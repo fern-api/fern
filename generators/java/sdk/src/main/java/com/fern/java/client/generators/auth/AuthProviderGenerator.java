@@ -28,8 +28,8 @@ import java.util.Map;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates the AuthProvider interface that all auth providers implement.
- * This interface provides a standard way to get authentication headers at request time.
+ * Generates the AuthProvider interface that all auth providers implement. This interface provides a standard way to get
+ * authentication headers at request time.
  */
 public final class AuthProviderGenerator extends AbstractFileGenerator {
 
@@ -49,15 +49,16 @@ public final class AuthProviderGenerator extends AbstractFileGenerator {
                 .addMethod(MethodSpec.methodBuilder("getAuthHeaders")
                         .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                         .addJavadoc("Returns the authentication headers for a request.\n")
-                        .addJavadoc("@param endpointMetadata metadata about the endpoint including security requirements\n")
+                        .addJavadoc(
+                                "@param endpointMetadata metadata about the endpoint including security requirements\n")
                         .addJavadoc("@return a map of header names to header values\n")
                         .addParameter(endpointMetadataClassName, "endpointMetadata")
                         .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
                         .build())
                 .build();
 
-        JavaFile javaFile = JavaFile.builder(className.packageName(), authProviderInterface)
-                .build();
+        JavaFile javaFile =
+                JavaFile.builder(className.packageName(), authProviderInterface).build();
 
         return GeneratedJavaFile.builder()
                 .className(className)

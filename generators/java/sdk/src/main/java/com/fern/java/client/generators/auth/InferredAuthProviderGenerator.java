@@ -17,7 +17,6 @@
 package com.fern.java.client.generators.auth;
 
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -26,14 +25,13 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates an InferredAuthProvider class that implements AuthProvider for inferred auth.
- * This provider uses the InferredAuthTokenSupplier to get auth headers from a token endpoint.
+ * Generates an InferredAuthProvider class that implements AuthProvider for inferred auth. This provider uses the
+ * InferredAuthTokenSupplier to get auth headers from a token endpoint.
  */
 public final class InferredAuthProviderGenerator extends AbstractFileGenerator {
 
@@ -63,32 +61,39 @@ public final class InferredAuthProviderGenerator extends AbstractFileGenerator {
         // The InferredAuthTokenSupplier implements Supplier<Map<String, String>>
         ParameterizedTypeName mapStringStringType = ParameterizedTypeName.get(
                 ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class));
-        ParameterizedTypeName supplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), mapStringStringType);
+        ParameterizedTypeName supplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), mapStringStringType);
 
         FieldSpec tokenSupplierField = FieldSpec.builder(
                         inferredAuthTokenSupplierClassName, "tokenSupplier", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
-        String errorMessage = "Please provide the required credentials for " + schemeName + " when initializing the client";
+        String errorMessage =
+                "Please provide the required credentials for " + schemeName + " when initializing the client";
 
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(authProviderClassName)
                 .addJavadoc("Auth provider for inferred authentication ($L).\n", schemeName)
                 .addJavadoc("Uses a token supplier to fetch and cache auth headers from the token endpoint.\n")
-                .addField(FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                        .initializer("$S", schemeName)
-                        .build())
-                .addField(FieldSpec.builder(String.class, "AUTH_CONFIG_ERROR_MESSAGE", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addField(
+                        FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                                .initializer("$S", schemeName)
+                                .build())
+                .addField(FieldSpec.builder(
+                                String.class,
+                                "AUTH_CONFIG_ERROR_MESSAGE",
+                                Modifier.PUBLIC,
+                                Modifier.STATIC,
+                                Modifier.FINAL)
                         .initializer("$S", errorMessage)
                         .build())
                 .addField(tokenSupplierField)
                 .addMethod(buildConstructor(tokenSupplierField))
                 .addMethod(buildGetAuthHeaders(endpointMetadataClassName, tokenSupplierField));
 
-        JavaFile javaFile = JavaFile.builder(className.packageName(), classBuilder.build())
-                .build();
+        JavaFile javaFile =
+                JavaFile.builder(className.packageName(), classBuilder.build()).build();
 
         return GeneratedJavaFile.builder()
                 .className(className)

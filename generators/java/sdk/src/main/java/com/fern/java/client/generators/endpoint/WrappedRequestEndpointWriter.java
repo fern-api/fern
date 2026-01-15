@@ -158,13 +158,15 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             }
         }
         if (clientGeneratorContext.isEndpointSecurity()) {
-            requestBodyCodeBlock.add("$T<String, String> _headers = new $T<>($L.$L($L));\n",
+            requestBodyCodeBlock.add(
+                    "$T<String, String> _headers = new $T<>($L.$L($L));\n",
                     java.util.Map.class,
                     java.util.HashMap.class,
                     clientOptionsMember.name,
                     ClientOptionsGenerator.HEADERS_METHOD_NAME,
                     AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-            requestBodyCodeBlock.add("_headers.putAll($L.$L($L));\n",
+            requestBodyCodeBlock.add(
+                    "_headers.putAll($L.$L($L));\n",
                     clientOptionsMember.name,
                     ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
                     getEndpointMetadataCodeBlock(httpEndpoint));

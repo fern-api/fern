@@ -135,13 +135,15 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     new RequestBodyInitializer(builder, generatedObjectMapper, endpoint, sendContentType, contentType));
 
             if (clientGeneratorContext.isEndpointSecurity()) {
-                builder.add("$T<String, String> _headers = new $T<>($L.$L($L));\n",
+                builder.add(
+                        "$T<String, String> _headers = new $T<>($L.$L($L));\n",
                         java.util.Map.class,
                         java.util.HashMap.class,
                         clientOptionsMember.name,
                         ClientOptionsGenerator.HEADERS_METHOD_NAME,
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-                builder.add("_headers.putAll($L.$L($L));\n",
+                builder.add(
+                        "_headers.putAll($L.$L($L));\n",
                         clientOptionsMember.name,
                         ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
                         getEndpointMetadataCodeBlock(httpEndpoint));
@@ -152,7 +154,10 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
-                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName());
+                    .add(
+                            ".method($S, $L)\n",
+                            httpEndpoint.getMethod().toString(),
+                            variables.getOkhttpRequestBodyName());
             if (clientGeneratorContext.isEndpointSecurity()) {
                 builder.add(".headers($T.of(_headers))\n", Headers.class);
             } else {
@@ -195,13 +200,15 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             builder, generatedObjectMapper, endpoint, sendContentType, contentType));
 
             if (clientGeneratorContext.isEndpointSecurity()) {
-                builder.add("$T<String, String> _headers = new $T<>($L.$L($L));\n",
+                builder.add(
+                        "$T<String, String> _headers = new $T<>($L.$L($L));\n",
                         java.util.Map.class,
                         java.util.HashMap.class,
                         clientOptionsMember.name,
                         ClientOptionsGenerator.HEADERS_METHOD_NAME,
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-                builder.add("_headers.putAll($L.$L($L));\n",
+                builder.add(
+                        "_headers.putAll($L.$L($L));\n",
                         clientOptionsMember.name,
                         ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
                         getEndpointMetadataCodeBlock(httpEndpoint));
@@ -212,7 +219,10 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
-                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName());
+                    .add(
+                            ".method($S, $L)\n",
+                            httpEndpoint.getMethod().toString(),
+                            variables.getOkhttpRequestBodyName());
             if (clientGeneratorContext.isEndpointSecurity()) {
                 builder.add(".headers($T.of(_headers))\n", Headers.class);
             } else {

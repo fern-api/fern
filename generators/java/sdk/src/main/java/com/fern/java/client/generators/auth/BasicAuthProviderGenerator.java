@@ -33,16 +33,15 @@ import java.util.Map;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
-/**
- * Generates a BasicAuthProvider class that implements AuthProvider for basic auth.
- */
+/** Generates a BasicAuthProvider class that implements AuthProvider for basic auth. */
 public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
 
     public static final String AUTH_SCHEME_NAME = "Basic";
 
     private final BasicAuthScheme basicAuthScheme;
 
-    public BasicAuthProviderGenerator(AbstractGeneratorContext<?, ?> generatorContext, BasicAuthScheme basicAuthScheme) {
+    public BasicAuthProviderGenerator(
+            AbstractGeneratorContext<?, ?> generatorContext, BasicAuthScheme basicAuthScheme) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName("BasicAuthProvider"), generatorContext);
         this.basicAuthScheme = basicAuthScheme;
     }
@@ -58,16 +57,20 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
         ClassName endpointMetadataClassName =
                 generatorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
 
-        ParameterizedTypeName stringSupplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), ClassName.get(String.class));
+        ParameterizedTypeName stringSupplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
-        FieldSpec usernameSupplierField = FieldSpec.builder(stringSupplierType, "usernameSupplier", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec usernameSupplierField = FieldSpec.builder(
+                        stringSupplierType, "usernameSupplier", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
-        FieldSpec passwordSupplierField = FieldSpec.builder(stringSupplierType, "passwordSupplier", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec passwordSupplierField = FieldSpec.builder(
+                        stringSupplierType, "passwordSupplier", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
-        String usernameEnvVar = basicAuthScheme.getUsernameEnvVar().map(ev -> ev.get()).orElse(null);
-        String passwordEnvVar = basicAuthScheme.getPasswordEnvVar().map(ev -> ev.get()).orElse(null);
+        String usernameEnvVar =
+                basicAuthScheme.getUsernameEnvVar().map(ev -> ev.get()).orElse(null);
+        String passwordEnvVar =
+                basicAuthScheme.getPasswordEnvVar().map(ev -> ev.get()).orElse(null);
 
         String errorMessage = "Please provide username and password when initializing the client";
 
@@ -75,10 +78,16 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(authProviderClassName)
                 .addJavadoc("Auth provider for Basic authentication.\n")
-                .addField(FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                        .initializer("$S", AUTH_SCHEME_NAME)
-                        .build())
-                .addField(FieldSpec.builder(String.class, "AUTH_CONFIG_ERROR_MESSAGE", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addField(
+                        FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                                .initializer("$S", AUTH_SCHEME_NAME)
+                                .build())
+                .addField(FieldSpec.builder(
+                                String.class,
+                                "AUTH_CONFIG_ERROR_MESSAGE",
+                                Modifier.PUBLIC,
+                                Modifier.STATIC,
+                                Modifier.FINAL)
                         .initializer("$S", errorMessage)
                         .build())
                 .addField(usernameSupplierField)
@@ -104,9 +113,7 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildGetAuthHeaders(
-            ClassName endpointMetadataClassName,
-            FieldSpec usernameSupplierField,
-            FieldSpec passwordSupplierField) {
+            ClassName endpointMetadataClassName, FieldSpec usernameSupplierField, FieldSpec passwordSupplierField) {
         return MethodSpec.methodBuilder("getAuthHeaders")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
@@ -118,8 +125,10 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                 .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
                 .endControlFlow()
                 .addStatement("String credentials = username + \":\" + password")
-                .addStatement("String encoded = $T.getEncoder().encodeToString(credentials.getBytes($T.UTF_8))",
-                        Base64.class, StandardCharsets.class)
+                .addStatement(
+                        "String encoded = $T.getEncoder().encodeToString(credentials.getBytes($T.UTF_8))",
+                        Base64.class,
+                        StandardCharsets.class)
                 .addStatement("$T<String, String> headers = new $T<>()", Map.class, HashMap.class)
                 .addStatement("headers.put($S, $S + encoded)", "Authorization", "Basic ")
                 .addStatement("return headers")
@@ -127,8 +136,8 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildCanCreateMethod(String usernameEnvVar, String passwordEnvVar) {
-        ParameterizedTypeName stringSupplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), ClassName.get(String.class));
+        ParameterizedTypeName stringSupplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder("canCreate")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)

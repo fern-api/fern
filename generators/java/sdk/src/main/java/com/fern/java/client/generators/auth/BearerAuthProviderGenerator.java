@@ -28,20 +28,18 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
-/**
- * Generates a BearerAuthProvider class that implements AuthProvider for bearer token auth.
- */
+/** Generates a BearerAuthProvider class that implements AuthProvider for bearer token auth. */
 public final class BearerAuthProviderGenerator extends AbstractFileGenerator {
 
     public static final String AUTH_SCHEME_NAME = "Bearer";
 
     private final BearerAuthScheme bearerAuthScheme;
 
-    public BearerAuthProviderGenerator(AbstractGeneratorContext<?, ?> generatorContext, BearerAuthScheme bearerAuthScheme) {
+    public BearerAuthProviderGenerator(
+            AbstractGeneratorContext<?, ?> generatorContext, BearerAuthScheme bearerAuthScheme) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName("BearerAuthProvider"), generatorContext);
         this.bearerAuthScheme = bearerAuthScheme;
     }
@@ -58,25 +56,33 @@ public final class BearerAuthProviderGenerator extends AbstractFileGenerator {
                 generatorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
 
         // Supplier<String> for token
-        ParameterizedTypeName tokenSupplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), ClassName.get(String.class));
+        ParameterizedTypeName tokenSupplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
-        FieldSpec tokenSupplierField = FieldSpec.builder(tokenSupplierType, "tokenSupplier", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec tokenSupplierField = FieldSpec.builder(
+                        tokenSupplierType, "tokenSupplier", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
         String envVar = bearerAuthScheme.getTokenEnvVar().map(ev -> ev.get()).orElse(null);
         String errorMessage = envVar != null
-                ? "Please provide 'token' when initializing the client, or set the '" + envVar + "' environment variable"
+                ? "Please provide 'token' when initializing the client, or set the '" + envVar
+                        + "' environment variable"
                 : "Please provide 'token' when initializing the client";
 
         TypeSpec bearerAuthProviderClass = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(authProviderClassName)
                 .addJavadoc("Auth provider for Bearer token authentication.\n")
-                .addField(FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                        .initializer("$S", AUTH_SCHEME_NAME)
-                        .build())
-                .addField(FieldSpec.builder(String.class, "AUTH_CONFIG_ERROR_MESSAGE", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addField(
+                        FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                                .initializer("$S", AUTH_SCHEME_NAME)
+                                .build())
+                .addField(FieldSpec.builder(
+                                String.class,
+                                "AUTH_CONFIG_ERROR_MESSAGE",
+                                Modifier.PUBLIC,
+                                Modifier.STATIC,
+                                Modifier.FINAL)
                         .initializer("$S", errorMessage)
                         .build())
                 .addField(tokenSupplierField)
@@ -118,8 +124,9 @@ public final class BearerAuthProviderGenerator extends AbstractFileGenerator {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("canCreate")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addJavadoc("Checks if this provider can be created with the given token supplier.\n")
-                .addParameter(ParameterizedTypeName.get(
-                        ClassName.get(Supplier.class), ClassName.get(String.class)), "tokenSupplier")
+                .addParameter(
+                        ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class)),
+                        "tokenSupplier")
                 .returns(boolean.class);
 
         if (envVar != null) {

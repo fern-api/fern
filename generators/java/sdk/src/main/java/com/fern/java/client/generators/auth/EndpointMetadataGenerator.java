@@ -30,8 +30,8 @@ import java.util.Map;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates the EndpointMetadata class that holds security requirements for an endpoint.
- * This is passed to AuthProvider.getAuthHeaders() at request time.
+ * Generates the EndpointMetadata class that holds security requirements for an endpoint. This is passed to
+ * AuthProvider.getAuthHeaders() at request time.
  */
 public final class EndpointMetadataGenerator extends AbstractFileGenerator {
 
@@ -45,12 +45,11 @@ public final class EndpointMetadataGenerator extends AbstractFileGenerator {
         // Outer list = OR (alternative security requirements)
         // Map keys = scheme names (e.g., "Bearer", "ApiKey")
         // Map values = scopes required for that scheme
-        ParameterizedTypeName scopesType = ParameterizedTypeName.get(
-                ClassName.get(List.class), ClassName.get(String.class));
-        ParameterizedTypeName schemeMapType = ParameterizedTypeName.get(
-                ClassName.get(Map.class), ClassName.get(String.class), scopesType);
-        ParameterizedTypeName securityType = ParameterizedTypeName.get(
-                ClassName.get(List.class), schemeMapType);
+        ParameterizedTypeName scopesType =
+                ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(String.class));
+        ParameterizedTypeName schemeMapType =
+                ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), scopesType);
+        ParameterizedTypeName securityType = ParameterizedTypeName.get(ClassName.get(List.class), schemeMapType);
 
         FieldSpec securityField = FieldSpec.builder(securityType, "security", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
@@ -81,8 +80,8 @@ public final class EndpointMetadataGenerator extends AbstractFileGenerator {
                         .build())
                 .build();
 
-        JavaFile javaFile = JavaFile.builder(className.packageName(), endpointMetadataClass)
-                .build();
+        JavaFile javaFile =
+                JavaFile.builder(className.packageName(), endpointMetadataClass).build();
 
         return GeneratedJavaFile.builder()
                 .className(className)

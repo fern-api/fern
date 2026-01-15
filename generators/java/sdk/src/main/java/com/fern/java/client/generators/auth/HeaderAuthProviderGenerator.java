@@ -28,20 +28,20 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
-/**
- * Generates a HeaderAuthProvider class that implements AuthProvider for custom header auth (API keys).
- */
+/** Generates a HeaderAuthProvider class that implements AuthProvider for custom header auth (API keys). */
 public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
 
     private final HeaderAuthScheme headerAuthScheme;
     private final String schemeName;
 
-    public HeaderAuthProviderGenerator(AbstractGeneratorContext<?, ?> generatorContext, HeaderAuthScheme headerAuthScheme, String schemeName) {
-        super(generatorContext.getPoetClassNameFactory().getCoreClassName(schemeName + "AuthProvider"), generatorContext);
+    public HeaderAuthProviderGenerator(
+            AbstractGeneratorContext<?, ?> generatorContext, HeaderAuthScheme headerAuthScheme, String schemeName) {
+        super(
+                generatorContext.getPoetClassNameFactory().getCoreClassName(schemeName + "AuthProvider"),
+                generatorContext);
         this.headerAuthScheme = headerAuthScheme;
         this.schemeName = schemeName;
     }
@@ -61,10 +61,11 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
         ClassName endpointMetadataClassName =
                 generatorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
 
-        ParameterizedTypeName stringSupplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), ClassName.get(String.class));
+        ParameterizedTypeName stringSupplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
-        FieldSpec valueSupplierField = FieldSpec.builder(stringSupplierType, "valueSupplier", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec valueSupplierField = FieldSpec.builder(
+                        stringSupplierType, "valueSupplier", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
         String headerName = headerAuthScheme.getName().getWireValue();
@@ -72,30 +73,43 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
         String prefix = headerAuthScheme.getPrefix().orElse(null);
 
         String errorMessage = envVar != null
-                ? "Please provide '" + headerAuthScheme.getName().getName().getCamelCase().getSafeName() + "' when initializing the client, or set the '" + envVar + "' environment variable"
-                : "Please provide '" + headerAuthScheme.getName().getName().getCamelCase().getSafeName() + "' when initializing the client";
+                ? "Please provide '"
+                        + headerAuthScheme.getName().getName().getCamelCase().getSafeName()
+                        + "' when initializing the client, or set the '" + envVar + "' environment variable"
+                : "Please provide '"
+                        + headerAuthScheme.getName().getName().getCamelCase().getSafeName()
+                        + "' when initializing the client";
 
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(authProviderClassName)
                 .addJavadoc("Auth provider for $L header authentication.\n", headerName)
-                .addField(FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                        .initializer("$S", schemeName)
-                        .build())
-                .addField(FieldSpec.builder(String.class, "AUTH_CONFIG_ERROR_MESSAGE", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addField(
+                        FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                                .initializer("$S", schemeName)
+                                .build())
+                .addField(FieldSpec.builder(
+                                String.class,
+                                "AUTH_CONFIG_ERROR_MESSAGE",
+                                Modifier.PUBLIC,
+                                Modifier.STATIC,
+                                Modifier.FINAL)
                         .initializer("$S", errorMessage)
                         .build())
-                .addField(FieldSpec.builder(String.class, "HEADER_NAME", Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+                .addField(FieldSpec.builder(
+                                String.class, "HEADER_NAME", Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
                         .initializer("$S", headerName)
                         .build());
 
         if (prefix != null) {
-            classBuilder.addField(FieldSpec.builder(String.class, "PREFIX", Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
-                    .initializer("$S", prefix + " ")
-                    .build());
+            classBuilder.addField(
+                    FieldSpec.builder(String.class, "PREFIX", Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+                            .initializer("$S", prefix + " ")
+                            .build());
         }
 
-        classBuilder.addField(valueSupplierField)
+        classBuilder
+                .addField(valueSupplierField)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(stringSupplierType, "valueSupplier")
@@ -104,8 +118,8 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
                 .addMethod(buildGetAuthHeaders(endpointMetadataClassName, valueSupplierField, prefix != null))
                 .addMethod(buildCanCreateMethod(envVar));
 
-        JavaFile javaFile = JavaFile.builder(className.packageName(), classBuilder.build())
-                .build();
+        JavaFile javaFile =
+                JavaFile.builder(className.packageName(), classBuilder.build()).build();
 
         return GeneratedJavaFile.builder()
                 .className(className)
@@ -113,7 +127,8 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec buildGetAuthHeaders(ClassName endpointMetadataClassName, FieldSpec valueSupplierField, boolean hasPrefix) {
+    private MethodSpec buildGetAuthHeaders(
+            ClassName endpointMetadataClassName, FieldSpec valueSupplierField, boolean hasPrefix) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("getAuthHeaders")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
@@ -135,8 +150,8 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildCanCreateMethod(String envVar) {
-        ParameterizedTypeName stringSupplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), ClassName.get(String.class));
+        ParameterizedTypeName stringSupplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder("canCreate")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)

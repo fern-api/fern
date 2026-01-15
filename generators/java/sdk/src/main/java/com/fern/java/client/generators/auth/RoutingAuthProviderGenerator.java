@@ -28,13 +28,12 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates the RoutingAuthProvider class that routes to the appropriate auth provider
- * based on endpoint security requirements.
+ * Generates the RoutingAuthProvider class that routes to the appropriate auth provider based on endpoint security
+ * requirements.
  */
 public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
 
@@ -50,37 +49,41 @@ public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
                 generatorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
 
         // Map<String, AuthProvider> authProviders
-        ParameterizedTypeName providersMapType = ParameterizedTypeName.get(
-                ClassName.get(Map.class), ClassName.get(String.class), authProviderClassName);
+        ParameterizedTypeName providersMapType =
+                ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), authProviderClassName);
 
         // Map<String, String> authConfigErrorMessages
         ParameterizedTypeName errorMessagesMapType = ParameterizedTypeName.get(
                 ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class));
 
-        FieldSpec providersField = FieldSpec.builder(providersMapType, "authProviders", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec providersField = FieldSpec.builder(
+                        providersMapType, "authProviders", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
-        FieldSpec errorMessagesField = FieldSpec.builder(errorMessagesMapType, "authConfigErrorMessages", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec errorMessagesField = FieldSpec.builder(
+                        errorMessagesMapType, "authConfigErrorMessages", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
         // List<Map<String, List<String>>> (security requirements type)
-        ParameterizedTypeName scopesType = ParameterizedTypeName.get(
-                ClassName.get(List.class), ClassName.get(String.class));
-        ParameterizedTypeName schemeMapType = ParameterizedTypeName.get(
-                ClassName.get(Map.class), ClassName.get(String.class), scopesType);
-        ParameterizedTypeName securityType = ParameterizedTypeName.get(
-                ClassName.get(List.class), schemeMapType);
+        ParameterizedTypeName scopesType =
+                ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(String.class));
+        ParameterizedTypeName schemeMapType =
+                ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), scopesType);
+        ParameterizedTypeName securityType = ParameterizedTypeName.get(ClassName.get(List.class), schemeMapType);
 
         TypeSpec routingAuthProviderClass = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(authProviderClassName)
-                .addJavadoc("Auth provider that routes to the appropriate provider based on endpoint security requirements.\n")
-                .addJavadoc("This implements the ENDPOINT_SECURITY auth mode where each endpoint can have different auth.\n")
+                .addJavadoc(
+                        "Auth provider that routes to the appropriate provider based on endpoint security requirements.\n")
+                .addJavadoc(
+                        "This implements the ENDPOINT_SECURITY auth mode where each endpoint can have different auth.\n")
                 .addField(providersField)
                 .addField(errorMessagesField)
                 .addMethod(buildConstructor(providersField, errorMessagesField, providersMapType, errorMessagesMapType))
                 .addMethod(buildGetAuthConfigErrorMessage())
-                .addMethod(buildGetAuthHeaders(authProviderClassName, endpointMetadataClassName, providersField, securityType, schemeMapType))
+                .addMethod(buildGetAuthHeaders(
+                        authProviderClassName, endpointMetadataClassName, providersField, securityType, schemeMapType))
                 .addMethod(buildBuilderMethod())
                 .addType(buildBuilderClass(authProviderClassName, providersMapType, errorMessagesMapType))
                 .build();
@@ -117,7 +120,8 @@ public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
                 .beginControlFlow("if (message != null)")
                 .addStatement("return message")
                 .endControlFlow()
-                .addStatement("return \"Please provide the required authentication credentials for \" + schemeKey + \" when initializing the client\"")
+                .addStatement(
+                        "return \"Please provide the required authentication credentials for \" + schemeKey + \" when initializing the client\"")
                 .build();
     }
 
@@ -140,35 +144,46 @@ public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
                 .endControlFlow()
                 .addCode("\n")
                 .addComment("Check if any security requirement can be satisfied by available providers")
-                .addStatement("boolean canSatisfyAnyRequirement = security.stream().anyMatch(securityRequirement -> \n" +
-                        "    securityRequirement.keySet().stream().allMatch(schemeKey -> $N.containsKey(schemeKey)))", providersField)
+                .addStatement(
+                        "boolean canSatisfyAnyRequirement = security.stream().anyMatch(securityRequirement -> \n"
+                                + "    securityRequirement.keySet().stream().allMatch(schemeKey -> $N.containsKey(schemeKey)))",
+                        providersField)
                 .addCode("\n")
                 .beginControlFlow("if (!canSatisfyAnyRequirement)")
                 .addComment("Build user-friendly error message showing which auth options are missing")
-                .addStatement("String missingAuthHints = security.stream()\n" +
-                        "    .map(req -> req.keySet().stream()\n" +
-                        "        .filter(key -> !$N.containsKey(key))\n" +
-                        "        .map(this::getAuthConfigErrorMessage)\n" +
-                        "        .collect($T.joining(\" AND \")))\n" +
-                        "    .collect($T.joining(\" OR \"))", providersField, Collectors.class, Collectors.class)
-                .addStatement("throw new $T(\"No authentication credentials provided that satisfy the endpoint's security requirements. \" + missingAuthHints)",
+                .addStatement(
+                        "String missingAuthHints = security.stream()\n" + "    .map(req -> req.keySet().stream()\n"
+                                + "        .filter(key -> !$N.containsKey(key))\n"
+                                + "        .map(this::getAuthConfigErrorMessage)\n"
+                                + "        .collect($T.joining(\" AND \")))\n"
+                                + "    .collect($T.joining(\" OR \"))",
+                        providersField,
+                        Collectors.class,
+                        Collectors.class)
+                .addStatement(
+                        "throw new $T(\"No authentication credentials provided that satisfy the endpoint's security requirements. \" + missingAuthHints)",
                         RuntimeException.class)
                 .endControlFlow()
                 .addCode("\n")
                 .addComment("Get the first security requirement that can be satisfied (OR relationship)")
-                .addStatement("$T satisfiableRequirement = security.stream()\n" +
-                        "    .filter(securityRequirement -> securityRequirement.keySet().stream()\n" +
-                        "        .allMatch(schemeKey -> $N.containsKey(schemeKey)))\n" +
-                        "    .findFirst()\n" +
-                        "    .orElseThrow(() -> new $T(\"Internal error: no satisfiable requirement found\"))",
-                        schemeMapType, providersField, RuntimeException.class)
+                .addStatement(
+                        "$T satisfiableRequirement = security.stream()\n"
+                                + "    .filter(securityRequirement -> securityRequirement.keySet().stream()\n"
+                                + "        .allMatch(schemeKey -> $N.containsKey(schemeKey)))\n"
+                                + "    .findFirst()\n"
+                                + "    .orElseThrow(() -> new $T(\"Internal error: no satisfiable requirement found\"))",
+                        schemeMapType,
+                        providersField,
+                        RuntimeException.class)
                 .addCode("\n")
                 .addComment("Get auth for all schemes in the satisfiable requirement (AND relationship)")
                 .addStatement("$T<String, String> combinedHeaders = new $T<>()", Map.class, HashMap.class)
                 .beginControlFlow("for (String schemeKey : satisfiableRequirement.keySet())")
                 .addStatement("$T provider = $N.get(schemeKey)", authProviderClassName, providersField)
                 .beginControlFlow("if (provider == null)")
-                .addStatement("throw new $T(\"Internal error: auth provider not found for scheme: \" + schemeKey)", RuntimeException.class)
+                .addStatement(
+                        "throw new $T(\"Internal error: auth provider not found for scheme: \" + schemeKey)",
+                        RuntimeException.class)
                 .endControlFlow()
                 .addStatement("$T<String, String> headers = provider.getAuthHeaders(endpointMetadata)", Map.class)
                 .addStatement("combinedHeaders.putAll(headers)")
@@ -198,7 +213,8 @@ public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(providersMapType, "authProviders", Modifier.PRIVATE, Modifier.FINAL)
                         .initializer("new $T<>()", HashMap.class)
                         .build())
-                .addField(FieldSpec.builder(errorMessagesMapType, "authConfigErrorMessages", Modifier.PRIVATE, Modifier.FINAL)
+                .addField(FieldSpec.builder(
+                                errorMessagesMapType, "authConfigErrorMessages", Modifier.PRIVATE, Modifier.FINAL)
                         .initializer("new $T<>()", HashMap.class)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("addAuthProvider")

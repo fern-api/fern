@@ -17,7 +17,6 @@
 package com.fern.java.client.generators.auth;
 
 import com.fern.ir.model.auth.OAuthClientCredentials;
-import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -31,13 +30,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates an OAuthAuthProvider class that implements AuthProvider for OAuth client credentials auth.
- * This provider manages token acquisition and caching with expiration handling.
+ * Generates an OAuthAuthProvider class that implements AuthProvider for OAuth client credentials auth. This provider
+ * manages token acquisition and caching with expiration handling.
  */
 public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
 
@@ -70,32 +68,41 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
         ClassName oauthTokenSupplierClassName =
                 generatorContext.getPoetClassNameFactory().getCoreClassName("OAuthTokenSupplier");
 
-        ParameterizedTypeName stringSupplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), ClassName.get(String.class));
+        ParameterizedTypeName stringSupplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
         // Fields
-        FieldSpec clientIdSupplierField = FieldSpec.builder(stringSupplierType, "clientIdSupplier", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec clientIdSupplierField = FieldSpec.builder(
+                        stringSupplierType, "clientIdSupplier", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
-        FieldSpec clientSecretSupplierField = FieldSpec.builder(stringSupplierType, "clientSecretSupplier", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec clientSecretSupplierField = FieldSpec.builder(
+                        stringSupplierType, "clientSecretSupplier", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
-        FieldSpec authClientField = FieldSpec.builder(authClientClassName, "authClient", Modifier.PRIVATE, Modifier.FINAL)
+        FieldSpec authClientField = FieldSpec.builder(
+                        authClientClassName, "authClient", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
-        FieldSpec accessTokenField = FieldSpec.builder(String.class, "accessToken", Modifier.PRIVATE)
-                .build();
-        FieldSpec expiresAtField = FieldSpec.builder(Instant.class, "expiresAt", Modifier.PRIVATE)
-                .build();
+        FieldSpec accessTokenField =
+                FieldSpec.builder(String.class, "accessToken", Modifier.PRIVATE).build();
+        FieldSpec expiresAtField =
+                FieldSpec.builder(Instant.class, "expiresAt", Modifier.PRIVATE).build();
         FieldSpec refreshLockField = FieldSpec.builder(Object.class, "refreshLock", Modifier.PRIVATE, Modifier.FINAL)
                 .initializer("new Object()")
                 .build();
 
-        String clientIdEnvVar = clientCredentials.getClientIdEnvVar().map(ev -> ev.get()).orElse(null);
-        String clientSecretEnvVar = clientCredentials.getClientSecretEnvVar().map(ev -> ev.get()).orElse(null);
+        String clientIdEnvVar =
+                clientCredentials.getClientIdEnvVar().map(ev -> ev.get()).orElse(null);
+        String clientSecretEnvVar =
+                clientCredentials.getClientSecretEnvVar().map(ev -> ev.get()).orElse(null);
         String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
 
         StringBuilder errorMessageBuilder = new StringBuilder("Please provide ");
         if (clientIdEnvVar != null && clientSecretEnvVar != null) {
-            errorMessageBuilder.append("clientId and clientSecret via .clientId()/.clientSecret() or set ")
-                    .append(clientIdEnvVar).append(" and ").append(clientSecretEnvVar).append(" environment variables");
+            errorMessageBuilder
+                    .append("clientId and clientSecret via .clientId()/.clientSecret() or set ")
+                    .append(clientIdEnvVar)
+                    .append(" and ")
+                    .append(clientSecretEnvVar)
+                    .append(" environment variables");
         } else {
             errorMessageBuilder.append("clientId and clientSecret via .clientId()/.clientSecret()");
         }
@@ -106,13 +113,20 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .addSuperinterface(authProviderClassName)
                 .addJavadoc("Auth provider for OAuth client credentials authentication.\n")
                 .addJavadoc("Handles token acquisition and caching with automatic refresh on expiration.\n")
-                .addField(FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                        .initializer("$S", AUTH_SCHEME_NAME)
-                        .build())
-                .addField(FieldSpec.builder(String.class, "AUTH_CONFIG_ERROR_MESSAGE", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addField(
+                        FieldSpec.builder(String.class, "AUTH_SCHEME", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                                .initializer("$S", AUTH_SCHEME_NAME)
+                                .build())
+                .addField(FieldSpec.builder(
+                                String.class,
+                                "AUTH_CONFIG_ERROR_MESSAGE",
+                                Modifier.PUBLIC,
+                                Modifier.STATIC,
+                                Modifier.FINAL)
                         .initializer("$S", errorMessage)
                         .build())
-                .addField(FieldSpec.builder(long.class, "BUFFER_IN_MINUTES", Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+                .addField(FieldSpec.builder(
+                                long.class, "BUFFER_IN_MINUTES", Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
                         .initializer("2")
                         .build())
                 .addField(clientIdSupplierField)
@@ -128,8 +142,8 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .addMethod(buildGetExpiresAtMethod())
                 .addMethod(buildCanCreateMethod(clientIdEnvVar, clientSecretEnvVar));
 
-        JavaFile javaFile = JavaFile.builder(className.packageName(), classBuilder.build())
-                .build();
+        JavaFile javaFile =
+                JavaFile.builder(className.packageName(), classBuilder.build()).build();
 
         return GeneratedJavaFile.builder()
                 .className(className)
@@ -138,11 +152,9 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildConstructor(
-            FieldSpec clientIdSupplierField,
-            FieldSpec clientSecretSupplierField,
-            FieldSpec authClientField) {
-        ParameterizedTypeName stringSupplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), ClassName.get(String.class));
+            FieldSpec clientIdSupplierField, FieldSpec clientSecretSupplierField, FieldSpec authClientField) {
+        ParameterizedTypeName stringSupplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
         return MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
@@ -212,7 +224,8 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .nextControlFlow("else")
                 .addStatement("this.accessToken = authHeader")
                 .endControlFlow()
-                .addComment("Set expiration with buffer (we don't have access to expires_in here, so use 1 hour default)")
+                .addComment(
+                        "Set expiration with buffer (we don't have access to expires_in here, so use 1 hour default)")
                 .addStatement("this.expiresAt = getExpiresAt(3600)")
                 .addStatement("return this.accessToken")
                 .build();
@@ -232,8 +245,8 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildCanCreateMethod(String clientIdEnvVar, String clientSecretEnvVar) {
-        ParameterizedTypeName stringSupplierType = ParameterizedTypeName.get(
-                ClassName.get(Supplier.class), ClassName.get(String.class));
+        ParameterizedTypeName stringSupplierType =
+                ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder("canCreate")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -249,7 +262,10 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
             clientIdCheck.append(" || System.getenv(\"").append(clientIdEnvVar).append("\") != null");
         }
         if (clientSecretEnvVar != null) {
-            clientSecretCheck.append(" || System.getenv(\"").append(clientSecretEnvVar).append("\") != null");
+            clientSecretCheck
+                    .append(" || System.getenv(\"")
+                    .append(clientSecretEnvVar)
+                    .append("\") != null");
         }
 
         builder.addStatement("return (" + clientIdCheck + ") && (" + clientSecretCheck + ")");

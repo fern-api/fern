@@ -282,9 +282,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         // Only add authProvider parameter if using endpoint security
         if (authProviderField != null) {
-            constructorBuilder.addParameter(
-                    ParameterSpec.builder(authProviderField.type, authProviderField.name)
-                            .build());
+            constructorBuilder.addParameter(ParameterSpec.builder(authProviderField.type, authProviderField.name)
+                    .build());
         }
 
         constructorBuilder

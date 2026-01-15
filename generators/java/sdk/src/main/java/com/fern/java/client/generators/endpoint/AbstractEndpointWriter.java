@@ -16,9 +16,9 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.AuthScope;
+import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.*;
 import com.fern.java.client.ClientGeneratorContext;

@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.32.0
+  changelogEntry:
+    - summary: |
+        Add endpoint-level security support with routing auth providers. APIs can now define different
+        authentication requirements per endpoint using the ENDPOINT_SECURITY auth mode. The SDK generates
+        individual auth providers (Bearer, Basic, ApiKey, OAuth, InferredAuth) and a RoutingAuthProvider
+        that routes requests to the appropriate provider based on each endpoint's security requirements.
+        Supports OR (any of) and AND (all of) auth requirement combinations.
+
+        To enable, add `auth: endpoint-security: {}` to your api.yml and define per-endpoint auth in your
+        service definitions using the `auth` field on each endpoint.
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
 - version: 3.31.0
   changelogEntry:
     - summary: |
