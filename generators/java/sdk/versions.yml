@@ -8,11 +8,10 @@
 
         Usage example:
         ```java
-        client.users().list(
-            ListUsersRequest.builder().build(),
+        client.endpoint(
+            Request.builder().build(),
             RequestOptions.builder()
-                .addQueryParameter("filter", "active")
-                .addQueryParameter("email(ct)", "test@example.com")
+                .addQueryParameter("key", "value")
                 .build()
         );
         ```
