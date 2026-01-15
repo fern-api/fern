@@ -1780,6 +1780,11 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API"
+                })
+                .option("indent", {
+                    type: "number",
+                    description: "Indentation width in spaces (default: 2)",
+                    default: 2
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -1795,7 +1800,8 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     defaultToAllApiWorkspaces: false
                 }),
                 cliContext,
-                outputPath: resolve(cwd(), argv.outputPath)
+                outputPath: resolve(cwd(), argv.outputPath),
+                indent: argv.indent
             });
         }
     );
