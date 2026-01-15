@@ -283,6 +283,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             // For staged builder, add static factory methods that delegate to builder class
             ClassName tokenAuthClassName = builderName.nestedClass("_TokenAuth");
             ClassName credentialsAuthClassName = builderName.nestedClass("_CredentialsAuth");
+            ClassName builderStageClassName = builderName.nestedClass("_Builder");
 
             result.getClientImpl()
                     .addMethod(MethodSpec.methodBuilder("withToken")
@@ -306,6 +307,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .addParameter(String.class, "clientSecret")
                             .returns(credentialsAuthClassName)
                             .addStatement("return $T.withCredentials(clientId, clientSecret)", builderName)
+                            .build());
+
+            result.getClientImpl()
+                    .addMethod(MethodSpec.methodBuilder("builder")
+                            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                            .addJavadoc("Creates a new client builder.\n")
+                            .addJavadoc("@return A builder for configuring and creating the client")
+                            .returns(builderStageClassName)
+                            .addStatement("return $T.builder()", builderName)
                             .build());
         } else {
             result.getClientImpl()
@@ -1463,6 +1473,55 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("return new _CredentialsAuth(clientId, clientSecret)");
 
                 clientBuilder.addMethod(withCredentialsMethod.build());
+
+                // Add builder() factory method to base builder
+                ClassName builderStageClassName = builderName.nestedClass("_Builder");
+                clientBuilder.addMethod(MethodSpec.methodBuilder("builder")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .addJavadoc("Creates a new client builder.\n")
+                        .addJavadoc("Use this method to start building a client with the classic builder pattern.\n")
+                        .addJavadoc("\n")
+                        .addJavadoc("@return A builder for configuring authentication and creating the client")
+                        .returns(builderStageClassName)
+                        .addStatement("return new _Builder()")
+                        .build());
+
+                // Create _Builder nested class with token() and credentials() methods
+                TypeSpec.Builder builderStageBuilder = TypeSpec.classBuilder("_Builder")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
+
+                // Add token() method that returns _TokenAuth
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("token")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Configure the client to use a pre-generated access token for authentication.\n")
+                        .addJavadoc("Use this when you already have a valid access token and want to bypass\n")
+                        .addJavadoc("the OAuth client credentials flow.\n")
+                        .addJavadoc("\n")
+                        .addJavadoc(
+                                "@param $L The access token to use for Authorization header\n",
+                                tokenOverridePropertyName)
+                        .addJavadoc("@return A builder configured for token authentication")
+                        .addParameter(String.class, tokenOverridePropertyName)
+                        .returns(tokenAuthClassName)
+                        .addStatement("return new _TokenAuth($L)", tokenOverridePropertyName)
+                        .build());
+
+                // Add credentials() method that returns _CredentialsAuth
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("credentials")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Configure the client to use OAuth client credentials for authentication.\n")
+                        .addJavadoc("The builder will automatically handle token acquisition and refresh.\n")
+                        .addJavadoc("\n")
+                        .addJavadoc("@param clientId The OAuth client ID\n")
+                        .addJavadoc("@param clientSecret The OAuth client secret\n")
+                        .addJavadoc("@return A builder configured for OAuth client credentials authentication")
+                        .addParameter(String.class, "clientId")
+                        .addParameter(String.class, "clientSecret")
+                        .returns(credentialsAuthClassName)
+                        .addStatement("return new _CredentialsAuth(clientId, clientSecret)")
+                        .build());
+
+                clientBuilder.addType(builderStageBuilder.build());
 
                 // Make configureAuthMethod empty for base class (subclasses override)
                 if (configureAuthMethod != null) {
