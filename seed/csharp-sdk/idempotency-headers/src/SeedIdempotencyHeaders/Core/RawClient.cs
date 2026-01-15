@@ -361,6 +361,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         {
             switch (kvp.Value)
             {
+                case null:
+                    result.Add(new KeyValuePair<string, string>(kvp.Key, ""));
+                    break;
                 case string str:
                     result.Add(new KeyValuePair<string, string>(kvp.Key, str));
                     break;

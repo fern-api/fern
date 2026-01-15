@@ -1952,6 +1952,72 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
 
+    it("should handle OpenAPI with webhook multipart form data payloads", async () => {
+        // This test captures current parser behavior with multipart/form-data webhooks.
+        // When multipart support is added, the snapshots will change to show proper parsing.
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/webhook-multipart-form-data")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "webhook-multipart-form-data"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate basic IR structure (webhooks with multipart/form-data may not parse yet)
+        expect(intermediateRepresentation).toBeDefined();
+        expect(intermediateRepresentation.webhookGroups).toBeDefined();
+        // Note: webhookGroups may be empty if multipart/form-data isn't supported yet
+
+        // Validate FDR output structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/webhook-multipart-form-data-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot(
+            "__snapshots__/webhook-multipart-form-data-ir.snap"
+        );
+    });
+
     it("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({

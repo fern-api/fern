@@ -226,6 +226,56 @@ export class Optional extends ReferenceType {
     }
 }
 
+/**
+ * Represents a wrapped Optional<T> type in C#.
+ * This renders as Optional<T> where T is the inner type.
+ * Used for explicit optional/undefined semantics in API requests.
+ */
+export class OptionalWrapper extends ReferenceType {
+    public override readonly isOptional = true;
+
+    /**
+     * The underlying type wrapped in Optional<T>.
+     */
+    public readonly value: Type;
+
+    /**
+     * Creates a new Optional<T> wrapper type.
+     * @param value - The underlying type to wrap
+     * @param generation - The generation context for code generation
+     */
+    constructor(value: Type, generation: Generation) {
+        super(generation);
+        this.value = value;
+    }
+
+    public override get isCollection(): boolean {
+        return false;
+    }
+
+    public override get multipartMethodName(): string | null {
+        return this.value.multipartMethodName;
+    }
+
+    public override get multipartMethodNameForCollection(): string | null {
+        return this.value.multipartMethodNameForCollection;
+    }
+
+    public override asOptional(): Type {
+        return this;
+    }
+
+    public override asNonOptional(): Type {
+        return this.value;
+    }
+
+    public override write(writer: Writer): void {
+        writer.write("Optional<");
+        this.value.write(writer);
+        writer.write(">");
+    }
+}
+
 export namespace Primitive {
     /**
      * Represents the C# `int` type (32-bit signed integer).

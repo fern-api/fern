@@ -6,24 +6,75 @@ import tmp from "tmp-promise";
 
 /**
  * Check if an error message indicates a network error.
+ * Used by both protobuf generation and AI example enhancement for air-gap detection.
  */
 export function isNetworkError(errorMessage: string): boolean {
     return (
         errorMessage.includes("server hosted at that remote is unavailable") ||
+        errorMessage.includes("fetch failed") ||
         errorMessage.includes("failed to connect") ||
         errorMessage.includes("network") ||
         errorMessage.includes("ENOTFOUND") ||
         errorMessage.includes("ETIMEDOUT") ||
         errorMessage.includes("TIMEDOUT") ||
-        errorMessage.includes("timed out")
+        errorMessage.includes("timed out") ||
+        errorMessage.includes("ECONNREFUSED") ||
+        errorMessage.includes("ECONNRESET") ||
+        errorMessage.includes("socket hang up")
     );
 }
 
+// Global cache for air-gap detection result
+let airGapDetectionResult: boolean | undefined;
+let airGapDetectionPromise: Promise<boolean> | undefined;
+
 /**
- * Detect if we're in an air-gapped environment by trying buf dep update once.
+ * Detect if we're in an air-gapped environment by trying to reach a URL via HTTP.
+ * The result is cached globally to avoid repeated detection attempts.
+ * Used by both protobuf generation and AI example enhancement.
+ */
+export async function detectAirGappedMode(url: string, logger: Logger, timeoutMs: number = 5000): Promise<boolean> {
+    if (airGapDetectionResult !== undefined) {
+        return airGapDetectionResult;
+    }
+
+    if (airGapDetectionPromise == null) {
+        airGapDetectionPromise = performAirGapDetection(url, logger, timeoutMs);
+    }
+
+    return airGapDetectionPromise;
+}
+
+async function performAirGapDetection(url: string, logger: Logger, timeoutMs: number): Promise<boolean> {
+    logger.debug(`Detecting air-gapped mode by checking connectivity to ${url}`);
+
+    try {
+        await fetch(url, {
+            method: "GET",
+            signal: AbortSignal.timeout(timeoutMs)
+        });
+
+        airGapDetectionResult = false;
+        logger.debug("Network check succeeded - not in air-gapped mode");
+        return false;
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        if (isNetworkError(errorMessage)) {
+            airGapDetectionResult = true;
+            logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage}`);
+            return true;
+        }
+        airGapDetectionResult = false;
+        return false;
+    }
+}
+
+/**
+ * Detect if we're in an air-gapped environment for protobuf generation.
+ * Uses buf dep update to check network availability.
  * Returns true if air-gapped (network unavailable), false otherwise.
  */
-export async function detectAirGappedMode(
+export async function detectAirGappedModeForProtobuf(
     absoluteFilepathToProtobufRoot: AbsoluteFilePath,
     logger: Logger
 ): Promise<boolean> {

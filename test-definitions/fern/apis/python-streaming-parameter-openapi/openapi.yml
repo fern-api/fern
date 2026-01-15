@@ -12,21 +12,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChatRequest'
+              $ref: "#/components/schemas/ChatRequest"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChatResponse'
+                $ref: "#/components/schemas/ChatResponse"
       x-fern-streaming:
         format: sse
         stream-condition: $request.stream
         response:
-          $ref: '#/components/schemas/ChatResponse'
+          $ref: "#/components/schemas/ChatResponse"
         response-stream:
-          $ref: '#/components/schemas/ChatStreamEvent'
+          $ref: "#/components/schemas/ChatStreamEvent"
       x-fern-examples:
         - name: default
           request:

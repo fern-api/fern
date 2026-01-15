@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.44.1
+  changelogEntry:
+    - summary: |
+        Add air-gapped environment detection for AI example enhancement. The CLI now detects network availability before attempting AI enhancement by checking connectivity to Venus. In air-gapped environments, AI enhancement is automatically skipped to prevent network errors. This follows the same pattern used for protobuf generation air-gap detection.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
 - version: 3.44.0
   changelogEntry:
     - summary: |

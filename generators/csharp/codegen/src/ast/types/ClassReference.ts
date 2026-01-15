@@ -132,7 +132,15 @@ export class ClassReference extends Node implements Type {
         return this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
     }
 
+    private getScopedName(isAttribute: boolean): string {
+        const nameToWrite =
+            isAttribute && this.name.endsWith("Attribute") ? this.name.slice(0, -"Attribute".length) : this.name;
+        return this.enclosingType ? `${this.enclosingType.name}.${nameToWrite}` : nameToWrite;
+    }
+
     private writeInternal(writer: Writer, isAttribute: boolean): void {
+        const nameToWrite = this.getScopedName(isAttribute);
+
         // if the name (or the enclosing type name) is ambiguous
         const isAmbiguous =
             this.registry.isAmbiguousTypeName(this.name) ||
@@ -152,18 +160,33 @@ export class ClassReference extends Node implements Type {
             writer.generation.settings.useFullyQualifiedNamespaces;
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
-        const fqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
+        // For attributes, strip the "Attribute" suffix from the fully qualified name
+        let fqNameBase = this.fullyQualifiedName;
+        if (isAttribute && fqNameBase.endsWith("Attribute")) {
+            // Replace the last occurrence of "Attribute" with empty string
+            const lastDotIndex = fqNameBase.lastIndexOf(".");
+            if (lastDotIndex >= 0) {
+                const namespacePart = fqNameBase.substring(0, lastDotIndex + 1);
+                const namePart = fqNameBase.substring(lastDotIndex + 1);
+                if (namePart.endsWith("Attribute")) {
+                    fqNameBase = namespacePart + namePart.slice(0, -"Attribute".length);
+                }
+            } else {
+                fqNameBase = fqNameBase.slice(0, -"Attribute".length);
+            }
+        }
+        const fqName = `${shouldGlobal ? "global::" : ""}${fqNameBase}`;
 
         if (!this.namespace) {
-            writer.write(this.name);
+            writer.write(nameToWrite);
             return;
         }
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
-            writer.write(`${alias}.${this.scopedName}`);
+            writer.write(`${alias}.${nameToWrite}`);
         } else {
             if (writer.skipImports) {
-                writer.write(this.scopedName);
+                writer.write(nameToWrite);
             } else {
                 if (this.fullyQualified) {
                     writer.write(fqName);
@@ -184,7 +207,7 @@ export class ClassReference extends Node implements Type {
                         ) {
                             writer.write(fqName);
                         } else {
-                            writer.write(`${typeQualification}${this.scopedName}`);
+                            writer.write(`${typeQualification}${nameToWrite}`);
                         }
                     } else if (isAmbiguous && this.resolveNamespace() !== writer.namespace) {
                         // If the class is ambiguous and not in this specific namespace
@@ -195,7 +218,7 @@ export class ClassReference extends Node implements Type {
                         // If the class is not ambiguous and is in this specific namespace,
                         // we can use the short name
                         writer.addReference(this);
-                        writer.write(this.scopedName);
+                        writer.write(nameToWrite);
                     }
                 }
             }
@@ -334,21 +357,37 @@ export class ClassReference extends Node implements Type {
             return true;
         }
 
+        // For attributes, check if there's a real conflict with another attribute type
+        // In C#, [Foo] automatically looks for FooAttribute, not Foo
+        // So [Nullable] won't conflict with System.Nullable<T> - it looks for NullableAttribute
+        if (isAttribute) {
+            const hasConflict = this.potentialConflictWithGeneratedType(writer, isAttribute);
+            if (!hasConflict) {
+                // No conflict with another attribute, so we can rely on the using statement
+                return false;
+            }
+        }
+
         // For child namespaces (like SeedCsharpNamespaceConflict.A.Aa from SeedCsharpNamespaceConflict.A),
         // we generally don't need qualification unless there's a specific conflict
         if (this.namespace.startsWith(`${currentNamespace}.`)) {
             // Only require qualification if there's an actual naming conflict
-            return this.potentialConflictWithGeneratedType(writer);
+            return this.potentialConflictWithGeneratedType(writer, isAttribute);
         }
 
         // Check for potential conflicts with generated types regardless of namespace
         // This handles both internal and external types consistently
-        return this.potentialConflictWithGeneratedType(writer);
+        return this.potentialConflictWithGeneratedType(writer, isAttribute);
     }
 
-    private potentialConflictWithGeneratedType(writer: Writer) {
+    private potentialConflictWithGeneratedType(writer: Writer, isAttribute: boolean = false) {
+        // For attributes, we check for conflicts differently
+        // In C#, [Foo] looks for FooAttribute first, then falls back to Foo
+        // Since our attribute classes are registered with names like "Nullable" (not "NullableAttribute"),
+        // we just check if there's another type with the same name in a different namespace
         const matchingNamespaces = writer.getAllTypeClassReferences().get(this.name);
         if (matchingNamespaces == null) {
+            // No types with this name at all, so no conflict
             return false;
         }
 
@@ -358,6 +397,12 @@ export class ClassReference extends Node implements Type {
         matchingNamespacesCopy.delete(this.namespace);
 
         if (matchingNamespacesCopy.size === 0) {
+            // No other types with this name in other namespaces
+            // For attributes in attribute context, there's no conflict with non-attribute types
+            // because C# looks for FooAttribute when you write [Foo]
+            if (isAttribute) {
+                return false;
+            }
             // Even if there's no type conflict, check for namespace conflicts
             // This handles cases like class "A" conflicting with namespace "A"
             return this.hasProjectNamespaceConflict(writer);
@@ -371,6 +416,12 @@ export class ClassReference extends Node implements Type {
             if (conflictingNamespace === currentNamespace || currentNamespace.startsWith(`${conflictingNamespace}.`)) {
                 return true;
             }
+        }
+
+        // For attributes, if we haven't found a conflict yet, there isn't one
+        // (because C# disambiguates [Foo] vs Foo<T> automatically)
+        if (isAttribute) {
+            return false;
         }
 
         // Also check if the class name matches any namespace segment in the project
