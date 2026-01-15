@@ -503,11 +503,16 @@ function convertExampleResponse({
                 });
             }
 
-            const responseBody = convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace });
+            const responseBody = convertExampleResponseBody({
+                endpoint,
+                example,
+                typeResolver,
+                exampleResolver,
+                file,
+                workspace
+            });
             return ExampleResponse.ok(
-                ExampleEndpointSuccessResponse.body(
-                    responseBody as unknown as ExampleTypeReference
-                )
+                ExampleEndpointSuccessResponse.body(responseBody as unknown as ExampleTypeReference)
             );
         },
         stream: (example) => {

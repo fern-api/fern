@@ -24,7 +24,13 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
     private readonly minProperties: number | undefined;
     private readonly maxProperties: number | undefined;
 
-    constructor({ context, breadcrumbs, schemaOrReferenceOrBoolean, minProperties, maxProperties }: MapSchemaConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        schemaOrReferenceOrBoolean,
+        minProperties,
+        maxProperties
+    }: MapSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schemaOrReferenceOrBoolean = schemaOrReferenceOrBoolean;
         this.minProperties = minProperties;
