@@ -36,8 +36,16 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "@types/is-ci": "^3.0.4",
     "@types/node": "18.15.3",
+    "ansi-escapes": "^5.0.0",
     "depcheck": "^1.4.7",
+    "chalk": "^5.3.0",
+    "is-ci": "^3.0.1",
+    "ora": "^7.0.1",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

@@ -194,11 +194,37 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
     }
 
     private getNumberValidation(schema: OpenAPIV3_1.SchemaObject): IntegerValidationRules | undefined {
+        // Handle both OpenAPI 3.0 (boolean) and OpenAPI 3.1 (number) formats for exclusive bounds
+        // OpenAPI 3.0: exclusiveMinimum/exclusiveMaximum are booleans that modify minimum/maximum
+        // OpenAPI 3.1: exclusiveMinimum/exclusiveMaximum are numbers representing the actual bounds
+        let min = schema.minimum;
+        let max = schema.maximum;
+        let exclusiveMin: boolean | undefined;
+        let exclusiveMax: boolean | undefined;
+
+        if (typeof schema.exclusiveMinimum === "boolean") {
+            // OpenAPI 3.0 format: boolean flag
+            exclusiveMin = schema.exclusiveMinimum;
+        } else if (typeof schema.exclusiveMinimum === "number") {
+            // OpenAPI 3.1 format: numeric value
+            min = schema.exclusiveMinimum;
+            exclusiveMin = true;
+        }
+
+        if (typeof schema.exclusiveMaximum === "boolean") {
+            // OpenAPI 3.0 format: boolean flag
+            exclusiveMax = schema.exclusiveMaximum;
+        } else if (typeof schema.exclusiveMaximum === "number") {
+            // OpenAPI 3.1 format: numeric value
+            max = schema.exclusiveMaximum;
+            exclusiveMax = true;
+        }
+
         return {
-            max: schema.maximum,
-            min: schema.minimum,
-            exclusiveMax: typeof schema.exclusiveMaximum === "boolean" ? schema.exclusiveMaximum : undefined,
-            exclusiveMin: typeof schema.exclusiveMinimum === "boolean" ? schema.exclusiveMinimum : undefined,
+            max,
+            min,
+            exclusiveMax,
+            exclusiveMin,
             multipleOf: schema.multipleOf
         };
     }

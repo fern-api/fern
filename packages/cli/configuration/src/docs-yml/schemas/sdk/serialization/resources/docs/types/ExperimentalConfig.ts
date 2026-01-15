@@ -23,6 +23,7 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
         "ai-example-style-instructions",
         core.serialization.string().optional(),
     ),
+    excludeApis: core.serialization.property("exclude-apis", core.serialization.boolean().optional()),
 });
 
 export declare namespace ExperimentalConfig {
@@ -34,5 +35,6 @@ export declare namespace ExperimentalConfig {
         "dynamic-snippets"?: boolean | null;
         "ai-examples"?: boolean | null;
         "ai-example-style-instructions"?: string | null;
+        "exclude-apis"?: boolean | null;
     }
 }

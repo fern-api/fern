@@ -295,7 +295,7 @@ export class Generation {
      * - `testUtils`: Helper methods for tests
      * - `mockServerTest`: Mock server testing infrastructure
      * - `publicCore`: Public core utilities exposed to SDK users
-     * - `asyncCore`: Asynchronous API utilities (websockets, streaming)
+     * - `webSocketsCore`: WebSocket API utilities
      * - `publicCoreTest`: Tests for public core functionality
      * - `asIsTestUtils`: Test utilities that preserve original casing
      * - `publicCoreClasses`: Location for core classes based on rootNamespaceForCoreClasses setting
@@ -316,8 +316,8 @@ export class Generation {
         mockServerTest: (): string => `${this.namespaces.test}.Unit.MockServer`,
         /** Public Core namespace, same as root for publicly exposed core utilities. */
         publicCore: (): string => this.namespaces.root,
-        /** Async Core namespace for asynchronous APIs like websockets and streaming ({root}.Core.Async). */
-        asyncCore: (): string => `${this.namespaces.core}.Async`,
+        /** WebSockets Core namespace for WebSocket APIs ({root}.Core.WebSockets). */
+        webSocketsCore: (): string => `${this.namespaces.core}.WebSockets`,
         /** Public Core test namespace for testing public core functionality ({root}.Test.PublicCore). */
         publicCoreTest: (): string => `${this.namespaces.root}.Test.PublicCore`,
         /** Test utilities namespace that preserves original casing ({root}.Test.Utils). */
@@ -424,7 +424,7 @@ export class Generation {
      * ### Client Infrastructure:
      * - `RootClient`, `RootClientForSnippets`: Main SDK client classes
      * - `TestClient`: Testing infrastructure
-     * - `AsyncApi`: Asynchronous API support (websockets, streaming)
+     * - `WebSocketClient`: WebSocket client for managing connections
      *
      * ### Error Handling:
      * - `BaseException`, `BaseApiException`: Exception hierarchy
@@ -470,7 +470,7 @@ export class Generation {
      * ### Generic Types (evaluated per call):
      * ```typescript
      * const pager = generation.Types.Pager(itemType); // Returns new ClassReference each time
-     * const asyncApi = generation.Types.AsyncApi(messageType);
+     * const webSocketClient = generation.Types.WebSocketClient();
      * ```
      *
      * All type references include proper namespace information and are registered with
@@ -672,17 +672,17 @@ export class Generation {
                 origin: this.model.staticExplicit("IStringEnum"),
                 namespace: this.namespaces.core
             }),
-        /** Configuration options for asynchronous APIs (websockets, streaming) */
-        AsyncApiOptions: () =>
+        /** WebSocket client for managing WebSocket connections */
+        WebSocketClient: () =>
             this.csharp.classReference({
-                origin: this.model.staticExplicit("AsyncApiOptions"),
-                namespace: `${this.namespaces.asyncCore}.Models`
+                origin: this.model.staticExplicit("WebSocketClient"),
+                namespace: this.namespaces.webSocketsCore
             }),
-        /** Query string builder utility */
+        /** Query string builder utility for WebSocket URLs */
         QueryBuilder: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("Query"),
-                namespace: this.namespaces.asyncCore
+                namespace: this.namespaces.webSocketsCore
             }),
         /** OAuth token provider for authentication */
         OAuthTokenProvider: () =>
@@ -737,27 +737,34 @@ export class Generation {
                 generics: genericType ? [genericType] : undefined
             }),
         /**
-         * Generic asynchronous API wrapper for websockets and streaming.
-         * @param genericType - The message type for the async API
-         */
-        AsyncApi: (genericType: ast.Type | ast.ClassReference): ast.ClassReference => {
-            return this.csharp.classReference({
-                origin: this.model.staticExplicit("AsyncApi"),
-                namespace: this.namespaces.asyncCore,
-                generics: [genericType]
-            });
-        },
-        /**
-         * Generic event wrapper for asynchronous APIs.
+         * Generic event wrapper for WebSocket APIs.
          * @param genericType - The event payload type
          */
-        AsyncEvent: (genericType: ast.Type | ast.ClassReference): ast.ClassReference => {
+        WebSocketEvent: (genericType: ast.Type | ast.ClassReference): ast.ClassReference => {
             return this.csharp.classReference({
                 origin: this.model.staticExplicit("Event"),
-                namespace: `${this.namespaces.asyncCore}.Events`,
+                namespace: this.namespaces.webSocketsCore,
                 generics: [genericType]
             });
         },
+        /** Connection status enum for WebSocket connections */
+        ConnectionStatus: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("ConnectionStatus"),
+                namespace: this.namespaces.webSocketsCore
+            }),
+        /** Connected event for WebSocket connections */
+        WebSocketConnected: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("Connected"),
+                namespace: this.namespaces.webSocketsCore
+            }),
+        /** Closed event for WebSocket connections */
+        WebSocketClosed: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("Closed"),
+                namespace: this.namespaces.webSocketsCore
+            }),
         /**
          * JSON serializer for string-based enum types.
          * @param enumClassReference - The enum type to serialize

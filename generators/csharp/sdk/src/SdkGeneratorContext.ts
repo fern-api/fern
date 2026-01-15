@@ -260,7 +260,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                     }
                 }
             }
-            recurse("Async", AsIsFiles.WebSocketAsync);
+            recurse("WebSockets", AsIsFiles.WebSockets);
             return files;
         }
 

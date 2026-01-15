@@ -270,8 +270,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },
@@ -382,8 +385,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },
