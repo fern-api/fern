@@ -456,7 +456,7 @@
                 "value": {
                   "default": undefined,
                   "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
+                  "exclusiveMinimum": 0,
                   "maximum": undefined,
                   "minimum": undefined,
                   "multipleOf": undefined,
@@ -517,8 +517,8 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
+                  "exclusiveMaximum": 1000,
+                  "exclusiveMinimum": 0,
                   "maximum": undefined,
                   "minimum": undefined,
                   "multipleOf": undefined,
@@ -825,7 +825,7 @@
                 "value": {
                   "default": undefined,
                   "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
+                  "exclusiveMinimum": 0,
                   "maximum": undefined,
                   "minimum": undefined,
                   "multipleOf": undefined,
@@ -886,8 +886,8 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
+                  "exclusiveMaximum": 1000,
+                  "exclusiveMinimum": 0,
                   "maximum": undefined,
                   "minimum": undefined,
                   "multipleOf": undefined,

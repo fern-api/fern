@@ -662,8 +662,59 @@ export class Extern {
                                 namespace: "System.Threading.Tasks",
                                 generics: ofType ? [ofType] : undefined
                             });
+                        },
+                        /**
+                         * Creates a reference to ValueTask or ValueTask<T>.
+                         *
+                         * @param ofType - The result type (optional)
+                         * @returns A ClassReference for ValueTask<T>
+                         */
+                        ValueTask: (ofType?: Type) => {
+                            return this.csharp.classReference({
+                                name: "ValueTask",
+                                namespace: "System.Threading.Tasks",
+                                generics: ofType ? [ofType] : undefined
+                            });
                         }
                     })
+            }),
+        /**
+         * ComponentModel namespace references.
+         */
+        ComponentModel: () =>
+            lazy({
+                /**
+                 * Reference to System.ComponentModel.INotifyPropertyChanged interface.
+                 */
+                INotifyPropertyChanged: () =>
+                    this.csharp.classReference({
+                        name: "INotifyPropertyChanged",
+                        namespace: "System.ComponentModel"
+                    }),
+                /**
+                 * Reference to System.ComponentModel.PropertyChangedEventHandler delegate.
+                 */
+                PropertyChangedEventHandler: () =>
+                    this.csharp.classReference({
+                        name: "PropertyChangedEventHandler",
+                        namespace: "System.ComponentModel"
+                    })
+            }),
+        /**
+         * Reference to System.IAsyncDisposable interface.
+         */
+        IAsyncDisposable: () =>
+            this.csharp.classReference({
+                name: "IAsyncDisposable",
+                namespace: "System"
+            }),
+        /**
+         * Reference to System.IDisposable interface.
+         */
+        IDisposable: () =>
+            this.csharp.classReference({
+                name: "IDisposable",
+                namespace: "System"
             })
     });
 
