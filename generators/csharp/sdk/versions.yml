@@ -12,7 +12,7 @@
         * Forward `Status`, `Connected`, `Closed`, and `ExceptionOccurred` events from internal client
         * Simplify `INotifyPropertyChanged` to only notify for `Status` property changes
 
-        This refactoring improves code clarity, reduces complexity, and aligns with the pattern used in the Hume SDK.
+        This refactoring improves code clarity and reduces complexity.
       type: feat
   createdAt: "2026-01-14"
   irVersion: 62
