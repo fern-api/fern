@@ -457,6 +457,7 @@ export class WebSocketClientGenerator extends WithGeneration {
     /**
      * Creates a constructor that accepts custom options.
      * Initializes _options and _client fields with the WebSocket URI and message handler.
+     * The URI building logic is inlined directly in the constructor.
      *
      * @returns Constructor definition that takes an Options parameter
      */
@@ -468,48 +469,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 // Initialize _options
                 writer.writeTextStatement(`_options = ${this.optionsParameter.name}`);
 
-                // Build the URI
-                writer.writeLine("var uri = CreateUri();");
-
-                // Initialize _client with URI and OnTextMessage handler
-                writer.write("_client = ");
-                writer.writeNode(
-                    this.csharp.instantiateClass({
-                        classReference: this.Types.WebSocketClient,
-                        arguments_: [this.csharp.codeblock("uri"), this.csharp.codeblock("OnTextMessage")]
-                    })
-                );
-                writer.writeTextStatement("");
-                // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
-            }),
-            doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
-        };
-    }
-
-    /**
-     * Creates the CreateUri method that builds the WebSocket connection URL.
-     *
-     * This method:
-     * - Combines the base URL with the channel path
-     * - Adds query parameters from the options
-     * - Returns a properly formatted URI for WebSocket connection
-     *
-     * @returns The CreateUri method definition
-     */
-    private createCreateUriMethod(cls: ast.Class) {
-        //- implement CreateUri (creates the Uri for the websocket connection)
-        //- add sub-path (ie '/chat')
-        // - add query parameters for all options
-
-        cls.addMethod({
-            access: ast.Access.Private,
-            name: "CreateUri",
-            return_: this.System.Uri,
-            parameters: [],
-            doc: this.csharp.xmlDocBlockOf({
-                summary: "Creates the Uri for the websocket connection from the BaseUrl and parameters"
-            }),
-            body: this.csharp.codeblock((writer) => {
+                // Build the URI inline (previously in CreateUri method)
                 const hasQueryParameters = this.websocketChannel.queryParameters.length > 0;
 
                 writer.write("var uri = ");
@@ -577,10 +537,19 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.writeTextStatement(`"`);
                 }
 
-                // return the URI
-                writer.writeTextStatement("return uri.Uri");
-            })
-        });
+                // Initialize _client with URI and OnTextMessage handler
+                writer.write("_client = ");
+                writer.writeNode(
+                    this.csharp.instantiateClass({
+                        classReference: this.Types.WebSocketClient,
+                        arguments_: [this.csharp.codeblock("uri.Uri"), this.csharp.codeblock("OnTextMessage")]
+                    })
+                );
+                writer.writeTextStatement("");
+                // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
+            }),
+            doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
+        };
     }
 
     /**
@@ -817,6 +786,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
     /**
      * Creates the Status property that forwards to _client.Status.
+     * Uses expression-bodied property syntax: public ConnectionStatus Status => _client.Status;
      */
     private createStatusProperty(cls: ast.Class) {
         cls.addField({
@@ -824,11 +794,8 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             type: this.Types.ConnectionStatus,
             summary: "Gets the current connection status of the WebSocket.",
-            accessors: {
-                get: (writer) => {
-                    writer.write(`_client.Status`);
-                }
-            }
+            get: true,
+            initializer: this.csharp.codeblock("_client.Status")
         });
     }
 
@@ -869,7 +836,26 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
+     * Creates the DisposeEvents helper method that disposes all event subscriptions.
+     */
+    private createDisposeEventsMethod(cls: ast.Class) {
+        cls.addMethod({
+            access: ast.Access.Private,
+            name: "DisposeEvents",
+            doc: this.csharp.xmlDocBlockOf({
+                summary: "Disposes of event subscriptions"
+            }),
+            body: this.csharp.codeblock((writer) => {
+                for (const event of this.events) {
+                    writer.writeTextStatement(`${event.name}.Dispose()`);
+                }
+            })
+        });
+    }
+
+    /**
      * Creates the DisposeAsync method for IAsyncDisposable implementation.
+     * Uses async ValueTask pattern with GC.SuppressFinalize.
      */
     private createDisposeAsyncMethod(cls: ast.Class) {
         // Note: We don't use isAsync: true because the AST wraps the return type in Task<T>,
@@ -880,7 +866,8 @@ export class WebSocketClientGenerator extends WithGeneration {
             name: "DisposeAsync",
             return_: this.System.Threading.Tasks.ValueTask(),
             doc: this.csharp.xmlDocBlockOf({
-                summary: "Asynchronously disposes the WebSocket client."
+                summary:
+                    "Asynchronously disposes the WebSocket client, closing any active connections and cleaning up resources."
             }),
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine("return new ValueTask(DisposeAsyncCore());");
@@ -889,10 +876,8 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.writeLine("{");
                 writer.indent();
                 writer.writeLine("await _client.DisposeAsync().ConfigureAwait(false);");
-                // Dispose event fields
-                for (const event of this.events) {
-                    writer.writeLine(`${event.name}.Dispose();`);
-                }
+                writer.writeLine("DisposeEvents();");
+                writer.writeLine("GC.SuppressFinalize(this);");
                 writer.dedent();
                 writer.writeLine("}");
             })
@@ -901,20 +886,20 @@ export class WebSocketClientGenerator extends WithGeneration {
 
     /**
      * Creates the Dispose method for IDisposable implementation.
+     * Includes GC.SuppressFinalize for proper disposal pattern.
      */
     private createDisposeMethod(cls: ast.Class) {
         cls.addMethod({
             access: ast.Access.Public,
             name: "Dispose",
             doc: this.csharp.xmlDocBlockOf({
-                summary: "Disposes the WebSocket client."
+                summary:
+                    "Synchronously disposes the WebSocket client, closing any active connections and cleaning up resources."
             }),
             body: this.csharp.codeblock((writer) => {
                 writer.writeTextStatement("_client.Dispose()");
-                // Dispose event fields
-                for (const event of this.events) {
-                    writer.writeTextStatement(`${event.name}.Dispose()`);
-                }
+                writer.writeTextStatement("DisposeEvents()");
+                writer.writeTextStatement("GC.SuppressFinalize(this)");
             })
         });
     }
@@ -945,6 +930,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
     /**
      * Creates event forwarders for Connected, Closed, and ExceptionOccurred from _client.
+     * Uses expression-bodied property syntax: public Event<Connected> Connected => _client.Connected;
      */
     private createClientEventForwarders(cls: ast.Class) {
         // Connected event
@@ -953,11 +939,8 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             type: this.Types.WebSocketEvent(this.Types.WebSocketConnected),
             summary: "Event that is raised when the WebSocket connection is established.",
-            accessors: {
-                get: (writer) => {
-                    writer.write(`_client.Connected`);
-                }
-            }
+            get: true,
+            initializer: this.csharp.codeblock("_client.Connected")
         });
 
         // Closed event
@@ -966,11 +949,8 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             type: this.Types.WebSocketEvent(this.Types.WebSocketClosed),
             summary: "Event that is raised when the WebSocket connection is closed.",
-            accessors: {
-                get: (writer) => {
-                    writer.write(`_client.Closed`);
-                }
-            }
+            get: true,
+            initializer: this.csharp.codeblock("_client.Closed")
         });
 
         // ExceptionOccurred event
@@ -979,11 +959,8 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             type: this.Types.WebSocketEvent(this.System.Exception),
             summary: "Event that is raised when an exception occurs during WebSocket operations.",
-            accessors: {
-                get: (writer) => {
-                    writer.write(`_client.ExceptionOccurred`);
-                }
-            }
+            get: true,
+            initializer: this.csharp.codeblock("_client.ExceptionOccurred")
         });
     }
 
@@ -1045,6 +1022,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         this.createCloseAsyncMethod(cls);
 
         // Add IAsyncDisposable and IDisposable implementations
+        this.createDisposeEventsMethod(cls);
         this.createDisposeAsyncMethod(cls);
         this.createDisposeMethod(cls);
 
@@ -1053,9 +1031,6 @@ export class WebSocketClientGenerator extends WithGeneration {
 
         // Add event fields forwarded from _client
         this.createClientEventForwarders(cls);
-
-        // Add CreateUri method (private, used in constructor)
-        this.createCreateUriMethod(cls);
 
         // Add OnTextMessage method (private, passed to WebSocketClient constructor)
         this.createOnTextMessageMethod(cls);

@@ -30,51 +30,35 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     public EmptyRealtimeApi(EmptyRealtimeApi.Options options)
     {
         _options = options;
-        var uri = CreateUri();
-        _client = new WebSocketClient(uri, OnTextMessage);
+        var uri = new UriBuilder(_options.BaseUrl);
+        uri.Path = $"{uri.Path.TrimEnd('/')}/empty/realtime";
+        _client = new WebSocketClient(uri.Uri, OnTextMessage);
     }
 
     /// <summary>
     /// Gets the current connection status of the WebSocket.
     /// </summary>
-    public ConnectionStatus Status
-    {
-        get => _client.Status;
-    }
+    public ConnectionStatus Status => _client.Status;
 
     /// <summary>
     /// Event that is raised when the WebSocket connection is established.
     /// </summary>
-    public Event<Connected> Connected
-    {
-        get => _client.Connected;
-    }
+    public Event<Connected> Connected => _client.Connected;
 
     /// <summary>
     /// Event that is raised when the WebSocket connection is closed.
     /// </summary>
-    public Event<Closed> Closed
-    {
-        get => _client.Closed;
-    }
+    public Event<Closed> Closed => _client.Closed;
 
     /// <summary>
     /// Event that is raised when an exception occurs during WebSocket operations.
     /// </summary>
-    public Event<Exception> ExceptionOccurred
-    {
-        get => _client.ExceptionOccurred;
-    }
+    public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
 
     /// <summary>
-    /// Creates the Uri for the websocket connection from the BaseUrl and parameters
+    /// Disposes of event subscriptions
     /// </summary>
-    private Uri CreateUri()
-    {
-        var uri = new UriBuilder(_options.BaseUrl);
-        uri.Path = $"{uri.Path.TrimEnd('/')}/empty/realtime";
-        return uri.Uri;
-    }
+    private void DisposeEvents() { }
 
     /// <summary>
     /// Dispatches incoming WebSocket messages
@@ -113,7 +97,7 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     }
 
     /// <summary>
-    /// Asynchronously disposes the WebSocket client.
+    /// Asynchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
     /// </summary>
     public ValueTask DisposeAsync()
     {
@@ -122,15 +106,19 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
         async Task DisposeAsyncCore()
         {
             await _client.DisposeAsync().ConfigureAwait(false);
+            DisposeEvents();
+            GC.SuppressFinalize(this);
         }
     }
 
     /// <summary>
-    /// Disposes the WebSocket client.
+    /// Synchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
     /// </summary>
     public void Dispose()
     {
         _client.Dispose();
+        DisposeEvents();
+        GC.SuppressFinalize(this);
     }
 
     /// <summary>

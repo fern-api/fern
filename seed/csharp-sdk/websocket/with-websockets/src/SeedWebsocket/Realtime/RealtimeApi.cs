@@ -50,47 +50,6 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     public RealtimeApi(RealtimeApi.Options options)
     {
         _options = options;
-        var uri = CreateUri();
-        _client = new WebSocketClient(uri, OnTextMessage);
-    }
-
-    /// <summary>
-    /// Gets the current connection status of the WebSocket.
-    /// </summary>
-    public ConnectionStatus Status
-    {
-        get => _client.Status;
-    }
-
-    /// <summary>
-    /// Event that is raised when the WebSocket connection is established.
-    /// </summary>
-    public Event<Connected> Connected
-    {
-        get => _client.Connected;
-    }
-
-    /// <summary>
-    /// Event that is raised when the WebSocket connection is closed.
-    /// </summary>
-    public Event<Closed> Closed
-    {
-        get => _client.Closed;
-    }
-
-    /// <summary>
-    /// Event that is raised when an exception occurs during WebSocket operations.
-    /// </summary>
-    public Event<Exception> ExceptionOccurred
-    {
-        get => _client.ExceptionOccurred;
-    }
-
-    /// <summary>
-    /// Creates the Uri for the websocket connection from the BaseUrl and parameters
-    /// </summary>
-    private Uri CreateUri()
-    {
         var uri = new UriBuilder(_options.BaseUrl)
         {
             Query = new Query()
@@ -101,7 +60,38 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
             },
         };
         uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(_options.SessionId)}";
-        return uri.Uri;
+        _client = new WebSocketClient(uri.Uri, OnTextMessage);
+    }
+
+    /// <summary>
+    /// Gets the current connection status of the WebSocket.
+    /// </summary>
+    public ConnectionStatus Status => _client.Status;
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is established.
+    /// </summary>
+    public Event<Connected> Connected => _client.Connected;
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is closed.
+    /// </summary>
+    public Event<Closed> Closed => _client.Closed;
+
+    /// <summary>
+    /// Event that is raised when an exception occurs during WebSocket operations.
+    /// </summary>
+    public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
+
+    /// <summary>
+    /// Disposes of event subscriptions
+    /// </summary>
+    private void DisposeEvents()
+    {
+        ReceiveEvent.Dispose();
+        ReceiveSnakeCase.Dispose();
+        ReceiveEvent2.Dispose();
+        ReceiveEvent3.Dispose();
     }
 
     /// <summary>
@@ -173,7 +163,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     }
 
     /// <summary>
-    /// Asynchronously disposes the WebSocket client.
+    /// Asynchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
     /// </summary>
     public ValueTask DisposeAsync()
     {
@@ -182,23 +172,19 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         async Task DisposeAsyncCore()
         {
             await _client.DisposeAsync().ConfigureAwait(false);
-            ReceiveEvent.Dispose();
-            ReceiveSnakeCase.Dispose();
-            ReceiveEvent2.Dispose();
-            ReceiveEvent3.Dispose();
+            DisposeEvents();
+            GC.SuppressFinalize(this);
         }
     }
 
     /// <summary>
-    /// Disposes the WebSocket client.
+    /// Synchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
     /// </summary>
     public void Dispose()
     {
         _client.Dispose();
-        ReceiveEvent.Dispose();
-        ReceiveSnakeCase.Dispose();
-        ReceiveEvent2.Dispose();
-        ReceiveEvent3.Dispose();
+        DisposeEvents();
+        GC.SuppressFinalize(this);
     }
 
     /// <summary>
