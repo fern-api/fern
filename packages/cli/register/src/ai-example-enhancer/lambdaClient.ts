@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
@@ -96,6 +97,16 @@ export class LambdaExampleEnhancer {
 
     async enhanceExample(request: ExampleEnhancementRequest): Promise<ExampleEnhancementResponse> {
         if (!this.config.enabled) {
+            return {
+                enhancedRequestExample: request.originalRequestExample,
+                enhancedResponseExample: request.originalResponseExample
+            };
+        }
+
+        // Check for air-gapped environment before attempting network calls
+        const isAirGapped = await detectAirGappedMode(`${this.venusOrigin}/health`, this.context.logger);
+        if (isAirGapped) {
+            this.context.logger.debug("Skipping AI example enhancement in air-gapped environment");
             return {
                 enhancedRequestExample: request.originalRequestExample,
                 enhancedResponseExample: request.originalResponseExample
