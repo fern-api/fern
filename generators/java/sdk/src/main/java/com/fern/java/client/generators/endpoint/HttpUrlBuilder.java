@@ -120,12 +120,8 @@ public final class HttpUrlBuilder {
     }
 
     public GeneratedHttpUrl generateBuilder(List<EnrichedObjectProperty> queryParamProperties) {
-        boolean shouldInline = queryParamProperties.isEmpty() && !hasOptionalPathParams;
-        if (shouldInline) {
-            return generateInlineableCodeBlock();
-        } else {
-            return generateUnInlineableCodeBlock(queryParamProperties);
-        }
+        // Always use uninlineable code block to support additional query parameters from RequestOptions
+        return generateUnInlineableCodeBlock(queryParamProperties);
     }
 
     private GeneratedHttpUrl generateInlineableCodeBlock() {
@@ -219,6 +215,16 @@ public final class HttpUrlBuilder {
                         queryParamProperty.allowMultiple());
             }
         });
+        // Add additional query parameters from RequestOptions (these override request-defined parameters)
+        codeBlock.beginControlFlow(
+                "if ($L != null)",
+                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+        codeBlock.beginControlFlow(
+                "$L.getQueryParameters().forEach((key, value) ->",
+                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+        codeBlock.addStatement("$L.addQueryParameter(key, value)", httpUrlname);
+        codeBlock.endControlFlow(")");
+        codeBlock.endControlFlow();
         return GeneratedHttpUrl.builder()
                 .initialization(codeBlock.build())
                 .inlineableBuild(CodeBlock.of("$L.build()", httpUrlname))

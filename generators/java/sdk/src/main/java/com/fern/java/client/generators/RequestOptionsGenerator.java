@@ -69,6 +69,23 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     Modifier.FINAL)
             .build();
 
+    private static final FieldSpec QUERY_PARAMETERS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(Map.class, String.class, String.class),
+                    "queryParameters",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec QUERY_PARAMETER_SUPPLIERS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(
+                            ClassName.get(Map.class),
+                            ClassName.get(String.class),
+                            ParameterizedTypeName.get(Supplier.class, String.class)),
+                    "queryParameterSuppliers",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
     private final List<HttpHeader> additionalHeaders;
     private final ClassName builderClassName;
     private final ClientGeneratorContext clientGeneratorContext;
@@ -181,9 +198,13 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
 
         addHeaderBuilder(builderTypeSpec);
         addHeaderSupplierBuilder(builderTypeSpec);
+        addQueryParameterBuilder(builderTypeSpec);
+        addQueryParameterSupplierBuilder(builderTypeSpec);
 
         requestOptionsTypeSpec.addField(HEADERS_FIELD);
         requestOptionsTypeSpec.addField(HEADER_SUPPLIERS_FIELD);
+        requestOptionsTypeSpec.addField(QUERY_PARAMETERS_FIELD);
+        requestOptionsTypeSpec.addField(QUERY_PARAMETER_SUPPLIERS_FIELD);
 
         builderTypeSpec.addField(HEADERS_FIELD.toBuilder()
                 .initializer(CodeBlock.of("new $T<>()", HashMap.class))
@@ -191,9 +212,17 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         builderTypeSpec.addField(HEADER_SUPPLIERS_FIELD.toBuilder()
                 .initializer(CodeBlock.of("new $T<>()", HashMap.class))
                 .build());
+        builderTypeSpec.addField(QUERY_PARAMETERS_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", HashMap.class))
+                .build());
+        builderTypeSpec.addField(QUERY_PARAMETER_SUPPLIERS_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", HashMap.class))
+                .build());
 
         fields.add(new RequestOption(HEADERS_FIELD, HEADERS_FIELD));
         fields.add(new RequestOption(HEADER_SUPPLIERS_FIELD, HEADER_SUPPLIERS_FIELD));
+        fields.add(new RequestOption(QUERY_PARAMETERS_FIELD, QUERY_PARAMETERS_FIELD));
+        fields.add(new RequestOption(QUERY_PARAMETER_SUPPLIERS_FIELD, QUERY_PARAMETER_SUPPLIERS_FIELD));
 
         getHeadersCodeBlock
                 .addStatement("headers.putAll(this.$L)", HEADERS_FIELD.name)
@@ -225,6 +254,20 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addCode(getHeadersCodeBlock.build())
                 .addStatement("return $N", HEADERS_FIELD.name)
                 .returns(HEADERS_FIELD.type)
+                .build());
+        requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder("getQueryParameters")
+                .addModifiers(Modifier.PUBLIC)
+                .addStatement(
+                        "$T $N = new $T<>(this.$L)",
+                        QUERY_PARAMETERS_FIELD.type,
+                        QUERY_PARAMETERS_FIELD.name,
+                        HashMap.class,
+                        QUERY_PARAMETERS_FIELD.name)
+                .beginControlFlow("this.$L.forEach((key, supplier) -> ", QUERY_PARAMETER_SUPPLIERS_FIELD.name)
+                .addStatement("$N.put(key, supplier.get())", QUERY_PARAMETERS_FIELD.name)
+                .endControlFlow(")")
+                .addStatement("return $N", QUERY_PARAMETERS_FIELD.name)
+                .returns(QUERY_PARAMETERS_FIELD.type)
                 .build());
         requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder("builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -379,6 +422,28 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(String.class, "key")
                 .addParameter(ParameterizedTypeName.get(Supplier.class, String.class), "value")
                 .addStatement("this.$L.put($L, $L)", HEADER_SUPPLIERS_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build());
+    }
+
+    private void addQueryParameterBuilder(TypeSpec.Builder builder) {
+        builder.addMethod(MethodSpec.methodBuilder("addQueryParameter")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(String.class, "value")
+                .addStatement("this.$L.put($L, $L)", QUERY_PARAMETERS_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build());
+    }
+
+    private void addQueryParameterSupplierBuilder(TypeSpec.Builder builder) {
+        builder.addMethod(MethodSpec.methodBuilder("addQueryParameter")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(ParameterizedTypeName.get(Supplier.class, String.class), "value")
+                .addStatement("this.$L.put($L, $L)", QUERY_PARAMETER_SUPPLIERS_FIELD.name, "key", "value")
                 .addStatement("return this")
                 .build());
     }
