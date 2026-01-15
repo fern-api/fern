@@ -195,7 +195,8 @@ This SDK supports two authentication methods:
 If you already have a valid access token, you can use it directly:
 
 \`\`\`java
-${clientClassName} client = ${clientClassName}.withToken("your-access-token")
+${clientClassName} client = ${clientClassName}.builder()
+    .token("your-access-token")
     .url("https://api.example.com")
     .build();
 \`\`\`
@@ -205,7 +206,8 @@ ${clientClassName} client = ${clientClassName}.withToken("your-access-token")
 The SDK can automatically handle token acquisition and refresh:
 
 \`\`\`java
-${clientClassName} client = ${clientClassName}.withCredentials("client-id", "client-secret")
+${clientClassName} client = ${clientClassName}.builder()
+    .credentials("client-id", "client-secret")
     .url("https://api.example.com")
     .build();
 \`\`\``;
@@ -808,7 +810,9 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
     }
 
     private getAccessFromRootClient(fernFilepath: FernFilepath): java.AstNode {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName + "()");
+        const clientAccessParts = fernFilepath.allParts.map(
+            (part) => this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
+        );
         return clientAccessParts.length > 0
             ? java.codeblock(`${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`)
             : java.codeblock(ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME);
@@ -933,7 +937,8 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
 
         // Get access path to WebSocket client from root client
         const clientAccessParts = fernFilepath.allParts.map(
-            (part: { camelCase: { safeName: string } }) => part.camelCase.safeName + "()"
+            (part: { camelCase: { safeName: string } }) =>
+                this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
         );
         const wsClientAccess =
             clientAccessParts.length > 0
@@ -1076,5 +1081,14 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         });
 
         return this.renderSnippet(snippet);
+    }
+
+    private static RESERVED_METHOD_NAMES = new Set(["getClass", "notify", "notifyAll", "wait"]);
+
+    private getKeyWordCompatibleMethodName(methodName: string): string {
+        if (ReadmeSnippetBuilder.RESERVED_METHOD_NAMES.has(methodName)) {
+            return methodName + "_";
+        }
+        return methodName;
     }
 }
