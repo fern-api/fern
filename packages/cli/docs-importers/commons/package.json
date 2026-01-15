@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/fdr-sdk": "0.142.22-c021dd849",
+    "@fern-api/fdr-sdk": "0.143.6-48348b476",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "js-yaml": "^4.1.1"
