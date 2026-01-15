@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.13
+  changelogEntry:
+    - summary: |
+        Fix nullable enum query parameters to be dropped when undefined is passed instead of being
+        sent as null. Previously, nullable query parameters like `role: nullable<UserRole>` would
+        generate code that converted undefined to null, causing the parameter to be included in the
+        request as an empty value. Now undefined values remain undefined and are properly dropped
+        from the query string.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
 - version: 3.43.12
   changelogEntry:
     - summary: |
