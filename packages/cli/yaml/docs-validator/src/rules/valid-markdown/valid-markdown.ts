@@ -9,6 +9,46 @@ import { z } from "zod";
 
 import { Rule } from "../../Rule";
 
+interface MdxError {
+    message?: string;
+    ruleId?: string;
+    reason?: string;
+}
+
+function isMdxError(e: unknown): e is MdxError {
+    return typeof e === "object" && e !== null && "message" in e;
+}
+
+const RECOVERABLE_MDX_ERRORS = [
+    "end-tag-mismatch",
+    "unexpected-eof",
+    "unexpected-character",
+    "unexpected-lazy",
+    "acorn",
+    "spread-extra"
+] as const;
+
+function isRecoverableMdxError(e: unknown): boolean {
+    if (!isMdxError(e)) {
+        return false;
+    }
+    if (e.ruleId != null && RECOVERABLE_MDX_ERRORS.includes(e.ruleId as (typeof RECOVERABLE_MDX_ERRORS)[number])) {
+        return true;
+    }
+    if (e.reason != null || e.message != null) {
+        const errorText = e.reason ?? e.message ?? "";
+        if (
+            errorText.includes("Expected the closing tag") ||
+            errorText.includes("before the end of `paragraph`") ||
+            errorText.includes("after the end of `paragraph`") ||
+            errorText.includes("after the start of `paragraph`")
+        ) {
+            return true;
+        }
+    }
+    return false;
+}
+
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
     create: ({ logger, workspace }) => {
@@ -132,6 +172,12 @@ async function parseMarkdown({
         };
     } catch (err) {
         logger.trace(`Markdown parse failed with error: ${err instanceof Error ? err.message : String(err)}`);
+        if (isRecoverableMdxError(err)) {
+            logger.trace(`MDX error is recoverable and will be handled during rendering: ${String(err)}`);
+            return {
+                type: "success"
+            };
+        }
         return {
             type: "failure",
             message: err instanceof Error ? err.message : undefined
