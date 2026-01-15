@@ -1491,8 +1491,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
 
                 // Add fields to store configuration values
-                builderStageBuilder.addField(FieldSpec.builder(
-                                generatedEnvironmentsClass.getClassName(), "environment")
+                builderStageBuilder.addField(FieldSpec.builder(generatedEnvironmentsClass.getClassName(), "environment")
                         .addModifiers(Modifier.PRIVATE)
                         .build());
 
