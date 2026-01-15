@@ -42,12 +42,32 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
             // Apply gradle-distribution-url override if configured
             await this.applyGradleDistributionUrlOverride();
 
-            this.context.logger.debug(`JavaProject: Running spotlessApply`);
+            this.context.logger.debug(`JavaProject: Running spotlessApply with JFR profiling`);
+
+            // Generate timestamp for JFR filename
+            const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+            const jfrFilename = `spotless-profile-${timestamp}.jfr`;
+            const jfrPath = `/fern/output/${jfrFilename}`;
+
+            // Configure JFR recording via GRADLE_OPTS
+            const jfrOptions = [
+                "-XX:+FlightRecorder",
+                `-XX:StartFlightRecording=duration=300s,filename=${jfrPath},settings=profile`,
+                "-XX:FlightRecorderOptions=stackdepth=256"
+            ].join(" ");
+
+            this.context.logger.debug(`JavaProject: JFR recording will be saved to ${jfrPath}`);
+
             await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
                 doNotPipeOutput: false,
-                cwd: this.absolutePathToOutputDirectory
+                cwd: this.absolutePathToOutputDirectory,
+                env: {
+                    ...process.env,
+                    GRADLE_OPTS: `${process.env.GRADLE_OPTS || ""} ${jfrOptions}`.trim()
+                }
             });
-            this.context.logger.debug(`JavaProject: Successfully ran spotlessApply`);
+
+            this.context.logger.debug(`JavaProject: Successfully ran spotlessApply - JFR profile saved to ${jfrPath}`);
         }
     }
 

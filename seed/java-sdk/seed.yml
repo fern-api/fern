@@ -49,6 +49,7 @@ test:
       NODE_PATH: node
       # Path to the built v2 CLI (relative to generators/java/sdk/sdk where Java runs)
       JAVA_V2_PATH: ../../../../generators/java-v2/sdk/dist/cli.cjs
+      JAVA_TOOL_OPTIONS: "-XX:StartFlightRecording=filename=/tmp/profile-5.jfr,settings=profile,dumponexit=true"
 
 language: java
 generatorType: SDK
