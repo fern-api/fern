@@ -7,6 +7,7 @@ import { MemberNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { Access } from "../language/Access";
 import { Annotation } from "../language/Annotation";
+import { AnnotationGroup } from "../language/AnnotationGroup";
 import { CodeBlock } from "../language/CodeBlock";
 import { XmlDocBlock } from "../language/XmlDocBlock";
 import { ClassReference } from "./ClassReference";
@@ -58,7 +59,7 @@ export declare namespace Field {
         /* Whether the field is readonly */
         readonly?: boolean;
         /* Field annotations */
-        annotations?: (Annotation | ClassReference)[];
+        annotations?: (Annotation | AnnotationGroup | ClassReference)[];
         /* The initializer for the field */
         initializer?: CodeBlock | ClassInstantiation;
         /* The summary tag (used for describing the field) */
@@ -104,7 +105,7 @@ export class Field extends MemberNode {
     private readonly init: Access | boolean;
     private readonly set: Access | boolean;
     private readonly new_: boolean;
-    private readonly annotations: Annotation[];
+    private readonly annotations: (Annotation | AnnotationGroup)[];
     private readonly initializer?: CodeBlock | ClassInstantiation;
     private readonly doc: XmlDocBlock;
     private readonly jsonPropertyName?: string;

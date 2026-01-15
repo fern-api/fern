@@ -50,41 +50,106 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.endpoint.queryParameters.length === 0) {
             return undefined;
         }
-        const requiredQueryParameters: QueryParameter[] = [];
-        const nullableQueryParameters: QueryParameter[] = [];
-        for (const queryParameter of this.endpoint.queryParameters) {
-            if (
-                (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) ||
-                this.context.isNullable(queryParameter.valueType)
-            ) {
-                nullableQueryParameters.push(queryParameter);
-            } else {
-                requiredQueryParameters.push(queryParameter);
-            }
-        }
 
-        return {
-            code: this.csharp.codeblock((writer) => {
-                writer.write(`var ${this.names.variables.query} = `);
-                writer.writeNodeStatement(
-                    this.csharp.dictionary({
-                        keyType: this.Primitive.string,
-                        valueType: this.Primitive.object,
-                        values: undefined
-                    })
-                );
-                for (const query of requiredQueryParameters) {
-                    this.writeQueryParameter(writer, query);
+        // Use experimental explicit nullable/optional handling if enabled
+        if (this.context.generation.settings.enableExplicitNullableOptional) {
+            const requiredQueryParameters: QueryParameter[] = [];
+            const optionalAndNullableQueryParameters: QueryParameter[] = [];
+            const optionalOnlyQueryParameters: QueryParameter[] = [];
+            const nullableOnlyQueryParameters: QueryParameter[] = [];
+
+            for (const queryParameter of this.endpoint.queryParameters) {
+                const isOptional = !queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType);
+                const isNullable = this.context.isNullable(queryParameter.valueType);
+
+                if (isOptional && isNullable) {
+                    // optional + nullable => Optional<T?> - check IsDefined, can be value or null
+                    optionalAndNullableQueryParameters.push(queryParameter);
+                } else if (isOptional) {
+                    // optional only => T? - check != null
+                    optionalOnlyQueryParameters.push(queryParameter);
+                } else if (isNullable) {
+                    // nullable only => T? - always include (can be value or null)
+                    nullableOnlyQueryParameters.push(queryParameter);
+                } else {
+                    // required => T - always include
+                    requiredQueryParameters.push(queryParameter);
                 }
-                for (const query of nullableQueryParameters) {
-                    const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
-                    writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference} != null`));
-                    this.writeQueryParameter(writer, query);
-                    writer.endControlFlow();
+            }
+
+            return {
+                code: this.csharp.codeblock((writer) => {
+                    writer.write(`var ${this.names.variables.query} = `);
+                    writer.writeNodeStatement(
+                        this.csharp.dictionary({
+                            keyType: this.Primitive.string,
+                            valueType: this.Primitive.object,
+                            values: undefined
+                        })
+                    );
+                    // Required params - always include
+                    for (const query of requiredQueryParameters) {
+                        this.writeQueryParameter(writer, query);
+                    }
+                    // Nullable-only params - always include (can be value or null)
+                    for (const query of nullableOnlyQueryParameters) {
+                        this.writeQueryParameter(writer, query);
+                    }
+                    // Optional-only params - include only if not null
+                    for (const query of optionalOnlyQueryParameters) {
+                        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+                        writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference} != null`));
+                        this.writeQueryParameter(writer, query);
+                        writer.endControlFlow();
+                    }
+                    // Optional + Nullable params - include if IsDefined (can be value or null)
+                    for (const query of optionalAndNullableQueryParameters) {
+                        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+                        writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference}.IsDefined`));
+                        this.writeQueryParameter(writer, query);
+                        writer.endControlFlow();
+                    }
+                }),
+                queryParameterBagReference: this.names.variables.query
+            };
+        } else {
+            // Legacy behavior: simple nullable check
+            const requiredQueryParameters: QueryParameter[] = [];
+            const nullableQueryParameters: QueryParameter[] = [];
+            for (const queryParameter of this.endpoint.queryParameters) {
+                if (
+                    (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) ||
+                    this.context.isNullable(queryParameter.valueType)
+                ) {
+                    nullableQueryParameters.push(queryParameter);
+                } else {
+                    requiredQueryParameters.push(queryParameter);
                 }
-            }),
-            queryParameterBagReference: this.names.variables.query
-        };
+            }
+
+            return {
+                code: this.csharp.codeblock((writer) => {
+                    writer.write(`var ${this.names.variables.query} = `);
+                    writer.writeNodeStatement(
+                        this.csharp.dictionary({
+                            keyType: this.Primitive.string,
+                            valueType: this.Primitive.object,
+                            values: undefined
+                        })
+                    );
+                    for (const query of requiredQueryParameters) {
+                        this.writeQueryParameter(writer, query);
+                    }
+                    for (const query of nullableQueryParameters) {
+                        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+                        writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference} != null`));
+                        this.writeQueryParameter(writer, query);
+                        writer.endControlFlow();
+                    }
+                }),
+                queryParameterBagReference: this.names.variables.query
+            };
+        }
     }
 
     private writeQueryParameter(writer: Writer, query: QueryParameter): void {
@@ -117,59 +182,159 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (headers.length === 0) {
             return undefined;
         }
-        const requiredHeaders: HttpHeader[] = [];
-        const optionalHeaders: HttpHeader[] = [];
-        for (const header of headers) {
-            if (this.context.isOptional(header.valueType)) {
-                optionalHeaders.push(header);
-            } else {
-                requiredHeaders.push(header);
-            }
-        }
 
-        return {
-            code: this.csharp.codeblock((writer) => {
-                writer.write(`var ${this.names.variables.headers} = `);
-                writer.writeNodeStatement(
-                    this.csharp.instantiateClass({
-                        classReference: this.Types.Headers,
-                        arguments_: [
-                            this.csharp.dictionary({
-                                keyType: this.Primitive.string,
-                                valueType: this.Primitive.string,
-                                values: {
-                                    type: "entries",
-                                    entries: requiredHeaders.map((header) => {
-                                        return {
-                                            key: this.csharp.codeblock(
-                                                this.csharp.string_({ string: header.name.wireValue })
-                                            ),
-                                            value: this.stringify({
-                                                reference: header.valueType,
-                                                name: header.name.name
-                                            })
-                                        };
-                                    })
-                                }
-                            })
-                        ]
-                    })
-                );
-                for (const header of optionalHeaders) {
-                    const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                    writer.controlFlow("if", this.csharp.codeblock(`${headerReference} != null`));
-                    writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
+        // Use experimental explicit nullable/optional handling if enabled
+        if (this.context.generation.settings.enableExplicitNullableOptional) {
+            const requiredHeaders: HttpHeader[] = [];
+            const optionalAndNullableHeaders: HttpHeader[] = [];
+            const optionalOnlyHeaders: HttpHeader[] = [];
+            const nullableOnlyHeaders: HttpHeader[] = [];
+
+            for (const header of headers) {
+                const isOptional = this.context.isOptional(header.valueType);
+                const isNullable = this.context.isNullable(header.valueType);
+
+                if (isOptional && isNullable) {
+                    // optional + nullable => Optional<T?> - check IsDefined, can be value or null
+                    optionalAndNullableHeaders.push(header);
+                } else if (isOptional) {
+                    // optional only => T? - check != null
+                    optionalOnlyHeaders.push(header);
+                } else if (isNullable) {
+                    // nullable only => T? - always include (can be value or null)
+                    nullableOnlyHeaders.push(header);
+                } else {
+                    // required => T - always include
+                    requiredHeaders.push(header);
+                }
+            }
+
+            return {
+                code: this.csharp.codeblock((writer) => {
+                    writer.write(`var ${this.names.variables.headers} = `);
                     writer.writeNodeStatement(
-                        this.stringify({
-                            reference: header.valueType,
-                            name: header.name.name
+                        this.csharp.instantiateClass({
+                            classReference: this.Types.Headers,
+                            arguments_: [
+                                this.csharp.dictionary({
+                                    keyType: this.Primitive.string,
+                                    valueType: this.Primitive.string,
+                                    values: {
+                                        type: "entries",
+                                        entries: [
+                                            ...requiredHeaders.map((header) => {
+                                                return {
+                                                    key: this.csharp.codeblock(
+                                                        this.csharp.string_({ string: header.name.wireValue })
+                                                    ),
+                                                    value: this.stringify({
+                                                        reference: header.valueType,
+                                                        name: header.name.name
+                                                    })
+                                                };
+                                            }),
+                                            ...nullableOnlyHeaders.map((header) => {
+                                                return {
+                                                    key: this.csharp.codeblock(
+                                                        this.csharp.string_({ string: header.name.wireValue })
+                                                    ),
+                                                    value: this.stringify({
+                                                        reference: header.valueType,
+                                                        name: header.name.name
+                                                    })
+                                                };
+                                            })
+                                        ]
+                                    }
+                                })
+                            ]
                         })
                     );
-                    writer.endControlFlow();
+                    // Optional-only headers - include only if not null
+                    for (const header of optionalOnlyHeaders) {
+                        const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
+                        writer.controlFlow("if", this.csharp.codeblock(`${headerReference} != null`));
+                        writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
+                        writer.writeNodeStatement(
+                            this.stringify({
+                                reference: header.valueType,
+                                name: header.name.name
+                            })
+                        );
+                        writer.endControlFlow();
+                    }
+                    // Optional + Nullable headers - include if IsDefined (can be value or null)
+                    for (const header of optionalAndNullableHeaders) {
+                        const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
+                        writer.controlFlow("if", this.csharp.codeblock(`${headerReference}.IsDefined`));
+                        writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
+                        writer.writeNodeStatement(
+                            this.stringify({
+                                reference: header.valueType,
+                                name: header.name.name
+                            })
+                        );
+                        writer.endControlFlow();
+                    }
+                }),
+                headerParameterBagReference: this.names.variables.headers
+            };
+        } else {
+            // Legacy behavior: simple optional check
+            const requiredHeaders: HttpHeader[] = [];
+            const optionalHeaders: HttpHeader[] = [];
+            for (const header of headers) {
+                if (this.context.isOptional(header.valueType)) {
+                    optionalHeaders.push(header);
+                } else {
+                    requiredHeaders.push(header);
                 }
-            }),
-            headerParameterBagReference: this.names.variables.headers
-        };
+            }
+
+            return {
+                code: this.csharp.codeblock((writer) => {
+                    writer.write(`var ${this.names.variables.headers} = `);
+                    writer.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.Types.Headers,
+                            arguments_: [
+                                this.csharp.dictionary({
+                                    keyType: this.Primitive.string,
+                                    valueType: this.Primitive.string,
+                                    values: {
+                                        type: "entries",
+                                        entries: requiredHeaders.map((header) => {
+                                            return {
+                                                key: this.csharp.codeblock(
+                                                    this.csharp.string_({ string: header.name.wireValue })
+                                                ),
+                                                value: this.stringify({
+                                                    reference: header.valueType,
+                                                    name: header.name.name
+                                                })
+                                            };
+                                        })
+                                    }
+                                })
+                            ]
+                        })
+                    );
+                    for (const header of optionalHeaders) {
+                        const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
+                        writer.controlFlow("if", this.csharp.codeblock(`${headerReference} != null`));
+                        writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
+                        writer.writeNodeStatement(
+                            this.stringify({
+                                reference: header.valueType,
+                                name: header.name.name
+                            })
+                        );
+                        writer.endControlFlow();
+                    }
+                }),
+                headerParameterBagReference: this.names.variables.headers
+            };
+        }
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
@@ -206,15 +371,32 @@ export class WrappedEndpointRequest extends EndpointRequest {
         allowOptionals?: boolean;
     }): ast.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
+        const isOptional = this.isOptional({ typeReference: reference });
+        const isNullable = this.isNullable({ typeReference: reference });
+        const isStruct = this.isStruct({ typeReference: reference });
+
+        // Add .Value for nullable structs that need method calls like .ToString(format)
+        // - When experimental flag is enabled: add .Value for Optional<T?> or nullable structs
+        // - When experimental flag is disabled (legacy): add .Value for optional structs (which become T?)
+        // Note: strings are reference types and don't need .Value (string? doesn't have .Value)
+        const needsDotValue =
+            (allowOptionals ?? true) &&
+            isStruct &&
+            (this.context.generation.settings.enableExplicitNullableOptional
+                ? (isOptional && isNullable) || isNullable
+                : isOptional);
+        const maybeDotValue = needsDotValue ? ".Value" : "";
+
         if (this.isString(reference)) {
-            return this.csharp.codeblock(`${parameter}`);
+            // When using experimental explicit nullable/optional, Optional<string?> needs .Value to unwrap
+            const needsOptionalValue =
+                (allowOptionals ?? true) &&
+                this.context.generation.settings.enableExplicitNullableOptional &&
+                isOptional &&
+                isNullable;
+            const optionalValue = needsOptionalValue ? ".Value" : "";
+            return this.csharp.codeblock(`${parameter}${optionalValue}`);
         }
-        const maybeDotValue =
-            (this.isOptional({ typeReference: reference }) || this.isNullable({ typeReference: reference })) &&
-            this.isStruct({ typeReference: reference }) &&
-            (allowOptionals ?? true)
-                ? ".Value"
-                : "";
 
         if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
             return this.csharp.codeblock((writer) => {

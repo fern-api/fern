@@ -146,6 +146,8 @@ export class Generation {
         enableWebsockets: () => this.customConfig["experimental-enable-websockets"] ?? false,
         /** When true, generates readonly constants instead of static properties. Default: false. */
         enableReadonlyConstants: () => this.customConfig["experimental-readonly-constants"] ?? false,
+        /** When true, uses explicit nullable/optional attributes and Optional<T?> wrapper for better null handling. Default: false. */
+        enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** Temporary mapping of websocket environment configurations. Default: {}. */
         temporaryWebsocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
         /** Custom name for the base API exception class. Default: "" (auto-generated). */
