@@ -858,28 +858,21 @@ export class WebSocketClientGenerator extends WithGeneration {
      * Uses async ValueTask pattern with GC.SuppressFinalize.
      */
     private createDisposeAsyncMethod(cls: ast.Class) {
-        // Note: We don't use isAsync: true because the AST wraps the return type in Task<T>,
-        // but IAsyncDisposable.DisposeAsync() must return ValueTask directly.
-        // Instead, we return a ValueTask that wraps the async operation.
+        // We use Primitive.Arbitrary to write "async ValueTask" directly as the return type.
+        // This avoids the AST's Task<T> wrapping that happens when isAsync: true is used.
+        // The result is: public async ValueTask DisposeAsync()
         cls.addMethod({
             access: ast.Access.Public,
             name: "DisposeAsync",
-            return_: this.System.Threading.Tasks.ValueTask(),
+            return_: this.Types.Arbitrary("async ValueTask"),
             doc: this.csharp.xmlDocBlockOf({
                 summary:
                     "Asynchronously disposes the WebSocket client, closing any active connections and cleaning up resources."
             }),
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine("return new ValueTask(DisposeAsyncCore());");
-                writer.writeLine("");
-                writer.writeLine("async Task DisposeAsyncCore()");
-                writer.writeLine("{");
-                writer.indent();
-                writer.writeLine("await _client.DisposeAsync().ConfigureAwait(false);");
+                writer.writeLine("await _client.DisposeAsync();");
                 writer.writeLine("DisposeEvents();");
-                writer.writeLine("GC.SuppressFinalize(this);");
-                writer.dedent();
-                writer.writeLine("}");
+                writer.writeTextStatement("GC.SuppressFinalize(this)");
             })
         });
     }
