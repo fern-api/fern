@@ -3788,6 +3788,16 @@
               "type": "null"
             }
           ]
+        },
+        "exclude-apis": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
