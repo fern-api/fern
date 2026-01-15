@@ -195,15 +195,19 @@ function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }
         case LogLevel.Debug:
         case LogLevel.Info:
             return content;
+        default:
+            assertNever(log.level);
     }
 }
 
-const LONGEST_LOG_LEVEL_STRING_LENGTH = Math.max(...LOG_LEVELS.map((level) => getLogLevelAsString(level).length));
+const LONGEST_LOG_LEVEL_STRING_LENGTH = Math.max(
+    ...LOG_LEVELS.map((level: LogLevel) => getLogLevelAsString(level).length)
+);
 function getDebugPrefix(log: Log) {
     return `${getLogLevelAsString(log.level).padEnd(LONGEST_LOG_LEVEL_STRING_LENGTH)} ${log.time.toISOString()} `;
 }
 
-function getLogLevelAsString(logLevel: LogLevel) {
+function getLogLevelAsString(logLevel: LogLevel): string {
     switch (logLevel) {
         case LogLevel.Trace:
             return "TRACE";

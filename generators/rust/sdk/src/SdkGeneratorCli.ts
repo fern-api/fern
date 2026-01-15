@@ -399,7 +399,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
         return generateModels({ context: context.toModelGeneratorContext() }).map(
-            (file) =>
+            (file: RustFile) =>
                 new RustFile({
                     filename: file.filename,
                     directory: RelativeFilePath.of("src/api/types"),

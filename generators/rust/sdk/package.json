@@ -39,7 +39,8 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-api/rust-codegen": "workspace:*"
+    "@fern-api/rust-codegen": "workspace:*",
+    "@fern-api/rust-model": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
@@ -51,7 +52,6 @@
     "@fern-api/mock-utils": "workspace:*",
     "@fern-api/rust-base": "workspace:*",
     "@fern-api/rust-dynamic-snippets": "workspace:*",
-    "@fern-api/rust-model": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^61.7.0",

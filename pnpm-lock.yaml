@@ -1948,6 +1948,9 @@ importers:
       '@fern-api/rust-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/rust-model':
+        specifier: workspace:*
+        version: link:../model
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
@@ -1976,9 +1979,6 @@ importers:
       '@fern-api/rust-dynamic-snippets':
         specifier: workspace:*
         version: link:../dynamic-snippets
-      '@fern-api/rust-model':
-        specifier: workspace:*
-        version: link:../model
       '@fern-fern/generator-cli-sdk':
         specifier: ^0.1.5
         version: 0.1.8
@@ -4733,13 +4733,6 @@ importers:
 
   packages/cli/cli-logger:
     dependencies:
-      chalk:
-        specifier: ^5.3.0
-        version: 5.6.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
@@ -4749,24 +4742,31 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@types/is-ci':
-        specifier: ^3.0.4
-        version: 3.0.4
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
       ansi-escapes:
         specifier: ^5.0.0
         version: 5.0.0
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
+      chalk:
+        specifier: ^5.3.0
+        version: 5.6.2
       is-ci:
         specifier: ^3.0.1
         version: 3.0.1
       ora:
         specifier: ^7.0.1
         version: 7.0.1
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@types/is-ci':
+        specifier: ^3.0.4
+        version: 3.0.4
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
       typescript:
         specifier: 5.9.3
         version: 5.9.3
