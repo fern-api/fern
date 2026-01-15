@@ -211,7 +211,7 @@
                     },
                   },
                 ],
-                "id": "fcb9a758",
+                "id": "7b7cff8b",
                 "name": undefined,
                 "queryParameters": [],
                 "request": undefined,
@@ -220,347 +220,376 @@
                   "type": "ok",
                   "value": {
                     "_visit": [Function],
-                    "jsonExample": {
-                      "description": "description",
-                      "id": "id",
-                      "location": "location",
-                      "name": "name",
-                      "status": "healthy",
-                    },
-                    "shape": {
-                      "_visit": [Function],
+                    "type": "body",
+                    "value": {
+                      "jsonExample": {
+                        "description": "description",
+                        "id": "id",
+                        "location": "location",
+                        "name": "name",
+                        "status": "healthy",
+                      },
                       "shape": {
                         "_visit": [Function],
-                        "extraProperties": undefined,
-                        "properties": [
-                          {
-                            "name": {
+                        "shape": {
+                          "_visit": [Function],
+                          "extraProperties": undefined,
+                          "properties": [
+                            {
                               "name": {
-                                "camelCase": {
-                                  "safeName": "id",
-                                  "unsafeName": "id",
-                                },
-                                "originalName": "id",
-                                "pascalCase": {
-                                  "safeName": "Id",
-                                  "unsafeName": "Id",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "ID",
-                                  "unsafeName": "ID",
-                                },
-                                "snakeCase": {
-                                  "safeName": "id",
-                                  "unsafeName": "id",
-                                },
-                              },
-                              "wireValue": "id",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
-                              },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                                "originalName": "Plant",
-                                "pascalCase": {
-                                  "safeName": "Plant",
-                                  "unsafeName": "Plant",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "PLANT",
-                                  "unsafeName": "PLANT",
-                                },
-                                "snakeCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                              },
-                              "typeId": "Plant",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "id",
-                              "shape": {
-                                "_visit": [Function],
-                                "primitive": {
-                                  "_visit": [Function],
-                                  "string": {
-                                    "original": "id",
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "id",
+                                    "unsafeName": "id",
                                   },
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "name": {
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "name",
-                                  "unsafeName": "name",
-                                },
-                                "originalName": "name",
-                                "pascalCase": {
-                                  "safeName": "Name",
-                                  "unsafeName": "Name",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "NAME",
-                                  "unsafeName": "NAME",
-                                },
-                                "snakeCase": {
-                                  "safeName": "name",
-                                  "unsafeName": "name",
-                                },
-                              },
-                              "wireValue": "name",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
-                              },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                                "originalName": "Plant",
-                                "pascalCase": {
-                                  "safeName": "Plant",
-                                  "unsafeName": "Plant",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "PLANT",
-                                  "unsafeName": "PLANT",
-                                },
-                                "snakeCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                              },
-                              "typeId": "Plant",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "name",
-                              "shape": {
-                                "_visit": [Function],
-                                "primitive": {
-                                  "_visit": [Function],
-                                  "string": {
-                                    "original": "name",
+                                  "originalName": "id",
+                                  "pascalCase": {
+                                    "safeName": "Id",
+                                    "unsafeName": "Id",
                                   },
-                                  "type": "string",
+                                  "screamingSnakeCase": {
+                                    "safeName": "ID",
+                                    "unsafeName": "ID",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "id",
+                                    "unsafeName": "id",
+                                  },
                                 },
-                                "type": "primitive",
+                                "wireValue": "id",
                               },
-                            },
-                          },
-                          {
-                            "name": {
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "status",
-                                  "unsafeName": "status",
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
                                 },
-                                "originalName": "status",
-                                "pascalCase": {
-                                  "safeName": "Status",
-                                  "unsafeName": "Status",
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
+                                  "originalName": "Plant",
+                                  "pascalCase": {
+                                    "safeName": "Plant",
+                                    "unsafeName": "Plant",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "PLANT",
+                                    "unsafeName": "PLANT",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
                                 },
-                                "screamingSnakeCase": {
-                                  "safeName": "STATUS",
-                                  "unsafeName": "STATUS",
-                                },
-                                "snakeCase": {
-                                  "safeName": "status",
-                                  "unsafeName": "status",
-                                },
+                                "typeId": "Plant",
                               },
-                              "wireValue": "status",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
-                              },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                                "originalName": "Plant",
-                                "pascalCase": {
-                                  "safeName": "Plant",
-                                  "unsafeName": "Plant",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "PLANT",
-                                  "unsafeName": "PLANT",
-                                },
-                                "snakeCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                              },
-                              "typeId": "Plant",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "healthy",
-                              "shape": {
-                                "_visit": [Function],
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "id",
                                 "shape": {
                                   "_visit": [Function],
-                                  "type": "enum",
-                                  "value": {
+                                  "primitive": {
+                                    "_visit": [Function],
+                                    "string": {
+                                      "original": "id",
+                                    },
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "name",
+                                    "unsafeName": "name",
+                                  },
+                                  "originalName": "name",
+                                  "pascalCase": {
+                                    "safeName": "Name",
+                                    "unsafeName": "Name",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "NAME",
+                                    "unsafeName": "NAME",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "name",
+                                    "unsafeName": "name",
+                                  },
+                                },
+                                "wireValue": "name",
+                              },
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
+                                },
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
+                                  "originalName": "Plant",
+                                  "pascalCase": {
+                                    "safeName": "Plant",
+                                    "unsafeName": "Plant",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "PLANT",
+                                    "unsafeName": "PLANT",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
+                                },
+                                "typeId": "Plant",
+                              },
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "name",
+                                "shape": {
+                                  "_visit": [Function],
+                                  "primitive": {
+                                    "_visit": [Function],
+                                    "string": {
+                                      "original": "name",
+                                    },
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "status",
+                                    "unsafeName": "status",
+                                  },
+                                  "originalName": "status",
+                                  "pascalCase": {
+                                    "safeName": "Status",
+                                    "unsafeName": "Status",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "STATUS",
+                                    "unsafeName": "STATUS",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "status",
+                                    "unsafeName": "status",
+                                  },
+                                },
+                                "wireValue": "status",
+                              },
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
+                                },
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
+                                  "originalName": "Plant",
+                                  "pascalCase": {
+                                    "safeName": "Plant",
+                                    "unsafeName": "Plant",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "PLANT",
+                                    "unsafeName": "PLANT",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
+                                },
+                                "typeId": "Plant",
+                              },
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "healthy",
+                                "shape": {
+                                  "_visit": [Function],
+                                  "shape": {
+                                    "_visit": [Function],
+                                    "type": "enum",
+                                    "value": {
+                                      "name": {
+                                        "camelCase": {
+                                          "safeName": "healthy",
+                                          "unsafeName": "healthy",
+                                        },
+                                        "originalName": "healthy",
+                                        "pascalCase": {
+                                          "safeName": "Healthy",
+                                          "unsafeName": "Healthy",
+                                        },
+                                        "screamingSnakeCase": {
+                                          "safeName": "HEALTHY",
+                                          "unsafeName": "HEALTHY",
+                                        },
+                                        "snakeCase": {
+                                          "safeName": "healthy",
+                                          "unsafeName": "healthy",
+                                        },
+                                      },
+                                      "wireValue": "healthy",
+                                    },
+                                  },
+                                  "type": "named",
+                                  "typeName": {
+                                    "displayName": undefined,
+                                    "fernFilepath": {
+                                      "allParts": [],
+                                      "file": undefined,
+                                      "packagePath": [],
+                                    },
                                     "name": {
                                       "camelCase": {
-                                        "safeName": "healthy",
-                                        "unsafeName": "healthy",
+                                        "safeName": "plantStatus",
+                                        "unsafeName": "plantStatus",
                                       },
-                                      "originalName": "healthy",
+                                      "originalName": "PlantStatus",
                                       "pascalCase": {
-                                        "safeName": "Healthy",
-                                        "unsafeName": "Healthy",
+                                        "safeName": "PlantStatus",
+                                        "unsafeName": "PlantStatus",
                                       },
                                       "screamingSnakeCase": {
-                                        "safeName": "HEALTHY",
-                                        "unsafeName": "HEALTHY",
+                                        "safeName": "PLANT_STATUS",
+                                        "unsafeName": "PLANT_STATUS",
                                       },
                                       "snakeCase": {
-                                        "safeName": "healthy",
-                                        "unsafeName": "healthy",
+                                        "safeName": "plant_status",
+                                        "unsafeName": "plant_status",
                                       },
                                     },
-                                    "wireValue": "healthy",
+                                    "typeId": "PlantStatus",
                                   },
-                                },
-                                "type": "named",
-                                "typeName": {
-                                  "displayName": undefined,
-                                  "fernFilepath": {
-                                    "allParts": [],
-                                    "file": undefined,
-                                    "packagePath": [],
-                                  },
-                                  "name": {
-                                    "camelCase": {
-                                      "safeName": "plantStatus",
-                                      "unsafeName": "plantStatus",
-                                    },
-                                    "originalName": "PlantStatus",
-                                    "pascalCase": {
-                                      "safeName": "PlantStatus",
-                                      "unsafeName": "PlantStatus",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "PLANT_STATUS",
-                                      "unsafeName": "PLANT_STATUS",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "plant_status",
-                                      "unsafeName": "plant_status",
-                                    },
-                                  },
-                                  "typeId": "PlantStatus",
                                 },
                               },
                             },
-                          },
-                          {
-                            "name": {
+                            {
                               "name": {
-                                "camelCase": {
-                                  "safeName": "description",
-                                  "unsafeName": "description",
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "description",
+                                    "unsafeName": "description",
+                                  },
+                                  "originalName": "description",
+                                  "pascalCase": {
+                                    "safeName": "Description",
+                                    "unsafeName": "Description",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "DESCRIPTION",
+                                    "unsafeName": "DESCRIPTION",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "description",
+                                    "unsafeName": "description",
+                                  },
                                 },
-                                "originalName": "description",
-                                "pascalCase": {
-                                  "safeName": "Description",
-                                  "unsafeName": "Description",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "DESCRIPTION",
-                                  "unsafeName": "DESCRIPTION",
-                                },
-                                "snakeCase": {
-                                  "safeName": "description",
-                                  "unsafeName": "description",
-                                },
+                                "wireValue": "description",
                               },
-                              "wireValue": "description",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
+                                },
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
+                                  "originalName": "Plant",
+                                  "pascalCase": {
+                                    "safeName": "Plant",
+                                    "unsafeName": "Plant",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "PLANT",
+                                    "unsafeName": "PLANT",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
+                                },
+                                "typeId": "Plant",
                               },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                                "originalName": "Plant",
-                                "pascalCase": {
-                                  "safeName": "Plant",
-                                  "unsafeName": "Plant",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "PLANT",
-                                  "unsafeName": "PLANT",
-                                },
-                                "snakeCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                              },
-                              "typeId": "Plant",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "description",
-                              "shape": {
-                                "_visit": [Function],
-                                "container": {
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "description",
+                                "shape": {
                                   "_visit": [Function],
-                                  "optional": {
-                                    "jsonExample": "description",
-                                    "shape": {
-                                      "_visit": [Function],
-                                      "container": {
+                                  "container": {
+                                    "_visit": [Function],
+                                    "optional": {
+                                      "jsonExample": "description",
+                                      "shape": {
                                         "_visit": [Function],
-                                        "nullable": {
-                                          "jsonExample": "description",
-                                          "shape": {
+                                        "container": {
+                                          "_visit": [Function],
+                                          "nullable": {
+                                            "jsonExample": "description",
+                                            "shape": {
+                                              "_visit": [Function],
+                                              "primitive": {
+                                                "_visit": [Function],
+                                                "string": {
+                                                  "original": "description",
+                                                },
+                                                "type": "string",
+                                              },
+                                              "type": "primitive",
+                                            },
+                                          },
+                                          "type": "nullable",
+                                          "valueType": {
                                             "_visit": [Function],
                                             "primitive": {
-                                              "_visit": [Function],
-                                              "string": {
-                                                "original": "description",
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "_visit": [Function],
+                                                "default": undefined,
+                                                "type": "string",
+                                                "validation": {
+                                                  "format": undefined,
+                                                  "maxLength": undefined,
+                                                  "minLength": undefined,
+                                                  "pattern": undefined,
+                                                },
                                               },
-                                              "type": "string",
                                             },
                                             "type": "primitive",
                                           },
                                         },
-                                        "type": "nullable",
-                                        "valueType": {
+                                        "type": "container",
+                                      },
+                                    },
+                                    "type": "optional",
+                                    "valueType": {
+                                      "_visit": [Function],
+                                      "container": {
+                                        "_visit": [Function],
+                                        "nullable": {
                                           "_visit": [Function],
                                           "primitive": {
                                             "v1": "STRING",
@@ -578,122 +607,122 @@
                                           },
                                           "type": "primitive",
                                         },
+                                        "type": "nullable",
                                       },
                                       "type": "container",
                                     },
                                   },
-                                  "type": "optional",
-                                  "valueType": {
-                                    "_visit": [Function],
-                                    "container": {
-                                      "_visit": [Function],
-                                      "nullable": {
-                                        "_visit": [Function],
-                                        "primitive": {
-                                          "v1": "STRING",
-                                          "v2": {
-                                            "_visit": [Function],
-                                            "default": undefined,
-                                            "type": "string",
-                                            "validation": {
-                                              "format": undefined,
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "pattern": undefined,
-                                            },
-                                          },
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "type": "nullable",
-                                    },
-                                    "type": "container",
+                                  "type": "container",
+                                },
+                              },
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "location",
+                                    "unsafeName": "location",
+                                  },
+                                  "originalName": "location",
+                                  "pascalCase": {
+                                    "safeName": "Location",
+                                    "unsafeName": "Location",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "LOCATION",
+                                    "unsafeName": "LOCATION",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "location",
+                                    "unsafeName": "location",
                                   },
                                 },
-                                "type": "container",
+                                "wireValue": "location",
                               },
-                            },
-                          },
-                          {
-                            "name": {
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "location",
-                                  "unsafeName": "location",
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
                                 },
-                                "originalName": "location",
-                                "pascalCase": {
-                                  "safeName": "Location",
-                                  "unsafeName": "Location",
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
+                                  "originalName": "Plant",
+                                  "pascalCase": {
+                                    "safeName": "Plant",
+                                    "unsafeName": "Plant",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "PLANT",
+                                    "unsafeName": "PLANT",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "plant",
+                                    "unsafeName": "plant",
+                                  },
                                 },
-                                "screamingSnakeCase": {
-                                  "safeName": "LOCATION",
-                                  "unsafeName": "LOCATION",
-                                },
-                                "snakeCase": {
-                                  "safeName": "location",
-                                  "unsafeName": "location",
-                                },
+                                "typeId": "Plant",
                               },
-                              "wireValue": "location",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
-                              },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                                "originalName": "Plant",
-                                "pascalCase": {
-                                  "safeName": "Plant",
-                                  "unsafeName": "Plant",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "PLANT",
-                                  "unsafeName": "PLANT",
-                                },
-                                "snakeCase": {
-                                  "safeName": "plant",
-                                  "unsafeName": "plant",
-                                },
-                              },
-                              "typeId": "Plant",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "location",
-                              "shape": {
-                                "_visit": [Function],
-                                "container": {
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "location",
+                                "shape": {
                                   "_visit": [Function],
-                                  "optional": {
-                                    "jsonExample": "location",
-                                    "shape": {
-                                      "_visit": [Function],
-                                      "container": {
+                                  "container": {
+                                    "_visit": [Function],
+                                    "optional": {
+                                      "jsonExample": "location",
+                                      "shape": {
                                         "_visit": [Function],
-                                        "nullable": {
-                                          "jsonExample": "location",
-                                          "shape": {
+                                        "container": {
+                                          "_visit": [Function],
+                                          "nullable": {
+                                            "jsonExample": "location",
+                                            "shape": {
+                                              "_visit": [Function],
+                                              "primitive": {
+                                                "_visit": [Function],
+                                                "string": {
+                                                  "original": "location",
+                                                },
+                                                "type": "string",
+                                              },
+                                              "type": "primitive",
+                                            },
+                                          },
+                                          "type": "nullable",
+                                          "valueType": {
                                             "_visit": [Function],
                                             "primitive": {
-                                              "_visit": [Function],
-                                              "string": {
-                                                "original": "location",
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "_visit": [Function],
+                                                "default": undefined,
+                                                "type": "string",
+                                                "validation": {
+                                                  "format": undefined,
+                                                  "maxLength": undefined,
+                                                  "minLength": undefined,
+                                                  "pattern": undefined,
+                                                },
                                               },
-                                              "type": "string",
                                             },
                                             "type": "primitive",
                                           },
                                         },
-                                        "type": "nullable",
-                                        "valueType": {
+                                        "type": "container",
+                                      },
+                                    },
+                                    "type": "optional",
+                                    "valueType": {
+                                      "_visit": [Function],
+                                      "container": {
+                                        "_visit": [Function],
+                                        "nullable": {
                                           "_visit": [Function],
                                           "primitive": {
                                             "v1": "STRING",
@@ -711,76 +740,49 @@
                                           },
                                           "type": "primitive",
                                         },
+                                        "type": "nullable",
                                       },
                                       "type": "container",
                                     },
                                   },
-                                  "type": "optional",
-                                  "valueType": {
-                                    "_visit": [Function],
-                                    "container": {
-                                      "_visit": [Function],
-                                      "nullable": {
-                                        "_visit": [Function],
-                                        "primitive": {
-                                          "v1": "STRING",
-                                          "v2": {
-                                            "_visit": [Function],
-                                            "default": undefined,
-                                            "type": "string",
-                                            "validation": {
-                                              "format": undefined,
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "pattern": undefined,
-                                            },
-                                          },
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "type": "nullable",
-                                    },
-                                    "type": "container",
-                                  },
+                                  "type": "container",
                                 },
-                                "type": "container",
                               },
                             },
-                          },
-                        ],
-                        "type": "object",
-                      },
-                      "type": "named",
-                      "typeName": {
-                        "displayName": undefined,
-                        "fernFilepath": {
-                          "allParts": [],
-                          "file": undefined,
-                          "packagePath": [],
+                          ],
+                          "type": "object",
                         },
-                        "name": {
-                          "camelCase": {
-                            "safeName": "plant",
-                            "unsafeName": "plant",
+                        "type": "named",
+                        "typeName": {
+                          "displayName": undefined,
+                          "fernFilepath": {
+                            "allParts": [],
+                            "file": undefined,
+                            "packagePath": [],
                           },
-                          "originalName": "Plant",
-                          "pascalCase": {
-                            "safeName": "Plant",
-                            "unsafeName": "Plant",
+                          "name": {
+                            "camelCase": {
+                              "safeName": "plant",
+                              "unsafeName": "plant",
+                            },
+                            "originalName": "Plant",
+                            "pascalCase": {
+                              "safeName": "Plant",
+                              "unsafeName": "Plant",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "PLANT",
+                              "unsafeName": "PLANT",
+                            },
+                            "snakeCase": {
+                              "safeName": "plant",
+                              "unsafeName": "plant",
+                            },
                           },
-                          "screamingSnakeCase": {
-                            "safeName": "PLANT",
-                            "unsafeName": "PLANT",
-                          },
-                          "snakeCase": {
-                            "safeName": "plant",
-                            "unsafeName": "plant",
-                          },
+                          "typeId": "Plant",
                         },
-                        "typeId": "Plant",
                       },
                     },
-                    "type": "body",
                   },
                 },
                 "rootPathParameters": [],
@@ -1077,7 +1079,7 @@
                 "docs": undefined,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "45684470",
+                "id": "955ed4d9",
                 "name": undefined,
                 "queryParameters": [],
                 "request": {
@@ -1574,370 +1576,430 @@
                   "type": "ok",
                   "value": {
                     "_visit": [Function],
-                    "jsonExample": {
-                      "established": "2023-01-15",
-                      "id": "id",
-                      "name": "name",
-                      "plants": [
-                        "plants",
-                        "plants",
-                      ],
-                      "size": "small",
-                    },
-                    "shape": {
-                      "_visit": [Function],
+                    "type": "body",
+                    "value": {
+                      "jsonExample": {
+                        "established": "2023-01-15",
+                        "id": "id",
+                        "name": "name",
+                        "plants": [
+                          "plants",
+                          "plants",
+                        ],
+                        "size": "small",
+                      },
                       "shape": {
                         "_visit": [Function],
-                        "extraProperties": undefined,
-                        "properties": [
-                          {
-                            "name": {
+                        "shape": {
+                          "_visit": [Function],
+                          "extraProperties": undefined,
+                          "properties": [
+                            {
                               "name": {
-                                "camelCase": {
-                                  "safeName": "id",
-                                  "unsafeName": "id",
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "id",
+                                    "unsafeName": "id",
+                                  },
+                                  "originalName": "id",
+                                  "pascalCase": {
+                                    "safeName": "Id",
+                                    "unsafeName": "Id",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "ID",
+                                    "unsafeName": "ID",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "id",
+                                    "unsafeName": "id",
+                                  },
                                 },
-                                "originalName": "id",
-                                "pascalCase": {
-                                  "safeName": "Id",
-                                  "unsafeName": "Id",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "ID",
-                                  "unsafeName": "ID",
-                                },
-                                "snakeCase": {
-                                  "safeName": "id",
-                                  "unsafeName": "id",
-                                },
+                                "wireValue": "id",
                               },
-                              "wireValue": "id",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
+                                },
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
+                                  "originalName": "Garden",
+                                  "pascalCase": {
+                                    "safeName": "Garden",
+                                    "unsafeName": "Garden",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "GARDEN",
+                                    "unsafeName": "GARDEN",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
+                                },
+                                "typeId": "Garden",
                               },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                                "originalName": "Garden",
-                                "pascalCase": {
-                                  "safeName": "Garden",
-                                  "unsafeName": "Garden",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "GARDEN",
-                                  "unsafeName": "GARDEN",
-                                },
-                                "snakeCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                              },
-                              "typeId": "Garden",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "id",
-                              "shape": {
-                                "_visit": [Function],
-                                "container": {
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "id",
+                                "shape": {
                                   "_visit": [Function],
-                                  "optional": {
-                                    "jsonExample": "id",
-                                    "shape": {
+                                  "container": {
+                                    "_visit": [Function],
+                                    "optional": {
+                                      "jsonExample": "id",
+                                      "shape": {
+                                        "_visit": [Function],
+                                        "primitive": {
+                                          "_visit": [Function],
+                                          "string": {
+                                            "original": "id",
+                                          },
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "optional",
+                                    "valueType": {
                                       "_visit": [Function],
                                       "primitive": {
-                                        "_visit": [Function],
-                                        "string": {
-                                          "original": "id",
+                                        "v1": "STRING",
+                                        "v2": {
+                                          "_visit": [Function],
+                                          "default": undefined,
+                                          "type": "string",
+                                          "validation": {
+                                            "format": undefined,
+                                            "maxLength": undefined,
+                                            "minLength": undefined,
+                                            "pattern": undefined,
+                                          },
                                         },
-                                        "type": "string",
                                       },
                                       "type": "primitive",
                                     },
                                   },
-                                  "type": "optional",
-                                  "valueType": {
-                                    "_visit": [Function],
-                                    "primitive": {
-                                      "v1": "STRING",
-                                      "v2": {
-                                        "_visit": [Function],
-                                        "default": undefined,
-                                        "type": "string",
-                                        "validation": {
-                                          "format": undefined,
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "pattern": undefined,
-                                        },
-                                      },
-                                    },
-                                    "type": "primitive",
+                                  "type": "container",
+                                },
+                              },
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "name",
+                                    "unsafeName": "name",
+                                  },
+                                  "originalName": "name",
+                                  "pascalCase": {
+                                    "safeName": "Name",
+                                    "unsafeName": "Name",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "NAME",
+                                    "unsafeName": "NAME",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "name",
+                                    "unsafeName": "name",
                                   },
                                 },
-                                "type": "container",
+                                "wireValue": "name",
                               },
-                            },
-                          },
-                          {
-                            "name": {
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "name",
-                                  "unsafeName": "name",
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
                                 },
-                                "originalName": "name",
-                                "pascalCase": {
-                                  "safeName": "Name",
-                                  "unsafeName": "Name",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "NAME",
-                                  "unsafeName": "NAME",
-                                },
-                                "snakeCase": {
-                                  "safeName": "name",
-                                  "unsafeName": "name",
-                                },
-                              },
-                              "wireValue": "name",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
-                              },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                                "originalName": "Garden",
-                                "pascalCase": {
-                                  "safeName": "Garden",
-                                  "unsafeName": "Garden",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "GARDEN",
-                                  "unsafeName": "GARDEN",
-                                },
-                                "snakeCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                              },
-                              "typeId": "Garden",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "name",
-                              "shape": {
-                                "_visit": [Function],
-                                "primitive": {
-                                  "_visit": [Function],
-                                  "string": {
-                                    "original": "name",
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
                                   },
-                                  "type": "string",
+                                  "originalName": "Garden",
+                                  "pascalCase": {
+                                    "safeName": "Garden",
+                                    "unsafeName": "Garden",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "GARDEN",
+                                    "unsafeName": "GARDEN",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
                                 },
-                                "type": "primitive",
+                                "typeId": "Garden",
                               },
-                            },
-                          },
-                          {
-                            "name": {
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "size",
-                                  "unsafeName": "size",
-                                },
-                                "originalName": "size",
-                                "pascalCase": {
-                                  "safeName": "Size",
-                                  "unsafeName": "Size",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "SIZE",
-                                  "unsafeName": "SIZE",
-                                },
-                                "snakeCase": {
-                                  "safeName": "size",
-                                  "unsafeName": "size",
-                                },
-                              },
-                              "wireValue": "size",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
-                              },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                                "originalName": "Garden",
-                                "pascalCase": {
-                                  "safeName": "Garden",
-                                  "unsafeName": "Garden",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "GARDEN",
-                                  "unsafeName": "GARDEN",
-                                },
-                                "snakeCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                              },
-                              "typeId": "Garden",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "small",
-                              "shape": {
-                                "_visit": [Function],
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "name",
                                 "shape": {
                                   "_visit": [Function],
-                                  "type": "enum",
-                                  "value": {
+                                  "primitive": {
+                                    "_visit": [Function],
+                                    "string": {
+                                      "original": "name",
+                                    },
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "size",
+                                    "unsafeName": "size",
+                                  },
+                                  "originalName": "size",
+                                  "pascalCase": {
+                                    "safeName": "Size",
+                                    "unsafeName": "Size",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "SIZE",
+                                    "unsafeName": "SIZE",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "size",
+                                    "unsafeName": "size",
+                                  },
+                                },
+                                "wireValue": "size",
+                              },
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
+                                },
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
+                                  "originalName": "Garden",
+                                  "pascalCase": {
+                                    "safeName": "Garden",
+                                    "unsafeName": "Garden",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "GARDEN",
+                                    "unsafeName": "GARDEN",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
+                                },
+                                "typeId": "Garden",
+                              },
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "small",
+                                "shape": {
+                                  "_visit": [Function],
+                                  "shape": {
+                                    "_visit": [Function],
+                                    "type": "enum",
+                                    "value": {
+                                      "name": {
+                                        "camelCase": {
+                                          "safeName": "small",
+                                          "unsafeName": "small",
+                                        },
+                                        "originalName": "small",
+                                        "pascalCase": {
+                                          "safeName": "Small",
+                                          "unsafeName": "Small",
+                                        },
+                                        "screamingSnakeCase": {
+                                          "safeName": "SMALL",
+                                          "unsafeName": "SMALL",
+                                        },
+                                        "snakeCase": {
+                                          "safeName": "small",
+                                          "unsafeName": "small",
+                                        },
+                                      },
+                                      "wireValue": "small",
+                                    },
+                                  },
+                                  "type": "named",
+                                  "typeName": {
+                                    "displayName": undefined,
+                                    "fernFilepath": {
+                                      "allParts": [],
+                                      "file": undefined,
+                                      "packagePath": [],
+                                    },
                                     "name": {
                                       "camelCase": {
-                                        "safeName": "small",
-                                        "unsafeName": "small",
+                                        "safeName": "gardenSize",
+                                        "unsafeName": "gardenSize",
                                       },
-                                      "originalName": "small",
+                                      "originalName": "GardenSize",
                                       "pascalCase": {
-                                        "safeName": "Small",
-                                        "unsafeName": "Small",
+                                        "safeName": "GardenSize",
+                                        "unsafeName": "GardenSize",
                                       },
                                       "screamingSnakeCase": {
-                                        "safeName": "SMALL",
-                                        "unsafeName": "SMALL",
+                                        "safeName": "GARDEN_SIZE",
+                                        "unsafeName": "GARDEN_SIZE",
                                       },
                                       "snakeCase": {
-                                        "safeName": "small",
-                                        "unsafeName": "small",
+                                        "safeName": "garden_size",
+                                        "unsafeName": "garden_size",
                                       },
                                     },
-                                    "wireValue": "small",
+                                    "typeId": "GardenSize",
                                   },
-                                },
-                                "type": "named",
-                                "typeName": {
-                                  "displayName": undefined,
-                                  "fernFilepath": {
-                                    "allParts": [],
-                                    "file": undefined,
-                                    "packagePath": [],
-                                  },
-                                  "name": {
-                                    "camelCase": {
-                                      "safeName": "gardenSize",
-                                      "unsafeName": "gardenSize",
-                                    },
-                                    "originalName": "GardenSize",
-                                    "pascalCase": {
-                                      "safeName": "GardenSize",
-                                      "unsafeName": "GardenSize",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "GARDEN_SIZE",
-                                      "unsafeName": "GARDEN_SIZE",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "garden_size",
-                                      "unsafeName": "garden_size",
-                                    },
-                                  },
-                                  "typeId": "GardenSize",
                                 },
                               },
                             },
-                          },
-                          {
-                            "name": {
+                            {
                               "name": {
-                                "camelCase": {
-                                  "safeName": "plants",
-                                  "unsafeName": "plants",
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "plants",
+                                    "unsafeName": "plants",
+                                  },
+                                  "originalName": "plants",
+                                  "pascalCase": {
+                                    "safeName": "Plants",
+                                    "unsafeName": "Plants",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "PLANTS",
+                                    "unsafeName": "PLANTS",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "plants",
+                                    "unsafeName": "plants",
+                                  },
                                 },
-                                "originalName": "plants",
-                                "pascalCase": {
-                                  "safeName": "Plants",
-                                  "unsafeName": "Plants",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "PLANTS",
-                                  "unsafeName": "PLANTS",
-                                },
-                                "snakeCase": {
-                                  "safeName": "plants",
-                                  "unsafeName": "plants",
-                                },
+                                "wireValue": "plants",
                               },
-                              "wireValue": "plants",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
+                                },
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
+                                  "originalName": "Garden",
+                                  "pascalCase": {
+                                    "safeName": "Garden",
+                                    "unsafeName": "Garden",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "GARDEN",
+                                    "unsafeName": "GARDEN",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
+                                },
+                                "typeId": "Garden",
                               },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                                "originalName": "Garden",
-                                "pascalCase": {
-                                  "safeName": "Garden",
-                                  "unsafeName": "Garden",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "GARDEN",
-                                  "unsafeName": "GARDEN",
-                                },
-                                "snakeCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                              },
-                              "typeId": "Garden",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": [
-                                "plants",
-                                "plants",
-                              ],
-                              "shape": {
-                                "_visit": [Function],
-                                "container": {
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": [
+                                  "plants",
+                                  "plants",
+                                ],
+                                "shape": {
                                   "_visit": [Function],
-                                  "optional": {
-                                    "jsonExample": [
-                                      "plants",
-                                      "plants",
-                                    ],
-                                    "shape": {
+                                  "container": {
+                                    "_visit": [Function],
+                                    "optional": {
+                                      "jsonExample": [
+                                        "plants",
+                                        "plants",
+                                      ],
+                                      "shape": {
+                                        "_visit": [Function],
+                                        "container": {
+                                          "_visit": [Function],
+                                          "itemType": {
+                                            "_visit": [Function],
+                                            "primitive": {
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "_visit": [Function],
+                                                "default": undefined,
+                                                "type": "string",
+                                                "validation": {
+                                                  "format": undefined,
+                                                  "maxLength": undefined,
+                                                  "minLength": undefined,
+                                                  "pattern": undefined,
+                                                },
+                                              },
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "list": [
+                                            {
+                                              "jsonExample": "plants",
+                                              "shape": {
+                                                "_visit": [Function],
+                                                "primitive": {
+                                                  "_visit": [Function],
+                                                  "string": {
+                                                    "original": "plants",
+                                                  },
+                                                  "type": "string",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                            },
+                                            {
+                                              "jsonExample": "plants",
+                                              "shape": {
+                                                "_visit": [Function],
+                                                "primitive": {
+                                                  "_visit": [Function],
+                                                  "string": {
+                                                    "original": "plants",
+                                                  },
+                                                  "type": "string",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                            },
+                                          ],
+                                          "type": "list",
+                                        },
+                                        "type": "container",
+                                      },
+                                    },
+                                    "type": "optional",
+                                    "valueType": {
                                       "_visit": [Function],
                                       "container": {
                                         "_visit": [Function],
-                                        "itemType": {
+                                        "list": {
                                           "_visit": [Function],
                                           "primitive": {
                                             "v1": "STRING",
@@ -1955,151 +2017,113 @@
                                           },
                                           "type": "primitive",
                                         },
-                                        "list": [
-                                          {
-                                            "jsonExample": "plants",
-                                            "shape": {
-                                              "_visit": [Function],
-                                              "primitive": {
-                                                "_visit": [Function],
-                                                "string": {
-                                                  "original": "plants",
-                                                },
-                                                "type": "string",
-                                              },
-                                              "type": "primitive",
-                                            },
-                                          },
-                                          {
-                                            "jsonExample": "plants",
-                                            "shape": {
-                                              "_visit": [Function],
-                                              "primitive": {
-                                                "_visit": [Function],
-                                                "string": {
-                                                  "original": "plants",
-                                                },
-                                                "type": "string",
-                                              },
-                                              "type": "primitive",
-                                            },
-                                          },
-                                        ],
                                         "type": "list",
                                       },
                                       "type": "container",
                                     },
                                   },
-                                  "type": "optional",
-                                  "valueType": {
-                                    "_visit": [Function],
-                                    "container": {
-                                      "_visit": [Function],
-                                      "list": {
-                                        "_visit": [Function],
-                                        "primitive": {
-                                          "v1": "STRING",
-                                          "v2": {
-                                            "_visit": [Function],
-                                            "default": undefined,
-                                            "type": "string",
-                                            "validation": {
-                                              "format": undefined,
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "pattern": undefined,
-                                            },
-                                          },
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "type": "list",
-                                    },
-                                    "type": "container",
+                                  "type": "container",
+                                },
+                              },
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "established",
+                                    "unsafeName": "established",
+                                  },
+                                  "originalName": "established",
+                                  "pascalCase": {
+                                    "safeName": "Established",
+                                    "unsafeName": "Established",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "ESTABLISHED",
+                                    "unsafeName": "ESTABLISHED",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "established",
+                                    "unsafeName": "established",
                                   },
                                 },
-                                "type": "container",
+                                "wireValue": "established",
                               },
-                            },
-                          },
-                          {
-                            "name": {
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "established",
-                                  "unsafeName": "established",
+                              "originalTypeDeclaration": {
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
                                 },
-                                "originalName": "established",
-                                "pascalCase": {
-                                  "safeName": "Established",
-                                  "unsafeName": "Established",
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
+                                  "originalName": "Garden",
+                                  "pascalCase": {
+                                    "safeName": "Garden",
+                                    "unsafeName": "Garden",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "GARDEN",
+                                    "unsafeName": "GARDEN",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "garden",
+                                    "unsafeName": "garden",
+                                  },
                                 },
-                                "screamingSnakeCase": {
-                                  "safeName": "ESTABLISHED",
-                                  "unsafeName": "ESTABLISHED",
-                                },
-                                "snakeCase": {
-                                  "safeName": "established",
-                                  "unsafeName": "established",
-                                },
+                                "typeId": "Garden",
                               },
-                              "wireValue": "established",
-                            },
-                            "originalTypeDeclaration": {
-                              "displayName": undefined,
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": undefined,
-                                "packagePath": [],
-                              },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                                "originalName": "Garden",
-                                "pascalCase": {
-                                  "safeName": "Garden",
-                                  "unsafeName": "Garden",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "GARDEN",
-                                  "unsafeName": "GARDEN",
-                                },
-                                "snakeCase": {
-                                  "safeName": "garden",
-                                  "unsafeName": "garden",
-                                },
-                              },
-                              "typeId": "Garden",
-                            },
-                            "propertyAccess": undefined,
-                            "value": {
-                              "jsonExample": "2023-01-15",
-                              "shape": {
-                                "_visit": [Function],
-                                "container": {
+                              "propertyAccess": undefined,
+                              "value": {
+                                "jsonExample": "2023-01-15",
+                                "shape": {
                                   "_visit": [Function],
-                                  "optional": {
-                                    "jsonExample": "2023-01-15",
-                                    "shape": {
-                                      "_visit": [Function],
-                                      "container": {
+                                  "container": {
+                                    "_visit": [Function],
+                                    "optional": {
+                                      "jsonExample": "2023-01-15",
+                                      "shape": {
                                         "_visit": [Function],
-                                        "nullable": {
-                                          "jsonExample": "2023-01-15",
-                                          "shape": {
+                                        "container": {
+                                          "_visit": [Function],
+                                          "nullable": {
+                                            "jsonExample": "2023-01-15",
+                                            "shape": {
+                                              "_visit": [Function],
+                                              "primitive": {
+                                                "_visit": [Function],
+                                                "date": "2023-01-15",
+                                                "type": "date",
+                                              },
+                                              "type": "primitive",
+                                            },
+                                          },
+                                          "type": "nullable",
+                                          "valueType": {
                                             "_visit": [Function],
                                             "primitive": {
-                                              "_visit": [Function],
-                                              "date": "2023-01-15",
-                                              "type": "date",
+                                              "v1": "DATE",
+                                              "v2": {
+                                                "_visit": [Function],
+                                                "type": "date",
+                                              },
                                             },
                                             "type": "primitive",
                                           },
                                         },
-                                        "type": "nullable",
-                                        "valueType": {
+                                        "type": "container",
+                                      },
+                                    },
+                                    "type": "optional",
+                                    "valueType": {
+                                      "_visit": [Function],
+                                      "container": {
+                                        "_visit": [Function],
+                                        "nullable": {
                                           "_visit": [Function],
                                           "primitive": {
                                             "v1": "DATE",
@@ -2110,69 +2134,49 @@
                                           },
                                           "type": "primitive",
                                         },
+                                        "type": "nullable",
                                       },
                                       "type": "container",
                                     },
                                   },
-                                  "type": "optional",
-                                  "valueType": {
-                                    "_visit": [Function],
-                                    "container": {
-                                      "_visit": [Function],
-                                      "nullable": {
-                                        "_visit": [Function],
-                                        "primitive": {
-                                          "v1": "DATE",
-                                          "v2": {
-                                            "_visit": [Function],
-                                            "type": "date",
-                                          },
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "type": "nullable",
-                                    },
-                                    "type": "container",
-                                  },
+                                  "type": "container",
                                 },
-                                "type": "container",
                               },
                             },
-                          },
-                        ],
-                        "type": "object",
-                      },
-                      "type": "named",
-                      "typeName": {
-                        "displayName": undefined,
-                        "fernFilepath": {
-                          "allParts": [],
-                          "file": undefined,
-                          "packagePath": [],
+                          ],
+                          "type": "object",
                         },
-                        "name": {
-                          "camelCase": {
-                            "safeName": "garden",
-                            "unsafeName": "garden",
+                        "type": "named",
+                        "typeName": {
+                          "displayName": undefined,
+                          "fernFilepath": {
+                            "allParts": [],
+                            "file": undefined,
+                            "packagePath": [],
                           },
-                          "originalName": "Garden",
-                          "pascalCase": {
-                            "safeName": "Garden",
-                            "unsafeName": "Garden",
+                          "name": {
+                            "camelCase": {
+                              "safeName": "garden",
+                              "unsafeName": "garden",
+                            },
+                            "originalName": "Garden",
+                            "pascalCase": {
+                              "safeName": "Garden",
+                              "unsafeName": "Garden",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "GARDEN",
+                              "unsafeName": "GARDEN",
+                            },
+                            "snakeCase": {
+                              "safeName": "garden",
+                              "unsafeName": "garden",
+                            },
                           },
-                          "screamingSnakeCase": {
-                            "safeName": "GARDEN",
-                            "unsafeName": "GARDEN",
-                          },
-                          "snakeCase": {
-                            "safeName": "garden",
-                            "unsafeName": "garden",
-                          },
+                          "typeId": "Garden",
                         },
-                        "typeId": "Garden",
                       },
                     },
-                    "type": "body",
                   },
                 },
                 "rootPathParameters": [],
