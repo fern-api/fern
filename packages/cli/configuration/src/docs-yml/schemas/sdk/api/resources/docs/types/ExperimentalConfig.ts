@@ -36,4 +36,6 @@ export interface ExperimentalConfig {
      * DEPRECATED: Use the top-level `ai-example-style-instructions` property instead.
      */
     aiExampleStyleInstructions?: string;
+    /** Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation. */
+    excludeApis?: boolean;
 }

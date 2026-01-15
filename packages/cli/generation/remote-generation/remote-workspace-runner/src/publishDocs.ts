@@ -58,6 +58,7 @@ export async function publishDocs({
     disableTemplates = false,
     skipUpload = false,
     withAiExamples = true,
+    excludeApis = false,
     targetAudiences
 }: {
     token: FernToken;
@@ -74,10 +75,17 @@ export async function publishDocs({
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
     withAiExamples?: boolean;
+    excludeApis?: boolean;
     targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
+
+    if (excludeApis) {
+        context.logger.debug(
+            "Experimental flag 'exclude-apis' is enabled - API references will be excluded from S3 upload"
+        );
+    }
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
@@ -164,6 +172,8 @@ export async function publishDocs({
                     filepaths: filepaths,
                     images,
                     basePath
+                    // TODO: Add excludeApis once FDR API supports it
+                    // excludeApis
                 });
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
@@ -211,6 +221,8 @@ export async function publishDocs({
                     orgId: CjsFdrSdk.OrgId(organization),
                     filepaths: filepaths,
                     images
+                    // TODO: Add excludeApis once FDR API supports it
+                    // excludeApis
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
