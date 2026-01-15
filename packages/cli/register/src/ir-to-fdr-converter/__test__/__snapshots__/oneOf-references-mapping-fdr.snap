@@ -583,6 +583,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "primitive",
