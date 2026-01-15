@@ -8,7 +8,11 @@ import com.seed.endpointSecurityAuth.core.BasicAuthProvider;
 import com.seed.endpointSecurityAuth.core.BearerAuthProvider;
 import com.seed.endpointSecurityAuth.core.ClientOptions;
 import com.seed.endpointSecurityAuth.core.Environment;
+import com.seed.endpointSecurityAuth.core.InferredAuthProvider;
+import com.seed.endpointSecurityAuth.core.InferredAuthTokenSupplier;
+import com.seed.endpointSecurityAuth.core.OAuthAuthProvider;
 import com.seed.endpointSecurityAuth.core.RoutingAuthProvider;
+import com.seed.endpointSecurityAuth.resources.auth.AuthClient;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -174,11 +178,33 @@ public class AsyncSeedEndpointSecurityAuthClientBuilder {
                     new ApiKeyAuthProvider(() -> this.apiKey),
                     "Please provide apiKey via .apiKey() or set MY_API_KEY environment variable");
         }
+        if (this.clientId != null && this.clientSecret != null) {
+            // OAuth requires building an auth client for token fetching
+            ClientOptions.Builder oauthClientOptionsBuilder =
+                    ClientOptions.builder().environment(this.environment);
+            AuthClient oauthAuthClient = new AuthClient(oauthClientOptionsBuilder.build());
+            routingBuilder.addAuthProvider(
+                    "OAuth",
+                    new OAuthAuthProvider(() -> this.clientId, () -> this.clientSecret, oauthAuthClient),
+                    "Please provide clientId and clientSecret via .clientId()/.clientSecret() or set MY_CLIENT_ID and MY_CLIENT_SECRET environment variables");
+        }
         if (this.username != null && this.password != null) {
             routingBuilder.addAuthProvider(
                     "Basic",
                     new BasicAuthProvider(() -> this.username, () -> this.password),
                     "Please provide credentials via .credentials() or set MY_USERNAME and MY_PASSWORD environment variables");
+        }
+        if (this.clientId != null && this.clientSecret != null) {
+            // InferredAuth requires building an auth client for token fetching
+            ClientOptions.Builder inferredClientOptionsBuilder =
+                    ClientOptions.builder().environment(this.environment);
+            AuthClient inferredAuthClient = new AuthClient(inferredClientOptionsBuilder.build());
+            InferredAuthTokenSupplier inferredTokenSupplier =
+                    new InferredAuthTokenSupplier(this.clientId, this.clientSecret, inferredAuthClient);
+            routingBuilder.addAuthProvider(
+                    "InferredAuth",
+                    new InferredAuthProvider(inferredTokenSupplier),
+                    "Please provide the required credentials for InferredAuth when initializing the client");
         }
         builder.authProvider(routingBuilder.build());
     }

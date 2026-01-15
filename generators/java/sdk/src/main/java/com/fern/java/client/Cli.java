@@ -13,7 +13,10 @@ import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
+import com.fern.ir.model.commons.EndpointReference;
 import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.ir.Subpackage;
+import com.squareup.javapoet.ClassName;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.publish.DirectPublish;
@@ -57,6 +60,8 @@ import com.fern.java.client.generators.auth.BasicAuthProviderGenerator;
 import com.fern.java.client.generators.auth.BearerAuthProviderGenerator;
 import com.fern.java.client.generators.auth.EndpointMetadataGenerator;
 import com.fern.java.client.generators.auth.HeaderAuthProviderGenerator;
+import com.fern.java.client.generators.auth.InferredAuthProviderGenerator;
+import com.fern.java.client.generators.auth.OAuthAuthProviderGenerator;
 import com.fern.java.client.generators.auth.RoutingAuthProviderGenerator;
 import com.fern.java.client.generators.websocket.AsyncWebSocketChannelWriter;
 import com.fern.java.client.generators.websocket.SyncWebSocketChannelWriter;
@@ -409,6 +414,23 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     String schemeName = headerScheme.getName().getName().getPascalCase().getSafeName();
                     HeaderAuthProviderGenerator headerGenerator = new HeaderAuthProviderGenerator(context, headerScheme, schemeName);
                     this.addGeneratedFile(headerGenerator.generateFile());
+                });
+
+                authScheme.getOauth().ifPresent(oauthScheme -> {
+                    oauthScheme.getConfiguration().getClientCredentials().ifPresent(clientCredentials -> {
+                        EndpointReference tokenEndpointRef = clientCredentials.getTokenEndpoint().getEndpointReference();
+                        Subpackage authSubpackage = context.getIr().getSubpackages().get(tokenEndpointRef.getSubpackageId().get());
+                        ClassName authClientClassName = context.getPoetClassNameFactory().getClientClassName(authSubpackage);
+                        OAuthAuthProviderGenerator oauthGenerator = new OAuthAuthProviderGenerator(context, clientCredentials, authClientClassName);
+                        this.addGeneratedFile(oauthGenerator.generateFile());
+                    });
+                });
+
+                authScheme.getInferred().ifPresent(inferredScheme -> {
+                    String schemeName = inferredScheme.getKey().get();
+                    ClassName inferredAuthTokenSupplierClassName = context.getPoetClassNameFactory().getCoreClassName("InferredAuthTokenSupplier");
+                    InferredAuthProviderGenerator inferredGenerator = new InferredAuthProviderGenerator(context, schemeName, inferredAuthTokenSupplierClassName);
+                    this.addGeneratedFile(inferredGenerator.generateFile());
                 });
             }
         }

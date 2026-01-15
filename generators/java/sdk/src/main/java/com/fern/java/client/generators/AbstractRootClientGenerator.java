@@ -903,15 +903,25 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             final String secondaryFieldName;
             final String envVarHint;
             final boolean isBasicAuth;
+            final boolean isOAuth;
+            final boolean isInferredAuth;
 
             AuthProviderInfo(String schemeKey, String providerClass, String fieldName,
                            String secondaryFieldName, String envVarHint, boolean isBasicAuth) {
+                this(schemeKey, providerClass, fieldName, secondaryFieldName, envVarHint, isBasicAuth, false, false);
+            }
+
+            AuthProviderInfo(String schemeKey, String providerClass, String fieldName,
+                           String secondaryFieldName, String envVarHint, boolean isBasicAuth,
+                           boolean isOAuth, boolean isInferredAuth) {
                 this.schemeKey = schemeKey;
                 this.providerClass = providerClass;
                 this.fieldName = fieldName;
                 this.secondaryFieldName = secondaryFieldName;
                 this.envVarHint = envVarHint;
                 this.isBasicAuth = isBasicAuth;
+                this.isOAuth = isOAuth;
+                this.isInferredAuth = isInferredAuth;
             }
         }
 
@@ -1143,8 +1153,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             ClassName inferredAuthTokenSupplierClassName =
                     generatedInferredAuthTokenSupplier.get().getClassName();
 
-            // Skip adding headers directly for ENDPOINT_SECURITY mode - auth is handled via RoutingAuthProvider
-            if (configureAuthMethod != null && !generatorContext.isEndpointSecurity()) {
+            // For ENDPOINT_SECURITY mode, track auth info for RoutingAuthProvider
+            if (generatorContext.isEndpointSecurity()) {
+                String schemeKey = inferred.getKey().get();
+                String envVarHint = "Please provide the required credentials for " + schemeKey + " when initializing the client";
+                // Store info for InferredAuth - requires auth client and token supplier
+                authProviderInfos.add(new AuthProviderInfo(schemeKey, "InferredAuthProvider",
+                        credentialPropertyNames.isEmpty() ? "clientId" : credentialPropertyNames.get(0),
+                        credentialPropertyNames.size() > 1 ? credentialPropertyNames.get(1) : null,
+                        envVarHint, false, false, true));
+            } else if (configureAuthMethod != null) {
                 String condition = requiredCredentialPropertyNames.stream()
                         .map(name -> "this." + name + " != null")
                         .reduce((a, b) -> a + " && " + b)
@@ -1322,7 +1340,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         createSetter(propName, Optional.empty(), Optional.empty());
                     }
 
-                    if (configureAuthMethod != null && !generatorContext.isEndpointSecurity()) {
+                    if (generatorContext.isEndpointSecurity()) {
+                        String clientIdEnvVar = clientCredentials.getClientIdEnvVar().map(ev -> ev.get()).orElse(null);
+                        String clientSecretEnvVar = clientCredentials.getClientSecretEnvVar().map(ev -> ev.get()).orElse(null);
+                        StringBuilder envVarHint = new StringBuilder("Please provide clientId and clientSecret via .clientId()/.clientSecret()");
+                        if (clientIdEnvVar != null && clientSecretEnvVar != null) {
+                            envVarHint.append(" or set ").append(clientIdEnvVar).append(" and ").append(clientSecretEnvVar).append(" environment variables");
+                        }
+                        authProviderInfos.add(new AuthProviderInfo("OAuth", "OAuthAuthProvider", "clientId", "clientSecret",
+                                envVarHint.toString(), false, true, false));
+                    } else if (configureAuthMethod != null) {
                         // Token override is always enabled - check for token first
                         configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
                         configureAuthMethod.addStatement(
@@ -1945,6 +1972,83 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     providerClassName,
                                     usernameField,
                                     passwordField,
+                                    info.envVarHint)
+                            .endControlFlow();
+                } else if (info.isOAuth) {
+                    // OAuth requires creating an auth client and using OAuthAuthProvider
+                    ClassName clientOptionsClassName = generatedClientOptions.getClassName();
+                    ClassName authClientClassName =
+                            clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("AuthClient");
+                    // Get the actual auth client class - it's in the auth subpackage
+                    // We need to build the auth client from scratch to avoid circular dependency
+                    this.configureAuthMethod
+                            .beginControlFlow(
+                                    "if (this.$L != null && this.$L != null)", info.fieldName, info.secondaryFieldName)
+                            .addComment("OAuth requires building an auth client for token fetching")
+                            .addStatement(
+                                    "$T.Builder oauthClientOptionsBuilder = $T.builder().environment(this.$L)",
+                                    clientOptionsClassName,
+                                    clientOptionsClassName,
+                                    ENVIRONMENT_FIELD_NAME)
+                            .addStatement(
+                                    "$T oauthAuthClient = new $T(oauthClientOptionsBuilder.build())",
+                                    generatedOAuthTokenSupplier.map(s -> {
+                                        // Get the AuthClient class from the token supplier's imports
+                                        return clientGeneratorContext.getPoetClassNameFactory().getClientClassName(
+                                                clientGeneratorContext.getIr().getSubpackages().values().stream()
+                                                        .filter(sp -> sp.getName().getCamelCase().getSafeName().equalsIgnoreCase("auth"))
+                                                        .findFirst()
+                                                        .orElse(null));
+                                    }).orElse(authClientClassName),
+                                    generatedOAuthTokenSupplier.map(s -> {
+                                        return clientGeneratorContext.getPoetClassNameFactory().getClientClassName(
+                                                clientGeneratorContext.getIr().getSubpackages().values().stream()
+                                                        .filter(sp -> sp.getName().getCamelCase().getSafeName().equalsIgnoreCase("auth"))
+                                                        .findFirst()
+                                                        .orElse(null));
+                                    }).orElse(authClientClassName))
+                            .addStatement(
+                                    "routingBuilder.addAuthProvider($S, new $T(() -> this.$L, () -> this.$L, oauthAuthClient), $S)",
+                                    info.schemeKey,
+                                    providerClassName,
+                                    info.fieldName,
+                                    info.secondaryFieldName,
+                                    info.envVarHint)
+                            .endControlFlow();
+                } else if (info.isInferredAuth) {
+                    // InferredAuth requires creating an auth client and token supplier
+                    ClassName clientOptionsClassName = generatedClientOptions.getClassName();
+                    ClassName inferredAuthTokenSupplierClassName =
+                            generatedInferredAuthTokenSupplier.map(GeneratedJavaFile::getClassName)
+                                    .orElse(clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("InferredAuthTokenSupplier"));
+                    ClassName authClientClassName = clientGeneratorContext.getPoetClassNameFactory().getClientClassName(
+                            clientGeneratorContext.getIr().getSubpackages().values().stream()
+                                    .filter(sp -> sp.getName().getCamelCase().getSafeName().equalsIgnoreCase("auth"))
+                                    .findFirst()
+                                    .orElse(null));
+                    this.configureAuthMethod
+                            .beginControlFlow(
+                                    "if (this.$L != null && this.$L != null)", info.fieldName, info.secondaryFieldName)
+                            .addComment("InferredAuth requires building an auth client for token fetching")
+                            .addStatement(
+                                    "$T.Builder inferredClientOptionsBuilder = $T.builder().environment(this.$L)",
+                                    clientOptionsClassName,
+                                    clientOptionsClassName,
+                                    ENVIRONMENT_FIELD_NAME)
+                            .addStatement(
+                                    "$T inferredAuthClient = new $T(inferredClientOptionsBuilder.build())",
+                                    authClientClassName,
+                                    authClientClassName)
+                            .addStatement(
+                                    "$T inferredTokenSupplier = new $T(this.$L, this.$L, inferredAuthClient)",
+                                    inferredAuthTokenSupplierClassName,
+                                    inferredAuthTokenSupplierClassName,
+                                    info.fieldName,
+                                    info.secondaryFieldName)
+                            .addStatement(
+                                    "routingBuilder.addAuthProvider($S, new $T(inferredTokenSupplier), $S)",
+                                    info.schemeKey,
+                                    providerClassName,
                                     info.envVarHint)
                             .endControlFlow();
                 } else {
