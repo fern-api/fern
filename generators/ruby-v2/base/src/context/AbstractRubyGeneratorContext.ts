@@ -1,12 +1,13 @@
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
-    GeneratorNotificationService
+    GeneratorNotificationService,
+    getPackageName
 } from "@fern-api/browser-compatible-base-generator";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-import { snakeCase, upperFirst } from "lodash-es";
+import { camelCase, snakeCase, upperFirst } from "lodash-es";
 import { RubyProject } from "../project/RubyProject";
 import { RubyTypeMapper } from "./RubyTypeMapper";
 
@@ -48,7 +49,9 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootFolderName(): string {
-        return snakeCase(this.customConfig.module ?? this.config.organization);
+        // Priority: custom config module > package name from publish config > organization name
+        const packageName = getPackageName(this.config);
+        return snakeCase(this.customConfig.module ?? packageName ?? this.config.organization);
     }
 
     public getRootPackageName(): string {
@@ -89,7 +92,10 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootModuleName(): string {
-        return upperFirst(this.customConfig.module ?? this.config.organization);
+        // Priority: custom config module > package name from publish config > organization name
+        // Use camelCase to convert hyphenated names (e.g., "nullable-optional") to valid Ruby module names
+        const packageName = getPackageName(this.config);
+        return upperFirst(camelCase(this.customConfig.module ?? packageName ?? this.config.organization));
     }
 
     public getRootModule(): ruby.Module_ {

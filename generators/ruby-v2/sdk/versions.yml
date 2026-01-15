@@ -8,6 +8,13 @@
         class will use that name instead of the default "Client". This restores functionality
         that existed in the original Ruby SDK generator.
       type: fix
+    - summary: |
+        Add support for packageName from publish config to set the gem name and module name.
+        The gem name (folder name) and module name now use the packageName from the RubyGems
+        publish config (e.g., output.publish.rubygems.packageName) as a fallback when the
+        custom config module option is not set. This restores functionality from the original
+        Ruby SDK generator where the gem name could be configured via the publish target.
+      type: fix
   createdAt: "2026-01-15"
   irVersion: 61
 
