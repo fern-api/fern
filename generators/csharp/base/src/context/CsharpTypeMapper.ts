@@ -83,9 +83,7 @@ export class CsharpTypeMapper extends WithGeneration {
                 return this.Collection.list(this.convert({ reference: container.list, unboxOptionals: true }));
             case "map": {
                 const key = this.convert({ reference: container.keyType });
-                // When experimental flag is enabled, preserve nullable markers in value types
-                const unboxValueOptionals = this.generation.settings.enableExplicitNullableOptional ? true : true;
-                const value = this.convert({ reference: container.valueType, unboxOptionals: unboxValueOptionals });
+                const value = this.convert({ reference: container.valueType, unboxOptionals: true });
                 if (is.Primitive.object(value)) {
                     // object map values should be nullable.
                     return this.Collection.map(key, value.asOptional());
