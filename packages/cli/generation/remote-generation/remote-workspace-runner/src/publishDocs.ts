@@ -172,8 +172,6 @@ export async function publishDocs({
                     filepaths: filepaths,
                     images,
                     basePath
-                    // TODO: Add excludeApis once FDR API supports it
-                    // excludeApis
                 });
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
@@ -221,8 +219,6 @@ export async function publishDocs({
                     orgId: CjsFdrSdk.OrgId(organization),
                     filepaths: filepaths,
                     images
-                    // TODO: Add excludeApis once FDR API supports it
-                    // excludeApis
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
@@ -488,7 +484,7 @@ export async function publishDocs({
         DocsV1Write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition,
-            excludeApis: false,
+            excludeApis,
             libraryDocs: libraryDocsConfig
         }
     );
