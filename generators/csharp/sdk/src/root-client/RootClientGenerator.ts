@@ -315,7 +315,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 arguments_: [
                                     this.csharp.instantiateClass({
                                         classReference: this.generation.Types.CustomExceptionInterceptor,
-                                        arguments_: []
+                                        arguments_: [this.csharp.codeblock("clientOptions")]
                                     })
                                 ]
                             })
@@ -455,7 +455,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     writer.writeNodeStatement(
                         this.csharp.instantiateClass({
                             classReference: this.generation.Types.CustomExceptionInterceptor,
-                            arguments_: []
+                            arguments_: [this.csharp.codeblock("clientOptions")]
                         })
                     );
                     writer.writeLine("interceptor.Intercept(ex);");
