@@ -71,6 +71,14 @@ export class WebhookConverter extends AbstractOperationConverter {
                 payloadType: requestBody.requestBodyType,
                 docs: requestBody.docs
             });
+        } else if (requestBody.type === "fileUpload") {
+            payload = WebhookPayload.formData({
+                name: requestBody.name,
+                properties: requestBody.properties,
+                docs: requestBody.docs,
+                contentType: requestBody.contentType,
+                v2Examples: requestBody.v2Examples
+            });
         } else {
             return undefined;
         }

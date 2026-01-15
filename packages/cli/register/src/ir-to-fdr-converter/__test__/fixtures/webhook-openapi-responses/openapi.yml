@@ -32,6 +32,46 @@ webhooks:
         "500":
           description: Server error processing webhook
 
+  documentupload:
+    post:
+      operationId: documentUploadWebhook
+      summary: Document upload webhook
+      description: Webhook triggered when a document is uploaded via multipart form data
+      tags:
+        - Documents
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - documentType
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The uploaded document file
+                documentType:
+                  type: string
+                  enum: [invoice, receipt, contract, other]
+                  description: Type of the document
+                metadata:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Document title
+                    description:
+                      type: string
+                      description: Document description
+      responses:
+        "200":
+          description: Document processed successfully
+        "400":
+          description: Invalid file or form data
+
 components:
   schemas:
     PaymentSession:

@@ -7,12 +7,14 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { InlinedWebhookPayload } from "./InlinedWebhookPayload";
 import { WebhookPayloadReference } from "./WebhookPayloadReference";
+import { FileUploadRequest } from "../../http/types/FileUploadRequest";
 
 export const WebhookPayload: core.serialization.Schema<serializers.WebhookPayload.Raw, FernIr.WebhookPayload> =
     core.serialization
         .union("type", {
             inlinedPayload: InlinedWebhookPayload,
             reference: WebhookPayloadReference,
+            formData: FileUploadRequest,
         })
         .transform<FernIr.WebhookPayload>({
             transform: (value) => {
@@ -21,6 +23,8 @@ export const WebhookPayload: core.serialization.Schema<serializers.WebhookPayloa
                         return FernIr.WebhookPayload.inlinedPayload(value);
                     case "reference":
                         return FernIr.WebhookPayload.reference(value);
+                    case "formData":
+                        return FernIr.WebhookPayload.formData(value);
                     default:
                         return value as FernIr.WebhookPayload;
                 }
@@ -29,7 +33,7 @@ export const WebhookPayload: core.serialization.Schema<serializers.WebhookPayloa
         });
 
 export declare namespace WebhookPayload {
-    export type Raw = WebhookPayload.InlinedPayload | WebhookPayload.Reference;
+    export type Raw = WebhookPayload.InlinedPayload | WebhookPayload.Reference | WebhookPayload.FormData;
 
     export interface InlinedPayload extends InlinedWebhookPayload.Raw {
         type: "inlinedPayload";
@@ -37,5 +41,9 @@ export declare namespace WebhookPayload {
 
     export interface Reference extends WebhookPayloadReference.Raw {
         type: "reference";
+    }
+
+    export interface FormData extends FileUploadRequest.Raw {
+        type: "formData";
     }
 }

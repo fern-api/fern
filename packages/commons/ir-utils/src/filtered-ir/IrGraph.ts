@@ -354,6 +354,17 @@ export class IrGraph {
                 reference: ({ payloadType }) => {
                     populateReferencesFromTypeReference(payloadType, referencedTypes, referencedSubpackages);
                 },
+                formData: (formData) => {
+                    for (const property of formData.properties) {
+                        if (property.type === "bodyProperty") {
+                            populateReferencesFromTypeReference(
+                                property.valueType,
+                                referencedTypes,
+                                referencedSubpackages
+                            );
+                        }
+                    }
+                },
                 _other: () => {
                     throw new Error("Unknown WebhookPayload: " + webhook.payload?.type);
                 }

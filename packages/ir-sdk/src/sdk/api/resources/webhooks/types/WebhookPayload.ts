@@ -4,7 +4,10 @@
 
 import * as FernIr from "../../../index";
 
-export type WebhookPayload = FernIr.WebhookPayload.InlinedPayload | FernIr.WebhookPayload.Reference;
+export type WebhookPayload =
+    | FernIr.WebhookPayload.InlinedPayload
+    | FernIr.WebhookPayload.Reference
+    | FernIr.WebhookPayload.FormData;
 
 export namespace WebhookPayload {
     export interface InlinedPayload extends FernIr.InlinedWebhookPayload, _Utils {
@@ -15,6 +18,10 @@ export namespace WebhookPayload {
         type: "reference";
     }
 
+    export interface FormData extends FernIr.FileUploadRequest, _Utils {
+        type: "formData";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.WebhookPayload._Visitor<_Result>) => _Result;
     }
@@ -22,6 +29,7 @@ export namespace WebhookPayload {
     export interface _Visitor<_Result> {
         inlinedPayload: (value: FernIr.InlinedWebhookPayload) => _Result;
         reference: (value: FernIr.WebhookPayloadReference) => _Result;
+        formData: (value: FernIr.FileUploadRequest) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -53,12 +61,27 @@ export const WebhookPayload = {
         };
     },
 
+    formData: (value: FernIr.FileUploadRequest): FernIr.WebhookPayload.FormData => {
+        return {
+            ...value,
+            type: "formData",
+            _visit: function <_Result>(
+                this: FernIr.WebhookPayload.FormData,
+                visitor: FernIr.WebhookPayload._Visitor<_Result>,
+            ) {
+                return FernIr.WebhookPayload._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.WebhookPayload, visitor: FernIr.WebhookPayload._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "inlinedPayload":
                 return visitor.inlinedPayload(value);
             case "reference":
                 return visitor.reference(value);
+            case "formData":
+                return visitor.formData(value);
             default:
                 return visitor._other(value as any);
         }

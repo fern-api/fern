@@ -134,14 +134,18 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 list: (itemType) => {
                     return {
                         type: "list",
-                        itemType: convertTypeReference(itemType)
+                        itemType: convertTypeReference(itemType),
+                        minItems: undefined,
+                        maxItems: undefined
                     };
                 },
                 map: ({ keyType, valueType }) => {
                     return {
                         type: "map",
                         keyType: convertTypeReference(keyType),
-                        valueType: convertTypeReference(valueType)
+                        valueType: convertTypeReference(valueType),
+                        minProperties: undefined,
+                        maxProperties: undefined
                     };
                 },
                 optional: (itemType) => {
@@ -160,7 +164,9 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 set: (itemType) => {
                     return {
                         type: "set",
-                        itemType: convertTypeReference(itemType)
+                        itemType: convertTypeReference(itemType),
+                        minItems: undefined,
+                        maxItems: undefined
                     };
                 },
                 literal: (literal) => {
@@ -221,9 +227,12 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     long: () => {
                         return {
                             type: "long",
-                            default: primitive.v2?.type === "long" ? primitive.v2.default : undefined,
                             minimum: undefined,
-                            maximum: undefined
+                            maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
+                            default: primitive.v2?.type === "long" ? primitive.v2.default : undefined
                         };
                     },
                     boolean: () => {
@@ -265,12 +274,24 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     },
                     uint: () => {
                         return {
-                            type: "uint"
+                            type: "uint",
+                            minimum: undefined,
+                            maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
+                            default: undefined
                         };
                     },
                     uint64: () => {
                         return {
-                            type: "uint64"
+                            type: "uint64",
+                            minimum: undefined,
+                            maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
+                            default: undefined
                         };
                     },
                     _other: () => {
@@ -310,6 +331,9 @@ function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.ap
         type: "integer",
         minimum: rules != null ? rules.min : undefined,
         maximum: rules != null ? rules.max : undefined,
+        exclusiveMinimum: undefined,
+        exclusiveMaximum: undefined,
+        multipleOf: rules != null ? rules.multipleOf : undefined,
         default: primitive != null && primitive.type === "integer" ? primitive.default : undefined
     };
 }
@@ -321,6 +345,9 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         type: "double",
         minimum: rules != null ? rules.min : undefined,
         maximum: rules != null ? rules.max : undefined,
+        exclusiveMinimum: undefined,
+        exclusiveMaximum: undefined,
+        multipleOf: rules != null ? rules.multipleOf : undefined,
         default: primitive != null && primitive.type === "double" ? primitive.default : undefined
     };
 }

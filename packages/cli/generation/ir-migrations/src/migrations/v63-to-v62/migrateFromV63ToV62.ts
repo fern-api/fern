@@ -637,6 +637,13 @@ function convertWebhookPayload(payload: IrVersions.V63.WebhookPayload): IrVersio
                 ...payload,
                 payloadType: convertTypeReference(payload.payloadType)
             });
+        case "formData":
+            // formData webhooks are not supported in v62, convert to an empty inlined payload
+            return IrVersions.V62.webhooks.WebhookPayload.inlinedPayload({
+                name: payload.name,
+                extends: [],
+                properties: []
+            });
     }
 }
 

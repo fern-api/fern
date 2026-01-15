@@ -9,6 +9,7 @@
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_paymentSessions",
+      "subpackage_documents",
     ],
     "types": [
       "PaymentSession",
@@ -29,6 +30,114 @@
     "typescriptSdk": undefined,
   },
   "subpackages": {
+    "subpackage_documents": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "documents",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_documents",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [
+        {
+          "description": "Webhook triggered when a document is uploaded via multipart form data",
+          "examples": [
+            {
+              "name": "documentsDocumentUploadWebhookExample",
+              "payload": {
+                "documentType": "invoice",
+                "file": "string",
+              },
+            },
+          ],
+          "headers": [],
+          "id": "documentUploadWebhook",
+          "method": "POST",
+          "name": "Document upload webhook",
+          "path": [],
+          "payload": {
+            "description": undefined,
+            "type": {
+              "availability": undefined,
+              "description": undefined,
+              "name": "Documents_documentUploadWebhook_Request",
+              "properties": [
+                {
+                  "type": "file",
+                  "value": {
+                    "availability": undefined,
+                    "contentType": "multipart/form-data",
+                    "description": "The uploaded document file",
+                    "isOptional": false,
+                    "key": "file",
+                    "type": "file",
+                  },
+                },
+                {
+                  "availability": undefined,
+                  "contentType": "multipart/form-data",
+                  "description": "Type of the document",
+                  "exploded": false,
+                  "key": "documentType",
+                  "propertyAccess": undefined,
+                  "type": "bodyProperty",
+                  "valueType": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "WebhooksDocumentUploadWebhookPayloadContentMultipartFormDataSchemaDocumentType",
+                  },
+                },
+                {
+                  "availability": undefined,
+                  "contentType": "multipart/form-data",
+                  "description": undefined,
+                  "exploded": false,
+                  "key": "metadata",
+                  "propertyAccess": undefined,
+                  "type": "bodyProperty",
+                  "valueType": {
+                    "defaultValue": undefined,
+                    "itemType": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "WebhooksDocumentUploadWebhookPayloadContentMultipartFormDataSchemaMetadata",
+                    },
+                    "type": "optional",
+                  },
+                },
+              ],
+              "type": "formData",
+            },
+          },
+          "responses": [
+            {
+              "description": "Document processed successfully",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+            {
+              "description": "Invalid file or form data",
+              "isWildcard": undefined,
+              "statusCode": 400,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+          ],
+        },
+      ],
+      "websockets": [],
+    },
     "subpackage_paymentSessions": {
       "description": undefined,
       "displayName": undefined,
@@ -161,8 +270,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },
@@ -334,6 +446,93 @@
             "value": "failed",
           },
         ],
+      },
+    },
+    "WebhooksDocumentUploadWebhookPayloadContentMultipartFormDataSchemaDocumentType": {
+      "availability": undefined,
+      "description": "Type of the document",
+      "displayName": undefined,
+      "name": "WebhooksDocumentUploadWebhookPayloadContentMultipartFormDataSchemaDocumentType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "invoice",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "receipt",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "contract",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "other",
+          },
+        ],
+      },
+    },
+    "WebhooksDocumentUploadWebhookPayloadContentMultipartFormDataSchemaMetadata": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "WebhooksDocumentUploadWebhookPayloadContentMultipartFormDataSchemaMetadata",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Document title",
+            "key": "title",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Document description",
+            "key": "description",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
       },
     },
   },

@@ -26,6 +26,7 @@ types:
     union:
       inlinedPayload: InlinedWebhookPayload
       reference: WebhookPayloadReference
+      formData: http.FileUploadRequest
 
   WebhookPayloadReference:
     extends: commons.WithDocs
