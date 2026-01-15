@@ -6,16 +6,21 @@ import tmp from "tmp-promise";
 
 /**
  * Check if an error message indicates a network error.
+ * Used by both protobuf generation and AI example enhancement for air-gap detection.
  */
 export function isNetworkError(errorMessage: string): boolean {
     return (
         errorMessage.includes("server hosted at that remote is unavailable") ||
+        errorMessage.includes("fetch failed") ||
         errorMessage.includes("failed to connect") ||
         errorMessage.includes("network") ||
         errorMessage.includes("ENOTFOUND") ||
         errorMessage.includes("ETIMEDOUT") ||
         errorMessage.includes("TIMEDOUT") ||
-        errorMessage.includes("timed out")
+        errorMessage.includes("timed out") ||
+        errorMessage.includes("ECONNREFUSED") ||
+        errorMessage.includes("ECONNRESET") ||
+        errorMessage.includes("socket hang up")
     );
 }
 

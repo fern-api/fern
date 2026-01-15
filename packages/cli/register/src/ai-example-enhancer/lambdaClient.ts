@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { isNetworkError } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
@@ -6,21 +7,6 @@ import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementR
 const DEFAULT_AI_ENHANCEMENT_MAX_RETRIES = 0; // 0 retries = 1 attempt total
 const DEFAULT_AI_ENHANCEMENT_TIMEOUT_MS = 15000; // 15 seconds
 const AIRGAP_DETECTION_TIMEOUT_MS = 5000; // 5 second timeout for airgap detection
-
-function isNetworkError(errorMessage: string): boolean {
-    return (
-        errorMessage.includes("fetch failed") ||
-        errorMessage.includes("failed to connect") ||
-        errorMessage.includes("network") ||
-        errorMessage.includes("ENOTFOUND") ||
-        errorMessage.includes("ETIMEDOUT") ||
-        errorMessage.includes("TIMEDOUT") ||
-        errorMessage.includes("timed out") ||
-        errorMessage.includes("ECONNREFUSED") ||
-        errorMessage.includes("ECONNRESET") ||
-        errorMessage.includes("socket hang up")
-    );
-}
 
 type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">> &
     Pick<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">;
