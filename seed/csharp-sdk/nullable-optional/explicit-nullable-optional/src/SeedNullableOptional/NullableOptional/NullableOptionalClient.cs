@@ -232,7 +232,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         }
         if (request.SortBy.IsDefined)
         {
-            _query["sortBy"] = request.SortBy.Value;
+            _query["sortBy"] = request.SortBy;
         }
         var response = await _client
             .SendRequestAsync(

@@ -53,7 +53,7 @@ public partial class SeedApiClient : ISeedApiClient
         }
         if (request.OptionalNullableBaz.IsDefined)
         {
-            _query["optional_nullable_baz"] = request.OptionalNullableBaz.Value;
+            _query["optional_nullable_baz"] = request.OptionalNullableBaz;
         }
         var response = await _client
             .SendRequestAsync(

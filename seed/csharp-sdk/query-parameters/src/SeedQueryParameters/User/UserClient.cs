@@ -90,7 +90,7 @@ public partial class UserClient : IUserClient
         _query["filter"] = request.Filter;
         if (request.OptionalDeadline != null)
         {
-            _query["optionalDeadline"] = request.OptionalDeadline.ToString(
+            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
                 Constants.DateTimeFormat
             );
         }

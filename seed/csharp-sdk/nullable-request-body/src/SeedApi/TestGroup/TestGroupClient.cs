@@ -33,7 +33,7 @@ public partial class TestGroupClient : ITestGroupClient
         }
         if (request.QueryParamInteger != null)
         {
-            _query["query_param_integer"] = request.QueryParamInteger.ToString();
+            _query["query_param_integer"] = request.QueryParamInteger.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(

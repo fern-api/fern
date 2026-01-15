@@ -32,15 +32,15 @@ public partial class UsersClient : IUsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.ToString();
+                    _query["page"] = request.Page.Value.ToString();
                 }
                 if (request.PerPage != null)
                 {
-                    _query["per_page"] = request.PerPage.ToString();
+                    _query["per_page"] = request.PerPage.Value.ToString();
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Stringify();
+                    _query["order"] = request.Order.Value.Stringify();
                 }
                 if (request.StartingAfter != null)
                 {
@@ -251,15 +251,15 @@ public partial class UsersClient : IUsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.ToString();
+                    _query["page"] = request.Page.Value.ToString();
                 }
                 if (request.PerPage != null)
                 {
-                    _query["per_page"] = request.PerPage.ToString();
+                    _query["per_page"] = request.PerPage.Value.ToString();
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Stringify();
+                    _query["order"] = request.Order.Value.Stringify();
                 }
                 if (request.StartingAfter != null)
                 {
@@ -315,15 +315,15 @@ public partial class UsersClient : IUsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.ToString();
+                    _query["page"] = request.Page.Value.ToString();
                 }
                 if (request.PerPage != null)
                 {
-                    _query["per_page"] = request.PerPage.ToString();
+                    _query["per_page"] = request.PerPage.Value.ToString();
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Stringify();
+                    _query["order"] = request.Order.Value.Stringify();
                 }
                 if (request.StartingAfter != null)
                 {
@@ -426,15 +426,15 @@ public partial class UsersClient : IUsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.ToString();
+                    _query["page"] = request.Page.Value.ToString();
                 }
                 if (request.Limit != null)
                 {
-                    _query["limit"] = request.Limit.ToString();
+                    _query["limit"] = request.Limit.Value.ToString();
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Stringify();
+                    _query["order"] = request.Order.Value.Stringify();
                 }
                 var response = await _client
                     .SendRequestAsync(
@@ -486,15 +486,15 @@ public partial class UsersClient : IUsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.ToString();
+                    _query["page"] = request.Page.Value.ToString();
                 }
                 if (request.Limit != null)
                 {
-                    _query["limit"] = request.Limit.ToString();
+                    _query["limit"] = request.Limit.Value.ToString();
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Stringify();
+                    _query["order"] = request.Order.Value.Stringify();
                 }
                 var response = await _client
                     .SendRequestAsync(
@@ -756,7 +756,7 @@ public partial class UsersClient : IUsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Offset != null)
                 {
-                    _query["offset"] = request.Offset.ToString();
+                    _query["offset"] = request.Offset.Value.ToString();
                 }
                 var response = await _client
                     .SendRequestAsync(
@@ -808,7 +808,7 @@ public partial class UsersClient : IUsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.ToString();
+                    _query["page"] = request.Page.Value.ToString();
                 }
                 var response = await _client
                     .SendRequestAsync(

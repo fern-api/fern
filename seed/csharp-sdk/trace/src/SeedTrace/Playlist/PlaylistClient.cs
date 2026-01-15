@@ -41,7 +41,7 @@ public partial class PlaylistClient : IPlaylistClient
         _query["datetime"] = request.Datetime.ToString(Constants.DateTimeFormat);
         if (request.OptionalDatetime != null)
         {
-            _query["optionalDatetime"] = request.OptionalDatetime.ToString(
+            _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString(
                 Constants.DateTimeFormat
             );
         }
@@ -115,7 +115,7 @@ public partial class PlaylistClient : IPlaylistClient
         _query["multipleField"] = request.MultipleField;
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.ToString();
+            _query["limit"] = request.Limit.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(

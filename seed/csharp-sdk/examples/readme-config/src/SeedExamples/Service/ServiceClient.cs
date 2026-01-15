@@ -145,7 +145,7 @@ public partial class ServiceClient : IServiceClient
         _query["tag"] = request.Tag;
         if (request.Shallow != null)
         {
-            _query["shallow"] = JsonUtils.Serialize(request.Shallow);
+            _query["shallow"] = JsonUtils.Serialize(request.Shallow.Value);
         }
         var _headers = new Headers(
             new Dictionary<string, string>() { { "X-API-Version", request.XApiVersion } }

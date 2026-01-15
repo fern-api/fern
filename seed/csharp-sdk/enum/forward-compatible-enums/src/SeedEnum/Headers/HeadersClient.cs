@@ -37,7 +37,7 @@ public partial class HeadersClient : IHeadersClient
         );
         if (request.MaybeOperand != null)
         {
-            _headers["maybeOperand"] = request.MaybeOperand.Stringify();
+            _headers["maybeOperand"] = request.MaybeOperand.Value.Stringify();
         }
         if (request.MaybeOperandOrColor != null)
         {

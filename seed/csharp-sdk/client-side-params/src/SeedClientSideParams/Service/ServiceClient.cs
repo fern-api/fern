@@ -236,15 +236,15 @@ public partial class ServiceClient : IServiceClient
         var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
-            _query["page"] = request.Page.ToString();
+            _query["page"] = request.Page.Value.ToString();
         }
         if (request.PerPage != null)
         {
-            _query["per_page"] = request.PerPage.ToString();
+            _query["per_page"] = request.PerPage.Value.ToString();
         }
         if (request.IncludeTotals != null)
         {
-            _query["include_totals"] = JsonUtils.Serialize(request.IncludeTotals);
+            _query["include_totals"] = JsonUtils.Serialize(request.IncludeTotals.Value);
         }
         if (request.Sort != null)
         {
@@ -325,7 +325,7 @@ public partial class ServiceClient : IServiceClient
         }
         if (request.IncludeFields != null)
         {
-            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields);
+            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields.Value);
         }
         var response = await _client
             .SendRequestAsync(
@@ -717,27 +717,27 @@ public partial class ServiceClient : IServiceClient
         }
         if (request.IncludeFields != null)
         {
-            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields);
+            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields.Value);
         }
         if (request.Page != null)
         {
-            _query["page"] = request.Page.ToString();
+            _query["page"] = request.Page.Value.ToString();
         }
         if (request.PerPage != null)
         {
-            _query["per_page"] = request.PerPage.ToString();
+            _query["per_page"] = request.PerPage.Value.ToString();
         }
         if (request.IncludeTotals != null)
         {
-            _query["include_totals"] = JsonUtils.Serialize(request.IncludeTotals);
+            _query["include_totals"] = JsonUtils.Serialize(request.IncludeTotals.Value);
         }
         if (request.IsGlobal != null)
         {
-            _query["is_global"] = JsonUtils.Serialize(request.IsGlobal);
+            _query["is_global"] = JsonUtils.Serialize(request.IsGlobal.Value);
         }
         if (request.IsFirstParty != null)
         {
-            _query["is_first_party"] = JsonUtils.Serialize(request.IsFirstParty);
+            _query["is_first_party"] = JsonUtils.Serialize(request.IsFirstParty.Value);
         }
         if (request.AppType != null)
         {
@@ -802,7 +802,7 @@ public partial class ServiceClient : IServiceClient
         }
         if (request.IncludeFields != null)
         {
-            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields);
+            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields.Value);
         }
         var response = await _client
             .SendRequestAsync(

@@ -220,15 +220,15 @@ public partial class NullableOptionalClient : INullableOptionalClient
         var _query = new Dictionary<string, object>();
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.ToString();
+            _query["limit"] = request.Limit.Value.ToString();
         }
         if (request.Offset != null)
         {
-            _query["offset"] = request.Offset.ToString();
+            _query["offset"] = request.Offset.Value.ToString();
         }
         if (request.IncludeDeleted != null)
         {
-            _query["includeDeleted"] = JsonUtils.Serialize(request.IncludeDeleted);
+            _query["includeDeleted"] = JsonUtils.Serialize(request.IncludeDeleted.Value);
         }
         if (request.SortBy != null)
         {
@@ -302,7 +302,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         }
         if (request.IsActive != null)
         {
-            _query["isActive"] = JsonUtils.Serialize(request.IsActive);
+            _query["isActive"] = JsonUtils.Serialize(request.IsActive.Value);
         }
         var response = await _client
             .SendRequestAsync(
@@ -809,11 +809,11 @@ public partial class NullableOptionalClient : INullableOptionalClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.Stringify();
+            _query["status"] = request.Status.Value.Stringify();
         }
         if (request.SecondaryRole != null)
         {
-            _query["secondaryRole"] = request.SecondaryRole.ToString();
+            _query["secondaryRole"] = request.SecondaryRole.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(

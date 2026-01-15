@@ -227,7 +227,7 @@ public partial class UserClient : IUserClient
         _query["bigIntParam"] = request.BigIntParam;
         if (request.OptionalDeadline != null)
         {
-            _query["optionalDeadline"] = request.OptionalDeadline.ToString(
+            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
                 Constants.DateTimeFormat
             );
         }

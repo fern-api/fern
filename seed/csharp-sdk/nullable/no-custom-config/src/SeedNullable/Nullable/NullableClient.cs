@@ -42,7 +42,7 @@ public partial class NullableClient : INullableClient
         }
         if (request.Extra != null)
         {
-            _query["extra"] = JsonUtils.Serialize(request.Extra);
+            _query["extra"] = JsonUtils.Serialize(request.Extra.Value);
         }
         var response = await _client
             .SendRequestAsync(

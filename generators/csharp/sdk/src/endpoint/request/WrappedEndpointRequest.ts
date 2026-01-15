@@ -375,17 +375,20 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const isNullable = this.isNullable({ typeReference: reference });
         const isStruct = this.isStruct({ typeReference: reference });
 
-        // Add .Value for Optional<T?> (both optional and nullable) or nullable structs
-        // Only add .Value when experimental flag is enabled and type uses Optional<T?> wrapper
-        const maybeDotValue =
-            this.context.generation.settings.enableExplicitNullableOptional &&
-            ((isOptional && isNullable) || (isNullable && isStruct)) &&
-            (allowOptionals ?? true)
-                ? ".Value"
-                : "";
+        // Add .Value for nullable structs that need method calls like .ToString(format)
+        // - When experimental flag is enabled: add .Value for Optional<T?> or nullable structs
+        // - When experimental flag is disabled (legacy): add .Value for optional structs (which become T?)
+        // Note: strings are reference types and don't need .Value (string? doesn't have .Value)
+        const needsDotValue =
+            (allowOptionals ?? true) &&
+            isStruct &&
+            (this.context.generation.settings.enableExplicitNullableOptional
+                ? (isOptional && isNullable) || isNullable
+                : isOptional);
+        const maybeDotValue = needsDotValue ? ".Value" : "";
 
         if (this.isString(reference)) {
-            return this.csharp.codeblock(`${parameter}${maybeDotValue}`);
+            return this.csharp.codeblock(`${parameter}`);
         }
 
         if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
