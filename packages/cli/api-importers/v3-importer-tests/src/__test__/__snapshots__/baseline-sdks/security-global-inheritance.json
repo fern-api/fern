@@ -262,7 +262,7 @@
                 "docs": "List of plants",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "GetPlantsResponseItem",
                         "camelCase": {

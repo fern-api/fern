@@ -333,7 +333,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const additionalPropertiesConverter = new MapSchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                schemaOrReferenceOrBoolean: this.schema.additionalProperties
+                schemaOrReferenceOrBoolean: this.schema.additionalProperties,
+                minProperties: this.schema.minProperties,
+                maxProperties: this.schema.maxProperties
             });
             const additionalPropertiesType = additionalPropertiesConverter.convert();
             if (additionalPropertiesType != null) {

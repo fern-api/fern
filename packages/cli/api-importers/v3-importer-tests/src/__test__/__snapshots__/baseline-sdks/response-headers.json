@@ -563,7 +563,7 @@
                 "docs": "A list of users",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "User",
                         "camelCase": {

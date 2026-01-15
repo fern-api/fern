@@ -170,7 +170,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Person",
                         "camelCase": {

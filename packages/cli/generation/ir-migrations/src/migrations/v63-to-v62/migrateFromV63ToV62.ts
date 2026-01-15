@@ -217,9 +217,11 @@ function convertTypeReference(typeReference: IrVersions.V63.TypeReference): IrVe
 function convertContainerType(container: IrVersions.V63.ContainerType): IrVersions.V62.types.ContainerType {
     switch (container.type) {
         case "list":
-            return IrVersions.V62.types.ContainerType.list(convertTypeReference(container.list));
+            // V63 list is now a ListType object with itemType property
+            return IrVersions.V62.types.ContainerType.list(convertTypeReference(container.itemType));
         case "set":
-            return IrVersions.V62.types.ContainerType.set(convertTypeReference(container.set));
+            // V63 set is now a SetType object with itemType property
+            return IrVersions.V62.types.ContainerType.set(convertTypeReference(container.itemType));
         case "map":
             return IrVersions.V62.types.ContainerType.map({
                 keyType: convertTypeReference(container.keyType),

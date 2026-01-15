@@ -82,7 +82,7 @@
             },
             "valueType": {
               "container": {
-                "list": {
+                "itemType": {
                   "name": {
                     "originalName": "Item",
                     "camelCase": {
