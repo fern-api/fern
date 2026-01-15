@@ -366,21 +366,9 @@ function filterExampleResponse({
                 body: (exampleTypeReference) =>
                     ExampleResponse.ok(
                         ExampleEndpointSuccessResponse.body(
-                            (() => {
-                                if (exampleTypeReference == null) {
-                                    return {
-                                        jsonExample: undefined,
-                                        shape: ExampleTypeReferenceShape.unknown({ unknown: undefined })
-                                    };
-                                }
-                                const filtered = filterExampleTypeReference({ filteredIr, exampleTypeReference });
-                                return (
-                                    filtered ?? {
-                                        jsonExample: undefined,
-                                        shape: ExampleTypeReferenceShape.unknown({ unknown: undefined })
-                                    }
-                                );
-                            })()
+                            exampleTypeReference != null
+                                ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
+                                : undefined
                         )
                     ),
                 stream: (stream) =>
