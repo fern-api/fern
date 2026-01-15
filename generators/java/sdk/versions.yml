@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.30.0
+  changelogEntry:
+    - summary: |
+        Add `enable-gradle-profiling` configuration option for profiling Gradle commands during generation.
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
 - version: 3.29.2
   changelogEntry:
     - summary: |

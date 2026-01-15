@@ -31,6 +31,9 @@ export const BaseJavaCustomConfigSchema = z.object({
     "gradle-plugin-management": z.string().optional(),
     "gradle-central-dependency-management": z.boolean().optional(),
 
+    // Hidden options (for debugging).
+    "enable-gradle-profiling": z.boolean().optional(),
+
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()
 });
