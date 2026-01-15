@@ -99,16 +99,11 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     /// <summary>
     /// Asynchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
     /// </summary>
-    public ValueTask DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
-        return new ValueTask(DisposeAsyncCore());
-
-        async Task DisposeAsyncCore()
-        {
-            await _client.DisposeAsync().ConfigureAwait(false);
-            DisposeEvents();
-            GC.SuppressFinalize(this);
-        }
+        await _client.DisposeAsync();
+        DisposeEvents();
+        GC.SuppressFinalize(this);
     }
 
     /// <summary>
