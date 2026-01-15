@@ -1,12 +1,11 @@
 import { FernToken } from "@fern-api/auth";
-import { isNetworkError } from "@fern-api/lazy-fern-workspace";
+import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
 // Configuration constants for AI enhancement
 const DEFAULT_AI_ENHANCEMENT_MAX_RETRIES = 0; // 0 retries = 1 attempt total
 const DEFAULT_AI_ENHANCEMENT_TIMEOUT_MS = 15000; // 15 seconds
-const AIRGAP_DETECTION_TIMEOUT_MS = 5000; // 5 second timeout for airgap detection
 
 type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">> &
     Pick<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">;
@@ -24,8 +23,6 @@ export class LambdaExampleEnhancer {
     private token: FernToken;
     private jwtPromise: Promise<string> | undefined;
     private organizationId: string;
-    private static isAirGapped: boolean | undefined;
-    private static airGapDetectionPromise: Promise<boolean> | undefined;
 
     constructor(config: AIExampleEnhancerConfig, context: TaskContext, token: FernToken, organizationId: string) {
         this.config = {
@@ -98,46 +95,6 @@ export class LambdaExampleEnhancer {
         return result.token;
     }
 
-    /**
-     * Detects if we're in an air-gapped environment by trying to reach Venus.
-     * The result is cached globally to avoid repeated detection attempts.
-     */
-    private async detectAirGappedMode(): Promise<boolean> {
-        if (LambdaExampleEnhancer.isAirGapped !== undefined) {
-            return LambdaExampleEnhancer.isAirGapped;
-        }
-
-        if (LambdaExampleEnhancer.airGapDetectionPromise == null) {
-            LambdaExampleEnhancer.airGapDetectionPromise = this.performAirGapDetection();
-        }
-
-        return LambdaExampleEnhancer.airGapDetectionPromise;
-    }
-
-    private async performAirGapDetection(): Promise<boolean> {
-        this.context.logger.debug("Detecting air-gapped mode for AI example enhancement");
-
-        try {
-            const response = await fetch(`${this.venusOrigin}/health`, {
-                method: "GET",
-                signal: AbortSignal.timeout(AIRGAP_DETECTION_TIMEOUT_MS)
-            });
-
-            LambdaExampleEnhancer.isAirGapped = false;
-            this.context.logger.debug("Network check succeeded - not in air-gapped mode");
-            return false;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
-            if (isNetworkError(errorMessage)) {
-                LambdaExampleEnhancer.isAirGapped = true;
-                this.context.logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage}`);
-                return true;
-            }
-            LambdaExampleEnhancer.isAirGapped = false;
-            return false;
-        }
-    }
-
     async enhanceExample(request: ExampleEnhancementRequest): Promise<ExampleEnhancementResponse> {
         if (!this.config.enabled) {
             return {
@@ -147,7 +104,7 @@ export class LambdaExampleEnhancer {
         }
 
         // Check for air-gapped environment before attempting network calls
-        const isAirGapped = await this.detectAirGappedMode();
+        const isAirGapped = await detectAirGappedMode(`${this.venusOrigin}/health`, this.context.logger);
         if (isAirGapped) {
             this.context.logger.debug("Skipping AI example enhancement in air-gapped environment");
             return {
