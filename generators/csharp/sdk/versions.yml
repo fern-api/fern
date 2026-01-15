@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.14.0
+  changelogEntry:
+    - summary: |
+        Refactor WebSocket API code generation to use composition over inheritance.
+
+        Key changes:
+        * Replace `AsyncApi<T>` base class with `WebSocketClient` internal class using composition
+        * Flatten namespace from `{root}.Core.Async.*` to `{root}.Core.WebSockets`
+        * Generated WebSocket clients now implement `IAsyncDisposable`, `IDisposable`, and `INotifyPropertyChanged` directly
+        * Store `Options` and `WebSocketClient` as private fields instead of using inheritance
+        * Forward `Status`, `Connected`, `Closed`, and `ExceptionOccurred` events from internal client
+        * Simplify `INotifyPropertyChanged` to only notify for `Status` property changes
+
+        This refactoring improves code clarity and reduces complexity.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 62
+
 - version: 2.13.1
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
