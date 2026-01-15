@@ -1486,12 +1486,116 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("return new _Builder()")
                         .build());
 
-                // Create _Builder nested class with token() and credentials() methods
+                // Create _Builder nested class with all builder methods plus token() and credentials()
                 TypeSpec.Builder builderStageBuilder = TypeSpec.classBuilder("_Builder")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
 
-                // Add token() method that returns _TokenAuth
-                builderStageBuilder.addMethod(MethodSpec.methodBuilder("token")
+                // Add fields to store configuration values
+                builderStageBuilder.addField(FieldSpec.builder(generatedEnvironmentsClass.getClassName(), "environment")
+                        .addModifiers(Modifier.PRIVATE)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                                "timeout")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                                "maxRetries")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(OkHttpClient.class, "httpClient")
+                        .addModifiers(Modifier.PRIVATE)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(
+                                        ClassName.get(Map.class),
+                                        ClassName.get(String.class),
+                                        ClassName.get(String.class)),
+                                "headers")
+                        .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                        .initializer("new $T<>()", HashMap.class)
+                        .build());
+
+                // Add environment() method if environments are present
+                if (generatedEnvironmentsClass.optionsPresent()) {
+                    builderStageBuilder.addMethod(MethodSpec.methodBuilder("environment")
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(generatedEnvironmentsClass.getClassName(), "environment")
+                            .returns(builderStageClassName)
+                            .addStatement("this.environment = environment")
+                            .addStatement("return this")
+                            .build());
+                }
+
+                // Add url() method if single URL environment
+                if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
+                    SingleUrlEnvironmentClass singleUrlEnvClass =
+                            ((SingleUrlEnvironmentClass) generatedEnvironmentsClass.info());
+                    builderStageBuilder.addMethod(MethodSpec.methodBuilder("url")
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(String.class, "url")
+                            .returns(builderStageClassName)
+                            .addStatement(
+                                    "this.environment = $T.$N(url)",
+                                    generatedEnvironmentsClass.getClassName(),
+                                    singleUrlEnvClass.getCustomMethod())
+                            .addStatement("return this")
+                            .build());
+                }
+
+                // Add timeout() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("timeout")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Sets the timeout (in seconds) for the client. Defaults to 60 seconds.")
+                        .addParameter(int.class, "timeout")
+                        .returns(builderStageClassName)
+                        .addStatement("this.timeout = $T.of(timeout)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add maxRetries() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("maxRetries")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Sets the maximum number of retries for the client. Defaults to 2 retries.")
+                        .addParameter(int.class, "maxRetries")
+                        .returns(builderStageClassName)
+                        .addStatement("this.maxRetries = $T.of(maxRetries)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add httpClient() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Sets the underlying OkHttp client")
+                        .addParameter(OkHttpClient.class, "httpClient")
+                        .returns(builderStageClassName)
+                        .addStatement("this.httpClient = httpClient")
+                        .addStatement("return this")
+                        .build());
+
+                // Add addHeader() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("addHeader")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Add a custom header to be sent with all requests.\n")
+                        .addJavadoc("@param name The header name\n")
+                        .addJavadoc("@param value The header value\n")
+                        .addJavadoc("@return This builder for method chaining")
+                        .addParameter(String.class, "name")
+                        .addParameter(String.class, "value")
+                        .returns(builderStageClassName)
+                        .addStatement("this.headers.put(name, value)")
+                        .addStatement("return this")
+                        .build());
+
+                // Add token() method that returns _TokenAuth with configuration copied using setter methods
+                MethodSpec.Builder tokenMethodBuilder = MethodSpec.methodBuilder("token")
                         .addModifiers(Modifier.PUBLIC)
                         .addJavadoc("Configure the client to use a pre-generated access token for authentication.\n")
                         .addJavadoc("Use this when you already have a valid access token and want to bypass\n")
@@ -1503,11 +1607,27 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addJavadoc("@return A builder configured for token authentication")
                         .addParameter(String.class, tokenOverridePropertyName)
                         .returns(tokenAuthClassName)
-                        .addStatement("return new _TokenAuth($L)", tokenOverridePropertyName)
-                        .build());
+                        .addStatement("_TokenAuth auth = new _TokenAuth($L)", tokenOverridePropertyName)
+                        .beginControlFlow("if (this.environment != null)")
+                        .addStatement("auth.environment = this.environment")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.timeout.isPresent())")
+                        .addStatement("auth.timeout(this.timeout.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.maxRetries.isPresent())")
+                        .addStatement("auth.maxRetries(this.maxRetries.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.httpClient != null)")
+                        .addStatement("auth.httpClient(this.httpClient)")
+                        .endControlFlow()
+                        .beginControlFlow("for ($T.Entry<String, String> header : this.headers.entrySet())", Map.class)
+                        .addStatement("auth.addHeader(header.getKey(), header.getValue())")
+                        .endControlFlow()
+                        .addStatement("return auth");
+                builderStageBuilder.addMethod(tokenMethodBuilder.build());
 
-                // Add credentials() method that returns _CredentialsAuth
-                builderStageBuilder.addMethod(MethodSpec.methodBuilder("credentials")
+                // Add credentials() method that returns _CredentialsAuth with configuration copied using setter methods
+                MethodSpec.Builder credentialsMethodBuilder = MethodSpec.methodBuilder("credentials")
                         .addModifiers(Modifier.PUBLIC)
                         .addJavadoc("Configure the client to use OAuth client credentials for authentication.\n")
                         .addJavadoc("The builder will automatically handle token acquisition and refresh.\n")
@@ -1518,8 +1638,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addParameter(String.class, "clientId")
                         .addParameter(String.class, "clientSecret")
                         .returns(credentialsAuthClassName)
-                        .addStatement("return new _CredentialsAuth(clientId, clientSecret)")
-                        .build());
+                        .addStatement("_CredentialsAuth auth = new _CredentialsAuth(clientId, clientSecret)")
+                        .beginControlFlow("if (this.environment != null)")
+                        .addStatement("auth.environment = this.environment")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.timeout.isPresent())")
+                        .addStatement("auth.timeout(this.timeout.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.maxRetries.isPresent())")
+                        .addStatement("auth.maxRetries(this.maxRetries.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.httpClient != null)")
+                        .addStatement("auth.httpClient(this.httpClient)")
+                        .endControlFlow()
+                        .beginControlFlow("for ($T.Entry<String, String> header : this.headers.entrySet())", Map.class)
+                        .addStatement("auth.addHeader(header.getKey(), header.getValue())")
+                        .endControlFlow()
+                        .addStatement("return auth");
+                builderStageBuilder.addMethod(credentialsMethodBuilder.build());
 
                 clientBuilder.addType(builderStageBuilder.build());
 
