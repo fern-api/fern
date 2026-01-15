@@ -1,4 +1,44 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.3
+  changelogEntry:
+    - summary: |
+        Downgrade OpenAPI reference validation to warning severity. Previously, invalid references were treated as errors.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.42.2
+  changelogEntry:
+    - summary: |
+        Fix webhook audience filtering in OpenAPI v3 importer. Webhooks with `x-fern-audiences` are now correctly included when generating for matching audiences.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.42.1
+  changelogEntry:
+    - summary: |
+        Rename java-model generator to fern-java-model.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.42.0
+  changelogEntry:
+    - summary: |
+        Add placeholder page for python-docs in `fern docs dev`. When running local development, a helpful placeholder page is shown explaining that Python library documentation requires `fern generate --docs` or `fern generate --docs --preview` to generate.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.41.1
+  changelogEntry:
+    - summary: |
+        Support `ai-examples` and `ai-example-style-instructions` configuration options from `experimental` with the new `enabled` and `style`, under `ai-examples` in the top-level `docs.yml` configuration.
+      type: chore
+  createdAt: "2026-01-14"
+  irVersion: 63
+
 - version: 3.41.0
   changelogEntry:
     - summary: |

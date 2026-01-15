@@ -23,6 +23,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly defaultEndpointId: EndpointId;
     private readonly rootPackageName: string;
     private readonly rootPackageClientName: string;
+    private readonly rootClientClassName: string;
     private readonly isPaginationEnabled: boolean;
 
     constructor({
@@ -44,6 +45,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 : this.getDefaultEndpointId();
         this.rootPackageName = this.context.getRootFolderName();
         this.rootPackageClientName = this.context.getRootModuleName();
+        this.rootClientClassName = this.context.getRootClientClassName();
     }
 
     public buildReadmeSnippetsByFeatureId(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -154,7 +156,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             fullString += "### Environments\n";
             fullString += this.writeCode(dedent`${openMardownRubySnippet}require "${this.rootPackageName}"
 
-                ${this.rootPackageName} = ${this.rootPackageClientName}::Client.new(
+                ${this.rootPackageName} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
                     base_url: ${this.getEnvironmentNameExample()}
                 )
             ${closeMardownRubySnippet}`);
@@ -164,7 +166,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         fullString += this.writeCode(dedent`${openMardownRubySnippet}require "${this.rootPackageName}"
 
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::Client.new(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
                 base_url: ${this.getEnvironmentURLExample()}
             )
         ${closeMardownRubySnippet}`);
@@ -175,7 +177,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::Client.new(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
                 base_url: ${this.getEnvironmentURLExample()}
             )
 
@@ -240,7 +242,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::Client.new(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
                 base_url: ${this.getEnvironmentURLExample()},
                 max_retries: 3  # Configure max retries (default is 2)
             )
