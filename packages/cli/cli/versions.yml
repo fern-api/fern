@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.2
+  changelogEntry:
+    - summary: |
+        Fix `fern check` to properly skip AsyncAPI JSON files in the `no-non-component-refs` validation rule. The rule now detects AsyncAPI specs in both YAML format (`asyncapi:`) and JSON format (`"asyncapi"`) to avoid false positive validation errors about non-component references.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
 - version: 3.42.1
   changelogEntry:
     - summary: |
