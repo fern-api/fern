@@ -1159,11 +1159,17 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         "api update",
         `Pulls the latest OpenAPI spec from the specified origin in ${GENERATORS_CONFIGURATION_FILENAME} and updates the local spec.`,
         (yargs) =>
-            yargs.option("api", {
-                string: true,
-                description:
-                    "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
-            }),
+            yargs
+                .option("api", {
+                    string: true,
+                    description:
+                        "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
+                })
+                .option("indent", {
+                    type: "number",
+                    description: "Indentation width in spaces (default: 2)",
+                    default: 2
+                }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
                 command: "fern api update"
@@ -1173,7 +1179,8 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
-                })
+                }),
+                indent: argv.indent
             });
         }
     );
