@@ -134,14 +134,18 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 list: (itemType) => {
                     return {
                         type: "list",
-                        itemType: convertTypeReference(itemType)
+                        itemType: convertTypeReference(itemType),
+                        minItems: undefined,
+                        maxItems: undefined
                     };
                 },
                 map: ({ keyType, valueType }) => {
                     return {
                         type: "map",
                         keyType: convertTypeReference(keyType),
-                        valueType: convertTypeReference(valueType)
+                        valueType: convertTypeReference(valueType),
+                        minProperties: undefined,
+                        maxProperties: undefined
                     };
                 },
                 optional: (itemType) => {
@@ -160,7 +164,9 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 set: (itemType) => {
                     return {
                         type: "set",
-                        itemType: convertTypeReference(itemType)
+                        itemType: convertTypeReference(itemType),
+                        minItems: undefined,
+                        maxItems: undefined
                     };
                 },
                 literal: (literal) => {
@@ -219,12 +225,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         return convertString(primitive.v2);
                     },
                     long: () => {
-                        return {
-                            type: "long",
-                            default: primitive.v2?.type === "long" ? primitive.v2.default : undefined,
-                            minimum: undefined,
-                            maximum: undefined
-                        };
+                        return convertLong(primitive.v2);
                     },
                     boolean: () => {
                         return {
@@ -264,14 +265,10 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         };
                     },
                     uint: () => {
-                        return {
-                            type: "uint"
-                        };
+                        return convertUint(primitive.v2);
                     },
                     uint64: () => {
-                        return {
-                            type: "uint64"
-                        };
+                        return convertUint64(primitive.v2);
                     },
                     _other: () => {
                         throw new Error("Unknown primitive: " + primitive.v1);
@@ -308,8 +305,11 @@ function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.ap
         primitive != null && primitive.type === "integer" ? primitive.validation : undefined;
     return {
         type: "integer",
-        minimum: rules != null ? rules.min : undefined,
-        maximum: rules != null ? rules.max : undefined,
+        minimum: rules?.exclusiveMin === true ? undefined : rules?.min,
+        maximum: rules?.exclusiveMax === true ? undefined : rules?.max,
+        exclusiveMinimum: rules?.exclusiveMin === true ? rules?.min : undefined,
+        exclusiveMaximum: rules?.exclusiveMax === true ? rules?.max : undefined,
+        multipleOf: rules?.multipleOf,
         default: primitive != null && primitive.type === "integer" ? primitive.default : undefined
     };
 }
@@ -319,9 +319,54 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         primitive != null && primitive.type === "double" ? primitive.validation : undefined;
     return {
         type: "double",
-        minimum: rules != null ? rules.min : undefined,
-        maximum: rules != null ? rules.max : undefined,
+        minimum: rules?.exclusiveMin === true ? undefined : rules?.min,
+        maximum: rules?.exclusiveMax === true ? undefined : rules?.max,
+        exclusiveMinimum: rules?.exclusiveMin === true ? rules?.min : undefined,
+        exclusiveMaximum: rules?.exclusiveMax === true ? rules?.max : undefined,
+        multipleOf: rules?.multipleOf,
         default: primitive != null && primitive.type === "double" ? primitive.default : undefined
+    };
+}
+
+function convertLong(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
+    const rules: Ir.LongValidationRules | undefined =
+        primitive != null && primitive.type === "long" ? primitive.validation : undefined;
+    return {
+        type: "long",
+        minimum: rules?.exclusiveMin === true ? undefined : rules?.min,
+        maximum: rules?.exclusiveMax === true ? undefined : rules?.max,
+        exclusiveMinimum: rules?.exclusiveMin === true ? rules?.min : undefined,
+        exclusiveMaximum: rules?.exclusiveMax === true ? rules?.max : undefined,
+        multipleOf: rules?.multipleOf,
+        default: primitive != null && primitive.type === "long" ? primitive.default : undefined
+    };
+}
+
+function convertUint(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
+    const rules: Ir.UintValidationRules | undefined =
+        primitive != null && primitive.type === "uint" ? primitive.validation : undefined;
+    return {
+        type: "uint",
+        minimum: rules?.exclusiveMin === true ? undefined : rules?.min,
+        maximum: rules?.exclusiveMax === true ? undefined : rules?.max,
+        exclusiveMinimum: rules?.exclusiveMin === true ? rules?.min : undefined,
+        exclusiveMaximum: rules?.exclusiveMax === true ? rules?.max : undefined,
+        multipleOf: rules?.multipleOf,
+        default: primitive != null && primitive.type === "uint" ? primitive.default : undefined
+    };
+}
+
+function convertUint64(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
+    const rules: Ir.Uint64ValidationRules | undefined =
+        primitive != null && primitive.type === "uint64" ? primitive.validation : undefined;
+    return {
+        type: "uint64",
+        minimum: rules?.exclusiveMin === true ? undefined : rules?.min,
+        maximum: rules?.exclusiveMax === true ? undefined : rules?.max,
+        exclusiveMinimum: rules?.exclusiveMin === true ? rules?.min : undefined,
+        exclusiveMaximum: rules?.exclusiveMax === true ? rules?.max : undefined,
+        multipleOf: rules?.multipleOf,
+        default: primitive != null && primitive.type === "uint64" ? primitive.default : undefined
     };
 }
 
