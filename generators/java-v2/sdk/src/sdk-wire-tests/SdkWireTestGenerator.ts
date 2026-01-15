@@ -385,36 +385,51 @@ export class SdkWireTestGenerator {
             const serviceNamePascal = serviceName;
             const serviceNameLower = expectedServiceName;
 
+            // Build the corrected fernFilepath for the expected service
+            const correctedFernFilepath = {
+                allParts: [
+                    {
+                        originalName: serviceNamePascal,
+                        camelCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
+                        snakeCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
+                        screamingSnakeCase: {
+                            unsafeName: serviceNamePascal.toUpperCase(),
+                            safeName: serviceNamePascal.toUpperCase()
+                        },
+                        pascalCase: { unsafeName: serviceNamePascal, safeName: serviceNamePascal }
+                    }
+                ],
+                packagePath: [],
+                file: {
+                    originalName: serviceNamePascal,
+                    camelCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
+                    snakeCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
+                    screamingSnakeCase: {
+                        unsafeName: serviceNamePascal.toUpperCase(),
+                        safeName: serviceNamePascal.toUpperCase()
+                    },
+                    pascalCase: { unsafeName: serviceNamePascal, safeName: serviceNamePascal }
+                }
+            };
+
+            // Correct both the endpoint declaration and the request declaration's fernFilepath
+            // This ensures that both the service chain (e.g., client.proxy().proxyV1Service())
+            // and the request type imports (e.g., FetchServiceRequest) use the correct package
+            const correctedRequest = {
+                ...dynamicEndpoint.request,
+                declaration: {
+                    ...dynamicEndpoint.request.declaration,
+                    fernFilepath: correctedFernFilepath
+                }
+            };
+
             const correctedDynamicEndpoint = {
                 ...dynamicEndpoint,
                 declaration: {
                     ...dynamicEndpoint.declaration,
-                    fernFilepath: {
-                        allParts: [
-                            {
-                                originalName: serviceNamePascal,
-                                camelCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
-                                snakeCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
-                                screamingSnakeCase: {
-                                    unsafeName: serviceNamePascal.toUpperCase(),
-                                    safeName: serviceNamePascal.toUpperCase()
-                                },
-                                pascalCase: { unsafeName: serviceNamePascal, safeName: serviceNamePascal }
-                            }
-                        ],
-                        packagePath: [],
-                        file: {
-                            originalName: serviceNamePascal,
-                            camelCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
-                            snakeCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
-                            screamingSnakeCase: {
-                                unsafeName: serviceNamePascal.toUpperCase(),
-                                safeName: serviceNamePascal.toUpperCase()
-                            },
-                            pascalCase: { unsafeName: serviceNamePascal, safeName: serviceNamePascal }
-                        }
-                    }
-                }
+                    fernFilepath: correctedFernFilepath
+                },
+                request: correctedRequest
             };
 
             const originalDynamicEndpoint = dynamicIr.endpoints[endpoint.id];

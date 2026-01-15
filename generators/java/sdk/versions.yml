@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.29.3
+  changelogEntry:
+    - summary: |
+        Fix wire test import conflicts when multiple services have types with the same simple name.
+        The service correction logic now also updates the request declaration's fernFilepath,
+        ensuring that request type imports (e.g., FetchServiceRequest) use the correct package
+        when there are naming conflicts across services.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
 - version: 3.29.2
   changelogEntry:
     - summary: |
