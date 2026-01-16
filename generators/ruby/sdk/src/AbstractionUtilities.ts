@@ -16,6 +16,7 @@ import {
     HashReference,
     Import,
     LocationGenerator,
+    LongClassReference,
     Module_,
     Parameter,
     Property,
@@ -111,14 +112,37 @@ export function generateEndpoints(
             );
 
             const shouldOverwriteUrl = endpoint.baseUrl !== undefined;
+            // Wrap the HTTP request with retry logic using the Retryable module
+            // This allows per-request max_retries override via request_options
+            const httpRequestBlock = generator.getFaradayBlock(requestClientVariable, path, shouldOverwriteUrl);
             const functionCore: AstNode[] = [
                 new Expression({
                     leftSide: responseVariable,
                     rightSide: new FunctionInvocation({
-                        // TODO: Do this field access on the client better
-                        onObject: `${requestClientVariable.write({})}.conn`,
-                        baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
-                        block: generator.getFaradayBlock(requestClientVariable, path, shouldOverwriteUrl)
+                        onObject: "Retryable",
+                        baseFunction: new Function_({ name: "with_retries", functionBody: [] }),
+                        arguments_: [
+                            new Argument({
+                                name: "request_options",
+                                value: requestOptionsVariable,
+                                isNamed: true
+                            }),
+                            new Argument({
+                                name: "max_retries",
+                                value: `${requestClientVariable.write({})}.max_retries`,
+                                isNamed: true
+                            })
+                        ],
+                        block: {
+                            expressions: [
+                                new FunctionInvocation({
+                                    // TODO: Do this field access on the client better
+                                    onObject: `${requestClientVariable.write({})}.conn`,
+                                    baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
+                                    block: httpRequestBlock
+                                })
+                            ]
+                        }
                     }),
                     isAssignment: true
                 }),
@@ -721,9 +745,6 @@ function generateRequestClientInitializer(
     defaultEnvironment?: string,
     hasFileBasedDependencies = false
 ): Function_ {
-    const retryOptions = new HashInstance({
-        contents: new Map([["max", retriesProperty.toVariable(VariableType.LOCAL)]])
-    });
     const faradayConfiguration = [];
     if (hasFileBasedDependencies) {
         faradayConfiguration.push(
@@ -765,33 +786,11 @@ function generateRequestClientInitializer(
         );
     }
 
-    faradayConfiguration.push(
-        new ConditionalStatement({
-            if_: {
-                rightSide: new FunctionInvocation({
-                    // TODO: Do this field access on the client better
-                    onObject: retriesProperty.toVariable(VariableType.LOCAL).write({}),
-                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                }),
-                operation: "!",
-                expressions: [
-                    new Expression({
-                        leftSide: "faraday.request",
-                        rightSide: new Expression({
-                            leftSide: new ClassReference({
-                                name: ":retry",
-                                import_: new Import({ from: "faraday/retry", isExternal: true })
-                            }),
-                            rightSide: retryOptions,
-                            operation: ", ",
-                            isAssignment: false
-                        }),
-                        isAssignment: false
-                    })
-                ]
-            }
-        })
-    );
+    // Note: Faraday retry middleware is NOT used here because we implement custom retry logic
+    // at the endpoint level to support per-request max_retries override via request_options.
+    // The retry logic is handled by the Retryable module which checks request_options.max_retries
+    // first, then falls back to the client's max_retries setting.
+
     faradayConfiguration.push(
         new ConditionalStatement({
             if_: {
@@ -813,6 +812,15 @@ function generateRequestClientInitializer(
     );
 
     let functionBody: AstNode[] = [];
+
+    // Store max_retries for per-request retry logic
+    functionBody.push(
+        new Expression({
+            leftSide: "@max_retries",
+            rightSide: retriesProperty.toVariable(VariableType.LOCAL).write({}),
+            isAssignment: true
+        })
+    );
 
     if (environmentCr !== undefined) {
         functionBody.push(
@@ -1089,9 +1097,15 @@ export function generateRequestClients(
         type: StringClassReference
     });
     // Client properties
+    const maxRetriesProperty = new Property({
+        name: "max_retries",
+        type: LongClassReference,
+        documentation: "The number of times to retry a failed request, defaults to 2."
+    });
     const clientProperties = [
         new Property({ name: "conn", type: faradayReference }),
         baseUrlProperty,
+        maxRetriesProperty,
         ...headersGenerator.getAuthHeadersAsProperties()
     ];
 
