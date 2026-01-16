@@ -814,7 +814,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private generateRawAccessClient(class_: ast.Class) {
         const rawAccessClientReference = this.csharp.classReference({
             name: "RawAccessClient",
-            namespace: this.namespaces.root
+            enclosingType: class_.reference
         });
 
         class_.addField({

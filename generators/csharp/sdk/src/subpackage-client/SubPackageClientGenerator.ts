@@ -215,7 +215,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
     private generateRawAccessClient(class_: ast.Class) {
         const rawAccessClientReference = this.csharp.classReference({
             name: "RawAccessClient",
-            namespace: this.classReference.namespace
+            enclosingType: class_.reference
         });
 
         class_.addField({
