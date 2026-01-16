@@ -5,17 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { EditThisPageType } from "./EditThisPageType";
 import { GithubEditThisPageConfig } from "./GithubEditThisPageConfig";
 
 export const EditThisPageConfig: core.serialization.ObjectSchema<
     serializers.EditThisPageConfig.Raw,
     FernDocsConfig.EditThisPageConfig
 > = core.serialization.object({
+    type: EditThisPageType.optional(),
     github: GithubEditThisPageConfig.optional(),
 });
 
 export declare namespace EditThisPageConfig {
     export interface Raw {
+        type?: EditThisPageType.Raw | null;
         github?: GithubEditThisPageConfig.Raw | null;
     }
 }

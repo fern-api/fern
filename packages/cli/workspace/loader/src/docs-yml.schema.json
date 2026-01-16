@@ -357,6 +357,13 @@
         }
       ]
     },
+    "docs.EditThisPageType": {
+      "type": "string",
+      "enum": [
+        "github",
+        "editor"
+      ]
+    },
     "docs.GithubEditThisPageConfig": {
       "type": "object",
       "properties": {
@@ -396,6 +403,16 @@
     "docs.EditThisPageConfig": {
       "type": "object",
       "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.EditThisPageType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "github": {
           "oneOf": [
             {

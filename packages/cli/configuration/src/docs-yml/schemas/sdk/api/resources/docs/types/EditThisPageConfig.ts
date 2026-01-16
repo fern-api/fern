@@ -5,5 +5,11 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface EditThisPageConfig {
+    /**
+     * The type of editor to use when clicking "Edit this page".
+     * - `github`: Opens the page in GitHub's web editor (default)
+     * - `editor`: Opens the page in Fern Editor, creating a new branch automatically
+     */
+    type?: FernDocsConfig.EditThisPageType;
     github?: FernDocsConfig.GithubEditThisPageConfig;
 }

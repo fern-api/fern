@@ -427,7 +427,18 @@ types:
   # this is a partial object in case we want to add more options in the future
   EditThisPageConfig:
     properties:
+      type:
+        type: optional<EditThisPageType>
+        docs: |
+          The type of editor to use when clicking "Edit this page".
+          - `github`: Opens the page in GitHub's web editor (default)
+          - `editor`: Opens the page in Fern Editor, creating a new branch automatically
       github: optional<GithubEditThisPageConfig>
+
+  EditThisPageType:
+    enum:
+      - github
+      - editor
 
   GithubEditThisPageConfig:
     properties:

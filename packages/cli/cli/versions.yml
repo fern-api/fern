@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.45.0
+  changelogEntry:
+    - summary: |
+        Add `type` field to `edit-this-page` configuration in docs.yml. When set to `editor`, the "Edit this page" button will open the page in Fern Editor instead of GitHub. The editor option automatically creates a new branch for editing.
+      type: feat
+  createdAt: "2026-01-16"
+  irVersion: 63
+
 - version: 3.44.1
   changelogEntry:
     - summary: |
