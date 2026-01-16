@@ -9,6 +9,7 @@ import { EndpointSdkName } from "./EndpointSdkName";
 import { WebhookHttpMethod } from "./WebhookHttpMethod";
 import { TagId } from "../../commons/types/TagId";
 import { Header } from "./Header";
+import { MultipartFormDataWebhookPayload } from "./MultipartFormDataWebhookPayload";
 import { Response } from "./Response";
 import { WebhookExampleCall } from "./WebhookExampleCall";
 import { WithDescription } from "../../commons/types/WithDescription";
@@ -27,6 +28,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
             headers: core.serialization.list(Header),
             generatedPayloadName: core.serialization.string(),
             payload: core.serialization.lazy(() => serializers.Schema),
+            multipartFormData: MultipartFormDataWebhookPayload.optional(),
             response: Response.optional(),
             examples: core.serialization.list(WebhookExampleCall),
         })
@@ -45,6 +47,7 @@ export declare namespace Webhook {
         headers: Header.Raw[];
         generatedPayloadName: string;
         payload: serializers.Schema.Raw;
+        multipartFormData?: MultipartFormDataWebhookPayload.Raw | null;
         response?: Response.Raw | null;
         examples: WebhookExampleCall.Raw[];
     }

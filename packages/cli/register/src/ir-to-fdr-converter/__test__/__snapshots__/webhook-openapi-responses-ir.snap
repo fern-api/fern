@@ -1134,6 +1134,7 @@
         "displayName": "Payment session completed webhook",
         "docs": "Webhook triggered when a payment session is completed",
         "examples": [],
+        "fileUploadPayload": undefined,
         "headers": [],
         "id": "Payment Sessions.paymentSessionCompletedWebhook",
         "method": "POST",

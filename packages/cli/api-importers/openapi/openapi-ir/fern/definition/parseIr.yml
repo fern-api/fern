@@ -88,8 +88,26 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: SchemaWithExample
+      multipartFormData:
+        type: optional<MultipartFormDataWebhookPayloadWithExample>
+        docs: |
+          Optional multipart form data payload for webhooks that use multipart/form-data content type.
+          This is populated when the webhook request body uses multipart/form-data encoding.
       response: optional<ResponseWithExample>
       examples: list<finalIr.WebhookExampleCall>
+
+  MultipartFormDataWebhookPayloadWithExample:
+    docs: |
+      Represents a multipart form data payload for webhooks.
+      This is used when a webhook request body uses multipart/form-data encoding.
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
+    properties:
+      name:
+        type: optional<string>
+        docs: If multipart was a reference, this will be the schema name.
+      properties: list<finalIr.MultipartRequestProperty>
 
   HttpErrorWithExample:
     extends:

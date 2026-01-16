@@ -16,6 +16,12 @@ types:
       method: WebhookHttpMethod
       headers: list<http.HttpHeader>
       payload: WebhookPayload
+      fileUploadPayload:
+        type: optional<http.FileUploadRequest>
+        docs: |
+          Optional multipart form data payload for webhooks that use multipart/form-data content type.
+          This is populated when the webhook request body uses multipart/form-data encoding.
+          When set, the payload field will contain a reference type as a placeholder.
       responses: optional<list<http.HttpResponse>>
       examples: optional<list<ExampleWebhookCall>>
       v2Examples: optional<examples.V2WebhookExamples>
