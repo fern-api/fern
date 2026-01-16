@@ -4037,6 +4037,37 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
 
+  packages/cli/api-importers/graphql:
+    dependencies:
+      '@fern-api/fdr-sdk':
+        specifier: 0.143.9-f12426eb4
+        version: 0.143.9-f12426eb4(typescript@5.9.3)
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      graphql:
+        specifier: ^16.8.1
+        version: 16.12.0
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^4.0.8
+        version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
+
   packages/cli/api-importers/openapi-pruner:
     dependencies:
       openapi-types:
@@ -21692,8 +21723,7 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  graphql@16.12.0:
-    optional: true
+  graphql@16.12.0: {}
 
   gray-matter@4.0.3:
     dependencies:
