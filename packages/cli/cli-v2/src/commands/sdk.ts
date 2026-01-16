@@ -1,14 +1,10 @@
 import type { Argv } from "yargs";
 import type { GlobalArgs } from "../context/GlobalArgs";
-import { addLoginCommand } from "./auth/login";
-import { addLogoutCommand } from "./auth/logout";
-import { addTokenCommand } from "./auth/token";
+import { addGenerateCommand } from "./sdk/generate";
 
-export function addAuthCommand(cli: Argv<GlobalArgs>): void {
-    cli.command("auth", "Authenticate fern", (yargs) => {
-        addLoginCommand(yargs);
-        addLogoutCommand(yargs);
-        addTokenCommand(yargs);
+export function addSdkCommand(cli: Argv<GlobalArgs>): void {
+    cli.command("sdk", "Configure and generate SDKs", (yargs) => {
+        addGenerateCommand(yargs);
         return yargs.demandCommand(1).fail((msg, err, yargs) => {
             if (err != null) {
                 process.stderr.write(`${err.message}\n`);

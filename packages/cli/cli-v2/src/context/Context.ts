@@ -4,18 +4,22 @@ import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 export class Context {
     private logLevel: LogLevel;
     private ttyAwareLogger: TtyAwareLogger;
+    public readonly cwd: string;
     public readonly stdout: Logger;
     public readonly stderr: Logger;
 
     constructor({
         stdout,
         stderr,
+        cwd,
         logLevel
     }: {
         stdout: NodeJS.WriteStream;
         stderr: NodeJS.WriteStream;
+        cwd?: string;
         logLevel?: LogLevel;
     }) {
+        this.cwd = cwd ?? process.cwd();
         this.logLevel = logLevel ?? LogLevel.Info;
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
