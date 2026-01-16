@@ -23,6 +23,7 @@ export * from "./TabConfig";
 export * from "./ChangelogFolderRelativePath";
 export * from "./DocsInstance";
 export * from "./CustomDomain";
+export * from "./EditThisPageLaunch";
 export * from "./EditThisPageConfig";
 export * from "./GithubEditThisPageConfig";
 export * from "./VersionConfig";

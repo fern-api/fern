@@ -424,9 +424,20 @@ types:
       - string
       - list<string>
 
+  EditThisPageLaunch:
+    enum:
+      - github
+      - editor
+
   # this is a partial object in case we want to add more options in the future
   EditThisPageConfig:
     properties:
+      launch:
+        type: optional<EditThisPageLaunch>
+        docs: |
+          The launch method for the "Edit this page" feature.
+
+          @default: github
       github: optional<GithubEditThisPageConfig>
 
   GithubEditThisPageConfig:
