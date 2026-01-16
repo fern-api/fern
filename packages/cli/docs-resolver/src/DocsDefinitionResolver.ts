@@ -1843,6 +1843,13 @@ function createEditThisPageUrl(
     }
 
     const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
+    const type = editThisPage.type ?? "github";
+
+    if (type === "editor") {
+        // Return a special marker URL that the docs bundle can detect
+        // The docs bundle will use this to show the Fern Editor button instead of the GitHub button
+        return `fern-editor://${owner}/${repo}/${branch}/fern/${pageFilepath}`;
+    }
 
     return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 }
