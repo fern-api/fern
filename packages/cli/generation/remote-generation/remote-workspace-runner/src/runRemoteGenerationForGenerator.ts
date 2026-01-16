@@ -7,6 +7,7 @@ import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -53,6 +54,14 @@ export async function runRemoteGenerationForGenerator({
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, interactiveTaskContext.logger);
+    if (isAirGapped) {
+        interactiveTaskContext.logger.debug(
+            "Detected air-gapped environment - skipping external FDR/Venus service calls"
+        );
+    }
+
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
     /** Sugar to substitute templated env vars in a standard way */
@@ -73,7 +82,8 @@ export async function runRemoteGenerationForGenerator({
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions
     });
 
-    const resolvedVersion = version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }));
+    const resolvedVersion =
+        version ?? (isAirGapped ? undefined : await computeSemanticVersion({ fdr, packageName, generatorInvocation }));
 
     const ir = generateIntermediateRepresentation({
         workspace,
@@ -101,66 +111,71 @@ export async function runRemoteGenerationForGenerator({
     });
 
     const venus = createVenusService({ token: token.value });
-    const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+    if (!isAirGapped) {
+        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
 
-    if (orgResponse.ok) {
-        if (orgResponse.body.isWhitelabled) {
-            if (ir.readmeConfig == null) {
-                ir.readmeConfig = emptyReadmeConfig;
+        if (orgResponse.ok) {
+            if (orgResponse.body.isWhitelabled) {
+                if (ir.readmeConfig == null) {
+                    ir.readmeConfig = emptyReadmeConfig;
+                }
+                ir.readmeConfig.whiteLabel = true;
             }
-            ir.readmeConfig.whiteLabel = true;
+            ir.selfHosted = orgResponse.body.selfHostedSdKs;
         }
-        ir.selfHosted = orgResponse.body.selfHostedSdKs;
     }
 
     const sources = workspace.getSources();
-    const apiDefinition = convertIrToFdrApi({
-        ir,
-        snippetsConfig: {
-            typescriptSdk: undefined,
-            pythonSdk: undefined,
-            javaSdk: undefined,
-            rubySdk: undefined,
-            goSdk: undefined,
-            csharpSdk: undefined,
-            phpSdk: undefined,
-            swiftSdk: undefined,
-            rustSdk: undefined
-        },
-        context: interactiveTaskContext
-    });
-    const response = await fdr.api.v1.register.registerApiDefinition({
-        orgId: FdrAPI.OrgId(organization),
-        apiId: FdrAPI.ApiId(ir.apiName.originalName),
-        definition: apiDefinition,
-        sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
-    });
+    let fdrApiDefinitionId: FdrAPI.ApiDefinitionId | undefined;
+    let sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload> | undefined;
 
-    let fdrApiDefinitionId;
-    let sourceUploads;
-    if (response.ok) {
-        fdrApiDefinitionId = response.body.apiDefinitionId;
-        sourceUploads = response.body.sources;
-    }
+    if (!isAirGapped) {
+        const apiDefinition = convertIrToFdrApi({
+            ir,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            context: interactiveTaskContext
+        });
+        const response = await fdr.api.v1.register.registerApiDefinition({
+            orgId: FdrAPI.OrgId(organization),
+            apiId: FdrAPI.ApiId(ir.apiName.originalName),
+            definition: apiDefinition,
+            sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
+        });
 
-    const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
-    if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
-        if (!response.ok) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to register API definition: ${JSON.stringify(response.error.content)}`
-            );
+        if (response.ok) {
+            fdrApiDefinitionId = response.body.apiDefinitionId;
+            sourceUploads = response.body.sources;
         }
-        // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
-        // files are required for successful code generation.
-        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
-    }
 
-    if (sourceUploads != null) {
-        interactiveTaskContext.logger.debug("Uploading source files ...");
-        const sourceConfig = await sourceUploader.uploadSources(sourceUploads);
+        const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
+        if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
+            if (!response.ok) {
+                interactiveTaskContext.failAndThrow(
+                    `Failed to register API definition: ${JSON.stringify(response.error.content)}`
+                );
+            }
+            interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
+        }
 
-        interactiveTaskContext.logger.debug("Setting IR source configuration ...");
-        ir.sourceConfig = sourceConfig;
+        if (sourceUploads != null) {
+            interactiveTaskContext.logger.debug("Uploading source files ...");
+            const sourceConfig = await sourceUploader.uploadSources(sourceUploads);
+
+            interactiveTaskContext.logger.debug("Setting IR source configuration ...");
+            ir.sourceConfig = sourceConfig;
+        }
+    } else {
+        fdrApiDefinitionId = FdrAPI.ApiDefinitionId(`air-gapped-${ir.apiName.originalName}`);
     }
 
     // handle dynamic-ir-only mode: skip SDK generation and only upload dynamic IR
@@ -184,22 +199,26 @@ export async function runRemoteGenerationForGenerator({
             return undefined;
         }
 
-        try {
-            await uploadDynamicIRForSdkGeneration({
-                fdr,
-                organization,
-                version,
-                language: generatorInvocation.language,
-                packageName,
-                ir,
-                smartCasing: generatorInvocation.smartCasing,
-                dynamicGeneratorConfig,
-                context: interactiveTaskContext
-            });
-        } catch (error) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to upload dynamic IR: ${error instanceof Error ? error.message : String(error)}`
-            );
+        if (!isAirGapped) {
+            try {
+                await uploadDynamicIRForSdkGeneration({
+                    fdr,
+                    organization,
+                    version,
+                    language: generatorInvocation.language,
+                    packageName,
+                    ir,
+                    smartCasing: generatorInvocation.smartCasing,
+                    dynamicGeneratorConfig,
+                    context: interactiveTaskContext
+                });
+            } catch (error) {
+                interactiveTaskContext.failAndThrow(
+                    `Failed to upload dynamic IR: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+        } else {
+            interactiveTaskContext.logger.debug("Skipping dynamic IR upload in air-gapped environment");
         }
 
         // Return a minimal response since no SDK generation occurred
@@ -261,7 +280,8 @@ export async function runRemoteGenerationForGenerator({
         actualVersionForUpload != null &&
         generatorInvocation.language != null &&
         packageName != null &&
-        !isPreview
+        !isPreview &&
+        !isAirGapped
     ) {
         try {
             await uploadDynamicIRForSdkGeneration({

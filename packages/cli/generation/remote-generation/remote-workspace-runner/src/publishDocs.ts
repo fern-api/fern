@@ -24,7 +24,7 @@ import yaml from "js-yaml";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
+import { detectAirGappedMode, OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { measureImageSizes } from "./measureImageSizes";
 import { asyncPool } from "./utils/asyncPool";
@@ -79,6 +79,12 @@ export async function publishDocs({
     excludeApis?: boolean;
     targetAudiences?: string[];
 }): Promise<void> {
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
+    if (isAirGapped) {
+        context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
+    }
+
     const fdr = createFdrService({ token: token.value });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
 
@@ -165,6 +171,12 @@ export async function publishDocs({
             );
             const hashNonImageTime = performance.now() - hashNonImageStart;
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
+
+            if (isAirGapped) {
+                context.logger.debug("Skipping FDR docs registration in air-gapped environment");
+                docsRegistrationId = "air-gapped-local";
+                return [];
+            }
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
@@ -266,6 +278,13 @@ export async function publishDocs({
             }
         },
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+            if (isAirGapped) {
+                context.logger.debug(
+                    `Skipping FDR API registration for ${apiName ?? ir.apiName.originalName} in air-gapped environment`
+                );
+                return CjsFdrSdk.ApiDefinitionId(`air-gapped-${ir.apiName.originalName}`);
+            }
+
             // Use apiName from docs.yml (folder name) as the API identifier for FDR
             // This ensures users can reference APIs by their folder name in docs components
             let apiDefinition = convertIrToFdrApi({
@@ -428,7 +447,7 @@ export async function publishDocs({
         docsWorkspace.config,
         docsWorkspace.absoluteFilePath
     );
-    if (pythonDocsSection != null) {
+    if (pythonDocsSection != null && !isAirGapped) {
         // Config is already deserialized with camelCase properties
         const githubUrl = pythonDocsSection.pythonDocs;
 
@@ -490,6 +509,14 @@ export async function publishDocs({
         if (pollAttempts >= MAX_POLL_ATTEMPTS) {
             return context.failAndThrow("Python docs generation timed out");
         }
+    }
+
+    if (isAirGapped) {
+        context.logger.info("Skipping FDR docs publishing in air-gapped environment");
+        const url = wrapWithHttps(urlToOutput);
+        const link = terminalLink(url, url);
+        context.logger.info(chalk.green(`Docs resolved locally for ${link} (air-gapped mode)`));
+        return;
     }
 
     context.logger.info("Publishing docs to FDR...");
