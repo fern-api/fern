@@ -212,14 +212,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.write("return new ");
                 writer.writeNode(this.Types.RawResponse(this.Primitive.object));
                 writer.writeLine();
-                writer.pushScope();
+                writer.writeLine("{");
+                writer.indent();
                 writer.writeLine(
                     `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                 );
                 writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
                 writer.writeLine("Headers = ExtractHeaders(response.Raw),");
                 writer.writeLine("Body = new object()");
-                writer.popScope();
+                writer.dedent();
                 writer.writeLine("};");
                 writer.popScope();
             });
@@ -263,14 +264,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.write("return new ");
                     writer.writeNode(this.Types.RawResponse(astType));
                     writer.writeLine();
-                    writer.pushScope();
+                    writer.writeLine("{");
+                    writer.indent();
                     writer.writeLine(
                         `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
                     writer.writeLine("Headers = ExtractHeaders(response.Raw),");
                     writer.writeLine("Body = body");
-                    writer.popScope();
+                    writer.dedent();
                     writer.writeLine("};");
 
                     writer.popScope();
@@ -306,14 +308,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.write("return new ");
                     writer.writeNode(this.Types.RawResponse(this.Primitive.string));
                     writer.writeLine();
-                    writer.pushScope();
+                    writer.writeLine("{");
+                    writer.indent();
                     writer.writeLine(
                         `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
                     writer.writeLine("Headers = ExtractHeaders(response.Raw),");
                     writer.writeLine(`Body = ${this.names.variables.responseBody}`);
-                    writer.popScope();
+                    writer.dedent();
                     writer.writeLine("};");
                     writer.popScope();
                 },
