@@ -9,6 +9,7 @@ import { OpenApiSpecSchema } from "./OpenApiSpecSchema";
 import { AsyncApiSpecSchema } from "./AsyncApiSpecSchema";
 import { ProtobufSpecSchema } from "./ProtobufSpecSchema";
 import { OpenRpcSpecSchema } from "./OpenRpcSpecSchema";
+import { GraphQlSpecSchema } from "./GraphQlSpecSchema";
 
 export const SpecSchema: core.serialization.Schema<serializers.SpecSchema.Raw, GeneratorsYml.SpecSchema> =
     core.serialization.undiscriminatedUnion([
@@ -16,8 +17,14 @@ export const SpecSchema: core.serialization.Schema<serializers.SpecSchema.Raw, G
         AsyncApiSpecSchema,
         ProtobufSpecSchema,
         OpenRpcSpecSchema,
+        GraphQlSpecSchema,
     ]);
 
 export declare namespace SpecSchema {
-    export type Raw = OpenApiSpecSchema.Raw | AsyncApiSpecSchema.Raw | ProtobufSpecSchema.Raw | OpenRpcSpecSchema.Raw;
+    export type Raw =
+        | OpenApiSpecSchema.Raw
+        | AsyncApiSpecSchema.Raw
+        | ProtobufSpecSchema.Raw
+        | OpenRpcSpecSchema.Raw
+        | GraphQlSpecSchema.Raw;
 }

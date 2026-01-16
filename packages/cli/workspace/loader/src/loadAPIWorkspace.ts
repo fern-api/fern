@@ -99,6 +99,28 @@ export async function loadSingleNamespaceAPIWorkspace({
             continue;
         }
 
+        if (definition.schema.type === "graphql") {
+            const relativeFilepathToGraphQL = RelativeFilePath.of(definition.schema.path);
+            const absoluteFilepathToGraphQL = join(absolutePathToWorkspace, relativeFilepathToGraphQL);
+            if (!(await doesPathExist(absoluteFilepathToGraphQL))) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [relativeFilepathToGraphQL]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
+            specs.push({
+                type: "graphql",
+                absoluteFilepath: absoluteFilepathToGraphQL,
+                absoluteFilepathToOverrides,
+                namespace
+            });
+            continue;
+        }
+
         const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
@@ -245,6 +267,9 @@ export async function loadAPIWorkspace({
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
                     if (spec.type === "openrpc") {
+                        return false;
+                    }
+                    if (spec.type === "graphql") {
                         return false;
                     }
                     if (spec.type === "protobuf") {

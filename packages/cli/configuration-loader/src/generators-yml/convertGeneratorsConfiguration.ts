@@ -428,6 +428,18 @@ async function parseApiConfigurationV2Schema({
                 audiences: [],
                 settings: apiSettings
             };
+        } else if (generatorsYml.isGraphQLSpecSchema(spec)) {
+            definitionLocation = {
+                schema: {
+                    type: "graphql",
+                    path: spec.graphql
+                },
+                origin: spec.origin,
+                overrides: spec.overrides,
+                overlays: undefined,
+                audiences: [],
+                settings: apiSettings
+            };
         } else {
             continue;
         }
