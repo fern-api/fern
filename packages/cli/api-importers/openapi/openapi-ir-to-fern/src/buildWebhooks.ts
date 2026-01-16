@@ -31,18 +31,60 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
             });
         }
 
+        let payload: RawSchemas.WebhookPayloadSchema | undefined;
+
+        webhook.payload._visit({
+            json: (jsonPayload) => {
+                payload = buildTypeReference({
+                    schema: jsonPayload,
+                    context,
+                    fileContainingReference: webhookLocation.file,
+                    namespace: maybeWebhookNamespace,
+                    declarationDepth: 0
+                });
+            },
+            multipart: (multipartPayload) => {
+                const properties = Object.fromEntries(
+                    multipartPayload.properties.map((property) => {
+                        if (property.schema.type === "file") {
+                            let fileType = property.schema.isArray ? "list<file>" : "file";
+                            fileType = property.schema.isOptional ? `optional<${fileType}>` : fileType;
+                            if (property.description != null) {
+                                const propertyTypeReference: RawSchemas.ObjectPropertySchema = {
+                                    type: fileType,
+                                    docs: property.description
+                                };
+                                return [property.key, propertyTypeReference];
+                            }
+                            return [property.key, fileType];
+                        } else {
+                            const propertyTypeReference: RawSchemas.ObjectPropertySchema = buildTypeReference({
+                                schema: property.schema.value,
+                                fileContainingReference: webhookLocation.file,
+                                context,
+                                namespace: maybeWebhookNamespace,
+                                declarationDepth: 1
+                            });
+                            return [property.key, propertyTypeReference];
+                        }
+                    })
+                );
+                payload = {
+                    name: multipartPayload.name ?? webhook.generatedPayloadName,
+                    properties
+                };
+            },
+            _other: () => {
+                throw new Error("Unrecognized WebhookPayload type: " + webhook.payload.type);
+            }
+        });
+
         const webhookDefinition: RawSchemas.WebhookSchema = {
             audiences: webhook.audiences,
             method: webhook.method,
             "display-name": webhook.summary ?? undefined,
             headers,
-            payload: buildTypeReference({
-                schema: webhook.payload,
-                context,
-                fileContainingReference: webhookLocation.file,
-                namespace: maybeWebhookNamespace,
-                declarationDepth: 0
-            }),
+            payload,
             examples:
                 webhook.examples != null
                     ? webhook.examples.map((exampleWebhookCall) => {

@@ -9,6 +9,7 @@ import { EndpointSdkName } from "../../finalIr/types/EndpointSdkName";
 import { WebhookHttpMethod } from "../../finalIr/types/WebhookHttpMethod";
 import { TagId } from "../../commons/types/TagId";
 import { HeaderWithExample } from "./HeaderWithExample";
+import { WebhookPayloadWithExample } from "./WebhookPayloadWithExample";
 import { ResponseWithExample } from "./ResponseWithExample";
 import { WebhookExampleCall } from "../../finalIr/types/WebhookExampleCall";
 import { WithDescription } from "../../commons/types/WithDescription";
@@ -28,7 +29,7 @@ export const WebhookWithExample: core.serialization.ObjectSchema<
         tags: core.serialization.list(TagId),
         headers: core.serialization.list(HeaderWithExample),
         generatedPayloadName: core.serialization.string(),
-        payload: core.serialization.lazy(() => serializers.SchemaWithExample),
+        payload: WebhookPayloadWithExample,
         response: ResponseWithExample.optional(),
         examples: core.serialization.list(WebhookExampleCall),
     })
@@ -46,7 +47,7 @@ export declare namespace WebhookWithExample {
         tags: TagId.Raw[];
         headers: HeaderWithExample.Raw[];
         generatedPayloadName: string;
-        payload: serializers.SchemaWithExample.Raw;
+        payload: WebhookPayloadWithExample.Raw;
         response?: ResponseWithExample.Raw | null;
         examples: WebhookExampleCall.Raw[];
     }

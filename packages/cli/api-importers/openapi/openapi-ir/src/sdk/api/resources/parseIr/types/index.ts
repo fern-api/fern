@@ -2,6 +2,7 @@ export * from "./NamedFullExample";
 export * from "./WebsocketHandshakeWithExample";
 export * from "./EndpointWithExample";
 export * from "./WebhookWithExample";
+export * from "./WebhookPayloadWithExample";
 export * from "./HttpErrorWithExample";
 export * from "./RequestWithExample";
 export * from "./ParseFormUrlEncodedRequest";

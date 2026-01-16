@@ -7,6 +7,7 @@ export * from "./IdempotencyHeader";
 export * from "./Tags";
 export * from "./HttpError";
 export * from "./Webhook";
+export * from "./WebhookPayload";
 export * from "./WebhookExampleCall";
 export * from "./WebsocketChannel";
 export * from "./WebsocketMessageSchema";
