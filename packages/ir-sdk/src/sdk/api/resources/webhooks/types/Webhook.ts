@@ -11,6 +11,12 @@ export interface Webhook extends FernIr.Declaration {
     method: FernIr.WebhookHttpMethod;
     headers: FernIr.HttpHeader[];
     payload: FernIr.WebhookPayload;
+    /**
+     * Optional multipart form data payload for webhooks that use multipart/form-data content type.
+     * This is populated when the webhook request body uses multipart/form-data encoding.
+     * When set, the payload field will contain a reference type as a placeholder.
+     */
+    fileUploadPayload: FernIr.FileUploadRequest | undefined;
     responses: FernIr.HttpResponse[] | undefined;
     examples: FernIr.ExampleWebhookCall[] | undefined;
     v2Examples: FernIr.V2WebhookExamples | undefined;
