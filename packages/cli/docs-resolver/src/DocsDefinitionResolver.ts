@@ -737,8 +737,7 @@ export class DocsDefinitionResolver {
             typography: undefined,
             backgroundImage: undefined,
             header: undefined,
-            footer: undefined,
-            editThisPageLaunch: undefined
+            footer: undefined
         };
         return config;
     }
