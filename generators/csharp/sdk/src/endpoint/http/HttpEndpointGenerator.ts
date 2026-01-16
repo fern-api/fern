@@ -231,7 +231,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                 );
                 writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                writer.writeLine("Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw)");
+                writer.writeLine(
+                    `Headers = ResponseHeaders.FromHttpResponseMessage(${this.names.variables.response}.Raw)`
+                );
                 writer.dedent();
                 writer.writeLine("}");
                 writer.dedent();
@@ -244,11 +246,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
         return this.csharp.codeblock((writer) => {
             body._visit({
-                streamParameter: () => {
-                    writer.writeLine("// Streaming responses are not supported for raw access");
-                    writer.writeLine(
-                        `throw new ${this.names.classes.baseException}("Streaming responses are not supported for raw access");`
-                    );
+                streamParameter: (ref) => {
+                    // For streaming, we can capture headers/status before reading the stream
+                    // Return WithRawResponse<IAsyncEnumerable<T>> where Data is a lazy stream
+                    this.writeRawStreamingResponse(writer, ref.streamResponse);
                 },
                 fileDownload: () => {
                     writer.writeLine("// File download responses are not supported for raw access");
@@ -288,7 +289,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                    writer.writeLine("Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw)");
+                    writer.writeLine(
+                        `Headers = ResponseHeaders.FromHttpResponseMessage(${this.names.variables.response}.Raw)`
+                    );
                     writer.dedent();
                     writer.writeLine("}");
                     writer.dedent();
@@ -310,11 +313,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                     writer.writeLine();
                 },
-                streaming: () => {
-                    writer.writeLine("// Streaming responses are not supported for raw access");
-                    writer.writeLine(
-                        `throw new ${this.names.classes.baseException}("Streaming responses are not supported for raw access");`
-                    );
+                streaming: (ref) => {
+                    // For streaming, we can capture headers/status before reading the stream
+                    this.writeRawStreamingResponse(writer, ref);
                 },
                 text: () => {
                     writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
@@ -337,7 +338,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                    writer.writeLine("Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw)");
+                    writer.writeLine(
+                        `Headers = ResponseHeaders.FromHttpResponseMessage(${this.names.variables.response}.Raw)`
+                    );
                     writer.dedent();
                     writer.writeLine("}");
                     writer.dedent();
@@ -348,6 +351,220 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 _other: () => undefined
             });
         });
+    }
+
+    private writeRawStreamingResponse(writer: Writer, streamingResponse: FernIr.StreamingResponse): void {
+        const context = this.context;
+        const names = this.names;
+
+        writer.writeLine(`if (${names.variables.response}.StatusCode is >= 200 and < 400)`);
+        writer.pushScope();
+
+        // Capture metadata before consuming the stream
+        writer.writeLine("var rawResponse = new RawResponse");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeLine(`StatusCode = (global::System.Net.HttpStatusCode)${names.variables.response}.StatusCode,`);
+        writer.writeLine(`Url = ${names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
+        writer.writeLine(`Headers = ResponseHeaders.FromHttpResponseMessage(${names.variables.response}.Raw)`);
+        writer.dedent();
+        writer.writeLine("};");
+        writer.writeLine();
+
+        // Create the streaming enumerable as the Data property
+        writer.write("return new ");
+
+        streamingResponse._visit({
+            json: (jsonChunk) => {
+                const payloadType = context.csharpTypeMapper.convert({
+                    reference: jsonChunk.payload
+                });
+                writer.writeNode(
+                    context.generation.Types.WithRawResponse(
+                        context.System.Collections.Generic.IAsyncEnumerable(payloadType)
+                    )
+                );
+                writer.writeLine();
+                writer.writeLine("{");
+                writer.indent();
+                writer.writeLine("Data = StreamDataAsync(),");
+                writer.writeLine("RawResponse = rawResponse");
+                writer.dedent();
+                writer.writeLine("};");
+                writer.writeLine();
+
+                // Define the local async method that performs the streaming
+                writer.write("async ");
+                writer.writeNode(context.System.Collections.Generic.IAsyncEnumerable(payloadType));
+                writer.writeLine(" StreamDataAsync()");
+                writer.pushScope();
+
+                writer.writeTextStatement(`string? line`);
+                writer.write(`using var reader = `);
+                writer.write(
+                    context.System.IO.StreamReader.new({
+                        arguments_: [
+                            context.csharp.codeblock(
+                                `await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()`
+                            )
+                        ]
+                    })
+                );
+                writer.writeTextStatement(";");
+                writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))");
+                writer.pushScope();
+
+                this.writeStreamingDeserialize(writer, payloadType, "line", true);
+
+                writer.popScope();
+                writer.writeTextStatement("yield break");
+                writer.popScope();
+            },
+            text: () => {
+                const stringType = this.Primitive.string;
+                writer.writeNode(
+                    context.generation.Types.WithRawResponse(
+                        context.System.Collections.Generic.IAsyncEnumerable(stringType)
+                    )
+                );
+                writer.writeLine();
+                writer.writeLine("{");
+                writer.indent();
+                writer.writeLine("Data = StreamDataAsync(),");
+                writer.writeLine("RawResponse = rawResponse");
+                writer.dedent();
+                writer.writeLine("};");
+                writer.writeLine();
+
+                // Define the local async method
+                writer.write("async ");
+                writer.writeNode(context.System.Collections.Generic.IAsyncEnumerable(stringType));
+                writer.writeLine(" StreamDataAsync()");
+                writer.pushScope();
+
+                writer.writeTextStatement(`string? line`);
+                writer.write(`using var reader = `);
+                writer.write(
+                    context.System.IO.StreamReader.new({
+                        arguments_: [
+                            context.csharp.codeblock(
+                                `await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()`
+                            )
+                        ]
+                    })
+                );
+                writer.writeTextStatement(";");
+                writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))");
+                writer.pushScope();
+                writer.writeLine("if(!string.IsNullOrEmpty(line))");
+                writer.pushScope();
+                writer.writeTextStatement("yield return line");
+                writer.popScope();
+                writer.popScope();
+                writer.writeTextStatement("yield break");
+                writer.popScope();
+            },
+            sse: (sseChunk) => {
+                const payloadType = context.csharpTypeMapper.convert({
+                    reference: sseChunk.payload
+                });
+                writer.writeNode(
+                    context.generation.Types.WithRawResponse(
+                        context.System.Collections.Generic.IAsyncEnumerable(payloadType)
+                    )
+                );
+                writer.writeLine();
+                writer.writeLine("{");
+                writer.indent();
+                writer.writeLine("Data = StreamDataAsync(),");
+                writer.writeLine("RawResponse = rawResponse");
+                writer.dedent();
+                writer.writeLine("};");
+                writer.writeLine();
+
+                // Define the local async method
+                writer.write("async ");
+                writer.writeNode(context.System.Collections.Generic.IAsyncEnumerable(payloadType));
+                writer.writeLine(" StreamDataAsync()");
+                writer.pushScope();
+
+                writer.write(`await foreach (var item in `);
+                writer.writeNode(context.System.Net.ServerSentEvents.SseParser);
+                writer.writeLine(
+                    `.Create(await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()).EnumerateAsync())`
+                );
+                writer.pushScope();
+
+                writer.writeLine("if( !string.IsNullOrEmpty(item.Data))");
+                writer.pushScope();
+
+                if (sseChunk.terminator) {
+                    writer.writeLine(`if( item.Data == "${sseChunk.terminator}")`);
+                    writer.pushScope();
+                    writer.writeTextStatement("break");
+                    writer.popScope();
+                }
+
+                this.writeStreamingDeserialize(writer, payloadType, "item.Data", true);
+
+                writer.popScope();
+                writer.popScope();
+                writer.writeTextStatement("yield break");
+                writer.popScope();
+            },
+            _other: () => {
+                writer.write('/* "Other" Streaming not currently implemented */');
+            }
+        });
+
+        writer.popScope();
+    }
+
+    private writeStreamingDeserialize(
+        writer: Writer,
+        payloadType: ast.Type,
+        jsonString: string,
+        yieldResult: boolean
+    ): void {
+        if (is.OneOf.OneOf(payloadType)) {
+            for (const each of payloadType.generics) {
+                writer.pushScope();
+                writer.write(`if(`, this.Types.JsonUtils, `.TryDeserialize(`, jsonString, `, out `, each, `? result))`);
+                writer.pushScope();
+                if (yieldResult) {
+                    writer.write("yield ");
+                }
+                writer.writeTextStatement(`return result!`);
+                writer.popScope();
+                writer.popScope();
+            }
+            return;
+        }
+
+        writer.writeStatement(payloadType.asOptional(), `result`);
+        writer.writeLine("try");
+        writer.pushScope();
+
+        writer.write("result = ");
+        writer.writeNode(this.Types.JsonUtils);
+        writer.write(".Deserialize<");
+        writer.writeNode(payloadType);
+        writer.writeTextStatement(`>(${jsonString})`);
+        writer.popScope();
+        writer.writeLine("catch (System.Text.Json.JsonException)");
+        writer.pushScope();
+        writer.writeStatement(
+            "throw new ",
+            this.Types.BaseException,
+            `($"Unable to deserialize JSON response '`,
+            jsonString,
+            `'")`
+        );
+        writer.popScope();
+
+        if (yieldResult) {
+            writer.writeTextStatement("yield return result!");
+        }
     }
 
     private generateRawPagerMethod(
