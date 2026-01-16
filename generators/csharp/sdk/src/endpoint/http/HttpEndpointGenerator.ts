@@ -204,13 +204,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
     }): ast.CodeBlock | undefined {
         const bodyType = getEndpointReturnType({ context: this.context, endpoint });
+        const rawResponseType = bodyType ?? this.Primitive.object;
 
         if (endpoint.response?.body == null) {
             return this.csharp.codeblock((writer) => {
                 writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
                 writer.pushScope();
                 writer.write("return new ");
-                writer.writeNode(this.Types.RawResponse(this.Primitive.object));
+                writer.writeNode(this.Types.RawResponse(rawResponseType));
                 writer.writeLine();
                 writer.writeLine("{");
                 writer.indent();
@@ -219,7 +220,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 );
                 writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
                 writer.writeLine("Headers = ExtractHeaders(response.Raw),");
-                writer.writeLine("Body = new object()");
+                // For endpoints with no body but a return type (like HEAD returning HttpResponseHeaders),
+                // we return the response headers as the body
+                if (bodyType != null) {
+                    writer.writeLine(`Body = ${this.names.variables.response}.Raw.Headers`);
+                } else {
+                    writer.writeLine("Body = new object()");
+                }
                 writer.dedent();
                 writer.writeLine("};");
                 writer.popScope();

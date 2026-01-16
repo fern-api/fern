@@ -146,12 +146,12 @@ public partial class UserClient : IUserClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new RawResponse<HttpResponseHeaders>
                 {
                     StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri!,
                     Headers = ExtractHeaders(response.Raw),
-                    Body = new object(),
+                    Body = response.Raw.Headers,
                 };
             }
             {
