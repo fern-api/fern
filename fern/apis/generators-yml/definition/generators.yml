@@ -558,7 +558,7 @@ types:
       graphql: string
       origin: optional<string>
       overrides: optional<string>
-      namespace: optional<string>
+      resource: optional<string>
 
   ProtobufSpecSchema:
     properties:

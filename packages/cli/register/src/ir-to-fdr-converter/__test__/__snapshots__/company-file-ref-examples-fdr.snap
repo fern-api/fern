@@ -3,6 +3,7 @@
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],
+  "graphqlOperations": {},
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [

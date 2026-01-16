@@ -45,6 +45,7 @@
     },
   },
   "globalHeaders": [],
+  "graphqlOperations": {},
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [

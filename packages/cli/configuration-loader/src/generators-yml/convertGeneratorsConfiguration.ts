@@ -443,10 +443,17 @@ async function parseApiConfigurationV2Schema({
         } else {
             continue;
         }
-        if ("namespace" in spec && spec.namespace != null) {
-            namespacedDefinitions[spec.namespace] ??= [];
+        // Handle namespace for most specs, but use "resource" for GraphQL specs
+        const namespaceValue =
+            generatorsYml.isGraphQLSpecSchema(spec) && "resource" in spec
+                ? spec.resource
+                : "namespace" in spec
+                  ? spec.namespace
+                  : undefined;
+        if (namespaceValue != null) {
+            namespacedDefinitions[namespaceValue] ??= [];
             // biome-ignore lint/style/noNonNullAssertion: allow
-            namespacedDefinitions[spec.namespace]!.push(definitionLocation);
+            namespacedDefinitions[namespaceValue]!.push(definitionLocation);
         } else {
             rootDefinitions.push(definitionLocation);
         }
