@@ -6,7 +6,6 @@ import { createFdrService } from "@fern-api/core";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 
 import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer";
@@ -32,9 +31,6 @@ export async function registerApi({
     playgroundConfig?: PlaygroundConfig;
     aiEnhancerConfig?: AIExampleEnhancerConfig;
 }): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
-    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
-    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
-
     const ir = generateIntermediateRepresentation({
         workspace,
         audiences,
@@ -52,11 +48,6 @@ export async function registerApi({
     const fdrService = createFdrService({
         token: token.value
     });
-
-    if (isAirGapped) {
-        context.logger.debug(`Skipping FDR API registration for ${ir.apiName.originalName} in air-gapped environment`);
-        return { id: FdrCjsSdk.ApiDefinitionId(`air-gapped-${ir.apiName.originalName}`), ir };
-    }
 
     let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 

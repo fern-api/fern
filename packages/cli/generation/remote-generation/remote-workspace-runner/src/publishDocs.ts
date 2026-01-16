@@ -172,12 +172,6 @@ export async function publishDocs({
             const hashNonImageTime = performance.now() - hashNonImageStart;
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
-            if (isAirGapped) {
-                context.logger.debug("Skipping FDR docs registration in air-gapped environment");
-                docsRegistrationId = "air-gapped-local";
-                return [];
-            }
-
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                     orgId: CjsFdrSdk.OrgId(organization),
@@ -278,13 +272,6 @@ export async function publishDocs({
             }
         },
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            if (isAirGapped) {
-                context.logger.debug(
-                    `Skipping FDR API registration for ${apiName ?? ir.apiName.originalName} in air-gapped environment`
-                );
-                return CjsFdrSdk.ApiDefinitionId(`air-gapped-${ir.apiName.originalName}`);
-            }
-
             // Use apiName from docs.yml (folder name) as the API identifier for FDR
             // This ensures users can reference APIs by their folder name in docs components
             let apiDefinition = convertIrToFdrApi({
@@ -509,14 +496,6 @@ export async function publishDocs({
         if (pollAttempts >= MAX_POLL_ATTEMPTS) {
             return context.failAndThrow("Python docs generation timed out");
         }
-    }
-
-    if (isAirGapped) {
-        context.logger.info("Skipping FDR docs publishing in air-gapped environment");
-        const url = wrapWithHttps(urlToOutput);
-        const link = terminalLink(url, url);
-        context.logger.info(chalk.green(`Docs resolved locally for ${link} (air-gapped mode)`));
-        return;
     }
 
     context.logger.info("Publishing docs to FDR...");
