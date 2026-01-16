@@ -21,7 +21,7 @@ export class RubyGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         readmeConfigBuilder: ReadmeConfigBuilder;
         ir: IntermediateRepresentation;
     }) {
-        super({ logger, config, selfHosted: false }); // TODO: upgrade IR and add self hosted
+        super({ logger, config, selfHosted: ir.selfHosted });
         this.readmeConfigBuilder = readmeConfigBuilder;
     }
 
