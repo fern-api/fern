@@ -864,39 +864,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             });
         }
 
-        nestedClass.addMethod({
-            name: "ExtractHeaders",
-            access: ast.Access.Private,
-            type: ast.MethodType.STATIC,
-            parameters: [
-                this.csharp.parameter({
-                    name: "response",
-                    type: this.System.Net.Http.HttpResponseMessage
-                })
-            ],
-            return_: this.System.Collections.Generic.IReadOnlyDictionary(
-                this.Primitive.string,
-                this.System.Collections.Generic.IEnumerable(this.Primitive.string)
-            ),
-            body: this.csharp.codeblock((writer) => {
-                writer.writeLine(
-                    "var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);"
-                );
-                writer.writeLine("foreach (var header in response.Headers)");
-                writer.pushScope();
-                writer.writeLine("headers[header.Key] = header.Value.ToList();");
-                writer.popScope();
-                writer.writeLine("if (response.Content != null)");
-                writer.pushScope();
-                writer.writeLine("foreach (var header in response.Content.Headers)");
-                writer.pushScope();
-                writer.writeLine("headers[header.Key] = header.Value.ToList();");
-                writer.popScope();
-                writer.popScope();
-                writer.writeLine("return headers;");
-            })
-        });
-
         class_.addNestedClass(nestedClass);
     }
 

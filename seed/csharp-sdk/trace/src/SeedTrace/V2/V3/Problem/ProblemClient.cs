@@ -27,39 +27,8 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/problems-v2/lightweight-problem-info",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetLightweightProblemsAsync(options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -73,39 +42,8 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/problems-v2/problem-info",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetProblemsAsync(options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -120,42 +58,8 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/problems-v2/problem-info/{0}",
-                        ValueConvert.ToPathParameterString(problemId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetLatestProblemAsync(problemId, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -171,43 +75,13 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/problems-v2/problem-info/{0}/version/{1}",
-                        ValueConvert.ToPathParameterString(problemId),
-                        ValueConvert.ToPathParameterString(problemVersion)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetProblemVersionAsync(
+            problemId,
+            problemVersion,
+            options,
+            cancellationToken
+        );
+        return response.Data;
     }
 
     public partial class RawAccessClient
@@ -217,27 +91,6 @@ public partial class ProblemClient : IProblemClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         /// <summary>
@@ -277,7 +130,7 @@ public partial class ProblemClient : IProblemClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -330,7 +183,7 @@ public partial class ProblemClient : IProblemClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -387,7 +240,7 @@ public partial class ProblemClient : IProblemClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -446,7 +299,7 @@ public partial class ProblemClient : IProblemClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }

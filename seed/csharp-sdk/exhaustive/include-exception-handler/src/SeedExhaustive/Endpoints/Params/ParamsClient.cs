@@ -39,42 +39,8 @@ public partial class ParamsClient : IParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = string.Format(
-                                "/params/path/{0}",
-                                ValueConvert.ToPathParameterString(param)
-                            ),
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.GetWithPathAsync(param, options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -94,42 +60,12 @@ public partial class ParamsClient : IParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = string.Format(
-                                "/params/path/{0}",
-                                ValueConvert.ToPathParameterString(request.Param)
-                            ),
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.GetWithInlinePathAsync(
+                    request,
+                    options,
+                    cancellationToken
+                );
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -149,34 +85,7 @@ public partial class ParamsClient : IParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["query"] = request.Query;
-                _query["number"] = request.Number.ToString();
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = "/params",
-                            Query = _query,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    return;
-                }
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                await Raw.GetWithQueryAsync(request, options, cancellationToken);
             })
             .ConfigureAwait(false);
     }
@@ -198,34 +107,7 @@ public partial class ParamsClient : IParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["query"] = request.Query;
-                _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = "/params",
-                            Query = _query,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    return;
-                }
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                await Raw.GetWithAllowMultipleQueryAsync(request, options, cancellationToken);
             })
             .ConfigureAwait(false);
     }
@@ -249,36 +131,7 @@ public partial class ParamsClient : IParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["query"] = request.Query;
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = string.Format(
-                                "/params/path-query/{0}",
-                                ValueConvert.ToPathParameterString(param)
-                            ),
-                            Query = _query,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    return;
-                }
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                await Raw.GetWithPathAndQueryAsync(param, request, options, cancellationToken);
             })
             .ConfigureAwait(false);
     }
@@ -300,36 +153,7 @@ public partial class ParamsClient : IParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["query"] = request.Query;
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = string.Format(
-                                "/params/path-query/{0}",
-                                ValueConvert.ToPathParameterString(request.Param)
-                            ),
-                            Query = _query,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    return;
-                }
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                await Raw.GetWithInlinePathAndQueryAsync(request, options, cancellationToken);
             })
             .ConfigureAwait(false);
     }
@@ -350,43 +174,13 @@ public partial class ParamsClient : IParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Put,
-                            Path = string.Format(
-                                "/params/path/{0}",
-                                ValueConvert.ToPathParameterString(param)
-                            ),
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.ModifyWithPathAsync(
+                    param,
+                    request,
+                    options,
+                    cancellationToken
+                );
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -408,43 +202,12 @@ public partial class ParamsClient : IParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Put,
-                            Path = string.Format(
-                                "/params/path/{0}",
-                                ValueConvert.ToPathParameterString(request.Param)
-                            ),
-                            Body = request.Body,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.ModifyWithInlinePathAsync(
+                    request,
+                    options,
+                    cancellationToken
+                );
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -456,27 +219,6 @@ public partial class ParamsClient : IParamsClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         /// <summary>
@@ -520,7 +262,7 @@ public partial class ParamsClient : IParamsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -583,7 +325,7 @@ public partial class ParamsClient : IParamsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -642,7 +384,7 @@ public partial class ParamsClient : IParamsClient
                             {
                                 StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                             },
                         };
                     }
@@ -695,7 +437,7 @@ public partial class ParamsClient : IParamsClient
                             {
                                 StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                             },
                         };
                     }
@@ -751,7 +493,7 @@ public partial class ParamsClient : IParamsClient
                             {
                                 StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                             },
                         };
                     }
@@ -806,7 +548,7 @@ public partial class ParamsClient : IParamsClient
                             {
                                 StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                             },
                         };
                     }
@@ -865,7 +607,7 @@ public partial class ParamsClient : IParamsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -929,7 +671,7 @@ public partial class ParamsClient : IParamsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }

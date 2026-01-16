@@ -99,81 +99,8 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["limit"] = request.Limit.ToString();
-        _query["id"] = request.Id;
-        _query["date"] = request.Date.ToString(Constants.DateFormat);
-        _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
-        _query["bytes"] = request.Bytes;
-        _query["user"] = JsonUtils.Serialize(request.User);
-        _query["userList"] = request
-            .UserList.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["excludeUser"] = request
-            .ExcludeUser.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["filter"] = request.Filter;
-        _query["neighborRequired"] = JsonUtils.Serialize(request.NeighborRequired);
-        if (request.OptionalDeadline != null)
-        {
-            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
-                Constants.DateTimeFormat
-            );
-        }
-        if (request.KeyValue != null)
-        {
-            _query["keyValue"] = JsonUtils.Serialize(request.KeyValue);
-        }
-        if (request.OptionalString != null)
-        {
-            _query["optionalString"] = request.OptionalString;
-        }
-        if (request.NestedUser != null)
-        {
-            _query["nestedUser"] = JsonUtils.Serialize(request.NestedUser);
-        }
-        if (request.OptionalUser != null)
-        {
-            _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
-        }
-        if (request.Neighbor != null)
-        {
-            _query["neighbor"] = JsonUtils.Serialize(request.Neighbor);
-        }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "user/getUsername",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<SearchResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.SearchAsync(request, options, cancellationToken);
+        return response.Data;
     }
 
     public partial class RawAccessClient
@@ -183,27 +110,6 @@ public partial class SeedApiClient : ISeedApiClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         public async Task<WithRawResponse<SearchResponse>> SearchAsync(
@@ -279,7 +185,7 @@ public partial class SeedApiClient : ISeedApiClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }

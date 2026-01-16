@@ -27,34 +27,12 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-test-submission-status/{0}",
-                        ValueConvert.ToPathParameterString(submissionId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.UpdateTestSubmissionStatusAsync(
+            submissionId,
+            request,
+            options,
+            cancellationToken
+        );
     }
 
     /// <example><code>
@@ -76,34 +54,7 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-test-submission-status-v2/{0}",
-                        ValueConvert.ToPathParameterString(submissionId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.SendTestSubmissionUpdateAsync(submissionId, request, options, cancellationToken);
     }
 
     /// <example><code>
@@ -119,34 +70,12 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-workspace-submission-status/{0}",
-                        ValueConvert.ToPathParameterString(submissionId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.UpdateWorkspaceSubmissionStatusAsync(
+            submissionId,
+            request,
+            options,
+            cancellationToken
+        );
     }
 
     /// <example><code>
@@ -168,34 +97,12 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-workspace-submission-status-v2/{0}",
-                        ValueConvert.ToPathParameterString(submissionId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.SendWorkspaceSubmissionUpdateAsync(
+            submissionId,
+            request,
+            options,
+            cancellationToken
+        );
     }
 
     /// <example><code>
@@ -320,35 +227,13 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-test-trace/submission/{0}/testCase/{1}",
-                        ValueConvert.ToPathParameterString(submissionId),
-                        ValueConvert.ToPathParameterString(testCaseId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.StoreTracedTestCaseAsync(
+            submissionId,
+            testCaseId,
+            request,
+            options,
+            cancellationToken
+        );
     }
 
     /// <example><code>
@@ -450,35 +335,13 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-test-trace-v2/submission/{0}/testCase/{1}",
-                        ValueConvert.ToPathParameterString(submissionId),
-                        ValueConvert.ToPathParameterString(testCaseId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.StoreTracedTestCaseV2Async(
+            submissionId,
+            testCaseId,
+            request,
+            options,
+            cancellationToken
+        );
     }
 
     /// <example><code>
@@ -607,34 +470,7 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-workspace-trace/submission/{0}",
-                        ValueConvert.ToPathParameterString(submissionId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.StoreTracedWorkspaceAsync(submissionId, request, options, cancellationToken);
     }
 
     /// <example><code>
@@ -734,34 +570,7 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-workspace-trace-v2/submission/{0}",
-                        ValueConvert.ToPathParameterString(submissionId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.StoreTracedWorkspaceV2Async(submissionId, request, options, cancellationToken);
     }
 
     public partial class RawAccessClient
@@ -771,27 +580,6 @@ public partial class AdminClient : IAdminClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         public async Task<WithRawResponse<object>> UpdateTestSubmissionStatusAsync(
@@ -826,7 +614,7 @@ public partial class AdminClient : IAdminClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }
@@ -872,7 +660,7 @@ public partial class AdminClient : IAdminClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }
@@ -918,7 +706,7 @@ public partial class AdminClient : IAdminClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }
@@ -964,7 +752,7 @@ public partial class AdminClient : IAdminClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }
@@ -1012,7 +800,7 @@ public partial class AdminClient : IAdminClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }
@@ -1060,7 +848,7 @@ public partial class AdminClient : IAdminClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }
@@ -1106,7 +894,7 @@ public partial class AdminClient : IAdminClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }
@@ -1152,7 +940,7 @@ public partial class AdminClient : IAdminClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }

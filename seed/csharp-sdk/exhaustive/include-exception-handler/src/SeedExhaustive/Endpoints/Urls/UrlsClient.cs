@@ -35,39 +35,8 @@ public partial class UrlsClient : IUrlsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = "/urls/MixedCase",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.WithMixedCaseAsync(options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -83,39 +52,8 @@ public partial class UrlsClient : IUrlsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = "/urls/no-ending-slash",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.NoEndingSlashAsync(options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -131,39 +69,8 @@ public partial class UrlsClient : IUrlsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = "/urls/with-ending-slash/",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.WithEndingSlashAsync(options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -179,39 +86,8 @@ public partial class UrlsClient : IUrlsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = "/urls/with_underscores",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.WithUnderscoresAsync(options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -223,27 +99,6 @@ public partial class UrlsClient : IUrlsClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         public async Task<WithRawResponse<string>> WithMixedCaseAsync(
@@ -280,7 +135,7 @@ public partial class UrlsClient : IUrlsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -336,7 +191,7 @@ public partial class UrlsClient : IUrlsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -392,7 +247,7 @@ public partial class UrlsClient : IUrlsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -448,7 +303,7 @@ public partial class UrlsClient : IUrlsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }

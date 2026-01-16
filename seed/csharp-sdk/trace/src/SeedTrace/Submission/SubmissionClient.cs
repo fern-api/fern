@@ -27,42 +27,8 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/sessions/create-session/{0}",
-                        ValueConvert.ToPathParameterString(language)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ExecutionSessionResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.CreateExecutionSessionAsync(language, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -77,42 +43,8 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/sessions/{0}",
-                        ValueConvert.ToPathParameterString(sessionId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ExecutionSessionResponse?>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetExecutionSessionAsync(sessionId, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -127,33 +59,7 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Delete,
-                    Path = string.Format(
-                        "/sessions/stop/{0}",
-                        ValueConvert.ToPathParameterString(sessionId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.StopExecutionSessionAsync(sessionId, options, cancellationToken);
     }
 
     /// <example><code>
@@ -164,39 +70,8 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/sessions/execution-sessions-state",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<GetExecutionSessionStateResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetExecutionSessionsStateAsync(options, cancellationToken);
+        return response.Data;
     }
 
     public partial class RawAccessClient
@@ -206,27 +81,6 @@ public partial class SubmissionClient : ISubmissionClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         /// <summary>
@@ -266,7 +120,7 @@ public partial class SubmissionClient : ISubmissionClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -323,7 +177,7 @@ public partial class SubmissionClient : ISubmissionClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -376,7 +230,7 @@ public partial class SubmissionClient : ISubmissionClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }
@@ -424,7 +278,7 @@ public partial class SubmissionClient : ISubmissionClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }

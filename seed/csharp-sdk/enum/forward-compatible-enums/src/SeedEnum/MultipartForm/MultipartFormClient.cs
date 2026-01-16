@@ -20,32 +20,7 @@ public partial class MultipartFormClient : IMultipartFormClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new SeedEnum.Core.MultipartFormRequest
-        {
-            BaseUrl = _client.Options.BaseUrl,
-            Method = HttpMethod.Post,
-            Path = "multipart",
-            Options = options,
-        };
-        multipartFormRequest_.AddJsonPart("color", request.Color);
-        multipartFormRequest_.AddJsonPart("maybeColor", request.MaybeColor);
-        multipartFormRequest_.AddJsonParts("colorList", request.ColorList);
-        multipartFormRequest_.AddJsonParts("maybeColorList", request.MaybeColorList);
-        var response = await _client
-            .SendRequestAsync(multipartFormRequest_, cancellationToken)
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedEnumApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.MultipartFormAsync(request, options, cancellationToken);
     }
 
     public partial class RawAccessClient
@@ -55,27 +30,6 @@ public partial class MultipartFormClient : IMultipartFormClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         public async Task<WithRawResponse<object>> MultipartFormAsync(
@@ -107,7 +61,7 @@ public partial class MultipartFormClient : IMultipartFormClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }

@@ -40,52 +40,13 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["datetime"] = request.Datetime.ToString(Constants.DateTimeFormat);
-        if (request.OptionalDatetime != null)
-        {
-            _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString(
-                Constants.DateTimeFormat
-            );
-        }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/v2/playlist/{0}/create",
-                        ValueConvert.ToPathParameterString(serviceParam)
-                    ),
-                    Body = request.Body,
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<Playlist>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.CreatePlaylistAsync(
+            serviceParam,
+            request,
+            options,
+            cancellationToken
+        );
+        return response.Data;
     }
 
     /// <summary>
@@ -111,52 +72,13 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["otherField"] = request.OtherField;
-        _query["multiLineDocs"] = request.MultiLineDocs;
-        _query["optionalMultipleField"] = request.OptionalMultipleField;
-        _query["multipleField"] = request.MultipleField;
-        if (request.Limit != null)
-        {
-            _query["limit"] = request.Limit.Value.ToString();
-        }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/v2/playlist/{0}/all",
-                        ValueConvert.ToPathParameterString(serviceParam)
-                    ),
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<Playlist>>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetPlaylistsAsync(
+            serviceParam,
+            request,
+            options,
+            cancellationToken
+        );
+        return response.Data;
     }
 
     /// <summary>
@@ -172,43 +94,13 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/v2/playlist/{0}/{1}",
-                        ValueConvert.ToPathParameterString(serviceParam),
-                        ValueConvert.ToPathParameterString(playlistId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<Playlist>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetPlaylistAsync(
+            serviceParam,
+            playlistId,
+            options,
+            cancellationToken
+        );
+        return response.Data;
     }
 
     /// <summary>
@@ -233,44 +125,14 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Put,
-                    Path = string.Format(
-                        "/v2/playlist/{0}/{1}",
-                        ValueConvert.ToPathParameterString(serviceParam),
-                        ValueConvert.ToPathParameterString(playlistId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<Playlist?>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.UpdatePlaylistAsync(
+            serviceParam,
+            playlistId,
+            request,
+            options,
+            cancellationToken
+        );
+        return response.Data;
     }
 
     /// <summary>
@@ -286,34 +148,7 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Delete,
-                    Path = string.Format(
-                        "/v2/playlist/{0}/{1}",
-                        ValueConvert.ToPathParameterString(serviceParam),
-                        ValueConvert.ToPathParameterString(playlistId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        await Raw.DeletePlaylistAsync(serviceParam, playlistId, options, cancellationToken);
     }
 
     public partial class RawAccessClient
@@ -323,27 +158,6 @@ public partial class PlaylistClient : IPlaylistClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         /// <summary>
@@ -394,7 +208,7 @@ public partial class PlaylistClient : IPlaylistClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -462,7 +276,7 @@ public partial class PlaylistClient : IPlaylistClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -521,7 +335,7 @@ public partial class PlaylistClient : IPlaylistClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -582,7 +396,7 @@ public partial class PlaylistClient : IPlaylistClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -637,7 +451,7 @@ public partial class PlaylistClient : IPlaylistClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                     },
                 };
             }

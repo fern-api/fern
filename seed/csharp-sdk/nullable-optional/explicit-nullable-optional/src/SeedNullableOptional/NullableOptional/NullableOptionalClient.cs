@@ -27,42 +27,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/api/users/{0}",
-                        ValueConvert.ToPathParameterString(userId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<UserResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetUserAsync(userId, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -94,40 +60,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/api/users",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<UserResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.CreateUserAsync(request, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -161,43 +95,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethodExtensions.Patch,
-                    Path = string.Format(
-                        "/api/users/{0}",
-                        ValueConvert.ToPathParameterString(userId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<UserResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.UpdateUserAsync(userId, request, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -220,57 +119,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.Limit != null)
-        {
-            _query["limit"] = request.Limit.ToString();
-        }
-        if (request.Offset != null)
-        {
-            _query["offset"] = request.Offset.ToString();
-        }
-        if (request.IncludeDeleted != null)
-        {
-            _query["includeDeleted"] = JsonUtils.Serialize(request.IncludeDeleted);
-        }
-        if (request.SortBy.IsDefined)
-        {
-            _query["sortBy"] = request.SortBy.Value;
-        }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/api/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.ListUsersAsync(request, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -293,51 +143,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["query"] = request.Query;
-        _query["department"] = request.Department;
-        if (request.Role != null)
-        {
-            _query["role"] = request.Role;
-        }
-        if (request.IsActive.IsDefined)
-        {
-            _query["isActive"] = JsonUtils.Serialize(request.IsActive.Value);
-        }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/api/users/search",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.SearchUsersAsync(request, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -494,40 +301,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/api/profiles/complex",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.CreateComplexProfileAsync(request, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -542,42 +317,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/api/profiles/complex/{0}",
-                        ValueConvert.ToPathParameterString(profileId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetComplexProfileAsync(profileId, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -634,43 +375,13 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethodExtensions.Patch,
-                    Path = string.Format(
-                        "/api/profiles/complex/{0}",
-                        ValueConvert.ToPathParameterString(profileId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.UpdateComplexProfileAsync(
+            profileId,
+            request,
+            options,
+            cancellationToken
+        );
+        return response.Data;
     }
 
     /// <summary>
@@ -747,40 +458,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/api/test/deserialization",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<DeserializationTestResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.TestDeserializationAsync(request, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -802,50 +481,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["role"] = request.Role.Value.ToString();
-        if (request.Status != null)
-        {
-            _query["status"] = request.Status.Stringify();
-        }
-        if (request.SecondaryRole.IsDefined)
-        {
-            _query["secondaryRole"] = request.SecondaryRole.Value.ToString();
-        }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/api/users/filter",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.FilterByRoleAsync(request, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -860,42 +497,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/api/users/{0}/notifications",
-                        ValueConvert.ToPathParameterString(userId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<NotificationMethod?>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetNotificationSettingsAsync(userId, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -919,43 +522,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Put,
-                    Path = string.Format(
-                        "/api/users/{0}/tags",
-                        ValueConvert.ToPathParameterString(userId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.UpdateTagsAsync(userId, request, options, cancellationToken);
+        return response.Data;
     }
 
     /// <summary>
@@ -977,40 +545,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/api/search",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<SearchResult>?>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedNullableOptionalException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        var response = await Raw.GetSearchResultsAsync(request, options, cancellationToken);
+        return response.Data;
     }
 
     public partial class RawAccessClient
@@ -1020,27 +556,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         /// <summary>
@@ -1080,7 +595,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1135,7 +650,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1194,7 +709,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1266,7 +781,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1332,7 +847,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1387,7 +902,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1444,7 +959,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1503,7 +1018,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1558,7 +1073,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1623,7 +1138,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1680,7 +1195,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1739,7 +1254,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }
@@ -1794,7 +1309,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         {
                             StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                             Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                         },
                     };
                 }

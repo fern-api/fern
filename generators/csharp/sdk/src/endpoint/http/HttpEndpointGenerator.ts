@@ -231,7 +231,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                 );
                 writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw))");
+                writer.writeLine("Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw)");
                 writer.dedent();
                 writer.writeLine("}");
                 writer.dedent();
@@ -288,7 +288,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                    writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw))");
+                    writer.writeLine("Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw)");
                     writer.dedent();
                     writer.writeLine("}");
                     writer.dedent();
@@ -337,7 +337,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                    writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw))");
+                    writer.writeLine("Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw)");
                     writer.dedent();
                     writer.writeLine("}");
                     writer.dedent();
@@ -480,44 +480,110 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint,
         rawClientReference: string
     ) {
-        const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
-        if (queryParameterCodeBlock != null) {
-            queryParameterCodeBlock.code.write(writer);
-        }
-        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-        if (headerParameterCodeBlock != null) {
-            headerParameterCodeBlock.code.write(writer);
-        }
-        const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
-        if (requestBodyCodeBlock?.code != null) {
-            writer.writeNode(requestBodyCodeBlock.code);
-        }
-        const apiRequestCodeBlock = rawClient.createHttpRequestWrapper({
-            baseUrl: this.getBaseURLForEndpoint({ endpoint }),
-            requestType: endpointSignatureInfo.request?.getRequestType(),
-            endpoint,
-            bodyReference: requestBodyCodeBlock?.requestBodyReference,
-            pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
-            endpointRequest: endpointSignatureInfo.request
-        });
-        if (apiRequestCodeBlock.code) {
-            writer.writeNode(apiRequestCodeBlock.code);
+        // Check if this is a streaming endpoint
+        const isStreaming =
+            endpoint.response?.body?._visit({
+                streaming: () => true,
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                streamParameter: () => true,
+                _other: () => false
+            }) ?? false;
+
+        if (isStreaming) {
+            // For streaming endpoints, generate the streaming logic inline
+            // since Raw access doesn't support streaming (can't capture response metadata for streams)
+
+            // Build query, header, and request body parameters
+            const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
+            if (queryParameterCodeBlock != null) {
+                queryParameterCodeBlock.code.write(writer);
+            }
+            const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
+            if (headerParameterCodeBlock != null) {
+                headerParameterCodeBlock.code.write(writer);
+            }
+            const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
+            if (requestBodyCodeBlock?.code != null) {
+                writer.writeNode(requestBodyCodeBlock.code);
+            }
+
+            // Create the HTTP request
+            const apiRequestCodeBlock = rawClient.createHttpRequestWrapper({
+                baseUrl: this.getBaseURLForEndpoint({ endpoint }),
+                requestType: endpointSignatureInfo.request?.getRequestType(),
+                endpoint,
+                bodyReference: requestBodyCodeBlock?.requestBodyReference,
+                pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
+                headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+                queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+                endpointRequest: endpointSignatureInfo.request
+            });
+            if (apiRequestCodeBlock.code) {
+                writer.writeNode(apiRequestCodeBlock.code);
+            }
+
+            // Send the request
+            writer.write(`var ${this.names.variables.response} = `);
+            writer.writeNodeStatement(
+                rawClient.sendRequestWithRequestWrapper({
+                    request: apiRequestCodeBlock.requestReference,
+                    clientReference: rawClientReference
+                })
+            );
+
+            // Write the streaming success response handling (uses yield return for async enumerable)
+            const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint });
+            if (successResponseStatements != null) {
+                writer.writeNode(successResponseStatements);
+            }
+
+            // Write error handling
+            writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
+            return;
         }
 
-        writer.write(`var ${this.names.variables.response} = `);
-        writer.writeNodeStatement(
-            rawClient.sendRequestWithRequestWrapper({
-                request: apiRequestCodeBlock.requestReference,
-                clientReference: rawClientReference
-            })
-        );
-        const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint });
-        if (successResponseStatements != null) {
-            writer.writeNode(successResponseStatements);
+        // For non-streaming endpoints, build argument list for Raw method call
+        const args: string[] = [];
+
+        // Add all base parameters (path params, request param)
+        for (const param of endpointSignatureInfo.baseParameters) {
+            args.push(param.name);
         }
-        writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
+
+        // Add options parameter
+        const optionsParamName = endpoint.idempotent
+            ? this.names.parameters.idempotentOptions
+            : this.names.parameters.requestOptions;
+        args.push(optionsParamName);
+
+        // Add cancellation token
+        args.push(this.names.parameters.cancellationToken);
+
+        // Check if endpoint has a return type
+        const returnType = getEndpointReturnType({ context: this.context, endpoint });
+
+        if (returnType != null) {
+            // For non-streaming endpoints, use the WithRawResponse pattern
+            // Generate: var response = await Raw.MethodAsync(...);
+            writer.write(`var ${this.names.variables.response} = await Raw.`);
+            writer.write(this.context.getEndpointMethodName(endpoint));
+            writer.write("(");
+            writer.write(args.join(", "));
+            writer.writeLine(");");
+
+            // Generate: return response.Data;
+            writer.writeLine(`return ${this.names.variables.response}.Data;`);
+        } else {
+            // For void endpoints, call without assignment
+            writer.write(`await Raw.`);
+            writer.write(this.context.getEndpointMethodName(endpoint));
+            writer.write("(");
+            writer.write(args.join(", "));
+            writer.writeLine(");");
+        }
     }
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
@@ -691,6 +757,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         `'")`
                     );
                     writer.popScope();
+
+                    // For streaming responses, yield the result
+                    if (yieldResult) {
+                        writer.writeTextStatement("yield return result!");
+                    }
                 }
 
                 value._visit({

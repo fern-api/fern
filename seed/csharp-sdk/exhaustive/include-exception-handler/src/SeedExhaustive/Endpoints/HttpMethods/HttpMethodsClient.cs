@@ -37,42 +37,8 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = string.Format(
-                                "/http-methods/{0}",
-                                ValueConvert.ToPathParameterString(id)
-                            ),
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.TestGetAsync(id, options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -89,40 +55,8 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/http-methods",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.TestPostAsync(request, options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -143,43 +77,8 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Put,
-                            Path = string.Format(
-                                "/http-methods/{0}",
-                                ValueConvert.ToPathParameterString(id)
-                            ),
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.TestPutAsync(id, request, options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -215,43 +114,8 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethodExtensions.Patch,
-                            Path = string.Format(
-                                "/http-methods/{0}",
-                                ValueConvert.ToPathParameterString(id)
-                            ),
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.TestPatchAsync(id, request, options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -268,42 +132,8 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Delete,
-                            Path = string.Format(
-                                "/http-methods/{0}",
-                                ValueConvert.ToPathParameterString(id)
-                            ),
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<bool>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                var response = await Raw.TestDeleteAsync(id, options, cancellationToken);
+                return response.Data;
             })
             .ConfigureAwait(false);
     }
@@ -315,27 +145,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         internal RawAccessClient(RawClient client)
         {
             _client = client;
-        }
-
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
-            HttpResponseMessage response
-        )
-        {
-            var headers = new Dictionary<string, IEnumerable<string>>(
-                StringComparer.OrdinalIgnoreCase
-            );
-            foreach (var header in response.Headers)
-            {
-                headers[header.Key] = header.Value.ToList();
-            }
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    headers[header.Key] = header.Value.ToList();
-                }
-            }
-            return headers;
         }
 
         public async Task<WithRawResponse<string>> TestGetAsync(
@@ -376,7 +185,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -436,7 +245,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -500,7 +309,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -564,7 +373,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }
@@ -624,7 +433,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                                     StatusCode = (global::System.Net.HttpStatusCode)
                                         response.StatusCode,
                                     Url = response.Raw.RequestMessage?.RequestUri!,
-                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                                 },
                             };
                         }

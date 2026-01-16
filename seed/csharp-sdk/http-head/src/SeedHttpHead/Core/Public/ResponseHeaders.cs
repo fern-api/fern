@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 
 namespace SeedHttpHead;
 
 /// <summary>
 /// Represents HTTP response headers with typed access to common header values.
 /// </summary>
-public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
+public readonly partial struct ResponseHeaders : IEnumerable<HttpHeader>
 {
     private readonly IReadOnlyDictionary<string, IEnumerable<string>> _headers;
 
@@ -42,6 +43,29 @@ public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
     }
 
     /// <summary>
+    /// Creates ResponseHeaders from an HttpResponseMessage by extracting both
+    /// response headers and content headers.
+    /// </summary>
+    /// <param name="response">The HTTP response message.</param>
+    /// <returns>A ResponseHeaders instance containing all headers.</returns>
+    internal static ResponseHeaders FromHttpResponseMessage(HttpResponseMessage response)
+    {
+        var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        foreach (var header in response.Headers)
+        {
+            headers[header.Key] = header.Value.ToList();
+        }
+        if (response.Content != null)
+        {
+            foreach (var header in response.Content.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+        }
+        return new ResponseHeaders(headers);
+    }
+
+    /// <summary>
     /// Gets the value of the "Content-Type" header.
     /// </summary>
     public string? ContentType =>
@@ -66,40 +90,6 @@ public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
                 out var longValue
             )
                 ? longValue
-                : null;
-        }
-    }
-
-    /// <summary>
-    /// Gets the value of the "ETag" header.
-    /// </summary>
-    public string? ETag => TryGetValue(HttpHeader.Names.ETag, out var value) ? value : null;
-
-    /// <summary>
-    /// Gets the value of the "X-Request-Id" header.
-    /// </summary>
-    public string? RequestId =>
-        TryGetValue(HttpHeader.Names.XRequestId, out var value) ? value : null;
-
-    /// <summary>
-    /// Gets the parsed value of the "Date" header.
-    /// </summary>
-    public DateTimeOffset? Date
-    {
-        get
-        {
-            if (!TryGetValue(HttpHeader.Names.Date, out var value))
-            {
-                return null;
-            }
-
-            return DateTimeOffset.TryParse(
-                value,
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out var date
-            )
-                ? date
                 : null;
         }
     }
