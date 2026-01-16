@@ -426,11 +426,15 @@ export class DocsDefinitionResolver {
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
-            const url = createEditThisPageUrl(this.editThisPage, relativePageFilepath);
+            const { url: editThisPageUrl, launch: editThisPageLaunch } = createEditThisPageUrl(
+                this.editThisPage,
+                relativePageFilepath
+            );
             const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown,
-                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined,
+                editThisPageUrl: editThisPageUrl ? DocsV1Write.Url(editThisPageUrl) : undefined,
+                editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch,
                 rawMarkdown: rawMarkdown
             };
         });
@@ -711,6 +715,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
+            editThisPageLaunch: (this.editThisPage?.launch ?? "github") as DocsV1Write.EditThisPageLaunch,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
@@ -1837,14 +1842,17 @@ The generated documentation will replace this placeholder page with complete API
 function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
-): string | undefined {
+): { url: string | undefined; launch: string } {
+    const launch = editThisPage?.launch ?? "github";
+
     if (editThisPage?.github == null) {
-        return undefined;
+        return { url: undefined, launch };
     }
 
     const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
+    const url = `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 
-    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
+    return { url, launch };
 }
 
 function convertAvailability(

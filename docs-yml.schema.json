@@ -393,6 +393,13 @@
       ],
       "additionalProperties": false
     },
+    "docs.EditThisPageLaunch": {
+      "type": "string",
+      "enum": [
+        "github",
+        "dashboard"
+      ]
+    },
     "docs.EditThisPageConfig": {
       "type": "object",
       "properties": {
@@ -400,6 +407,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.GithubEditThisPageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "launch": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.EditThisPageLaunch"
             },
             {
               "type": "null"
