@@ -75,6 +75,307 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
+    public generateRaw(
+        cls: ast.Class,
+        {
+            serviceId,
+            endpoint,
+            rawClientReference,
+            rawClient
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+            rawClientReference: string;
+            rawClient: RawClient;
+        }
+    ) {
+        if (this.hasPagination(endpoint)) {
+            this.generateRawPagerMethod(cls, {
+                serviceId,
+                endpoint,
+                rawClientReference,
+                rawClient
+            });
+        } else {
+            this.generateRawUnpagedMethod(cls, {
+                serviceId,
+                endpoint,
+                rawClientReference,
+                rawClient
+            });
+        }
+    }
+
+    private generateRawUnpagedMethod(
+        cls: ast.Class,
+        {
+            serviceId,
+            endpoint,
+            rawClientReference,
+            rawClient
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+            rawClientReference: string;
+            rawClient: RawClient;
+        }
+    ) {
+        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(
+            this.csharp.parameter({
+                type: this.System.Threading.CancellationToken,
+                name: this.names.parameters.cancellationToken,
+                initializer: "default"
+            })
+        );
+        const bodyType = getEndpointReturnType({ context: this.context, endpoint });
+        const return_ = bodyType ? this.Types.RawResponse(bodyType) : this.Types.RawResponse(this.Primitive.object);
+        const body = this.csharp.codeblock((writer) => {
+            this.writeRawUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
+        });
+
+        return cls.addMethod({
+            name: this.context.getEndpointMethodName(endpoint),
+            access: ast.Access.Public,
+            isAsync: true,
+            parameters,
+            summary: endpoint.docs,
+            return_,
+            body: this.wrapWithExceptionHandler({ body, returnType: return_ })
+        });
+    }
+
+    private writeRawUnpagedMethodBody(
+        endpointSignatureInfo: EndpointSignatureInfo,
+        writer: Writer,
+        rawClient: RawClient,
+        endpoint: HttpEndpoint,
+        rawClientReference: string
+    ) {
+        const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
+        if (queryParameterCodeBlock != null) {
+            queryParameterCodeBlock.code.write(writer);
+        }
+        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
+        if (headerParameterCodeBlock != null) {
+            headerParameterCodeBlock.code.write(writer);
+        }
+        const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
+        if (requestBodyCodeBlock?.code != null) {
+            writer.writeNode(requestBodyCodeBlock.code);
+        }
+        const apiRequestCodeBlock = rawClient.createHttpRequestWrapper({
+            baseUrl: this.getBaseURLForEndpoint({ endpoint }),
+            requestType: endpointSignatureInfo.request?.getRequestType(),
+            endpoint,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
+            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            endpointRequest: endpointSignatureInfo.request
+        });
+        if (apiRequestCodeBlock.code) {
+            writer.writeNode(apiRequestCodeBlock.code);
+        }
+
+        writer.write(`var ${this.names.variables.response} = `);
+        writer.writeNodeStatement(
+            rawClient.sendRequestWithRequestWrapper({
+                request: apiRequestCodeBlock.requestReference,
+                clientReference: rawClientReference
+            })
+        );
+
+        const rawResponseStatements = this.getRawEndpointSuccessResponseStatements({ endpoint });
+        if (rawResponseStatements != null) {
+            writer.writeNode(rawResponseStatements);
+        }
+        writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
+    }
+
+    private getRawEndpointSuccessResponseStatements({
+        endpoint
+    }: {
+        endpoint: HttpEndpoint;
+    }): ast.CodeBlock | undefined {
+        const bodyType = getEndpointReturnType({ context: this.context, endpoint });
+
+        if (endpoint.response?.body == null) {
+            return this.csharp.codeblock((writer) => {
+                writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
+                writer.pushScope();
+                writer.write("return new ");
+                writer.writeNode(this.Types.RawResponse(this.Primitive.object));
+                writer.writeLine();
+                writer.pushScope();
+                writer.writeLine(
+                    `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
+                );
+                writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
+                writer.writeLine("Headers = ExtractHeaders(response.Raw),");
+                writer.writeLine("Body = new object()");
+                writer.popScope();
+                writer.writeLine("};");
+                writer.popScope();
+            });
+        }
+
+        const body = endpoint.response.body;
+
+        return this.csharp.codeblock((writer) => {
+            body._visit({
+                streamParameter: () => {
+                    writer.writeLine("// Streaming responses are not supported for raw access");
+                    writer.writeLine(
+                        `throw new ${this.names.classes.baseException}("Streaming responses are not supported for raw access");`
+                    );
+                },
+                fileDownload: () => {
+                    writer.writeLine("// File download responses are not supported for raw access");
+                    writer.writeLine(
+                        `throw new ${this.names.classes.baseException}("File download responses are not supported for raw access");`
+                    );
+                },
+                json: (reference) => {
+                    const astType = this.context.csharpTypeMapper.convert({
+                        reference: reference.responseBodyType
+                    });
+                    writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
+                    writer.pushScope();
+
+                    writer.writeTextStatement(
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                    );
+                    writer.writeLine("try");
+                    writer.pushScope();
+
+                    writer.write("var body = ");
+                    writer.writeNode(this.Types.JsonUtils);
+                    writer.write(".Deserialize<");
+                    writer.writeNode(astType);
+                    writer.writeLine(`>(${this.names.variables.responseBody})!;`);
+
+                    writer.write("return new ");
+                    writer.writeNode(this.Types.RawResponse(astType));
+                    writer.writeLine();
+                    writer.pushScope();
+                    writer.writeLine(
+                        `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
+                    );
+                    writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
+                    writer.writeLine("Headers = ExtractHeaders(response.Raw),");
+                    writer.writeLine("Body = body");
+                    writer.popScope();
+                    writer.writeLine("};");
+
+                    writer.popScope();
+
+                    writer.write("catch (");
+                    writer.writeNode(this.System.Text.Json.JsonException);
+                    writer.writeLine(" e)");
+                    writer.pushScope();
+
+                    writer.write("throw new ");
+                    writer.writeNode(this.Types.BaseException);
+                    writer.writeTextStatement('("Failed to deserialize response", e)');
+                    writer.popScope();
+
+                    writer.popScope();
+
+                    writer.writeLine();
+                },
+                streaming: () => {
+                    writer.writeLine("// Streaming responses are not supported for raw access");
+                    writer.writeLine(
+                        `throw new ${this.names.classes.baseException}("Streaming responses are not supported for raw access");`
+                    );
+                },
+                text: () => {
+                    writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
+                    writer.pushScope();
+
+                    writer.writeTextStatement(
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                    );
+
+                    writer.write("return new ");
+                    writer.writeNode(this.Types.RawResponse(this.Primitive.string));
+                    writer.writeLine();
+                    writer.pushScope();
+                    writer.writeLine(
+                        `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
+                    );
+                    writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
+                    writer.writeLine("Headers = ExtractHeaders(response.Raw),");
+                    writer.writeLine(`Body = ${this.names.variables.responseBody}`);
+                    writer.popScope();
+                    writer.writeLine("};");
+                    writer.popScope();
+                },
+                bytes: () => this.context.logger.error("Bytes not supported for raw access"),
+                _other: () => undefined
+            });
+        });
+    }
+
+    private generateRawPagerMethod(
+        cls: ast.Class,
+        {
+            serviceId,
+            endpoint,
+            rawClientReference,
+            rawClient
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+            rawClientReference: string;
+            rawClient: RawClient;
+        }
+    ) {
+        this.assertHasPagination(endpoint);
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(
+            this.csharp.parameter({
+                type: this.System.Threading.CancellationToken,
+                name: this.names.parameters.cancellationToken,
+                initializer: "default"
+            })
+        );
+
+        const unpagedEndpointResponseType = getEndpointReturnType({
+            context: this.context,
+            endpoint
+        });
+        if (!unpagedEndpointResponseType) {
+            throw new Error("Internal error; a response type is required for pagination endpoints");
+        }
+
+        const return_ = this.Types.RawResponse(unpagedEndpointResponseType);
+        const body = this.csharp.codeblock((writer) => {
+            this.writeRawUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
+        });
+
+        return cls.addMethod({
+            name: this.context.getEndpointMethodName(endpoint),
+            access: ast.Access.Public,
+            isAsync: true,
+            parameters,
+            summary: endpoint.docs,
+            return_,
+            body: this.wrapWithExceptionHandler({ body, returnType: return_ })
+        });
+    }
+
     private getHttpMethodSnippet({ endpoint }: { endpoint: HttpEndpoint }): SingleEndpointSnippet | undefined {
         // if this is a paginated endpoint, don't return a snippet for the internal method
         if (this.hasPagination(endpoint)) {

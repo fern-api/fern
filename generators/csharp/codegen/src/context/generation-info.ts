@@ -540,6 +540,17 @@ export class Generation {
                 multipartMethodNameForCollection: "AddFileParameterParts",
                 isReferenceType: true
             }),
+        /**
+         * Generic wrapper containing HTTP response metadata and the parsed response body.
+         * @param bodyType - The type of the deserialized response body
+         */
+        RawResponse: (bodyType: ast.Type | ast.ClassReference): ast.ClassReference => {
+            return this.csharp.classReference({
+                origin: this.model.staticExplicit("RawResponse"),
+                namespace: this.namespaces.publicCore,
+                generics: [bodyType]
+            });
+        },
         /** HTTP header management utilities */
         Headers: () =>
             this.csharp.classReference({

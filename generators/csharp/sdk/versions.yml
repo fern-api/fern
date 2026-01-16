@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.16.0
+  changelogEntry:
+    - summary: |
+        Add Raw HTTP Response Access Pattern for explicit access to HTTP response metadata.
+
+        Users can now access raw HTTP response information (status code, URL, headers) via an explicit `.Raw` property on all clients:
+
+        ```csharp
+        // Default path - clean and simple
+        User user = await client.GetUserAsync("123");
+
+        // Raw path - explicit access to HTTP metadata
+        var response = await client.Raw.GetUserAsync("123");
+
+        Console.WriteLine(response.StatusCode);                      // OK
+        Console.WriteLine((int)response.StatusCode);                 // 200
+        Console.WriteLine(response.Url);                             // https://api.example.com/users/123
+        Console.WriteLine(response.Headers["X-Request-Id"].First()); // abc-123
+        Console.WriteLine(response.Body.Name);                       // Jane Doe
+        ```
+
+        Key features:
+        * `RawResponse<T>` wrapper type containing StatusCode, Url, Headers, and Body
+        * `RawAccessClient` nested class exposed via `.Raw` property on all clients
+        * Zero overhead on default path - no extra allocations when not using `.Raw`
+        * Headers are case-insensitive and include both response and content headers
+        * All HTTP metadata is copied before HttpResponseMessage disposal
+      type: feat
+  createdAt: "2026-01-16"
+  irVersion: 62
+
 - version: 2.15.0
   changelogEntry:
     - summary: |

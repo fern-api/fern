@@ -116,6 +116,9 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
         // add websocket api endpoints if needed
         this.generateWebsocketFactories(class_);
 
+        // add raw access client
+        this.generateRawAccessClient(class_);
+
         return new CSharpFile({
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
@@ -186,6 +189,8 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
                             );
                         }
                     }
+
+                    innerWriter.writeLine(`Raw = new RawAccessClient(${this.members.clientName});`);
                 };
 
                 if (this.settings.includeExceptionHandler) {
@@ -205,6 +210,93 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
 
     private getSubpackages(): Subpackage[] {
         return this.context.getSubpackages(this.subpackage.subpackages);
+    }
+
+    private generateRawAccessClient(class_: ast.Class) {
+        const rawAccessClientReference = this.csharp.classReference({
+            name: "RawAccessClient",
+            namespace: this.classReference.namespace
+        });
+
+        class_.addField({
+            access: ast.Access.Public,
+            get: true,
+            origin: class_.explicit("Raw"),
+            type: rawAccessClientReference
+        });
+
+        const nestedClass = this.csharp.class_({
+            reference: rawAccessClientReference,
+            partial: true,
+            access: ast.Access.Public
+        });
+
+        nestedClass.addField({
+            access: ast.Access.Private,
+            origin: nestedClass.explicit("_client"),
+            type: this.Types.RawClient,
+            readonly: true
+        });
+
+        nestedClass.addConstructor({
+            access: ast.Access.Internal,
+            parameters: [
+                this.csharp.parameter({
+                    name: "client",
+                    type: this.Types.RawClient
+                })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine("_client = client;");
+            })
+        });
+
+        const serviceId = this.serviceId;
+        if (this.service != null && serviceId != null) {
+            this.service.endpoints.flatMap((endpoint) => {
+                return this.context.endpointGenerator.generateRaw(nestedClass, {
+                    serviceId,
+                    endpoint,
+                    rawClientReference: "_client",
+                    rawClient: this.rawClient
+                });
+            });
+        }
+
+        nestedClass.addMethod({
+            name: "ExtractHeaders",
+            access: ast.Access.Private,
+            type: ast.MethodType.STATIC,
+            parameters: [
+                this.csharp.parameter({
+                    name: "response",
+                    type: this.context.System.Net.Http.HttpResponseMessage
+                })
+            ],
+            return_: this.context.System.Collections.Generic.IReadOnlyDictionary(
+                this.context.generation.Primitive.string,
+                this.context.System.Collections.Generic.IEnumerable(this.context.generation.Primitive.string)
+            ),
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine(
+                    "var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);"
+                );
+                writer.writeLine("foreach (var header in response.Headers)");
+                writer.pushScope();
+                writer.writeLine("headers[header.Key] = header.Value.ToList();");
+                writer.popScope();
+                writer.writeLine("if (response.Content != null)");
+                writer.pushScope();
+                writer.writeLine("foreach (var header in response.Content.Headers)");
+                writer.pushScope();
+                writer.writeLine("headers[header.Key] = header.Value.ToList();");
+                writer.popScope();
+                writer.popScope();
+                writer.writeLine("return headers;");
+            })
+        });
+
+        class_.addNestedClass(nestedClass);
     }
 
     protected getFilepath(): RelativeFilePath {

@@ -167,6 +167,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             });
         }
 
+        this.generateRawAccessClient(class_);
+
         const { optionalParameters } = this.getConstructorParameters();
         if (optionalParameters.some((parameter) => parameter.environmentVariable != null)) {
             this.getFromEnvironmentOrThrowMethod(class_);
@@ -444,6 +446,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             );
                         }
                     }
+
+                    innerWriter.writeLine("Raw = new RawAccessClient(_client);");
                 };
 
                 if (this.settings.includeExceptionHandler) {
@@ -805,6 +809,95 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getSubpackages(): Subpackage[] {
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
+    }
+
+    private generateRawAccessClient(class_: ast.Class) {
+        const rawAccessClientReference = this.csharp.classReference({
+            name: "RawAccessClient",
+            namespace: this.namespaces.root
+        });
+
+        class_.addField({
+            access: ast.Access.Public,
+            get: true,
+            origin: class_.explicit("Raw"),
+            type: rawAccessClientReference
+        });
+
+        const nestedClass = this.csharp.class_({
+            reference: rawAccessClientReference,
+            partial: true,
+            access: ast.Access.Public
+        });
+
+        nestedClass.addField({
+            access: ast.Access.Private,
+            origin: nestedClass.explicit("_client"),
+            type: this.Types.RawClient,
+            readonly: true
+        });
+
+        nestedClass.addConstructor({
+            access: ast.Access.Internal,
+            parameters: [
+                this.csharp.parameter({
+                    name: "client",
+                    type: this.Types.RawClient
+                })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine("_client = client;");
+            })
+        });
+
+        const rootServiceId = this.context.ir.rootPackage.service;
+        if (rootServiceId != null) {
+            const service =
+                this.context.getHttpService(rootServiceId) ?? fail(`Service with id ${rootServiceId} not found`);
+            service.endpoints.flatMap((endpoint) => {
+                return this.context.endpointGenerator.generateRaw(nestedClass, {
+                    serviceId: rootServiceId,
+                    endpoint,
+                    rawClientReference: "_client",
+                    rawClient: this.rawClient
+                });
+            });
+        }
+
+        nestedClass.addMethod({
+            name: "ExtractHeaders",
+            access: ast.Access.Private,
+            type: ast.MethodType.STATIC,
+            parameters: [
+                this.csharp.parameter({
+                    name: "response",
+                    type: this.System.Net.Http.HttpResponseMessage
+                })
+            ],
+            return_: this.System.Collections.Generic.IReadOnlyDictionary(
+                this.Primitive.string,
+                this.System.Collections.Generic.IEnumerable(this.Primitive.string)
+            ),
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine(
+                    "var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);"
+                );
+                writer.writeLine("foreach (var header in response.Headers)");
+                writer.pushScope();
+                writer.writeLine("headers[header.Key] = header.Value.ToList();");
+                writer.popScope();
+                writer.writeLine("if (response.Content != null)");
+                writer.pushScope();
+                writer.writeLine("foreach (var header in response.Content.Headers)");
+                writer.pushScope();
+                writer.writeLine("headers[header.Key] = header.Value.ToList();");
+                writer.popScope();
+                writer.popScope();
+                writer.writeLine("return headers;");
+            })
+        });
+
+        class_.addNestedClass(nestedClass);
     }
 
     private getInferredAuthCredentialParams(): string[] {
