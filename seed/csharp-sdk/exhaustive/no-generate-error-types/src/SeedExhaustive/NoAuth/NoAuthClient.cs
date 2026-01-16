@@ -1,5 +1,5 @@
-using SeedExhaustive.Core;
 using System.Text.Json;
+using SeedExhaustive.Core;
 
 namespace SeedExhaustive;
 
@@ -7,7 +7,8 @@ public partial class NoAuthClient : INoAuthClient
 {
     private RawClient _client;
 
-    internal NoAuthClient (RawClient client){
+    internal NoAuthClient(RawClient client)
+    {
         _client = client;
         Raw = new RawAccessClient(_client);
     }
@@ -20,8 +21,25 @@ public partial class NoAuthClient : INoAuthClient
     /// <example><code>
     /// await client.NoAuth.PostWithNoAuthAsync(new Dictionary&lt;object, object?&gt;() { { "key", "value" } });
     /// </code></example>
-    public async Task<bool> PostWithNoAuthAsync(object request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/no-auth", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<bool> PostWithNoAuthAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/no-auth",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -34,22 +52,33 @@ public partial class NoAuthClient : INoAuthClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -67,8 +96,25 @@ public partial class NoAuthClient : INoAuthClient
         /// <summary>
         /// POST request with no auth
         /// </summary>
-        public async Task<RawResponse<bool>> PostWithNoAuthAsync(object request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/no-auth", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<bool>> PostWithNoAuthAsync(
+            object request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/no-auth",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -80,8 +126,7 @@ public partial class NoAuthClient : INoAuthClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -89,13 +134,15 @@ public partial class NoAuthClient : INoAuthClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }

@@ -1,5 +1,5 @@
-using SeedPackageYml.Core;
 using System.Text.Json;
+using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
 
@@ -7,8 +7,11 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
 {
     private readonly RawClient _client;
 
-    public SeedPackageYmlClient (ClientOptions? clientOptions = null){
-        var defaultHeaders = new Headers(new Dictionary<string, string>(){
+    public SeedPackageYmlClient(ClientOptions? clientOptions = null)
+    {
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPackageYml" },
                 { "X-Fern-SDK-Version", Version.Current },
@@ -16,15 +19,15 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             }
         );
         clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders){
-            if (!clientOptions.Headers.ContainsKey(header.Key)){
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = 
-        new RawClient(clientOptions);
-        Service = 
-        new ServiceClient(_client);
+        _client = new RawClient(clientOptions);
+        Service = new ServiceClient(_client);
         Raw = new RawAccessClient(_client);
     }
 
@@ -35,8 +38,26 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
     /// <example><code>
     /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
     /// </code></example>
-    public async Task<string> EchoAsync(string id, EchoRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<string> EchoAsync(
+        string id,
+        EchoRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)),
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -49,22 +70,33 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                 throw new SeedPackageYmlException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedPackageYmlApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedPackageYmlApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -79,8 +111,26 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> EchoAsync(string id, EchoRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<string>> EchoAsync(
+            string id,
+            EchoRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)),
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -92,8 +142,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -101,13 +150,15 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                     throw new SeedPackageYmlException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedPackageYmlApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedPackageYmlApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }

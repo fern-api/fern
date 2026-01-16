@@ -6,7 +6,8 @@ public partial class PackageClient : IPackageClient
 {
     private RawClient _client;
 
-    internal PackageClient (RawClient client){
+    internal PackageClient(RawClient client)
+    {
         _client = client;
         Raw = new RawAccessClient(_client);
     }
@@ -16,29 +17,57 @@ public partial class PackageClient : IPackageClient
     /// <example><code>
     /// await client.Package.TestAsync(new TestRequest { For = "for" });
     /// </code></example>
-    public async Task TestAsync(TestRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+    public async Task TestAsync(
+        TestRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
         var _query = new Dictionary<string, object>();
         _query["for"] = request.For;
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNurseryApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedNurseryApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -53,10 +82,27 @@ public partial class PackageClient : IPackageClient
             return headers;
         }
 
-        public async Task<RawResponse<object>> TestAsync(TestRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        public async Task<RawResponse<object>> TestAsync(
+            TestRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
             var _query = new Dictionary<string, object>();
             _query["for"] = request.For;
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "",
+                        Query = _query,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 return new RawResponse<object>
@@ -64,16 +110,17 @@ public partial class PackageClient : IPackageClient
                     StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri!,
                     Headers = ExtractHeaders(response.Raw),
-                    Body = new object()
-                }
+                    Body = new object(),
                 };
             }
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedNurseryApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedNurseryApiApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }

@@ -1,6 +1,6 @@
-using SeedCrossPackageTypeNames.Core;
-using SeedCrossPackageTypeNames;
 using System.Text.Json;
+using SeedCrossPackageTypeNames;
+using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames.FolderD;
 
@@ -8,7 +8,8 @@ public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 
-    internal ServiceClient (RawClient client){
+    internal ServiceClient(RawClient client)
+    {
         _client = client;
         Raw = new RawAccessClient(_client);
     }
@@ -18,8 +19,23 @@ public partial class ServiceClient : IServiceClient
     /// <example><code>
     /// await client.FolderD.Service.GetDirectThreadAsync();
     /// </code></example>
-    public async Task<Response> GetDirectThreadAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "", Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<Response> GetDirectThreadAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -32,22 +48,33 @@ public partial class ServiceClient : IServiceClient
                 throw new SeedCrossPackageTypeNamesException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedCrossPackageTypeNamesApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedCrossPackageTypeNamesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -62,8 +89,23 @@ public partial class ServiceClient : IServiceClient
             return headers;
         }
 
-        public async Task<RawResponse<Response>> GetDirectThreadAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "", Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<Response>> GetDirectThreadAsync(
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = "",
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -75,22 +117,26 @@ public partial class ServiceClient : IServiceClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
                 {
-                    throw new SeedCrossPackageTypeNamesException("Failed to deserialize response", e);
+                    throw new SeedCrossPackageTypeNamesException(
+                        "Failed to deserialize response",
+                        e
+                    );
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedCrossPackageTypeNamesApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedCrossPackageTypeNamesApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }

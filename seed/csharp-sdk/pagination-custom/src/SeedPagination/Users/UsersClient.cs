@@ -1,5 +1,5 @@
-using SeedPagination.Core;
 using System.Text.Json;
+using SeedPagination.Core;
 
 namespace SeedPagination;
 
@@ -7,7 +7,8 @@ public partial class UsersClient : IUsersClient
 {
     private RawClient _client;
 
-    internal UsersClient (RawClient client){
+    internal UsersClient(RawClient client)
+    {
         _client = client;
         Raw = new RawAccessClient(_client);
     }
@@ -19,37 +20,79 @@ public partial class UsersClient : IUsersClient
     ///     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
     /// );
     /// </code></example>
-    public async Task<SeedPaginationPager<string>> ListUsernamesCustomAsync(ListUsernamesRequestCustom request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+    public async Task<SeedPaginationPager<string>> ListUsernamesCustomAsync(
+        ListUsernamesRequestCustom request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
         var _query = new Dictionary<string, object>();
-        if (request.StartingAfter != null){
+        if (request.StartingAfter != null)
+        {
             _query["starting_after"] = request.StartingAfter;
         }
-        var httpRequest = await _client.CreateHttpRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options});
-        var sendRequest = async (HttpRequestMessage httpRequest, CancellationToken cancellationToken) =>{
-            var response = await _client.SendRequestAsync(httpRequest, options, cancellationToken).ConfigureAwait(false);
+        var httpRequest = await _client.CreateHttpRequestAsync(
+            new JsonRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/users",
+                Query = _query,
+                Options = options,
+            }
+        );
+        var sendRequest = async (
+            HttpRequestMessage httpRequest,
+            CancellationToken cancellationToken
+        ) =>
+        {
+            var response = await _client
+                .SendRequestAsync(httpRequest, options, cancellationToken)
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 return response.Raw;
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedPaginationApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
-        }
-        ;
-        return await SeedPaginationPagerFactory.CreateAsync<string>(new SeedPaginationPagerContext(){ SendRequest = sendRequest, InitialHttpRequest = httpRequest, ClientOptions = _client.Options, RequestOptions = options}, cancellationToken).ConfigureAwait(false);
+        };
+        return await SeedPaginationPagerFactory
+            .CreateAsync<string>(
+                new SeedPaginationPagerContext()
+                {
+                    SendRequest = sendRequest,
+                    InitialHttpRequest = httpRequest,
+                    ClientOptions = _client.Options,
+                    RequestOptions = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -64,12 +107,30 @@ public partial class UsersClient : IUsersClient
             return headers;
         }
 
-        public async Task<RawResponse<UsernameCursor>> ListUsernamesCustomAsync(ListUsernamesRequestCustom request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        public async Task<RawResponse<UsernameCursor>> ListUsernamesCustomAsync(
+            ListUsernamesRequestCustom request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
             var _query = new Dictionary<string, object>();
-            if (request.StartingAfter != null){
+            if (request.StartingAfter != null)
+            {
                 _query["starting_after"] = request.StartingAfter;
             }
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = "/users",
+                        Query = _query,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -81,8 +142,7 @@ public partial class UsersClient : IUsersClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -90,13 +150,15 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedPaginationApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }

@@ -1,6 +1,6 @@
-using SeedExhaustive.Core;
 using System.Text.Json;
 using SeedExhaustive;
+using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
@@ -8,7 +8,8 @@ public partial class PrimitiveClient : IPrimitiveClient
 {
     private RawClient _client;
 
-    internal PrimitiveClient (RawClient client){
+    internal PrimitiveClient(RawClient client)
+    {
         _client = client;
         Raw = new RawAccessClient(_client);
     }
@@ -18,8 +19,25 @@ public partial class PrimitiveClient : IPrimitiveClient
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnStringAsync("string");
     /// </code></example>
-    public async Task<string> GetAndReturnStringAsync(string request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/string", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<string> GetAndReturnStringAsync(
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/string",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -32,18 +50,39 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnIntAsync(1);
     /// </code></example>
-    public async Task<int> GetAndReturnIntAsync(int request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/integer", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<int> GetAndReturnIntAsync(
+        int request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/integer",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -56,18 +95,39 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
     /// </code></example>
-    public async Task<long> GetAndReturnLongAsync(long request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/long", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<long> GetAndReturnLongAsync(
+        long request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/long",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -80,18 +140,39 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
     /// </code></example>
-    public async Task<double> GetAndReturnDoubleAsync(double request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/double", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<double> GetAndReturnDoubleAsync(
+        double request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/double",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -104,18 +185,39 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnBoolAsync(true);
     /// </code></example>
-    public async Task<bool> GetAndReturnBoolAsync(bool request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/boolean", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<bool> GetAndReturnBoolAsync(
+        bool request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/boolean",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -128,10 +230,14 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
@@ -140,8 +246,25 @@ public partial class PrimitiveClient : IPrimitiveClient
     ///     new DateTime(2024, 01, 15, 09, 30, 00, 000)
     /// );
     /// </code></example>
-    public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/datetime", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<DateTime> GetAndReturnDatetimeAsync(
+        DateTime request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/datetime",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -154,18 +277,39 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnDateAsync(new DateOnly(2023, 1, 15));
     /// </code></example>
-    public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/date", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<DateOnly> GetAndReturnDateAsync(
+        DateOnly request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/date",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -178,18 +322,39 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnUuidAsync("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
     /// </code></example>
-    public async Task<string> GetAndReturnUuidAsync(string request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/uuid", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<string> GetAndReturnUuidAsync(
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/uuid",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -202,18 +367,39 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
     /// </code></example>
-    public async Task<string> GetAndReturnBase64Async(string request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/base64", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<string> GetAndReturnBase64Async(
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/primitive/base64",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -226,22 +412,33 @@ public partial class PrimitiveClient : IPrimitiveClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -256,8 +453,25 @@ public partial class PrimitiveClient : IPrimitiveClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> GetAndReturnStringAsync(string request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/string", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<string>> GetAndReturnStringAsync(
+            string request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/string",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -269,8 +483,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -278,15 +491,36 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<int>> GetAndReturnIntAsync(int request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/integer", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<int>> GetAndReturnIntAsync(
+            int request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/integer",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -298,8 +532,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -307,15 +540,36 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<long>> GetAndReturnLongAsync(long request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/long", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<long>> GetAndReturnLongAsync(
+            long request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/long",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -327,8 +581,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -336,15 +589,36 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<double>> GetAndReturnDoubleAsync(double request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/double", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<double>> GetAndReturnDoubleAsync(
+            double request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/double",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -356,8 +630,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -365,15 +638,36 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<bool>> GetAndReturnBoolAsync(bool request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/boolean", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<bool>> GetAndReturnBoolAsync(
+            bool request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/boolean",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -385,8 +679,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -394,15 +687,36 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<DateTime>> GetAndReturnDatetimeAsync(DateTime request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/datetime", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<DateTime>> GetAndReturnDatetimeAsync(
+            DateTime request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/datetime",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -414,8 +728,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -423,15 +736,36 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<DateOnly>> GetAndReturnDateAsync(DateOnly request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/date", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<DateOnly>> GetAndReturnDateAsync(
+            DateOnly request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/date",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -443,8 +777,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -452,15 +785,36 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<string>> GetAndReturnUuidAsync(string request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/uuid", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<string>> GetAndReturnUuidAsync(
+            string request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/uuid",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -472,8 +826,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -481,15 +834,36 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<string>> GetAndReturnBase64Async(string request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/primitive/base64", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<string>> GetAndReturnBase64Async(
+            string request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/primitive/base64",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -501,8 +875,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -510,13 +883,15 @@ public partial class PrimitiveClient : IPrimitiveClient
                     throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedExhaustiveApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }

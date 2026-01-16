@@ -1,5 +1,5 @@
-using SeedPathParameters.Core;
 using System.Text.Json;
+using SeedPathParameters.Core;
 
 namespace SeedPathParameters;
 
@@ -7,7 +7,8 @@ public partial class OrganizationsClient : IOrganizationsClient
 {
     private RawClient _client;
 
-    internal OrganizationsClient (RawClient client){
+    internal OrganizationsClient(RawClient client)
+    {
         _client = client;
         Raw = new RawAccessClient(_client);
     }
@@ -17,8 +18,29 @@ public partial class OrganizationsClient : IOrganizationsClient
     /// <example><code>
     /// await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
     /// </code></example>
-    public async Task<Organization> GetOrganizationAsync(string tenantId, string organizationId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/{0}/organizations/{1}/", ValueConvert.ToPathParameterString(tenantId), ValueConvert.ToPathParameterString(organizationId)), Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<Organization> GetOrganizationAsync(
+        string tenantId,
+        string organizationId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(organizationId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -31,10 +53,14 @@ public partial class OrganizationsClient : IOrganizationsClient
                 throw new SeedPathParametersException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedPathParametersApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedPathParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
@@ -48,8 +74,29 @@ public partial class OrganizationsClient : IOrganizationsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<User> GetOrganizationUserAsync(GetOrganizationUserRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/{0}/organizations/{1}/users/{2}", ValueConvert.ToPathParameterString(request.TenantId), ValueConvert.ToPathParameterString(request.OrganizationId), ValueConvert.ToPathParameterString(request.UserId)), Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<User> GetOrganizationUserAsync(
+        GetOrganizationUserRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/users/{2}",
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.OrganizationId),
+                        ValueConvert.ToPathParameterString(request.UserId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -62,10 +109,14 @@ public partial class OrganizationsClient : IOrganizationsClient
                 throw new SeedPathParametersException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedPathParametersApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedPathParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
@@ -76,12 +127,36 @@ public partial class OrganizationsClient : IOrganizationsClient
     ///     new SearchOrganizationsRequest { Limit = 1 }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<Organization>> SearchOrganizationsAsync(string tenantId, string organizationId, SearchOrganizationsRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+    public async Task<IEnumerable<Organization>> SearchOrganizationsAsync(
+        string tenantId,
+        string organizationId,
+        SearchOrganizationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
         var _query = new Dictionary<string, object>();
-        if (request.Limit != null){
+        if (request.Limit != null)
+        {
             _query["limit"] = request.Limit.Value.ToString();
         }
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/{0}/organizations/{1}/search", ValueConvert.ToPathParameterString(tenantId), ValueConvert.ToPathParameterString(organizationId)), Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/search",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(organizationId)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -94,22 +169,33 @@ public partial class OrganizationsClient : IOrganizationsClient
                 throw new SeedPathParametersException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedPathParametersApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedPathParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -124,8 +210,29 @@ public partial class OrganizationsClient : IOrganizationsClient
             return headers;
         }
 
-        public async Task<RawResponse<Organization>> GetOrganizationAsync(string tenantId, string organizationId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/{0}/organizations/{1}/", ValueConvert.ToPathParameterString(tenantId), ValueConvert.ToPathParameterString(organizationId)), Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<Organization>> GetOrganizationAsync(
+            string tenantId,
+            string organizationId,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = string.Format(
+                            "/{0}/organizations/{1}/",
+                            ValueConvert.ToPathParameterString(tenantId),
+                            ValueConvert.ToPathParameterString(organizationId)
+                        ),
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -137,8 +244,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -146,15 +252,40 @@ public partial class OrganizationsClient : IOrganizationsClient
                     throw new SeedPathParametersException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedPathParametersApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedPathParametersApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<User>> GetOrganizationUserAsync(GetOrganizationUserRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/{0}/organizations/{1}/users/{2}", ValueConvert.ToPathParameterString(request.TenantId), ValueConvert.ToPathParameterString(request.OrganizationId), ValueConvert.ToPathParameterString(request.UserId)), Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<User>> GetOrganizationUserAsync(
+            GetOrganizationUserRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = string.Format(
+                            "/{0}/organizations/{1}/users/{2}",
+                            ValueConvert.ToPathParameterString(request.TenantId),
+                            ValueConvert.ToPathParameterString(request.OrganizationId),
+                            ValueConvert.ToPathParameterString(request.UserId)
+                        ),
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -166,8 +297,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -175,19 +305,47 @@ public partial class OrganizationsClient : IOrganizationsClient
                     throw new SeedPathParametersException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedPathParametersApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedPathParametersApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<IEnumerable<Organization>>> SearchOrganizationsAsync(string tenantId, string organizationId, SearchOrganizationsRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        public async Task<RawResponse<IEnumerable<Organization>>> SearchOrganizationsAsync(
+            string tenantId,
+            string organizationId,
+            SearchOrganizationsRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
             var _query = new Dictionary<string, object>();
-            if (request.Limit != null){
+            if (request.Limit != null)
+            {
                 _query["limit"] = request.Limit.Value.ToString();
             }
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/{0}/organizations/{1}/search", ValueConvert.ToPathParameterString(tenantId), ValueConvert.ToPathParameterString(organizationId)), Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = string.Format(
+                            "/{0}/organizations/{1}/search",
+                            ValueConvert.ToPathParameterString(tenantId),
+                            ValueConvert.ToPathParameterString(organizationId)
+                        ),
+                        Query = _query,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -199,8 +357,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -208,13 +365,15 @@ public partial class OrganizationsClient : IOrganizationsClient
                     throw new SeedPathParametersException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedPathParametersApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedPathParametersApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }

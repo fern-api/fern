@@ -1,5 +1,5 @@
-using SeedApi.Core;
 using System.Text.Json;
+using SeedApi.Core;
 
 namespace SeedApi;
 
@@ -7,8 +7,11 @@ public partial class SeedApiClient : ISeedApiClient
 {
     private readonly RawClient _client;
 
-    public SeedApiClient (ClientOptions? clientOptions = null){
-        var defaultHeaders = new Headers(new Dictionary<string, string>(){
+    public SeedApiClient(ClientOptions? clientOptions = null)
+    {
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedApi" },
                 { "X-Fern-SDK-Version", Version.Current },
@@ -16,13 +19,14 @@ public partial class SeedApiClient : ISeedApiClient
             }
         );
         clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders){
-            if (!clientOptions.Headers.ContainsKey(header.Key)){
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = 
-        new RawClient(clientOptions);
+        _client = new RawClient(clientOptions);
         Raw = new RawAccessClient(_client);
     }
 
@@ -37,19 +41,39 @@ public partial class SeedApiClient : ISeedApiClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Foo> GetFooAsync(GetFooRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+    public async Task<Foo> GetFooAsync(
+        GetFooRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
         var _query = new Dictionary<string, object>();
         _query["required_baz"] = request.RequiredBaz;
-        if (request.OptionalBaz != null){
+        if (request.OptionalBaz != null)
+        {
             _query["optional_baz"] = request.OptionalBaz;
         }
-        if (request.OptionalNullableBaz != null){
+        if (request.OptionalNullableBaz != null)
+        {
             _query["optional_nullable_baz"] = request.OptionalNullableBaz;
         }
-        if (request.RequiredNullableBaz != null){
+        if (request.RequiredNullableBaz != null)
+        {
             _query["required_nullable_baz"] = request.RequiredNullableBaz;
         }
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "foo", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "foo",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -62,10 +86,14 @@ public partial class SeedApiClient : ISeedApiClient
                 throw new SeedApiException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
@@ -81,12 +109,30 @@ public partial class SeedApiClient : ISeedApiClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Foo> UpdateFooAsync(string id, UpdateFooRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var _headers = new Headers(new Dictionary<string, string>(){
-                { "X-Idempotency-Key", request.XIdempotencyKey },
-            }
+    public async Task<Foo> UpdateFooAsync(
+        string id,
+        UpdateFooRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-Idempotency-Key", request.XIdempotencyKey } }
         );
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethodExtensions.Patch, Path = string.Format("foo/{0}", ValueConvert.ToPathParameterString(id)), Body = request, Headers = _headers, Options = options}, cancellationToken).ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethodExtensions.Patch,
+                    Path = string.Format("foo/{0}", ValueConvert.ToPathParameterString(id)),
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -99,22 +145,33 @@ public partial class SeedApiClient : ISeedApiClient
                 throw new SeedApiException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -129,19 +186,39 @@ public partial class SeedApiClient : ISeedApiClient
             return headers;
         }
 
-        public async Task<RawResponse<Foo>> GetFooAsync(GetFooRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        public async Task<RawResponse<Foo>> GetFooAsync(
+            GetFooRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
             var _query = new Dictionary<string, object>();
             _query["required_baz"] = request.RequiredBaz;
-            if (request.OptionalBaz != null){
+            if (request.OptionalBaz != null)
+            {
                 _query["optional_baz"] = request.OptionalBaz;
             }
-            if (request.OptionalNullableBaz != null){
+            if (request.OptionalNullableBaz != null)
+            {
                 _query["optional_nullable_baz"] = request.OptionalNullableBaz;
             }
-            if (request.RequiredNullableBaz != null){
+            if (request.RequiredNullableBaz != null)
+            {
                 _query["required_nullable_baz"] = request.RequiredNullableBaz;
             }
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "foo", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = "foo",
+                        Query = _query,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -153,8 +230,7 @@ public partial class SeedApiClient : ISeedApiClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -162,19 +238,44 @@ public partial class SeedApiClient : ISeedApiClient
                     throw new SeedApiException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedApiApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<Foo>> UpdateFooAsync(string id, UpdateFooRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var _headers = new Headers(new Dictionary<string, string>(){
+        public async Task<RawResponse<Foo>> UpdateFooAsync(
+            string id,
+            UpdateFooRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var _headers = new Headers(
+                new Dictionary<string, string>()
+                {
                     { "X-Idempotency-Key", request.XIdempotencyKey },
                 }
             );
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethodExtensions.Patch, Path = string.Format("foo/{0}", ValueConvert.ToPathParameterString(id)), Body = request, Headers = _headers, Options = options}, cancellationToken).ConfigureAwait(false);
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethodExtensions.Patch,
+                        Path = string.Format("foo/{0}", ValueConvert.ToPathParameterString(id)),
+                        Body = request,
+                        Headers = _headers,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -186,8 +287,7 @@ public partial class SeedApiClient : ISeedApiClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
@@ -195,13 +295,15 @@ public partial class SeedApiClient : ISeedApiClient
                     throw new SeedApiException("Failed to deserialize response", e);
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedApiApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }

@@ -1,5 +1,5 @@
-using SeedApi.Core;
 using System.Text.Json;
+using SeedApi.Core;
 
 namespace SeedApi;
 
@@ -7,12 +7,15 @@ public partial class ImdbClient : IImdbClient
 {
     private RawClient _client;
 
-    internal ImdbClient (RawClient client){
-        try{
+    internal ImdbClient(RawClient client)
+    {
+        try
+        {
             _client = client;
             Raw = new RawAccessClient(_client);
         }
-        catch (Exception ex){
+        catch (Exception ex)
+        {
             client.Options.ExceptionHandler?.CaptureException(ex);
             throw;
         }
@@ -26,99 +29,174 @@ public partial class ImdbClient : IImdbClient
     /// <example><code>
     /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
     /// </code></example>
-    public async Task<string> CreateMovieAsync(CreateMovieRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/movies/create-movie", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+    public async Task<string> CreateMovieAsync(
+        CreateMovieRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/movies/create-movie",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<string>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<string>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedApiException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedApiException("Failed to deserialize response", e);
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedApiApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-            }
-            
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-            }
-        }
-        ).ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example><code>
     /// await client.Imdb.GetMovieAsync("movieId");
     /// </code></example>
-    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/movies/{0}", ValueConvert.ToPathParameterString(movieId)), Options = options}, cancellationToken).ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+    public async Task<Movie> GetMovieAsync(
+        string movieId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = string.Format(
+                                "/movies/{0}",
+                                ValueConvert.ToPathParameterString(movieId)
+                            ),
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<Movie>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<Movie>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedApiException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedApiException("Failed to deserialize response", e);
-                }
-            }
-            
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    switch (response.StatusCode){
-                        case 404:
-                            throw new MovieDoesNotExistError(JsonUtils.Deserialize<string>(responseBody));
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 404:
+                                throw new MovieDoesNotExistError(
+                                    JsonUtils.Deserialize<string>(responseBody)
+                                );
                         }
                     }
-                    catch (JsonException){
+                    catch (JsonException)
+                    {
                         // unable to map error response, throwing generic error
                     }
-                    throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                    throw new SeedApiApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-            }
-            ).ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
+    }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+
+        internal RawAccessClient(RawClient client)
+        {
+            _client = client;
         }
 
-        public partial class RawAccessClient
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
         {
-            private readonly RawClient _client;
-            internal RawAccessClient (RawClient client){
-                _client = client;
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
             }
-
-            private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-                var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
-                foreach (var header in response.Headers)
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
                 {
                     headers[header.Key] = header.Value.ToList();
                 }
-                if (response.Content != null)
-                {
-                    foreach (var header in response.Content.Headers)
-                    {
-                        headers[header.Key] = header.Value.ToList();
-                    }
-                }
-                return headers;
             }
+            return headers;
+        }
 
-            /// <summary>
-            /// Add a movie to the database using the movies/* /... path.
-            /// </summary>
-            public async Task<RawResponse<string>> CreateMovieAsync(CreateMovieRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-                return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        /// <summary>
+        /// Add a movie to the database using the movies/* /... path.
+        /// </summary>
+        public async Task<RawResponse<string>> CreateMovieAsync(
+            CreateMovieRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            return await _client
+                .Options.ExceptionHandler.TryCatchAsync(async () =>
                 {
-                    var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/movies/create-movie", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+                    var response = await _client
+                        .SendRequestAsync(
+                            new JsonRequest
+                            {
+                                BaseUrl = _client.Options.BaseUrl,
+                                Method = HttpMethod.Post,
+                                Path = "/movies/create-movie",
+                                Body = request,
+                                Options = options,
+                            },
+                            cancellationToken
+                        )
+                        .ConfigureAwait(false);
                     if (response.StatusCode is >= 200 and < 400)
                     {
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -130,8 +208,7 @@ public partial class ImdbClient : IImdbClient
                                 StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
-                                Body = body
-                            }
+                                Body = body,
                             };
                         }
                         catch (JsonException e)
@@ -139,19 +216,43 @@ public partial class ImdbClient : IImdbClient
                             throw new SeedApiException("Failed to deserialize response", e);
                         }
                     }
-                    
+
                     {
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                        throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                        throw new SeedApiApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
                     }
-                }
-                ).ConfigureAwait(false);
-            }
+                })
+                .ConfigureAwait(false);
+        }
 
-            public async Task<RawResponse<Movie>> GetMovieAsync(string movieId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-                return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        public async Task<RawResponse<Movie>> GetMovieAsync(
+            string movieId,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            return await _client
+                .Options.ExceptionHandler.TryCatchAsync(async () =>
                 {
-                    var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/movies/{0}", ValueConvert.ToPathParameterString(movieId)), Options = options}, cancellationToken).ConfigureAwait(false);
+                    var response = await _client
+                        .SendRequestAsync(
+                            new JsonRequest
+                            {
+                                BaseUrl = _client.Options.BaseUrl,
+                                Method = HttpMethod.Get,
+                                Path = string.Format(
+                                    "/movies/{0}",
+                                    ValueConvert.ToPathParameterString(movieId)
+                                ),
+                                Options = options,
+                            },
+                            cancellationToken
+                        )
+                        .ConfigureAwait(false);
                     if (response.StatusCode is >= 200 and < 400)
                     {
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -163,8 +264,7 @@ public partial class ImdbClient : IImdbClient
                                 StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
-                                Body = body
-                            }
+                                Body = body,
                             };
                         }
                         catch (JsonException e)
@@ -172,25 +272,31 @@ public partial class ImdbClient : IImdbClient
                             throw new SeedApiException("Failed to deserialize response", e);
                         }
                     }
-                    
+
                     {
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            switch (response.StatusCode){
+                            switch (response.StatusCode)
+                            {
                                 case 404:
-                                    throw new MovieDoesNotExistError(JsonUtils.Deserialize<string>(responseBody));
-                                }
+                                    throw new MovieDoesNotExistError(
+                                        JsonUtils.Deserialize<string>(responseBody)
+                                    );
                             }
-                            catch (JsonException){
-                                // unable to map error response, throwing generic error
-                            }
-                            throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
                         }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new SeedApiApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
                     }
-                    ).ConfigureAwait(false);
-                }
-
-            }
-
+                })
+                .ConfigureAwait(false);
         }
+    }
+}

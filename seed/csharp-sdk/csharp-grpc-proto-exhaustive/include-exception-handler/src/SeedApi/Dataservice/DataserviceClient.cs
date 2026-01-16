@@ -1,5 +1,5 @@
-using SeedApi.Core;
 using System.Text.Json;
+using SeedApi.Core;
 
 namespace SeedApi;
 
@@ -7,12 +7,15 @@ public partial class DataserviceClient : IDataserviceClient
 {
     private RawClient _client;
 
-    internal DataserviceClient (RawClient client){
-        try{
+    internal DataserviceClient(RawClient client)
+    {
+        try
+        {
             _client = client;
             Raw = new RawAccessClient(_client);
         }
-        catch (Exception ex){
+        catch (Exception ex)
+        {
             client.Options.ExceptionHandler?.CaptureException(ex);
             throw;
         }
@@ -23,40 +26,67 @@ public partial class DataserviceClient : IDataserviceClient
     /// <example><code>
     /// await client.Dataservice.FooAsync();
     /// </code></example>
-    public async Task<Dictionary<string, object?>> FooAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "foo", Options = options}, cancellationToken).ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+    public async Task<Dictionary<string, object?>> FooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "foo",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<Dictionary<string, object?>>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<Dictionary<string, object?>>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedApiException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedApiException("Failed to deserialize response", e);
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedApiApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-            }
-            
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-            }
-        }
-        ).ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -71,39 +101,58 @@ public partial class DataserviceClient : IDataserviceClient
             return headers;
         }
 
-        public async Task<RawResponse<Dictionary<string, object?>>> FooAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "foo", Options = options}, cancellationToken).ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
+        public async Task<RawResponse<Dictionary<string, object?>>> FooAsync(
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            return await _client
+                .Options.ExceptionHandler.TryCatchAsync(async () =>
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
+                    var response = await _client
+                        .SendRequestAsync(
+                            new JsonRequest
+                            {
+                                BaseUrl = _client.Options.BaseUrl,
+                                Method = HttpMethod.Post,
+                                Path = "foo",
+                                Options = options,
+                            },
+                            cancellationToken
+                        )
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
                     {
-                        var body = JsonUtils.Deserialize<Dictionary<string, object?>>(responseBody)!;
-                        return new RawResponse<Dictionary<string, object?>>
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
                         {
-                            StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
-                            Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = ExtractHeaders(response.Raw),
-                            Body = body
+                            var body = JsonUtils.Deserialize<Dictionary<string, object?>>(
+                                responseBody
+                            )!;
+                            return new RawResponse<Dictionary<string, object?>>
+                            {
+                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                Url = response.Raw.RequestMessage?.RequestUri!,
+                                Headers = ExtractHeaders(response.Raw),
+                                Body = body,
+                            };
                         }
-                        };
+                        catch (JsonException e)
+                        {
+                            throw new SeedApiException("Failed to deserialize response", e);
+                        }
                     }
-                    catch (JsonException e)
+
                     {
-                        throw new SeedApiException("Failed to deserialize response", e);
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        throw new SeedApiApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
                     }
-                }
-                
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-                }
-            }
-            ).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
         }
-
     }
-
 }

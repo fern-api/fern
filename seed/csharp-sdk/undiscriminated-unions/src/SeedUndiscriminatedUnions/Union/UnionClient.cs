@@ -1,6 +1,6 @@
-using SeedUndiscriminatedUnions.Core;
-using OneOf;
 using System.Text.Json;
+using OneOf;
+using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
@@ -8,7 +8,8 @@ public partial class UnionClient : IUnionClient
 {
     private RawClient _client;
 
-    internal UnionClient (RawClient client){
+    internal UnionClient(RawClient client)
+    {
         _client = client;
         Raw = new RawAccessClient(_client);
     }
@@ -18,48 +19,115 @@ public partial class UnionClient : IUnionClient
     /// <example><code>
     /// await client.Union.GetAsync("string");
     /// </code></example>
-    public async Task<OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>> GetAsync(OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<
+        OneOf<
+            string,
+            IEnumerable<string>,
+            int,
+            IEnumerable<int>,
+            IEnumerable<IEnumerable<int>>,
+            HashSet<string>
+        >
+    > GetAsync(
+        OneOf<
+            string,
+            IEnumerable<string>,
+            int,
+            IEnumerable<int>,
+            IEnumerable<IEnumerable<int>>,
+            HashSet<string>
+        > request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>>(responseBody)!;
+                return JsonUtils.Deserialize<
+                    OneOf<
+                        string,
+                        IEnumerable<string>,
+                        int,
+                        IEnumerable<int>,
+                        IEnumerable<IEnumerable<int>>,
+                        HashSet<string>
+                    >
+                >(responseBody)!;
             }
             catch (JsonException e)
             {
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Union.GetMetadataAsync();
     /// </code></example>
-    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/metadata", Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/metadata",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(responseBody)!;
+                return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
+                    responseBody
+                )!;
             }
             catch (JsonException e)
             {
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
@@ -74,8 +142,25 @@ public partial class UnionClient : IUnionClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<bool> UpdateMetadataAsync(OneOf<Dictionary<string, object?>?, NamedMetadata> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Put, Path = "/metadata", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<bool> UpdateMetadataAsync(
+        OneOf<Dictionary<string, object?>?, NamedMetadata> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Put,
+                    Path = "/metadata",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -88,10 +173,14 @@ public partial class UnionClient : IUnionClient
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
@@ -109,8 +198,25 @@ public partial class UnionClient : IUnionClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<bool> CallAsync(Request request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/call", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<bool> CallAsync(
+        Request request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/call",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -123,42 +229,97 @@ public partial class UnionClient : IUnionClient
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Union.DuplicateTypesUnionAsync("string");
     /// </code></example>
-    public async Task<OneOf<string, IEnumerable<string>, int, HashSet<string>>> DuplicateTypesUnionAsync(OneOf<string, IEnumerable<string>, int, HashSet<string>> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/duplicate", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<
+        OneOf<string, IEnumerable<string>, int, HashSet<string>>
+    > DuplicateTypesUnionAsync(
+        OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/duplicate",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<OneOf<string, IEnumerable<string>, int, HashSet<string>>>(responseBody)!;
+                return JsonUtils.Deserialize<
+                    OneOf<string, IEnumerable<string>, int, HashSet<string>>
+                >(responseBody)!;
             }
             catch (JsonException e)
             {
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     /// <example><code>
     /// await client.Union.NestedUnionsAsync("string");
     /// </code></example>
-    public async Task<string> NestedUnionsAsync(OneOf<string, IEnumerable<string>, OneOf<int, HashSet<string>, IEnumerable<string>, OneOf<bool, HashSet<string>, IEnumerable<string>>>> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/nested", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<string> NestedUnionsAsync(
+        OneOf<
+            string,
+            IEnumerable<string>,
+            OneOf<
+                int,
+                HashSet<string>,
+                IEnumerable<string>,
+                OneOf<bool, HashSet<string>, IEnumerable<string>>
+            >
+        > request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/nested",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -171,10 +332,14 @@ public partial class UnionClient : IUnionClient
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
@@ -186,8 +351,25 @@ public partial class UnionClient : IUnionClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<string> TestCamelCasePropertiesAsync(PaymentRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/camel-case", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+    public async Task<string> TestCamelCasePropertiesAsync(
+        PaymentRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/camel-case",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -200,22 +382,33 @@ public partial class UnionClient : IUnionClient
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-        
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
     }
 
     public partial class RawAccessClient
     {
         private readonly RawClient _client;
-        internal RawAccessClient (RawClient client){
+
+        internal RawAccessClient(RawClient client)
+        {
             _client = client;
         }
 
-        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
-            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
             foreach (var header in response.Headers)
             {
                 headers[header.Key] = header.Value.ToList();
@@ -230,66 +423,165 @@ public partial class UnionClient : IUnionClient
             return headers;
         }
 
-        public async Task<RawResponse<OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>>> GetAsync(OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<
+            RawResponse<
+                OneOf<
+                    string,
+                    IEnumerable<string>,
+                    int,
+                    IEnumerable<int>,
+                    IEnumerable<IEnumerable<int>>,
+                    HashSet<string>
+                >
+            >
+        > GetAsync(
+            OneOf<
+                string,
+                IEnumerable<string>,
+                int,
+                IEnumerable<int>,
+                IEnumerable<IEnumerable<int>>,
+                HashSet<string>
+            > request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>>(responseBody)!;
-                    return new RawResponse<OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>>
+                    var body = JsonUtils.Deserialize<
+                        OneOf<
+                            string,
+                            IEnumerable<string>,
+                            int,
+                            IEnumerable<int>,
+                            IEnumerable<IEnumerable<int>>,
+                            HashSet<string>
+                        >
+                    >(responseBody)!;
+                    return new RawResponse<
+                        OneOf<
+                            string,
+                            IEnumerable<string>,
+                            int,
+                            IEnumerable<int>,
+                            IEnumerable<IEnumerable<int>>,
+                            HashSet<string>
+                        >
+                    >
                     {
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
                 {
-                    throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                    throw new SeedUndiscriminatedUnionsException(
+                        "Failed to deserialize response",
+                        e
+                    );
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<Dictionary<OneOf<KeyType, string>, string>>> GetMetadataAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/metadata", Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<Dictionary<OneOf<KeyType, string>, string>>> GetMetadataAsync(
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = "/metadata",
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(responseBody)!;
+                    var body = JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
+                        responseBody
+                    )!;
                     return new RawResponse<Dictionary<OneOf<KeyType, string>, string>>
                     {
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
                 {
-                    throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                    throw new SeedUndiscriminatedUnionsException(
+                        "Failed to deserialize response",
+                        e
+                    );
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<bool>> UpdateMetadataAsync(OneOf<Dictionary<string, object?>?, NamedMetadata> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Put, Path = "/metadata", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<bool>> UpdateMetadataAsync(
+            OneOf<Dictionary<string, object?>?, NamedMetadata> request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Put,
+                        Path = "/metadata",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -301,24 +593,47 @@ public partial class UnionClient : IUnionClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
                 {
-                    throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                    throw new SeedUndiscriminatedUnionsException(
+                        "Failed to deserialize response",
+                        e
+                    );
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<bool>> CallAsync(Request request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/call", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<bool>> CallAsync(
+            Request request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/call",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -330,53 +645,112 @@ public partial class UnionClient : IUnionClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
                 {
-                    throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                    throw new SeedUndiscriminatedUnionsException(
+                        "Failed to deserialize response",
+                        e
+                    );
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>> DuplicateTypesUnionAsync(OneOf<string, IEnumerable<string>, int, HashSet<string>> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/duplicate", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<
+            RawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>
+        > DuplicateTypesUnionAsync(
+            OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/duplicate",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<OneOf<string, IEnumerable<string>, int, HashSet<string>>>(responseBody)!;
+                    var body = JsonUtils.Deserialize<
+                        OneOf<string, IEnumerable<string>, int, HashSet<string>>
+                    >(responseBody)!;
                     return new RawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>
                     {
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
                 {
-                    throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                    throw new SeedUndiscriminatedUnionsException(
+                        "Failed to deserialize response",
+                        e
+                    );
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<string>> NestedUnionsAsync(OneOf<string, IEnumerable<string>, OneOf<int, HashSet<string>, IEnumerable<string>, OneOf<bool, HashSet<string>, IEnumerable<string>>>> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/nested", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<string>> NestedUnionsAsync(
+            OneOf<
+                string,
+                IEnumerable<string>,
+                OneOf<
+                    int,
+                    HashSet<string>,
+                    IEnumerable<string>,
+                    OneOf<bool, HashSet<string>, IEnumerable<string>>
+                >
+            > request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/nested",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -388,24 +762,47 @@ public partial class UnionClient : IUnionClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
                 {
-                    throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                    throw new SeedUndiscriminatedUnionsException(
+                        "Failed to deserialize response",
+                        e
+                    );
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
 
-        public async Task<RawResponse<string>> TestCamelCasePropertiesAsync(PaymentRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/camel-case", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+        public async Task<RawResponse<string>> TestCamelCasePropertiesAsync(
+            PaymentRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "/camel-case",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -417,22 +814,26 @@ public partial class UnionClient : IUnionClient
                         StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
-                        Body = body
-                    }
+                        Body = body,
                     };
                 }
                 catch (JsonException e)
                 {
-                    throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                    throw new SeedUndiscriminatedUnionsException(
+                        "Failed to deserialize response",
+                        e
+                    );
                 }
             }
-            
+
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
             }
         }
-
     }
-
 }
