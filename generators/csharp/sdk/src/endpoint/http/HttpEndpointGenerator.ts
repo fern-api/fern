@@ -216,7 +216,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeLine("{");
                 writer.indent();
                 writer.writeLine(
-                    `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
+                    `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                 );
                 writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
                 writer.writeLine("Headers = ExtractHeaders(response.Raw),");
@@ -274,7 +274,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("{");
                     writer.indent();
                     writer.writeLine(
-                        `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
+                        `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
                     writer.writeLine("Headers = ExtractHeaders(response.Raw),");
@@ -318,7 +318,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("{");
                     writer.indent();
                     writer.writeLine(
-                        `StatusCode = (System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
+                        `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
                     writer.writeLine("Headers = ExtractHeaders(response.Raw),");
