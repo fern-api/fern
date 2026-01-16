@@ -5449,6 +5449,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/graphql-to-fdr':
+        specifier: workspace:*
+        version: link:../api-importers/graphql
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../generation/ir-generator
