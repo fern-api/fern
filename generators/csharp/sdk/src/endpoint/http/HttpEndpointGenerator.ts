@@ -219,7 +219,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                 );
                 writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                writer.writeLine("Headers = ExtractHeaders(response.Raw),");
+                writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),");
                 // For endpoints with no body but a return type (like HEAD returning HttpResponseHeaders),
                 // we return the response headers as the body
                 if (bodyType != null) {
@@ -277,7 +277,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                    writer.writeLine("Headers = ExtractHeaders(response.Raw),");
+                    writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),");
                     writer.writeLine("Body = body");
                     writer.dedent();
                     writer.writeLine("};");
@@ -321,7 +321,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                    writer.writeLine("Headers = ExtractHeaders(response.Raw),");
+                    writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),");
                     writer.writeLine(`Body = ${this.names.variables.responseBody}`);
                     writer.dedent();
                     writer.writeLine("};");

@@ -373,7 +373,7 @@ public partial class UserClient : IUserClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = ExtractHeaders(response.Raw),
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
                         Body = body,
                     };
                 }
@@ -423,7 +423,7 @@ public partial class UserClient : IUserClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = ExtractHeaders(response.Raw),
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
                         Body = body,
                     };
                 }
@@ -473,7 +473,7 @@ public partial class UserClient : IUserClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = ExtractHeaders(response.Raw),
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
                         Body = body,
                     };
                 }
@@ -523,7 +523,7 @@ public partial class UserClient : IUserClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = ExtractHeaders(response.Raw),
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
                         Body = body,
                     };
                 }
@@ -573,7 +573,7 @@ public partial class UserClient : IUserClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = ExtractHeaders(response.Raw),
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
                         Body = body,
                     };
                 }
@@ -623,7 +623,7 @@ public partial class UserClient : IUserClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = ExtractHeaders(response.Raw),
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
                         Body = body,
                     };
                 }
@@ -673,7 +673,7 @@ public partial class UserClient : IUserClient
                     {
                         StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = ExtractHeaders(response.Raw),
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
                         Body = body,
                     };
                 }

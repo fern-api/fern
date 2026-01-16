@@ -20,9 +20,9 @@ public record RawResponse<T>
 
     /// <summary>
     /// The response headers, including both response headers and content headers.
-    /// Header names are case-insensitive.
+    /// Provides typed access to common headers and case-insensitive header name lookups.
     /// </summary>
-    public required IReadOnlyDictionary<string, IEnumerable<string>> Headers { get; init; }
+    public required ResponseHeaders Headers { get; init; }
 
     /// <summary>
     /// The deserialized response body.

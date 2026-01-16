@@ -268,7 +268,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        const files = [AsIsFiles.FileParameter, AsIsFiles.RawResponse];
+        const files = [AsIsFiles.FileParameter, AsIsFiles.HttpHeader, AsIsFiles.ResponseHeaders, AsIsFiles.RawResponse];
         if (this.settings.generateNewAdditionalProperties) {
             files.push(AsIsFiles.Json.AdditionalProperties);
         }

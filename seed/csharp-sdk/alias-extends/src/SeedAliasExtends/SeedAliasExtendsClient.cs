@@ -124,7 +124,7 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
                 {
                     StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = ExtractHeaders(response.Raw),
+                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
                     Body = new object(),
                 };
             }
