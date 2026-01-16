@@ -431,6 +431,7 @@ export class DocsDefinitionResolver {
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown,
                 editThisPageUrl: url ? DocsV1Write.Url(url) : undefined,
+                editThisPageLaunch: undefined,
                 rawMarkdown: rawMarkdown
             };
         });
@@ -732,7 +733,8 @@ export class DocsDefinitionResolver {
             typography: undefined,
             backgroundImage: undefined,
             header: undefined,
-            footer: undefined
+            footer: undefined,
+            editThisPageLaunch: undefined
         };
         return config;
     }

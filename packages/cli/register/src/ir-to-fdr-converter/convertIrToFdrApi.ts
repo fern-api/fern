@@ -32,7 +32,8 @@ export function convertIrToFdrApi({
                 type: convertTypeReference(header.valueType)
             })
         ),
-        navigation: undefined
+        navigation: undefined,
+        graphqlOperations: {}
     };
 
     for (const [typeId, type] of Object.entries(ir.types)) {

@@ -1,10 +1,10 @@
-import { FernRegistry } from "@fern-api/fdr-sdk";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
 import { TaskContext } from "@fern-api/task-context";
 
 export interface GraphQLFdrResult {
-    graphqlOperations: Record<FernRegistry.GraphQlOperationId, FernRegistry.api.latest.GraphQlOperation>;
+    graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>;
 }
 
 export async function generateFdrFromGraphQL(

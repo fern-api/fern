@@ -234,6 +234,7 @@ export async function getPreviewDocsDefinition({
             previousDocsDefinition.pages[pageId] = {
                 markdown: finalMarkdown,
                 editThisPageUrl: previousValue.editThisPageUrl,
+                editThisPageLaunch: undefined,
                 rawMarkdown: markdown
             };
         }

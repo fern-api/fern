@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-api/fdr-sdk";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -20,7 +20,7 @@ import {
 } from "graphql";
 
 export interface GraphQLConverterResult {
-    graphqlOperations: Record<FernRegistry.GraphQlOperationId, FernRegistry.api.latest.GraphQlOperation>;
+    graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>;
 }
 
 export class GraphQLConverter {
@@ -37,7 +37,7 @@ export class GraphQLConverter {
         const sdlContent = await readFile(this.filePath, "utf-8");
         this.schema = buildSchema(sdlContent);
 
-        const graphqlOperations: Record<FernRegistry.GraphQlOperationId, FernRegistry.api.latest.GraphQlOperation> = {};
+        const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation> = {};
 
         const queryType = this.schema.getQueryType();
         if (queryType) {
@@ -59,12 +59,12 @@ export class GraphQLConverter {
 
     private convertOperations(
         type: GraphQLObjectType,
-        operationType: FernRegistry.api.latest.GraphQlOperationType,
-        operations: Record<FernRegistry.GraphQlOperationId, FernRegistry.api.latest.GraphQlOperation>
+        operationType: FdrAPI.api.latest.GraphQlOperationType,
+        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>
     ): void {
         const fields = type.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-            const operationId = FernRegistry.GraphQlOperationId(`${operationType.toLowerCase()}_${fieldName}`);
+            const operationId = FdrAPI.GraphQlOperationId(`${operationType.toLowerCase()}_${fieldName}`);
             operations[operationId] = this.convertField(field, fieldName, operationType);
         }
     }
@@ -72,12 +72,12 @@ export class GraphQLConverter {
     private convertField(
         field: GraphQLField<unknown, unknown>,
         name: string,
-        operationType: FernRegistry.api.latest.GraphQlOperationType
-    ): FernRegistry.api.latest.GraphQlOperation {
+        operationType: FdrAPI.api.latest.GraphQlOperationType
+    ): FdrAPI.api.latest.GraphQlOperation {
         const args = field.args.map((arg) => this.convertArgument(arg));
 
         return {
-            id: FernRegistry.GraphQlOperationId(`${operationType.toLowerCase()}_${name}`),
+            id: FdrAPI.GraphQlOperationId(`${operationType.toLowerCase()}_${name}`),
             operationType,
             name,
             displayName: undefined,
@@ -91,7 +91,7 @@ export class GraphQLConverter {
         };
     }
 
-    private convertArgument(arg: GQLArgument): FernRegistry.api.latest.GraphQlArgument {
+    private convertArgument(arg: GQLArgument): FdrAPI.api.latest.GraphQlArgument {
         return {
             name: arg.name,
             description: arg.description ?? undefined,
@@ -101,7 +101,7 @@ export class GraphQLConverter {
         };
     }
 
-    private convertOutputType(type: GraphQLOutputType): FernRegistry.api.latest.TypeShape {
+    private convertOutputType(type: GraphQLOutputType): FdrAPI.api.latest.TypeShape {
         if (type instanceof GraphQLNonNull) {
             const innerType = this.convertOutputType(type.ofType);
             return innerType;
@@ -109,8 +109,13 @@ export class GraphQLConverter {
 
         if (type instanceof GraphQLList) {
             return {
-                type: "list",
-                itemShape: this.convertOutputType(type.ofType)
+                type: "alias",
+                value: {
+                    type: "list",
+                    itemShape: this.convertOutputType(type.ofType),
+                    minItems: undefined,
+                    maxItems: undefined
+                }
             };
         }
 
@@ -131,12 +136,15 @@ export class GraphQLConverter {
         }
 
         return {
-            type: "unknown",
-            displayName: undefined
+            type: "alias",
+            value: {
+                type: "unknown",
+                displayName: undefined
+            }
         };
     }
 
-    private convertInputType(type: GraphQLInputType): FernRegistry.api.latest.TypeShape {
+    private convertInputType(type: GraphQLInputType): FdrAPI.api.latest.TypeShape {
         if (type instanceof GraphQLNonNull) {
             const innerType = this.convertInputType(type.ofType);
             return innerType;
@@ -144,8 +152,13 @@ export class GraphQLConverter {
 
         if (type instanceof GraphQLList) {
             return {
-                type: "list",
-                itemShape: this.convertInputType(type.ofType)
+                type: "alias",
+                value: {
+                    type: "list",
+                    itemShape: this.convertInputType(type.ofType),
+                    minItems: undefined,
+                    maxItems: undefined
+                }
             };
         }
 
@@ -162,12 +175,15 @@ export class GraphQLConverter {
         }
 
         return {
-            type: "unknown",
-            displayName: undefined
+            type: "alias",
+            value: {
+                type: "unknown",
+                displayName: undefined
+            }
         };
     }
 
-    private convertScalarType(type: GraphQLScalarType): FernRegistry.api.latest.TypeShape {
+    private convertScalarType(type: GraphQLScalarType): FdrAPI.api.latest.TypeShape {
         const scalarName = type.name.toLowerCase();
         switch (scalarName) {
             case "string":
@@ -178,6 +194,7 @@ export class GraphQLConverter {
                         type: "primitive",
                         value: {
                             type: "string",
+                            format: undefined,
                             regex: undefined,
                             minLength: undefined,
                             maxLength: undefined,
@@ -194,6 +211,9 @@ export class GraphQLConverter {
                             type: "integer",
                             minimum: undefined,
                             maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
                             default: undefined
                         }
                     }
@@ -207,6 +227,9 @@ export class GraphQLConverter {
                             type: "double",
                             minimum: undefined,
                             maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
                             default: undefined
                         }
                     }
@@ -229,6 +252,7 @@ export class GraphQLConverter {
                         type: "primitive",
                         value: {
                             type: "string",
+                            format: undefined,
                             regex: undefined,
                             minLength: undefined,
                             maxLength: undefined,
@@ -239,7 +263,7 @@ export class GraphQLConverter {
         }
     }
 
-    private convertEnumType(type: GraphQLEnumType): FernRegistry.api.latest.TypeShape {
+    private convertEnumType(type: GraphQLEnumType): FdrAPI.api.latest.TypeShape {
         const values = type.getValues();
         return {
             type: "enum",
@@ -252,17 +276,17 @@ export class GraphQLConverter {
         };
     }
 
-    private convertObjectType(type: GraphQLObjectType | GraphQLInterfaceType): FernRegistry.api.latest.TypeShape {
+    private convertObjectType(type: GraphQLObjectType | GraphQLInterfaceType): FdrAPI.api.latest.TypeShape {
         const fields = type.getFields();
-        const properties: FernRegistry.api.latest.ObjectProperty[] = [];
+        const properties: FdrAPI.api.latest.ObjectProperty[] = [];
 
         for (const [fieldName, field] of Object.entries(fields)) {
             properties.push({
-                key: FernRegistry.PropertyKey(fieldName),
+                key: FdrAPI.PropertyKey(fieldName),
                 valueShape: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
-                hidden: undefined
+                propertyAccess: undefined
             });
         }
 
@@ -274,17 +298,17 @@ export class GraphQLConverter {
         };
     }
 
-    private convertInputObjectType(type: GraphQLInputObjectType): FernRegistry.api.latest.TypeShape {
+    private convertInputObjectType(type: GraphQLInputObjectType): FdrAPI.api.latest.TypeShape {
         const fields = type.getFields();
-        const properties: FernRegistry.api.latest.ObjectProperty[] = [];
+        const properties: FdrAPI.api.latest.ObjectProperty[] = [];
 
         for (const [fieldName, field] of Object.entries(fields)) {
             properties.push({
-                key: FernRegistry.PropertyKey(fieldName),
+                key: FdrAPI.PropertyKey(fieldName),
                 valueShape: this.convertInputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
-                hidden: undefined
+                propertyAccess: undefined
             });
         }
 
@@ -296,7 +320,7 @@ export class GraphQLConverter {
         };
     }
 
-    private convertUnionType(type: GraphQLUnionType): FernRegistry.api.latest.TypeShape {
+    private convertUnionType(type: GraphQLUnionType): FdrAPI.api.latest.TypeShape {
         const types = type.getTypes();
         return {
             type: "undiscriminatedUnion",
