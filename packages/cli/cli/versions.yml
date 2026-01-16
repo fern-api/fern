@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.46.0
+  changelogEntry:
+    - summary: |
+        Propagate webhook multipart form data payloads to FDR conversion. The `fileUploadPayload` field on webhooks is now converted to the FDR `FormDataRequest` type, enabling proper rendering of file upload fields and body properties in documentation.
+      type: feat
+  createdAt: "2026-01-16"
+  irVersion: 63
+
 - version: 3.45.0
   changelogEntry:
     - summary: |
