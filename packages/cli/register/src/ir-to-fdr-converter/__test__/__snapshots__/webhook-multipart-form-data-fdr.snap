@@ -7,7 +7,9 @@
   "rootPackage": {
     "endpoints": [],
     "pointsTo": undefined,
-    "subpackages": [],
+    "subpackages": [
+      "subpackage_documentManagement",
+    ],
     "types": [
       "DocumentUploadEvent",
     ],
@@ -25,7 +27,85 @@
     "swiftSdk": undefined,
     "typescriptSdk": undefined,
   },
-  "subpackages": {},
+  "subpackages": {
+    "subpackage_documentManagement": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "documentManagement",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_documentManagement",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [
+        {
+          "description": "Webhook with multipart form data including file uploads",
+          "examples": [
+            {
+              "name": "documentManagementDocumentUploadedWebhookExample",
+              "payload": {
+                "document": "string",
+                "eventId": "evt_doc_abc123",
+                "eventType": "document.uploaded",
+                "timestamp": "2024-01-15T09:30:00Z",
+                "uploadedBy": "user_xyz789",
+              },
+            },
+          ],
+          "headers": [],
+          "id": "documentUploadedWebhook",
+          "method": "POST",
+          "name": "Document uploaded webhook",
+          "path": [],
+          "payload": {
+            "description": undefined,
+            "type": {
+              "extends": [],
+              "extraProperties": undefined,
+              "properties": [],
+              "type": "object",
+            },
+          },
+          "responses": [
+            {
+              "description": "Webhook processed successfully",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+            {
+              "description": "Invalid payload or missing required fields",
+              "isWildcard": undefined,
+              "statusCode": 400,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+            {
+              "description": "Server error processing webhook",
+              "isWildcard": undefined,
+              "statusCode": 500,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+          ],
+        },
+      ],
+      "websockets": [],
+    },
+  },
   "types": {
     "DocumentUploadEvent": {
       "availability": undefined,
@@ -205,6 +285,23 @@
       "description": "Type of the event",
       "displayName": undefined,
       "name": "DocumentUploadEventEventType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "document.uploaded",
+          },
+        ],
+      },
+    },
+    "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType": {
+      "availability": undefined,
+      "description": "Type of the event",
+      "displayName": undefined,
+      "name": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
       "shape": {
         "default": undefined,
         "type": "enum",
