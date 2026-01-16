@@ -186,6 +186,28 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
+    public generateRaw(
+        cls: ast.Class,
+        {
+            serviceId,
+            endpoint,
+            rawClientReference,
+            rawClient
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+            rawClientReference: string;
+            rawClient: RawClient;
+        }
+    ) {
+        return this.http.generateRaw(cls, {
+            serviceId,
+            endpoint,
+            rawClientReference,
+            rawClient
+        });
+    }
+
     private isGrpcEndpoint(
         grpcClientInfo: GrpcClientInfo | undefined,
         endpoint: HttpEndpoint

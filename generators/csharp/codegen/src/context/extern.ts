@@ -289,6 +289,20 @@ export class Extern {
                                 name: "IDictionary",
                                 namespace: "System.Collections.Generic",
                                 generics: [keyType, valueType]
+                            }),
+
+                        /**
+                         * Creates a reference to IReadOnlyDictionary<TKey, TValue>.
+                         *
+                         * @param keyType - The key type
+                         * @param valueType - The value type
+                         * @returns A ClassReference for IReadOnlyDictionary<TKey, TValue>
+                         */
+                        IReadOnlyDictionary: (keyType: Type, valueType: Type) =>
+                            this.csharp.classReference({
+                                name: "IReadOnlyDictionary",
+                                namespace: "System.Collections.Generic",
+                                generics: [keyType, valueType]
                             })
                     }),
 
@@ -371,6 +385,15 @@ export class Extern {
                             this.csharp.classReference({
                                 name: "HttpResponseHeaders",
                                 namespace: "System.Net.Http.Headers"
+                            }),
+
+                        /**
+                         * Reference to System.Net.Http.HttpResponseMessage class.
+                         */
+                        HttpResponseMessage: () =>
+                            this.csharp.classReference({
+                                name: "HttpResponseMessage",
+                                namespace: "System.Net.Http"
                             })
                     }),
                 /**
