@@ -37,10 +37,13 @@ public readonly struct HttpHeader : IEquatable<HttpHeader>
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        return HashCode.Combine(
-            StringComparer.OrdinalIgnoreCase.GetHashCode(Name ?? string.Empty),
-            Value?.GetHashCode() ?? 0
-        );
+        unchecked
+        {
+            var hash = 17;
+            hash = hash * 31 + StringComparer.OrdinalIgnoreCase.GetHashCode(Name ?? string.Empty);
+            hash = hash * 31 + (Value?.GetHashCode() ?? 0);
+            return hash;
+        }
     }
 
     /// <inheritdoc/>

@@ -28,11 +28,14 @@ public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
     /// <param name="headers">The underlying header dictionary.</param>
     public ResponseHeaders(IReadOnlyDictionary<string, IEnumerable<string>> headers)
     {
-        // Create a case-insensitive copy
-        _headers = new Dictionary<string, IEnumerable<string>>(
-            headers,
-            StringComparer.OrdinalIgnoreCase
-        );
+        // Create a case-insensitive copy by manually copying entries
+        // (Dictionary constructor with IReadOnlyDictionary is not available in .NET Standard 2.0)
+        var dict = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+        foreach (var kvp in headers)
+        {
+            dict[kvp.Key] = kvp.Value;
+        }
+        _headers = dict;
     }
 
     /// <summary>
