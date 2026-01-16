@@ -1,4 +1,10 @@
-import { NamedFullExample, Source, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
+import {
+    NamedFullExample,
+    Source,
+    WebhookExampleCall,
+    WebhookPayloadWithExample,
+    WebhookWithExample
+} from "@fern-api/openapi-ir";
 import { createHash } from "crypto";
 
 import { getExtension } from "../../../../getExtension";
@@ -77,9 +83,25 @@ export function convertWebhookOperation({
         )
         .filter((request) => request != null)
         .map((request) => {
-            if (request == null || (request.type !== "json" && request.type !== "formUrlEncoded")) {
-                context.logger.error(`Skipping webhook ${path} because non-json and non-formUrlEncoded request body`);
+            if (
+                request == null ||
+                (request.type !== "json" && request.type !== "formUrlEncoded" && request.type !== "multipart")
+            ) {
+                context.logger.error(
+                    `Skipping webhook ${path} because non-json, non-formUrlEncoded, and non-multipart request body`
+                );
                 return undefined;
+            }
+
+            let payload: WebhookPayloadWithExample;
+            let examples: WebhookExampleCall[];
+
+            if (request.type === "multipart") {
+                payload = WebhookPayloadWithExample.multipart(request);
+                examples = [];
+            } else {
+                payload = WebhookPayloadWithExample.json(request.schema);
+                examples = convertWebhookExamples(request.fullExamples);
             }
 
             const webhook: WebhookWithExample = {
@@ -92,10 +114,10 @@ export function convertWebhookOperation({
                 tags: context.resolveTagsToTagIds(operation.tags),
                 headers: convertedParameters.headers,
                 generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
-                payload: request.schema,
+                payload,
                 response: convertedResponse?.value,
                 description: operation.description,
-                examples: convertWebhookExamples(request.fullExamples),
+                examples,
                 source
             };
             return webhook;

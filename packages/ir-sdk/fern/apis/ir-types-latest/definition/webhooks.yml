@@ -26,11 +26,20 @@ types:
     union:
       inlinedPayload: InlinedWebhookPayload
       reference: WebhookPayloadReference
+      fileUpload: WebhookFileUploadPayload
 
   WebhookPayloadReference:
     extends: commons.WithDocs
     properties:
       payloadType: types.TypeReference
+
+  WebhookFileUploadPayload:
+    extends:
+      - commons.WithDocs
+      - commons.WithContentType
+    properties:
+      name: commons.Name
+      properties: list<http.FileUploadRequestProperty>
 
   InlinedWebhookPayload:
     properties:

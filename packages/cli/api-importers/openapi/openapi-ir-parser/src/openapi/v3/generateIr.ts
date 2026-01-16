@@ -18,6 +18,7 @@ import {
     Source,
     Webhook,
     WebhookExampleCall,
+    WebhookPayload,
     WebhookWithExample
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
@@ -217,9 +218,11 @@ export function generateIr({
     const webhooks: Webhook[] = webhooksWithExample.map((webhookWithExample) => {
         const extensionExamples = webhookWithExample.examples;
         let examples: WebhookExampleCall[] = extensionExamples;
-        if (!options.disableExamples && examples.length === 0) {
+
+        // Only generate examples for JSON payloads
+        if (!options.disableExamples && examples.length === 0 && webhookWithExample.payload.type === "json") {
             const webhookExample = exampleTypeFactory.buildExample({
-                schema: webhookWithExample.payload,
+                schema: webhookWithExample.payload.value,
                 exampleId: undefined,
                 example: undefined,
                 skipReadonly: false,
@@ -239,9 +242,17 @@ export function generateIr({
             }
         }
 
+        // Convert payload based on type
+        let payload: WebhookPayload;
+        if (webhookWithExample.payload.type === "json") {
+            payload = WebhookPayload.json(convertSchemaWithExampleToSchema(webhookWithExample.payload.value));
+        } else {
+            payload = WebhookPayload.multipart(webhookWithExample.payload);
+        }
+
         return {
             ...webhookWithExample,
-            payload: convertSchemaWithExampleToSchema(webhookWithExample.payload),
+            payload,
             examples
         };
     });

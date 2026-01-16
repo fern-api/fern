@@ -87,9 +87,14 @@ types:
         type: string
         docs: |
           Populated as ${operationId}Payload
-      payload: SchemaWithExample
+      payload: WebhookPayloadWithExample
       response: optional<ResponseWithExample>
       examples: list<finalIr.WebhookExampleCall>
+
+  WebhookPayloadWithExample:
+    union:
+      json: SchemaWithExample
+      multipart: ParseMultipartRequest
 
   HttpErrorWithExample:
     extends:

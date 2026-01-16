@@ -637,6 +637,22 @@ function convertWebhookPayload(payload: IrVersions.V63.WebhookPayload): IrVersio
                 ...payload,
                 payloadType: convertTypeReference(payload.payloadType)
             });
+        case "fileUpload":
+            return IrVersions.V62.webhooks.WebhookPayload.inlinedPayload({
+                name: payload.name,
+                extends: [],
+                properties: payload.properties
+                    .filter(
+                        (prop): prop is IrVersions.V63.FileUploadRequestProperty.BodyProperty =>
+                            prop.type === "bodyProperty"
+                    )
+                    .map((prop) => ({
+                        docs: prop.docs,
+                        availability: prop.availability,
+                        name: prop.name,
+                        valueType: convertTypeReference(prop.valueType)
+                    }))
+            });
     }
 }
 

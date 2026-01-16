@@ -99,9 +99,14 @@ types:
         type: string
         docs: |
           Populated as ${operationId}Payload
-      payload: Schema
+      payload: WebhookPayload
       response: optional<Response>
       examples: list<WebhookExampleCall>
+
+  WebhookPayload:
+    union:
+      json: Schema
+      multipart: MultipartRequest
 
   WebhookExampleCall:
     extends: commons.WithDescription

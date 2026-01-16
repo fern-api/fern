@@ -354,6 +354,25 @@ export class IrGraph {
                 reference: ({ payloadType }) => {
                     populateReferencesFromTypeReference(payloadType, referencedTypes, referencedSubpackages);
                 },
+                fileUpload: (fileUploadPayload) => {
+                    for (const property of fileUploadPayload.properties) {
+                        FileUploadRequestProperty._visit(property, {
+                            file: () => {
+                                // File properties don't reference types
+                            },
+                            bodyProperty: (bodyProperty) => {
+                                populateReferencesFromTypeReference(
+                                    bodyProperty.valueType,
+                                    referencedTypes,
+                                    referencedSubpackages
+                                );
+                            },
+                            _other: () => {
+                                // Unknown property type
+                            }
+                        });
+                    }
+                },
                 _other: () => {
                     throw new Error("Unknown WebhookPayload: " + webhook.payload?.type);
                 }

@@ -2,6 +2,7 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
 import {
     isRawTextType,
+    parseFileUploadWebhookPayload,
     parseRawBytesType,
     parseRawFileType,
     parseRawTextType,
@@ -10,6 +11,8 @@ import {
 import {
     Availability,
     ExampleWebhookCall,
+    FileProperty,
+    FileUploadRequestProperty,
     HttpResponse,
     HttpResponseBody,
     InlinedWebhookPayloadProperty,
@@ -59,7 +62,7 @@ export function convertWebhookGroup({
                           convertHttpHeader({ headerKey, header, file })
                       )
                     : [],
-            payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
+            payload: convertWebhookPayloadSchema({ webhook, file }),
             responses: convertWebhookResponses({ webhook, file, typeResolver }),
             examples:
                 webhook.examples != null
@@ -79,12 +82,14 @@ export function convertWebhookGroup({
 }
 
 function convertWebhookPayloadSchema({
-    payload,
+    webhook,
     file
 }: {
-    payload: RawSchemas.WebhookPayloadSchema;
+    webhook: RawSchemas.WebhookSchema;
     file: FernFileContext;
 }): WebhookPayload {
+    const payload = webhook.payload;
+
     if (typeof payload === "string") {
         return WebhookPayload.reference({
             docs: undefined,
@@ -95,29 +100,79 @@ function convertWebhookPayloadSchema({
             docs: undefined,
             payloadType: file.parseTypeReference(payload.type)
         });
-    } else {
-        return WebhookPayload.inlinedPayload({
-            name: file.casingsGenerator.generateName(payload.name),
-            extends: getExtensionsAsList(payload.extends).map((extended) =>
-                parseTypeName({ typeName: extended, file })
-            ),
-            properties:
-                payload.properties != null
-                    ? Object.entries(payload.properties).map(([propertyKey, propertyDefinition]) =>
-                          convertInlinedRequestProperty({
-                              propertyKey,
-                              propertyDefinition,
-                              docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
-                              availability:
-                                  typeof propertyDefinition !== "string"
-                                      ? convertAvailability(propertyDefinition.availability)
-                                      : undefined,
-                              file
-                          })
-                      )
-                    : []
+    }
+
+    const fileUploadPayload = parseFileUploadWebhookPayload(webhook);
+    if (fileUploadPayload != null) {
+        return WebhookPayload.fileUpload({
+            docs: undefined,
+            contentType: undefined,
+            name: file.casingsGenerator.generateName(fileUploadPayload.name),
+            properties: fileUploadPayload.properties.map((property) => {
+                if (property.isFile) {
+                    if (property.isArray) {
+                        return FileUploadRequestProperty.file(
+                            FileProperty.fileArray({
+                                key: file.casingsGenerator.generateNameAndWireValue({
+                                    wireValue: property.key,
+                                    name: property.key
+                                }),
+                                isOptional: property.isOptional,
+                                docs: property.docs,
+                                contentType: undefined
+                            })
+                        );
+                    } else {
+                        return FileUploadRequestProperty.file(
+                            FileProperty.file({
+                                key: file.casingsGenerator.generateNameAndWireValue({
+                                    wireValue: property.key,
+                                    name: property.key
+                                }),
+                                isOptional: property.isOptional,
+                                docs: property.docs,
+                                contentType: undefined
+                            })
+                        );
+                    }
+                } else {
+                    return FileUploadRequestProperty.bodyProperty({
+                        docs: property.docs,
+                        availability: convertAvailability(property.availability),
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            wireValue: property.key,
+                            name: getPropertyName({ propertyKey: property.key, property: property.propertyType }).name
+                        }),
+                        valueType: file.parseTypeReference(property.propertyType),
+                        contentType: undefined,
+                        style: undefined,
+                        v2Examples: undefined,
+                        propertyAccess: undefined
+                    });
+                }
+            })
         });
     }
+
+    return WebhookPayload.inlinedPayload({
+        name: file.casingsGenerator.generateName(payload.name),
+        extends: getExtensionsAsList(payload.extends).map((extended) => parseTypeName({ typeName: extended, file })),
+        properties:
+            payload.properties != null
+                ? Object.entries(payload.properties).map(([propertyKey, propertyDefinition]) =>
+                      convertInlinedRequestProperty({
+                          propertyKey,
+                          propertyDefinition,
+                          docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                          availability:
+                              typeof propertyDefinition !== "string"
+                                  ? convertAvailability(propertyDefinition.availability)
+                                  : undefined,
+                          file
+                      })
+                  )
+                : []
+    });
 }
 
 function convertInlinedRequestProperty({
