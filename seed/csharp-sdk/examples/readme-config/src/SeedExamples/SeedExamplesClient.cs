@@ -165,7 +165,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> EchoAsync(
+        public async Task<WithRawResponse<string>> EchoAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -189,13 +189,16 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -214,7 +217,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
             }
         }
 
-        public async Task<RawResponse<Identifier>> CreateTypeAsync(
+        public async Task<WithRawResponse<Identifier>> CreateTypeAsync(
             OneOf<BasicType, ComplexType> request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -238,13 +241,16 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Identifier>(responseBody)!;
-                    return new RawResponse<Identifier>
+                    var data = JsonUtils.Deserialize<Identifier>(responseBody)!;
+                    return new WithRawResponse<Identifier>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

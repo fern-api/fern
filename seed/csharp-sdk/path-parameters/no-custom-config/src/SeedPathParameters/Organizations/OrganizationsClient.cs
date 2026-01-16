@@ -210,7 +210,7 @@ public partial class OrganizationsClient : IOrganizationsClient
             return headers;
         }
 
-        public async Task<RawResponse<Organization>> GetOrganizationAsync(
+        public async Task<WithRawResponse<Organization>> GetOrganizationAsync(
             string tenantId,
             string organizationId,
             RequestOptions? options = null,
@@ -238,13 +238,16 @@ public partial class OrganizationsClient : IOrganizationsClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Organization>(responseBody)!;
-                    return new RawResponse<Organization>
+                    var data = JsonUtils.Deserialize<Organization>(responseBody)!;
+                    return new WithRawResponse<Organization>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -263,7 +266,7 @@ public partial class OrganizationsClient : IOrganizationsClient
             }
         }
 
-        public async Task<RawResponse<User>> GetOrganizationUserAsync(
+        public async Task<WithRawResponse<User>> GetOrganizationUserAsync(
             GetOrganizationUserRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -291,13 +294,16 @@ public partial class OrganizationsClient : IOrganizationsClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -316,7 +322,7 @@ public partial class OrganizationsClient : IOrganizationsClient
             }
         }
 
-        public async Task<RawResponse<IEnumerable<Organization>>> SearchOrganizationsAsync(
+        public async Task<WithRawResponse<IEnumerable<Organization>>> SearchOrganizationsAsync(
             string tenantId,
             string organizationId,
             SearchOrganizationsRequest request,
@@ -351,13 +357,16 @@ public partial class OrganizationsClient : IOrganizationsClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<Organization>>(responseBody)!;
-                    return new RawResponse<IEnumerable<Organization>>
+                    var data = JsonUtils.Deserialize<IEnumerable<Organization>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<Organization>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

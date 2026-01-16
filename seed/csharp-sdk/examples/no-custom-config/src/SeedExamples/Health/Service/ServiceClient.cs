@@ -133,7 +133,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// This endpoint checks the health of a resource.
         /// </summary>
-        public async Task<RawResponse<object>> CheckAsync(
+        public async Task<WithRawResponse<object>> CheckAsync(
             string id,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -153,12 +153,15 @@ public partial class ServiceClient : IServiceClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -174,7 +177,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// This endpoint checks the health of the service.
         /// </summary>
-        public async Task<RawResponse<bool>> PingAsync(
+        public async Task<WithRawResponse<bool>> PingAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -196,13 +199,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

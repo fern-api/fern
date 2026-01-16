@@ -338,7 +338,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> TestGetAsync(
+        public async Task<WithRawResponse<string>> TestGetAsync(
             string id,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -367,13 +367,17 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<string>(responseBody)!;
-                            return new RawResponse<string>
+                            var data = JsonUtils.Deserialize<string>(responseBody)!;
+                            return new WithRawResponse<string>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -394,7 +398,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<ObjectWithOptionalField>> TestPostAsync(
+        public async Task<WithRawResponse<ObjectWithOptionalField>> TestPostAsync(
             ObjectWithRequiredField request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -421,15 +425,19 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ObjectWithOptionalField>(
+                            var data = JsonUtils.Deserialize<ObjectWithOptionalField>(
                                 responseBody
                             )!;
-                            return new RawResponse<ObjectWithOptionalField>
+                            return new WithRawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -450,7 +458,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<ObjectWithOptionalField>> TestPutAsync(
+        public async Task<WithRawResponse<ObjectWithOptionalField>> TestPutAsync(
             string id,
             ObjectWithRequiredField request,
             RequestOptions? options = null,
@@ -481,15 +489,19 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ObjectWithOptionalField>(
+                            var data = JsonUtils.Deserialize<ObjectWithOptionalField>(
                                 responseBody
                             )!;
-                            return new RawResponse<ObjectWithOptionalField>
+                            return new WithRawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -510,7 +522,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<ObjectWithOptionalField>> TestPatchAsync(
+        public async Task<WithRawResponse<ObjectWithOptionalField>> TestPatchAsync(
             string id,
             ObjectWithOptionalField request,
             RequestOptions? options = null,
@@ -541,15 +553,19 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ObjectWithOptionalField>(
+                            var data = JsonUtils.Deserialize<ObjectWithOptionalField>(
                                 responseBody
                             )!;
-                            return new RawResponse<ObjectWithOptionalField>
+                            return new WithRawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -570,7 +586,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<bool>> TestDeleteAsync(
+        public async Task<WithRawResponse<bool>> TestDeleteAsync(
             string id,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -599,13 +615,17 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                            return new RawResponse<bool>
+                            var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                            return new WithRawResponse<bool>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)

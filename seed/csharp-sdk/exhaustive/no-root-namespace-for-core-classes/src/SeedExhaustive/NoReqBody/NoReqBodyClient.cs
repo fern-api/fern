@@ -132,7 +132,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
             return headers;
         }
 
-        public async Task<RawResponse<ObjectWithOptionalField>> GetWithNoRequestBodyAsync(
+        public async Task<WithRawResponse<ObjectWithOptionalField>> GetWithNoRequestBodyAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -154,13 +154,16 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
-                    return new RawResponse<ObjectWithOptionalField>
+                    var data = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                    return new WithRawResponse<ObjectWithOptionalField>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -179,7 +182,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
             }
         }
 
-        public async Task<RawResponse<string>> PostWithNoRequestBodyAsync(
+        public async Task<WithRawResponse<string>> PostWithNoRequestBodyAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -201,13 +204,16 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

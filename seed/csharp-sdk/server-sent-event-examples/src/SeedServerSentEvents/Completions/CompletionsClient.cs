@@ -106,7 +106,7 @@ public partial class CompletionsClient : ICompletionsClient
             return headers;
         }
 
-        public async Task<RawResponse<IAsyncEnumerable<StreamedCompletion>>> StreamAsync(
+        public async Task<WithRawResponse<IAsyncEnumerable<StreamedCompletion>>> StreamAsync(
             StreamCompletionRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default

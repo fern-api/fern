@@ -106,7 +106,7 @@ public partial class PutClient : IPutClient
             return headers;
         }
 
-        public async Task<RawResponse<PutResponse>> AddAsync(
+        public async Task<WithRawResponse<PutResponse>> AddAsync(
             PutRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -135,13 +135,17 @@ public partial class PutClient : IPutClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<PutResponse>(responseBody)!;
-                            return new RawResponse<PutResponse>
+                            var data = JsonUtils.Deserialize<PutResponse>(responseBody)!;
+                            return new WithRawResponse<PutResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)

@@ -134,7 +134,7 @@ public partial class TypesClient : ITypesClient
             return headers;
         }
 
-        public async Task<RawResponse<UnionWithTime>> GetAsync(
+        public async Task<WithRawResponse<UnionWithTime>> GetAsync(
             string id,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -157,13 +157,16 @@ public partial class TypesClient : ITypesClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<UnionWithTime>(responseBody)!;
-                    return new RawResponse<UnionWithTime>
+                    var data = JsonUtils.Deserialize<UnionWithTime>(responseBody)!;
+                    return new WithRawResponse<UnionWithTime>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -182,7 +185,7 @@ public partial class TypesClient : ITypesClient
             }
         }
 
-        public async Task<RawResponse<bool>> UpdateAsync(
+        public async Task<WithRawResponse<bool>> UpdateAsync(
             UnionWithTime request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -206,13 +209,16 @@ public partial class TypesClient : ITypesClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

@@ -105,7 +105,7 @@ public partial class HeadersClient : IHeadersClient
             return headers;
         }
 
-        public async Task<RawResponse<SendResponse>> SendAsync(
+        public async Task<WithRawResponse<SendResponse>> SendAsync(
             SendLiteralsInHeadersRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -137,13 +137,16 @@ public partial class HeadersClient : IHeadersClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<SendResponse>(responseBody)!;
-                    return new RawResponse<SendResponse>
+                    var data = JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                    return new WithRawResponse<SendResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

@@ -140,7 +140,7 @@ public partial class DummyClient : IDummyClient
             return headers;
         }
 
-        public async Task<RawResponse<IAsyncEnumerable<StreamResponse>>> GenerateStreamAsync(
+        public async Task<WithRawResponse<IAsyncEnumerable<StreamResponse>>> GenerateStreamAsync(
             GenerateStreamRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -173,7 +173,7 @@ public partial class DummyClient : IDummyClient
             }
         }
 
-        public async Task<RawResponse<StreamResponse>> GenerateAsync(
+        public async Task<WithRawResponse<StreamResponse>> GenerateAsync(
             Generateequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -197,13 +197,16 @@ public partial class DummyClient : IDummyClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<StreamResponse>(responseBody)!;
-                    return new RawResponse<StreamResponse>
+                    var data = JsonUtils.Deserialize<StreamResponse>(responseBody)!;
+                    return new WithRawResponse<StreamResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

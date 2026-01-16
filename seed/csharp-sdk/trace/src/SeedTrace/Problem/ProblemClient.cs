@@ -409,7 +409,7 @@ public partial class ProblemClient : IProblemClient
         /// <summary>
         /// Creates a problem
         /// </summary>
-        public async Task<RawResponse<CreateProblemResponse>> CreateProblemAsync(
+        public async Task<WithRawResponse<CreateProblemResponse>> CreateProblemAsync(
             CreateProblemRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -433,13 +433,16 @@ public partial class ProblemClient : IProblemClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<CreateProblemResponse>(responseBody)!;
-                    return new RawResponse<CreateProblemResponse>
+                    var data = JsonUtils.Deserialize<CreateProblemResponse>(responseBody)!;
+                    return new WithRawResponse<CreateProblemResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -461,7 +464,7 @@ public partial class ProblemClient : IProblemClient
         /// <summary>
         /// Updates a problem
         /// </summary>
-        public async Task<RawResponse<UpdateProblemResponse>> UpdateProblemAsync(
+        public async Task<WithRawResponse<UpdateProblemResponse>> UpdateProblemAsync(
             string problemId,
             CreateProblemRequest request,
             RequestOptions? options = null,
@@ -489,13 +492,16 @@ public partial class ProblemClient : IProblemClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<UpdateProblemResponse>(responseBody)!;
-                    return new RawResponse<UpdateProblemResponse>
+                    var data = JsonUtils.Deserialize<UpdateProblemResponse>(responseBody)!;
+                    return new WithRawResponse<UpdateProblemResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -517,7 +523,7 @@ public partial class ProblemClient : IProblemClient
         /// <summary>
         /// Soft deletes a problem
         /// </summary>
-        public async Task<RawResponse<object>> DeleteProblemAsync(
+        public async Task<WithRawResponse<object>> DeleteProblemAsync(
             string problemId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -540,12 +546,15 @@ public partial class ProblemClient : IProblemClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -561,7 +570,9 @@ public partial class ProblemClient : IProblemClient
         /// <summary>
         /// Returns default starter files for problem
         /// </summary>
-        public async Task<RawResponse<GetDefaultStarterFilesResponse>> GetDefaultStarterFilesAsync(
+        public async Task<
+            WithRawResponse<GetDefaultStarterFilesResponse>
+        > GetDefaultStarterFilesAsync(
             GetDefaultStarterFilesRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -585,13 +596,16 @@ public partial class ProblemClient : IProblemClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
-                    return new RawResponse<GetDefaultStarterFilesResponse>
+                    var data = JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
+                    return new WithRawResponse<GetDefaultStarterFilesResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

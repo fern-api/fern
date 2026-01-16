@@ -157,7 +157,7 @@ public partial class ImdbClient : IImdbClient
         /// <summary>
         /// Add a movie to the database using the movies/* /... path.
         /// </summary>
-        public async Task<RawResponse<string>> CreateMovieAsync(
+        public async Task<WithRawResponse<string>> CreateMovieAsync(
             CreateMovieRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -181,13 +181,16 @@ public partial class ImdbClient : IImdbClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -206,7 +209,7 @@ public partial class ImdbClient : IImdbClient
             }
         }
 
-        public async Task<RawResponse<Movie>> GetMovieAsync(
+        public async Task<WithRawResponse<Movie>> GetMovieAsync(
             string movieId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -232,13 +235,16 @@ public partial class ImdbClient : IImdbClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Movie>(responseBody)!;
-                    return new RawResponse<Movie>
+                    var data = JsonUtils.Deserialize<Movie>(responseBody)!;
+                    return new WithRawResponse<Movie>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

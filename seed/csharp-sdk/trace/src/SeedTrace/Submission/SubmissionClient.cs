@@ -232,7 +232,7 @@ public partial class SubmissionClient : ISubmissionClient
         /// <summary>
         /// Returns sessionId and execution server URL for session. Spins up server.
         /// </summary>
-        public async Task<RawResponse<ExecutionSessionResponse>> CreateExecutionSessionAsync(
+        public async Task<WithRawResponse<ExecutionSessionResponse>> CreateExecutionSessionAsync(
             Language language,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -258,13 +258,16 @@ public partial class SubmissionClient : ISubmissionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<ExecutionSessionResponse>(responseBody)!;
-                    return new RawResponse<ExecutionSessionResponse>
+                    var data = JsonUtils.Deserialize<ExecutionSessionResponse>(responseBody)!;
+                    return new WithRawResponse<ExecutionSessionResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -286,7 +289,7 @@ public partial class SubmissionClient : ISubmissionClient
         /// <summary>
         /// Returns execution server URL for session. Returns empty if session isn't registered.
         /// </summary>
-        public async Task<RawResponse<ExecutionSessionResponse?>> GetExecutionSessionAsync(
+        public async Task<WithRawResponse<ExecutionSessionResponse?>> GetExecutionSessionAsync(
             string sessionId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -312,13 +315,16 @@ public partial class SubmissionClient : ISubmissionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<ExecutionSessionResponse?>(responseBody)!;
-                    return new RawResponse<ExecutionSessionResponse?>
+                    var data = JsonUtils.Deserialize<ExecutionSessionResponse?>(responseBody)!;
+                    return new WithRawResponse<ExecutionSessionResponse?>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -340,7 +346,7 @@ public partial class SubmissionClient : ISubmissionClient
         /// <summary>
         /// Stops execution session.
         /// </summary>
-        public async Task<RawResponse<object>> StopExecutionSessionAsync(
+        public async Task<WithRawResponse<object>> StopExecutionSessionAsync(
             string sessionId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -363,12 +369,15 @@ public partial class SubmissionClient : ISubmissionClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -382,7 +391,7 @@ public partial class SubmissionClient : ISubmissionClient
         }
 
         public async Task<
-            RawResponse<GetExecutionSessionStateResponse>
+            WithRawResponse<GetExecutionSessionStateResponse>
         > GetExecutionSessionsStateAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -405,15 +414,18 @@ public partial class SubmissionClient : ISubmissionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<GetExecutionSessionStateResponse>(
+                    var data = JsonUtils.Deserialize<GetExecutionSessionStateResponse>(
                         responseBody
                     )!;
-                    return new RawResponse<GetExecutionSessionStateResponse>
+                    return new WithRawResponse<GetExecutionSessionStateResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

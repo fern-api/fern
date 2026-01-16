@@ -226,7 +226,7 @@ public partial class System : ISystem
             return headers;
         }
 
-        public async global::System.Threading.Tasks.Task<RawResponse<User>> CreateUserAsync(
+        public async global::System.Threading.Tasks.Task<WithRawResponse<User>> CreateUserAsync(
             User request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -250,13 +250,16 @@ public partial class System : ISystem
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -275,7 +278,7 @@ public partial class System : ISystem
             }
         }
 
-        public async global::System.Threading.Tasks.Task<RawResponse<Task>> CreateTaskAsync(
+        public async global::System.Threading.Tasks.Task<WithRawResponse<Task>> CreateTaskAsync(
             Task request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -299,13 +302,16 @@ public partial class System : ISystem
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Task>(responseBody)!;
-                    return new RawResponse<Task>
+                    var data = JsonUtils.Deserialize<Task>(responseBody)!;
+                    return new WithRawResponse<Task>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -324,7 +330,9 @@ public partial class System : ISystem
             }
         }
 
-        public async global::System.Threading.Tasks.Task<RawResponse<object>> EmptyResponseAsync(
+        public async global::System.Threading.Tasks.Task<
+            WithRawResponse<object>
+        > EmptyResponseAsync(
             Task request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -345,12 +353,15 @@ public partial class System : ISystem
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {

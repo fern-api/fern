@@ -171,7 +171,7 @@ public partial class SeedValidationClient : ISeedValidationClient
             return headers;
         }
 
-        public async Task<RawResponse<Type>> CreateAsync(
+        public async Task<WithRawResponse<Type>> CreateAsync(
             CreateRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -195,13 +195,16 @@ public partial class SeedValidationClient : ISeedValidationClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Type>(responseBody)!;
-                    return new RawResponse<Type>
+                    var data = JsonUtils.Deserialize<Type>(responseBody)!;
+                    return new WithRawResponse<Type>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -220,7 +223,7 @@ public partial class SeedValidationClient : ISeedValidationClient
             }
         }
 
-        public async Task<RawResponse<Type>> GetAsync(
+        public async Task<WithRawResponse<Type>> GetAsync(
             GetRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -248,13 +251,16 @@ public partial class SeedValidationClient : ISeedValidationClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Type>(responseBody)!;
-                    return new RawResponse<Type>
+                    var data = JsonUtils.Deserialize<Type>(responseBody)!;
+                    return new WithRawResponse<Type>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

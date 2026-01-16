@@ -308,7 +308,7 @@ public partial class UserClient : IUserClient
             return headers;
         }
 
-        public async Task<RawResponse<object>> CreateUsernameAsync(
+        public async Task<WithRawResponse<object>> CreateUsernameAsync(
             CreateUsernameRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -332,12 +332,15 @@ public partial class UserClient : IUserClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -350,7 +353,7 @@ public partial class UserClient : IUserClient
             }
         }
 
-        public async Task<RawResponse<object>> CreateUsernameWithReferencedTypeAsync(
+        public async Task<WithRawResponse<object>> CreateUsernameWithReferencedTypeAsync(
             CreateUsernameReferencedRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -374,12 +377,15 @@ public partial class UserClient : IUserClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -392,7 +398,7 @@ public partial class UserClient : IUserClient
             }
         }
 
-        public async Task<RawResponse<object>> CreateUsernameOptionalAsync(
+        public async Task<WithRawResponse<object>> CreateUsernameOptionalAsync(
             CreateUsernameBodyOptionalProperties? request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -413,12 +419,15 @@ public partial class UserClient : IUserClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -431,7 +440,7 @@ public partial class UserClient : IUserClient
             }
         }
 
-        public async Task<RawResponse<User>> GetUsernameAsync(
+        public async Task<WithRawResponse<User>> GetUsernameAsync(
             GetUsersRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -485,13 +494,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

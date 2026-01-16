@@ -128,7 +128,7 @@ public partial class SyspropClient : ISyspropClient
             return headers;
         }
 
-        public async Task<RawResponse<object>> SetNumWarmInstancesAsync(
+        public async Task<WithRawResponse<object>> SetNumWarmInstancesAsync(
             Language language,
             int numWarmInstances,
             RequestOptions? options = null,
@@ -153,12 +153,15 @@ public partial class SyspropClient : ISyspropClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -171,7 +174,7 @@ public partial class SyspropClient : ISyspropClient
             }
         }
 
-        public async Task<RawResponse<Dictionary<Language, int>>> GetNumWarmInstancesAsync(
+        public async Task<WithRawResponse<Dictionary<Language, int>>> GetNumWarmInstancesAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -193,13 +196,16 @@ public partial class SyspropClient : ISyspropClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Dictionary<Language, int>>(responseBody)!;
-                    return new RawResponse<Dictionary<Language, int>>
+                    var data = JsonUtils.Deserialize<Dictionary<Language, int>>(responseBody)!;
+                    return new WithRawResponse<Dictionary<Language, int>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

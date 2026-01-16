@@ -158,7 +158,7 @@ public partial class SeedApiClient : ISeedApiClient
         }
 
         public async Task<
-            RawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
+            WithRawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
         > UploadJsonDocumentAsync(
             UploadDocumentRequest request,
             RequestOptions? options = null,
@@ -184,15 +184,18 @@ public partial class SeedApiClient : ISeedApiClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<OneOf<DocumentMetadata, DocumentUploadResult>>(
+                    var data = JsonUtils.Deserialize<OneOf<DocumentMetadata, DocumentUploadResult>>(
                         responseBody
                     )!;
-                    return new RawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
+                    return new WithRawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -212,7 +215,7 @@ public partial class SeedApiClient : ISeedApiClient
         }
 
         public async Task<
-            RawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
+            WithRawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
         > UploadPdfDocumentAsync(
             Stream request,
             RequestOptions? options = null,
@@ -238,15 +241,18 @@ public partial class SeedApiClient : ISeedApiClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<OneOf<DocumentMetadata, DocumentUploadResult>>(
+                    var data = JsonUtils.Deserialize<OneOf<DocumentMetadata, DocumentUploadResult>>(
                         responseBody
                     )!;
-                    return new RawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
+                    return new WithRawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

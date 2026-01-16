@@ -186,7 +186,7 @@ public partial class SeedApiClient : ISeedApiClient
             return headers;
         }
 
-        public async Task<RawResponse<Foo>> GetFooAsync(
+        public async Task<WithRawResponse<Foo>> GetFooAsync(
             GetFooRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -224,13 +224,16 @@ public partial class SeedApiClient : ISeedApiClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Foo>(responseBody)!;
-                    return new RawResponse<Foo>
+                    var data = JsonUtils.Deserialize<Foo>(responseBody)!;
+                    return new WithRawResponse<Foo>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -249,7 +252,7 @@ public partial class SeedApiClient : ISeedApiClient
             }
         }
 
-        public async Task<RawResponse<Foo>> UpdateFooAsync(
+        public async Task<WithRawResponse<Foo>> UpdateFooAsync(
             string id,
             UpdateFooRequest request,
             RequestOptions? options = null,
@@ -281,13 +284,16 @@ public partial class SeedApiClient : ISeedApiClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Foo>(responseBody)!;
-                    return new RawResponse<Foo>
+                    var data = JsonUtils.Deserialize<Foo>(responseBody)!;
+                    return new WithRawResponse<Foo>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

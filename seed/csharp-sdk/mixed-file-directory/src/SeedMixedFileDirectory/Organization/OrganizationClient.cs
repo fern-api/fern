@@ -96,7 +96,7 @@ public partial class OrganizationClient : IOrganizationClient
         /// <summary>
         /// Create a new organization.
         /// </summary>
-        public async Task<RawResponse<Organization>> CreateAsync(
+        public async Task<WithRawResponse<Organization>> CreateAsync(
             CreateOrganizationRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -120,13 +120,16 @@ public partial class OrganizationClient : IOrganizationClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Organization>(responseBody)!;
-                    return new RawResponse<Organization>
+                    var data = JsonUtils.Deserialize<Organization>(responseBody)!;
+                    return new WithRawResponse<Organization>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

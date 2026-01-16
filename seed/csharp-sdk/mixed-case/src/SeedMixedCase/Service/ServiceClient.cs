@@ -142,7 +142,7 @@ public partial class ServiceClient : IServiceClient
             return headers;
         }
 
-        public async Task<RawResponse<Resource>> GetResourceAsync(
+        public async Task<WithRawResponse<Resource>> GetResourceAsync(
             string resourceId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -168,13 +168,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Resource>(responseBody)!;
-                    return new RawResponse<Resource>
+                    var data = JsonUtils.Deserialize<Resource>(responseBody)!;
+                    return new WithRawResponse<Resource>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -193,7 +196,7 @@ public partial class ServiceClient : IServiceClient
             }
         }
 
-        public async Task<RawResponse<IEnumerable<Resource>>> ListResourcesAsync(
+        public async Task<WithRawResponse<IEnumerable<Resource>>> ListResourcesAsync(
             ListResourcesRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -220,13 +223,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<Resource>>(responseBody)!;
-                    return new RawResponse<IEnumerable<Resource>>
+                    var data = JsonUtils.Deserialize<IEnumerable<Resource>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<Resource>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

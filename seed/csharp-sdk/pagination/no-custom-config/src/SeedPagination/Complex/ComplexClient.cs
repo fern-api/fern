@@ -143,7 +143,7 @@ public partial class ComplexClient : IComplexClient
             return headers;
         }
 
-        public async Task<RawResponse<PaginatedConversationResponse>> SearchAsync(
+        public async Task<WithRawResponse<PaginatedConversationResponse>> SearchAsync(
             string index,
             SearchRequest request,
             RequestOptions? options = null,
@@ -172,13 +172,16 @@ public partial class ComplexClient : IComplexClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<PaginatedConversationResponse>(responseBody)!;
-                    return new RawResponse<PaginatedConversationResponse>
+                    var data = JsonUtils.Deserialize<PaginatedConversationResponse>(responseBody)!;
+                    return new WithRawResponse<PaginatedConversationResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

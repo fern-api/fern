@@ -219,7 +219,7 @@ public partial class NullableClient : INullableClient
             return headers;
         }
 
-        public async Task<RawResponse<IEnumerable<User>>> GetUsersAsync(
+        public async Task<WithRawResponse<IEnumerable<User>>> GetUsersAsync(
             GetUsersRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -257,13 +257,16 @@ public partial class NullableClient : INullableClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
-                    return new RawResponse<IEnumerable<User>>
+                    var data = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<User>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -282,7 +285,7 @@ public partial class NullableClient : INullableClient
             }
         }
 
-        public async Task<RawResponse<User>> CreateUserAsync(
+        public async Task<WithRawResponse<User>> CreateUserAsync(
             CreateUserRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -306,13 +309,16 @@ public partial class NullableClient : INullableClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -331,7 +337,7 @@ public partial class NullableClient : INullableClient
             }
         }
 
-        public async Task<RawResponse<bool>> DeleteUserAsync(
+        public async Task<WithRawResponse<bool>> DeleteUserAsync(
             DeleteUserRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -355,13 +361,16 @@ public partial class NullableClient : INullableClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

@@ -137,7 +137,7 @@ public partial class UnknownClient : IUnknownClient
             return headers;
         }
 
-        public async Task<RawResponse<IEnumerable<object>>> PostAsync(
+        public async Task<WithRawResponse<IEnumerable<object>>> PostAsync(
             object request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -161,13 +161,16 @@ public partial class UnknownClient : IUnknownClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
-                    return new RawResponse<IEnumerable<object>>
+                    var data = JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<object>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -186,7 +189,7 @@ public partial class UnknownClient : IUnknownClient
             }
         }
 
-        public async Task<RawResponse<IEnumerable<object>>> PostObjectAsync(
+        public async Task<WithRawResponse<IEnumerable<object>>> PostObjectAsync(
             MyObject request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -210,13 +213,16 @@ public partial class UnknownClient : IUnknownClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
-                    return new RawResponse<IEnumerable<object>>
+                    var data = JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<object>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

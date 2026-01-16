@@ -3,10 +3,9 @@ using System.Net;
 namespace SeedOauthClientCredentialsWithVariables;
 
 /// <summary>
-/// Wrapper containing HTTP response metadata and the parsed response body.
+/// Contains HTTP response metadata (status code, URL, headers) without the parsed body.
 /// </summary>
-/// <typeparam name="T">The type of the deserialized response body.</typeparam>
-public record RawResponse<T>
+public record RawResponse
 {
     /// <summary>
     /// The HTTP status code of the response.
@@ -23,9 +22,4 @@ public record RawResponse<T>
     /// Provides typed access to common headers and case-insensitive header name lookups.
     /// </summary>
     public required ResponseHeaders Headers { get; init; }
-
-    /// <summary>
-    /// The deserialized response body.
-    /// </summary>
-    public required T Body { get; init; }
 }

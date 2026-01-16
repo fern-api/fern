@@ -79,7 +79,7 @@ public partial class ServiceClient : IServiceClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> GetTextAsync(
+        public async Task<WithRawResponse<string>> GetTextAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -99,12 +99,15 @@ public partial class ServiceClient : IServiceClient
             if (response.StatusCode is >= 200 and < 400)
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                return new RawResponse<string>
+                return new WithRawResponse<string>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = responseBody,
+                    Data = responseBody,
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {

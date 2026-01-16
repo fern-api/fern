@@ -234,7 +234,7 @@ public partial class SimpleClient : ISimpleClient
             return headers;
         }
 
-        public async Task<RawResponse<FooResponse>> FooWithoutEndpointErrorAsync(
+        public async Task<WithRawResponse<FooResponse>> FooWithoutEndpointErrorAsync(
             FooRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -258,13 +258,16 @@ public partial class SimpleClient : ISimpleClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<FooResponse>(responseBody)!;
-                    return new RawResponse<FooResponse>
+                    var data = JsonUtils.Deserialize<FooResponse>(responseBody)!;
+                    return new WithRawResponse<FooResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -303,7 +306,7 @@ public partial class SimpleClient : ISimpleClient
             }
         }
 
-        public async Task<RawResponse<FooResponse>> FooAsync(
+        public async Task<WithRawResponse<FooResponse>> FooAsync(
             FooRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -327,13 +330,16 @@ public partial class SimpleClient : ISimpleClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<FooResponse>(responseBody)!;
-                    return new RawResponse<FooResponse>
+                    var data = JsonUtils.Deserialize<FooResponse>(responseBody)!;
+                    return new WithRawResponse<FooResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -372,7 +378,7 @@ public partial class SimpleClient : ISimpleClient
             }
         }
 
-        public async Task<RawResponse<FooResponse>> FooWithExamplesAsync(
+        public async Task<WithRawResponse<FooResponse>> FooWithExamplesAsync(
             FooRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -396,13 +402,16 @@ public partial class SimpleClient : ISimpleClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<FooResponse>(responseBody)!;
-                    return new RawResponse<FooResponse>
+                    var data = JsonUtils.Deserialize<FooResponse>(responseBody)!;
+                    return new WithRawResponse<FooResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

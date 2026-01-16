@@ -134,7 +134,7 @@ public partial class UnionClient : IUnionClient
             return headers;
         }
 
-        public async Task<RawResponse<object>> GetAsync(
+        public async Task<WithRawResponse<object>> GetAsync(
             string id,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -157,13 +157,16 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<object>(responseBody)!;
-                    return new RawResponse<object>
+                    var data = JsonUtils.Deserialize<object>(responseBody)!;
+                    return new WithRawResponse<object>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -182,7 +185,7 @@ public partial class UnionClient : IUnionClient
             }
         }
 
-        public async Task<RawResponse<bool>> UpdateAsync(
+        public async Task<WithRawResponse<bool>> UpdateAsync(
             object request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -206,13 +209,16 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

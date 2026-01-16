@@ -180,7 +180,7 @@ public partial class BasicAuthClient : IBasicAuthClient
         /// <summary>
         /// GET request with basic auth scheme
         /// </summary>
-        public async Task<RawResponse<bool>> GetWithBasicAuthAsync(
+        public async Task<WithRawResponse<bool>> GetWithBasicAuthAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -202,13 +202,16 @@ public partial class BasicAuthClient : IBasicAuthClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -247,7 +250,7 @@ public partial class BasicAuthClient : IBasicAuthClient
         /// <summary>
         /// POST request with basic auth scheme
         /// </summary>
-        public async Task<RawResponse<bool>> PostWithBasicAuthAsync(
+        public async Task<WithRawResponse<bool>> PostWithBasicAuthAsync(
             object request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -271,13 +274,16 @@ public partial class BasicAuthClient : IBasicAuthClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

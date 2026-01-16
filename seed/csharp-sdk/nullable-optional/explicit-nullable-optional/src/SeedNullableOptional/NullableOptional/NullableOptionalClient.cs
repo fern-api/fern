@@ -1046,7 +1046,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Get a user by ID
         /// </summary>
-        public async Task<RawResponse<UserResponse>> GetUserAsync(
+        public async Task<WithRawResponse<UserResponse>> GetUserAsync(
             string userId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1072,13 +1072,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
-                    return new RawResponse<UserResponse>
+                    var data = JsonUtils.Deserialize<UserResponse>(responseBody)!;
+                    return new WithRawResponse<UserResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1100,7 +1103,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Create a new user
         /// </summary>
-        public async Task<RawResponse<UserResponse>> CreateUserAsync(
+        public async Task<WithRawResponse<UserResponse>> CreateUserAsync(
             CreateUserRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1124,13 +1127,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
-                    return new RawResponse<UserResponse>
+                    var data = JsonUtils.Deserialize<UserResponse>(responseBody)!;
+                    return new WithRawResponse<UserResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1152,7 +1158,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Update a user (partial update)
         /// </summary>
-        public async Task<RawResponse<UserResponse>> UpdateUserAsync(
+        public async Task<WithRawResponse<UserResponse>> UpdateUserAsync(
             string userId,
             UpdateUserRequest request,
             RequestOptions? options = null,
@@ -1180,13 +1186,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
-                    return new RawResponse<UserResponse>
+                    var data = JsonUtils.Deserialize<UserResponse>(responseBody)!;
+                    return new WithRawResponse<UserResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1208,7 +1217,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// List all users
         /// </summary>
-        public async Task<RawResponse<IEnumerable<UserResponse>>> ListUsersAsync(
+        public async Task<WithRawResponse<IEnumerable<UserResponse>>> ListUsersAsync(
             ListUsersRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1249,13 +1258,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
-                    return new RawResponse<IEnumerable<UserResponse>>
+                    var data = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<UserResponse>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1277,7 +1289,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Search users
         /// </summary>
-        public async Task<RawResponse<IEnumerable<UserResponse>>> SearchUsersAsync(
+        public async Task<WithRawResponse<IEnumerable<UserResponse>>> SearchUsersAsync(
             SearchUsersRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1312,13 +1324,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
-                    return new RawResponse<IEnumerable<UserResponse>>
+                    var data = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<UserResponse>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1340,7 +1355,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Create a complex profile to test nullable enums and unions
         /// </summary>
-        public async Task<RawResponse<ComplexProfile>> CreateComplexProfileAsync(
+        public async Task<WithRawResponse<ComplexProfile>> CreateComplexProfileAsync(
             ComplexProfile request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1364,13 +1379,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
-                    return new RawResponse<ComplexProfile>
+                    var data = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
+                    return new WithRawResponse<ComplexProfile>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1392,7 +1410,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Get a complex profile by ID
         /// </summary>
-        public async Task<RawResponse<ComplexProfile>> GetComplexProfileAsync(
+        public async Task<WithRawResponse<ComplexProfile>> GetComplexProfileAsync(
             string profileId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1418,13 +1436,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
-                    return new RawResponse<ComplexProfile>
+                    var data = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
+                    return new WithRawResponse<ComplexProfile>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1446,7 +1467,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Update complex profile to test nullable field updates
         /// </summary>
-        public async Task<RawResponse<ComplexProfile>> UpdateComplexProfileAsync(
+        public async Task<WithRawResponse<ComplexProfile>> UpdateComplexProfileAsync(
             string profileId,
             UpdateComplexProfileRequest request,
             RequestOptions? options = null,
@@ -1474,13 +1495,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
-                    return new RawResponse<ComplexProfile>
+                    var data = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
+                    return new WithRawResponse<ComplexProfile>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1502,7 +1526,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Test endpoint for validating null deserialization
         /// </summary>
-        public async Task<RawResponse<DeserializationTestResponse>> TestDeserializationAsync(
+        public async Task<WithRawResponse<DeserializationTestResponse>> TestDeserializationAsync(
             DeserializationTestRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1526,13 +1550,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<DeserializationTestResponse>(responseBody)!;
-                    return new RawResponse<DeserializationTestResponse>
+                    var data = JsonUtils.Deserialize<DeserializationTestResponse>(responseBody)!;
+                    return new WithRawResponse<DeserializationTestResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1554,7 +1581,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Filter users by role with nullable enum
         /// </summary>
-        public async Task<RawResponse<IEnumerable<UserResponse>>> FilterByRoleAsync(
+        public async Task<WithRawResponse<IEnumerable<UserResponse>>> FilterByRoleAsync(
             FilterByRoleRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1588,13 +1615,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
-                    return new RawResponse<IEnumerable<UserResponse>>
+                    var data = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<UserResponse>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1616,7 +1646,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Get notification settings which may be null
         /// </summary>
-        public async Task<RawResponse<NotificationMethod?>> GetNotificationSettingsAsync(
+        public async Task<WithRawResponse<NotificationMethod?>> GetNotificationSettingsAsync(
             string userId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1642,13 +1672,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<NotificationMethod?>(responseBody)!;
-                    return new RawResponse<NotificationMethod?>
+                    var data = JsonUtils.Deserialize<NotificationMethod?>(responseBody)!;
+                    return new WithRawResponse<NotificationMethod?>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1670,7 +1703,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Update tags to test array handling
         /// </summary>
-        public async Task<RawResponse<IEnumerable<string>>> UpdateTagsAsync(
+        public async Task<WithRawResponse<IEnumerable<string>>> UpdateTagsAsync(
             string userId,
             UpdateTagsRequest request,
             RequestOptions? options = null,
@@ -1698,13 +1731,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
-                    return new RawResponse<IEnumerable<string>>
+                    var data = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<string>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1726,7 +1762,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         /// <summary>
         /// Get search results with nullable unions
         /// </summary>
-        public async Task<RawResponse<IEnumerable<SearchResult>?>> GetSearchResultsAsync(
+        public async Task<WithRawResponse<IEnumerable<SearchResult>?>> GetSearchResultsAsync(
             SearchRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1750,13 +1786,16 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<SearchResult>?>(responseBody)!;
-                    return new RawResponse<IEnumerable<SearchResult>?>
+                    var data = JsonUtils.Deserialize<IEnumerable<SearchResult>?>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<SearchResult>?>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

@@ -88,7 +88,7 @@ public partial class DummyClient : IDummyClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> GetDummyAsync(
+        public async Task<WithRawResponse<string>> GetDummyAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -110,13 +110,16 @@ public partial class DummyClient : IDummyClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

@@ -146,7 +146,9 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
         /// <summary>
         /// POST with custom object in request body, response is an object
         /// </summary>
-        public async Task<RawResponse<ObjectWithOptionalField>> PostWithObjectBodyandResponseAsync(
+        public async Task<
+            WithRawResponse<ObjectWithOptionalField>
+        > PostWithObjectBodyandResponseAsync(
             PostWithObjectBody request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -173,15 +175,19 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ObjectWithOptionalField>(
+                            var data = JsonUtils.Deserialize<ObjectWithOptionalField>(
                                 responseBody
                             )!;
-                            return new RawResponse<ObjectWithOptionalField>
+                            return new WithRawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)

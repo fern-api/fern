@@ -206,7 +206,7 @@ public partial class SeedApiClient : ISeedApiClient
             return headers;
         }
 
-        public async Task<RawResponse<SearchResponse>> SearchAsync(
+        public async Task<WithRawResponse<SearchResponse>> SearchAsync(
             SearchRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -271,13 +271,16 @@ public partial class SeedApiClient : ISeedApiClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<SearchResponse>(responseBody)!;
-                    return new RawResponse<SearchResponse>
+                    var data = JsonUtils.Deserialize<SearchResponse>(responseBody)!;
+                    return new WithRawResponse<SearchResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

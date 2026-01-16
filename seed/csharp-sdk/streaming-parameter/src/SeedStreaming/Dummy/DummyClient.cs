@@ -94,7 +94,7 @@ public partial class DummyClient : IDummyClient
             return headers;
         }
 
-        public async Task<RawResponse<IAsyncEnumerable<StreamResponse>>> GenerateAsync(
+        public async Task<WithRawResponse<IAsyncEnumerable<StreamResponse>>> GenerateAsync(
             GenerateRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default

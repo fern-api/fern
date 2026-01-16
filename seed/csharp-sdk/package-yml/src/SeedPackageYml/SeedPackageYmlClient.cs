@@ -111,7 +111,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> EchoAsync(
+        public async Task<WithRawResponse<string>> EchoAsync(
             string id,
             EchoRequest request,
             RequestOptions? options = null,
@@ -136,13 +136,16 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

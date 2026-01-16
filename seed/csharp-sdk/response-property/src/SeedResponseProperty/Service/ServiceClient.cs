@@ -360,7 +360,7 @@ public partial class ServiceClient : IServiceClient
             return headers;
         }
 
-        public async Task<RawResponse<Response>> GetMovieAsync(
+        public async Task<WithRawResponse<Response>> GetMovieAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -384,13 +384,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Response>(responseBody)!;
-                    return new RawResponse<Response>
+                    var data = JsonUtils.Deserialize<Response>(responseBody)!;
+                    return new WithRawResponse<Response>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -409,7 +412,7 @@ public partial class ServiceClient : IServiceClient
             }
         }
 
-        public async Task<RawResponse<Response>> GetMovieDocsAsync(
+        public async Task<WithRawResponse<Response>> GetMovieDocsAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -433,13 +436,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Response>(responseBody)!;
-                    return new RawResponse<Response>
+                    var data = JsonUtils.Deserialize<Response>(responseBody)!;
+                    return new WithRawResponse<Response>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -458,7 +464,7 @@ public partial class ServiceClient : IServiceClient
             }
         }
 
-        public async Task<RawResponse<StringResponse>> GetMovieNameAsync(
+        public async Task<WithRawResponse<StringResponse>> GetMovieNameAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -482,13 +488,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<StringResponse>(responseBody)!;
-                    return new RawResponse<StringResponse>
+                    var data = JsonUtils.Deserialize<StringResponse>(responseBody)!;
+                    return new WithRawResponse<StringResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -507,7 +516,7 @@ public partial class ServiceClient : IServiceClient
             }
         }
 
-        public async Task<RawResponse<Response>> GetMovieMetadataAsync(
+        public async Task<WithRawResponse<Response>> GetMovieMetadataAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -531,13 +540,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Response>(responseBody)!;
-                    return new RawResponse<Response>
+                    var data = JsonUtils.Deserialize<Response>(responseBody)!;
+                    return new WithRawResponse<Response>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -556,7 +568,7 @@ public partial class ServiceClient : IServiceClient
             }
         }
 
-        public async Task<RawResponse<Response?>> GetOptionalMovieAsync(
+        public async Task<WithRawResponse<Response?>> GetOptionalMovieAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -580,13 +592,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Response?>(responseBody)!;
-                    return new RawResponse<Response?>
+                    var data = JsonUtils.Deserialize<Response?>(responseBody)!;
+                    return new WithRawResponse<Response?>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -605,7 +620,7 @@ public partial class ServiceClient : IServiceClient
             }
         }
 
-        public async Task<RawResponse<WithDocs?>> GetOptionalMovieDocsAsync(
+        public async Task<WithRawResponse<WithDocs?>> GetOptionalMovieDocsAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -629,13 +644,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<WithDocs?>(responseBody)!;
-                    return new RawResponse<WithDocs?>
+                    var data = JsonUtils.Deserialize<WithDocs?>(responseBody)!;
+                    return new WithRawResponse<WithDocs?>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -654,7 +672,7 @@ public partial class ServiceClient : IServiceClient
             }
         }
 
-        public async Task<RawResponse<StringResponse?>> GetOptionalMovieNameAsync(
+        public async Task<WithRawResponse<StringResponse?>> GetOptionalMovieNameAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -678,13 +696,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<StringResponse?>(responseBody)!;
-                    return new RawResponse<StringResponse?>
+                    var data = JsonUtils.Deserialize<StringResponse?>(responseBody)!;
+                    return new WithRawResponse<StringResponse?>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

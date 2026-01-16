@@ -160,7 +160,7 @@ public partial class SeedApiClient : ISeedApiClient
         /// <summary>
         /// Returns a RootObject which inherits from a nullable schema.
         /// </summary>
-        public async Task<RawResponse<RootObject>> GetTestAsync(
+        public async Task<WithRawResponse<RootObject>> GetTestAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -182,13 +182,16 @@ public partial class SeedApiClient : ISeedApiClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<RootObject>(responseBody)!;
-                    return new RawResponse<RootObject>
+                    var data = JsonUtils.Deserialize<RootObject>(responseBody)!;
+                    return new WithRawResponse<RootObject>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -210,7 +213,7 @@ public partial class SeedApiClient : ISeedApiClient
         /// <summary>
         /// Creates a test object with nullable allOf in request body.
         /// </summary>
-        public async Task<RawResponse<RootObject>> CreateTestAsync(
+        public async Task<WithRawResponse<RootObject>> CreateTestAsync(
             RootObject request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -235,13 +238,16 @@ public partial class SeedApiClient : ISeedApiClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<RootObject>(responseBody)!;
-                    return new RawResponse<RootObject>
+                    var data = JsonUtils.Deserialize<RootObject>(responseBody)!;
+                    return new WithRawResponse<RootObject>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

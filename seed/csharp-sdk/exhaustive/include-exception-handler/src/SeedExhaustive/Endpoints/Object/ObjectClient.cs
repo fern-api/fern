@@ -476,7 +476,9 @@ public partial class ObjectClient : IObjectClient
             return headers;
         }
 
-        public async Task<RawResponse<ObjectWithOptionalField>> GetAndReturnWithOptionalFieldAsync(
+        public async Task<
+            WithRawResponse<ObjectWithOptionalField>
+        > GetAndReturnWithOptionalFieldAsync(
             ObjectWithOptionalField request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -503,15 +505,19 @@ public partial class ObjectClient : IObjectClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ObjectWithOptionalField>(
+                            var data = JsonUtils.Deserialize<ObjectWithOptionalField>(
                                 responseBody
                             )!;
-                            return new RawResponse<ObjectWithOptionalField>
+                            return new WithRawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -532,7 +538,9 @@ public partial class ObjectClient : IObjectClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<ObjectWithRequiredField>> GetAndReturnWithRequiredFieldAsync(
+        public async Task<
+            WithRawResponse<ObjectWithRequiredField>
+        > GetAndReturnWithRequiredFieldAsync(
             ObjectWithRequiredField request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -559,15 +567,19 @@ public partial class ObjectClient : IObjectClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ObjectWithRequiredField>(
+                            var data = JsonUtils.Deserialize<ObjectWithRequiredField>(
                                 responseBody
                             )!;
-                            return new RawResponse<ObjectWithRequiredField>
+                            return new WithRawResponse<ObjectWithRequiredField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -588,7 +600,7 @@ public partial class ObjectClient : IObjectClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<ObjectWithMapOfMap>> GetAndReturnWithMapOfMapAsync(
+        public async Task<WithRawResponse<ObjectWithMapOfMap>> GetAndReturnWithMapOfMapAsync(
             ObjectWithMapOfMap request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -615,13 +627,17 @@ public partial class ObjectClient : IObjectClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
-                            return new RawResponse<ObjectWithMapOfMap>
+                            var data = JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
+                            return new WithRawResponse<ObjectWithMapOfMap>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -643,7 +659,7 @@ public partial class ObjectClient : IObjectClient
         }
 
         public async Task<
-            RawResponse<NestedObjectWithOptionalField>
+            WithRawResponse<NestedObjectWithOptionalField>
         > GetAndReturnNestedWithOptionalFieldAsync(
             NestedObjectWithOptionalField request,
             RequestOptions? options = null,
@@ -671,15 +687,19 @@ public partial class ObjectClient : IObjectClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<NestedObjectWithOptionalField>(
+                            var data = JsonUtils.Deserialize<NestedObjectWithOptionalField>(
                                 responseBody
                             )!;
-                            return new RawResponse<NestedObjectWithOptionalField>
+                            return new WithRawResponse<NestedObjectWithOptionalField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -701,7 +721,7 @@ public partial class ObjectClient : IObjectClient
         }
 
         public async Task<
-            RawResponse<NestedObjectWithRequiredField>
+            WithRawResponse<NestedObjectWithRequiredField>
         > GetAndReturnNestedWithRequiredFieldAsync(
             string string_,
             NestedObjectWithRequiredField request,
@@ -733,15 +753,19 @@ public partial class ObjectClient : IObjectClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<NestedObjectWithRequiredField>(
+                            var data = JsonUtils.Deserialize<NestedObjectWithRequiredField>(
                                 responseBody
                             )!;
-                            return new RawResponse<NestedObjectWithRequiredField>
+                            return new WithRawResponse<NestedObjectWithRequiredField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -763,7 +787,7 @@ public partial class ObjectClient : IObjectClient
         }
 
         public async Task<
-            RawResponse<NestedObjectWithRequiredField>
+            WithRawResponse<NestedObjectWithRequiredField>
         > GetAndReturnNestedWithRequiredFieldAsListAsync(
             IEnumerable<NestedObjectWithRequiredField> request,
             RequestOptions? options = null,
@@ -791,15 +815,19 @@ public partial class ObjectClient : IObjectClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<NestedObjectWithRequiredField>(
+                            var data = JsonUtils.Deserialize<NestedObjectWithRequiredField>(
                                 responseBody
                             )!;
-                            return new RawResponse<NestedObjectWithRequiredField>
+                            return new WithRawResponse<NestedObjectWithRequiredField>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)

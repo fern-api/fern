@@ -155,7 +155,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             return headers;
         }
 
-        public async Task<RawResponse<UnionResponse>> GetUnionAsync(
+        public async Task<WithRawResponse<UnionResponse>> GetUnionAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -177,13 +177,16 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<UnionResponse>(responseBody)!;
-                    return new RawResponse<UnionResponse>
+                    var data = JsonUtils.Deserialize<UnionResponse>(responseBody)!;
+                    return new WithRawResponse<UnionResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -205,7 +208,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             }
         }
 
-        public async Task<RawResponse<UnionListResponse>> ListUnionsAsync(
+        public async Task<WithRawResponse<UnionListResponse>> ListUnionsAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -227,13 +230,16 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<UnionListResponse>(responseBody)!;
-                    return new RawResponse<UnionListResponse>
+                    var data = JsonUtils.Deserialize<UnionListResponse>(responseBody)!;
+                    return new WithRawResponse<UnionListResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

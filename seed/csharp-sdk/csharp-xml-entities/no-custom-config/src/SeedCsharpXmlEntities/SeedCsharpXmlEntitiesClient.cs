@@ -111,7 +111,7 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
         /// <summary>
         /// Get timezone information with + offset
         /// </summary>
-        public async Task<RawResponse<TimeZoneModel>> GetTimeZoneAsync(
+        public async Task<WithRawResponse<TimeZoneModel>> GetTimeZoneAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -133,13 +133,16 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<TimeZoneModel>(responseBody)!;
-                    return new RawResponse<TimeZoneModel>
+                    var data = JsonUtils.Deserialize<TimeZoneModel>(responseBody)!;
+                    return new WithRawResponse<TimeZoneModel>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

@@ -165,7 +165,7 @@ public partial class SystemClient : ISystemClient
             return headers;
         }
 
-        public async Task<RawResponse<User>> CreateUserAsync(
+        public async Task<WithRawResponse<User>> CreateUserAsync(
             User request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -189,13 +189,16 @@ public partial class SystemClient : ISystemClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -217,7 +220,7 @@ public partial class SystemClient : ISystemClient
             }
         }
 
-        public async Task<RawResponse<Task>> CreateTaskAsync(
+        public async Task<WithRawResponse<Task>> CreateTaskAsync(
             Task request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -241,13 +244,16 @@ public partial class SystemClient : ISystemClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Task>(responseBody)!;
-                    return new RawResponse<Task>
+                    var data = JsonUtils.Deserialize<Task>(responseBody)!;
+                    return new WithRawResponse<Task>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

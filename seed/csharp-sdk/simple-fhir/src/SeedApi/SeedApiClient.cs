@@ -109,7 +109,7 @@ public partial class SeedApiClient : ISeedApiClient
             return headers;
         }
 
-        public async Task<RawResponse<Account>> GetAccountAsync(
+        public async Task<WithRawResponse<Account>> GetAccountAsync(
             string accountId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -135,13 +135,16 @@ public partial class SeedApiClient : ISeedApiClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Account>(responseBody)!;
-                    return new RawResponse<Account>
+                    var data = JsonUtils.Deserialize<Account>(responseBody)!;
+                    return new WithRawResponse<Account>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

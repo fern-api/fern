@@ -26,6 +26,7 @@ export const AsIsFiles = {
     HttpHeader: "HttpHeader.Template.cs",
     ResponseHeaders: "ResponseHeaders.Template.cs",
     RawResponse: "RawResponse.Template.cs",
+    WithRawResponse: "WithRawResponse.Template.cs",
     BaseRequest: "BaseRequest.Template.cs",
     EmptyRequest: "EmptyRequest.Template.cs",
     EncodingCache: "EncodingCache.Template.cs",

@@ -424,7 +424,7 @@ public partial class UnionClient : IUnionClient
         }
 
         public async Task<
-            RawResponse<
+            WithRawResponse<
                 OneOf<
                     string,
                     IEnumerable<string>,
@@ -465,7 +465,7 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<
+                    var data = JsonUtils.Deserialize<
                         OneOf<
                             string,
                             IEnumerable<string>,
@@ -475,7 +475,7 @@ public partial class UnionClient : IUnionClient
                             HashSet<string>
                         >
                     >(responseBody)!;
-                    return new RawResponse<
+                    return new WithRawResponse<
                         OneOf<
                             string,
                             IEnumerable<string>,
@@ -486,10 +486,13 @@ public partial class UnionClient : IUnionClient
                         >
                     >
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -511,7 +514,9 @@ public partial class UnionClient : IUnionClient
             }
         }
 
-        public async Task<RawResponse<Dictionary<OneOf<KeyType, string>, string>>> GetMetadataAsync(
+        public async Task<
+            WithRawResponse<Dictionary<OneOf<KeyType, string>, string>>
+        > GetMetadataAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -533,15 +538,18 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
+                    var data = JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
                         responseBody
                     )!;
-                    return new RawResponse<Dictionary<OneOf<KeyType, string>, string>>
+                    return new WithRawResponse<Dictionary<OneOf<KeyType, string>, string>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -563,7 +571,7 @@ public partial class UnionClient : IUnionClient
             }
         }
 
-        public async Task<RawResponse<bool>> UpdateMetadataAsync(
+        public async Task<WithRawResponse<bool>> UpdateMetadataAsync(
             OneOf<Dictionary<string, object?>?, NamedMetadata> request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -587,13 +595,16 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -615,7 +626,7 @@ public partial class UnionClient : IUnionClient
             }
         }
 
-        public async Task<RawResponse<bool>> CallAsync(
+        public async Task<WithRawResponse<bool>> CallAsync(
             Request request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -639,13 +650,16 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -668,7 +682,7 @@ public partial class UnionClient : IUnionClient
         }
 
         public async Task<
-            RawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>
+            WithRawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>
         > DuplicateTypesUnionAsync(
             OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
             RequestOptions? options = null,
@@ -693,15 +707,20 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<
+                    var data = JsonUtils.Deserialize<
                         OneOf<string, IEnumerable<string>, int, HashSet<string>>
                     >(responseBody)!;
-                    return new RawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>
+                    return new WithRawResponse<
+                        OneOf<string, IEnumerable<string>, int, HashSet<string>>
+                    >
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -723,7 +742,7 @@ public partial class UnionClient : IUnionClient
             }
         }
 
-        public async Task<RawResponse<string>> NestedUnionsAsync(
+        public async Task<WithRawResponse<string>> NestedUnionsAsync(
             OneOf<
                 string,
                 IEnumerable<string>,
@@ -756,13 +775,16 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -784,7 +806,7 @@ public partial class UnionClient : IUnionClient
             }
         }
 
-        public async Task<RawResponse<string>> TestCamelCasePropertiesAsync(
+        public async Task<WithRawResponse<string>> TestCamelCasePropertiesAsync(
             PaymentRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -808,13 +830,16 @@ public partial class UnionClient : IUnionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

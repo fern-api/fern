@@ -204,7 +204,7 @@ public partial class OptionalClient : IOptionalClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> SendOptionalBodyAsync(
+        public async Task<WithRawResponse<string>> SendOptionalBodyAsync(
             Dictionary<string, object?>? request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -228,13 +228,16 @@ public partial class OptionalClient : IOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -253,7 +256,7 @@ public partial class OptionalClient : IOptionalClient
             }
         }
 
-        public async Task<RawResponse<string>> SendOptionalTypedBodyAsync(
+        public async Task<WithRawResponse<string>> SendOptionalTypedBodyAsync(
             SendOptionalBodyRequest? request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -277,13 +280,16 @@ public partial class OptionalClient : IOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<string>(responseBody)!;
-                    return new RawResponse<string>
+                    var data = JsonUtils.Deserialize<string>(responseBody)!;
+                    return new WithRawResponse<string>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -307,7 +313,7 @@ public partial class OptionalClient : IOptionalClient
         /// This should not generate wire tests expecting {} when Optional.empty() is passed.
         /// </summary>
         public async Task<
-            RawResponse<DeployResponse>
+            WithRawResponse<DeployResponse>
         > SendOptionalNullableWithAllOptionalPropertiesAsync(
             string actionId,
             string id,
@@ -338,13 +344,16 @@ public partial class OptionalClient : IOptionalClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<DeployResponse>(responseBody)!;
-                    return new RawResponse<DeployResponse>
+                    var data = JsonUtils.Deserialize<DeployResponse>(responseBody)!;
+                    return new WithRawResponse<DeployResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

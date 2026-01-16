@@ -541,14 +541,23 @@ export class Generation {
                 isReferenceType: true
             }),
         /**
-         * Generic wrapper containing HTTP response metadata and the parsed response body.
-         * @param bodyType - The type of the deserialized response body
+         * Contains HTTP response metadata (status code, URL, headers) without the parsed body.
          */
-        RawResponse: (bodyType: ast.Type | ast.ClassReference): ast.ClassReference => {
+        RawResponse: (): ast.ClassReference => {
             return this.csharp.classReference({
                 origin: this.model.staticExplicit("RawResponse"),
+                namespace: this.namespaces.publicCore
+            });
+        },
+        /**
+         * Generic wrapper containing the parsed response data and the raw HTTP response metadata.
+         * @param dataType - The type of the deserialized response data
+         */
+        WithRawResponse: (dataType: ast.Type | ast.ClassReference): ast.ClassReference => {
+            return this.csharp.classReference({
+                origin: this.model.staticExplicit("WithRawResponse"),
                 namespace: this.namespaces.publicCore,
-                generics: [bodyType]
+                generics: [dataType]
             });
         },
         /** HTTP header management utilities */

@@ -106,7 +106,7 @@ public partial class EventsClient : IEventsClient
         /// <summary>
         /// List all user events.
         /// </summary>
-        public async Task<RawResponse<IEnumerable<Event>>> ListEventsAsync(
+        public async Task<WithRawResponse<IEnumerable<Event>>> ListEventsAsync(
             ListUserEventsRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -135,13 +135,16 @@ public partial class EventsClient : IEventsClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
-                    return new RawResponse<IEnumerable<Event>>
+                    var data = JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<Event>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

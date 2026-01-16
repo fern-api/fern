@@ -506,7 +506,7 @@ public partial class PrimitiveClient : IPrimitiveClient
             return headers;
         }
 
-        public async Task<RawResponse<string>> GetAndReturnStringAsync(
+        public async Task<WithRawResponse<string>> GetAndReturnStringAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -533,13 +533,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<string>(responseBody)!;
-                            return new RawResponse<string>
+                            var data = JsonUtils.Deserialize<string>(responseBody)!;
+                            return new WithRawResponse<string>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -560,7 +564,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<int>> GetAndReturnIntAsync(
+        public async Task<WithRawResponse<int>> GetAndReturnIntAsync(
             int request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -587,13 +591,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<int>(responseBody)!;
-                            return new RawResponse<int>
+                            var data = JsonUtils.Deserialize<int>(responseBody)!;
+                            return new WithRawResponse<int>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -614,7 +622,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<long>> GetAndReturnLongAsync(
+        public async Task<WithRawResponse<long>> GetAndReturnLongAsync(
             long request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -641,13 +649,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<long>(responseBody)!;
-                            return new RawResponse<long>
+                            var data = JsonUtils.Deserialize<long>(responseBody)!;
+                            return new WithRawResponse<long>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -668,7 +680,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<double>> GetAndReturnDoubleAsync(
+        public async Task<WithRawResponse<double>> GetAndReturnDoubleAsync(
             double request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -695,13 +707,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<double>(responseBody)!;
-                            return new RawResponse<double>
+                            var data = JsonUtils.Deserialize<double>(responseBody)!;
+                            return new WithRawResponse<double>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -722,7 +738,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<bool>> GetAndReturnBoolAsync(
+        public async Task<WithRawResponse<bool>> GetAndReturnBoolAsync(
             bool request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -749,13 +765,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                            return new RawResponse<bool>
+                            var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                            return new WithRawResponse<bool>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -776,7 +796,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<DateTime>> GetAndReturnDatetimeAsync(
+        public async Task<WithRawResponse<DateTime>> GetAndReturnDatetimeAsync(
             DateTime request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -803,13 +823,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<DateTime>(responseBody)!;
-                            return new RawResponse<DateTime>
+                            var data = JsonUtils.Deserialize<DateTime>(responseBody)!;
+                            return new WithRawResponse<DateTime>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -830,7 +854,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<DateOnly>> GetAndReturnDateAsync(
+        public async Task<WithRawResponse<DateOnly>> GetAndReturnDateAsync(
             DateOnly request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -857,13 +881,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<DateOnly>(responseBody)!;
-                            return new RawResponse<DateOnly>
+                            var data = JsonUtils.Deserialize<DateOnly>(responseBody)!;
+                            return new WithRawResponse<DateOnly>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -884,7 +912,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<string>> GetAndReturnUuidAsync(
+        public async Task<WithRawResponse<string>> GetAndReturnUuidAsync(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -911,13 +939,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<string>(responseBody)!;
-                            return new RawResponse<string>
+                            var data = JsonUtils.Deserialize<string>(responseBody)!;
+                            return new WithRawResponse<string>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -938,7 +970,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<string>> GetAndReturnBase64Async(
+        public async Task<WithRawResponse<string>> GetAndReturnBase64Async(
             string request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -965,13 +997,17 @@ public partial class PrimitiveClient : IPrimitiveClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<string>(responseBody)!;
-                            return new RawResponse<string>
+                            var data = JsonUtils.Deserialize<string>(responseBody)!;
+                            return new WithRawResponse<string>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)

@@ -134,7 +134,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             })
         );
         const bodyType = getEndpointReturnType({ context: this.context, endpoint });
-        const return_ = bodyType ? this.Types.RawResponse(bodyType) : this.Types.RawResponse(this.Primitive.object);
+        const return_ = bodyType
+            ? this.Types.WithRawResponse(bodyType)
+            : this.Types.WithRawResponse(this.Primitive.object);
         const body = this.csharp.codeblock((writer) => {
             this.writeRawUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
         });
@@ -211,22 +213,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
                 writer.pushScope();
                 writer.write("return new ");
-                writer.writeNode(this.Types.RawResponse(rawResponseType));
+                writer.writeNode(this.Types.WithRawResponse(rawResponseType));
                 writer.writeLine();
+                writer.writeLine("{");
+                writer.indent();
+                // For endpoints with no body but a return type (like HEAD returning HttpResponseHeaders),
+                // we return the response headers as the data
+                if (bodyType != null) {
+                    writer.writeLine(`Data = ${this.names.variables.response}.Raw.Headers,`);
+                } else {
+                    writer.writeLine("Data = new object(),");
+                }
+                writer.writeLine("RawResponse = new RawResponse");
                 writer.writeLine("{");
                 writer.indent();
                 writer.writeLine(
                     `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                 );
                 writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),");
-                // For endpoints with no body but a return type (like HEAD returning HttpResponseHeaders),
-                // we return the response headers as the body
-                if (bodyType != null) {
-                    writer.writeLine(`Body = ${this.names.variables.response}.Raw.Headers`);
-                } else {
-                    writer.writeLine("Body = new object()");
-                }
+                writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw))");
+                writer.dedent();
+                writer.writeLine("}");
                 writer.dedent();
                 writer.writeLine("};");
                 writer.popScope();
@@ -262,23 +269,28 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("try");
                     writer.pushScope();
 
-                    writer.write("var body = ");
+                    writer.write("var data = ");
                     writer.writeNode(this.Types.JsonUtils);
                     writer.write(".Deserialize<");
                     writer.writeNode(astType);
                     writer.writeLine(`>(${this.names.variables.responseBody})!;`);
 
                     writer.write("return new ");
-                    writer.writeNode(this.Types.RawResponse(astType));
+                    writer.writeNode(this.Types.WithRawResponse(astType));
                     writer.writeLine();
+                    writer.writeLine("{");
+                    writer.indent();
+                    writer.writeLine("Data = data,");
+                    writer.writeLine("RawResponse = new RawResponse");
                     writer.writeLine("{");
                     writer.indent();
                     writer.writeLine(
                         `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                    writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),");
-                    writer.writeLine("Body = body");
+                    writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw))");
+                    writer.dedent();
+                    writer.writeLine("}");
                     writer.dedent();
                     writer.writeLine("};");
 
@@ -313,16 +325,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     );
 
                     writer.write("return new ");
-                    writer.writeNode(this.Types.RawResponse(this.Primitive.string));
+                    writer.writeNode(this.Types.WithRawResponse(this.Primitive.string));
                     writer.writeLine();
+                    writer.writeLine("{");
+                    writer.indent();
+                    writer.writeLine(`Data = ${this.names.variables.responseBody},`);
+                    writer.writeLine("RawResponse = new RawResponse");
                     writer.writeLine("{");
                     writer.indent();
                     writer.writeLine(
                         `StatusCode = (global::System.Net.HttpStatusCode)${this.names.variables.response}.StatusCode,`
                     );
                     writer.writeLine(`Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri!,`);
-                    writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),");
-                    writer.writeLine(`Body = ${this.names.variables.responseBody}`);
+                    writer.writeLine("Headers = new ResponseHeaders(ExtractHeaders(response.Raw))");
+                    writer.dedent();
+                    writer.writeLine("}");
                     writer.dedent();
                     writer.writeLine("};");
                     writer.popScope();
@@ -370,7 +387,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             throw new Error("Internal error; a response type is required for pagination endpoints");
         }
 
-        const return_ = this.Types.RawResponse(unpagedEndpointResponseType);
+        const return_ = this.Types.WithRawResponse(unpagedEndpointResponseType);
         const body = this.csharp.codeblock((writer) => {
             this.writeRawUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
         });

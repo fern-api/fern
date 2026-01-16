@@ -299,7 +299,7 @@ public partial class ServiceClient : IServiceClient
             return headers;
         }
 
-        public async Task<RawResponse<object>> PatchAsync(
+        public async Task<WithRawResponse<object>> PatchAsync(
             PatchProxyRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -321,12 +321,15 @@ public partial class ServiceClient : IServiceClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -345,7 +348,7 @@ public partial class ServiceClient : IServiceClient
         /// - optional&lt;T&gt; fields (can be present or absent, but not null)
         /// - optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)
         /// </summary>
-        public async Task<RawResponse<object>> PatchComplexAsync(
+        public async Task<WithRawResponse<object>> PatchComplexAsync(
             string id,
             PatchComplexRequest request,
             RequestOptions? options = null,
@@ -368,12 +371,15 @@ public partial class ServiceClient : IServiceClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -390,7 +396,7 @@ public partial class ServiceClient : IServiceClient
         /// Named request with mixed optional/nullable fields and merge-patch content type.
         /// This should trigger the NPE issue when optional fields aren't initialized.
         /// </summary>
-        public async Task<RawResponse<object>> NamedPatchWithMixedAsync(
+        public async Task<WithRawResponse<object>> NamedPatchWithMixedAsync(
             string id,
             NamedMixedPatchRequest request,
             RequestOptions? options = null,
@@ -416,12 +422,15 @@ public partial class ServiceClient : IServiceClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -440,7 +449,7 @@ public partial class ServiceClient : IServiceClient
         /// 1. Not NPE when fields are not provided (tests initialization)
         /// 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
         /// </summary>
-        public async Task<RawResponse<object>> OptionalMergePatchTestAsync(
+        public async Task<WithRawResponse<object>> OptionalMergePatchTestAsync(
             OptionalMergePatchRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -462,12 +471,15 @@ public partial class ServiceClient : IServiceClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -483,7 +495,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Regular PATCH endpoint without merge-patch semantics
         /// </summary>
-        public async Task<RawResponse<object>> RegularPatchAsync(
+        public async Task<WithRawResponse<object>> RegularPatchAsync(
             string id,
             RegularPatchRequest request,
             RequestOptions? options = null,
@@ -505,12 +517,15 @@ public partial class ServiceClient : IServiceClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {

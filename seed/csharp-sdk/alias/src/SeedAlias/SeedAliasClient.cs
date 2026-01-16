@@ -96,7 +96,7 @@ public partial class SeedAliasClient : ISeedAliasClient
             return headers;
         }
 
-        public async Task<RawResponse<object>> GetAsync(
+        public async Task<WithRawResponse<object>> GetAsync(
             string typeId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -116,12 +116,15 @@ public partial class SeedAliasClient : ISeedAliasClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {

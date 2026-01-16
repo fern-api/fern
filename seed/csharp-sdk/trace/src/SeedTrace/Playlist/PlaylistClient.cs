@@ -349,7 +349,7 @@ public partial class PlaylistClient : IPlaylistClient
         /// <summary>
         /// Create a new playlist
         /// </summary>
-        public async Task<RawResponse<Playlist>> CreatePlaylistAsync(
+        public async Task<WithRawResponse<Playlist>> CreatePlaylistAsync(
             int serviceParam,
             CreatePlaylistRequest request,
             RequestOptions? options = null,
@@ -386,13 +386,16 @@ public partial class PlaylistClient : IPlaylistClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Playlist>(responseBody)!;
-                    return new RawResponse<Playlist>
+                    var data = JsonUtils.Deserialize<Playlist>(responseBody)!;
+                    return new WithRawResponse<Playlist>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -414,7 +417,7 @@ public partial class PlaylistClient : IPlaylistClient
         /// <summary>
         /// Returns the user's playlists
         /// </summary>
-        public async Task<RawResponse<IEnumerable<Playlist>>> GetPlaylistsAsync(
+        public async Task<WithRawResponse<IEnumerable<Playlist>>> GetPlaylistsAsync(
             int serviceParam,
             GetPlaylistsRequest request,
             RequestOptions? options = null,
@@ -451,13 +454,16 @@ public partial class PlaylistClient : IPlaylistClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<Playlist>>(responseBody)!;
-                    return new RawResponse<IEnumerable<Playlist>>
+                    var data = JsonUtils.Deserialize<IEnumerable<Playlist>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<Playlist>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -479,7 +485,7 @@ public partial class PlaylistClient : IPlaylistClient
         /// <summary>
         /// Returns a playlist
         /// </summary>
-        public async Task<RawResponse<Playlist>> GetPlaylistAsync(
+        public async Task<WithRawResponse<Playlist>> GetPlaylistAsync(
             int serviceParam,
             string playlistId,
             RequestOptions? options = null,
@@ -507,13 +513,16 @@ public partial class PlaylistClient : IPlaylistClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Playlist>(responseBody)!;
-                    return new RawResponse<Playlist>
+                    var data = JsonUtils.Deserialize<Playlist>(responseBody)!;
+                    return new WithRawResponse<Playlist>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -535,7 +544,7 @@ public partial class PlaylistClient : IPlaylistClient
         /// <summary>
         /// Updates a playlist
         /// </summary>
-        public async Task<RawResponse<Playlist?>> UpdatePlaylistAsync(
+        public async Task<WithRawResponse<Playlist?>> UpdatePlaylistAsync(
             int serviceParam,
             string playlistId,
             UpdatePlaylistRequest? request,
@@ -565,13 +574,16 @@ public partial class PlaylistClient : IPlaylistClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Playlist?>(responseBody)!;
-                    return new RawResponse<Playlist?>
+                    var data = JsonUtils.Deserialize<Playlist?>(responseBody)!;
+                    return new WithRawResponse<Playlist?>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -593,7 +605,7 @@ public partial class PlaylistClient : IPlaylistClient
         /// <summary>
         /// Deletes a playlist
         /// </summary>
-        public async Task<RawResponse<object>> DeletePlaylistAsync(
+        public async Task<WithRawResponse<object>> DeletePlaylistAsync(
             int serviceParam,
             string playlistId,
             RequestOptions? options = null,
@@ -618,12 +630,15 @@ public partial class PlaylistClient : IPlaylistClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {

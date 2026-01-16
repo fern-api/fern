@@ -103,7 +103,7 @@ public partial class FooClient : IFooClient
             return headers;
         }
 
-        public async Task<RawResponse<ImportingType>> FindAsync(
+        public async Task<WithRawResponse<ImportingType>> FindAsync(
             FindRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -133,13 +133,16 @@ public partial class FooClient : IFooClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<ImportingType>(responseBody)!;
-                    return new RawResponse<ImportingType>
+                    var data = JsonUtils.Deserialize<ImportingType>(responseBody)!;
+                    return new WithRawResponse<ImportingType>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

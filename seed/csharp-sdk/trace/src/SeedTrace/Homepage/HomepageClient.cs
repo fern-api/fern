@@ -124,7 +124,7 @@ public partial class HomepageClient : IHomepageClient
             return headers;
         }
 
-        public async Task<RawResponse<IEnumerable<string>>> GetHomepageProblemsAsync(
+        public async Task<WithRawResponse<IEnumerable<string>>> GetHomepageProblemsAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -146,13 +146,16 @@ public partial class HomepageClient : IHomepageClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
-                    return new RawResponse<IEnumerable<string>>
+                    var data = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<string>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -171,7 +174,7 @@ public partial class HomepageClient : IHomepageClient
             }
         }
 
-        public async Task<RawResponse<object>> SetHomepageProblemsAsync(
+        public async Task<WithRawResponse<object>> SetHomepageProblemsAsync(
             IEnumerable<string> request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -192,12 +195,15 @@ public partial class HomepageClient : IHomepageClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {

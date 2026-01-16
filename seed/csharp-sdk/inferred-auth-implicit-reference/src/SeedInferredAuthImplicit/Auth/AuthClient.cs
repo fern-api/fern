@@ -154,7 +154,7 @@ public partial class AuthClient : IAuthClient
             return headers;
         }
 
-        public async Task<RawResponse<TokenResponse>> GetTokenWithClientCredentialsAsync(
+        public async Task<WithRawResponse<TokenResponse>> GetTokenWithClientCredentialsAsync(
             GetTokenRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -178,13 +178,16 @@ public partial class AuthClient : IAuthClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
-                    return new RawResponse<TokenResponse>
+                    var data = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                    return new WithRawResponse<TokenResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -206,7 +209,7 @@ public partial class AuthClient : IAuthClient
             }
         }
 
-        public async Task<RawResponse<TokenResponse>> RefreshTokenAsync(
+        public async Task<WithRawResponse<TokenResponse>> RefreshTokenAsync(
             RefreshTokenRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -230,13 +233,16 @@ public partial class AuthClient : IAuthClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
-                    return new RawResponse<TokenResponse>
+                    var data = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                    return new WithRawResponse<TokenResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

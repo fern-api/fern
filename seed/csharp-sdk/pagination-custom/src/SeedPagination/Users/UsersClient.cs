@@ -107,7 +107,7 @@ public partial class UsersClient : IUsersClient
             return headers;
         }
 
-        public async Task<RawResponse<UsernameCursor>> ListUsernamesCustomAsync(
+        public async Task<WithRawResponse<UsernameCursor>> ListUsernamesCustomAsync(
             ListUsernamesRequestCustom request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -136,13 +136,16 @@ public partial class UsersClient : IUsersClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
-                    return new RawResponse<UsernameCursor>
+                    var data = JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
+                    return new WithRawResponse<UsernameCursor>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

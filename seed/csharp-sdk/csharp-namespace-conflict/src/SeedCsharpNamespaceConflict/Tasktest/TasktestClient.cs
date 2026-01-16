@@ -78,7 +78,7 @@ public partial class TasktestClient : ITasktestClient
             return headers;
         }
 
-        public async System.Threading.Tasks.Task<RawResponse<object>> HelloAsync(
+        public async System.Threading.Tasks.Task<WithRawResponse<object>> HelloAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -97,12 +97,15 @@ public partial class TasktestClient : ITasktestClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {

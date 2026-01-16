@@ -794,7 +794,7 @@ public partial class AdminClient : IAdminClient
             return headers;
         }
 
-        public async Task<RawResponse<object>> UpdateTestSubmissionStatusAsync(
+        public async Task<WithRawResponse<object>> UpdateTestSubmissionStatusAsync(
             string submissionId,
             TestSubmissionStatus request,
             RequestOptions? options = null,
@@ -819,12 +819,15 @@ public partial class AdminClient : IAdminClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -837,7 +840,7 @@ public partial class AdminClient : IAdminClient
             }
         }
 
-        public async Task<RawResponse<object>> SendTestSubmissionUpdateAsync(
+        public async Task<WithRawResponse<object>> SendTestSubmissionUpdateAsync(
             string submissionId,
             TestSubmissionUpdate request,
             RequestOptions? options = null,
@@ -862,12 +865,15 @@ public partial class AdminClient : IAdminClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -880,7 +886,7 @@ public partial class AdminClient : IAdminClient
             }
         }
 
-        public async Task<RawResponse<object>> UpdateWorkspaceSubmissionStatusAsync(
+        public async Task<WithRawResponse<object>> UpdateWorkspaceSubmissionStatusAsync(
             string submissionId,
             WorkspaceSubmissionStatus request,
             RequestOptions? options = null,
@@ -905,12 +911,15 @@ public partial class AdminClient : IAdminClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -923,7 +932,7 @@ public partial class AdminClient : IAdminClient
             }
         }
 
-        public async Task<RawResponse<object>> SendWorkspaceSubmissionUpdateAsync(
+        public async Task<WithRawResponse<object>> SendWorkspaceSubmissionUpdateAsync(
             string submissionId,
             WorkspaceSubmissionUpdate request,
             RequestOptions? options = null,
@@ -948,12 +957,15 @@ public partial class AdminClient : IAdminClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -966,7 +978,7 @@ public partial class AdminClient : IAdminClient
             }
         }
 
-        public async Task<RawResponse<object>> StoreTracedTestCaseAsync(
+        public async Task<WithRawResponse<object>> StoreTracedTestCaseAsync(
             string submissionId,
             string testCaseId,
             StoreTracedTestCaseRequest request,
@@ -993,12 +1005,15 @@ public partial class AdminClient : IAdminClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -1011,7 +1026,7 @@ public partial class AdminClient : IAdminClient
             }
         }
 
-        public async Task<RawResponse<object>> StoreTracedTestCaseV2Async(
+        public async Task<WithRawResponse<object>> StoreTracedTestCaseV2Async(
             string submissionId,
             string testCaseId,
             IEnumerable<TraceResponseV2> request,
@@ -1038,12 +1053,15 @@ public partial class AdminClient : IAdminClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -1056,7 +1074,7 @@ public partial class AdminClient : IAdminClient
             }
         }
 
-        public async Task<RawResponse<object>> StoreTracedWorkspaceAsync(
+        public async Task<WithRawResponse<object>> StoreTracedWorkspaceAsync(
             string submissionId,
             StoreTracedWorkspaceRequest request,
             RequestOptions? options = null,
@@ -1081,12 +1099,15 @@ public partial class AdminClient : IAdminClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -1099,7 +1120,7 @@ public partial class AdminClient : IAdminClient
             }
         }
 
-        public async Task<RawResponse<object>> StoreTracedWorkspaceV2Async(
+        public async Task<WithRawResponse<object>> StoreTracedWorkspaceV2Async(
             string submissionId,
             IEnumerable<TraceResponseV2> request,
             RequestOptions? options = null,
@@ -1124,12 +1145,15 @@ public partial class AdminClient : IAdminClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {

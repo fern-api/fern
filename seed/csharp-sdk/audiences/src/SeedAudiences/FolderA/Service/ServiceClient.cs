@@ -96,7 +96,7 @@ public partial class ServiceClient : IServiceClient
             return headers;
         }
 
-        public async Task<RawResponse<Response>> GetDirectThreadAsync(
+        public async Task<WithRawResponse<Response>> GetDirectThreadAsync(
             GetDirectThreadRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -123,13 +123,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Response>(responseBody)!;
-                    return new RawResponse<Response>
+                    var data = JsonUtils.Deserialize<Response>(responseBody)!;
+                    return new WithRawResponse<Response>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

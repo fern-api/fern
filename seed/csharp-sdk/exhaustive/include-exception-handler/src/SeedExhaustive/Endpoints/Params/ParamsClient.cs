@@ -482,7 +482,7 @@ public partial class ParamsClient : IParamsClient
         /// <summary>
         /// GET with path param
         /// </summary>
-        public async Task<RawResponse<string>> GetWithPathAsync(
+        public async Task<WithRawResponse<string>> GetWithPathAsync(
             string param,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -511,13 +511,17 @@ public partial class ParamsClient : IParamsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<string>(responseBody)!;
-                            return new RawResponse<string>
+                            var data = JsonUtils.Deserialize<string>(responseBody)!;
+                            return new WithRawResponse<string>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -541,7 +545,7 @@ public partial class ParamsClient : IParamsClient
         /// <summary>
         /// GET with path param
         /// </summary>
-        public async Task<RawResponse<string>> GetWithInlinePathAsync(
+        public async Task<WithRawResponse<string>> GetWithInlinePathAsync(
             GetWithInlinePath request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -570,13 +574,17 @@ public partial class ParamsClient : IParamsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<string>(responseBody)!;
-                            return new RawResponse<string>
+                            var data = JsonUtils.Deserialize<string>(responseBody)!;
+                            return new WithRawResponse<string>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -600,7 +608,7 @@ public partial class ParamsClient : IParamsClient
         /// <summary>
         /// GET with query param
         /// </summary>
-        public async Task<RawResponse<object>> GetWithQueryAsync(
+        public async Task<WithRawResponse<object>> GetWithQueryAsync(
             GetWithQuery request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -627,12 +635,15 @@ public partial class ParamsClient : IParamsClient
                         .ConfigureAwait(false);
                     if (response.StatusCode is >= 200 and < 400)
                     {
-                        return new RawResponse<object>
+                        return new WithRawResponse<object>
                         {
-                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                            Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                            Body = new object(),
+                            Data = new object(),
+                            RawResponse = new RawResponse
+                            {
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                                Url = response.Raw.RequestMessage?.RequestUri!,
+                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            },
                         };
                     }
                     {
@@ -650,7 +661,7 @@ public partial class ParamsClient : IParamsClient
         /// <summary>
         /// GET with multiple of same query param
         /// </summary>
-        public async Task<RawResponse<object>> GetWithAllowMultipleQueryAsync(
+        public async Task<WithRawResponse<object>> GetWithAllowMultipleQueryAsync(
             GetWithMultipleQuery request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -677,12 +688,15 @@ public partial class ParamsClient : IParamsClient
                         .ConfigureAwait(false);
                     if (response.StatusCode is >= 200 and < 400)
                     {
-                        return new RawResponse<object>
+                        return new WithRawResponse<object>
                         {
-                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                            Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                            Body = new object(),
+                            Data = new object(),
+                            RawResponse = new RawResponse
+                            {
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                                Url = response.Raw.RequestMessage?.RequestUri!,
+                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            },
                         };
                     }
                     {
@@ -700,7 +714,7 @@ public partial class ParamsClient : IParamsClient
         /// <summary>
         /// GET with path and query params
         /// </summary>
-        public async Task<RawResponse<object>> GetWithPathAndQueryAsync(
+        public async Task<WithRawResponse<object>> GetWithPathAndQueryAsync(
             string param,
             GetWithPathAndQuery request,
             RequestOptions? options = null,
@@ -730,12 +744,15 @@ public partial class ParamsClient : IParamsClient
                         .ConfigureAwait(false);
                     if (response.StatusCode is >= 200 and < 400)
                     {
-                        return new RawResponse<object>
+                        return new WithRawResponse<object>
                         {
-                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                            Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                            Body = new object(),
+                            Data = new object(),
+                            RawResponse = new RawResponse
+                            {
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                                Url = response.Raw.RequestMessage?.RequestUri!,
+                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            },
                         };
                     }
                     {
@@ -753,7 +770,7 @@ public partial class ParamsClient : IParamsClient
         /// <summary>
         /// GET with path and query params
         /// </summary>
-        public async Task<RawResponse<object>> GetWithInlinePathAndQueryAsync(
+        public async Task<WithRawResponse<object>> GetWithInlinePathAndQueryAsync(
             GetWithInlinePathAndQuery request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -782,12 +799,15 @@ public partial class ParamsClient : IParamsClient
                         .ConfigureAwait(false);
                     if (response.StatusCode is >= 200 and < 400)
                     {
-                        return new RawResponse<object>
+                        return new WithRawResponse<object>
                         {
-                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                            Url = response.Raw.RequestMessage?.RequestUri!,
-                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                            Body = new object(),
+                            Data = new object(),
+                            RawResponse = new RawResponse
+                            {
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                                Url = response.Raw.RequestMessage?.RequestUri!,
+                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                            },
                         };
                     }
                     {
@@ -805,7 +825,7 @@ public partial class ParamsClient : IParamsClient
         /// <summary>
         /// PUT to update with path param
         /// </summary>
-        public async Task<RawResponse<string>> ModifyWithPathAsync(
+        public async Task<WithRawResponse<string>> ModifyWithPathAsync(
             string param,
             string request,
             RequestOptions? options = null,
@@ -836,13 +856,17 @@ public partial class ParamsClient : IParamsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<string>(responseBody)!;
-                            return new RawResponse<string>
+                            var data = JsonUtils.Deserialize<string>(responseBody)!;
+                            return new WithRawResponse<string>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -866,7 +890,7 @@ public partial class ParamsClient : IParamsClient
         /// <summary>
         /// PUT to update with path param
         /// </summary>
-        public async Task<RawResponse<string>> ModifyWithInlinePathAsync(
+        public async Task<WithRawResponse<string>> ModifyWithInlinePathAsync(
             ModifyResourceAtInlinedPath request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -896,13 +920,17 @@ public partial class ParamsClient : IParamsClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<string>(responseBody)!;
-                            return new RawResponse<string>
+                            var data = JsonUtils.Deserialize<string>(responseBody)!;
+                            return new WithRawResponse<string>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)

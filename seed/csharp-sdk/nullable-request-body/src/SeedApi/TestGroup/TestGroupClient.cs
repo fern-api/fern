@@ -126,7 +126,7 @@ public partial class TestGroupClient : ITestGroupClient
         /// <summary>
         /// Post a nullable request body
         /// </summary>
-        public async Task<RawResponse<object>> TestMethodNameAsync(
+        public async Task<WithRawResponse<object>> TestMethodNameAsync(
             TestMethodNameTestGroupRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -164,13 +164,16 @@ public partial class TestGroupClient : ITestGroupClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<object>(responseBody)!;
-                    return new RawResponse<object>
+                    var data = JsonUtils.Deserialize<object>(responseBody)!;
+                    return new WithRawResponse<object>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

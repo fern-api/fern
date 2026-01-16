@@ -131,7 +131,7 @@ public partial class UserClient : IUserClient
             return headers;
         }
 
-        public async Task<RawResponse<IEnumerable<User>>> GetAsync(
+        public async Task<WithRawResponse<IEnumerable<User>>> GetAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -153,13 +153,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
-                    return new RawResponse<IEnumerable<User>>
+                    var data = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<User>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -178,7 +181,7 @@ public partial class UserClient : IUserClient
             }
         }
 
-        public async Task<RawResponse<IEnumerable<User>>> GetAdminsAsync(
+        public async Task<WithRawResponse<IEnumerable<User>>> GetAdminsAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
@@ -200,13 +203,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
-                    return new RawResponse<IEnumerable<User>>
+                    var data = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<User>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

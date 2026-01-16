@@ -387,7 +387,7 @@ public partial class UserClient : IUserClient
             return headers;
         }
 
-        public async Task<RawResponse<User>> GetUserAsync(
+        public async Task<WithRawResponse<User>> GetUserAsync(
             string tenantId,
             string userId,
             GetUsersRequest request,
@@ -416,13 +416,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -441,7 +444,7 @@ public partial class UserClient : IUserClient
             }
         }
 
-        public async Task<RawResponse<User>> CreateUserAsync(
+        public async Task<WithRawResponse<User>> CreateUserAsync(
             string tenantId,
             User request,
             RequestOptions? options = null,
@@ -469,13 +472,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -494,7 +500,7 @@ public partial class UserClient : IUserClient
             }
         }
 
-        public async Task<RawResponse<User>> UpdateUserAsync(
+        public async Task<WithRawResponse<User>> UpdateUserAsync(
             string tenantId,
             string userId,
             UpdateUserRequest request,
@@ -524,13 +530,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -549,7 +558,7 @@ public partial class UserClient : IUserClient
             }
         }
 
-        public async Task<RawResponse<IEnumerable<User>>> SearchUsersAsync(
+        public async Task<WithRawResponse<IEnumerable<User>>> SearchUsersAsync(
             string tenantId,
             string userId,
             SearchUsersRequest request,
@@ -584,13 +593,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
-                    return new RawResponse<IEnumerable<User>>
+                    var data = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<User>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -612,7 +624,7 @@ public partial class UserClient : IUserClient
         /// <summary>
         /// Test endpoint with path parameter that has a text prefix (v{version})
         /// </summary>
-        public async Task<RawResponse<User>> GetUserMetadataAsync(
+        public async Task<WithRawResponse<User>> GetUserMetadataAsync(
             string tenantId,
             string userId,
             int version,
@@ -643,13 +655,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -671,7 +686,7 @@ public partial class UserClient : IUserClient
         /// <summary>
         /// Test endpoint with path parameters listed in different order than found in path
         /// </summary>
-        public async Task<RawResponse<User>> GetUserSpecificsAsync(
+        public async Task<WithRawResponse<User>> GetUserSpecificsAsync(
             string tenantId,
             string userId,
             int version,
@@ -704,13 +719,16 @@ public partial class UserClient : IUserClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

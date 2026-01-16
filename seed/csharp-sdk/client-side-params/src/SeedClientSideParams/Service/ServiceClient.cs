@@ -879,7 +879,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// List resources with pagination
         /// </summary>
-        public async Task<RawResponse<IEnumerable<Resource>>> ListResourcesAsync(
+        public async Task<WithRawResponse<IEnumerable<Resource>>> ListResourcesAsync(
             ListResourcesRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -917,13 +917,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<Resource>>(responseBody)!;
-                    return new RawResponse<IEnumerable<Resource>>
+                    var data = JsonUtils.Deserialize<IEnumerable<Resource>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<Resource>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -945,7 +948,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Get a single resource
         /// </summary>
-        public async Task<RawResponse<Resource>> GetResourceAsync(
+        public async Task<WithRawResponse<Resource>> GetResourceAsync(
             string resourceId,
             GetResourceRequest request,
             RequestOptions? options = null,
@@ -976,13 +979,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Resource>(responseBody)!;
-                    return new RawResponse<Resource>
+                    var data = JsonUtils.Deserialize<Resource>(responseBody)!;
+                    return new WithRawResponse<Resource>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1004,7 +1010,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Search resources with complex parameters
         /// </summary>
-        public async Task<RawResponse<SearchResponse>> SearchResourcesAsync(
+        public async Task<WithRawResponse<SearchResponse>> SearchResourcesAsync(
             SearchResourcesRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1032,13 +1038,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<SearchResponse>(responseBody)!;
-                    return new RawResponse<SearchResponse>
+                    var data = JsonUtils.Deserialize<SearchResponse>(responseBody)!;
+                    return new WithRawResponse<SearchResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1060,7 +1069,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// List or search for users
         /// </summary>
-        public async Task<RawResponse<PaginatedUserResponse>> ListUsersAsync(
+        public async Task<WithRawResponse<PaginatedUserResponse>> ListUsersAsync(
             ListUsersRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1117,13 +1126,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<PaginatedUserResponse>(responseBody)!;
-                    return new RawResponse<PaginatedUserResponse>
+                    var data = JsonUtils.Deserialize<PaginatedUserResponse>(responseBody)!;
+                    return new WithRawResponse<PaginatedUserResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1145,7 +1157,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Get a user by ID
         /// </summary>
-        public async Task<RawResponse<User>> GetUserByIdAsync(
+        public async Task<WithRawResponse<User>> GetUserByIdAsync(
             string userId,
             GetUserRequest request,
             RequestOptions? options = null,
@@ -1182,13 +1194,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1210,7 +1225,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Create a new user
         /// </summary>
-        public async Task<RawResponse<User>> CreateUserAsync(
+        public async Task<WithRawResponse<User>> CreateUserAsync(
             CreateUserRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1234,13 +1249,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1262,7 +1280,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Update a user
         /// </summary>
-        public async Task<RawResponse<User>> UpdateUserAsync(
+        public async Task<WithRawResponse<User>> UpdateUserAsync(
             string userId,
             UpdateUserRequest request,
             RequestOptions? options = null,
@@ -1290,13 +1308,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<User>(responseBody)!;
-                    return new RawResponse<User>
+                    var data = JsonUtils.Deserialize<User>(responseBody)!;
+                    return new WithRawResponse<User>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1318,7 +1339,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Delete a user
         /// </summary>
-        public async Task<RawResponse<object>> DeleteUserAsync(
+        public async Task<WithRawResponse<object>> DeleteUserAsync(
             string userId,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1341,12 +1362,15 @@ public partial class ServiceClient : IServiceClient
                 .ConfigureAwait(false);
             if (response.StatusCode is >= 200 and < 400)
             {
-                return new RawResponse<object>
+                return new WithRawResponse<object>
                 {
-                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri!,
-                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                    Body = new object(),
+                    Data = new object(),
+                    RawResponse = new RawResponse
+                    {
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                    },
                 };
             }
             {
@@ -1362,7 +1386,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// List all connections
         /// </summary>
-        public async Task<RawResponse<IEnumerable<Connection>>> ListConnectionsAsync(
+        public async Task<WithRawResponse<IEnumerable<Connection>>> ListConnectionsAsync(
             ListConnectionsRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1399,13 +1423,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<IEnumerable<Connection>>(responseBody)!;
-                    return new RawResponse<IEnumerable<Connection>>
+                    var data = JsonUtils.Deserialize<IEnumerable<Connection>>(responseBody)!;
+                    return new WithRawResponse<IEnumerable<Connection>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1427,7 +1454,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Get a connection by ID
         /// </summary>
-        public async Task<RawResponse<Connection>> GetConnectionAsync(
+        public async Task<WithRawResponse<Connection>> GetConnectionAsync(
             string connectionId,
             GetConnectionRequest request,
             RequestOptions? options = null,
@@ -1460,13 +1487,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Connection>(responseBody)!;
-                    return new RawResponse<Connection>
+                    var data = JsonUtils.Deserialize<Connection>(responseBody)!;
+                    return new WithRawResponse<Connection>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1488,7 +1518,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// List all clients/applications
         /// </summary>
-        public async Task<RawResponse<PaginatedClientResponse>> ListClientsAsync(
+        public async Task<WithRawResponse<PaginatedClientResponse>> ListClientsAsync(
             ListClientsRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1545,13 +1575,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<PaginatedClientResponse>(responseBody)!;
-                    return new RawResponse<PaginatedClientResponse>
+                    var data = JsonUtils.Deserialize<PaginatedClientResponse>(responseBody)!;
+                    return new WithRawResponse<PaginatedClientResponse>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -1573,7 +1606,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// Get a client by ID
         /// </summary>
-        public async Task<RawResponse<Client>> GetClientAsync(
+        public async Task<WithRawResponse<Client>> GetClientAsync(
             string clientId,
             GetClientRequest request,
             RequestOptions? options = null,
@@ -1610,13 +1643,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Client>(responseBody)!;
-                    return new RawResponse<Client>
+                    var data = JsonUtils.Deserialize<Client>(responseBody)!;
+                    return new WithRawResponse<Client>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

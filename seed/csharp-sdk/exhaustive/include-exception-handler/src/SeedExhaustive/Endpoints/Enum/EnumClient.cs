@@ -105,7 +105,7 @@ public partial class EnumClient : IEnumClient
             return headers;
         }
 
-        public async Task<RawResponse<WeatherReport>> GetAndReturnEnumAsync(
+        public async Task<WithRawResponse<WeatherReport>> GetAndReturnEnumAsync(
             WeatherReport request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -132,13 +132,17 @@ public partial class EnumClient : IEnumClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<WeatherReport>(responseBody)!;
-                            return new RawResponse<WeatherReport>
+                            var data = JsonUtils.Deserialize<WeatherReport>(responseBody)!;
+                            return new WithRawResponse<WeatherReport>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)

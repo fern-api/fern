@@ -187,7 +187,7 @@ public partial class BigunionClient : IBigunionClient
             return headers;
         }
 
-        public async Task<RawResponse<BigUnion>> GetAsync(
+        public async Task<WithRawResponse<BigUnion>> GetAsync(
             string id,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -210,13 +210,16 @@ public partial class BigunionClient : IBigunionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<BigUnion>(responseBody)!;
-                    return new RawResponse<BigUnion>
+                    var data = JsonUtils.Deserialize<BigUnion>(responseBody)!;
+                    return new WithRawResponse<BigUnion>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -235,7 +238,7 @@ public partial class BigunionClient : IBigunionClient
             }
         }
 
-        public async Task<RawResponse<bool>> UpdateAsync(
+        public async Task<WithRawResponse<bool>> UpdateAsync(
             BigUnion request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -259,13 +262,16 @@ public partial class BigunionClient : IBigunionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<bool>(responseBody)!;
-                    return new RawResponse<bool>
+                    var data = JsonUtils.Deserialize<bool>(responseBody)!;
+                    return new WithRawResponse<bool>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)
@@ -284,7 +290,7 @@ public partial class BigunionClient : IBigunionClient
             }
         }
 
-        public async Task<RawResponse<Dictionary<string, bool>>> UpdateManyAsync(
+        public async Task<WithRawResponse<Dictionary<string, bool>>> UpdateManyAsync(
             IEnumerable<BigUnion> request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -308,13 +314,16 @@ public partial class BigunionClient : IBigunionClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<Dictionary<string, bool>>(responseBody)!;
-                    return new RawResponse<Dictionary<string, bool>>
+                    var data = JsonUtils.Deserialize<Dictionary<string, bool>>(responseBody)!;
+                    return new WithRawResponse<Dictionary<string, bool>>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

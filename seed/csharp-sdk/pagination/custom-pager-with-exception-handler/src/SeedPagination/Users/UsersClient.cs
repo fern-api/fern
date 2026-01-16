@@ -1574,7 +1574,9 @@ public partial class UsersClient : IUsersClient
             return headers;
         }
 
-        public async Task<RawResponse<ListUsersPaginationResponse>> ListWithCursorPaginationAsync(
+        public async Task<
+            WithRawResponse<ListUsersPaginationResponse>
+        > ListWithCursorPaginationAsync(
             ListUsersCursorPaginationRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1618,15 +1620,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersPaginationResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersPaginationResponse>
+                            return new WithRawResponse<ListUsersPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -1648,7 +1654,7 @@ public partial class UsersClient : IUsersClient
         }
 
         public async Task<
-            RawResponse<ListUsersMixedTypePaginationResponse>
+            WithRawResponse<ListUsersMixedTypePaginationResponse>
         > ListWithMixedTypeCursorPaginationAsync(
             ListUsersMixedTypeCursorPaginationRequest request,
             RequestOptions? options = null,
@@ -1681,15 +1687,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersMixedTypePaginationResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersMixedTypePaginationResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersMixedTypePaginationResponse>
+                            return new WithRawResponse<ListUsersMixedTypePaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -1711,7 +1721,7 @@ public partial class UsersClient : IUsersClient
         }
 
         public async Task<
-            RawResponse<ListUsersPaginationResponse>
+            WithRawResponse<ListUsersPaginationResponse>
         > ListWithBodyCursorPaginationAsync(
             ListUsersBodyCursorPaginationRequest request,
             RequestOptions? options = null,
@@ -1739,15 +1749,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersPaginationResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersPaginationResponse>
+                            return new WithRawResponse<ListUsersPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -1774,7 +1788,7 @@ public partial class UsersClient : IUsersClient
         /// when getNextPage() is called with a different cursor value.
         /// </summary>
         public async Task<
-            RawResponse<ListUsersTopLevelCursorPaginationResponse>
+            WithRawResponse<ListUsersTopLevelCursorPaginationResponse>
         > ListWithTopLevelBodyCursorPaginationAsync(
             ListUsersTopLevelBodyCursorPaginationRequest request,
             RequestOptions? options = null,
@@ -1802,16 +1816,20 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body =
+                            var data =
                                 JsonUtils.Deserialize<ListUsersTopLevelCursorPaginationResponse>(
                                     responseBody
                                 )!;
-                            return new RawResponse<ListUsersTopLevelCursorPaginationResponse>
+                            return new WithRawResponse<ListUsersTopLevelCursorPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -1832,7 +1850,9 @@ public partial class UsersClient : IUsersClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<ListUsersPaginationResponse>> ListWithOffsetPaginationAsync(
+        public async Task<
+            WithRawResponse<ListUsersPaginationResponse>
+        > ListWithOffsetPaginationAsync(
             ListUsersOffsetPaginationRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -1876,15 +1896,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersPaginationResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersPaginationResponse>
+                            return new WithRawResponse<ListUsersPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -1906,7 +1930,7 @@ public partial class UsersClient : IUsersClient
         }
 
         public async Task<
-            RawResponse<ListUsersPaginationResponse>
+            WithRawResponse<ListUsersPaginationResponse>
         > ListWithDoubleOffsetPaginationAsync(
             ListUsersDoubleOffsetPaginationRequest request,
             RequestOptions? options = null,
@@ -1951,15 +1975,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersPaginationResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersPaginationResponse>
+                            return new WithRawResponse<ListUsersPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -1981,7 +2009,7 @@ public partial class UsersClient : IUsersClient
         }
 
         public async Task<
-            RawResponse<ListUsersPaginationResponse>
+            WithRawResponse<ListUsersPaginationResponse>
         > ListWithBodyOffsetPaginationAsync(
             ListUsersBodyOffsetPaginationRequest request,
             RequestOptions? options = null,
@@ -2009,15 +2037,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersPaginationResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersPaginationResponse>
+                            return new WithRawResponse<ListUsersPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -2039,7 +2071,7 @@ public partial class UsersClient : IUsersClient
         }
 
         public async Task<
-            RawResponse<ListUsersPaginationResponse>
+            WithRawResponse<ListUsersPaginationResponse>
         > ListWithOffsetStepPaginationAsync(
             ListUsersOffsetStepPaginationRequest request,
             RequestOptions? options = null,
@@ -2080,15 +2112,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersPaginationResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersPaginationResponse>
+                            return new WithRawResponse<ListUsersPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -2110,7 +2146,7 @@ public partial class UsersClient : IUsersClient
         }
 
         public async Task<
-            RawResponse<ListUsersPaginationResponse>
+            WithRawResponse<ListUsersPaginationResponse>
         > ListWithOffsetPaginationHasNextPageAsync(
             ListWithOffsetPaginationHasNextPageRequest request,
             RequestOptions? options = null,
@@ -2151,15 +2187,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersPaginationResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersPaginationResponse>
+                            return new WithRawResponse<ListUsersPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -2180,7 +2220,7 @@ public partial class UsersClient : IUsersClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<ListUsersExtendedResponse>> ListWithExtendedResultsAsync(
+        public async Task<WithRawResponse<ListUsersExtendedResponse>> ListWithExtendedResultsAsync(
             ListUsersExtendedRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -2212,15 +2252,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersExtendedResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersExtendedResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersExtendedResponse>
+                            return new WithRawResponse<ListUsersExtendedResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -2242,7 +2286,7 @@ public partial class UsersClient : IUsersClient
         }
 
         public async Task<
-            RawResponse<ListUsersExtendedOptionalListResponse>
+            WithRawResponse<ListUsersExtendedOptionalListResponse>
         > ListWithExtendedResultsAndOptionalDataAsync(
             ListUsersExtendedRequestForOptionalData request,
             RequestOptions? options = null,
@@ -2275,15 +2319,19 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<ListUsersExtendedOptionalListResponse>(
+                            var data = JsonUtils.Deserialize<ListUsersExtendedOptionalListResponse>(
                                 responseBody
                             )!;
-                            return new RawResponse<ListUsersExtendedOptionalListResponse>
+                            return new WithRawResponse<ListUsersExtendedOptionalListResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -2304,7 +2352,7 @@ public partial class UsersClient : IUsersClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<UsernameCursor>> ListUsernamesAsync(
+        public async Task<WithRawResponse<UsernameCursor>> ListUsernamesAsync(
             ListUsernamesRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -2336,13 +2384,17 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
-                            return new RawResponse<UsernameCursor>
+                            var data = JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
+                            return new WithRawResponse<UsernameCursor>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -2363,7 +2415,7 @@ public partial class UsersClient : IUsersClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<UsernameCursor?>> ListUsernamesWithOptionalResponseAsync(
+        public async Task<WithRawResponse<UsernameCursor?>> ListUsernamesWithOptionalResponseAsync(
             ListUsernamesWithOptionalResponseRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -2395,13 +2447,17 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<UsernameCursor?>(responseBody)!;
-                            return new RawResponse<UsernameCursor?>
+                            var data = JsonUtils.Deserialize<UsernameCursor?>(responseBody)!;
+                            return new WithRawResponse<UsernameCursor?>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -2422,7 +2478,7 @@ public partial class UsersClient : IUsersClient
                 .ConfigureAwait(false);
         }
 
-        public async Task<RawResponse<UsernameContainer>> ListWithGlobalConfigAsync(
+        public async Task<WithRawResponse<UsernameContainer>> ListWithGlobalConfigAsync(
             ListWithGlobalConfigRequest request,
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
@@ -2454,13 +2510,17 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body = JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
-                            return new RawResponse<UsernameContainer>
+                            var data = JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
+                            return new WithRawResponse<UsernameContainer>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)
@@ -2482,7 +2542,7 @@ public partial class UsersClient : IUsersClient
         }
 
         public async Task<
-            RawResponse<ListUsersOptionalDataPaginationResponse>
+            WithRawResponse<ListUsersOptionalDataPaginationResponse>
         > ListWithOptionalDataAsync(
             ListUsersOptionalDataRequest request,
             RequestOptions? options = null,
@@ -2515,16 +2575,20 @@ public partial class UsersClient : IUsersClient
                         var responseBody = await response.Raw.Content.ReadAsStringAsync();
                         try
                         {
-                            var body =
+                            var data =
                                 JsonUtils.Deserialize<ListUsersOptionalDataPaginationResponse>(
                                     responseBody
                                 )!;
-                            return new RawResponse<ListUsersOptionalDataPaginationResponse>
+                            return new WithRawResponse<ListUsersOptionalDataPaginationResponse>
                             {
-                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                                Url = response.Raw.RequestMessage?.RequestUri!,
-                                Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                                Body = body,
+                                Data = data,
+                                RawResponse = new RawResponse
+                                {
+                                    StatusCode = (global::System.Net.HttpStatusCode)
+                                        response.StatusCode,
+                                    Url = response.Raw.RequestMessage?.RequestUri!,
+                                    Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                                },
                             };
                         }
                         catch (JsonException e)

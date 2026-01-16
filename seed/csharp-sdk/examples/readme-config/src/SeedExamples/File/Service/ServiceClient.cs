@@ -116,7 +116,7 @@ public partial class ServiceClient : IServiceClient
         /// <summary>
         /// This endpoint returns a file by its name.
         /// </summary>
-        public async Task<RawResponse<SeedExamples.File>> GetFileAsync(
+        public async Task<WithRawResponse<SeedExamples.File>> GetFileAsync(
             string filename,
             GetFileRequest request,
             RequestOptions? options = null,
@@ -150,13 +150,16 @@ public partial class ServiceClient : IServiceClient
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 try
                 {
-                    var body = JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
-                    return new RawResponse<SeedExamples.File>
+                    var data = JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
+                    return new WithRawResponse<SeedExamples.File>
                     {
-                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri!,
-                        Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
-                        Body = body,
+                        Data = data,
+                        RawResponse = new RawResponse
+                        {
+                            StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = new ResponseHeaders(ExtractHeaders(response.Raw)),
+                        },
                     };
                 }
                 catch (JsonException e)

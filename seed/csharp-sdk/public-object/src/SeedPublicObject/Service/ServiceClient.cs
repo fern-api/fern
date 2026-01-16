@@ -75,7 +75,7 @@ public partial class ServiceClient : IServiceClient
             return headers;
         }
 
-        public async Task<RawResponse<System.IO.Stream>> GetAsync(
+        public async Task<WithRawResponse<System.IO.Stream>> GetAsync(
             RequestOptions? options = null,
             CancellationToken cancellationToken = default
         )
