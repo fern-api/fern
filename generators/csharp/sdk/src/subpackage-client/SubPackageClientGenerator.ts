@@ -233,7 +233,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
 
         nestedClass.addField({
             access: ast.Access.Private,
-            origin: nestedClass.explicit("_client"),
+            name: "_client",
             type: this.Types.RawClient,
             readonly: true
         });
