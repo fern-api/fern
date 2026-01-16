@@ -1,5 +1,5 @@
-using System.Text.Json;
 using SeedNullableOptional.Core;
+using System.Text.Json;
 
 namespace SeedNullableOptional;
 
@@ -7,10 +7,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
 {
     private RawClient _client;
 
-    internal NullableOptionalClient(RawClient client)
-    {
+    internal NullableOptionalClient (RawClient client){
         _client = client;
+        Raw = new RawAccessClient(_client);
     }
+
+    public NullableOptionalClient.RawAccessClient Raw { get; }
 
     /// <summary>
     /// Get a user by ID
@@ -18,27 +20,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     /// <example><code>
     /// await client.NullableOptional.GetUserAsync("userId");
     /// </code></example>
-    public async Task<UserResponse> GetUserAsync(
-        string userId,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/api/users/{0}",
-                        ValueConvert.ToPathParameterString(userId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<UserResponse> GetUserAsync(string userId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/api/users/{0}", ValueConvert.ToPathParameterString(userId)), Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -51,14 +34,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -85,25 +64,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<UserResponse> CreateUserAsync(
-        CreateUserRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/api/users",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<UserResponse> CreateUserAsync(CreateUserRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/api/users", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -116,14 +78,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -151,29 +109,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<UserResponse> UpdateUserAsync(
-        string userId,
-        UpdateUserRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethodExtensions.Patch,
-                    Path = string.Format(
-                        "/api/users/{0}",
-                        ValueConvert.ToPathParameterString(userId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<UserResponse> UpdateUserAsync(string userId, UpdateUserRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethodExtensions.Patch, Path = string.Format("/api/users/{0}", ValueConvert.ToPathParameterString(userId)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -186,14 +123,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -211,42 +144,21 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<UserResponse>> ListUsersAsync(
-        ListUsersRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<IEnumerable<UserResponse>> ListUsersAsync(ListUsersRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Limit != null)
-        {
+        if (request.Limit != null){
             _query["limit"] = request.Limit.Value.ToString();
         }
-        if (request.Offset != null)
-        {
+        if (request.Offset != null){
             _query["offset"] = request.Offset.Value.ToString();
         }
-        if (request.IncludeDeleted != null)
-        {
+        if (request.IncludeDeleted != null){
             _query["includeDeleted"] = JsonUtils.Serialize(request.IncludeDeleted.Value);
         }
-        if (request.SortBy != null)
-        {
+        if (request.SortBy != null){
             _query["sortBy"] = request.SortBy;
         }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/api/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/api/users", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -259,14 +171,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -284,39 +192,19 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<UserResponse>> SearchUsersAsync(
-        SearchUsersRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<IEnumerable<UserResponse>> SearchUsersAsync(SearchUsersRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
-        if (request.Department != null)
-        {
+        if (request.Department != null){
             _query["department"] = request.Department;
         }
-        if (request.Role != null)
-        {
+        if (request.Role != null){
             _query["role"] = request.Role;
         }
-        if (request.IsActive != null)
-        {
+        if (request.IsActive != null){
             _query["isActive"] = JsonUtils.Serialize(request.IsActive.Value);
         }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/api/users/search",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/api/users/search", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -329,14 +217,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -488,25 +372,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ComplexProfile> CreateComplexProfileAsync(
-        ComplexProfile request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/api/profiles/complex",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<ComplexProfile> CreateComplexProfileAsync(ComplexProfile request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/api/profiles/complex", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -519,14 +386,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -536,27 +399,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     /// <example><code>
     /// await client.NullableOptional.GetComplexProfileAsync("profileId");
     /// </code></example>
-    public async Task<ComplexProfile> GetComplexProfileAsync(
-        string profileId,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/api/profiles/complex/{0}",
-                        ValueConvert.ToPathParameterString(profileId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<ComplexProfile> GetComplexProfileAsync(string profileId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/api/profiles/complex/{0}", ValueConvert.ToPathParameterString(profileId)), Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -569,14 +413,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -627,29 +467,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ComplexProfile> UpdateComplexProfileAsync(
-        string profileId,
-        UpdateComplexProfileRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethodExtensions.Patch,
-                    Path = string.Format(
-                        "/api/profiles/complex/{0}",
-                        ValueConvert.ToPathParameterString(profileId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<ComplexProfile> UpdateComplexProfileAsync(string profileId, UpdateComplexProfileRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethodExtensions.Patch, Path = string.Format("/api/profiles/complex/{0}", ValueConvert.ToPathParameterString(profileId)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -662,14 +481,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -741,25 +556,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<DeserializationTestResponse> TestDeserializationAsync(
-        DeserializationTestRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/api/test/deserialization",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<DeserializationTestResponse> TestDeserializationAsync(DeserializationTestRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/api/test/deserialization", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -772,14 +570,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -796,38 +590,18 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<UserResponse>> FilterByRoleAsync(
-        FilterByRoleRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<IEnumerable<UserResponse>> FilterByRoleAsync(FilterByRoleRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Role != null)
-        {
+        if (request.Role != null){
             _query["role"] = request.Role.ToString();
         }
-        if (request.Status != null)
-        {
+        if (request.Status != null){
             _query["status"] = request.Status.Value.Stringify();
         }
-        if (request.SecondaryRole != null)
-        {
+        if (request.SecondaryRole != null){
             _query["secondaryRole"] = request.SecondaryRole.Value.ToString();
         }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/api/users/filter",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/api/users/filter", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -840,14 +614,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -857,27 +627,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     /// <example><code>
     /// await client.NullableOptional.GetNotificationSettingsAsync("userId");
     /// </code></example>
-    public async Task<NotificationMethod?> GetNotificationSettingsAsync(
-        string userId,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/api/users/{0}/notifications",
-                        ValueConvert.ToPathParameterString(userId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<NotificationMethod?> GetNotificationSettingsAsync(string userId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/api/users/{0}/notifications", ValueConvert.ToPathParameterString(userId)), Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -890,14 +641,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -915,29 +662,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<string>> UpdateTagsAsync(
-        string userId,
-        UpdateTagsRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Put,
-                    Path = string.Format(
-                        "/api/users/{0}/tags",
-                        ValueConvert.ToPathParameterString(userId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<IEnumerable<string>> UpdateTagsAsync(string userId, UpdateTagsRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Put, Path = string.Format("/api/users/{0}/tags", ValueConvert.ToPathParameterString(userId)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -950,14 +676,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -974,25 +696,8 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<SearchResult>?> GetSearchResultsAsync(
-        SearchRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/api/search",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<IEnumerable<SearchResult>?> GetSearchResultsAsync(SearchRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/api/search", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -1005,14 +710,486 @@ public partial class NullableOptionalClient : INullableOptionalClient
                 throw new SeedNullableOptionalException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedNullableOptionalApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+        internal RawAccessClient (RawClient client){
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
+            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
+
+        /// <summary>
+        /// Get a user by ID
+        /// </summary>
+        public async Task<RawResponse<UserResponse>> GetUserAsync(string userId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/api/users/{0}", ValueConvert.ToPathParameterString(userId)), Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
+                    return new RawResponse<UserResponse>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Create a new user
+        /// </summary>
+        public async Task<RawResponse<UserResponse>> CreateUserAsync(CreateUserRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/api/users", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
+                    return new RawResponse<UserResponse>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Update a user (partial update)
+        /// </summary>
+        public async Task<RawResponse<UserResponse>> UpdateUserAsync(string userId, UpdateUserRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethodExtensions.Patch, Path = string.Format("/api/users/{0}", ValueConvert.ToPathParameterString(userId)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
+                    return new RawResponse<UserResponse>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// List all users
+        /// </summary>
+        public async Task<RawResponse<IEnumerable<UserResponse>>> ListUsersAsync(ListUsersRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var _query = new Dictionary<string, object>();
+            if (request.Limit != null){
+                _query["limit"] = request.Limit.Value.ToString();
+            }
+            if (request.Offset != null){
+                _query["offset"] = request.Offset.Value.ToString();
+            }
+            if (request.IncludeDeleted != null){
+                _query["includeDeleted"] = JsonUtils.Serialize(request.IncludeDeleted.Value);
+            }
+            if (request.SortBy != null){
+                _query["sortBy"] = request.SortBy;
+            }
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/api/users", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
+                    return new RawResponse<IEnumerable<UserResponse>>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Search users
+        /// </summary>
+        public async Task<RawResponse<IEnumerable<UserResponse>>> SearchUsersAsync(SearchUsersRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var _query = new Dictionary<string, object>();
+            _query["query"] = request.Query;
+            if (request.Department != null){
+                _query["department"] = request.Department;
+            }
+            if (request.Role != null){
+                _query["role"] = request.Role;
+            }
+            if (request.IsActive != null){
+                _query["isActive"] = JsonUtils.Serialize(request.IsActive.Value);
+            }
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/api/users/search", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
+                    return new RawResponse<IEnumerable<UserResponse>>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Create a complex profile to test nullable enums and unions
+        /// </summary>
+        public async Task<RawResponse<ComplexProfile>> CreateComplexProfileAsync(ComplexProfile request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/api/profiles/complex", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
+                    return new RawResponse<ComplexProfile>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Get a complex profile by ID
+        /// </summary>
+        public async Task<RawResponse<ComplexProfile>> GetComplexProfileAsync(string profileId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/api/profiles/complex/{0}", ValueConvert.ToPathParameterString(profileId)), Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
+                    return new RawResponse<ComplexProfile>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Update complex profile to test nullable field updates
+        /// </summary>
+        public async Task<RawResponse<ComplexProfile>> UpdateComplexProfileAsync(string profileId, UpdateComplexProfileRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethodExtensions.Patch, Path = string.Format("/api/profiles/complex/{0}", ValueConvert.ToPathParameterString(profileId)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
+                    return new RawResponse<ComplexProfile>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Test endpoint for validating null deserialization
+        /// </summary>
+        public async Task<RawResponse<DeserializationTestResponse>> TestDeserializationAsync(DeserializationTestRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/api/test/deserialization", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<DeserializationTestResponse>(responseBody)!;
+                    return new RawResponse<DeserializationTestResponse>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Filter users by role with nullable enum
+        /// </summary>
+        public async Task<RawResponse<IEnumerable<UserResponse>>> FilterByRoleAsync(FilterByRoleRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var _query = new Dictionary<string, object>();
+            if (request.Role != null){
+                _query["role"] = request.Role.ToString();
+            }
+            if (request.Status != null){
+                _query["status"] = request.Status.Value.Stringify();
+            }
+            if (request.SecondaryRole != null){
+                _query["secondaryRole"] = request.SecondaryRole.Value.ToString();
+            }
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/api/users/filter", Query = _query, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
+                    return new RawResponse<IEnumerable<UserResponse>>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Get notification settings which may be null
+        /// </summary>
+        public async Task<RawResponse<NotificationMethod?>> GetNotificationSettingsAsync(string userId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/api/users/{0}/notifications", ValueConvert.ToPathParameterString(userId)), Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<NotificationMethod?>(responseBody)!;
+                    return new RawResponse<NotificationMethod?>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Update tags to test array handling
+        /// </summary>
+        public async Task<RawResponse<IEnumerable<string>>> UpdateTagsAsync(string userId, UpdateTagsRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Put, Path = string.Format("/api/users/{0}/tags", ValueConvert.ToPathParameterString(userId)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+                    return new RawResponse<IEnumerable<string>>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Get search results with nullable unions
+        /// </summary>
+        public async Task<RawResponse<IEnumerable<SearchResult>?>> GetSearchResultsAsync(SearchRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/api/search", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<IEnumerable<SearchResult>?>(responseBody)!;
+                    return new RawResponse<IEnumerable<SearchResult>?>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedNullableOptionalException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedNullableOptionalApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+    }
+
 }

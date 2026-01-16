@@ -1,5 +1,5 @@
-using System.Text.Json;
 using SeedTrace.Core;
+using System.Text.Json;
 
 namespace SeedTrace;
 
@@ -7,10 +7,12 @@ public partial class ProblemClient : IProblemClient
 {
     private RawClient _client;
 
-    internal ProblemClient(RawClient client)
-    {
+    internal ProblemClient (RawClient client){
         _client = client;
+        Raw = new RawAccessClient(_client);
     }
+
+    public ProblemClient.RawAccessClient Raw { get; }
 
     /// <summary>
     /// Creates a problem
@@ -94,25 +96,8 @@ public partial class ProblemClient : IProblemClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<CreateProblemResponse> CreateProblemAsync(
-        CreateProblemRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/problem-crud/create",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<CreateProblemResponse> CreateProblemAsync(CreateProblemRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/problem-crud/create", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -125,14 +110,10 @@ public partial class ProblemClient : IProblemClient
                 throw new SeedTraceException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedTraceApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -219,29 +200,8 @@ public partial class ProblemClient : IProblemClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<UpdateProblemResponse> UpdateProblemAsync(
-        string problemId,
-        CreateProblemRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/problem-crud/update/{0}",
-                        ValueConvert.ToPathParameterString(problemId)
-                    ),
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<UpdateProblemResponse> UpdateProblemAsync(string problemId, CreateProblemRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = string.Format("/problem-crud/update/{0}", ValueConvert.ToPathParameterString(problemId)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -254,14 +214,10 @@ public partial class ProblemClient : IProblemClient
                 throw new SeedTraceException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedTraceApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -271,38 +227,15 @@ public partial class ProblemClient : IProblemClient
     /// <example><code>
     /// await client.Problem.DeleteProblemAsync("problemId");
     /// </code></example>
-    public async Task DeleteProblemAsync(
-        string problemId,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Delete,
-                    Path = string.Format(
-                        "/problem-crud/delete/{0}",
-                        ValueConvert.ToPathParameterString(problemId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task DeleteProblemAsync(string problemId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Delete, Path = string.Format("/problem-crud/delete/{0}", ValueConvert.ToPathParameterString(problemId)), Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedTraceApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
 
@@ -331,25 +264,8 @@ public partial class ProblemClient : IProblemClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
-        GetDefaultStarterFilesRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/problem-crud/default-starter-files",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(GetDefaultStarterFilesRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/problem-crud/default-starter-files", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -362,14 +278,154 @@ public partial class ProblemClient : IProblemClient
                 throw new SeedTraceException("Failed to deserialize response", e);
             }
         }
-
+        
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
+            throw new SeedTraceApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
         }
     }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+        internal RawAccessClient (RawClient client){
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
+            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
+
+        /// <summary>
+        /// Creates a problem
+        /// </summary>
+        public async Task<RawResponse<CreateProblemResponse>> CreateProblemAsync(CreateProblemRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/problem-crud/create", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<CreateProblemResponse>(responseBody)!;
+                    return new RawResponse<CreateProblemResponse>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedTraceException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedTraceApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Updates a problem
+        /// </summary>
+        public async Task<RawResponse<UpdateProblemResponse>> UpdateProblemAsync(string problemId, CreateProblemRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = string.Format("/problem-crud/update/{0}", ValueConvert.ToPathParameterString(problemId)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<UpdateProblemResponse>(responseBody)!;
+                    return new RawResponse<UpdateProblemResponse>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedTraceException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedTraceApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Soft deletes a problem
+        /// </summary>
+        public async Task<RawResponse<object>> DeleteProblemAsync(string problemId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Delete, Path = string.Format("/problem-crud/delete/{0}", ValueConvert.ToPathParameterString(problemId)), Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                return new RawResponse<object>
+                {
+                    StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri!,
+                    Headers = ExtractHeaders(response.Raw),
+                    Body = new object()
+                }
+                };
+            }
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedTraceApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+        /// <summary>
+        /// Returns default starter files for problem
+        /// </summary>
+        public async Task<RawResponse<GetDefaultStarterFilesResponse>> GetDefaultStarterFilesAsync(GetDefaultStarterFilesRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/problem-crud/default-starter-files", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    var body = JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
+                    return new RawResponse<GetDefaultStarterFilesResponse>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = body
+                    }
+                    };
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedTraceException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedTraceApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+
+    }
+
 }

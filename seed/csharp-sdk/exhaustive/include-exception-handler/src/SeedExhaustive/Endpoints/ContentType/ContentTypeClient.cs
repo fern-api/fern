@@ -1,6 +1,6 @@
-using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
+using SeedExhaustive;
 
 namespace SeedExhaustive.Endpoints;
 
@@ -8,18 +8,18 @@ public partial class ContentTypeClient : IContentTypeClient
 {
     private RawClient _client;
 
-    internal ContentTypeClient(RawClient client)
-    {
-        try
-        {
+    internal ContentTypeClient (RawClient client){
+        try{
             _client = client;
+            Raw = new RawAccessClient(_client);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex){
             client.Options.ExceptionHandler?.CaptureException(ex);
             throw;
         }
     }
+
+    public ContentTypeClient.RawAccessClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
@@ -41,43 +41,20 @@ public partial class ContentTypeClient : IContentTypeClient
     ///     }
     /// );
     /// </code></example>
-    public async Task PostJsonPatchContentTypeAsync(
-        ObjectWithOptionalField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task PostJsonPatchContentTypeAsync(ObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/foo/bar", Body = request, ContentType = "application/json-patch+json", Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/foo/bar",
-                            Body = request,
-                            ContentType = "application/json-patch+json",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    return;
-                }
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+                return;
+            }
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+        ).ConfigureAwait(false);
     }
 
     /// <example><code>
@@ -100,42 +77,91 @@ public partial class ContentTypeClient : IContentTypeClient
     ///     }
     /// );
     /// </code></example>
-    public async Task PostJsonPatchContentWithCharsetTypeAsync(
-        ObjectWithOptionalField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task PostJsonPatchContentWithCharsetTypeAsync(ObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/foo/baz", Body = request, ContentType = "application/json-patch+json; charset=utf-8", Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/foo/baz",
-                            Body = request,
-                            ContentType = "application/json-patch+json; charset=utf-8",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
+                return;
+            }
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+        ).ConfigureAwait(false);
+    }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+        internal RawAccessClient (RawClient client){
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
+            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
+
+        public async Task<RawResponse<object>> PostJsonPatchContentTypeAsync(ObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/foo/bar", Body = request, ContentType = "application/json-patch+json", Options = options}, cancellationToken).ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    return;
+                    return new RawResponse<object>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = new object()
+                    }
+                    };
                 }
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
                 }
-            })
-            .ConfigureAwait(false);
+            }
+            ).ConfigureAwait(false);
+        }
+
+        public async Task<RawResponse<object>> PostJsonPatchContentWithCharsetTypeAsync(ObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/foo/baz", Body = request, ContentType = "application/json-patch+json; charset=utf-8", Options = options}, cancellationToken).ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return new RawResponse<object>
+                    {
+                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri!,
+                        Headers = ExtractHeaders(response.Raw),
+                        Body = new object()
+                    }
+                    };
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
     }
+
 }

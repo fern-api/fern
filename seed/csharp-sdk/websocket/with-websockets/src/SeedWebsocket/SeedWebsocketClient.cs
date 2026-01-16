@@ -28,12 +28,46 @@ public partial class SeedWebsocketClient : ISeedWebsocketClient
         }
         _client = new RawClient(clientOptions);
         Empty = new EmptyClient(_client);
+        Raw = new RawAccessClient(_client);
     }
 
     public EmptyClient Empty { get; }
 
+    public SeedWebsocketClient.RawAccessClient Raw { get; }
+
     public RealtimeApi CreateRealtimeApi(RealtimeApi.Options options)
     {
         return new RealtimeApi(options);
+    }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+
+        internal RawAccessClient(RawClient client)
+        {
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
     }
 }

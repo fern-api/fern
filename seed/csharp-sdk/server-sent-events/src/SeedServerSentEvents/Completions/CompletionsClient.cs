@@ -10,7 +10,10 @@ public partial class CompletionsClient : ICompletionsClient
     internal CompletionsClient(RawClient client)
     {
         _client = client;
+        Raw = new RawAccessClient(_client);
     }
+
+    public CompletionsClient.RawAccessClient Raw { get; }
 
     /// <example><code>
     /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
@@ -70,6 +73,70 @@ public partial class CompletionsClient : ICompletionsClient
                 response.StatusCode,
                 responseBody
             );
+        }
+    }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+
+        internal RawAccessClient(RawClient client)
+        {
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
+
+        public async Task<RawResponse<IAsyncEnumerable<StreamedCompletion>>> StreamAsync(
+            StreamCompletionRequest request,
+            RequestOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var response = await _client
+                .SendRequestAsync(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Post,
+                        Path = "stream",
+                        Body = request,
+                        Options = options,
+                    },
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
+            // Streaming responses are not supported for raw access
+            throw new SeedServerSentEventsException(
+                "Streaming responses are not supported for raw access"
+            );
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedServerSentEventsApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
+            }
         }
     }
 }

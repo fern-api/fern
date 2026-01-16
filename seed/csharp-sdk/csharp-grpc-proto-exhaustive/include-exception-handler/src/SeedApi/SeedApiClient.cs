@@ -21,7 +21,7 @@ public partial class SeedApiClient : ISeedApiClient
             );
             clientOptions ??= new ClientOptions();
             clientOptions.ExceptionHandler = new ExceptionHandler(
-                new SeedApiExceptionInterceptor()
+                new SeedApiExceptionInterceptor(clientOptions)
             );
             foreach (var header in defaultHeaders)
             {
@@ -32,14 +32,48 @@ public partial class SeedApiClient : ISeedApiClient
             }
             _client = new RawClient(clientOptions);
             Dataservice = new DataserviceClient(_client);
+            Raw = new RawAccessClient(_client);
         }
         catch (Exception ex)
         {
-            var interceptor = new SeedApiExceptionInterceptor();
+            var interceptor = new SeedApiExceptionInterceptor(clientOptions);
             interceptor.Intercept(ex);
             throw;
         }
     }
 
     public DataserviceClient Dataservice { get; }
+
+    public SeedApiClient.RawAccessClient Raw { get; }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+
+        internal RawAccessClient(RawClient client)
+        {
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
+    }
 }

@@ -21,6 +21,7 @@ public partial class EndpointsClient : IEndpointsClient
             Put = new PutClient(_client);
             Union = new UnionClient(_client);
             Urls = new UrlsClient(_client);
+            Raw = new RawAccessClient(_client);
         }
         catch (Exception ex)
         {
@@ -48,4 +49,37 @@ public partial class EndpointsClient : IEndpointsClient
     public UnionClient Union { get; }
 
     public UrlsClient Urls { get; }
+
+    public EndpointsClient.RawAccessClient Raw { get; }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+
+        internal RawAccessClient(RawClient client)
+        {
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
+    }
 }

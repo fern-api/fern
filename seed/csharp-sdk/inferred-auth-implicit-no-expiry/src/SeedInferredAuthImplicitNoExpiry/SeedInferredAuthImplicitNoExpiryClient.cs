@@ -52,6 +52,7 @@ public partial class SeedInferredAuthImplicitNoExpiryClient
         NestedNoAuth = new NestedNoAuthClient(_client);
         Nested = new NestedClient(_client);
         Simple = new SimpleClient(_client);
+        Raw = new RawAccessClient(_client);
     }
 
     public AuthClient Auth { get; }
@@ -61,4 +62,37 @@ public partial class SeedInferredAuthImplicitNoExpiryClient
     public NestedClient Nested { get; }
 
     public SimpleClient Simple { get; }
+
+    public SeedInferredAuthImplicitNoExpiryClient.RawAccessClient Raw { get; }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+
+        internal RawAccessClient(RawClient client)
+        {
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(
+            HttpResponseMessage response
+        )
+        {
+            var headers = new Dictionary<string, IEnumerable<string>>(
+                StringComparer.OrdinalIgnoreCase
+            );
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
+    }
 }

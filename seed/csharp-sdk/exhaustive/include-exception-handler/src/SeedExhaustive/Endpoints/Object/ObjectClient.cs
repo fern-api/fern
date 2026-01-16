@@ -1,7 +1,7 @@
-using System.Text.Json;
-using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
+using SeedExhaustive;
+using System.Text.Json;
 
 namespace SeedExhaustive.Endpoints;
 
@@ -9,18 +9,18 @@ public partial class ObjectClient : IObjectClient
 {
     private RawClient _client;
 
-    internal ObjectClient(RawClient client)
-    {
-        try
-        {
+    internal ObjectClient (RawClient client){
+        try{
             _client = client;
+            Raw = new RawAccessClient(_client);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex){
             client.Options.ExceptionHandler?.CaptureException(ex);
             throw;
         }
     }
+
+    public ObjectClient.RawAccessClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
@@ -42,51 +42,29 @@ public partial class ObjectClient : IObjectClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
-        ObjectWithOptionalField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(ObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-with-optional-field", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/object/get-and-return-with-optional-field",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
+                    return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
                 }
-
+                catch (JsonException e)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
+                    throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
-            })
-            .ConfigureAwait(false);
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+        ).ConfigureAwait(false);
     }
 
     /// <example><code>
@@ -94,51 +72,29 @@ public partial class ObjectClient : IObjectClient
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
-    public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
-        ObjectWithRequiredField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(ObjectWithRequiredField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-with-required-field", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/object/get-and-return-with-required-field",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<ObjectWithRequiredField>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
+                    return JsonUtils.Deserialize<ObjectWithRequiredField>(responseBody)!;
                 }
-
+                catch (JsonException e)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
+                    throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
-            })
-            .ConfigureAwait(false);
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+        ).ConfigureAwait(false);
     }
 
     /// <example><code>
@@ -155,51 +111,29 @@ public partial class ObjectClient : IObjectClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
-        ObjectWithMapOfMap request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(ObjectWithMapOfMap request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-with-map-of-map", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/object/get-and-return-with-map-of-map",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
+                    return JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
                 }
-
+                catch (JsonException e)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
+                    throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
-            })
-            .ConfigureAwait(false);
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+        ).ConfigureAwait(false);
     }
 
     /// <example><code>
@@ -226,51 +160,29 @@ public partial class ObjectClient : IObjectClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
-        NestedObjectWithOptionalField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(NestedObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-nested-with-optional-field", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/object/get-and-return-nested-with-optional-field",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
+                    return JsonUtils.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
                 }
-
+                catch (JsonException e)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
+                    throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
-            })
-            .ConfigureAwait(false);
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+        ).ConfigureAwait(false);
     }
 
     /// <example><code>
@@ -298,55 +210,29 @@ public partial class ObjectClient : IObjectClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
-        string string_,
-        NestedObjectWithRequiredField request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(string string_, NestedObjectWithRequiredField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = string.Format("/object/get-and-return-nested-with-required-field/{0}", ValueConvert.ToPathParameterString(string_)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = string.Format(
-                                "/object/get-and-return-nested-with-required-field/{0}",
-                                ValueConvert.ToPathParameterString(string_)
-                            ),
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
+                    return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
                 }
-
+                catch (JsonException e)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
+                    throw new SeedExhaustiveException("Failed to deserialize response", e);
                 }
-            })
-            .ConfigureAwait(false);
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+        ).ConfigureAwait(false);
     }
 
     /// <example><code>
@@ -396,50 +282,252 @@ public partial class ObjectClient : IObjectClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
-        IEnumerable<NestedObjectWithRequiredField> request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(IEnumerable<NestedObjectWithRequiredField> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-nested-with-required-field-list", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/object/get-and-return-nested-with-required-field-list",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+                }
+                catch (JsonException e)
+                {
+                    throw new SeedExhaustiveException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+            }
+        }
+        ).ConfigureAwait(false);
+    }
+
+    public partial class RawAccessClient
+    {
+        private readonly RawClient _client;
+        internal RawAccessClient (RawClient client){
+            _client = client;
+        }
+
+        private static IReadOnlyDictionary<string, IEnumerable<string>> ExtractHeaders(HttpResponseMessage response) {
+            var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+            foreach (var header in response.Headers)
+            {
+                headers[header.Key] = header.Value.ToList();
+            }
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    headers[header.Key] = header.Value.ToList();
+                }
+            }
+            return headers;
+        }
+
+        public async Task<RawResponse<ObjectWithOptionalField>> GetAndReturnWithOptionalFieldAsync(ObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-with-optional-field", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+                        var body = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                        return new RawResponse<ObjectWithOptionalField>
+                        {
+                            StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = ExtractHeaders(response.Raw),
+                            Body = body
+                        }
+                        };
                     }
                     catch (JsonException e)
                     {
                         throw new SeedExhaustiveException("Failed to deserialize response", e);
                     }
                 }
-
+                
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
                 }
-            })
-            .ConfigureAwait(false);
+            }
+            ).ConfigureAwait(false);
+        }
+
+        public async Task<RawResponse<ObjectWithRequiredField>> GetAndReturnWithRequiredFieldAsync(ObjectWithRequiredField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-with-required-field", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var body = JsonUtils.Deserialize<ObjectWithRequiredField>(responseBody)!;
+                        return new RawResponse<ObjectWithRequiredField>
+                        {
+                            StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = ExtractHeaders(response.Raw),
+                            Body = body
+                        }
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
+                }
+                
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        public async Task<RawResponse<ObjectWithMapOfMap>> GetAndReturnWithMapOfMapAsync(ObjectWithMapOfMap request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-with-map-of-map", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var body = JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
+                        return new RawResponse<ObjectWithMapOfMap>
+                        {
+                            StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = ExtractHeaders(response.Raw),
+                            Body = body
+                        }
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
+                }
+                
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        public async Task<RawResponse<NestedObjectWithOptionalField>> GetAndReturnNestedWithOptionalFieldAsync(NestedObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-nested-with-optional-field", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var body = JsonUtils.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
+                        return new RawResponse<NestedObjectWithOptionalField>
+                        {
+                            StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = ExtractHeaders(response.Raw),
+                            Body = body
+                        }
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
+                }
+                
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        public async Task<RawResponse<NestedObjectWithRequiredField>> GetAndReturnNestedWithRequiredFieldAsync(string string_, NestedObjectWithRequiredField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = string.Format("/object/get-and-return-nested-with-required-field/{0}", ValueConvert.ToPathParameterString(string_)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var body = JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+                        return new RawResponse<NestedObjectWithRequiredField>
+                        {
+                            StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = ExtractHeaders(response.Raw),
+                            Body = body
+                        }
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
+                }
+                
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        public async Task<RawResponse<NestedObjectWithRequiredField>> GetAndReturnNestedWithRequiredFieldAsListAsync(IEnumerable<NestedObjectWithRequiredField> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+            return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/object/get-and-return-nested-with-required-field-list", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var body = JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+                        return new RawResponse<NestedObjectWithRequiredField>
+                        {
+                            StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri!,
+                            Headers = ExtractHeaders(response.Raw),
+                            Body = body
+                        }
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
+                }
+                
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
     }
+
 }
