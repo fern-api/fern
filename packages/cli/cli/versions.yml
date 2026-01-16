@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.47.0
+- version: 3.48.0
   changelogEntry:
     - summary: |
         Add GraphQL support to the Fern CLI. This includes adding GraphQLSpecSchema to generators.yml, creating a GraphQL parser package that converts GraphQL SDL files to FDR GraphQL types, and updating the workspace-loader to recognize GraphQL specs. The FDR SDK has been upgraded to version 0.144.0-0e699a1f9 which includes the new GraphQL types.
+      type: feat
+  createdAt: "2026-01-16"
+  irVersion: 63
+
+- version: 3.47.0
+  changelogEntry:
+    - summary: |
+        Add edit this page launch target
       type: feat
   createdAt: "2026-01-16"
   irVersion: 63
