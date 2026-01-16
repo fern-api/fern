@@ -120,7 +120,7 @@ public partial class S3Client : IS3Client
                     var body = JsonUtils.Deserialize<string>(responseBody)!;
                     return new RawResponse<string>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

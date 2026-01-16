@@ -135,7 +135,7 @@ public partial class EnumClient : IEnumClient
                             var body = JsonUtils.Deserialize<WeatherReport>(responseBody)!;
                             return new RawResponse<WeatherReport>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,

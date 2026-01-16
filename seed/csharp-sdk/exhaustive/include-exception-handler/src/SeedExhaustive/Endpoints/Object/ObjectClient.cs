@@ -508,7 +508,7 @@ public partial class ObjectClient : IObjectClient
                             )!;
                             return new RawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -564,7 +564,7 @@ public partial class ObjectClient : IObjectClient
                             )!;
                             return new RawResponse<ObjectWithRequiredField>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -618,7 +618,7 @@ public partial class ObjectClient : IObjectClient
                             var body = JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
                             return new RawResponse<ObjectWithMapOfMap>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -676,7 +676,7 @@ public partial class ObjectClient : IObjectClient
                             )!;
                             return new RawResponse<NestedObjectWithOptionalField>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -738,7 +738,7 @@ public partial class ObjectClient : IObjectClient
                             )!;
                             return new RawResponse<NestedObjectWithRequiredField>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -796,7 +796,7 @@ public partial class ObjectClient : IObjectClient
                             )!;
                             return new RawResponse<NestedObjectWithRequiredField>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,

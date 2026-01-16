@@ -180,7 +180,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                     var body = JsonUtils.Deserialize<UnionResponse>(responseBody)!;
                     return new RawResponse<UnionResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -230,7 +230,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                     var body = JsonUtils.Deserialize<UnionListResponse>(responseBody)!;
                     return new RawResponse<UnionListResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

@@ -138,7 +138,7 @@ public partial class PutClient : IPutClient
                             var body = JsonUtils.Deserialize<PutResponse>(responseBody)!;
                             return new RawResponse<PutResponse>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,

@@ -198,7 +198,7 @@ public partial class ComplexClient : IComplexClient
                             )!;
                             return new RawResponse<PaginatedConversationResponse>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,

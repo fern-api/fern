@@ -114,7 +114,7 @@ public partial class ServiceClient : IServiceClient
                     var body = JsonUtils.Deserialize<Response>(responseBody)!;
                     return new RawResponse<Response>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

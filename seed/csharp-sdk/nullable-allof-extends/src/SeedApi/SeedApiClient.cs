@@ -185,7 +185,7 @@ public partial class SeedApiClient : ISeedApiClient
                     var body = JsonUtils.Deserialize<RootObject>(responseBody)!;
                     return new RawResponse<RootObject>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -238,7 +238,7 @@ public partial class SeedApiClient : ISeedApiClient
                     var body = JsonUtils.Deserialize<RootObject>(responseBody)!;
                     return new RawResponse<RootObject>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

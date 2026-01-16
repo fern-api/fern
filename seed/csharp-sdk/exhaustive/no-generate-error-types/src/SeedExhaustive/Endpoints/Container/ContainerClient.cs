@@ -417,7 +417,7 @@ public partial class ContainerClient : IContainerClient
                     var body = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
                     return new RawResponse<IEnumerable<string>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -470,7 +470,7 @@ public partial class ContainerClient : IContainerClient
                     )!;
                     return new RawResponse<IEnumerable<ObjectWithRequiredField>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -519,7 +519,7 @@ public partial class ContainerClient : IContainerClient
                     var body = JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
                     return new RawResponse<HashSet<string>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -572,7 +572,7 @@ public partial class ContainerClient : IContainerClient
                     )!;
                     return new RawResponse<HashSet<ObjectWithRequiredField>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -621,7 +621,7 @@ public partial class ContainerClient : IContainerClient
                     var body = JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
                     return new RawResponse<Dictionary<string, string>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -674,7 +674,7 @@ public partial class ContainerClient : IContainerClient
                     )!;
                     return new RawResponse<Dictionary<string, ObjectWithRequiredField>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -723,7 +723,7 @@ public partial class ContainerClient : IContainerClient
                     var body = JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
                     return new RawResponse<ObjectWithRequiredField?>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

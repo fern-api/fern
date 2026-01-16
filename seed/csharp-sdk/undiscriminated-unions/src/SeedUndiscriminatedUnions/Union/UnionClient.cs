@@ -486,7 +486,7 @@ public partial class UnionClient : IUnionClient
                         >
                     >
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -538,7 +538,7 @@ public partial class UnionClient : IUnionClient
                     )!;
                     return new RawResponse<Dictionary<OneOf<KeyType, string>, string>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -590,7 +590,7 @@ public partial class UnionClient : IUnionClient
                     var body = JsonUtils.Deserialize<bool>(responseBody)!;
                     return new RawResponse<bool>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -642,7 +642,7 @@ public partial class UnionClient : IUnionClient
                     var body = JsonUtils.Deserialize<bool>(responseBody)!;
                     return new RawResponse<bool>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -698,7 +698,7 @@ public partial class UnionClient : IUnionClient
                     >(responseBody)!;
                     return new RawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -759,7 +759,7 @@ public partial class UnionClient : IUnionClient
                     var body = JsonUtils.Deserialize<string>(responseBody)!;
                     return new RawResponse<string>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -811,7 +811,7 @@ public partial class UnionClient : IUnionClient
                     var body = JsonUtils.Deserialize<string>(responseBody)!;
                     return new RawResponse<string>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

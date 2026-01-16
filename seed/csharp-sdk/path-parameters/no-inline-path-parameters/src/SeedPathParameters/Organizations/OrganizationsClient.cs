@@ -242,7 +242,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                     var body = JsonUtils.Deserialize<Organization>(responseBody)!;
                     return new RawResponse<Organization>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -298,7 +298,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                     var body = JsonUtils.Deserialize<User>(responseBody)!;
                     return new RawResponse<User>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -358,7 +358,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                     var body = JsonUtils.Deserialize<IEnumerable<Organization>>(responseBody)!;
                     return new RawResponse<IEnumerable<Organization>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

@@ -536,7 +536,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<string>(responseBody)!;
                             return new RawResponse<string>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -590,7 +590,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<int>(responseBody)!;
                             return new RawResponse<int>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -644,7 +644,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<long>(responseBody)!;
                             return new RawResponse<long>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -698,7 +698,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<double>(responseBody)!;
                             return new RawResponse<double>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -752,7 +752,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<bool>(responseBody)!;
                             return new RawResponse<bool>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -806,7 +806,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<DateTime>(responseBody)!;
                             return new RawResponse<DateTime>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -860,7 +860,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<DateOnly>(responseBody)!;
                             return new RawResponse<DateOnly>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -914,7 +914,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<string>(responseBody)!;
                             return new RawResponse<string>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -968,7 +968,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             var body = JsonUtils.Deserialize<string>(responseBody)!;
                             return new RawResponse<string>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,

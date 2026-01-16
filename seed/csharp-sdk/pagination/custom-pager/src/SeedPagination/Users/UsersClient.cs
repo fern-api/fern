@@ -1456,7 +1456,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
                     return new RawResponse<ListUsersPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1514,7 +1514,7 @@ public partial class UsersClient : IUsersClient
                     )!;
                     return new RawResponse<ListUsersMixedTypePaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1565,7 +1565,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
                     return new RawResponse<ListUsersPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1623,7 +1623,7 @@ public partial class UsersClient : IUsersClient
                     )!;
                     return new RawResponse<ListUsersTopLevelCursorPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1689,7 +1689,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
                     return new RawResponse<ListUsersPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1757,7 +1757,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
                     return new RawResponse<ListUsersPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1808,7 +1808,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
                     return new RawResponse<ListUsersPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1872,7 +1872,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
                     return new RawResponse<ListUsersPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1936,7 +1936,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
                     return new RawResponse<ListUsersPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1990,7 +1990,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<ListUsersExtendedResponse>(responseBody)!;
                     return new RawResponse<ListUsersExtendedResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -2048,7 +2048,7 @@ public partial class UsersClient : IUsersClient
                     )!;
                     return new RawResponse<ListUsersExtendedOptionalListResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -2102,7 +2102,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
                     return new RawResponse<UsernameCursor>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -2156,7 +2156,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<UsernameCursor?>(responseBody)!;
                     return new RawResponse<UsernameCursor?>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -2210,7 +2210,7 @@ public partial class UsersClient : IUsersClient
                     var body = JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
                     return new RawResponse<UsernameContainer>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -2268,7 +2268,7 @@ public partial class UsersClient : IUsersClient
                     )!;
                     return new RawResponse<ListUsersOptionalDataPaginationResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

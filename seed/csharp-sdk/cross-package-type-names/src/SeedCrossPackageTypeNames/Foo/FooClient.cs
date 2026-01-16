@@ -136,7 +136,7 @@ public partial class FooClient : IFooClient
                     var body = JsonUtils.Deserialize<ImportingType>(responseBody)!;
                     return new RawResponse<ImportingType>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

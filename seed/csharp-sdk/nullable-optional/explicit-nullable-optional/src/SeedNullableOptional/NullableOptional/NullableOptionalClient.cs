@@ -1075,7 +1075,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
                     return new RawResponse<UserResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1127,7 +1127,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
                     return new RawResponse<UserResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1183,7 +1183,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<UserResponse>(responseBody)!;
                     return new RawResponse<UserResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1252,7 +1252,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
                     return new RawResponse<IEnumerable<UserResponse>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1315,7 +1315,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
                     return new RawResponse<IEnumerable<UserResponse>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1367,7 +1367,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
                     return new RawResponse<ComplexProfile>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1421,7 +1421,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
                     return new RawResponse<ComplexProfile>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1477,7 +1477,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<ComplexProfile>(responseBody)!;
                     return new RawResponse<ComplexProfile>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1529,7 +1529,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<DeserializationTestResponse>(responseBody)!;
                     return new RawResponse<DeserializationTestResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1591,7 +1591,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<IEnumerable<UserResponse>>(responseBody)!;
                     return new RawResponse<IEnumerable<UserResponse>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1645,7 +1645,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<NotificationMethod?>(responseBody)!;
                     return new RawResponse<NotificationMethod?>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1701,7 +1701,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
                     return new RawResponse<IEnumerable<string>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -1753,7 +1753,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     var body = JsonUtils.Deserialize<IEnumerable<SearchResult>?>(responseBody)!;
                     return new RawResponse<IEnumerable<SearchResult>?>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

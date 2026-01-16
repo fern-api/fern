@@ -436,7 +436,7 @@ public partial class ProblemClient : IProblemClient
                     var body = JsonUtils.Deserialize<CreateProblemResponse>(responseBody)!;
                     return new RawResponse<CreateProblemResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -492,7 +492,7 @@ public partial class ProblemClient : IProblemClient
                     var body = JsonUtils.Deserialize<UpdateProblemResponse>(responseBody)!;
                     return new RawResponse<UpdateProblemResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -542,7 +542,7 @@ public partial class ProblemClient : IProblemClient
             {
                 return new RawResponse<object>
                 {
-                    StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri!,
                     Headers = ExtractHeaders(response.Raw),
                     Body = new object(),
@@ -588,7 +588,7 @@ public partial class ProblemClient : IProblemClient
                     var body = JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
                     return new RawResponse<GetDefaultStarterFilesResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

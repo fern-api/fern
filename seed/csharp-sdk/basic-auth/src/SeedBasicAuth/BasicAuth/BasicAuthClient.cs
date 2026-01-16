@@ -199,7 +199,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                     var body = JsonUtils.Deserialize<bool>(responseBody)!;
                     return new RawResponse<bool>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -265,7 +265,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                     var body = JsonUtils.Deserialize<bool>(responseBody)!;
                     return new RawResponse<bool>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

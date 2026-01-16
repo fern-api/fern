@@ -153,7 +153,7 @@ public partial class ServiceClient : IServiceClient
                     var body = JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
                     return new RawResponse<SeedExamples.File>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

@@ -123,7 +123,7 @@ public partial class OrganizationClient : IOrganizationClient
                     var body = JsonUtils.Deserialize<Organization>(responseBody)!;
                     return new RawResponse<Organization>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

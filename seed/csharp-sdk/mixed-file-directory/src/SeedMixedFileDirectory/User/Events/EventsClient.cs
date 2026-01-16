@@ -138,7 +138,7 @@ public partial class EventsClient : IEventsClient
                     var body = JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
                     return new RawResponse<IEnumerable<Event>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

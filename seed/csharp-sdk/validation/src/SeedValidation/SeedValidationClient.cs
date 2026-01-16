@@ -198,7 +198,7 @@ public partial class SeedValidationClient : ISeedValidationClient
                     var body = JsonUtils.Deserialize<Type>(responseBody)!;
                     return new RawResponse<Type>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -251,7 +251,7 @@ public partial class SeedValidationClient : ISeedValidationClient
                     var body = JsonUtils.Deserialize<Type>(responseBody)!;
                     return new RawResponse<Type>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

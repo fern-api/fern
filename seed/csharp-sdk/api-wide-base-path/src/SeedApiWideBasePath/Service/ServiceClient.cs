@@ -119,7 +119,7 @@ public partial class ServiceClient : IServiceClient
             {
                 return new RawResponse<object>
                 {
-                    StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri!,
                     Headers = ExtractHeaders(response.Raw),
                     Body = new object(),

@@ -146,7 +146,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                     var body = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
                     return new RawResponse<ObjectWithOptionalField>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

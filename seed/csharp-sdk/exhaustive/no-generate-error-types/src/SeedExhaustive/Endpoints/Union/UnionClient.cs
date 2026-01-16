@@ -121,7 +121,7 @@ public partial class UnionClient : IUnionClient
                     var body = JsonUtils.Deserialize<Animal>(responseBody)!;
                     return new RawResponse<Animal>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

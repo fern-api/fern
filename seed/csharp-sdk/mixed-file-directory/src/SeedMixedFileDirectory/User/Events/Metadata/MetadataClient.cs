@@ -128,7 +128,7 @@ public partial class MetadataClient : IMetadataClient
                     var body = JsonUtils.Deserialize<Metadata>(responseBody)!;
                     return new RawResponse<Metadata>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

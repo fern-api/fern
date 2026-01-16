@@ -149,7 +149,7 @@ public partial class HomepageClient : IHomepageClient
                     var body = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
                     return new RawResponse<IEnumerable<string>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -194,7 +194,7 @@ public partial class HomepageClient : IHomepageClient
             {
                 return new RawResponse<object>
                 {
-                    StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri!,
                     Headers = ExtractHeaders(response.Raw),
                     Body = new object(),

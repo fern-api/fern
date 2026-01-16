@@ -200,7 +200,7 @@ public partial class DummyClient : IDummyClient
                     var body = JsonUtils.Deserialize<StreamResponse>(responseBody)!;
                     return new RawResponse<StreamResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

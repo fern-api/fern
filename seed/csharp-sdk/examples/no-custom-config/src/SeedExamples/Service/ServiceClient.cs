@@ -546,7 +546,7 @@ public partial class ServiceClient : IServiceClient
                     var body = JsonUtils.Deserialize<Movie>(responseBody)!;
                     return new RawResponse<Movie>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -595,7 +595,7 @@ public partial class ServiceClient : IServiceClient
                     var body = JsonUtils.Deserialize<string>(responseBody)!;
                     return new RawResponse<string>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -654,7 +654,7 @@ public partial class ServiceClient : IServiceClient
                     var body = JsonUtils.Deserialize<Metadata>(responseBody)!;
                     return new RawResponse<Metadata>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -703,7 +703,7 @@ public partial class ServiceClient : IServiceClient
                     var body = JsonUtils.Deserialize<Response>(responseBody)!;
                     return new RawResponse<Response>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,
@@ -748,7 +748,7 @@ public partial class ServiceClient : IServiceClient
             {
                 return new RawResponse<object>
                 {
-                    StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri!,
                     Headers = ExtractHeaders(response.Raw),
                     Body = new object(),

@@ -148,7 +148,7 @@ public partial class UserClient : IUserClient
             {
                 return new RawResponse<HttpResponseHeaders>
                 {
-                    StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri!,
                     Headers = ExtractHeaders(response.Raw),
                     Body = response.Raw.Headers,
@@ -193,7 +193,7 @@ public partial class UserClient : IUserClient
                     var body = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
                     return new RawResponse<IEnumerable<User>>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

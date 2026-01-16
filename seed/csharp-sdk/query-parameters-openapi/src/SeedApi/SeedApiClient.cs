@@ -274,7 +274,7 @@ public partial class SeedApiClient : ISeedApiClient
                     var body = JsonUtils.Deserialize<SearchResponse>(responseBody)!;
                     return new RawResponse<SearchResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

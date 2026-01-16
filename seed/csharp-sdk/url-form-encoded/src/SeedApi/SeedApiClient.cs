@@ -138,7 +138,7 @@ public partial class SeedApiClient : ISeedApiClient
                     var body = JsonUtils.Deserialize<PostSubmitResponse>(responseBody)!;
                     return new RawResponse<PostSubmitResponse>
                     {
-                        StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                        StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri!,
                         Headers = ExtractHeaders(response.Raw),
                         Body = body,

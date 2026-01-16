@@ -370,7 +370,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                             var body = JsonUtils.Deserialize<string>(responseBody)!;
                             return new RawResponse<string>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -426,7 +426,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                             )!;
                             return new RawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -486,7 +486,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                             )!;
                             return new RawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -546,7 +546,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                             )!;
                             return new RawResponse<ObjectWithOptionalField>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
@@ -602,7 +602,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                             var body = JsonUtils.Deserialize<bool>(responseBody)!;
                             return new RawResponse<bool>
                             {
-                                StatusCode = (System.Net.HttpStatusCode)response.StatusCode,
+                                StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
                                 Url = response.Raw.RequestMessage?.RequestUri!,
                                 Headers = ExtractHeaders(response.Raw),
                                 Body = body,
