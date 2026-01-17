@@ -27,6 +27,7 @@ export class GraphQLConverter {
     private schema: GraphQLSchema | undefined;
     private context: TaskContext;
     private filePath: AbsoluteFilePath;
+    private visitedTypes: Set<string> = new Set();
 
     constructor({ context, filePath }: { context: TaskContext; filePath: AbsoluteFilePath }) {
         this.context = context;
@@ -277,6 +278,20 @@ export class GraphQLConverter {
     }
 
     private convertObjectType(type: GraphQLObjectType | GraphQLInterfaceType): FdrAPI.api.latest.TypeShape {
+        const typeName = type.name;
+        
+        if (this.visitedTypes.has(typeName)) {
+            return {
+                type: "alias",
+                value: {
+                    type: "unknown",
+                    displayName: typeName
+                }
+            };
+        }
+        
+        this.visitedTypes.add(typeName);
+        
         const fields = type.getFields();
         const properties: FdrAPI.api.latest.ObjectProperty[] = [];
 
@@ -290,6 +305,8 @@ export class GraphQLConverter {
             });
         }
 
+        this.visitedTypes.delete(typeName);
+
         return {
             type: "object",
             extends: [],
@@ -299,6 +316,20 @@ export class GraphQLConverter {
     }
 
     private convertInputObjectType(type: GraphQLInputObjectType): FdrAPI.api.latest.TypeShape {
+        const typeName = type.name;
+        
+        if (this.visitedTypes.has(typeName)) {
+            return {
+                type: "alias",
+                value: {
+                    type: "unknown",
+                    displayName: typeName
+                }
+            };
+        }
+        
+        this.visitedTypes.add(typeName);
+        
         const fields = type.getFields();
         const properties: FdrAPI.api.latest.ObjectProperty[] = [];
 
@@ -311,6 +342,8 @@ export class GraphQLConverter {
                 propertyAccess: undefined
             });
         }
+
+        this.visitedTypes.delete(typeName);
 
         return {
             type: "object",

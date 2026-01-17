@@ -1,0 +1,216 @@
+# Basic GraphQL schema to test the converter
+
+"""
+A user in the system
+"""
+type User {
+  """
+  The unique identifier for the user
+  """
+  id: ID!
+  """
+  The user's display name
+  """
+  name: String!
+  """
+  The user's email address
+  """
+  email: String
+  """
+  The user's age
+  """
+  age: Int
+  """
+  The user's account balance
+  """
+  balance: Float
+  """
+  Whether the user is active
+  """
+  isActive: Boolean!
+  """
+  The user's role in the system
+  """
+  role: UserRole!
+  """
+  The user's posts
+  """
+  posts: [Post!]!
+}
+
+"""
+A blog post
+"""
+type Post {
+  """
+  The unique identifier for the post
+  """
+  id: ID!
+  """
+  The post title
+  """
+  title: String!
+  """
+  The post content
+  """
+  content: String!
+  """
+  The post author
+  """
+  author: User!
+  """
+  The post status
+  """
+  status: PostStatus!
+  """
+  Tags associated with the post
+  """
+  tags: [String!]
+}
+
+"""
+User roles in the system
+"""
+enum UserRole {
+  """
+  Administrator with full access
+  """
+  ADMIN
+  """
+  Regular user
+  """
+  USER
+  """
+  Guest with limited access
+  """
+  GUEST
+}
+
+"""
+Post publication status
+"""
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+"""
+Search result that can be either a User or a Post
+"""
+union SearchResult = User | Post
+
+"""
+Input for creating a new user
+"""
+input CreateUserInput {
+  """
+  The user's name
+  """
+  name: String!
+  """
+  The user's email
+  """
+  email: String!
+  """
+  The user's role
+  """
+  role: UserRole = USER
+}
+
+"""
+Input for creating a new post
+"""
+input CreatePostInput {
+  """
+  The post title
+  """
+  title: String!
+  """
+  The post content
+  """
+  content: String!
+  """
+  The author's user ID
+  """
+  authorId: ID!
+  """
+  Tags for the post
+  """
+  tags: [String!]
+}
+
+"""
+Input for filtering users
+"""
+input UserFilter {
+  """
+  Filter by role
+  """
+  role: UserRole
+  """
+  Filter by active status
+  """
+  isActive: Boolean
+}
+
+type Query {
+  """
+  Get a user by ID
+  """
+  user(id: ID!): User
+  """
+  Get all users with optional filtering
+  """
+  users(filter: UserFilter, limit: Int = 10, offset: Int = 0): [User!]!
+  """
+  Get a post by ID
+  """
+  post(id: ID!): Post
+  """
+  Get all posts
+  """
+  posts(status: PostStatus, limit: Int = 10): [Post!]!
+  """
+  Search for users or posts
+  """
+  search(query: String!): [SearchResult!]!
+}
+
+type Mutation {
+  """
+  Create a new user
+  """
+  createUser(input: CreateUserInput!): User!
+  """
+  Update an existing user
+  """
+  updateUser(id: ID!, name: String, email: String, role: UserRole): User
+  """
+  Delete a user
+  """
+  deleteUser(id: ID!): Boolean!
+  """
+  Create a new post
+  """
+  createPost(input: CreatePostInput!): Post!
+  """
+  Update a post's status
+  """
+  updatePostStatus(id: ID!, status: PostStatus!): Post
+}
+
+type Subscription {
+  """
+  Subscribe to new user creations
+  """
+  userCreated: User!
+  """
+  Subscribe to new posts by a specific user
+  """
+  postCreated(authorId: ID): Post!
+  """
+  Subscribe to post status changes
+  """
+  postStatusChanged(postId: ID!): Post!
+}

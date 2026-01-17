@@ -1,0 +1,3229 @@
+{
+  "graphqlOperations": {
+    "query_user": {
+      "id": "query_user",
+      "operationType": "QUERY",
+      "name": "user",
+      "description": "Get a user by ID",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the user"
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's display name"
+          },
+          {
+            "key": "email",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's email address"
+          },
+          {
+            "key": "age",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "The user's age"
+          },
+          {
+            "key": "balance",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            },
+            "description": "The user's account balance"
+          },
+          {
+            "key": "isActive",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "Whether the user is active"
+          },
+          {
+            "key": "role",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "ADMIN",
+                  "description": "Administrator with full access"
+                },
+                {
+                  "value": "USER",
+                  "description": "Regular user"
+                },
+                {
+                  "value": "GUEST",
+                  "description": "Guest with limited access"
+                }
+              ]
+            },
+            "description": "The user's role in the system"
+          },
+          {
+            "key": "posts",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The unique identifier for the post"
+                    },
+                    {
+                      "key": "title",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post title"
+                    },
+                    {
+                      "key": "content",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post content"
+                    },
+                    {
+                      "key": "author",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "User"
+                        }
+                      },
+                      "description": "The post author"
+                    },
+                    {
+                      "key": "status",
+                      "valueShape": {
+                        "type": "enum",
+                        "values": [
+                          {
+                            "value": "DRAFT"
+                          },
+                          {
+                            "value": "PUBLISHED"
+                          },
+                          {
+                            "value": "ARCHIVED"
+                          }
+                        ]
+                      },
+                      "description": "The post status"
+                    },
+                    {
+                      "key": "tags",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "description": "Tags associated with the post"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "The user's posts"
+          }
+        ]
+      }
+    },
+    "query_users": {
+      "id": "query_users",
+      "operationType": "QUERY",
+      "name": "users",
+      "description": "Get all users with optional filtering",
+      "arguments": [
+        {
+          "name": "filter",
+          "type": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "ADMIN",
+                      "description": "Administrator with full access"
+                    },
+                    {
+                      "value": "USER",
+                      "description": "Regular user"
+                    },
+                    {
+                      "value": "GUEST",
+                      "description": "Guest with limited access"
+                    }
+                  ]
+                },
+                "description": "Filter by role"
+              },
+              {
+                "key": "isActive",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "description": "Filter by active status"
+              }
+            ]
+          }
+        },
+        {
+          "name": "limit",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          "defaultValue": 10
+        },
+        {
+          "name": "offset",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          "defaultValue": 0
+        }
+      ],
+      "returnType": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "id",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The unique identifier for the user"
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The user's display name"
+              },
+              {
+                "key": "email",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The user's email address"
+              },
+              {
+                "key": "age",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "description": "The user's age"
+              },
+              {
+                "key": "balance",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                },
+                "description": "The user's account balance"
+              },
+              {
+                "key": "isActive",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "description": "Whether the user is active"
+              },
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "ADMIN",
+                      "description": "Administrator with full access"
+                    },
+                    {
+                      "value": "USER",
+                      "description": "Regular user"
+                    },
+                    {
+                      "value": "GUEST",
+                      "description": "Guest with limited access"
+                    }
+                  ]
+                },
+                "description": "The user's role in the system"
+              },
+              {
+                "key": "posts",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "id",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "description": "The unique identifier for the post"
+                        },
+                        {
+                          "key": "title",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "description": "The post title"
+                        },
+                        {
+                          "key": "content",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "description": "The post content"
+                        },
+                        {
+                          "key": "author",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown",
+                              "displayName": "User"
+                            }
+                          },
+                          "description": "The post author"
+                        },
+                        {
+                          "key": "status",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "DRAFT"
+                              },
+                              {
+                                "value": "PUBLISHED"
+                              },
+                              {
+                                "value": "ARCHIVED"
+                              }
+                            ]
+                          },
+                          "description": "The post status"
+                        },
+                        {
+                          "key": "tags",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "list",
+                              "itemShape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "description": "Tags associated with the post"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "description": "The user's posts"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "query_post": {
+      "id": "query_post",
+      "operationType": "QUERY",
+      "name": "post",
+      "description": "Get a post by ID",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the post"
+          },
+          {
+            "key": "title",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post title"
+          },
+          {
+            "key": "content",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post content"
+          },
+          {
+            "key": "author",
+            "valueShape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The unique identifier for the user"
+                },
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's display name"
+                },
+                {
+                  "key": "email",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's email address"
+                },
+                {
+                  "key": "age",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "description": "The user's age"
+                },
+                {
+                  "key": "balance",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "double"
+                      }
+                    }
+                  },
+                  "description": "The user's account balance"
+                },
+                {
+                  "key": "isActive",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "description": "Whether the user is active"
+                },
+                {
+                  "key": "role",
+                  "valueShape": {
+                    "type": "enum",
+                    "values": [
+                      {
+                        "value": "ADMIN",
+                        "description": "Administrator with full access"
+                      },
+                      {
+                        "value": "USER",
+                        "description": "Regular user"
+                      },
+                      {
+                        "value": "GUEST",
+                        "description": "Guest with limited access"
+                      }
+                    ]
+                  },
+                  "description": "The user's role in the system"
+                },
+                {
+                  "key": "posts",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "Post"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The user's posts"
+                }
+              ]
+            },
+            "description": "The post author"
+          },
+          {
+            "key": "status",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "DRAFT"
+                },
+                {
+                  "value": "PUBLISHED"
+                },
+                {
+                  "value": "ARCHIVED"
+                }
+              ]
+            },
+            "description": "The post status"
+          },
+          {
+            "key": "tags",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Tags associated with the post"
+          }
+        ]
+      }
+    },
+    "query_posts": {
+      "id": "query_posts",
+      "operationType": "QUERY",
+      "name": "posts",
+      "description": "Get all posts",
+      "arguments": [
+        {
+          "name": "status",
+          "type": {
+            "type": "enum",
+            "values": [
+              {
+                "value": "DRAFT"
+              },
+              {
+                "value": "PUBLISHED"
+              },
+              {
+                "value": "ARCHIVED"
+              }
+            ]
+          }
+        },
+        {
+          "name": "limit",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          "defaultValue": 10
+        }
+      ],
+      "returnType": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "id",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The unique identifier for the post"
+              },
+              {
+                "key": "title",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The post title"
+              },
+              {
+                "key": "content",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The post content"
+              },
+              {
+                "key": "author",
+                "valueShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The unique identifier for the user"
+                    },
+                    {
+                      "key": "name",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The user's display name"
+                    },
+                    {
+                      "key": "email",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The user's email address"
+                    },
+                    {
+                      "key": "age",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "description": "The user's age"
+                    },
+                    {
+                      "key": "balance",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      },
+                      "description": "The user's account balance"
+                    },
+                    {
+                      "key": "isActive",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "description": "Whether the user is active"
+                    },
+                    {
+                      "key": "role",
+                      "valueShape": {
+                        "type": "enum",
+                        "values": [
+                          {
+                            "value": "ADMIN",
+                            "description": "Administrator with full access"
+                          },
+                          {
+                            "value": "USER",
+                            "description": "Regular user"
+                          },
+                          {
+                            "value": "GUEST",
+                            "description": "Guest with limited access"
+                          }
+                        ]
+                      },
+                      "description": "The user's role in the system"
+                    },
+                    {
+                      "key": "posts",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown",
+                              "displayName": "Post"
+                            }
+                          }
+                        }
+                      },
+                      "description": "The user's posts"
+                    }
+                  ]
+                },
+                "description": "The post author"
+              },
+              {
+                "key": "status",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "DRAFT"
+                    },
+                    {
+                      "value": "PUBLISHED"
+                    },
+                    {
+                      "value": "ARCHIVED"
+                    }
+                  ]
+                },
+                "description": "The post status"
+              },
+              {
+                "key": "tags",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Tags associated with the post"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "query_search": {
+      "id": "query_search",
+      "operationType": "QUERY",
+      "name": "search",
+      "description": "Search for users or posts",
+      "arguments": [
+        {
+          "name": "query",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "displayName": "User",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The unique identifier for the user"
+                    },
+                    {
+                      "key": "name",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The user's display name"
+                    },
+                    {
+                      "key": "email",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The user's email address"
+                    },
+                    {
+                      "key": "age",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "description": "The user's age"
+                    },
+                    {
+                      "key": "balance",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      },
+                      "description": "The user's account balance"
+                    },
+                    {
+                      "key": "isActive",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "description": "Whether the user is active"
+                    },
+                    {
+                      "key": "role",
+                      "valueShape": {
+                        "type": "enum",
+                        "values": [
+                          {
+                            "value": "ADMIN",
+                            "description": "Administrator with full access"
+                          },
+                          {
+                            "value": "USER",
+                            "description": "Regular user"
+                          },
+                          {
+                            "value": "GUEST",
+                            "description": "Guest with limited access"
+                          }
+                        ]
+                      },
+                      "description": "The user's role in the system"
+                    },
+                    {
+                      "key": "posts",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": [
+                              {
+                                "key": "id",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "description": "The unique identifier for the post"
+                              },
+                              {
+                                "key": "title",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "description": "The post title"
+                              },
+                              {
+                                "key": "content",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "description": "The post content"
+                              },
+                              {
+                                "key": "author",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "unknown",
+                                    "displayName": "User"
+                                  }
+                                },
+                                "description": "The post author"
+                              },
+                              {
+                                "key": "status",
+                                "valueShape": {
+                                  "type": "enum",
+                                  "values": [
+                                    {
+                                      "value": "DRAFT"
+                                    },
+                                    {
+                                      "value": "PUBLISHED"
+                                    },
+                                    {
+                                      "value": "ARCHIVED"
+                                    }
+                                  ]
+                                },
+                                "description": "The post status"
+                              },
+                              {
+                                "key": "tags",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "list",
+                                    "itemShape": {
+                                      "type": "alias",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "description": "Tags associated with the post"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "description": "The user's posts"
+                    }
+                  ]
+                },
+                "description": "A user in the system"
+              },
+              {
+                "displayName": "Post",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The unique identifier for the post"
+                    },
+                    {
+                      "key": "title",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post title"
+                    },
+                    {
+                      "key": "content",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post content"
+                    },
+                    {
+                      "key": "author",
+                      "valueShape": {
+                        "type": "object",
+                        "extends": [],
+                        "properties": [
+                          {
+                            "key": "id",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "description": "The unique identifier for the user"
+                          },
+                          {
+                            "key": "name",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "description": "The user's display name"
+                          },
+                          {
+                            "key": "email",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "description": "The user's email address"
+                          },
+                          {
+                            "key": "age",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "description": "The user's age"
+                          },
+                          {
+                            "key": "balance",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double"
+                                }
+                              }
+                            },
+                            "description": "The user's account balance"
+                          },
+                          {
+                            "key": "isActive",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean"
+                                }
+                              }
+                            },
+                            "description": "Whether the user is active"
+                          },
+                          {
+                            "key": "role",
+                            "valueShape": {
+                              "type": "enum",
+                              "values": [
+                                {
+                                  "value": "ADMIN",
+                                  "description": "Administrator with full access"
+                                },
+                                {
+                                  "value": "USER",
+                                  "description": "Regular user"
+                                },
+                                {
+                                  "value": "GUEST",
+                                  "description": "Guest with limited access"
+                                }
+                              ]
+                            },
+                            "description": "The user's role in the system"
+                          },
+                          {
+                            "key": "posts",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "list",
+                                "itemShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "unknown",
+                                    "displayName": "Post"
+                                  }
+                                }
+                              }
+                            },
+                            "description": "The user's posts"
+                          }
+                        ]
+                      },
+                      "description": "The post author"
+                    },
+                    {
+                      "key": "status",
+                      "valueShape": {
+                        "type": "enum",
+                        "values": [
+                          {
+                            "value": "DRAFT"
+                          },
+                          {
+                            "value": "PUBLISHED"
+                          },
+                          {
+                            "value": "ARCHIVED"
+                          }
+                        ]
+                      },
+                      "description": "The post status"
+                    },
+                    {
+                      "key": "tags",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "description": "Tags associated with the post"
+                    }
+                  ]
+                },
+                "description": "A blog post"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "mutation_createUser": {
+      "id": "mutation_createUser",
+      "operationType": "MUTATION",
+      "name": "createUser",
+      "description": "Create a new user",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The user's name"
+              },
+              {
+                "key": "email",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The user's email"
+              },
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "ADMIN",
+                      "description": "Administrator with full access"
+                    },
+                    {
+                      "value": "USER",
+                      "description": "Regular user"
+                    },
+                    {
+                      "value": "GUEST",
+                      "description": "Guest with limited access"
+                    }
+                  ]
+                },
+                "description": "The user's role"
+              }
+            ]
+          }
+        }
+      ],
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the user"
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's display name"
+          },
+          {
+            "key": "email",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's email address"
+          },
+          {
+            "key": "age",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "The user's age"
+          },
+          {
+            "key": "balance",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            },
+            "description": "The user's account balance"
+          },
+          {
+            "key": "isActive",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "Whether the user is active"
+          },
+          {
+            "key": "role",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "ADMIN",
+                  "description": "Administrator with full access"
+                },
+                {
+                  "value": "USER",
+                  "description": "Regular user"
+                },
+                {
+                  "value": "GUEST",
+                  "description": "Guest with limited access"
+                }
+              ]
+            },
+            "description": "The user's role in the system"
+          },
+          {
+            "key": "posts",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The unique identifier for the post"
+                    },
+                    {
+                      "key": "title",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post title"
+                    },
+                    {
+                      "key": "content",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post content"
+                    },
+                    {
+                      "key": "author",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "User"
+                        }
+                      },
+                      "description": "The post author"
+                    },
+                    {
+                      "key": "status",
+                      "valueShape": {
+                        "type": "enum",
+                        "values": [
+                          {
+                            "value": "DRAFT"
+                          },
+                          {
+                            "value": "PUBLISHED"
+                          },
+                          {
+                            "value": "ARCHIVED"
+                          }
+                        ]
+                      },
+                      "description": "The post status"
+                    },
+                    {
+                      "key": "tags",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "description": "Tags associated with the post"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "The user's posts"
+          }
+        ]
+      }
+    },
+    "mutation_updateUser": {
+      "id": "mutation_updateUser",
+      "operationType": "MUTATION",
+      "name": "updateUser",
+      "description": "Update an existing user",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "name",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "email",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "role",
+          "type": {
+            "type": "enum",
+            "values": [
+              {
+                "value": "ADMIN",
+                "description": "Administrator with full access"
+              },
+              {
+                "value": "USER",
+                "description": "Regular user"
+              },
+              {
+                "value": "GUEST",
+                "description": "Guest with limited access"
+              }
+            ]
+          }
+        }
+      ],
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the user"
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's display name"
+          },
+          {
+            "key": "email",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's email address"
+          },
+          {
+            "key": "age",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "The user's age"
+          },
+          {
+            "key": "balance",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            },
+            "description": "The user's account balance"
+          },
+          {
+            "key": "isActive",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "Whether the user is active"
+          },
+          {
+            "key": "role",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "ADMIN",
+                  "description": "Administrator with full access"
+                },
+                {
+                  "value": "USER",
+                  "description": "Regular user"
+                },
+                {
+                  "value": "GUEST",
+                  "description": "Guest with limited access"
+                }
+              ]
+            },
+            "description": "The user's role in the system"
+          },
+          {
+            "key": "posts",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The unique identifier for the post"
+                    },
+                    {
+                      "key": "title",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post title"
+                    },
+                    {
+                      "key": "content",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post content"
+                    },
+                    {
+                      "key": "author",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "User"
+                        }
+                      },
+                      "description": "The post author"
+                    },
+                    {
+                      "key": "status",
+                      "valueShape": {
+                        "type": "enum",
+                        "values": [
+                          {
+                            "value": "DRAFT"
+                          },
+                          {
+                            "value": "PUBLISHED"
+                          },
+                          {
+                            "value": "ARCHIVED"
+                          }
+                        ]
+                      },
+                      "description": "The post status"
+                    },
+                    {
+                      "key": "tags",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "description": "Tags associated with the post"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "The user's posts"
+          }
+        ]
+      }
+    },
+    "mutation_deleteUser": {
+      "id": "mutation_deleteUser",
+      "operationType": "MUTATION",
+      "name": "deleteUser",
+      "description": "Delete a user",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "mutation_createPost": {
+      "id": "mutation_createPost",
+      "operationType": "MUTATION",
+      "name": "createPost",
+      "description": "Create a new post",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "title",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The post title"
+              },
+              {
+                "key": "content",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The post content"
+              },
+              {
+                "key": "authorId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The author's user ID"
+              },
+              {
+                "key": "tags",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Tags for the post"
+              }
+            ]
+          }
+        }
+      ],
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the post"
+          },
+          {
+            "key": "title",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post title"
+          },
+          {
+            "key": "content",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post content"
+          },
+          {
+            "key": "author",
+            "valueShape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The unique identifier for the user"
+                },
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's display name"
+                },
+                {
+                  "key": "email",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's email address"
+                },
+                {
+                  "key": "age",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "description": "The user's age"
+                },
+                {
+                  "key": "balance",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "double"
+                      }
+                    }
+                  },
+                  "description": "The user's account balance"
+                },
+                {
+                  "key": "isActive",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "description": "Whether the user is active"
+                },
+                {
+                  "key": "role",
+                  "valueShape": {
+                    "type": "enum",
+                    "values": [
+                      {
+                        "value": "ADMIN",
+                        "description": "Administrator with full access"
+                      },
+                      {
+                        "value": "USER",
+                        "description": "Regular user"
+                      },
+                      {
+                        "value": "GUEST",
+                        "description": "Guest with limited access"
+                      }
+                    ]
+                  },
+                  "description": "The user's role in the system"
+                },
+                {
+                  "key": "posts",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "Post"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The user's posts"
+                }
+              ]
+            },
+            "description": "The post author"
+          },
+          {
+            "key": "status",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "DRAFT"
+                },
+                {
+                  "value": "PUBLISHED"
+                },
+                {
+                  "value": "ARCHIVED"
+                }
+              ]
+            },
+            "description": "The post status"
+          },
+          {
+            "key": "tags",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Tags associated with the post"
+          }
+        ]
+      }
+    },
+    "mutation_updatePostStatus": {
+      "id": "mutation_updatePostStatus",
+      "operationType": "MUTATION",
+      "name": "updatePostStatus",
+      "description": "Update a post's status",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "status",
+          "type": {
+            "type": "enum",
+            "values": [
+              {
+                "value": "DRAFT"
+              },
+              {
+                "value": "PUBLISHED"
+              },
+              {
+                "value": "ARCHIVED"
+              }
+            ]
+          }
+        }
+      ],
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the post"
+          },
+          {
+            "key": "title",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post title"
+          },
+          {
+            "key": "content",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post content"
+          },
+          {
+            "key": "author",
+            "valueShape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The unique identifier for the user"
+                },
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's display name"
+                },
+                {
+                  "key": "email",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's email address"
+                },
+                {
+                  "key": "age",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "description": "The user's age"
+                },
+                {
+                  "key": "balance",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "double"
+                      }
+                    }
+                  },
+                  "description": "The user's account balance"
+                },
+                {
+                  "key": "isActive",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "description": "Whether the user is active"
+                },
+                {
+                  "key": "role",
+                  "valueShape": {
+                    "type": "enum",
+                    "values": [
+                      {
+                        "value": "ADMIN",
+                        "description": "Administrator with full access"
+                      },
+                      {
+                        "value": "USER",
+                        "description": "Regular user"
+                      },
+                      {
+                        "value": "GUEST",
+                        "description": "Guest with limited access"
+                      }
+                    ]
+                  },
+                  "description": "The user's role in the system"
+                },
+                {
+                  "key": "posts",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "Post"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The user's posts"
+                }
+              ]
+            },
+            "description": "The post author"
+          },
+          {
+            "key": "status",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "DRAFT"
+                },
+                {
+                  "value": "PUBLISHED"
+                },
+                {
+                  "value": "ARCHIVED"
+                }
+              ]
+            },
+            "description": "The post status"
+          },
+          {
+            "key": "tags",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Tags associated with the post"
+          }
+        ]
+      }
+    },
+    "subscription_userCreated": {
+      "id": "subscription_userCreated",
+      "operationType": "SUBSCRIPTION",
+      "name": "userCreated",
+      "description": "Subscribe to new user creations",
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the user"
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's display name"
+          },
+          {
+            "key": "email",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The user's email address"
+          },
+          {
+            "key": "age",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "The user's age"
+          },
+          {
+            "key": "balance",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            },
+            "description": "The user's account balance"
+          },
+          {
+            "key": "isActive",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "Whether the user is active"
+          },
+          {
+            "key": "role",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "ADMIN",
+                  "description": "Administrator with full access"
+                },
+                {
+                  "value": "USER",
+                  "description": "Regular user"
+                },
+                {
+                  "value": "GUEST",
+                  "description": "Guest with limited access"
+                }
+              ]
+            },
+            "description": "The user's role in the system"
+          },
+          {
+            "key": "posts",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The unique identifier for the post"
+                    },
+                    {
+                      "key": "title",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post title"
+                    },
+                    {
+                      "key": "content",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The post content"
+                    },
+                    {
+                      "key": "author",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "User"
+                        }
+                      },
+                      "description": "The post author"
+                    },
+                    {
+                      "key": "status",
+                      "valueShape": {
+                        "type": "enum",
+                        "values": [
+                          {
+                            "value": "DRAFT"
+                          },
+                          {
+                            "value": "PUBLISHED"
+                          },
+                          {
+                            "value": "ARCHIVED"
+                          }
+                        ]
+                      },
+                      "description": "The post status"
+                    },
+                    {
+                      "key": "tags",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "description": "Tags associated with the post"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "The user's posts"
+          }
+        ]
+      }
+    },
+    "subscription_postCreated": {
+      "id": "subscription_postCreated",
+      "operationType": "SUBSCRIPTION",
+      "name": "postCreated",
+      "description": "Subscribe to new posts by a specific user",
+      "arguments": [
+        {
+          "name": "authorId",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the post"
+          },
+          {
+            "key": "title",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post title"
+          },
+          {
+            "key": "content",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post content"
+          },
+          {
+            "key": "author",
+            "valueShape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The unique identifier for the user"
+                },
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's display name"
+                },
+                {
+                  "key": "email",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's email address"
+                },
+                {
+                  "key": "age",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "description": "The user's age"
+                },
+                {
+                  "key": "balance",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "double"
+                      }
+                    }
+                  },
+                  "description": "The user's account balance"
+                },
+                {
+                  "key": "isActive",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "description": "Whether the user is active"
+                },
+                {
+                  "key": "role",
+                  "valueShape": {
+                    "type": "enum",
+                    "values": [
+                      {
+                        "value": "ADMIN",
+                        "description": "Administrator with full access"
+                      },
+                      {
+                        "value": "USER",
+                        "description": "Regular user"
+                      },
+                      {
+                        "value": "GUEST",
+                        "description": "Guest with limited access"
+                      }
+                    ]
+                  },
+                  "description": "The user's role in the system"
+                },
+                {
+                  "key": "posts",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "Post"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The user's posts"
+                }
+              ]
+            },
+            "description": "The post author"
+          },
+          {
+            "key": "status",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "DRAFT"
+                },
+                {
+                  "value": "PUBLISHED"
+                },
+                {
+                  "value": "ARCHIVED"
+                }
+              ]
+            },
+            "description": "The post status"
+          },
+          {
+            "key": "tags",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Tags associated with the post"
+          }
+        ]
+      }
+    },
+    "subscription_postStatusChanged": {
+      "id": "subscription_postStatusChanged",
+      "operationType": "SUBSCRIPTION",
+      "name": "postStatusChanged",
+      "description": "Subscribe to post status changes",
+      "arguments": [
+        {
+          "name": "postId",
+          "type": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique identifier for the post"
+          },
+          {
+            "key": "title",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post title"
+          },
+          {
+            "key": "content",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The post content"
+          },
+          {
+            "key": "author",
+            "valueShape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The unique identifier for the user"
+                },
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's display name"
+                },
+                {
+                  "key": "email",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user's email address"
+                },
+                {
+                  "key": "age",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "description": "The user's age"
+                },
+                {
+                  "key": "balance",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "double"
+                      }
+                    }
+                  },
+                  "description": "The user's account balance"
+                },
+                {
+                  "key": "isActive",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "description": "Whether the user is active"
+                },
+                {
+                  "key": "role",
+                  "valueShape": {
+                    "type": "enum",
+                    "values": [
+                      {
+                        "value": "ADMIN",
+                        "description": "Administrator with full access"
+                      },
+                      {
+                        "value": "USER",
+                        "description": "Regular user"
+                      },
+                      {
+                        "value": "GUEST",
+                        "description": "Guest with limited access"
+                      }
+                    ]
+                  },
+                  "description": "The user's role in the system"
+                },
+                {
+                  "key": "posts",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "unknown",
+                          "displayName": "Post"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The user's posts"
+                }
+              ]
+            },
+            "description": "The post author"
+          },
+          {
+            "key": "status",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "DRAFT"
+                },
+                {
+                  "value": "PUBLISHED"
+                },
+                {
+                  "value": "ARCHIVED"
+                }
+              ]
+            },
+            "description": "The post status"
+          },
+          {
+            "key": "tags",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Tags associated with the post"
+          }
+        ]
+      }
+    }
+  }
+}
