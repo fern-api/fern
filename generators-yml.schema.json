@@ -2216,6 +2216,48 @@
       ],
       "additionalProperties": false
     },
+    "generators.GraphQLSpecSchema": {
+      "type": "object",
+      "properties": {
+        "graphql": {
+          "type": "string"
+        },
+        "origin": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "overrides": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resource": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "graphql"
+      ],
+      "additionalProperties": false
+    },
     "generators.SpecSchema": {
       "anyOf": [
         {
@@ -2229,6 +2271,9 @@
         },
         {
           "$ref": "#/definitions/generators.OpenRPCSpecSchema"
+        },
+        {
+          "$ref": "#/definitions/generators.GraphQLSpecSchema"
         }
       ]
     },
