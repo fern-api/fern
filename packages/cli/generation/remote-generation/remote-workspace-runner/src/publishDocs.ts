@@ -13,6 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -23,7 +24,6 @@ import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { measureImageSizes } from "./measureImageSizes";
 import { asyncPool } from "./utils/asyncPool";
@@ -264,8 +264,38 @@ export async function publishDocs({
                 }
             }
         },
-        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+        registerApi: async ({
+            ir,
+            snippetsConfig,
+            playgroundConfig,
+            graphqlOperations,
+            graphqlTypes,
+            apiName,
+            workspace
+        }) => {
+            // Log GraphQL operations and types received in publishDocs registerApi
+            const operationCount = graphqlOperations ? Object.keys(graphqlOperations).length : 0;
+            const typeCount = graphqlTypes ? Object.keys(graphqlTypes).length : 0;
+            context.logger.debug(
+                `publishDocs registerApi received ${operationCount} GraphQL operations and ${typeCount} GraphQL types`
+            );
+            if (operationCount > 0 && graphqlOperations) {
+                context.logger.debug(
+                    `GraphQL operation IDs in publishDocs: ${JSON.stringify(Object.keys(graphqlOperations))}`
+                );
+            }
+            if (typeCount > 0 && graphqlTypes) {
+                context.logger.debug(`GraphQL type IDs in publishDocs: ${JSON.stringify(Object.keys(graphqlTypes))}`);
+            }
+
+            let apiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
+                context
+            });
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,

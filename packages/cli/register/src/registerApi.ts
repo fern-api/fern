@@ -20,6 +20,8 @@ export async function registerApi({
     audiences,
     snippetsConfig,
     playgroundConfig,
+    graphqlOperations = {},
+    graphqlTypes = {},
     aiEnhancerConfig
 }: {
     organization: string;
@@ -29,8 +31,20 @@ export async function registerApi({
     audiences: Audiences;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.latest.GraphQlOperation>;
+    graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
     aiEnhancerConfig?: AIExampleEnhancerConfig;
 }): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
+    // Log GraphQL operations and types received
+    const operationCount = Object.keys(graphqlOperations).length;
+    const typeCount = Object.keys(graphqlTypes).length;
+    context.logger.debug(`registerApi received ${operationCount} GraphQL operations and ${typeCount} GraphQL types`);
+    if (operationCount > 0) {
+        context.logger.debug(`GraphQL operation IDs received: ${JSON.stringify(Object.keys(graphqlOperations))}`);
+    }
+    if (typeCount > 0) {
+        context.logger.debug(`GraphQL type IDs received: ${JSON.stringify(Object.keys(graphqlTypes))}`);
+    }
     const ir = generateIntermediateRepresentation({
         workspace,
         audiences,
@@ -49,7 +63,21 @@ export async function registerApi({
         token: token.value
     });
 
-    let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+    // Log before calling convertIrToFdrApi
+    context.logger.debug(
+        `Calling convertIrToFdrApi with ${Object.keys(graphqlOperations).length} GraphQL operations and ${Object.keys(graphqlTypes).length} GraphQL types`
+    );
+
+    let apiDefinition = convertIrToFdrApi({
+        ir,
+        snippetsConfig,
+        playgroundConfig,
+        graphqlOperations,
+        graphqlTypes,
+        context
+    });
+
+    context.logger.debug("convertIrToFdrApi completed successfully");
 
     if (aiEnhancerConfig) {
         const sources = workspace.getSources();

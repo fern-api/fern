@@ -9,13 +9,31 @@ export function convertIrToFdrApi({
     ir,
     snippetsConfig,
     playgroundConfig,
+    graphqlOperations = {},
+    graphqlTypes = {},
     context
 }: {
     ir: IntermediateRepresentation;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.latest.GraphQlOperation>;
+    graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
     context: TaskContext;
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
+    // Log GraphQL operations and types received in convertIrToFdrApi
+    const operationCount = Object.keys(graphqlOperations).length;
+    const typeCount = Object.keys(graphqlTypes).length;
+    context.logger.debug(
+        `convertIrToFdrApi received ${operationCount} GraphQL operations and ${typeCount} GraphQL types`
+    );
+    if (operationCount > 0) {
+        context.logger.debug(
+            `GraphQL operation IDs in convertIrToFdrApi: ${JSON.stringify(Object.keys(graphqlOperations))}`
+        );
+    }
+    if (typeCount > 0) {
+        context.logger.debug(`GraphQL type IDs in convertIrToFdrApi: ${JSON.stringify(Object.keys(graphqlTypes))}`);
+    }
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
@@ -33,8 +51,17 @@ export function convertIrToFdrApi({
             })
         ),
         navigation: undefined,
-        graphqlOperations: {}
+        graphqlOperations
     };
+
+    // Log GraphQL operations added to API definition
+    const finalOperationCount = Object.keys(fdrApi.graphqlOperations).length;
+    context.logger.debug(`API definition created with ${finalOperationCount} GraphQL operations`);
+    if (finalOperationCount > 0) {
+        context.logger.debug(
+            `Final GraphQL operations in API definition: ${JSON.stringify(Object.keys(fdrApi.graphqlOperations))}`
+        );
+    }
 
     for (const [typeId, type] of Object.entries(ir.types)) {
         fdrApi.types[FdrCjsSdk.TypeId(typeId)] = {
@@ -44,6 +71,11 @@ export function convertIrToFdrApi({
             availability: convertIrAvailability(type.availability),
             displayName: type.name.displayName
         };
+    }
+
+    // Merge GraphQL types into the API definition
+    for (const [typeId, typeDefinition] of Object.entries(graphqlTypes)) {
+        fdrApi.types[FdrCjsSdk.TypeId(typeId)] = typeDefinition;
     }
 
     for (const [subpackageId, subpackage] of Object.entries(ir.subpackages)) {
