@@ -24,7 +24,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
         .strict()
         .demandCommand()
         .recommendCommands()
-        .fail((msg, err, yargs) => {
+        .fail((msg, err, y) => {
             if (err != null) {
                 process.stderr.write(`${err.message}\n`);
                 process.exit(1);
@@ -32,7 +32,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
             if (msg != null) {
                 process.stderr.write(`Error: ${msg}\n\n`);
             }
-            yargs.showHelp();
+            y.showHelp();
             process.exit(1);
         });
 
