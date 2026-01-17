@@ -18,16 +18,20 @@ describe("GraphQLConverter", async () => {
         }
 
         it(fixture.name, async () => {
-            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("schema.graphql"));
+            const fixturePath = join(
+                FIXTURES_DIR,
+                RelativeFilePath.of(fixture.name),
+                RelativeFilePath.of("schema.graphql")
+            );
             const context = createMockTaskContext();
-            
+
             const converter = new GraphQLConverter({
                 context,
                 filePath: fixturePath
             });
 
             const result = await converter.convert();
-            
+
             await expect(JSON.stringify(result, undefined, 2)).toMatchFileSnapshot(
                 `./__snapshots__/${fixture.name}.json`
             );

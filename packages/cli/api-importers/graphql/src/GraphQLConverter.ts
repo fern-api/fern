@@ -279,7 +279,7 @@ export class GraphQLConverter {
 
     private convertObjectType(type: GraphQLObjectType | GraphQLInterfaceType): FdrAPI.api.latest.TypeShape {
         const typeName = type.name;
-        
+
         if (this.visitedTypes.has(typeName)) {
             return {
                 type: "alias",
@@ -289,9 +289,9 @@ export class GraphQLConverter {
                 }
             };
         }
-        
+
         this.visitedTypes.add(typeName);
-        
+
         const fields = type.getFields();
         const properties: FdrAPI.api.latest.ObjectProperty[] = [];
 
@@ -317,7 +317,7 @@ export class GraphQLConverter {
 
     private convertInputObjectType(type: GraphQLInputObjectType): FdrAPI.api.latest.TypeShape {
         const typeName = type.name;
-        
+
         if (this.visitedTypes.has(typeName)) {
             return {
                 type: "alias",
@@ -327,9 +327,9 @@ export class GraphQLConverter {
                 }
             };
         }
-        
+
         this.visitedTypes.add(typeName);
-        
+
         const fields = type.getFields();
         const properties: FdrAPI.api.latest.ObjectProperty[] = [];
 
