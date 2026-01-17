@@ -5,6 +5,7 @@ import { TaskContext } from "@fern-api/task-context";
 
 export interface GraphQLFdrResult {
     graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>;
+    types: Record<FdrAPI.TypeId, FdrAPI.api.latest.TypeDefinition>;
 }
 
 export async function generateFdrFromGraphQL(
