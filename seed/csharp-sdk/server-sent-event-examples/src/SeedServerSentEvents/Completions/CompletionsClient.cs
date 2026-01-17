@@ -105,10 +105,52 @@ public partial class CompletionsClient : ICompletionsClient
                     cancellationToken
                 )
                 .ConfigureAwait(false);
-            // Streaming responses are not supported for raw access
-            throw new SeedServerSentEventsException(
-                "Streaming responses are not supported for raw access"
-            );
+            if (response.StatusCode is >= 200 and < 400)
+            {
+                var rawResponse = new RawResponse
+                {
+                    StatusCode = (global::System.Net.HttpStatusCode)response.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri!,
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                };
+
+                return new WithRawResponse<IAsyncEnumerable<StreamedCompletion>>
+                {
+                    Data = StreamDataAsync(),
+                    RawResponse = rawResponse,
+                };
+
+                async IAsyncEnumerable<StreamedCompletion> StreamDataAsync()
+                {
+                    await foreach (
+                        var item in SseParser
+                            .Create(await response.Raw.Content.ReadAsStreamAsync())
+                            .EnumerateAsync()
+                    )
+                    {
+                        if (!string.IsNullOrEmpty(item.Data))
+                        {
+                            if (item.Data == "[[DONE]]")
+                            {
+                                break;
+                            }
+                            StreamedCompletion? result;
+                            try
+                            {
+                                result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
+                            }
+                            catch (System.Text.Json.JsonException)
+                            {
+                                throw new SeedServerSentEventsException(
+                                    $"Unable to deserialize JSON response 'item.Data'"
+                                );
+                            }
+                            yield return result!;
+                        }
+                    }
+                    yield break;
+                }
+            }
             {
                 var responseBody = await response.Raw.Content.ReadAsStringAsync();
                 throw new SeedServerSentEventsApiException(
