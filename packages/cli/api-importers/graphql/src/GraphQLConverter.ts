@@ -29,11 +29,17 @@ export class GraphQLConverter {
     private context: TaskContext;
     private filePath: AbsoluteFilePath;
     private visitedTypes: Set<string> = new Set();
+    private processingTypes: Set<string> = new Set(); // Track types currently being processed to detect cycles
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
     constructor({ context, filePath }: { context: TaskContext; filePath: AbsoluteFilePath }) {
         this.context = context;
         this.filePath = filePath;
+    }
+
+    private isBuiltInScalar(typeName: string): boolean {
+        // GraphQL built-in scalars that don't need type definitions
+        return ["String", "Int", "Float", "Boolean", "ID"].includes(typeName);
     }
 
     public async convert(): Promise<GraphQLConverterResult> {
@@ -84,45 +90,80 @@ export class GraphQLConverter {
                 continue;
             }
 
-            // Skip scalar types (they don't need to be in the types map)
-            if (type instanceof GraphQLScalarType) {
+            // Skip built-in scalar types, but include custom scalars
+            if (type instanceof GraphQLScalarType && this.isBuiltInScalar(typeName)) {
                 continue;
             }
 
             const typeId = FdrAPI.TypeId(typeName);
 
+            // Use backtracking pattern to detect recursive types
             if (type instanceof GraphQLEnumType) {
-                this.types[typeId] = {
-                    name: typeName,
-                    shape: this.convertEnumTypeDefinition(type),
-                    displayName: undefined,
-                    description: type.description ?? undefined,
-                    availability: undefined
-                };
+                this.processingTypes.add(typeName);
+                try {
+                    this.types[typeId] = {
+                        name: typeName,
+                        shape: this.convertEnumTypeDefinition(type),
+                        displayName: undefined,
+                        description: type.description ?? undefined,
+                        availability: undefined
+                    };
+                } finally {
+                    this.processingTypes.delete(typeName);
+                }
             } else if (type instanceof GraphQLObjectType || type instanceof GraphQLInterfaceType) {
-                this.types[typeId] = {
-                    name: typeName,
-                    shape: this.convertObjectTypeDefinition(type),
-                    displayName: undefined,
-                    description: type.description ?? undefined,
-                    availability: undefined
-                };
+                this.processingTypes.add(typeName);
+                try {
+                    this.types[typeId] = {
+                        name: typeName,
+                        shape: this.convertObjectTypeDefinition(type),
+                        displayName: undefined,
+                        description: type.description ?? undefined,
+                        availability: undefined
+                    };
+                } finally {
+                    this.processingTypes.delete(typeName);
+                }
             } else if (type instanceof GraphQLInputObjectType) {
-                this.types[typeId] = {
-                    name: typeName,
-                    shape: this.convertInputObjectTypeDefinition(type),
-                    displayName: undefined,
-                    description: type.description ?? undefined,
-                    availability: undefined
-                };
+                this.processingTypes.add(typeName);
+                try {
+                    this.types[typeId] = {
+                        name: typeName,
+                        shape: this.convertInputObjectTypeDefinition(type),
+                        displayName: undefined,
+                        description: type.description ?? undefined,
+                        availability: undefined
+                    };
+                } finally {
+                    this.processingTypes.delete(typeName);
+                }
             } else if (type instanceof GraphQLUnionType) {
-                this.types[typeId] = {
-                    name: typeName,
-                    shape: this.convertUnionTypeDefinition(type),
-                    displayName: undefined,
-                    description: type.description ?? undefined,
-                    availability: undefined
-                };
+                this.processingTypes.add(typeName);
+                try {
+                    this.types[typeId] = {
+                        name: typeName,
+                        shape: this.convertUnionTypeDefinition(type),
+                        displayName: undefined,
+                        description: type.description ?? undefined,
+                        availability: undefined
+                    };
+                } finally {
+                    this.processingTypes.delete(typeName);
+                }
+            } else if (type instanceof GraphQLScalarType && !this.isBuiltInScalar(typeName)) {
+                // Handle custom scalar types as alias types
+                this.processingTypes.add(typeName);
+                try {
+                    this.types[typeId] = {
+                        name: typeName,
+                        shape: this.convertScalarTypeDefinition(type),
+                        displayName: undefined,
+                        description: type.description ?? undefined,
+                        availability: undefined
+                    };
+                } finally {
+                    this.processingTypes.delete(typeName);
+                }
             }
         }
     }
@@ -190,14 +231,38 @@ export class GraphQLConverter {
         }
 
         if (type instanceof GraphQLEnumType) {
+            // Check for cycles - if we're currently processing this type, return a reference
+            if (this.processingTypes.has(type.name)) {
+                return {
+                    type: "id",
+                    value: FdrAPI.TypeId(type.name),
+                    default: undefined
+                };
+            }
             return this.convertEnumType(type);
         }
 
         if (type instanceof GraphQLObjectType || type instanceof GraphQLInterfaceType) {
+            // Check for cycles - if we're currently processing this type, return a reference
+            if (this.processingTypes.has(type.name)) {
+                return {
+                    type: "id",
+                    value: FdrAPI.TypeId(type.name),
+                    default: undefined
+                };
+            }
             return this.convertObjectType(type);
         }
 
         if (type instanceof GraphQLUnionType) {
+            // Check for cycles - if we're currently processing this type, return a reference
+            if (this.processingTypes.has(type.name)) {
+                return {
+                    type: "id",
+                    value: FdrAPI.TypeId(type.name),
+                    default: undefined
+                };
+            }
             return this.convertUnionType(type);
         }
 
@@ -226,10 +291,26 @@ export class GraphQLConverter {
         }
 
         if (type instanceof GraphQLEnumType) {
+            // Check for cycles - if we're currently processing this type, return a reference
+            if (this.processingTypes.has(type.name)) {
+                return {
+                    type: "id",
+                    value: FdrAPI.TypeId(type.name),
+                    default: undefined
+                };
+            }
             return this.convertEnumType(type);
         }
 
         if (type instanceof GraphQLInputObjectType) {
+            // Check for cycles - if we're currently processing this type, return a reference
+            if (this.processingTypes.has(type.name)) {
+                return {
+                    type: "id",
+                    value: FdrAPI.TypeId(type.name),
+                    default: undefined
+                };
+            }
             return this.convertInputObjectType(type);
         }
 
@@ -239,67 +320,78 @@ export class GraphQLConverter {
     }
 
     private convertScalarType(type: GraphQLScalarType): FdrAPI.api.v1.register.TypeReference {
-        const scalarName = type.name.toLowerCase();
-        switch (scalarName) {
-            case "string":
-            case "id":
-                return {
-                    type: "primitive",
-                    value: {
-                        type: "string",
-                        format: undefined,
-                        regex: undefined,
-                        minLength: undefined,
-                        maxLength: undefined,
-                        default: undefined
-                    }
-                };
-            case "int":
-                return {
-                    type: "primitive",
-                    value: {
-                        type: "integer",
-                        minimum: undefined,
-                        maximum: undefined,
-                        exclusiveMinimum: undefined,
-                        exclusiveMaximum: undefined,
-                        multipleOf: undefined,
-                        default: undefined
-                    }
-                };
-            case "float":
-                return {
-                    type: "primitive",
-                    value: {
-                        type: "double",
-                        minimum: undefined,
-                        maximum: undefined,
-                        exclusiveMinimum: undefined,
-                        exclusiveMaximum: undefined,
-                        multipleOf: undefined,
-                        default: undefined
-                    }
-                };
-            case "boolean":
-                return {
-                    type: "primitive",
-                    value: {
-                        type: "boolean",
-                        default: undefined
-                    }
-                };
-            default:
-                return {
-                    type: "primitive",
-                    value: {
-                        type: "string",
-                        format: undefined,
-                        regex: undefined,
-                        minLength: undefined,
-                        maxLength: undefined,
-                        default: undefined
-                    }
-                };
+        // Check if this is a built-in scalar that should be converted directly to primitives
+        if (this.isBuiltInScalar(type.name)) {
+            const scalarName = type.name.toLowerCase();
+            switch (scalarName) {
+                case "string":
+                case "id":
+                    return {
+                        type: "primitive",
+                        value: {
+                            type: "string",
+                            format: undefined,
+                            regex: undefined,
+                            minLength: undefined,
+                            maxLength: undefined,
+                            default: undefined
+                        }
+                    };
+                case "int":
+                    return {
+                        type: "primitive",
+                        value: {
+                            type: "integer",
+                            minimum: undefined,
+                            maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
+                            default: undefined
+                        }
+                    };
+                case "float":
+                    return {
+                        type: "primitive",
+                        value: {
+                            type: "double",
+                            minimum: undefined,
+                            maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
+                            default: undefined
+                        }
+                    };
+                case "boolean":
+                    return {
+                        type: "primitive",
+                        value: {
+                            type: "boolean",
+                            default: undefined
+                        }
+                    };
+                default:
+                    // This shouldn't happen for built-in scalars, but fallback to string
+                    return {
+                        type: "primitive",
+                        value: {
+                            type: "string",
+                            format: undefined,
+                            regex: undefined,
+                            minLength: undefined,
+                            maxLength: undefined,
+                            default: undefined
+                        }
+                    };
+            }
+        } else {
+            // For custom scalars, return a reference to the alias type we created
+            return {
+                type: "id",
+                value: FdrAPI.TypeId(type.name),
+                default: undefined
+            };
         }
     }
 
@@ -416,5 +508,153 @@ export class GraphQLConverter {
                 availability: undefined
             }))
         };
+    }
+
+    private convertScalarTypeDefinition(type: GraphQLScalarType): FdrAPI.api.v1.register.TypeShape {
+        // Create an alias type that wraps the appropriate primitive type
+        // based on common GraphQL scalar naming patterns
+        const scalarName = type.name.toLowerCase();
+        const baseType = this.getBaseTypeForCustomScalar(scalarName);
+
+        return {
+            type: "alias",
+            value: baseType
+        };
+    }
+
+    private getBaseTypeForCustomScalar(scalarName: string): FdrAPI.api.v1.register.TypeReference {
+        // Map common custom scalar patterns to appropriate FDR primitive types
+        switch (scalarName) {
+            case "datetime":
+            case "timestamp":
+            case "zoneddatetime":
+            case "offsetdatetime":
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "datetime",
+                        default: undefined
+                    }
+                };
+
+            case "date":
+            case "localdate":
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "date",
+                        default: undefined
+                    }
+                };
+
+            case "email":
+            case "emailaddress":
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "string",
+                        format: "email",
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined
+                    }
+                };
+
+            case "url":
+            case "uri":
+            case "urlstring":
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "string",
+                        format: "uri",
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined
+                    }
+                };
+
+            case "uuid":
+            case "guid":
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "string",
+                        format: "uuid",
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined
+                    }
+                };
+
+            case "json":
+            case "jsonobject":
+                return {
+                    type: "unknown"
+                };
+
+            case "upload":
+            case "file":
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "string",
+                        format: "binary",
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined
+                    }
+                };
+
+            case "bigint":
+            case "long":
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "long",
+                        minimum: undefined,
+                        maximum: undefined,
+                        exclusiveMinimum: undefined,
+                        exclusiveMaximum: undefined,
+                        multipleOf: undefined,
+                        default: undefined
+                    }
+                };
+
+            case "decimal":
+            case "currency":
+            case "money":
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "double",
+                        minimum: undefined,
+                        maximum: undefined,
+                        exclusiveMinimum: undefined,
+                        exclusiveMaximum: undefined,
+                        multipleOf: undefined,
+                        default: undefined
+                    }
+                };
+
+            // For all other custom scalars, default to string
+            // but preserve them as named types so they maintain semantic meaning
+            default:
+                return {
+                    type: "primitive",
+                    value: {
+                        type: "string",
+                        format: undefined,
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined
+                    }
+                };
+        }
     }
 }
