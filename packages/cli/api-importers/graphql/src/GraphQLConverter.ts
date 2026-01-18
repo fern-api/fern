@@ -20,8 +20,8 @@ import {
 } from "graphql";
 
 export interface GraphQLConverterResult {
-    graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>;
-    types: Record<FdrAPI.TypeId, FdrAPI.api.latest.TypeDefinition>;
+    graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
+    types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
 }
 
 export class GraphQLConverter {
@@ -29,7 +29,7 @@ export class GraphQLConverter {
     private context: TaskContext;
     private filePath: AbsoluteFilePath;
     private visitedTypes: Set<string> = new Set();
-    private types: Record<FdrAPI.TypeId, FdrAPI.api.latest.TypeDefinition> = {};
+    private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
     constructor({ context, filePath }: { context: TaskContext; filePath: AbsoluteFilePath }) {
         this.context = context;
@@ -43,7 +43,7 @@ export class GraphQLConverter {
         // First pass: collect all type definitions
         this.collectTypeDefinitions();
 
-        const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation> = {};
+        const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
 
         const queryType = this.schema.getQueryType();
         if (queryType) {
@@ -129,8 +129,8 @@ export class GraphQLConverter {
 
     private convertOperations(
         type: GraphQLObjectType,
-        operationType: FdrAPI.api.latest.GraphQlOperationType,
-        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>
+        operationType: FdrAPI.api.v1.register.GraphQlOperationType,
+        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>
     ): void {
         const fields = type.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
@@ -142,8 +142,8 @@ export class GraphQLConverter {
     private convertField(
         field: GraphQLField<unknown, unknown>,
         name: string,
-        operationType: FdrAPI.api.latest.GraphQlOperationType
-    ): FdrAPI.api.latest.GraphQlOperation {
+        operationType: FdrAPI.api.v1.register.GraphQlOperationType
+    ): FdrAPI.api.v1.register.GraphQlOperation {
         const args = field.args.map((arg) => this.convertArgument(arg));
 
         return {
@@ -153,7 +153,6 @@ export class GraphQLConverter {
             displayName: undefined,
             description: field.description ?? undefined,
             availability: undefined,
-            namespace: undefined,
             arguments: args.length > 0 ? args : undefined,
             returnType: this.convertOutputType(field.type),
             examples: undefined,
@@ -161,7 +160,7 @@ export class GraphQLConverter {
         };
     }
 
-    private convertArgument(arg: GQLArgument): FdrAPI.api.latest.GraphQlArgument {
+    private convertArgument(arg: GQLArgument): FdrAPI.api.v1.register.GraphQlArgument {
         return {
             name: arg.name,
             description: arg.description ?? undefined,
@@ -171,7 +170,7 @@ export class GraphQLConverter {
         };
     }
 
-    private convertOutputType(type: GraphQLOutputType): FdrAPI.api.latest.TypeShape {
+    private convertOutputType(type: GraphQLOutputType): FdrAPI.api.v1.register.TypeReference {
         if (type instanceof GraphQLNonNull) {
             const innerType = this.convertOutputType(type.ofType);
             return innerType;
@@ -179,13 +178,10 @@ export class GraphQLConverter {
 
         if (type instanceof GraphQLList) {
             return {
-                type: "alias",
-                value: {
-                    type: "list",
-                    itemShape: this.convertOutputType(type.ofType),
-                    minItems: undefined,
-                    maxItems: undefined
-                }
+                type: "list",
+                itemType: this.convertOutputType(type.ofType),
+                minItems: undefined,
+                maxItems: undefined
             };
         }
 
@@ -206,15 +202,11 @@ export class GraphQLConverter {
         }
 
         return {
-            type: "alias",
-            value: {
-                type: "unknown",
-                displayName: undefined
-            }
+            type: "unknown"
         };
     }
 
-    private convertInputType(type: GraphQLInputType): FdrAPI.api.latest.TypeShape {
+    private convertInputType(type: GraphQLInputType): FdrAPI.api.v1.register.TypeReference {
         if (type instanceof GraphQLNonNull) {
             const innerType = this.convertInputType(type.ofType);
             return innerType;
@@ -222,13 +214,10 @@ export class GraphQLConverter {
 
         if (type instanceof GraphQLList) {
             return {
-                type: "alias",
-                value: {
-                    type: "list",
-                    itemShape: this.convertInputType(type.ofType),
-                    minItems: undefined,
-                    maxItems: undefined
-                }
+                type: "list",
+                itemType: this.convertInputType(type.ofType),
+                minItems: undefined,
+                maxItems: undefined
             };
         }
 
@@ -245,145 +234,114 @@ export class GraphQLConverter {
         }
 
         return {
-            type: "alias",
-            value: {
-                type: "unknown",
-                displayName: undefined
-            }
+            type: "unknown"
         };
     }
 
-    private convertScalarType(type: GraphQLScalarType): FdrAPI.api.latest.TypeShape {
+    private convertScalarType(type: GraphQLScalarType): FdrAPI.api.v1.register.TypeReference {
         const scalarName = type.name.toLowerCase();
         switch (scalarName) {
             case "string":
             case "id":
                 return {
-                    type: "alias",
+                    type: "primitive",
                     value: {
-                        type: "primitive",
-                        value: {
-                            type: "string",
-                            format: undefined,
-                            regex: undefined,
-                            minLength: undefined,
-                            maxLength: undefined,
-                            default: undefined
-                        }
+                        type: "string",
+                        format: undefined,
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined
                     }
                 };
             case "int":
                 return {
-                    type: "alias",
+                    type: "primitive",
                     value: {
-                        type: "primitive",
-                        value: {
-                            type: "integer",
-                            minimum: undefined,
-                            maximum: undefined,
-                            exclusiveMinimum: undefined,
-                            exclusiveMaximum: undefined,
-                            multipleOf: undefined,
-                            default: undefined
-                        }
+                        type: "integer",
+                        minimum: undefined,
+                        maximum: undefined,
+                        exclusiveMinimum: undefined,
+                        exclusiveMaximum: undefined,
+                        multipleOf: undefined,
+                        default: undefined
                     }
                 };
             case "float":
                 return {
-                    type: "alias",
+                    type: "primitive",
                     value: {
-                        type: "primitive",
-                        value: {
-                            type: "double",
-                            minimum: undefined,
-                            maximum: undefined,
-                            exclusiveMinimum: undefined,
-                            exclusiveMaximum: undefined,
-                            multipleOf: undefined,
-                            default: undefined
-                        }
+                        type: "double",
+                        minimum: undefined,
+                        maximum: undefined,
+                        exclusiveMinimum: undefined,
+                        exclusiveMaximum: undefined,
+                        multipleOf: undefined,
+                        default: undefined
                     }
                 };
             case "boolean":
                 return {
-                    type: "alias",
+                    type: "primitive",
                     value: {
-                        type: "primitive",
-                        value: {
-                            type: "boolean",
-                            default: undefined
-                        }
+                        type: "boolean",
+                        default: undefined
                     }
                 };
             default:
                 return {
-                    type: "alias",
+                    type: "primitive",
                     value: {
-                        type: "primitive",
-                        value: {
-                            type: "string",
-                            format: undefined,
-                            regex: undefined,
-                            minLength: undefined,
-                            maxLength: undefined,
-                            default: undefined
-                        }
+                        type: "string",
+                        format: undefined,
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined
                     }
                 };
         }
     }
 
     // Methods for returning type references (used when referencing types in operations)
-    private convertEnumType(type: GraphQLEnumType): FdrAPI.api.latest.TypeShape {
+    private convertEnumType(type: GraphQLEnumType): FdrAPI.api.v1.register.TypeReference {
         // Return a reference to the type in the types map
         return {
-            type: "alias",
-            value: {
-                type: "id",
-                id: FdrAPI.TypeId(type.name),
-                default: undefined
-            }
+            type: "id",
+            value: FdrAPI.TypeId(type.name),
+            default: undefined
         };
     }
 
-    private convertObjectType(type: GraphQLObjectType | GraphQLInterfaceType): FdrAPI.api.latest.TypeShape {
+    private convertObjectType(type: GraphQLObjectType | GraphQLInterfaceType): FdrAPI.api.v1.register.TypeReference {
         // Return a reference to the type in the types map
         return {
-            type: "alias",
-            value: {
-                type: "id",
-                id: FdrAPI.TypeId(type.name),
-                default: undefined
-            }
+            type: "id",
+            value: FdrAPI.TypeId(type.name),
+            default: undefined
         };
     }
 
-    private convertInputObjectType(type: GraphQLInputObjectType): FdrAPI.api.latest.TypeShape {
+    private convertInputObjectType(type: GraphQLInputObjectType): FdrAPI.api.v1.register.TypeReference {
         // Return a reference to the type in the types map
         return {
-            type: "alias",
-            value: {
-                type: "id",
-                id: FdrAPI.TypeId(type.name),
-                default: undefined
-            }
+            type: "id",
+            value: FdrAPI.TypeId(type.name),
+            default: undefined
         };
     }
 
-    private convertUnionType(type: GraphQLUnionType): FdrAPI.api.latest.TypeShape {
+    private convertUnionType(type: GraphQLUnionType): FdrAPI.api.v1.register.TypeReference {
         // Return a reference to the type in the types map
         return {
-            type: "alias",
-            value: {
-                type: "id",
-                id: FdrAPI.TypeId(type.name),
-                default: undefined
-            }
+            type: "id",
+            value: FdrAPI.TypeId(type.name),
+            default: undefined
         };
     }
 
     // Methods for creating type definitions (used when building the types map)
-    private convertEnumTypeDefinition(type: GraphQLEnumType): FdrAPI.api.latest.TypeShape {
+    private convertEnumTypeDefinition(type: GraphQLEnumType): FdrAPI.api.v1.register.TypeShape {
         const values = type.getValues();
         return {
             type: "enum",
@@ -396,14 +354,16 @@ export class GraphQLConverter {
         };
     }
 
-    private convertObjectTypeDefinition(type: GraphQLObjectType | GraphQLInterfaceType): FdrAPI.api.latest.TypeShape {
+    private convertObjectTypeDefinition(
+        type: GraphQLObjectType | GraphQLInterfaceType
+    ): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties: FdrAPI.api.latest.ObjectProperty[] = [];
+        const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
 
         for (const [fieldName, field] of Object.entries(fields)) {
             properties.push({
                 key: FdrAPI.PropertyKey(fieldName),
-                valueShape: this.convertOutputType(field.type),
+                valueType: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
                 propertyAccess: undefined
@@ -418,14 +378,14 @@ export class GraphQLConverter {
         };
     }
 
-    private convertInputObjectTypeDefinition(type: GraphQLInputObjectType): FdrAPI.api.latest.TypeShape {
+    private convertInputObjectTypeDefinition(type: GraphQLInputObjectType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties: FdrAPI.api.latest.ObjectProperty[] = [];
+        const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
 
         for (const [fieldName, field] of Object.entries(fields)) {
             properties.push({
                 key: FdrAPI.PropertyKey(fieldName),
-                valueShape: this.convertInputType(field.type),
+                valueType: this.convertInputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
                 propertyAccess: undefined
@@ -440,13 +400,18 @@ export class GraphQLConverter {
         };
     }
 
-    private convertUnionTypeDefinition(type: GraphQLUnionType): FdrAPI.api.latest.TypeShape {
+    private convertUnionTypeDefinition(type: GraphQLUnionType): FdrAPI.api.v1.register.TypeShape {
         const types = type.getTypes();
         return {
             type: "undiscriminatedUnion",
             variants: types.map((t) => ({
+                typeName: t.name,
                 displayName: t.name,
-                shape: this.convertObjectType(t),
+                type: {
+                    type: "id",
+                    value: FdrAPI.TypeId(t.name),
+                    default: undefined
+                },
                 description: t.description ?? undefined,
                 availability: undefined
             }))

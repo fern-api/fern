@@ -3,10 +3,10 @@
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],
-  "graphqlOperations": {},
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_documentManagement",
@@ -33,6 +33,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
+      "graphqlOperations": [],
       "name": "documentManagement",
       "pointsTo": undefined,
       "subpackageId": "subpackage_documentManagement",

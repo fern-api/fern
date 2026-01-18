@@ -16,7 +16,7 @@ export function convertIrToFdrApi({
     ir: IntermediateRepresentation;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
-    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.latest.GraphQlOperation>;
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>;
     graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
     context: TaskContext;
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
@@ -37,7 +37,7 @@ export function convertIrToFdrApi({
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
-        rootPackage: convertPackage(ir.rootPackage, ir),
+        rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations),
         apiName: ir.apiName.originalName,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
@@ -50,16 +50,15 @@ export function convertIrToFdrApi({
                 type: convertTypeReference(header.valueType)
             })
         ),
-        navigation: undefined,
-        graphqlOperations
+        navigation: undefined
     };
 
-    // Log GraphQL operations added to API definition
-    const finalOperationCount = Object.keys(fdrApi.graphqlOperations).length;
-    context.logger.debug(`API definition created with ${finalOperationCount} GraphQL operations`);
-    if (finalOperationCount > 0) {
+    // Log GraphQL operations added to rootPackage
+    const finalOperationCount = fdrApi.rootPackage.graphqlOperations?.length ?? 0;
+    context.logger.debug(`API definition created with ${finalOperationCount} GraphQL operations in rootPackage`);
+    if (finalOperationCount > 0 && fdrApi.rootPackage.graphqlOperations) {
         context.logger.debug(
-            `Final GraphQL operations in API definition: ${JSON.stringify(Object.keys(fdrApi.graphqlOperations))}`
+            `Final rootPackage GraphQL operations: ${JSON.stringify(fdrApi.rootPackage.graphqlOperations.map((op) => op.id))}`
         );
     }
 

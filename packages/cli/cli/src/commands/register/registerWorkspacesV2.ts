@@ -1,4 +1,6 @@
 import { FernToken } from "@fern-api/auth";
+import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { AIExampleEnhancerConfig, registerApi } from "@fern-api/register";
 import chalk from "chalk";
@@ -20,6 +22,50 @@ export async function registerWorkspacesV2({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                // Extract GraphQL operations from the workspace
+                const graphqlOperations: Record<string, any> = {};
+                const graphqlTypes: Record<string, any> = {};
+
+                // Process GraphQL specs in the workspace
+                if (workspace instanceof OSSWorkspace) {
+                    const graphqlSpecs = workspace.allSpecs.filter((spec) => spec.type === "graphql");
+                    context.logger.debug(`Found ${graphqlSpecs.length} GraphQL specs in workspace`);
+
+                    for (const spec of graphqlSpecs) {
+                        try {
+                            context.logger.debug(`Processing GraphQL spec: ${spec.absoluteFilepath}`);
+                            const converter = new GraphQLConverter({
+                                context,
+                                filePath: spec.absoluteFilepath
+                            });
+                            const graphqlResult = await converter.convert();
+                            const operationCount = Object.keys(graphqlResult.graphqlOperations).length;
+                            const typeCount = Object.keys(graphqlResult.types).length;
+                            context.logger.debug(
+                                `GraphQL spec ${spec.absoluteFilepath} converted successfully with ${operationCount} operations and ${typeCount} types`
+                            );
+
+                            // Merge the GraphQL operations and types from this spec
+                            Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
+
+                            // Convert GraphQL types from api.latest to api.v1.register format
+                            for (const [typeId, typeDefinition] of Object.entries(graphqlResult.types)) {
+                                graphqlTypes[typeId] = typeDefinition as any;
+                            }
+                        } catch (error) {
+                            context.logger.error(
+                                `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                                String(error)
+                            );
+                            // Continue processing other specs
+                        }
+                    }
+                }
+
+                context.logger.debug(
+                    `Total extracted: ${Object.keys(graphqlOperations).length} GraphQL operations, ${Object.keys(graphqlTypes).length} GraphQL types`
+                );
+
                 await registerApi({
                     organization: project.config.organization,
                     workspace: await workspace.toFernWorkspace({ context }),
@@ -37,6 +83,8 @@ export async function registerWorkspacesV2({
                         swiftSdk: undefined,
                         rustSdk: undefined
                     },
+                    graphqlOperations,
+                    graphqlTypes,
                     aiEnhancerConfig
                 });
                 context.logger.info(chalk.green("Registered API"));

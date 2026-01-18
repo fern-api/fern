@@ -30,6 +30,7 @@ export class ApiReferenceNodeConverter {
     #visitedWebSockets = new Set<FernNavigation.V1.WebSocketId>();
     #visitedWebhooks = new Set<FernNavigation.V1.WebhookId>();
     #visitedGrpcs = new Set<FernNavigation.V1.GrpcId>();
+    #visitedGraphqlOperations = new Set<APIV1Read.GraphQlOperationId>();
     #visitedSubpackages = new Set<string>();
     #nodeIdToSubpackageId = new Map<string, string[]>();
     #children: FernNavigation.V1.ApiPackageChild[] = [];
@@ -621,6 +622,46 @@ export class ApiReferenceNodeConverter {
             }
         }
 
+        // Check if it's a GraphQL operation
+        const graphqlOperation = this.#holder.api.rootPackage.graphqlOperations?.find(
+            (op) => op.id === endpointItem.endpoint || op.name === endpointItem.endpoint
+        );
+
+        if (graphqlOperation != null) {
+            const operationId = APIV1Read.GraphQlOperationId(graphqlOperation.id);
+            if (this.#visitedGraphqlOperations.has(operationId)) {
+                this.taskContext.logger.error(
+                    `Duplicate GraphQL operation found in the API Reference layout: ${operationId}`
+                );
+                return;
+            }
+            this.#visitedGraphqlOperations.add(operationId);
+
+            const operationSlug =
+                endpointItem.slug != null
+                    ? parentSlug.append(endpointItem.slug)
+                    : parentSlug.append(graphqlOperation.name ?? graphqlOperation.id);
+
+            return {
+                id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
+                type: "graphql" as const,
+                operationType: graphqlOperation.operationType,
+                graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
+                apiDefinitionId: this.apiDefinitionId,
+                availability: endpointItem.availability ?? parentAvailability,
+                title:
+                    endpointItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
+                slug: operationSlug.get(),
+                icon: this.resolveIconFileId(endpointItem.icon),
+                hidden: this.hideChildren || endpointItem.hidden,
+                playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                authed: undefined,
+                viewers: endpointItem.viewers,
+                orphaned: endpointItem.orphaned,
+                featureFlags: endpointItem.featureFlags
+            };
+        }
+
         this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", endpointItem.endpoint);
 
         return;
@@ -823,7 +864,50 @@ export class ApiReferenceNodeConverter {
             }
         });
 
+        // Add GraphQL operations if they exist in the rootPackage
+        if (pkg.graphqlOperations != null) {
+            this.taskContext.logger.debug(
+                `Converting ${pkg.graphqlOperations.length} GraphQL operations to navigation items`
+            );
+            pkg.graphqlOperations.forEach((graphqlOperation) => {
+                const operationId = APIV1Read.GraphQlOperationId(graphqlOperation.id);
+                if (this.#visitedGraphqlOperations.has(operationId)) {
+                    return;
+                }
+                this.#visitedGraphqlOperations.add(operationId);
+
+                const operationSlug = parentSlug.append(graphqlOperation.name ?? graphqlOperation.id);
+                // Map GraphQL operation types to HTTP methods for display purposes
+                const httpMethod = graphqlOperation.operationType === "MUTATION" ? "POST" : "GET";
+
+                const navigationItem: FernNavigation.V1.GraphQlNode = {
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operationId}`),
+                    type: "graphql" as const,
+                    operationType: graphqlOperation.operationType,
+                    graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: parentAvailability,
+                    title: graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
+                    slug: operationSlug.get(),
+                    icon: undefined,
+                    hidden: this.hideChildren,
+                    playground: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                };
+
+                this.taskContext.logger.debug(
+                    `Adding GraphQL operation '${graphqlOperation.id}' as navigation item with title '${navigationItem.title}'`
+                );
+                additionalChildren.push(navigationItem);
+            });
+        }
+
         additionalChildren = this.mergeEndpointPairs(additionalChildren);
+
+        this.taskContext.logger.debug(`Total navigation children after processing: ${additionalChildren.length}`);
 
         if (this.apiSection.alphabetized) {
             additionalChildren = additionalChildren.sort((a, b) => {

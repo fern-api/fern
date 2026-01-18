@@ -54,7 +54,7 @@ type RegisterApiFn = (opts: {
     ir: IntermediateRepresentation;
     snippetsConfig: APIV1Write.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
-    graphqlOperations?: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>;
+    graphqlOperations?: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
     graphqlTypes?: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
     apiName?: string;
     workspace?: FernWorkspace;
@@ -1294,7 +1294,9 @@ export class DocsDefinitionResolver {
             ir,
             apiDefinitionId,
             playgroundConfig: { oauth: item.playground?.oauth },
-            context: this.taskContext
+            context: this.taskContext,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types
         });
 
         const node = new ApiReferenceNodeConverter(
@@ -1383,13 +1385,13 @@ export class DocsDefinitionResolver {
      * Extract GraphQL operations from a workspace
      */
     private async extractGraphQLData(): Promise<{
-        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>;
+        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
     }> {
         this.taskContext.logger.debug("Starting GraphQL extraction...");
         this.taskContext.logger.debug(`Found ${this.ossWorkspaces.length} OSS workspaces`);
 
-        const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation> = {};
+        const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
         // Find all GraphQL specs across all OSS workspaces

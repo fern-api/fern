@@ -16,12 +16,16 @@ export function convertIrToApiDefinition({
     ir,
     apiDefinitionId,
     playgroundConfig,
-    context
+    context,
+    graphqlOperations = {},
+    graphqlTypes = {}
 }: {
     ir: IntermediateRepresentation;
     apiDefinitionId: string;
     playgroundConfig?: PlaygroundConfig;
     context: TaskContext;
+    graphqlOperations?: Record<string, any>;
+    graphqlTypes?: Record<string, any>;
 }): APIV1Read.ApiDefinition {
     // the navigation constructor doesn't need to know about snippets, so we can pass an empty object
     return convertDbAPIDefinitionToRead(
@@ -40,6 +44,8 @@ export function convertIrToApiDefinition({
                     rustSdk: undefined
                 },
                 playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
                 context
             }),
             APIV1Read.ApiDefinitionId(apiDefinitionId),

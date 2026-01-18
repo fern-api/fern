@@ -4,8 +4,8 @@ import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
 import { TaskContext } from "@fern-api/task-context";
 
 export interface GraphQLFdrResult {
-    graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.latest.GraphQlOperation>;
-    types: Record<FdrAPI.TypeId, FdrAPI.api.latest.TypeDefinition>;
+    graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
+    types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
 }
 
 export async function generateFdrFromGraphQL(

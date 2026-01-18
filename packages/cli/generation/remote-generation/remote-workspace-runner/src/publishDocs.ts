@@ -354,6 +354,20 @@ export async function publishDocs({
                 }
             }
 
+            // Debug: Log the API definition structure right before FDR registration
+            context.logger.debug("About to register API definition with FDR");
+            context.logger.debug(
+                `API definition rootPackage structure: ${JSON.stringify({
+                    endpoints: apiDefinition.rootPackage.endpoints?.length || 0,
+                    subpackages: apiDefinition.rootPackage.subpackages?.length || 0,
+                    types: apiDefinition.rootPackage.types?.length || 0,
+                    webhooks: apiDefinition.rootPackage.webhooks?.length || 0,
+                    websockets: apiDefinition.rootPackage.websockets?.length || 0,
+                    graphqlOperations: apiDefinition.rootPackage.graphqlOperations?.length || 0,
+                    hasGraphqlOperationsField: "graphqlOperations" in apiDefinition.rootPackage
+                })}`
+            );
+
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),

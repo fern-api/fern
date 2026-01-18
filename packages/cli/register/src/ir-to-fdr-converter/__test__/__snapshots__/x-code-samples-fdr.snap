@@ -3,7 +3,6 @@
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],
-  "graphqlOperations": {},
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [
@@ -180,6 +179,7 @@ func main() {
         "slug": undefined,
       },
     ],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [],

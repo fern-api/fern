@@ -3,10 +3,10 @@
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],
-  "graphqlOperations": {},
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_paymentSessions",
@@ -34,6 +34,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
+      "graphqlOperations": [],
       "name": "paymentSessions",
       "pointsTo": undefined,
       "subpackageId": "subpackage_paymentSessions",

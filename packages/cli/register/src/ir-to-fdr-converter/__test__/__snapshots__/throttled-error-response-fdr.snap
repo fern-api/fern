@@ -3,7 +3,6 @@
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],
-  "graphqlOperations": {},
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [
@@ -150,6 +149,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [],

@@ -13,10 +13,10 @@
     },
   },
   "globalHeaders": [],
-  "graphqlOperations": {},
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_users",
@@ -322,6 +322,7 @@
           "slug": undefined,
         },
       ],
+      "graphqlOperations": [],
       "name": "users",
       "pointsTo": undefined,
       "subpackageId": "subpackage_users",
