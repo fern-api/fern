@@ -256,6 +256,50 @@ function findMatchingOpenAPIPath(examplePath: string, availablePaths: string[]):
     return undefined;
 }
 
+function extractHeaderParameterNames(openApiSpecJson: string, endpointPath: string, method: string): string[] {
+    try {
+        const spec = JSON.parse(openApiSpecJson) as OpenAPIV3.Document;
+        if (!spec.paths) {
+            return [];
+        }
+
+        const availablePaths = Object.keys(spec.paths);
+        const matchingPath = findMatchingOpenAPIPath(endpointPath, availablePaths);
+        if (!matchingPath) {
+            return [];
+        }
+
+        const pathItem = spec.paths[matchingPath];
+        if (!pathItem) {
+            return [];
+        }
+
+        const operation = pathItem[method.toLowerCase() as keyof OpenAPIV3.PathItemObject] as
+            | OpenAPIV3.OperationObject
+            | undefined;
+        if (!operation) {
+            return [];
+        }
+
+        const headerNames: string[] = [];
+
+        const allParameters = [...(pathItem.parameters ?? []), ...(operation.parameters ?? [])];
+
+        for (const param of allParameters) {
+            if ("$ref" in param) {
+                continue;
+            }
+            if (param.in === "header") {
+                headerNames.push(param.name);
+            }
+        }
+
+        return headerNames;
+    } catch {
+        return [];
+    }
+}
+
 async function pruneOpenAPISpecForBatch(
     openApiSpecContent: string,
     endpointSelectors: Array<{ path: string; method: string }>,
@@ -920,6 +964,11 @@ async function processEndpoint(
         const responseChanged = result.enhancedResponseExample !== request.originalResponseExample;
 
         if (requestChanged || responseChanged) {
+            // Extract header parameter names from the OpenAPI spec for filtering
+            const headerParameterNames = prunedOpenApiSpec
+                ? extractHeaderParameterNames(prunedOpenApiSpec, workItem.example.path, workItem.endpoint.method)
+                : [];
+
             // Create enhanced example record
             const enhancedExampleRecord: EnhancedExampleRecord = {
                 endpoint: workItem.example.path,
@@ -928,7 +977,8 @@ async function processEndpoint(
                 queryParameters: workItem.example.queryParameters,
                 headers: workItem.example.headers,
                 requestBody: requestChanged ? result.enhancedRequestExample : undefined,
-                responseBody: responseChanged ? result.enhancedResponseExample : undefined
+                responseBody: responseChanged ? result.enhancedResponseExample : undefined,
+                headerParameterNames: headerParameterNames.length > 0 ? headerParameterNames : undefined
             };
 
             enhancedExampleRecords.push(enhancedExampleRecord);
