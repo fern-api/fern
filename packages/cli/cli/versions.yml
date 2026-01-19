@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.1
+  changelogEntry:
+    - summary: |
+        Fix AI example generation to filter path/query/header parameters from request bodies and omit empty request/response bodies. The AI model sometimes incorrectly includes these parameters in the request body, which causes SDK validation errors.
+      type: fix
+  createdAt: "2026-01-19"
+  irVersion: 63
+
 - version: 3.47.0
   changelogEntry:
     - summary: |
