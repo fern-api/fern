@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.4
+  changelogEntry:
+    - summary: |
+        Unwrap FDR typed value wrappers when writing AI examples to x-fern-examples format.
+      type: fix
+  createdAt: "2026-01-19"
+  irVersion: 63
+
 - version: 3.47.3
   changelogEntry:
     - summary: |

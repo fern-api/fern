@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { filterRequestBody, isEmptyObject } from "./filterHelpers";
+import { filterRequestBody, isEmptyObject, unwrapExampleValue } from "./filterHelpers";
 
 export interface EnhancedExampleRecord {
     endpoint: string;
@@ -112,12 +112,16 @@ export async function writeAiExamplesOverride({
                     }
                 }
 
+                // Unwrap FDR typed value wrappers from request body first
+                // This converts { "file": { "type": "filename", "value": "test.wav" } } to { "file": "test.wav" }
+                const unwrappedRequestBody = unwrapExampleValue(example.requestBody);
+
                 // Filter out path/query/header params from request body and extract any AI-generated values
                 // The AI model sometimes incorrectly includes these in the request body
-                let filteredRequestBody: unknown = example.requestBody;
-                if (example.requestBody !== undefined) {
+                let filteredRequestBody: unknown = unwrappedRequestBody;
+                if (unwrappedRequestBody !== undefined) {
                     const { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders } =
-                        filterRequestBody(example.requestBody, pathParams, queryParams, headersForFiltering);
+                        filterRequestBody(unwrappedRequestBody, pathParams, queryParams, headersForFiltering);
                     filteredRequestBody = filteredBody;
 
                     // Merge extracted values into the appropriate parameter sections
@@ -161,10 +165,11 @@ export async function writeAiExamplesOverride({
                     fernExample.request = filteredRequestBody;
                 }
 
-                // Only write response body if it's non-empty
-                if (example.responseBody !== undefined && !isEmptyObject(example.responseBody)) {
+                // Unwrap FDR typed value wrappers from response body and write if non-empty
+                const unwrappedResponseBody = unwrapExampleValue(example.responseBody);
+                if (unwrappedResponseBody !== undefined && !isEmptyObject(unwrappedResponseBody)) {
                     fernExample.response = {
-                        body: example.responseBody
+                        body: unwrappedResponseBody
                     };
                 }
 
