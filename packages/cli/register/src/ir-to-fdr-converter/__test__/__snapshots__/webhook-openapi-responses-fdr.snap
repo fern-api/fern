@@ -43,18 +43,51 @@
           "description": "Webhook triggered when a payment session is completed",
           "examples": [
             {
-              "name": "paymentSessionsPaymentSessionCompletedWebhookExample",
+              "name": "Small payment completed",
               "payload": {
-                "eventId": "evt_xyz789",
+                "eventId": "evt_small_001",
                 "eventType": "payment_session.completed",
                 "paymentSession": {
-                  "amount": 1.1,
+                  "amount": 25.99,
                   "createdAt": "2024-01-15T09:30:00Z",
-                  "currency": "string",
-                  "id": "ps_abc123",
-                  "status": "pending",
+                  "currency": "USD",
+                  "customerId": "cust_abc",
+                  "id": "ps_small_123",
+                  "status": "completed",
                 },
-                "timestamp": "2024-01-15T09:30:00Z",
+                "timestamp": "2024-01-15T09:35:00Z",
+              },
+            },
+            {
+              "name": "Large payment completed",
+              "payload": {
+                "eventId": "evt_large_002",
+                "eventType": "payment_session.completed",
+                "paymentSession": {
+                  "amount": 1500,
+                  "createdAt": "2024-01-15T10:00:00Z",
+                  "currency": "USD",
+                  "customerId": "cust_xyz",
+                  "id": "ps_large_456",
+                  "status": "completed",
+                },
+                "timestamp": "2024-01-15T10:05:00Z",
+              },
+            },
+            {
+              "name": "International payment in EUR",
+              "payload": {
+                "eventId": "evt_intl_003",
+                "eventType": "payment_session.completed",
+                "paymentSession": {
+                  "amount": 99.5,
+                  "createdAt": "2024-01-15T11:00:00Z",
+                  "currency": "EUR",
+                  "customerId": "cust_eu_001",
+                  "id": "ps_intl_789",
+                  "status": "completed",
+                },
+                "timestamp": "2024-01-15T11:10:00Z",
               },
             },
           ],
