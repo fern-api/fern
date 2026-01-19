@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.1
+  changelogEntry:
+    - summary: |
+        Throw an error when an OpenRPC spec fails to parse instead of silently skipping it. The error message now includes details about missing or invalid required fields (openrpc version string and methods array).
+      type: fix
+  createdAt: "2026-01-19"
+  irVersion: 63
+
 - version: 3.47.0
   changelogEntry:
     - summary: |
