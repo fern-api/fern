@@ -3,6 +3,107 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
+/**
+ * Checks if a value is an empty object (i.e., {})
+ */
+function isEmptyObject(value: unknown): boolean {
+    if (value === null || value === undefined) {
+        return true;
+    }
+    if (typeof value !== "object") {
+        return false;
+    }
+    if (Array.isArray(value)) {
+        return value.length === 0;
+    }
+    return Object.keys(value as Record<string, unknown>).length === 0;
+}
+
+/**
+ * Filters out path parameters, query parameters, and header keys from the request body.
+ * The AI model sometimes incorrectly includes these in the request body.
+ * Returns the filtered body and any extracted parameter values.
+ */
+function filterRequestBody(
+    requestBody: unknown,
+    pathParameters: Record<string, unknown> | undefined,
+    queryParameters: Record<string, unknown> | undefined,
+    headers: Record<string, unknown> | undefined
+): {
+    filteredBody: unknown;
+    extractedPathParams: Record<string, unknown>;
+    extractedQueryParams: Record<string, unknown>;
+    extractedHeaders: Record<string, unknown>;
+} {
+    const extractedPathParams: Record<string, unknown> = {};
+    const extractedQueryParams: Record<string, unknown> = {};
+    const extractedHeaders: Record<string, unknown> = {};
+
+    if (
+        requestBody === null ||
+        requestBody === undefined ||
+        typeof requestBody !== "object" ||
+        Array.isArray(requestBody)
+    ) {
+        return { filteredBody: requestBody, extractedPathParams, extractedQueryParams, extractedHeaders };
+    }
+
+    const bodyRecord = requestBody as Record<string, unknown>;
+    const filteredBody: Record<string, unknown> = {};
+
+    // Get all parameter keys to filter out
+    const pathParamKeys = new Set(Object.keys(pathParameters ?? {}));
+    const queryParamKeys = new Set(Object.keys(queryParameters ?? {}));
+    const headerKeys = new Set(Object.keys(headers ?? {}));
+
+    for (const [key, value] of Object.entries(bodyRecord)) {
+        // Check if this key matches a path parameter (case-insensitive, with common variations)
+        const normalizedKey = key.toLowerCase().replace(/[-_]/g, "");
+
+        let isPathParam = false;
+        let isQueryParam = false;
+        let isHeader = false;
+
+        for (const pathKey of pathParamKeys) {
+            const normalizedPathKey = pathKey.toLowerCase().replace(/[-_]/g, "");
+            if (normalizedKey === normalizedPathKey) {
+                isPathParam = true;
+                extractedPathParams[pathKey] = value;
+                break;
+            }
+        }
+
+        if (!isPathParam) {
+            for (const queryKey of queryParamKeys) {
+                const normalizedQueryKey = queryKey.toLowerCase().replace(/[-_]/g, "");
+                if (normalizedKey === normalizedQueryKey) {
+                    isQueryParam = true;
+                    extractedQueryParams[queryKey] = value;
+                    break;
+                }
+            }
+        }
+
+        if (!isPathParam && !isQueryParam) {
+            for (const headerKey of headerKeys) {
+                const normalizedHeaderKey = headerKey.toLowerCase().replace(/[-_]/g, "");
+                if (normalizedKey === normalizedHeaderKey) {
+                    isHeader = true;
+                    extractedHeaders[headerKey] = value;
+                    break;
+                }
+            }
+        }
+
+        // Only include in filtered body if it's not a path/query/header param
+        if (!isPathParam && !isQueryParam && !isHeader) {
+            filteredBody[key] = value;
+        }
+    }
+
+    return { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders };
+}
+
 export interface EnhancedExampleRecord {
     endpoint: string;
     method: string;
@@ -93,25 +194,62 @@ export async function writeAiExamplesOverride({
             const xFernExamples = methodExamples.map((example, index) => {
                 const fernExample: Record<string, unknown> = {};
 
-                if (example.pathParameters && Object.keys(example.pathParameters).length > 0) {
-                    fernExample["path-parameters"] = example.pathParameters;
-                }
+                // Start with the original path/query/header parameters
+                let pathParams = { ...(example.pathParameters ?? {}) };
+                let queryParams = { ...(example.queryParameters ?? {}) };
+                let headerParams = { ...(example.headers ?? {}) };
 
-                if (example.queryParameters && Object.keys(example.queryParameters).length > 0) {
-                    fernExample["query-parameters"] = example.queryParameters;
-                }
-
-                if (example.headers && Object.keys(example.headers).length > 0) {
-                    fernExample.headers = example.headers;
-                }
-
+                // Filter out path/query/header params from request body and extract any AI-generated values
+                // The AI model sometimes incorrectly includes these in the request body
+                let filteredRequestBody: unknown = example.requestBody;
                 if (example.requestBody !== undefined) {
+                    const { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders } =
+                        filterRequestBody(example.requestBody, pathParams, queryParams, headerParams);
+                    filteredRequestBody = filteredBody;
+
+                    // Merge extracted values into the appropriate parameter sections
+                    // Only use extracted values if they provide more meaningful data than the original
+                    for (const [key, value] of Object.entries(extractedPathParams)) {
+                        if (value !== undefined && value !== null && value !== "") {
+                            pathParams[key] = value;
+                        }
+                    }
+                    for (const [key, value] of Object.entries(extractedQueryParams)) {
+                        if (value !== undefined && value !== null && value !== "") {
+                            queryParams[key] = value;
+                        }
+                    }
+                    for (const [key, value] of Object.entries(extractedHeaders)) {
+                        if (value !== undefined && value !== null && value !== "") {
+                            headerParams[key] = value;
+                        }
+                    }
+                }
+
+                // Write path parameters if non-empty
+                if (Object.keys(pathParams).length > 0) {
+                    fernExample["path-parameters"] = pathParams;
+                }
+
+                // Write query parameters if non-empty
+                if (Object.keys(queryParams).length > 0) {
+                    fernExample["query-parameters"] = queryParams;
+                }
+
+                // Write headers if non-empty
+                if (Object.keys(headerParams).length > 0) {
+                    fernExample.headers = headerParams;
+                }
+
+                // Only write request body if it's non-empty after filtering
+                if (filteredRequestBody !== undefined && !isEmptyObject(filteredRequestBody)) {
                     fernExample.request = {
-                        body: example.requestBody
+                        body: filteredRequestBody
                     };
                 }
 
-                if (example.responseBody !== undefined) {
+                // Only write response body if it's non-empty
+                if (example.responseBody !== undefined && !isEmptyObject(example.responseBody)) {
                     fernExample.response = {
                         body: example.responseBody
                     };
