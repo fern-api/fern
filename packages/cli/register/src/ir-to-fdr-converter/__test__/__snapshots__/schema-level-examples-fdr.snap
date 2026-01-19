@@ -1,0 +1,530 @@
+{
+  "apiName": "Schema Level Examples API",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": "Force align an audio file to text.",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/v1/forced-alignment",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "file": "string",
+              "text": "string",
+            },
+            "requestBodyV3": {
+              "type": "form",
+              "value": {
+                "file": {
+                  "type": "filename",
+                  "value": "string",
+                },
+                "text": {
+                  "type": "json",
+                  "value": "string",
+                },
+              },
+            },
+            "responseBody": {
+              "characters": [
+                {
+                  "end": 1.1,
+                  "start": 1.1,
+                  "text": "string",
+                },
+              ],
+              "loss": 1.1,
+              "words": [
+                {
+                  "end": 1.1,
+                  "loss": 1.1,
+                  "start": 1.1,
+                  "text": "string",
+                },
+              ],
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "characters": [
+                  {
+                    "end": 1.1,
+                    "start": 1.1,
+                    "text": "string",
+                  },
+                ],
+                "loss": 1.1,
+                "words": [
+                  {
+                    "end": 1.1,
+                    "loss": 1.1,
+                    "start": 1.1,
+                    "text": "string",
+                  },
+                ],
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "forced_alignment",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create Forced Alignment",
+        "originalEndpointId": "endpoint_.forced_alignment",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/v1/forced-alignment",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "multipart/form-data",
+            "description": undefined,
+            "type": "fileUpload",
+            "value": {
+              "availability": undefined,
+              "description": undefined,
+              "name": "forced_alignment_Request",
+              "properties": [
+                {
+                  "type": "file",
+                  "value": {
+                    "availability": undefined,
+                    "contentType": "multipart/form-data",
+                    "description": "The file to align.",
+                    "isOptional": false,
+                    "key": "file",
+                    "type": "file",
+                  },
+                },
+                {
+                  "availability": undefined,
+                  "contentType": "multipart/form-data",
+                  "description": "The text to align with the audio.",
+                  "exploded": false,
+                  "key": "text",
+                  "propertyAccess": undefined,
+                  "type": "bodyProperty",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "default": undefined,
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "regex": undefined,
+                      "type": "string",
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "multipart/form-data",
+                "description": undefined,
+                "type": "fileUpload",
+                "value": {
+                  "availability": undefined,
+                  "description": undefined,
+                  "name": "forced_alignment_Request",
+                  "properties": [
+                    {
+                      "type": "file",
+                      "value": {
+                        "availability": undefined,
+                        "contentType": "multipart/form-data",
+                        "description": "The file to align.",
+                        "isOptional": false,
+                        "key": "file",
+                        "type": "file",
+                      },
+                    },
+                    {
+                      "availability": undefined,
+                      "contentType": "multipart/form-data",
+                      "description": "The text to align with the audio.",
+                      "exploded": false,
+                      "key": "text",
+                      "propertyAccess": undefined,
+                      "type": "bodyProperty",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "default": undefined,
+                          "format": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "regex": undefined,
+                          "type": "string",
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Successful Response",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "ForcedAlignmentResponseModel",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Successful Response",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ForcedAlignmentResponseModel",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "ForcedAlignmentRequest",
+      "ForcedAlignmentResponseModel",
+      "ForcedAlignmentCharacterResponseModel",
+      "ForcedAlignmentWordResponseModel",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "ForcedAlignmentCharacterResponseModel": {
+      "availability": undefined,
+      "description": "Model representing a single character with its timing information.",
+      "displayName": undefined,
+      "name": "ForcedAlignmentCharacterResponseModel",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The character that was transcribed.",
+            "key": "text",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The start time of the character in seconds.",
+            "key": "start",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "multipleOf": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The end time of the character in seconds.",
+            "key": "end",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "multipleOf": undefined,
+                "type": "double",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ForcedAlignmentRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ForcedAlignmentRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The file to align.",
+            "key": "file",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": "binary",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The text to align with the audio.",
+            "key": "text",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ForcedAlignmentResponseModel": {
+      "availability": undefined,
+      "description": "Model representing the response from the aligner service.",
+      "displayName": undefined,
+      "name": "ForcedAlignmentResponseModel",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "List of characters with their timing information.",
+            "key": "characters",
+            "propertyAccess": undefined,
+            "valueType": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ForcedAlignmentCharacterResponseModel",
+              },
+              "maxItems": undefined,
+              "minItems": undefined,
+              "type": "list",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "List of words with their timing information.",
+            "key": "words",
+            "propertyAccess": undefined,
+            "valueType": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ForcedAlignmentWordResponseModel",
+              },
+              "maxItems": undefined,
+              "minItems": undefined,
+              "type": "list",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The average alignment loss/confidence score.",
+            "key": "loss",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "multipleOf": undefined,
+                "type": "double",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ForcedAlignmentWordResponseModel": {
+      "availability": undefined,
+      "description": "Model representing a single word with its timing information.",
+      "displayName": undefined,
+      "name": "ForcedAlignmentWordResponseModel",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The word that was transcribed.",
+            "key": "text",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The start time of the word in seconds.",
+            "key": "start",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "multipleOf": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The end time of the word in seconds.",
+            "key": "end",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "multipleOf": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The average alignment loss/confidence score for this word.",
+            "key": "loss",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "multipleOf": undefined,
+                "type": "double",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

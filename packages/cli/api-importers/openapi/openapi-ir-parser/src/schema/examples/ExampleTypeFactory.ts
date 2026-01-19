@@ -160,8 +160,11 @@ export class ExampleTypeFactory {
                         referencedSchemaWithExample?.type === "object" &&
                         !this.nonRequestReferencedSchemas.has(schema.schema);
 
+                    // If no example is provided, try to use the schema-level example from the referenced type
+                    const exampleToUse = example ?? this.getSchemaExample(referencedSchemaWithExample);
+
                     const referencedExample = this.buildExampleHelper({
-                        example,
+                        example: exampleToUse,
                         schema: referencedSchemaWithExample,
                         exampleId,
                         visitedSchemaIds,
