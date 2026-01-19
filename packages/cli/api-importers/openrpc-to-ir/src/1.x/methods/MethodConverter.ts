@@ -89,6 +89,16 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             } else {
                 resolvedParam = param;
             }
+
+            // Validate that the param has a schema field (required by OpenRPC spec)
+            if (resolvedParam.schema == null) {
+                this.context.errorCollector.collect({
+                    message: `OpenRPC method '${this.method.name}' has parameter '${resolvedParam.name}' without a required 'schema' field. Parameters must have a 'schema' property containing the JSON Schema definition. Found keys: ${Object.keys(resolvedParam).join(", ")}`,
+                    path: [...this.breadcrumbs, "params", String(index)]
+                });
+                continue;
+            }
+
             const schemaId = [this.method.name, "Param", resolvedParam.name].join("_");
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 breadcrumbs: [this.method.name, "Param", resolvedParam.name],
