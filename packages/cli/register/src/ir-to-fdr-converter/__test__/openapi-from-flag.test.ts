@@ -2627,4 +2627,136 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/min-max-values-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/min-max-values-ir.snap");
     });
+
+    it("should handle AI examples override with correct x-fern-examples format (no FDR wrappers)", async () => {
+        // Test that AI examples are correctly loaded from ai_examples_override.yml
+        // and that the x-fern-examples format is correct:
+        // 1. Request should be direct value (not wrapped in body)
+        // 2. Response should have body wrapper
+        // 3. Path/query/header parameters should be in their own sections
+        // 4. Plain values should be used (not FDR typed value wrappers)
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/ai-examples-fdr-unwrap")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "ai-examples-fdr-unwrap"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: true,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate services and endpoints
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        const service = services[0];
+        expect(service).toBeDefined();
+
+        if (service && typeof service === "object" && "endpoints" in service) {
+            // biome-ignore lint/suspicious/noExplicitAny: test code accessing dynamic IR properties
+            const serviceWithEndpoints = service as { endpoints?: Array<any> };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBe(2); // POST /v1/forced-alignment and POST /v1/text-to-speech/{voice_id}
+
+            // Check that AI examples from override file were loaded
+            serviceWithEndpoints.endpoints?.forEach((endpoint) => {
+                // biome-ignore lint/suspicious/noExplicitAny: test code accessing dynamic IR properties
+                const endpointAny = endpoint as any;
+                const method = endpointAny?.method;
+                const path = endpointAny?.fullPath?.head || endpointAny?.path;
+
+                console.log(`\nEndpoint: ${method} ${path}`);
+
+                // Check for user-specified examples (from ai_examples_override.yml)
+                const hasV2UserExamples =
+                    endpointAny?.v2Examples?.userSpecifiedExamples &&
+                    Object.keys(endpointAny.v2Examples.userSpecifiedExamples).length > 0;
+
+                console.log(`  Has AI override examples: ${hasV2UserExamples}`);
+
+                if (hasV2UserExamples) {
+                    const exampleKeys = Object.keys(endpointAny.v2Examples.userSpecifiedExamples);
+                    console.log(`  Example keys: ${exampleKeys.join(", ")}`);
+
+                    // Verify the example structure is correct (no FDR wrappers)
+                    const firstKey = exampleKeys[0];
+                    const example = firstKey ? endpointAny.v2Examples.userSpecifiedExamples[firstKey] : undefined;
+
+                    if (example?.request?.body?.value) {
+                        const requestBody = example.request.body.value;
+                        console.log(`  Request body:`, JSON.stringify(requestBody, null, 2));
+
+                        // Verify no FDR typed value wrappers (should be plain values)
+                        if (typeof requestBody === "object" && requestBody !== null) {
+                            for (const [key, value] of Object.entries(requestBody)) {
+                                // Check that values are NOT wrapped in {type, value} structure
+                                if (
+                                    typeof value === "object" &&
+                                    value !== null &&
+                                    "type" in value &&
+                                    "value" in value
+                                ) {
+                                    console.log(`  WARNING: Found FDR wrapper in ${key}:`, value);
+                                } else {
+                                    console.log(`  OK: ${key} is plain value`);
+                                }
+                            }
+                        }
+                    }
+
+                    if (example?.response?.body?.value) {
+                        console.log(`  Response body:`, JSON.stringify(example.response.body.value, null, 2));
+                    }
+                }
+            });
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+        expect(fdrApiDefinition.rootPackage.endpoints).toBeDefined();
+        expect(fdrApiDefinition.rootPackage.endpoints.length).toBe(2);
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/ai-examples-fdr-unwrap-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/ai-examples-fdr-unwrap-ir.snap");
+    });
 });

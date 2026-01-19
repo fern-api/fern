@@ -1,0 +1,775 @@
+{
+  "apiName": "AI Examples FDR Unwrap Test",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": "Aligns text to audio using forced alignment",
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {
+              "xi-api-key": "your-api-key-here",
+            },
+            "name": undefined,
+            "path": "/v1/forced-alignment",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "file": "lecture_recording.wav",
+              "text": "Good morning everyone, welcome to the lecture on machine learning.",
+            },
+            "requestBodyV3": {
+              "type": "form",
+              "value": {
+                "enabled_spooled_file": {
+                  "type": "json",
+                  "value": undefined,
+                },
+                "file": {
+                  "type": "filename",
+                  "value": "lecture_recording.wav",
+                },
+                "text": {
+                  "type": "json",
+                  "value": "Good morning everyone, welcome to the lecture on machine learning.",
+                },
+              },
+            },
+            "responseBody": {
+              "alignment": {
+                "words": [
+                  {
+                    "end": 0.3,
+                    "start": 0,
+                    "word": "Good",
+                  },
+                  {
+                    "end": 0.7,
+                    "start": 0.3,
+                    "word": "morning",
+                  },
+                  {
+                    "end": 1.2,
+                    "start": 0.7,
+                    "word": "everyone",
+                  },
+                ],
+              },
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "alignment": {
+                  "words": [
+                    {
+                      "end": 0.3,
+                      "start": 0,
+                      "word": "Good",
+                    },
+                    {
+                      "end": 0.7,
+                      "start": 0.3,
+                      "word": "morning",
+                    },
+                    {
+                      "end": 1.2,
+                      "start": 0.7,
+                      "word": "everyone",
+                    },
+                  ],
+                },
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [
+          {
+            "availability": undefined,
+            "description": "API key for authentication",
+            "key": "xi-api-key",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "id": "createForcedAlignment",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create forced alignment from audio file",
+        "originalEndpointId": "endpoint_.createForcedAlignment",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/v1/forced-alignment",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "multipart/form-data",
+            "description": undefined,
+            "type": "fileUpload",
+            "value": {
+              "availability": undefined,
+              "description": undefined,
+              "name": "createForcedAlignment_Request",
+              "properties": [
+                {
+                  "type": "file",
+                  "value": {
+                    "availability": undefined,
+                    "contentType": "multipart/form-data",
+                    "description": "Audio file to align",
+                    "isOptional": false,
+                    "key": "file",
+                    "type": "file",
+                  },
+                },
+                {
+                  "availability": undefined,
+                  "contentType": "multipart/form-data",
+                  "description": "Text to align with audio",
+                  "exploded": false,
+                  "key": "text",
+                  "propertyAccess": undefined,
+                  "type": "bodyProperty",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "default": undefined,
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "regex": undefined,
+                      "type": "string",
+                    },
+                  },
+                },
+                {
+                  "availability": undefined,
+                  "contentType": "multipart/form-data",
+                  "description": "Whether to use spooled file processing",
+                  "exploded": false,
+                  "key": "enabled_spooled_file",
+                  "propertyAccess": undefined,
+                  "type": "bodyProperty",
+                  "valueType": {
+                    "defaultValue": undefined,
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "default": undefined,
+                        "type": "boolean",
+                      },
+                    },
+                    "type": "optional",
+                  },
+                },
+              ],
+            },
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "multipart/form-data",
+                "description": undefined,
+                "type": "fileUpload",
+                "value": {
+                  "availability": undefined,
+                  "description": undefined,
+                  "name": "createForcedAlignment_Request",
+                  "properties": [
+                    {
+                      "type": "file",
+                      "value": {
+                        "availability": undefined,
+                        "contentType": "multipart/form-data",
+                        "description": "Audio file to align",
+                        "isOptional": false,
+                        "key": "file",
+                        "type": "file",
+                      },
+                    },
+                    {
+                      "availability": undefined,
+                      "contentType": "multipart/form-data",
+                      "description": "Text to align with audio",
+                      "exploded": false,
+                      "key": "text",
+                      "propertyAccess": undefined,
+                      "type": "bodyProperty",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "default": undefined,
+                          "format": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "regex": undefined,
+                          "type": "string",
+                        },
+                      },
+                    },
+                    {
+                      "availability": undefined,
+                      "contentType": "multipart/form-data",
+                      "description": "Whether to use spooled file processing",
+                      "exploded": false,
+                      "key": "enabled_spooled_file",
+                      "propertyAccess": undefined,
+                      "type": "bodyProperty",
+                      "valueType": {
+                        "defaultValue": undefined,
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "default": undefined,
+                            "type": "boolean",
+                          },
+                        },
+                        "type": "optional",
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Alignment result",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "AlignmentResult",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Alignment result",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "AlignmentResult",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb",
+            "pathParameters": {
+              "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+            },
+            "queryParameters": {
+              "output_format": "mp3_44100_128",
+            },
+            "requestBody": {
+              "model_id": "eleven_monolingual_v1",
+              "text": "Hello world, this is a test of the text to speech system.",
+              "voice_settings": {
+                "similarity_boost": 0.75,
+                "stability": 0.5,
+              },
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "model_id": "eleven_monolingual_v1",
+                "text": "Hello world, this is a test of the text to speech system.",
+                "voice_settings": {
+                  "similarity_boost": 0.75,
+                  "stability": 0.5,
+                },
+              },
+            },
+            "responseBody": undefined,
+            "responseBodyV3": undefined,
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "createTextToSpeech",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Convert text to speech",
+        "originalEndpointId": "endpoint_.createTextToSpeech",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/v1/text-to-speech/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "voice_id",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": "Voice ID to use",
+              "explode": undefined,
+              "key": "voice_id",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [
+          {
+            "availability": undefined,
+            "description": "Output audio format",
+            "explode": undefined,
+            "key": "output_format",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": "mp3_44100_128",
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "TextToSpeechRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "TextToSpeechRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Audio generated successfully",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "contentType": undefined,
+            "type": "fileDownload",
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Audio generated successfully",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "contentType": undefined,
+                "type": "fileDownload",
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "AlignmentResult",
+      "WordAlignment",
+      "TextToSpeechRequest",
+      "VoiceSettings",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "AlignmentResult": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "AlignmentResult",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "alignment",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "AlignmentResultAlignment",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "AlignmentResultAlignment": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "AlignmentResultAlignment",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "words",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "WordAlignment",
+                },
+                "maxItems": undefined,
+                "minItems": undefined,
+                "type": "list",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "TextToSpeechRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "TextToSpeechRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Text to convert to speech",
+            "key": "text",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Model ID to use for synthesis",
+            "key": "model_id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "voice_settings",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "VoiceSettings",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "VoiceSettings": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "VoiceSettings",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "stability",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": 1,
+                  "minimum": 0,
+                  "multipleOf": undefined,
+                  "type": "double",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "similarity_boost",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": 1,
+                  "minimum": 0,
+                  "multipleOf": undefined,
+                  "type": "double",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "WordAlignment": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "WordAlignment",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "word",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "start",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "double",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "end",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "double",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

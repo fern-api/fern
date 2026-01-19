@@ -1,0 +1,122 @@
+openapi: 3.1.0
+info:
+  title: AI Examples FDR Unwrap Test
+  description: Tests that FDR typed value wrappers are correctly unwrapped when writing AI examples
+  version: 1.0.0
+paths:
+  /v1/forced-alignment:
+    post:
+      operationId: createForcedAlignment
+      summary: Create forced alignment from audio file
+      description: Aligns text to audio using forced alignment
+      parameters:
+        - name: xi-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+          description: API key for authentication
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - text
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Audio file to align
+                text:
+                  type: string
+                  description: Text to align with audio
+                enabled_spooled_file:
+                  type: boolean
+                  description: Whether to use spooled file processing
+      responses:
+        "200":
+          description: Alignment result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlignmentResult"
+  /v1/text-to-speech/{voice_id}:
+    post:
+      operationId: createTextToSpeech
+      summary: Convert text to speech
+      parameters:
+        - name: voice_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Voice ID to use
+        - name: output_format
+          in: query
+          required: false
+          schema:
+            type: string
+            default: mp3_44100_128
+          description: Output audio format
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TextToSpeechRequest"
+      responses:
+        "200":
+          description: Audio generated successfully
+          content:
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    AlignmentResult:
+      type: object
+      properties:
+        alignment:
+          type: object
+          properties:
+            words:
+              type: array
+              items:
+                $ref: "#/components/schemas/WordAlignment"
+    WordAlignment:
+      type: object
+      properties:
+        word:
+          type: string
+        start:
+          type: number
+        end:
+          type: number
+    TextToSpeechRequest:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          description: Text to convert to speech
+        model_id:
+          type: string
+          description: Model ID to use for synthesis
+        voice_settings:
+          $ref: "#/components/schemas/VoiceSettings"
+    VoiceSettings:
+      type: object
+      properties:
+        stability:
+          type: number
+          minimum: 0
+          maximum: 1
+        similarity_boost:
+          type: number
+          minimum: 0
+          maximum: 1
