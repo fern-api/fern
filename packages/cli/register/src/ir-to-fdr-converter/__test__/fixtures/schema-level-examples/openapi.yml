@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: Schema Level Examples API
+  version: 1.0.0
+  description: Test API for schema-level examples
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /v1/forced-alignment:
+    post:
+      operationId: forced_alignment
+      summary: Create Forced Alignment
+      description: Force align an audio file to text.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ForcedAlignmentRequest"
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForcedAlignmentResponseModel"
+components:
+  schemas:
+    ForcedAlignmentRequest:
+      type: object
+      properties:
+        file:
+          description: The file to align.
+          type: string
+          format: binary
+        text:
+          description: The text to align with the audio.
+          type: string
+      required:
+        - file
+        - text
+    ForcedAlignmentResponseModel:
+      description: Model representing the response from the aligner service.
+      type: object
+      properties:
+        characters:
+          description: List of characters with their timing information.
+          type: array
+          items:
+            $ref: "#/components/schemas/ForcedAlignmentCharacterResponseModel"
+        words:
+          description: List of words with their timing information.
+          type: array
+          items:
+            $ref: "#/components/schemas/ForcedAlignmentWordResponseModel"
+        loss:
+          description: The average alignment loss/confidence score.
+          type: number
+      required:
+        - characters
+        - words
+        - loss
+    ForcedAlignmentCharacterResponseModel:
+      description: Model representing a single character with its timing information.
+      type: object
+      properties:
+        text:
+          description: The character that was transcribed.
+          type: string
+        start:
+          description: The start time of the character in seconds.
+          type: number
+        end:
+          description: The end time of the character in seconds.
+          type: number
+      example:
+        end: 0.02
+        start: 0
+        text: "H"
+      required:
+        - text
+        - start
+        - end
+    ForcedAlignmentWordResponseModel:
+      description: Model representing a single word with its timing information.
+      type: object
+      properties:
+        text:
+          description: The word that was transcribed.
+          type: string
+        start:
+          description: The start time of the word in seconds.
+          type: number
+        end:
+          description: The end time of the word in seconds.
+          type: number
+        loss:
+          description: The average alignment loss/confidence score for this word.
+          type: number
+      example:
+        end: 1.02
+        loss: 0.12
+        start: 0
+        text: "Hello"
+      required:
+        - text
+        - start
+        - end
+        - loss
