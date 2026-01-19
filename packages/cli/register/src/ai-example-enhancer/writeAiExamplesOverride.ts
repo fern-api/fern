@@ -13,6 +13,7 @@ export interface EnhancedExampleRecord {
     headers?: Record<string, unknown>;
     requestBody?: unknown;
     responseBody?: unknown;
+    headerParameterNames?: string[];
 }
 
 /**
@@ -100,12 +101,23 @@ export async function writeAiExamplesOverride({
                 let queryParams = { ...(example.queryParameters ?? {}) };
                 let headerParams = { ...(example.headers ?? {}) };
 
+                // Build a headers object for filtering that includes both existing headers
+                // and header parameter names from the OpenAPI spec (which may not have values yet)
+                const headersForFiltering: Record<string, unknown> = { ...headerParams };
+                if (example.headerParameterNames) {
+                    for (const headerName of example.headerParameterNames) {
+                        if (!(headerName in headersForFiltering)) {
+                            headersForFiltering[headerName] = "";
+                        }
+                    }
+                }
+
                 // Filter out path/query/header params from request body and extract any AI-generated values
                 // The AI model sometimes incorrectly includes these in the request body
                 let filteredRequestBody: unknown = example.requestBody;
                 if (example.requestBody !== undefined) {
                     const { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders } =
-                        filterRequestBody(example.requestBody, pathParams, queryParams, headerParams);
+                        filterRequestBody(example.requestBody, pathParams, queryParams, headersForFiltering);
                     filteredRequestBody = filteredBody;
 
                     // Merge extracted values into the appropriate parameter sections
