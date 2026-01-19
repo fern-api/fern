@@ -154,11 +154,10 @@ export async function writeAiExamplesOverride({
                     fernExample.headers = headerParams;
                 }
 
-                // Only write request body if it's non-empty after filtering
+                // Only write request if it's non-empty after filtering
+                // Note: In x-fern-examples, request is directly the value (not wrapped in body)
                 if (filteredRequestBody !== undefined && !isEmptyObject(filteredRequestBody)) {
-                    fernExample.request = {
-                        body: filteredRequestBody
-                    };
+                    fernExample.request = filteredRequestBody;
                 }
 
                 // Only write response body if it's non-empty
