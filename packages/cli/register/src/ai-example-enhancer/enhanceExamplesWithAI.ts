@@ -1036,20 +1036,18 @@ function applyEnhancementResults(
                     ...example
                 };
 
-                if (enhancementResult.enhancedReq !== undefined && example.requestBodyV3) {
+                if (enhancementResult.enhancedReq !== undefined) {
                     enhancedExample.requestBody = enhancementResult.enhancedReq;
-                    enhancedExample.requestBodyV3 = {
-                        ...example.requestBodyV3,
-                        value: enhancementResult.enhancedReq
-                    };
+                    enhancedExample.requestBodyV3 = example.requestBodyV3
+                        ? { ...example.requestBodyV3, value: enhancementResult.enhancedReq }
+                        : { type: "json", value: enhancementResult.enhancedReq };
                 }
 
-                if (enhancementResult.enhancedRes !== undefined && example.responseBodyV3) {
+                if (enhancementResult.enhancedRes !== undefined) {
                     enhancedExample.responseBody = enhancementResult.enhancedRes;
-                    enhancedExample.responseBodyV3 = {
-                        ...example.responseBodyV3,
-                        value: enhancementResult.enhancedRes
-                    };
+                    enhancedExample.responseBodyV3 = example.responseBodyV3
+                        ? { ...example.responseBodyV3, value: enhancementResult.enhancedRes }
+                        : { type: "json", value: enhancementResult.enhancedRes };
                 }
 
                 return enhancedExample;

@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.3
+  changelogEntry:
+    - summary: |
+        Fix AI examples not appearing in docs on first run by creating requestBodyV3/responseBodyV3 structures when applying enhanced examples.
+      type: fix
+  createdAt: "2026-01-19"
+  irVersion: 63
+
 - version: 3.47.2
   changelogEntry:
     - summary: |
