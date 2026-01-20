@@ -238,7 +238,6 @@ sdks:
                 expect(error).toBeInstanceOf(ValidationError);
                 const validationError = error as ValidationError;
 
-                // Error message is all issue.toString() joined by newlines.
                 const expectedMessage = validationError.issues.map((i) => i.toString()).join("\n");
                 expect(validationError.message).toBe(expectedMessage);
             }
@@ -264,7 +263,6 @@ sdks:
                 expect(error).toBeInstanceOf(ValidationError);
                 const validationError = error as ValidationError;
 
-                // Simulate CLI writing each issue to stderr
                 const output: string[] = [];
                 for (const issue of validationError.issues) {
                     output.push(issue.toString());
@@ -272,6 +270,283 @@ sdks:
 
                 expect(output).toEqual(["fern.yml:7:13: sdks.targets.node.lang must be a string"]);
             }
+        });
+    });
+
+    describe("$ref resolution", () => {
+        it("resolves $ref for cli configuration", async () => {
+            await writeFile(
+                join(testDir, "cli.yaml"),
+                `
+version: 4.0.0
+`
+            );
+
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+cli:
+  $ref: "./cli.yaml"
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+
+            expect(fernYml.cli?.version).toBe("4.0.0");
+        });
+
+        it("resolves $ref for sdks configuration", async () => {
+            await writeFile(
+                join(testDir, "sdks.yaml"),
+                `
+autorelease: true
+defaultGroup: production
+targets:
+  python:
+    lang: python
+    version: "2.0.0"
+`
+            );
+
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  $ref: "./sdks.yaml"
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+
+            expect(fernYml.sdks?.autorelease).toBe(true);
+            expect(fernYml.sdks?.defaultGroup).toBe("production");
+            expect(fernYml.sdks?.targets?.python?.lang).toBe("python");
+            expect(fernYml.sdks?.targets?.python?.version).toBe("2.0.0");
+        });
+
+        it("resolves $ref for individual SDK targets", async () => {
+            const targetsDir = join(testDir, "targets");
+            await mkdir(targetsDir, { recursive: true });
+
+            await writeFile(
+                join(targetsDir, "typescript.yaml"),
+                `
+lang: typescript
+version: "1.5.0"
+config:
+  packageName: "@acme/sdk"
+`
+            );
+
+            await writeFile(
+                join(targetsDir, "python.yaml"),
+                `
+lang: python
+version: "2.1.0"
+config:
+  packageName: acme-sdk
+`
+            );
+
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  autorelease: true
+  targets:
+    node:
+      $ref: "./targets/typescript.yaml"
+    python:
+      $ref: "./targets/python.yaml"
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+
+            expect(fernYml.sdks?.targets?.node?.lang).toBe("typescript");
+            expect(fernYml.sdks?.targets?.node?.version).toBe("1.5.0");
+            expect(fernYml.sdks?.targets?.python?.lang).toBe("python");
+            expect(fernYml.sdks?.targets?.python?.version).toBe("2.1.0");
+        });
+
+        it("resolves chained $ref references", async () => {
+            const commonDir = join(testDir, "common");
+            await mkdir(commonDir, { recursive: true });
+
+            await writeFile(
+                join(commonDir, "base-target.yaml"),
+                `
+lang: typescript
+version: "1.0.0"
+`
+            );
+
+            await writeFile(
+                join(testDir, "sdk-config.yaml"),
+                `
+autorelease: false
+targets:
+  node:
+    $ref: "./common/base-target.yaml"
+`
+            );
+
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  $ref: "./sdk-config.yaml"
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+
+            expect(fernYml.sdks?.autorelease).toBe(false);
+            expect(fernYml.sdks?.targets?.node?.lang).toBe("typescript");
+            expect(fernYml.sdks?.targets?.node?.version).toBe("1.0.0");
+        });
+
+        it("throws ValidationError when $ref file does not exist", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+cli:
+  $ref: "./nonexistent.yaml"
+`
+            );
+
+            try {
+                await loadFernYml({ cwd: testDir });
+                expect.fail("Expected ValidationError to be thrown");
+            } catch (error) {
+                expect(error).toBeInstanceOf(ValidationError);
+                const validationError = error as ValidationError;
+                expect(validationError.issues.length).toBeGreaterThan(0);
+                expect(validationError.issues[0]?.message).toContain("Referenced file does not exist");
+            }
+        });
+
+        it("throws ValidationError when $ref has sibling keys", async () => {
+            await writeFile(
+                join(testDir, "cli.yaml"),
+                `
+version: 4.0.0
+`
+            );
+
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+cli:
+  $ref: "./cli.yaml"
+  extra: invalid
+`
+            );
+
+            try {
+                await loadFernYml({ cwd: testDir });
+                expect.fail("Expected ValidationError to be thrown");
+            } catch (error) {
+                expect(error).toBeInstanceOf(ValidationError);
+                const validationError = error as ValidationError;
+                expect(validationError.issues.length).toBeGreaterThan(0);
+                expect(validationError.issues[0]?.message).toContain("$ref cannot have sibling keys");
+            }
+        });
+
+        it("throws ValidationError on circular $ref", async () => {
+            await writeFile(
+                join(testDir, "a.yaml"),
+                `
+autorelease: true
+targets:
+  node:
+    $ref: "./b.yaml"
+`
+            );
+
+            await writeFile(
+                join(testDir, "b.yaml"),
+                `
+lang: typescript
+config:
+  nested:
+    $ref: "./fern.yml"
+`
+            );
+
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  $ref: "./a.yaml"
+`
+            );
+
+            try {
+                await loadFernYml({ cwd: testDir });
+                expect.fail("Expected ValidationError to be thrown");
+            } catch (error) {
+                expect(error).toBeInstanceOf(ValidationError);
+                const validationError = error as ValidationError;
+                expect(validationError.issues.length).toBeGreaterThan(0);
+                expect(validationError.issues[0]?.message).toContain("Circular $ref detected");
+            }
+        });
+
+        it("resolves multiple $ref at different levels", async () => {
+            await writeFile(
+                join(testDir, "cli.yaml"),
+                `
+version: 5.0.0
+`
+            );
+
+            const targetsDir = join(testDir, "targets");
+            await mkdir(targetsDir, { recursive: true });
+            await writeFile(
+                join(targetsDir, "go.yaml"),
+                `
+lang: go
+version: "0.1.0"
+`
+            );
+
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+cli:
+  $ref: "./cli.yaml"
+sdks:
+  autorelease: true
+  targets:
+    go:
+      $ref: "./targets/go.yaml"
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+
+            expect(fernYml.cli?.version).toBe("5.0.0");
+            expect(fernYml.sdks?.autorelease).toBe(true);
+            expect(fernYml.sdks?.targets?.go?.lang).toBe("go");
+            expect(fernYml.sdks?.targets?.go?.version).toBe("0.1.0");
         });
     });
 });
