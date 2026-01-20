@@ -1176,9 +1176,39 @@ function applyEnhancementResults(
 
                 if (enhancementResult.enhancedReq !== undefined) {
                     enhancedExample.requestBody = enhancementResult.enhancedReq;
-                    enhancedExample.requestBodyV3 = example.requestBodyV3
-                        ? { ...example.requestBodyV3, value: enhancementResult.enhancedReq }
-                        : { type: "json", value: enhancementResult.enhancedReq };
+                    if (example.requestBodyV3) {
+                        // For form data, we need to preserve the FDR typed value wrapper structure
+                        // and update the value property within each field's wrapper
+                        if (example.requestBodyV3.type === "form" && typeof example.requestBodyV3.value === "object") {
+                            const enhancedReq = enhancementResult.enhancedReq as Record<string, unknown>;
+                            const originalValue = example.requestBodyV3.value as Record<
+                                string,
+                                { type?: string; value?: unknown }
+                            >;
+                            const updatedValue: Record<string, { type?: string; value?: unknown }> = {};
+
+                            // Update each field's value while preserving the FDR typed value wrapper structure
+                            for (const [key, wrapper] of Object.entries(originalValue)) {
+                                if (key in enhancedReq) {
+                                    updatedValue[key] = { ...wrapper, value: enhancedReq[key] };
+                                } else {
+                                    updatedValue[key] = wrapper;
+                                }
+                            }
+
+                            enhancedExample.requestBodyV3 = {
+                                ...example.requestBodyV3,
+                                value: updatedValue
+                            };
+                        } else {
+                            enhancedExample.requestBodyV3 = {
+                                ...example.requestBodyV3,
+                                value: enhancementResult.enhancedReq
+                            };
+                        }
+                    } else {
+                        enhancedExample.requestBodyV3 = { type: "json", value: enhancementResult.enhancedReq };
+                    }
                 }
 
                 if (enhancementResult.enhancedRes !== undefined) {
