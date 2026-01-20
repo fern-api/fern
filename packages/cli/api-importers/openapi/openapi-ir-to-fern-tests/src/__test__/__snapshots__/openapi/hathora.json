@@ -278,7 +278,13 @@
                   "multipleOf": undefined,
                 },
               },
-              "env": "list<DeploymentConfigEnvItem>",
+              "env": {
+                "type": "list<DeploymentConfigEnvItem>",
+                "validation": {
+                  "maxItems": 100,
+                  "minItems": undefined,
+                },
+              },
               "planName": "PlanName",
               "roomsPerProcess": {
                 "type": "integer",
@@ -677,7 +683,10 @@ types:
     inline: true
   DeploymentConfig:
     properties:
-      env: list<DeploymentConfigEnvItem>
+      env:
+        type: list<DeploymentConfigEnvItem>
+        validation:
+          maxItems: 100
       roomsPerProcess:
         type: integer
         validation:

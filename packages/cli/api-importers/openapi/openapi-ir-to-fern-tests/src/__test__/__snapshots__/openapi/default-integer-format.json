@@ -369,8 +369,8 @@
               type: optional<uint64>
               docs: Explicit uint64 format (should override default)
             integerArray:
-              docs: Array of unformatted integers (should use int64 default)
               type: list<long>
+              docs: Array of unformatted integers (should use int64 default)
             mixedFormatArray:
               type: optional<list<IntegerRequestMixedFormatArrayItem>>
               docs: Array with mixed explicit formats
@@ -485,8 +485,8 @@ types:
         type: IntegerResponseMetadata
         docs: Metadata with integer properties
       results:
-        docs: Array of unformatted integer results (should use int64 default)
         type: list<long>
+        docs: Array of unformatted integer results (should use int64 default)
     source:
       openapi: ../openapi.yml
 ",

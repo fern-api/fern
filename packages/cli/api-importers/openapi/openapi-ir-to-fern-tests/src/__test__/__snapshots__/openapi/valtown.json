@@ -658,6 +658,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
     docs: Result of executing an SQL statement.
     properties:
       columns:
+        type: list<string>
         docs: |-
           Names of columns.
 
@@ -666,8 +667,8 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           ```sql
           SELECT author AS author, COUNT(*) AS count FROM books GROUP BY author
           ```
-        type: list<string>
       columnTypes:
+        type: list<string>
         docs: >-
           Types of columns.
 
@@ -675,10 +676,9 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           The types are currently shown for types declared in a SQL table. For
           column types of function calls, for example, an empty string is
           returned.
-        type: list<string>
       rows:
-        docs: Rows produced by the statement.
         type: list<list<unknown>>
+        docs: Rows produced by the statement.
       rowsAffected:
         type: double
         docs: >-

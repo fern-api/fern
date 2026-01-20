@@ -547,17 +547,17 @@ types:
       address:
         type: root.Address
       coverages:
-        docs: ''
         type: list<root.Coverage>
+        docs: ''
       properties:
-        docs: ''
         type: list<root.Property>
+        docs: ''
       insureds:
-        docs: ''
         type: list<root.Insured>
-      thirdParties:
         docs: ''
+      thirdParties:
         type: list<root.ThirdParty>
+        docs: ''
       createdAt: string
       modifiedAt: string
       refreshedAt: string
@@ -1409,11 +1409,11 @@ types:
         type: string
         docs: The unique id for the Account object.
       policies:
+        type: list<unknown>
         docs: >-
           List of unique ids for the Policy objects. If Ignition is configured
           to select a single policy (as is the default), the list will only
           contain 1 item.
-        type: list<unknown>
     source:
       openapi: ../openapi.yml
     inline: true
