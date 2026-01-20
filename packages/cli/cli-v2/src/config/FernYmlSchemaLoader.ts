@@ -26,12 +26,17 @@ export class FernYmlSchemaLoader {
 
     /**
      * Finds, loads, and validates a fern.yml configuration file.
+     * This also resolves and validates any `$ref` nodes in the
+     * configuration.
      *
      * @returns Result with either the parsed config or validation errors.
      * @throws Error if fern.yml is not found.
      */
     public async load(): Promise<FernYmlSchemaLoader.Result> {
         const absoluteFilePath = await this.finder.findOrThrow(FernYml.FILENAME);
-        return await this.loader.load({ absoluteFilePath, schema: FernYmlSchema });
+        return await this.loader.load({
+            absoluteFilePath,
+            schema: FernYmlSchema
+        });
     }
 }
