@@ -5,3 +5,4 @@
 "/api/users/required-header"
 "/api/users/required-query"
 "/api/users"
+"/api/users/inlined"
