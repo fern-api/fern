@@ -79,7 +79,12 @@
     "navigationConfig": undefined,
     "service": "service_",
     "subpackages": [],
-    "types": [],
+    "types": [
+      "AuthResponse",
+      "Contact",
+      "Payment",
+      "PaymentRequest",
+    ],
     "webhooks": undefined,
     "websocket": undefined,
   },
@@ -177,25 +182,25 @@
                   "inline": false,
                   "name": {
                     "camelCase": {
-                      "safeName": "authorizeResponse200",
-                      "unsafeName": "authorizeResponse200",
+                      "safeName": "authResponse",
+                      "unsafeName": "authResponse",
                     },
-                    "originalName": "authorize_Response_200",
+                    "originalName": "AuthResponse",
                     "pascalCase": {
-                      "safeName": "AuthorizeResponse200",
-                      "unsafeName": "AuthorizeResponse200",
+                      "safeName": "AuthResponse",
+                      "unsafeName": "AuthResponse",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "AUTHORIZE_RESPONSE_200",
-                      "unsafeName": "AUTHORIZE_RESPONSE_200",
+                      "safeName": "AUTH_RESPONSE",
+                      "unsafeName": "AUTH_RESPONSE",
                     },
                     "snakeCase": {
-                      "safeName": "authorize_response_200",
-                      "unsafeName": "authorize_response_200",
+                      "safeName": "auth_response",
+                      "unsafeName": "auth_response",
                     },
                   },
                   "type": "named",
-                  "typeId": "authorize_Response_200",
+                  "typeId": "AuthResponse",
                 },
                 "type": "response",
                 "v2Examples": {
@@ -281,25 +286,25 @@
                       "inline": false,
                       "name": {
                         "camelCase": {
-                          "safeName": "authorizeResponse200",
-                          "unsafeName": "authorizeResponse200",
+                          "safeName": "authResponse",
+                          "unsafeName": "authResponse",
                         },
-                        "originalName": "authorize_Response_200",
+                        "originalName": "AuthResponse",
                         "pascalCase": {
-                          "safeName": "AuthorizeResponse200",
-                          "unsafeName": "AuthorizeResponse200",
+                          "safeName": "AuthResponse",
+                          "unsafeName": "AuthResponse",
                         },
                         "screamingSnakeCase": {
-                          "safeName": "AUTHORIZE_RESPONSE_200",
-                          "unsafeName": "AUTHORIZE_RESPONSE_200",
+                          "safeName": "AUTH_RESPONSE",
+                          "unsafeName": "AUTH_RESPONSE",
                         },
                         "snakeCase": {
-                          "safeName": "authorize_response_200",
-                          "unsafeName": "authorize_response_200",
+                          "safeName": "auth_response",
+                          "unsafeName": "auth_response",
                         },
                       },
                       "type": "named",
-                      "typeId": "authorize_Response_200",
+                      "typeId": "AuthResponse",
                     },
                     "type": "response",
                     "v2Examples": {
@@ -495,25 +500,25 @@
                   "inline": false,
                   "name": {
                     "camelCase": {
-                      "safeName": "getContactResponse200",
-                      "unsafeName": "getContactResponse200",
+                      "safeName": "contact",
+                      "unsafeName": "contact",
                     },
-                    "originalName": "getContact_Response_200",
+                    "originalName": "Contact",
                     "pascalCase": {
-                      "safeName": "GetContactResponse200",
-                      "unsafeName": "GetContactResponse200",
+                      "safeName": "Contact",
+                      "unsafeName": "Contact",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "GET_CONTACT_RESPONSE_200",
-                      "unsafeName": "GET_CONTACT_RESPONSE_200",
+                      "safeName": "CONTACT",
+                      "unsafeName": "CONTACT",
                     },
                     "snakeCase": {
-                      "safeName": "get_contact_response_200",
-                      "unsafeName": "get_contact_response_200",
+                      "safeName": "contact",
+                      "unsafeName": "contact",
                     },
                   },
                   "type": "named",
-                  "typeId": "getContact_Response_200",
+                  "typeId": "Contact",
                 },
                 "type": "response",
                 "v2Examples": {
@@ -603,25 +608,25 @@
                       "inline": false,
                       "name": {
                         "camelCase": {
-                          "safeName": "getContactResponse200",
-                          "unsafeName": "getContactResponse200",
+                          "safeName": "contact",
+                          "unsafeName": "contact",
                         },
-                        "originalName": "getContact_Response_200",
+                        "originalName": "Contact",
                         "pascalCase": {
-                          "safeName": "GetContactResponse200",
-                          "unsafeName": "GetContactResponse200",
+                          "safeName": "Contact",
+                          "unsafeName": "Contact",
                         },
                         "screamingSnakeCase": {
-                          "safeName": "GET_CONTACT_RESPONSE_200",
-                          "unsafeName": "GET_CONTACT_RESPONSE_200",
+                          "safeName": "CONTACT",
+                          "unsafeName": "CONTACT",
                         },
                         "snakeCase": {
-                          "safeName": "get_contact_response_200",
-                          "unsafeName": "get_contact_response_200",
+                          "safeName": "contact",
+                          "unsafeName": "contact",
                         },
                       },
                       "type": "named",
-                      "typeId": "getContact_Response_200",
+                      "typeId": "Contact",
                     },
                     "type": "response",
                     "v2Examples": {
@@ -712,25 +717,25 @@
                       "inline": false,
                       "name": {
                         "camelCase": {
-                          "safeName": "paymentsGetResponsesContentApplicationJsonSchemaItems",
-                          "unsafeName": "paymentsGetResponsesContentApplicationJsonSchemaItems",
+                          "safeName": "payment",
+                          "unsafeName": "payment",
                         },
-                        "originalName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
+                        "originalName": "Payment",
                         "pascalCase": {
-                          "safeName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
-                          "unsafeName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
+                          "safeName": "Payment",
+                          "unsafeName": "Payment",
                         },
                         "screamingSnakeCase": {
-                          "safeName": "PAYMENTS_GET_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
-                          "unsafeName": "PAYMENTS_GET_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                          "safeName": "PAYMENT",
+                          "unsafeName": "PAYMENT",
                         },
                         "snakeCase": {
-                          "safeName": "payments_get_responses_content_application_json_schema_items",
-                          "unsafeName": "payments_get_responses_content_application_json_schema_items",
+                          "safeName": "payment",
+                          "unsafeName": "payment",
                         },
                       },
                       "type": "named",
-                      "typeId": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
+                      "typeId": "Payment",
                     },
                     "type": "list",
                   },
@@ -830,25 +835,25 @@
                           "inline": false,
                           "name": {
                             "camelCase": {
-                              "safeName": "paymentsGetResponsesContentApplicationJsonSchemaItems",
-                              "unsafeName": "paymentsGetResponsesContentApplicationJsonSchemaItems",
+                              "safeName": "payment",
+                              "unsafeName": "payment",
                             },
-                            "originalName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
+                            "originalName": "Payment",
                             "pascalCase": {
-                              "safeName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
-                              "unsafeName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
+                              "safeName": "Payment",
+                              "unsafeName": "Payment",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "PAYMENTS_GET_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
-                              "unsafeName": "PAYMENTS_GET_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                              "safeName": "PAYMENT",
+                              "unsafeName": "PAYMENT",
                             },
                             "snakeCase": {
-                              "safeName": "payments_get_responses_content_application_json_schema_items",
-                              "unsafeName": "payments_get_responses_content_application_json_schema_items",
+                              "safeName": "payment",
+                              "unsafeName": "payment",
                             },
                           },
                           "type": "named",
-                          "typeId": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
+                          "typeId": "Payment",
                         },
                         "type": "list",
                       },
@@ -925,91 +930,39 @@
             "_visit": [Function],
             "contentType": "application/json",
             "docs": undefined,
-            "extendedProperties": [],
-            "extends": [],
-            "extraProperties": false,
-            "name": {
-              "camelCase": {
-                "safeName": "createPaymentRequest",
-                "unsafeName": "createPaymentRequest",
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
               },
-              "originalName": "createPayment_Request",
-              "pascalCase": {
-                "safeName": "CreatePaymentRequest",
-                "unsafeName": "CreatePaymentRequest",
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "paymentRequest",
+                  "unsafeName": "paymentRequest",
+                },
+                "originalName": "PaymentRequest",
+                "pascalCase": {
+                  "safeName": "PaymentRequest",
+                  "unsafeName": "PaymentRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PAYMENT_REQUEST",
+                  "unsafeName": "PAYMENT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "payment_request",
+                  "unsafeName": "payment_request",
+                },
               },
-              "screamingSnakeCase": {
-                "safeName": "CREATE_PAYMENT_REQUEST",
-                "unsafeName": "CREATE_PAYMENT_REQUEST",
-              },
-              "snakeCase": {
-                "safeName": "create_payment_request",
-                "unsafeName": "create_payment_request",
-              },
+              "type": "named",
+              "typeId": "PaymentRequest",
             },
-            "properties": [
-              {
-                "availability": undefined,
-                "docs": undefined,
-                "name": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "amount",
-                      "unsafeName": "amount",
-                    },
-                    "originalName": "amount",
-                    "pascalCase": {
-                      "safeName": "Amount",
-                      "unsafeName": "Amount",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "AMOUNT",
-                      "unsafeName": "AMOUNT",
-                    },
-                    "snakeCase": {
-                      "safeName": "amount",
-                      "unsafeName": "amount",
-                    },
-                  },
-                  "wireValue": "amount",
-                },
-                "propertyAccess": undefined,
-                "v2Examples": {
-                  "autogeneratedExamples": {
-                    "PaymentsPostRequestBodyContentApplicationJsonSchemaAmount_example_autogenerated": 1.1,
-                  },
-                  "userSpecifiedExamples": {},
-                },
-                "valueType": {
-                  "_visit": [Function],
-                  "container": {
-                    "_visit": [Function],
-                    "optional": {
-                      "_visit": [Function],
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "_visit": [Function],
-                          "default": undefined,
-                          "type": "double",
-                          "validation": {
-                            "exclusiveMax": undefined,
-                            "exclusiveMin": undefined,
-                            "max": undefined,
-                            "min": undefined,
-                            "multipleOf": undefined,
-                          },
-                        },
-                      },
-                      "type": "primitive",
-                    },
-                    "type": "optional",
-                  },
-                  "type": "container",
-                },
-              },
-            ],
-            "type": "inlinedRequestBody",
+            "type": "reference",
             "v2Examples": {
               "autogeneratedExamples": {
                 "createPaymentExample": {},
@@ -1036,25 +989,25 @@
                   "inline": false,
                   "name": {
                     "camelCase": {
-                      "safeName": "createPaymentResponse201",
-                      "unsafeName": "createPaymentResponse201",
+                      "safeName": "payment",
+                      "unsafeName": "payment",
                     },
-                    "originalName": "createPayment_Response_201",
+                    "originalName": "Payment",
                     "pascalCase": {
-                      "safeName": "CreatePaymentResponse201",
-                      "unsafeName": "CreatePaymentResponse201",
+                      "safeName": "Payment",
+                      "unsafeName": "Payment",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "CREATE_PAYMENT_RESPONSE_201",
-                      "unsafeName": "CREATE_PAYMENT_RESPONSE_201",
+                      "safeName": "PAYMENT",
+                      "unsafeName": "PAYMENT",
                     },
                     "snakeCase": {
-                      "safeName": "create_payment_response_201",
-                      "unsafeName": "create_payment_response_201",
+                      "safeName": "payment",
+                      "unsafeName": "payment",
                     },
                   },
                   "type": "named",
-                  "typeId": "createPayment_Response_201",
+                  "typeId": "Payment",
                 },
                 "type": "response",
                 "v2Examples": {
@@ -1124,91 +1077,39 @@
                 "_visit": [Function],
                 "contentType": "application/json",
                 "docs": undefined,
-                "extendedProperties": [],
-                "extends": [],
-                "extraProperties": false,
-                "name": {
-                  "camelCase": {
-                    "safeName": "createPaymentRequest",
-                    "unsafeName": "createPaymentRequest",
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
                   },
-                  "originalName": "createPayment_Request",
-                  "pascalCase": {
-                    "safeName": "CreatePaymentRequest",
-                    "unsafeName": "CreatePaymentRequest",
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "paymentRequest",
+                      "unsafeName": "paymentRequest",
+                    },
+                    "originalName": "PaymentRequest",
+                    "pascalCase": {
+                      "safeName": "PaymentRequest",
+                      "unsafeName": "PaymentRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PAYMENT_REQUEST",
+                      "unsafeName": "PAYMENT_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "payment_request",
+                      "unsafeName": "payment_request",
+                    },
                   },
-                  "screamingSnakeCase": {
-                    "safeName": "CREATE_PAYMENT_REQUEST",
-                    "unsafeName": "CREATE_PAYMENT_REQUEST",
-                  },
-                  "snakeCase": {
-                    "safeName": "create_payment_request",
-                    "unsafeName": "create_payment_request",
-                  },
+                  "type": "named",
+                  "typeId": "PaymentRequest",
                 },
-                "properties": [
-                  {
-                    "availability": undefined,
-                    "docs": undefined,
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "amount",
-                          "unsafeName": "amount",
-                        },
-                        "originalName": "amount",
-                        "pascalCase": {
-                          "safeName": "Amount",
-                          "unsafeName": "Amount",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "AMOUNT",
-                          "unsafeName": "AMOUNT",
-                        },
-                        "snakeCase": {
-                          "safeName": "amount",
-                          "unsafeName": "amount",
-                        },
-                      },
-                      "wireValue": "amount",
-                    },
-                    "propertyAccess": undefined,
-                    "v2Examples": {
-                      "autogeneratedExamples": {
-                        "PaymentsPostRequestBodyContentApplicationJsonSchemaAmount_example_autogenerated": 1.1,
-                      },
-                      "userSpecifiedExamples": {},
-                    },
-                    "valueType": {
-                      "_visit": [Function],
-                      "container": {
-                        "_visit": [Function],
-                        "optional": {
-                          "_visit": [Function],
-                          "primitive": {
-                            "v1": "DOUBLE",
-                            "v2": {
-                              "_visit": [Function],
-                              "default": undefined,
-                              "type": "double",
-                              "validation": {
-                                "exclusiveMax": undefined,
-                                "exclusiveMin": undefined,
-                                "max": undefined,
-                                "min": undefined,
-                                "multipleOf": undefined,
-                              },
-                            },
-                          },
-                          "type": "primitive",
-                        },
-                        "type": "optional",
-                      },
-                      "type": "container",
-                    },
-                  },
-                ],
-                "type": "inlinedRequestBody",
+                "type": "reference",
                 "v2Examples": {
                   "autogeneratedExamples": {
                     "createPaymentExample": {},
@@ -1239,25 +1140,25 @@
                       "inline": false,
                       "name": {
                         "camelCase": {
-                          "safeName": "createPaymentResponse201",
-                          "unsafeName": "createPaymentResponse201",
+                          "safeName": "payment",
+                          "unsafeName": "payment",
                         },
-                        "originalName": "createPayment_Response_201",
+                        "originalName": "Payment",
                         "pascalCase": {
-                          "safeName": "CreatePaymentResponse201",
-                          "unsafeName": "CreatePaymentResponse201",
+                          "safeName": "Payment",
+                          "unsafeName": "Payment",
                         },
                         "screamingSnakeCase": {
-                          "safeName": "CREATE_PAYMENT_RESPONSE_201",
-                          "unsafeName": "CREATE_PAYMENT_RESPONSE_201",
+                          "safeName": "PAYMENT",
+                          "unsafeName": "PAYMENT",
                         },
                         "snakeCase": {
-                          "safeName": "create_payment_response_201",
-                          "unsafeName": "create_payment_response_201",
+                          "safeName": "payment",
+                          "unsafeName": "payment",
                         },
                       },
                       "type": "named",
-                      "typeId": "createPayment_Response_201",
+                      "typeId": "Payment",
                     },
                     "type": "response",
                     "v2Examples": {
@@ -1294,7 +1195,7 @@
   "sourceConfig": undefined,
   "subpackages": {},
   "types": {
-    "PaymentsGetResponsesContentApplicationJsonSchemaItems": {
+    "AuthResponse": {
       "autogeneratedExamples": [],
       "availability": undefined,
       "docs": undefined,
@@ -1309,196 +1210,24 @@
         },
         "name": {
           "camelCase": {
-            "safeName": "paymentsGetResponsesContentApplicationJsonSchemaItems",
-            "unsafeName": "paymentsGetResponsesContentApplicationJsonSchemaItems",
+            "safeName": "authResponse",
+            "unsafeName": "authResponse",
           },
-          "originalName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
+          "originalName": "AuthResponse",
           "pascalCase": {
-            "safeName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
-            "unsafeName": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
+            "safeName": "AuthResponse",
+            "unsafeName": "AuthResponse",
           },
           "screamingSnakeCase": {
-            "safeName": "PAYMENTS_GET_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
-            "unsafeName": "PAYMENTS_GET_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+            "safeName": "AUTH_RESPONSE",
+            "unsafeName": "AUTH_RESPONSE",
           },
           "snakeCase": {
-            "safeName": "payments_get_responses_content_application_json_schema_items",
-            "unsafeName": "payments_get_responses_content_application_json_schema_items",
+            "safeName": "auth_response",
+            "unsafeName": "auth_response",
           },
         },
-        "typeId": "PaymentsGetResponsesContentApplicationJsonSchemaItems",
-      },
-      "referencedTypes": Set {},
-      "shape": {
-        "_visit": [Function],
-        "extendedProperties": [],
-        "extends": [],
-        "extraProperties": false,
-        "properties": [
-          {
-            "availability": undefined,
-            "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-                "originalName": "id",
-                "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
-                },
-                "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-              },
-              "wireValue": "id",
-            },
-            "propertyAccess": undefined,
-            "v2Examples": {
-              "autogeneratedExamples": {
-                "PaymentsGetResponsesContentApplicationJsonSchemaItemsId_example_autogenerated": "string",
-              },
-              "userSpecifiedExamples": {},
-            },
-            "valueType": {
-              "_visit": [Function],
-              "container": {
-                "_visit": [Function],
-                "optional": {
-                  "_visit": [Function],
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "_visit": [Function],
-                      "default": undefined,
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                  "type": "primitive",
-                },
-                "type": "optional",
-              },
-              "type": "container",
-            },
-          },
-          {
-            "availability": undefined,
-            "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "amount",
-                  "unsafeName": "amount",
-                },
-                "originalName": "amount",
-                "pascalCase": {
-                  "safeName": "Amount",
-                  "unsafeName": "Amount",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "AMOUNT",
-                  "unsafeName": "AMOUNT",
-                },
-                "snakeCase": {
-                  "safeName": "amount",
-                  "unsafeName": "amount",
-                },
-              },
-              "wireValue": "amount",
-            },
-            "propertyAccess": undefined,
-            "v2Examples": {
-              "autogeneratedExamples": {
-                "PaymentsGetResponsesContentApplicationJsonSchemaItemsAmount_example_autogenerated": 1.1,
-              },
-              "userSpecifiedExamples": {},
-            },
-            "valueType": {
-              "_visit": [Function],
-              "container": {
-                "_visit": [Function],
-                "optional": {
-                  "_visit": [Function],
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "_visit": [Function],
-                      "default": undefined,
-                      "type": "double",
-                      "validation": {
-                        "exclusiveMax": undefined,
-                        "exclusiveMin": undefined,
-                        "max": undefined,
-                        "min": undefined,
-                        "multipleOf": undefined,
-                      },
-                    },
-                  },
-                  "type": "primitive",
-                },
-                "type": "optional",
-              },
-              "type": "container",
-            },
-          },
-        ],
-        "type": "object",
-      },
-      "source": undefined,
-      "userProvidedExamples": [],
-      "v2Examples": {
-        "autogeneratedExamples": {
-          "PaymentsGetResponsesContentApplicationJsonSchemaItems_example_autogenerated": {},
-        },
-        "userSpecifiedExamples": {},
-      },
-    },
-    "authorize_Response_200": {
-      "autogeneratedExamples": [],
-      "availability": undefined,
-      "docs": undefined,
-      "encoding": undefined,
-      "inline": false,
-      "name": {
-        "displayName": undefined,
-        "fernFilepath": {
-          "allParts": [],
-          "file": undefined,
-          "packagePath": [],
-        },
-        "name": {
-          "camelCase": {
-            "safeName": "authorizeResponse200",
-            "unsafeName": "authorizeResponse200",
-          },
-          "originalName": "authorize_Response_200",
-          "pascalCase": {
-            "safeName": "AuthorizeResponse200",
-            "unsafeName": "AuthorizeResponse200",
-          },
-          "screamingSnakeCase": {
-            "safeName": "AUTHORIZE_RESPONSE_200",
-            "unsafeName": "AUTHORIZE_RESPONSE_200",
-          },
-          "snakeCase": {
-            "safeName": "authorize_response_200",
-            "unsafeName": "authorize_response_200",
-          },
-        },
-        "typeId": "authorize_Response_200",
+        "typeId": "AuthResponse",
       },
       "referencedTypes": Set {},
       "shape": {
@@ -1535,7 +1264,7 @@
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
-                "AuthorizePostResponsesContentApplicationJsonSchemaToken_example_autogenerated": "string",
+                "AuthResponseToken_example_autogenerated": "string",
               },
               "userSpecifiedExamples": {},
             },
@@ -1573,12 +1302,12 @@
       "userProvidedExamples": [],
       "v2Examples": {
         "autogeneratedExamples": {
-          "authorize_Response_200_example_autogenerated": {},
+          "AuthResponse_example_autogenerated": {},
         },
         "userSpecifiedExamples": {},
       },
     },
-    "createPayment_Response_201": {
+    "Contact": {
       "autogeneratedExamples": [],
       "availability": undefined,
       "docs": undefined,
@@ -1593,24 +1322,24 @@
         },
         "name": {
           "camelCase": {
-            "safeName": "createPaymentResponse201",
-            "unsafeName": "createPaymentResponse201",
+            "safeName": "contact",
+            "unsafeName": "contact",
           },
-          "originalName": "createPayment_Response_201",
+          "originalName": "Contact",
           "pascalCase": {
-            "safeName": "CreatePaymentResponse201",
-            "unsafeName": "CreatePaymentResponse201",
+            "safeName": "Contact",
+            "unsafeName": "Contact",
           },
           "screamingSnakeCase": {
-            "safeName": "CREATE_PAYMENT_RESPONSE_201",
-            "unsafeName": "CREATE_PAYMENT_RESPONSE_201",
+            "safeName": "CONTACT",
+            "unsafeName": "CONTACT",
           },
           "snakeCase": {
-            "safeName": "create_payment_response_201",
-            "unsafeName": "create_payment_response_201",
+            "safeName": "contact",
+            "unsafeName": "contact",
           },
         },
-        "typeId": "createPayment_Response_201",
+        "typeId": "Contact",
       },
       "referencedTypes": Set {},
       "shape": {
@@ -1647,179 +1376,7 @@
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
-                "PaymentsPostResponsesContentApplicationJsonSchemaId_example_autogenerated": "string",
-              },
-              "userSpecifiedExamples": {},
-            },
-            "valueType": {
-              "_visit": [Function],
-              "container": {
-                "_visit": [Function],
-                "optional": {
-                  "_visit": [Function],
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "_visit": [Function],
-                      "default": undefined,
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                  "type": "primitive",
-                },
-                "type": "optional",
-              },
-              "type": "container",
-            },
-          },
-          {
-            "availability": undefined,
-            "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "amount",
-                  "unsafeName": "amount",
-                },
-                "originalName": "amount",
-                "pascalCase": {
-                  "safeName": "Amount",
-                  "unsafeName": "Amount",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "AMOUNT",
-                  "unsafeName": "AMOUNT",
-                },
-                "snakeCase": {
-                  "safeName": "amount",
-                  "unsafeName": "amount",
-                },
-              },
-              "wireValue": "amount",
-            },
-            "propertyAccess": undefined,
-            "v2Examples": {
-              "autogeneratedExamples": {
-                "PaymentsPostResponsesContentApplicationJsonSchemaAmount_example_autogenerated": 1.1,
-              },
-              "userSpecifiedExamples": {},
-            },
-            "valueType": {
-              "_visit": [Function],
-              "container": {
-                "_visit": [Function],
-                "optional": {
-                  "_visit": [Function],
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "_visit": [Function],
-                      "default": undefined,
-                      "type": "double",
-                      "validation": {
-                        "exclusiveMax": undefined,
-                        "exclusiveMin": undefined,
-                        "max": undefined,
-                        "min": undefined,
-                        "multipleOf": undefined,
-                      },
-                    },
-                  },
-                  "type": "primitive",
-                },
-                "type": "optional",
-              },
-              "type": "container",
-            },
-          },
-        ],
-        "type": "object",
-      },
-      "source": undefined,
-      "userProvidedExamples": [],
-      "v2Examples": {
-        "autogeneratedExamples": {
-          "createPayment_Response_201_example_autogenerated": {},
-        },
-        "userSpecifiedExamples": {},
-      },
-    },
-    "getContact_Response_200": {
-      "autogeneratedExamples": [],
-      "availability": undefined,
-      "docs": undefined,
-      "encoding": undefined,
-      "inline": false,
-      "name": {
-        "displayName": undefined,
-        "fernFilepath": {
-          "allParts": [],
-          "file": undefined,
-          "packagePath": [],
-        },
-        "name": {
-          "camelCase": {
-            "safeName": "getContactResponse200",
-            "unsafeName": "getContactResponse200",
-          },
-          "originalName": "getContact_Response_200",
-          "pascalCase": {
-            "safeName": "GetContactResponse200",
-            "unsafeName": "GetContactResponse200",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_CONTACT_RESPONSE_200",
-            "unsafeName": "GET_CONTACT_RESPONSE_200",
-          },
-          "snakeCase": {
-            "safeName": "get_contact_response_200",
-            "unsafeName": "get_contact_response_200",
-          },
-        },
-        "typeId": "getContact_Response_200",
-      },
-      "referencedTypes": Set {},
-      "shape": {
-        "_visit": [Function],
-        "extendedProperties": [],
-        "extends": [],
-        "extraProperties": false,
-        "properties": [
-          {
-            "availability": undefined,
-            "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-                "originalName": "id",
-                "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
-                },
-                "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-              },
-              "wireValue": "id",
-            },
-            "propertyAccess": undefined,
-            "v2Examples": {
-              "autogeneratedExamples": {
-                "ContactsIdGetResponsesContentApplicationJsonSchemaId_example_autogenerated": "string",
+                "ContactId_example_autogenerated": "string",
               },
               "userSpecifiedExamples": {},
             },
@@ -1878,7 +1435,7 @@
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
-                "ContactsIdGetResponsesContentApplicationJsonSchemaName_example_autogenerated": "string",
+                "ContactName_example_autogenerated": "string",
               },
               "userSpecifiedExamples": {},
             },
@@ -1916,7 +1473,292 @@
       "userProvidedExamples": [],
       "v2Examples": {
         "autogeneratedExamples": {
-          "getContact_Response_200_example_autogenerated": {},
+          "Contact_example_autogenerated": {},
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Payment": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "payment",
+            "unsafeName": "payment",
+          },
+          "originalName": "Payment",
+          "pascalCase": {
+            "safeName": "Payment",
+            "unsafeName": "Payment",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT",
+            "unsafeName": "PAYMENT",
+          },
+          "snakeCase": {
+            "safeName": "payment",
+            "unsafeName": "payment",
+          },
+        },
+        "typeId": "Payment",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentId_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+                "originalName": "amount",
+                "pascalCase": {
+                  "safeName": "Amount",
+                  "unsafeName": "Amount",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "AMOUNT",
+                  "unsafeName": "AMOUNT",
+                },
+                "snakeCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+              },
+              "wireValue": "amount",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentAmount_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "double",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": undefined,
+                        "multipleOf": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Payment_example_autogenerated": {},
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "PaymentRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "paymentRequest",
+            "unsafeName": "paymentRequest",
+          },
+          "originalName": "PaymentRequest",
+          "pascalCase": {
+            "safeName": "PaymentRequest",
+            "unsafeName": "PaymentRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT_REQUEST",
+            "unsafeName": "PAYMENT_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "payment_request",
+            "unsafeName": "payment_request",
+          },
+        },
+        "typeId": "PaymentRequest",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+                "originalName": "amount",
+                "pascalCase": {
+                  "safeName": "Amount",
+                  "unsafeName": "Amount",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "AMOUNT",
+                  "unsafeName": "AMOUNT",
+                },
+                "snakeCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+              },
+              "wireValue": "amount",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentRequestAmount_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "double",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": undefined,
+                        "multipleOf": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "PaymentRequest_example_autogenerated": {},
         },
         "userSpecifiedExamples": {},
       },

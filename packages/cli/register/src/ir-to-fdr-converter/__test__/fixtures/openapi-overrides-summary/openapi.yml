@@ -13,10 +13,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  token:
-                    type: string
+                $ref: '#/components/schemas/AuthResponse'
   /contacts/{id}:
     get:
       operationId: getContact
@@ -32,12 +29,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
+                $ref: '#/components/schemas/Contact'
   /payments:
     get:
       operationId: listPayments
@@ -50,12 +42,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    amount:
-                      type: number
+                  $ref: '#/components/schemas/Payment'
     post:
       operationId: createPayment
       summary: Create payment (main spec)
@@ -64,19 +51,37 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                amount:
-                  type: number
+              $ref: '#/components/schemas/PaymentRequest'
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  amount:
-                    type: number
+                $ref: '#/components/schemas/Payment'
+components:
+  schemas:
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    Contact:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+    PaymentRequest:
+      type: object
+      properties:
+        amount:
+          type: number
