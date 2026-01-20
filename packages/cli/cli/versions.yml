@@ -2,7 +2,7 @@
 - version: 3.47.3
   changelogEntry:
     - summary: |
-        Improve error messages for authentication errors when publishing docs. The CLI now shows user-friendly messages for 401/403 errors instead of raw error details, with clear instructions to run 'fern login' and contact support if needed.
+        Improve error messages for authentication errors when publishing docs.
       type: fix
   createdAt: "2026-01-20"
   irVersion: 63
