@@ -113,6 +113,22 @@ public abstract class AbstractHttpResponseParserGenerator {
             List<String> paramNamesWoBodyWithRequestOptions,
             ParameterSpec bodyParameterSpec);
 
+    public abstract void addBodyOnlyReturnStatement(
+            MethodSpec.Builder bodyOnlyMethodBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> bodyOnlyParamNames,
+            ParameterSpec bodyParam,
+            String wrapperTypeName,
+            String bodyPropertyName);
+
+    public abstract void addBodyOnlyWithRequestOptionsReturnStatement(
+            MethodSpec.Builder bodyOnlyWithRequestOptionsMethodBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> bodyOnlyWithRequestOptionsParamNames,
+            ParameterSpec bodyParam,
+            String wrapperTypeName,
+            String bodyPropertyName);
+
     public abstract CodeBlock getByteArrayEndpointBaseMethodBody(
             CodeBlock.Builder methodBodyBuilder,
             MethodSpec byteArrayBaseMethodSpec,

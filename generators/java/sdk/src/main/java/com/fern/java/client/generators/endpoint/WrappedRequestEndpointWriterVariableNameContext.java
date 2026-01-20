@@ -12,6 +12,7 @@ import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,5 +96,59 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
                     .getCamelCase()
                     .getSafeName();
         }
+    }
+
+    @Override
+    public Optional<TypeName> getBodyTypeName() {
+        if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
+            GeneratedWrappedRequest.RequestBodyGetter bodyGetter =
+                    generatedWrappedRequest.requestBodyGetter().get();
+            if (bodyGetter instanceof GeneratedWrappedRequest.InlinedRequestBodyGetters) {
+                return Optional.of(generatedWrappedRequest.getClassName());
+            } else if (bodyGetter instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter) {
+                GeneratedWrappedRequest.ReferencedRequestBodyGetter referencedGetter =
+                        (GeneratedWrappedRequest.ReferencedRequestBodyGetter) bodyGetter;
+                return Optional.of(referencedGetter.requestBodyGetter().returnType);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public String getBodyParameterName() {
+        if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
+            GeneratedWrappedRequest.RequestBodyGetter bodyGetter =
+                    generatedWrappedRequest.requestBodyGetter().get();
+            if (bodyGetter instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter) {
+                GeneratedWrappedRequest.ReferencedRequestBodyGetter referencedGetter =
+                        (GeneratedWrappedRequest.ReferencedRequestBodyGetter) bodyGetter;
+                // Convert getter name (e.g., "getBody") to parameter name (e.g., "body")
+                String getterName = referencedGetter.requestBodyGetter().name;
+                if (getterName.startsWith("get") && getterName.length() > 3) {
+                    return Character.toLowerCase(getterName.charAt(3)) + getterName.substring(4);
+                }
+                return getterName;
+            }
+        }
+        return "body";
+    }
+
+    @Override
+    public String getBodyPropertyName() {
+        if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
+            GeneratedWrappedRequest.RequestBodyGetter bodyGetter =
+                    generatedWrappedRequest.requestBodyGetter().get();
+            if (bodyGetter instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter) {
+                GeneratedWrappedRequest.ReferencedRequestBodyGetter referencedGetter =
+                        (GeneratedWrappedRequest.ReferencedRequestBodyGetter) bodyGetter;
+                // Convert getter name (e.g., "getBody") to property name (e.g., "body")
+                String getterName = referencedGetter.requestBodyGetter().name;
+                if (getterName.startsWith("get") && getterName.length() > 3) {
+                    return Character.toLowerCase(getterName.charAt(3)) + getterName.substring(4);
+                }
+                return getterName;
+            }
+        }
+        return "body";
     }
 }

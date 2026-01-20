@@ -184,6 +184,24 @@ public abstract class AbstractClientGeneratorUtils {
                             .get());
                 }
 
+                if (httpEndpointMethodSpecs.getBodyOnlyMethodSpec().isPresent()) {
+                    rawClientImplBuilder.addMethod(
+                            rawHttpEndpointMethodSpecs.getBodyOnlyMethodSpec().get());
+                    implBuilder.addMethod(
+                            delegatingHttpEndpointMethodSpecs.getBodyOnlyMethodSpec().get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getBodyOnlyWithRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getBodyOnlyWithRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getBodyOnlyWithRequestOptionsMethodSpec()
+                            .get());
+                }
+
                 rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
                 implBuilder.addMethod(delegatingHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
 

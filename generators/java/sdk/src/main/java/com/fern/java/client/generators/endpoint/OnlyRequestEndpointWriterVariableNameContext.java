@@ -102,4 +102,19 @@ public class OnlyRequestEndpointWriterVariableNameContext extends AbstractEndpoi
             throw new RuntimeException("Unexpected, both generatedWrappedRequest and sdkRequestBodyType are null");
         }
     }
+
+    @Override
+    public Optional<TypeName> getBodyTypeName() {
+        return Optional.empty();
+    }
+
+    @Override
+    public String getBodyParameterName() {
+        return "body";
+    }
+
+    @Override
+    public String getBodyPropertyName() {
+        return "body";
+    }
 }
