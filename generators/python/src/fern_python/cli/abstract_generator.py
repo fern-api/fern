@@ -310,7 +310,7 @@ class AbstractGenerator(ABC):
         logger.debug("Finished writing files for GitHub repository.")
 
     def _get_github_workflow_legacy(
-        self, output_mode: GithubOutputMode, write_unit_tests: bool, min_python_version: str = "3.8"
+        self, output_mode: GithubOutputMode, write_unit_tests: bool, min_python_version: str = "3.9"
     ) -> str:
         workflow_yaml = f"""name: ci
 on: [push]
@@ -395,7 +395,7 @@ jobs:
         return workflow_yaml
 
     def _get_github_workflow(
-        self, output_mode: GithubOutputMode, write_unit_tests: bool, min_python_version: str = "3.8"
+        self, output_mode: GithubOutputMode, write_unit_tests: bool, min_python_version: str = "3.9"
     ) -> str:
         # new workflow that supports automated OIDC-attestation signing and publishing to PyPI
         workflow_yaml = f"""name: ci
