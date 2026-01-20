@@ -8,6 +8,12 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, Tuple, cast
 
+from fern_python.codegen.ast.dependency.dependency import (
+    Dependency,
+    DependencyCompatibility,
+)
+from fern_python.codegen.dependency_manager import DependencyManager
+
 from fern.generator_exec import (
     BasicLicense,
     GithubOutputMode,
@@ -15,12 +21,6 @@ from fern.generator_exec import (
     LicenseId,
     PypiMetadata,
 )
-
-from fern_python.codegen.ast.dependency.dependency import (
-    Dependency,
-    DependencyCompatibility,
-)
-from fern_python.codegen.dependency_manager import DependencyManager
 
 # All known Python 3.x minor versions for classifier generation
 ALL_PYTHON_VERSIONS = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
