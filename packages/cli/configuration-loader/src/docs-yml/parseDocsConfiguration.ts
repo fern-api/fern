@@ -455,6 +455,7 @@ function convertLayoutConfig(
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false
+        // maxTocDepth will be added once @fern-api/fdr-sdk is updated with the new DocsLayoutConfig type
     };
 }
 

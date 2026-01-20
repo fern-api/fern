@@ -4737,6 +4737,16 @@
               "type": "null"
             }
           ]
+        },
+        "max-toc-depth": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
