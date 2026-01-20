@@ -719,7 +719,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isExampleWithSummary(example: unknown): example is { summary: string } {
-        return typeof example === "object" && example != null && "summary" in example;
+        return (
+            typeof example === "object" &&
+            example != null &&
+            "summary" in example &&
+            typeof (example as { summary: unknown }).summary === "string" &&
+            (example as { summary: string }).summary.length > 0
+        );
     }
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {
