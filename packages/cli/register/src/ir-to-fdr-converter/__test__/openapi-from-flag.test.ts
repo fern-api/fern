@@ -2690,4 +2690,70 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/openapi-overrides-summary-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/openapi-overrides-summary-ir.snap");
     });
+
+    it("should capture baseline for OpenAPI example summary field processing", async () => {
+        // Test OpenAPI spec with summary fields in components/examples
+        // This test establishes a baseline to show the difference when summary field processing is fixed
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/openapi-example-summary")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "openapi-example-summary"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate services and endpoints were processed correctly
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        // This captures the current behavior where example summary fields may not be propagated
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/openapi-example-summary-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/openapi-example-summary-ir.snap");
+    });
 });
