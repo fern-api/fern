@@ -128,7 +128,7 @@ export function registerLiteralEnumsForTypeReference({
                     registerLiteralEnumsForTypeReference({
                         parentSymbol,
                         registry,
-                        typeReference: lt
+                        typeReference: lt.list
                     });
                 },
                 nullable: (typeReference) => {
@@ -145,11 +145,11 @@ export function registerLiteralEnumsForTypeReference({
                         typeReference
                     });
                 },
-                set: (typeReference) => {
+                set: (st) => {
                     registerLiteralEnumsForTypeReference({
                         parentSymbol,
                         registry,
-                        typeReference
+                        typeReference: st.set
                     });
                 },
                 _other: noop
