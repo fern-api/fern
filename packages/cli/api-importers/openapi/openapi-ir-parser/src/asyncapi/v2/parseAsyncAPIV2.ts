@@ -125,12 +125,16 @@ export function parseAsyncAPIV2({
                 for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
                     if (isReferenceObject(schema)) {
                         const resolvedSchema = context.resolveSchemaReference(schema);
+                        const isRequired = required.includes(name);
+                        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                            ? [false, !isRequired]
+                            : [!isRequired, false];
                         headers.push({
                             name,
                             schema: convertReferenceObject(
                                 schema,
-                                false,
-                                false,
+                                isOptional,
+                                isNullable,
                                 context,
                                 breadcrumbs,
                                 undefined,
@@ -174,12 +178,16 @@ export function parseAsyncAPIV2({
                 for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
                     if (isReferenceObject(schema)) {
                         const resolvedSchema = context.resolveSchemaReference(schema);
+                        const isRequired = required.includes(name);
+                        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                            ? [false, !isRequired]
+                            : [!isRequired, false];
                         queryParameters.push({
                             name,
                             schema: convertReferenceObject(
                                 schema,
-                                false,
-                                false,
+                                isOptional,
+                                isNullable,
                                 context,
                                 breadcrumbs,
                                 undefined,
