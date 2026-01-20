@@ -138,10 +138,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public async getOpenAPIIr(
         {
             context,
-            relativePathToDependency
+            relativePathToDependency,
+            loadAiExamples = false
         }: {
             context: TaskContext;
             relativePathToDependency?: RelativeFilePath;
+            loadAiExamples?: boolean;
         },
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
@@ -150,7 +152,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             context,
             documents: await this.loader.loadDocuments({
                 context,
-                specs: openApiSpecs
+                specs: openApiSpecs,
+                loadAiExamples
             }),
             options: {
                 ...settings,
