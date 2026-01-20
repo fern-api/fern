@@ -461,8 +461,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             writer.write("{");
             writer.newLine();
             writer.indent();
-            for (let i = 0; i < propertiesWithDefaults.length; i++) {
-                const { propertyName } = propertiesWithDefaults[i]!;
+            for (const [i, { propertyName }] of propertiesWithDefaults.entries()) {
                 writer.write(`${propertyName} = ${propertyName} ?? Defaults.${propertyName}`);
                 if (i < propertiesWithDefaults.length - 1) {
                     writer.write(",");

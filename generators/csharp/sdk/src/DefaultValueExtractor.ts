@@ -43,9 +43,7 @@ export class DefaultValueExtractor {
 
                 return v2._visit<ExtractedDefault | undefined>({
                     integer: (t) =>
-                        t.default != null
-                            ? { value: `${t.default}`, csharpType: "int", isConst: true }
-                            : undefined,
+                        t.default != null ? { value: `${t.default}`, csharpType: "int", isConst: true } : undefined,
                     long: (t) =>
                         // Skip large values that may have lost precision in JavaScript
                         t.default != null && this.isSafeInteger(t.default)
