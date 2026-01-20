@@ -8,6 +8,7 @@ import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
+import { filterRequestBody, unwrapExampleValue } from "./filterHelpers";
 import { LambdaExampleEnhancer } from "./lambdaClient";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
 import { AIExampleEnhancerConfig, ConcurrencyStats, ProcessingResult, ProgressCallback, QueuedRequest } from "./types";
@@ -922,7 +923,14 @@ async function processEndpoint(
     apiStats?: { count: number; total: number },
     endpointNumber?: number,
     circuitBreaker?: CircuitBreaker
-): Promise<{ endpointKey: string; enhancedReq?: unknown; enhancedRes?: unknown } | null> {
+): Promise<{
+    endpointKey: string;
+    enhancedReq?: unknown;
+    enhancedRes?: unknown;
+    extractedHeaders?: Record<string, unknown>;
+    extractedPathParams?: Record<string, unknown>;
+    extractedQueryParams?: Record<string, unknown>;
+} | null> {
     const endpointKey = workItem.endpointKey;
 
     context.logger.debug(`Processing endpoint ${endpointNumber}: ${workItem.endpoint.method} ${workItem.example.path}`);
@@ -969,6 +977,50 @@ async function processEndpoint(
                 ? extractHeaderParameterNames(prunedOpenApiSpec, workItem.example.path, workItem.endpoint.method)
                 : [];
 
+            // Build a headers object for filtering that includes both existing headers
+            // and header parameter names from the OpenAPI spec (which may not have values yet)
+            const headersForFiltering: Record<string, unknown> = { ...(workItem.example.headers ?? {}) };
+            if (headerParameterNames.length > 0) {
+                for (const headerName of headerParameterNames) {
+                    if (!(headerName in headersForFiltering)) {
+                        headersForFiltering[headerName] = "";
+                    }
+                }
+            }
+
+            // Unwrap FDR typed value wrappers and filter the request body to extract headers
+            const unwrappedRequestBody = unwrapExampleValue(result.enhancedRequestExample);
+            const { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders } = filterRequestBody(
+                unwrappedRequestBody,
+                workItem.example.pathParameters,
+                workItem.example.queryParameters,
+                headersForFiltering
+            );
+
+            // Merge extracted headers with original headers
+            const mergedHeaders: Record<string, unknown> = { ...(workItem.example.headers ?? {}) };
+            for (const [key, value] of Object.entries(extractedHeaders)) {
+                if (value !== undefined && value !== null && value !== "") {
+                    mergedHeaders[key] = value;
+                }
+            }
+
+            // Merge extracted path params with original path params
+            const mergedPathParams: Record<string, unknown> = { ...(workItem.example.pathParameters ?? {}) };
+            for (const [key, value] of Object.entries(extractedPathParams)) {
+                if (value !== undefined && value !== null && value !== "") {
+                    mergedPathParams[key] = value;
+                }
+            }
+
+            // Merge extracted query params with original query params
+            const mergedQueryParams: Record<string, unknown> = { ...(workItem.example.queryParameters ?? {}) };
+            for (const [key, value] of Object.entries(extractedQueryParams)) {
+                if (value !== undefined && value !== null && value !== "") {
+                    mergedQueryParams[key] = value;
+                }
+            }
+
             // Create enhanced example record
             const enhancedExampleRecord: EnhancedExampleRecord = {
                 endpoint: workItem.example.path,
@@ -996,8 +1048,11 @@ async function processEndpoint(
 
             return {
                 endpointKey,
-                enhancedReq: result.enhancedRequestExample,
-                enhancedRes: result.enhancedResponseExample
+                enhancedReq: filteredBody,
+                enhancedRes: result.enhancedResponseExample,
+                extractedHeaders: Object.keys(mergedHeaders).length > 0 ? mergedHeaders : undefined,
+                extractedPathParams: Object.keys(mergedPathParams).length > 0 ? mergedPathParams : undefined,
+                extractedQueryParams: Object.keys(mergedQueryParams).length > 0 ? mergedQueryParams : undefined
             };
         }
 
@@ -1022,7 +1077,16 @@ async function processEndpoint(
 
 function applyEnhancementResults(
     pkg: FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-    enhancementResults: Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>
+    enhancementResults: Map<
+        string,
+        {
+            enhancedReq?: unknown;
+            enhancedRes?: unknown;
+            extractedHeaders?: Record<string, unknown>;
+            extractedPathParams?: Record<string, unknown>;
+            extractedQueryParams?: Record<string, unknown>;
+        }
+    >
 ): FdrCjsSdk.api.v1.register.ApiDefinitionPackage {
     const enhancedEndpoints = pkg.endpoints.map((endpoint) => {
         const endpointV3 = endpoint as unknown as EndpointV3;
@@ -1048,6 +1112,30 @@ function applyEnhancementResults(
                     enhancedExample.responseBodyV3 = example.responseBodyV3
                         ? { ...example.responseBodyV3, value: enhancementResult.enhancedRes }
                         : { type: "json", value: enhancementResult.enhancedRes };
+                }
+
+                // Apply extracted headers to the example
+                if (enhancementResult.extractedHeaders !== undefined) {
+                    enhancedExample.headers = {
+                        ...(example.headers ?? {}),
+                        ...enhancementResult.extractedHeaders
+                    };
+                }
+
+                // Apply extracted path parameters to the example
+                if (enhancementResult.extractedPathParams !== undefined) {
+                    enhancedExample.pathParameters = {
+                        ...(example.pathParameters ?? {}),
+                        ...enhancementResult.extractedPathParams
+                    };
+                }
+
+                // Apply extracted query parameters to the example
+                if (enhancementResult.extractedQueryParams !== undefined) {
+                    enhancedExample.queryParameters = {
+                        ...(example.queryParameters ?? {}),
+                        ...enhancementResult.extractedQueryParams
+                    };
                 }
 
                 return enhancedExample;

@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.5
+  changelogEntry:
+    - summary: |
+        Fix AI examples headers/path/query params not appearing in docs on first run by extracting and applying them from the enhanced request body.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
 - version: 3.47.4
   changelogEntry:
     - summary: |
