@@ -2,7 +2,7 @@
  * Checks if a value looks like an FDR typed value wrapper (has `type` and/or `value` properties).
  * These wrappers are used internally but should be unwrapped for x-fern-examples.
  */
-function isFdrTypedValueWrapper(value: unknown): value is { type?: string; value?: unknown } {
+export function isFdrTypedValueWrapper(value: unknown): value is { type?: string; value?: unknown } {
     if (value === null || value === undefined || typeof value !== "object" || Array.isArray(value)) {
         return false;
     }

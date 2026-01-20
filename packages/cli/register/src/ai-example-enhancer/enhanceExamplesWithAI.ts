@@ -8,7 +8,7 @@ import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
-import { filterRequestBody, unwrapExampleValue } from "./filterHelpers";
+import { filterRequestBody, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers";
 import { LambdaExampleEnhancer } from "./lambdaClient";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
 import { AIExampleEnhancerConfig, ConcurrencyStats, ProcessingResult, ProgressCallback, QueuedRequest } from "./types";
@@ -1177,9 +1177,17 @@ function applyEnhancementResults(
                 if (enhancementResult.enhancedReq !== undefined) {
                     enhancedExample.requestBody = enhancementResult.enhancedReq;
                     if (example.requestBodyV3) {
-                        // For form data, we need to preserve the FDR typed value wrapper structure
-                        // and update the value property within each field's wrapper
-                        if (example.requestBodyV3.type === "form" && typeof example.requestBodyV3.value === "object") {
+                        // Check if the value contains FDR typed value wrappers (form data structure)
+                        // Form data has a structure like: { "file": { "type": "filename", "value": "..." }, "text": { "type": "json", "value": "..." } }
+                        const isFormData =
+                            typeof example.requestBodyV3.value === "object" &&
+                            example.requestBodyV3.value !== null &&
+                            !Array.isArray(example.requestBodyV3.value) &&
+                            Object.values(example.requestBodyV3.value as Record<string, unknown>).some((v) =>
+                                isFdrTypedValueWrapper(v)
+                            );
+
+                        if (isFormData) {
                             const enhancedReq = enhancementResult.enhancedReq as Record<string, unknown>;
                             const originalValue = example.requestBodyV3.value as Record<
                                 string,
