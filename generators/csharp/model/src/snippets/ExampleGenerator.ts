@@ -223,7 +223,7 @@ export class ExampleGenerator extends WithGeneration {
                     valueType:
                         p.valueType.type === "unknown"
                             ? this.context.csharpTypeMapper.convert({ reference: p.valueType }).asOptional()
-                            : this.context.csharpTypeMapper.convert({ reference: p.valueType }),
+                            : this.context.csharpTypeMapper.convert({ reference: p.valueType, unboxOptionals: true }),
                     values: {
                         type: "entries",
                         entries

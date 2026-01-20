@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.<a href="src/seed/retries/client.py">get_users</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.retries.<a href="src/seed/retries/client.py">get_users</a>() -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
 <dl>
 <dd>
 

@@ -16,6 +16,8 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.ir.model.auth.AuthSchemeKey;
+import com.fern.ir.model.auth.AuthScope;
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.*;
@@ -55,6 +57,7 @@ public abstract class AbstractEndpointWriter {
     public static final String APPLICATION_JSON_HEADER = "application/json";
     public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
+    public static final String MERGE_HEADERS_METHOD_NAME = "mergeHeaders";
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final GeneratedClientOptions generatedClientOptions;
@@ -359,6 +362,71 @@ public abstract class AbstractEndpointWriter {
                     paramNamesWoBodyWithRequestOptions,
                     bodyParameterSpec);
             endpointWithoutRequestWithRequestOptions = endpointWithoutRequestWithRequestOptionsBuilder.build();
+        }
+
+        MethodSpec bodyOnlyMethodSpec = null;
+        MethodSpec bodyOnlyWithRequestOptionsMethodSpec = null;
+        if (variables.sdkRequest().isPresent()
+                && variables
+                        .sdkRequest()
+                        .get()
+                        .getShape()
+                        .visit(new SdkRequestHasRequiredBodyWithOnlyOptionalWrapperAdditions())) {
+            Optional<TypeName> bodyTypeName = variables.getBodyTypeName();
+            Optional<TypeName> wrapperTypeName = variables.getWrapperTypeName();
+            if (bodyTypeName.isPresent() && wrapperTypeName.isPresent()) {
+                String bodyParamName = variables.getBodyParameterName();
+                ParameterSpec bodyParam =
+                        ParameterSpec.builder(bodyTypeName.get(), bodyParamName).build();
+
+                MethodSpec.Builder bodyOnlyMethodBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                        .addJavadoc(endpointWithRequestOptions.javadoc)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameters(variables.pathParameters)
+                        .addParameter(bodyParam)
+                        .returns(endpointWithoutRequestOptions.returnType);
+                List<String> bodyOnlyParamNames = Stream.concat(variables.pathParameters.stream(), Stream.of(bodyParam))
+                        .map(parameterSpec -> parameterSpec.name)
+                        .collect(Collectors.toList());
+                responseParserGenerator.addBodyOnlyReturnStatement(
+                        bodyOnlyMethodBuilder,
+                        endpointWithRequestOptions,
+                        bodyOnlyParamNames,
+                        bodyParam,
+                        wrapperTypeName.get(),
+                        variables.getBodyPropertyName());
+                bodyOnlyMethodSpec = bodyOnlyMethodBuilder.build();
+
+                MethodSpec.Builder bodyOnlyWithRequestOptionsMethodBuilder = MethodSpec.methodBuilder(
+                                endpointWithRequestOptions.name)
+                        .addJavadoc(endpointWithRequestOptions.javadoc)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameters(variables.pathParameters)
+                        .addParameter(bodyParam)
+                        .returns(endpointWithRequestOptions.returnType);
+                if (httpEndpoint.getIdempotent()) {
+                    bodyOnlyWithRequestOptionsMethodBuilder.addParameter(ParameterSpec.builder(
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getIdempotentRequestOptionsClassName(),
+                                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                            .build());
+                } else {
+                    bodyOnlyWithRequestOptionsMethodBuilder.addParameter(requestOptionsParameterSpec());
+                }
+                List<String> bodyOnlyWithRequestOptionsParamNames = Stream.concat(
+                                variables.pathParameters.stream(), Stream.of(bodyParam))
+                        .map(parameterSpec -> parameterSpec.name)
+                        .collect(Collectors.toList());
+                responseParserGenerator.addBodyOnlyWithRequestOptionsReturnStatement(
+                        bodyOnlyWithRequestOptionsMethodBuilder,
+                        endpointWithRequestOptions,
+                        bodyOnlyWithRequestOptionsParamNames,
+                        bodyParam,
+                        wrapperTypeName.get(),
+                        variables.getBodyPropertyName());
+                bodyOnlyWithRequestOptionsMethodSpec = bodyOnlyWithRequestOptionsMethodBuilder.build();
+            }
         }
 
         Optional<BytesRequest> maybeBytes = httpEndpoint
@@ -805,6 +873,8 @@ public abstract class AbstractEndpointWriter {
                 endpointWithoutRequestOptions,
                 endpointWithoutRequest,
                 endpointWithoutRequestWithRequestOptions,
+                bodyOnlyMethodSpec,
+                bodyOnlyWithRequestOptionsMethodSpec,
                 byteArrayMethodSpec,
                 nonRequestOptionsByteArrayMethodSpec,
                 inputStreamMethodSpec,
@@ -907,6 +977,50 @@ public abstract class AbstractEndpointWriter {
                         .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
             }
             return isOptional;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    private class SdkRequestHasRequiredBodyWithOnlyOptionalWrapperAdditions
+            implements SdkRequestShape.Visitor<Boolean> {
+
+        @Override
+        public Boolean visitJustRequestBody(SdkRequestBodyType justRequestBody) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitWrapper(SdkRequestWrapper wrapper) {
+            if (!httpEndpoint.getRequestBody().isPresent()) {
+                return false;
+            }
+            boolean bodyIsRequired = !httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
+            if (!bodyIsRequired) {
+                return false;
+            }
+            boolean allHeadersOptional = httpEndpoint.getHeaders().isEmpty()
+                    || httpEndpoint.getHeaders().stream().allMatch(httpHeader -> httpHeader
+                            .getValueType()
+                            .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
+            boolean allQueryParamsOptional = httpEndpoint.getQueryParameters().isEmpty()
+                    || httpEndpoint.getQueryParameters().stream().allMatch(queryParameter -> queryParameter
+                            .getValueType()
+                            .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
+            boolean allInlinePathParamsOptional = !inlinePathParams
+                    || httpEndpoint.getPathParameters().isEmpty()
+                    || httpEndpoint.getPathParameters().stream().allMatch(pathParameter -> pathParameter
+                            .getValueType()
+                            .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
+            boolean hasOnlyOptionalWrapperAdditions =
+                    allHeadersOptional && allQueryParamsOptional && allInlinePathParamsOptional;
+            boolean hasWrapperAdditions = !httpEndpoint.getHeaders().isEmpty()
+                    || !httpEndpoint.getQueryParameters().isEmpty()
+                    || (inlinePathParams && !httpEndpoint.getPathParameters().isEmpty());
+            return hasOnlyOptionalWrapperAdditions && hasWrapperAdditions;
         }
 
         @Override
@@ -1052,5 +1166,55 @@ public abstract class AbstractEndpointWriter {
                 return Optional.empty();
             }
         });
+    }
+
+    protected CodeBlock getEndpointMetadataCodeBlock(HttpEndpoint endpoint) {
+        ClassName endpointMetadataClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
+
+        if (endpoint.getSecurity().isEmpty() || endpoint.getSecurity().get().isEmpty()) {
+            return CodeBlock.of("$T.empty()", endpointMetadataClassName);
+        }
+
+        CodeBlock.Builder securityListBuilder = CodeBlock.builder();
+        securityListBuilder.add("new $T($T.asList(", endpointMetadataClassName, java.util.Arrays.class);
+
+        List<HttpEndpointSecurityItem> securityItems = endpoint.getSecurity().get();
+        boolean firstItem = true;
+        for (HttpEndpointSecurityItem item : securityItems) {
+            if (!firstItem) {
+                securityListBuilder.add(", ");
+            }
+            firstItem = false;
+
+            Map<AuthSchemeKey, List<AuthScope>> schemeMap = item.get();
+
+            securityListBuilder.add("$T.of(", java.util.Map.class);
+            boolean firstScheme = true;
+            for (Map.Entry<AuthSchemeKey, List<AuthScope>> entry : schemeMap.entrySet()) {
+                if (!firstScheme) {
+                    securityListBuilder.add(", ");
+                }
+                firstScheme = false;
+
+                String schemeKey = entry.getKey().get();
+                List<AuthScope> scopes = entry.getValue();
+
+                securityListBuilder.add("$S, $T.of(", schemeKey, java.util.List.class);
+                boolean firstScope = true;
+                for (AuthScope scope : scopes) {
+                    if (!firstScope) {
+                        securityListBuilder.add(", ");
+                    }
+                    firstScope = false;
+                    securityListBuilder.add("$S", scope.get());
+                }
+                securityListBuilder.add(")");
+            }
+            securityListBuilder.add(")");
+        }
+        securityListBuilder.add("))");
+
+        return securityListBuilder.build();
     }
 }

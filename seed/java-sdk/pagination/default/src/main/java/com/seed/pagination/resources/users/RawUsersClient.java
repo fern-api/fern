@@ -26,6 +26,7 @@ import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPagi
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
+import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
@@ -33,6 +34,7 @@ import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersMixedTypePaginationResponse;
 import com.seed.pagination.resources.users.types.ListUsersOptionalDataPaginationResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
+import com.seed.pagination.resources.users.types.ListUsersTopLevelCursorPaginationResponse;
 import com.seed.pagination.resources.users.types.NextPage;
 import com.seed.pagination.resources.users.types.Page;
 import com.seed.pagination.resources.users.types.User;
@@ -64,6 +66,12 @@ public class RawUsersClient {
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithCursorPagination() {
         return listWithCursorPagination(
                 ListUsersCursorPaginationRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithCursorPagination(
+                ListUsersCursorPaginationRequest.builder().build(), requestOptions);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithCursorPagination(
@@ -136,6 +144,12 @@ public class RawUsersClient {
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithMixedTypeCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithMixedTypeCursorPagination(
+                ListUsersMixedTypeCursorPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest request) {
         return listWithMixedTypeCursorPagination(request, null);
     }
@@ -192,6 +206,12 @@ public class RawUsersClient {
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithBodyCursorPagination() {
         return listWithBodyCursorPagination(
                 ListUsersBodyCursorPaginationRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithBodyCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithBodyCursorPagination(
+                ListUsersBodyCursorPaginationRequest.builder().build(), requestOptions);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithBodyCursorPagination(
@@ -256,9 +276,106 @@ public class RawUsersClient {
         }
     }
 
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination() {
+        return listWithTopLevelBodyCursorPagination(
+                ListUsersTopLevelBodyCursorPaginationRequest.builder().build());
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithTopLevelBodyCursorPagination(
+                ListUsersTopLevelBodyCursorPaginationRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
+            ListUsersTopLevelBodyCursorPaginationRequest request) {
+        return listWithTopLevelBodyCursorPagination(request, null);
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
+            ListUsersTopLevelBodyCursorPaginationRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegments("top-level-cursor")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedPaginationException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                ListUsersTopLevelCursorPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                        responseBodyString, ListUsersTopLevelCursorPaginationResponse.class);
+                Optional<String> startingAfter = parsedResponse.getNextCursor();
+                ListUsersTopLevelBodyCursorPaginationRequest nextRequest =
+                        ListUsersTopLevelBodyCursorPaginationRequest.builder()
+                                .from(request)
+                                .cursor(startingAfter)
+                                .build();
+                List<User> result = parsedResponse.getData();
+                return new SeedPaginationHttpResponse<>(
+                        new SyncPagingIterable<User>(
+                                startingAfter.isPresent(),
+                                result,
+                                parsedResponse,
+                                () -> listWithTopLevelBodyCursorPagination(nextRequest, requestOptions)
+                                        .body()),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOffsetPagination() {
         return listWithOffsetPagination(
                 ListUsersOffsetPaginationRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithOffsetPagination(
+                ListUsersOffsetPaginationRequest.builder().build(), requestOptions);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOffsetPagination(
@@ -330,6 +447,12 @@ public class RawUsersClient {
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithDoubleOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithDoubleOffsetPagination(
+                ListUsersDoubleOffsetPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithDoubleOffsetPagination(
             ListUsersDoubleOffsetPaginationRequest request) {
         return listWithDoubleOffsetPagination(request, null);
     }
@@ -395,6 +518,12 @@ public class RawUsersClient {
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithBodyOffsetPagination() {
         return listWithBodyOffsetPagination(
                 ListUsersBodyOffsetPaginationRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithBodyOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithBodyOffsetPagination(
+                ListUsersBodyOffsetPaginationRequest.builder().build(), requestOptions);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithBodyOffsetPagination(
@@ -465,6 +594,12 @@ public class RawUsersClient {
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOffsetStepPagination(
+            RequestOptions requestOptions) {
+        return listWithOffsetStepPagination(
+                ListUsersOffsetStepPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOffsetStepPagination(
             ListUsersOffsetStepPaginationRequest request) {
         return listWithOffsetStepPagination(request, null);
     }
@@ -526,6 +661,12 @@ public class RawUsersClient {
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage() {
         return listWithOffsetPaginationHasNextPage(
                 ListWithOffsetPaginationHasNextPageRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage(
+            RequestOptions requestOptions) {
+        return listWithOffsetPaginationHasNextPage(
+                ListWithOffsetPaginationHasNextPageRequest.builder().build(), requestOptions);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage(
@@ -593,6 +734,10 @@ public class RawUsersClient {
         return listWithExtendedResults(ListUsersExtendedRequest.builder().build());
     }
 
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithExtendedResults(RequestOptions requestOptions) {
+        return listWithExtendedResults(ListUsersExtendedRequest.builder().build(), requestOptions);
+    }
+
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithExtendedResults(
             ListUsersExtendedRequest request) {
         return listWithExtendedResults(request, null);
@@ -647,6 +792,12 @@ public class RawUsersClient {
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData() {
         return listWithExtendedResultsAndOptionalData(
                 ListUsersExtendedRequestForOptionalData.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData(
+            RequestOptions requestOptions) {
+        return listWithExtendedResultsAndOptionalData(
+                ListUsersExtendedRequestForOptionalData.builder().build(), requestOptions);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData(
@@ -706,6 +857,10 @@ public class RawUsersClient {
         return listUsernames(ListUsernamesRequest.builder().build());
     }
 
+    public SeedPaginationHttpResponse<SyncPagingIterable<String>> listUsernames(RequestOptions requestOptions) {
+        return listUsernames(ListUsernamesRequest.builder().build(), requestOptions);
+    }
+
     public SeedPaginationHttpResponse<SyncPagingIterable<String>> listUsernames(ListUsernamesRequest request) {
         return listUsernames(request, null);
     }
@@ -759,6 +914,12 @@ public class RawUsersClient {
     public SeedPaginationHttpResponse<SyncPagingIterable<String>> listUsernamesWithOptionalResponse() {
         return listUsernamesWithOptionalResponse(
                 ListUsernamesWithOptionalResponseRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<String>> listUsernamesWithOptionalResponse(
+            RequestOptions requestOptions) {
+        return listUsernamesWithOptionalResponse(
+                ListUsernamesWithOptionalResponseRequest.builder().build(), requestOptions);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<String>> listUsernamesWithOptionalResponse(
@@ -823,6 +984,10 @@ public class RawUsersClient {
         return listWithGlobalConfig(ListWithGlobalConfigRequest.builder().build());
     }
 
+    public SeedPaginationHttpResponse<SyncPagingIterable<String>> listWithGlobalConfig(RequestOptions requestOptions) {
+        return listWithGlobalConfig(ListWithGlobalConfigRequest.builder().build(), requestOptions);
+    }
+
     public SeedPaginationHttpResponse<SyncPagingIterable<String>> listWithGlobalConfig(
             ListWithGlobalConfigRequest request) {
         return listWithGlobalConfig(request, null);
@@ -876,6 +1041,10 @@ public class RawUsersClient {
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOptionalData() {
         return listWithOptionalData(ListUsersOptionalDataRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOptionalData(RequestOptions requestOptions) {
+        return listWithOptionalData(ListUsersOptionalDataRequest.builder().build(), requestOptions);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOptionalData(

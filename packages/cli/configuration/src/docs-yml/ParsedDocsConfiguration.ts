@@ -293,6 +293,7 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Page
     | DocsNavigationItem.Section
     | DocsNavigationItem.ApiSection
+    | DocsNavigationItem.PythonDocsSection
     | DocsNavigationItem.Link
     | DocsNavigationItem.Changelog;
 
@@ -367,6 +368,16 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;
+        slug: string | undefined;
+    }
+
+    export interface PythonDocsSection {
+        type: "pythonDocsSection";
+        /** GitHub URL to the repository containing the Python library source code */
+        githubUrl: string;
+        /** Navigation title. Defaults to "Python Reference". */
+        title: string | undefined;
+        /** URL slug. Defaults to "python-docs". */
         slug: string | undefined;
     }
 

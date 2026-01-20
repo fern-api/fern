@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:undiscriminated-union-with-response-property/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:undiscriminated-union-with-response-property-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

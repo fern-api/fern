@@ -68,8 +68,24 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedObjectMapper generatedObjectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
-        CodeBlock.Builder builder = CodeBlock.builder()
-                .add("$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class)
+        CodeBlock.Builder builder = CodeBlock.builder();
+
+        if (clientGeneratorContext.isEndpointSecurity()) {
+            builder.add(
+                    "$T<String, String> _headers = new $T<>($L.$L($L));\n",
+                    java.util.Map.class,
+                    java.util.HashMap.class,
+                    clientOptionsMember.name,
+                    ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            builder.add(
+                    "_headers.putAll($L.$L($L));\n",
+                    clientOptionsMember.name,
+                    ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
+                    getEndpointMetadataCodeBlock(httpEndpoint));
+        }
+
+        builder.add("$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class)
                 .indent()
                 .add(".url(")
                 .add(inlineableHttpUrl)
@@ -84,12 +100,17 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
         } else {
             builder.add(".method($S, null)\n", httpEndpoint.getMethod().toString());
         }
-        builder.add(
-                ".headers($T.of($L.$L($L)))\n",
-                Headers.class,
-                clientOptionsMember.name,
-                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+
+        if (clientGeneratorContext.isEndpointSecurity()) {
+            builder.add(".headers($T.of(_headers))\n", Headers.class);
+        } else {
+            builder.add(
+                    ".headers($T.of($L.$L($L)))\n",
+                    Headers.class,
+                    clientOptionsMember.name,
+                    ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+        }
         if (sendContentType) {
             builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         }

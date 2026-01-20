@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.unknown.post(request) -> List&lt;Object&gt;</code></summary>
+<details><summary><code>client.unknown.post(request) -> List&amp;lt;Object&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ HashMap<String, Object>() {{put("key", "value");
 </dl>
 </details>
 
-<details><summary><code>client.unknown.postObject(request) -> List&lt;Object&gt;</code></summary>
+<details><summary><code>client.unknown.postObject(request) -> List&amp;lt;Object&amp;gt;</code></summary>
 <dl>
 <dd>
 

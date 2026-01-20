@@ -13,7 +13,7 @@ export declare namespace Annotation {
 }
 
 export class Annotation extends AstNode {
-    private reference: ClassReference;
+    public readonly reference: ClassReference;
     private argument?: string | AstNode;
 
     constructor(args: Annotation.Args, generation: Generation) {

@@ -27,4 +27,23 @@ describe("fern api update", () => {
         // Shutdown the server now that we're done.
         await cleanup();
     }, 60_000);
+
+    it("fern api update --indent 4", async () => {
+        // Start express server that will respond with the OpenAPI spec.
+        const { cleanup } = setupOpenAPIServer();
+
+        const tmpDir = await tmp.dir();
+        const directory = AbsoluteFilePath.of(tmpDir.path);
+        const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
+
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+        await runFernCli(["api", "update", "--indent", "4"], {
+            cwd: directory
+        });
+
+        expect(await getDirectoryContentsForSnapshot(outputPath)).toMatchSnapshot();
+
+        // Shutdown the server now that we're done.
+        await cleanup();
+    }, 60_000);
 });

@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>$client->fileUploadExample->uploadFile($request) -> string</code></summary>
+<details><summary><code>$client-&gt;fileUploadExample-&gt;uploadFile($request) -> string</code></summary>
 <dl>
 <dd>
 

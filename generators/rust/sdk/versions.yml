@@ -1,5 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.14.3
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 62
+
+- version: 0.14.2
+  changelogEntry:
+    - summary: |
+        Remove redundant type imports from README code snippets. The prelude import already re-exports all types via `pub use crate::api::*;`, so the additional explicit type imports were unnecessary.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 62
+
 - version: 0.14.1
   changelogEntry:
     - summary: |

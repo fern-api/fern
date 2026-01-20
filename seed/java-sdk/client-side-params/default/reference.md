@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.listResources() -> List&lt;Resource&gt;</code></summary>
+<details><summary><code>client.service.listResources() -> List&amp;lt;Resource&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -702,7 +702,7 @@ client.service().deleteUser("userId");
 </dl>
 </details>
 
-<details><summary><code>client.service.listConnections() -> List&lt;Connection&gt;</code></summary>
+<details><summary><code>client.service.listConnections() -> List&amp;lt;Connection&amp;gt;</code></summary>
 <dl>
 <dd>
 

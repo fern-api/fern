@@ -209,6 +209,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -366,6 +367,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -473,6 +475,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -583,10 +586,13 @@
                 "type": "id",
                 "value": "User",
               },
+              "maxItems": undefined,
+              "minItems": undefined,
               "type": "list",
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -601,6 +607,8 @@
                     "type": "id",
                     "value": "User",
                   },
+                  "maxItems": undefined,
+                  "minItems": undefined,
                   "type": "list",
                 },
               },
@@ -747,8 +755,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },

@@ -12,18 +12,14 @@ import * as SeedSimpleApi from "../../../index.js";
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UserClient.Options>;
 
     constructor(options: UserClient.Options) {
-
-
-                        this._options = normalizeClientOptionsWithAuth(options);
-                    
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
@@ -37,11 +33,22 @@ export class UserClient {
         return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
-    private async __get(id: string, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
+    private async __get(
+        id: string,
+        requestOptions?: UserClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/users/${core.url.encodePathParam(id)}`),
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/users/${core.url.encodePathParam(id)}`,
+            ),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -49,7 +56,7 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedSimpleApi.User, rawResponse: _response.rawResponse };
@@ -59,7 +66,7 @@ export class UserClient {
             throw new errors.SeedSimpleApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse
+                rawResponse: _response.rawResponse,
             });
         }
 

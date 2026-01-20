@@ -10,14 +10,14 @@
     "dotnet-sdk_10@latest",
     "buf@1.50.0",
     "git-lfs@latest",
-    "git@latest"
+    "git@latest",
+    "docker@latest"
   ],
   "shell": {
     "init_hook": [
       "printf '\\033]0;%s\\007' 'fern (devbox)'",
       "unset GOROOT # Unset GOROOT from parent shell to avoid conflicts with devbox's Go",
       "go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@dc6f6fa 2>/dev/null || true",
-      "echo 'Fern development environment loaded!'",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version)",
       "echo 'Go:' $(go version)",
@@ -25,7 +25,9 @@
       "echo 'Java:' $(java --version 2>&1 | head -1)",
       "echo '.NET:' $(dotnet --version)",
       "echo 'buf:' $(buf --version)",
-      "echo 'protoc-gen-openapi:' $(ls -l ~/go/bin/protoc-gen-openapi 2>/dev/null | awk '{print $6,$7,$8}' || echo 'not installed')"
+      "echo 'Docker:' $(docker --version 2>/dev/null || echo 'not available')",
+      "echo 'protoc-gen-openapi:' $(ls -l ~/go/bin/protoc-gen-openapi 2>/dev/null | awk '{print $6,$7,$8}' || echo 'not installed')",
+      "echo 'Fern development environment loaded!'"
     ],
     "scripts": {
       "install": "pnpm install",

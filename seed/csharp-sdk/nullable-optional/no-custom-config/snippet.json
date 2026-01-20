@@ -1,0 +1,161 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.GetUserAsync(\"userId\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Username = \"username\",\n        Email = \"email\",\n        Phone = \"phone\",\n        Address = new Address\n        {\n            Street = \"street\",\n            City = \"city\",\n            State = \"state\",\n            ZipCode = \"zipCode\",\n            Country = \"country\",\n            BuildingId = \"buildingId\",\n            TenantId = \"tenantId\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.UpdateUserAsync(\n    \"userId\",\n    new UpdateUserRequest\n    {\n        Username = \"username\",\n        Email = \"email\",\n        Phone = \"phone\",\n        Address = new Address\n        {\n            Street = \"street\",\n            City = \"city\",\n            State = \"state\",\n            ZipCode = \"zipCode\",\n            Country = \"country\",\n            BuildingId = \"buildingId\",\n            TenantId = \"tenantId\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.ListUsersAsync(\n    new ListUsersRequest\n    {\n        Limit = 1,\n        Offset = 1,\n        IncludeDeleted = true,\n        SortBy = \"sortBy\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/search",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.searchUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.SearchUsersAsync(\n    new SearchUsersRequest\n    {\n        Query = \"query\",\n        Department = \"department\",\n        Role = \"role\",\n        IsActive = true,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/profiles/complex",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createComplexProfile"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.CreateComplexProfileAsync(\n    new ComplexProfile\n    {\n        Id = \"id\",\n        NullableRole = UserRole.Admin,\n        OptionalRole = UserRole.Admin,\n        OptionalNullableRole = UserRole.Admin,\n        NullableStatus = UserStatus.Active,\n        OptionalStatus = UserStatus.Active,\n        OptionalNullableStatus = UserStatus.Active,\n        NullableNotification = new NotificationMethod(\n            new NotificationMethod.Email(\n                new EmailNotification\n                {\n                    EmailAddress = \"emailAddress\",\n                    Subject = \"subject\",\n                    HtmlContent = \"htmlContent\",\n                }\n            )\n        ),\n        OptionalNotification = new NotificationMethod(\n            new NotificationMethod.Email(\n                new EmailNotification\n                {\n                    EmailAddress = \"emailAddress\",\n                    Subject = \"subject\",\n                    HtmlContent = \"htmlContent\",\n                }\n            )\n        ),\n        OptionalNullableNotification = new NotificationMethod(\n            new NotificationMethod.Email(\n                new EmailNotification\n                {\n                    EmailAddress = \"emailAddress\",\n                    Subject = \"subject\",\n                    HtmlContent = \"htmlContent\",\n                }\n            )\n        ),\n        NullableSearchResult = new SearchResult(\n            new SearchResult.User(\n                new UserResponse\n                {\n                    Id = \"id\",\n                    Username = \"username\",\n                    Email = \"email\",\n                    Phone = \"phone\",\n                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                    Address = new Address\n                    {\n                        Street = \"street\",\n                        City = \"city\",\n                        State = \"state\",\n                        ZipCode = \"zipCode\",\n                        Country = \"country\",\n                        BuildingId = \"buildingId\",\n                        TenantId = \"tenantId\",\n                    },\n                }\n            )\n        ),\n        OptionalSearchResult = new SearchResult(\n            new SearchResult.User(\n                new UserResponse\n                {\n                    Id = \"id\",\n                    Username = \"username\",\n                    Email = \"email\",\n                    Phone = \"phone\",\n                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                    Address = new Address\n                    {\n                        Street = \"street\",\n                        City = \"city\",\n                        State = \"state\",\n                        ZipCode = \"zipCode\",\n                        Country = \"country\",\n                        BuildingId = \"buildingId\",\n                        TenantId = \"tenantId\",\n                    },\n                }\n            )\n        ),\n        NullableArray = new List<string>() { \"nullableArray\", \"nullableArray\" },\n        OptionalArray = new List<string>() { \"optionalArray\", \"optionalArray\" },\n        OptionalNullableArray = new List<string>()\n        {\n            \"optionalNullableArray\",\n            \"optionalNullableArray\",\n        },\n        NullableListOfNullables = new List<string>()\n        {\n            \"nullableListOfNullables\",\n            \"nullableListOfNullables\",\n        },\n        NullableMapOfNullables = new Dictionary<string, Address>()\n        {\n            {\n                \"nullableMapOfNullables\",\n                new Address\n                {\n                    Street = \"street\",\n                    City = \"city\",\n                    State = \"state\",\n                    ZipCode = \"zipCode\",\n                    Country = \"country\",\n                    BuildingId = \"buildingId\",\n                    TenantId = \"tenantId\",\n                }\n            },\n        },\n        NullableListOfUnions = new List<NotificationMethod>()\n        {\n            new NotificationMethod(\n                new NotificationMethod.Email(\n                    new EmailNotification\n                    {\n                        EmailAddress = \"emailAddress\",\n                        Subject = \"subject\",\n                        HtmlContent = \"htmlContent\",\n                    }\n                )\n            ),\n            new NotificationMethod(\n                new NotificationMethod.Email(\n                    new EmailNotification\n                    {\n                        EmailAddress = \"emailAddress\",\n                        Subject = \"subject\",\n                        HtmlContent = \"htmlContent\",\n                    }\n                )\n            ),\n        },\n        OptionalMapOfEnums = new Dictionary<string, UserRole>()\n        {\n            { \"optionalMapOfEnums\", UserRole.Admin },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/profiles/complex/{profileId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getComplexProfile"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.GetComplexProfileAsync(\"profileId\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/profiles/complex/{profileId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateComplexProfile"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.UpdateComplexProfileAsync(\n    \"profileId\",\n    new UpdateComplexProfileRequest\n    {\n        NullableRole = UserRole.Admin,\n        NullableStatus = UserStatus.Active,\n        NullableNotification = new NotificationMethod(\n            new NotificationMethod.Email(\n                new EmailNotification\n                {\n                    EmailAddress = \"emailAddress\",\n                    Subject = \"subject\",\n                    HtmlContent = \"htmlContent\",\n                }\n            )\n        ),\n        NullableSearchResult = new SearchResult(\n            new SearchResult.User(\n                new UserResponse\n                {\n                    Id = \"id\",\n                    Username = \"username\",\n                    Email = \"email\",\n                    Phone = \"phone\",\n                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                    Address = new Address\n                    {\n                        Street = \"street\",\n                        City = \"city\",\n                        State = \"state\",\n                        ZipCode = \"zipCode\",\n                        Country = \"country\",\n                        BuildingId = \"buildingId\",\n                        TenantId = \"tenantId\",\n                    },\n                }\n            )\n        ),\n        NullableArray = new List<string>() { \"nullableArray\", \"nullableArray\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/test/deserialization",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.testDeserialization"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.TestDeserializationAsync(\n    new DeserializationTestRequest\n    {\n        RequiredString = \"requiredString\",\n        NullableString = \"nullableString\",\n        OptionalString = \"optionalString\",\n        OptionalNullableString = \"optionalNullableString\",\n        NullableEnum = UserRole.Admin,\n        OptionalEnum = UserStatus.Active,\n        NullableUnion = new NotificationMethod(\n            new NotificationMethod.Email(\n                new EmailNotification\n                {\n                    EmailAddress = \"emailAddress\",\n                    Subject = \"subject\",\n                    HtmlContent = \"htmlContent\",\n                }\n            )\n        ),\n        OptionalUnion = new SearchResult(\n            new SearchResult.User(\n                new UserResponse\n                {\n                    Id = \"id\",\n                    Username = \"username\",\n                    Email = \"email\",\n                    Phone = \"phone\",\n                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                    Address = new Address\n                    {\n                        Street = \"street\",\n                        City = \"city\",\n                        State = \"state\",\n                        ZipCode = \"zipCode\",\n                        Country = \"country\",\n                        BuildingId = \"buildingId\",\n                        TenantId = \"tenantId\",\n                    },\n                }\n            )\n        ),\n        NullableList = new List<string>() { \"nullableList\", \"nullableList\" },\n        NullableMap = new Dictionary<string, int>() { { \"nullableMap\", 1 } },\n        NullableObject = new Address\n        {\n            Street = \"street\",\n            City = \"city\",\n            State = \"state\",\n            ZipCode = \"zipCode\",\n            Country = \"country\",\n            BuildingId = \"buildingId\",\n            TenantId = \"tenantId\",\n        },\n        OptionalObject = new Organization\n        {\n            Id = \"id\",\n            Name = \"name\",\n            Domain = \"domain\",\n            EmployeeCount = 1,\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/filter",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.filterByRole"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.FilterByRoleAsync(\n    new FilterByRoleRequest\n    {\n        Role = UserRole.Admin,\n        Status = UserStatus.Active,\n        SecondaryRole = UserRole.Admin,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}/notifications",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getNotificationSettings"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.GetNotificationSettingsAsync(\"userId\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/users/{userId}/tags",
+                "method": "PUT",
+                "identifier_override": "endpoint_nullable-optional.updateTags"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.UpdateTagsAsync(\n    \"userId\",\n    new UpdateTagsRequest\n    {\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Categories = new List<string>() { \"categories\", \"categories\" },\n        Labels = new List<string>() { \"labels\", \"labels\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/api/search",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.getSearchResults"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNullableOptional;\n\nvar client = new SeedNullableOptionalClient();\nawait client.NullableOptional.GetSearchResultsAsync(\n    new SearchRequest\n    {\n        Query = \"query\",\n        Filters = new Dictionary<string, string>() { { \"filters\", \"filters\" } },\n        IncludeTypes = new List<string>() { \"includeTypes\", \"includeTypes\" },\n    }\n);\n"
+            }
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client->dummy->generateStream($request)</code></summary>
+<details><summary><code>$client-&gt;dummy-&gt;generateStream($request)</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ $client->dummy->generateStream(
 </dl>
 </details>
 
-<details><summary><code>$client->dummy->generate($request) -> StreamResponse</code></summary>
+<details><summary><code>$client-&gt;dummy-&gt;generate($request) -> StreamResponse</code></summary>
 <dl>
 <dd>
 

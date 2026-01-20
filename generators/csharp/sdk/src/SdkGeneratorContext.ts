@@ -154,7 +154,10 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.Json.DateTimeSerializer,
                 AsIsFiles.Json.JsonAccessAttribute,
                 AsIsFiles.Json.JsonConfiguration,
-                AsIsFiles.Json.OneOfSerializer
+                AsIsFiles.Json.Nullable,
+                AsIsFiles.Json.OneOfSerializer,
+                AsIsFiles.Json.Optional,
+                AsIsFiles.Json.OptionalAttribute
             ]
         );
         // HTTP stuff
@@ -257,7 +260,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                     }
                 }
             }
-            recurse("Async", AsIsFiles.WebSocketAsync);
+            recurse("WebSockets", AsIsFiles.WebSockets);
             return files;
         }
 

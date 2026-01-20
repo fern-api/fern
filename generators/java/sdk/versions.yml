@@ -1,4 +1,114 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Generate body-only method overloads for endpoints with required body and optional headers/query params.
+        This prevents breaking changes when optional headers or query params are added to existing endpoints.
+      type: feat
+  createdAt: "2026-01-20"
+  irVersion: 63
+
+- version: 3.32.1
+  changelogEntry:
+    - summary: |
+        Update container to fix CVE-2026-23745 (node-tar path traversal via hardlinks/symlinks) and
+        CVE-2025-66293 (libpng out-of-bounds read). Patches npm's bundled tar to 7.5.3 and updates
+        libpng16-16 to the latest available version.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
+- version: 3.32.0
+  changelogEntry:
+    - summary: |
+        Add endpoint-level security support with routing auth providers. APIs can now define different
+        authentication requirements per endpoint using the ENDPOINT_SECURITY auth mode. The SDK generates
+        individual auth providers (Bearer, Basic, ApiKey, OAuth, InferredAuth) and a RoutingAuthProvider
+        that routes requests to the appropriate provider based on each endpoint's security requirements.
+        Supports OR (any of) and AND (all of) auth requirement combinations.
+
+        To enable, add `auth: endpoint-security: {}` to your api.yml and define per-endpoint auth in your
+        service definitions using the `auth` field on each endpoint.
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.31.0
+  changelogEntry:
+    - summary: |
+        Add `additionalQueryParameters` support to `RequestOptions`, allowing users to add query parameters
+        to API requests at runtime. Query parameters added via RequestOptions override any request-defined
+        parameters with the same key. This mirrors the existing `addHeader` pattern.
+
+        Usage example:
+        ```java
+        client.endpoint(
+            Request.builder().build(),
+            RequestOptions.builder()
+                .addQueryParameter("key", "value")
+                .build()
+        );
+        ```
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.30.0
+  changelogEntry:
+    - summary: |
+        Add `enable-gradle-profiling` configuration option for profiling Gradle commands during generation.
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.29.2
+  changelogEntry:
+    - summary: |
+        Add `notify`, `notifyAll`, and `wait` to reserved method names to prevent generated SDK
+        methods from conflicting with final methods in Java's Object class. This fixes compilation
+        errors when an API has a subpackage named "notify" (e.g., Twilio's Notify API).
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.29.1
+  changelogEntry:
+    - summary: |
+        Fix `_Builder` class to support all builder methods (url, timeout, environment, maxRetries,
+        httpClient, addHeader) so method chaining works in any order. This allows customers upgrading
+        from 3.18.x who wrote `builder().url().token()` to continue working without compile errors.
+        Configuration values set on `_Builder` are now properly passed through to `_TokenAuth` and
+        `_CredentialsAuth` when `token()` or `credentials()` is called.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.29.0
+  changelogEntry:
+    - summary: |
+        Add backward-compatible `builder()` method for OAuth client credentials authentication.
+        This restores support for the classic builder pattern `Client.builder().token("...")` and
+        `Client.builder().credentials("...", "...")` alongside the existing `withToken()` and
+        `withCredentials()` shortcuts. This prevents breaking changes for customers who upgraded.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.28.2
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.28.1
+  changelogEntry:
+    - summary: |
+        Update libtasn1-6 and gnupg packages in container to fix CVE-2021-46848, CVE-2025-13151, CVE-2025-68973.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
 - version: 3.28.0
   changelogEntry:
     - summary: |

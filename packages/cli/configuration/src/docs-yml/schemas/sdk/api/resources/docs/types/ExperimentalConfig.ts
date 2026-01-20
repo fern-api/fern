@@ -24,8 +24,18 @@ export interface ExperimentalConfig {
      * Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
      */
     dynamicSnippets?: boolean;
-    /** Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples. */
+    /**
+     * Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+     *
+     * DEPRECATED: Use the top-level `ai-examples` property instead.
+     */
     aiExamples?: boolean;
-    /** Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters. */
+    /**
+     * Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+     *
+     * DEPRECATED: Use the top-level `ai-example-style-instructions` property instead.
+     */
     aiExampleStyleInstructions?: string;
+    /** Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation. */
+    excludeApis?: boolean;
 }

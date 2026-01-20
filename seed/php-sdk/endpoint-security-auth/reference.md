@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client->auth->getToken($request) -> TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ $client->auth->getToken(
 </details>
 
 ## User
-<details><summary><code>$client->user->getWithBearer() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getWithBearer() -> array</code></summary>
 <dl>
 <dd>
 
@@ -97,7 +97,7 @@ $client->user->getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>$client->user->getWithApiKey() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getWithApiKey() -> array</code></summary>
 <dl>
 <dd>
 
@@ -122,7 +122,7 @@ $client->user->getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>$client->user->getWithOAuth() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getWithOAuth() -> array</code></summary>
 <dl>
 <dd>
 
@@ -147,7 +147,7 @@ $client->user->getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>$client->user->getWithBasic() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getWithBasic() -> array</code></summary>
 <dl>
 <dd>
 
@@ -172,7 +172,7 @@ $client->user->getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>$client->user->getWithInferredAuth() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getWithInferredAuth() -> array</code></summary>
 <dl>
 <dd>
 
@@ -197,7 +197,7 @@ $client->user->getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>$client->user->getWithAnyAuth() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getWithAnyAuth() -> array</code></summary>
 <dl>
 <dd>
 
@@ -222,7 +222,7 @@ $client->user->getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>$client->user->getWithAllAuth() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getWithAllAuth() -> array</code></summary>
 <dl>
 <dd>
 

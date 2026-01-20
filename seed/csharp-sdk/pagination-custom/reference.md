@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesCustomAsync</a>(ListUsernamesRequestCustom { ... }) -> SeedPaginationPager<string></code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesCustomAsync</a>(ListUsernamesRequestCustom { ... }) -> SeedPaginationPager&lt;string&gt;</code></summary>
 <dl>
 <dd>
 

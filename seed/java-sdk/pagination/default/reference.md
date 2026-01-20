@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.complex.search(index, request) -> SyncPagingIterable&lt;Conversation&gt;</code></summary>
+<details><summary><code>client.complex.search(index, request) -> SyncPagingIterable&amp;lt;Conversation&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -71,7 +71,7 @@ client.complex().search(
 </details>
 
 ## InlineUsers InlineUsers
-<details><summary><code>client.inlineUsers.inlineUsers.listWithCursorPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithCursorPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -146,7 +146,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -191,7 +191,7 @@ client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithBodyCursorPagination(request) -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithBodyCursorPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -238,7 +238,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -313,7 +313,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -388,7 +388,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithBodyOffsetPagination(request) -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithBodyOffsetPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -435,7 +435,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetStepPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetStepPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -502,7 +502,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -569,7 +569,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithExtendedResults() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithExtendedResults() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -614,7 +614,7 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -659,7 +659,7 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listUsernames() -> SyncPagingIterable&lt;String&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listUsernames() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -707,7 +707,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithGlobalConfig() -> SyncPagingIterable&lt;String&gt;</code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.listWithGlobalConfig() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -753,7 +753,7 @@ client.inlineUsers().inlineUsers().listWithGlobalConfig(
 </details>
 
 ## Users
-<details><summary><code>client.users.listWithCursorPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithCursorPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -828,7 +828,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithMixedTypeCursorPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithMixedTypeCursorPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -873,7 +873,7 @@ client.users().listWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithBodyCursorPagination(request) -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithBodyCursorPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -920,7 +920,80 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithOffsetPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithTopLevelBodyCursorPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().listWithTopLevelBodyCursorPagination(
+    ListUsersTopLevelBodyCursorPaginationRequest
+        .builder()
+        .cursor("initial_cursor")
+        .filter("active")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `Optional<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `Optional<String>` — An optional filter to apply to the results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.listWithOffsetPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -995,7 +1068,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithDoubleOffsetPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithDoubleOffsetPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1070,7 +1143,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithBodyOffsetPagination(request) -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithBodyOffsetPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1117,7 +1190,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithOffsetStepPagination() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithOffsetStepPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1184,7 +1257,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithOffsetPaginationHasNextPage() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithOffsetPaginationHasNextPage() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1251,7 +1324,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithExtendedResults() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithExtendedResults() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1296,7 +1369,7 @@ client.users().listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithExtendedResultsAndOptionalData() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithExtendedResultsAndOptionalData() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1341,7 +1414,7 @@ client.users().listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.users.listUsernames() -> SyncPagingIterable&lt;String&gt;</code></summary>
+<details><summary><code>client.users.listUsernames() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1389,7 +1462,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listUsernamesWithOptionalResponse() -> SyncPagingIterable&lt;String&gt;</code></summary>
+<details><summary><code>client.users.listUsernamesWithOptionalResponse() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1437,7 +1510,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithGlobalConfig() -> SyncPagingIterable&lt;String&gt;</code></summary>
+<details><summary><code>client.users.listWithGlobalConfig() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1482,7 +1555,7 @@ client.users().listWithGlobalConfig(
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithOptionalData() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<details><summary><code>client.users.listWithOptionalData() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 

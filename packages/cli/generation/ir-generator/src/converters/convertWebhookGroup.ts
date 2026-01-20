@@ -60,6 +60,7 @@ export function convertWebhookGroup({
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
+            fileUploadPayload: undefined,
             responses: convertWebhookResponses({ webhook, file, typeResolver }),
             examples:
                 webhook.examples != null

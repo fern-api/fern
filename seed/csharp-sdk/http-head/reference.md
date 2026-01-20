@@ -25,7 +25,7 @@ await client.User.HeadAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

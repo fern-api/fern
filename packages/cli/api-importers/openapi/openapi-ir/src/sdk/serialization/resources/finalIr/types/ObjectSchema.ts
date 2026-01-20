@@ -23,6 +23,8 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
             properties: core.serialization.list(core.serialization.lazyObject(() => serializers.ObjectProperty)),
             allOfPropertyConflicts: core.serialization.list(AllOfPropertyConflict),
             additionalProperties: core.serialization.boolean(),
+            minProperties: core.serialization.number().optional(),
+            maxProperties: core.serialization.number().optional(),
         })
         .extend(WithSdkGroupName)
         .extend(WithNamespace)
@@ -48,5 +50,7 @@ export declare namespace ObjectSchema {
         properties: serializers.ObjectProperty.Raw[];
         allOfPropertyConflicts: AllOfPropertyConflict.Raw[];
         additionalProperties: boolean;
+        minProperties?: number | null;
+        maxProperties?: number | null;
     }
 }

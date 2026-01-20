@@ -42,6 +42,10 @@ public class AsyncInlineUsersClient {
         return this.rawClient.listWithCursorPagination().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<SyncPagingIterable<User>> listWithCursorPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithCursorPagination(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<SyncPagingIterable<User>> listWithCursorPagination(
             ListUsersCursorPaginationRequest request) {
         return this.rawClient.listWithCursorPagination(request).thenApply(response -> response.body());
@@ -54,6 +58,11 @@ public class AsyncInlineUsersClient {
 
     public CompletableFuture<SyncPagingIterable<User>> listWithMixedTypeCursorPagination() {
         return this.rawClient.listWithMixedTypeCursorPagination().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithMixedTypeCursorPagination(
+            RequestOptions requestOptions) {
+        return this.rawClient.listWithMixedTypeCursorPagination(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithMixedTypeCursorPagination(
@@ -72,6 +81,10 @@ public class AsyncInlineUsersClient {
         return this.rawClient.listWithBodyCursorPagination().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<SyncPagingIterable<User>> listWithBodyCursorPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithBodyCursorPagination(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyCursorPagination(
             ListUsersBodyCursorPaginationRequest request) {
         return this.rawClient.listWithBodyCursorPagination(request).thenApply(response -> response.body());
@@ -88,6 +101,10 @@ public class AsyncInlineUsersClient {
         return this.rawClient.listWithOffsetPagination().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithOffsetPagination(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPagination(
             ListUsersOffsetPaginationRequest request) {
         return this.rawClient.listWithOffsetPagination(request).thenApply(response -> response.body());
@@ -100,6 +117,10 @@ public class AsyncInlineUsersClient {
 
     public CompletableFuture<SyncPagingIterable<User>> listWithDoubleOffsetPagination() {
         return this.rawClient.listWithDoubleOffsetPagination().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithDoubleOffsetPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithDoubleOffsetPagination(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithDoubleOffsetPagination(
@@ -118,6 +139,10 @@ public class AsyncInlineUsersClient {
         return this.rawClient.listWithBodyOffsetPagination().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<SyncPagingIterable<User>> listWithBodyOffsetPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithBodyOffsetPagination(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyOffsetPagination(
             ListUsersBodyOffsetPaginationRequest request) {
         return this.rawClient.listWithBodyOffsetPagination(request).thenApply(response -> response.body());
@@ -132,6 +157,10 @@ public class AsyncInlineUsersClient {
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetStepPagination() {
         return this.rawClient.listWithOffsetStepPagination().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithOffsetStepPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithOffsetStepPagination(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetStepPagination(
@@ -151,6 +180,13 @@ public class AsyncInlineUsersClient {
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage(
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .listWithOffsetPaginationHasNextPage(requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage(
             ListWithOffsetPaginationHasNextPageRequest request) {
         return this.rawClient.listWithOffsetPaginationHasNextPage(request).thenApply(response -> response.body());
     }
@@ -166,6 +202,10 @@ public class AsyncInlineUsersClient {
         return this.rawClient.listWithExtendedResults().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResults(RequestOptions requestOptions) {
+        return this.rawClient.listWithExtendedResults(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResults(ListUsersExtendedRequest request) {
         return this.rawClient.listWithExtendedResults(request).thenApply(response -> response.body());
     }
@@ -177,6 +217,13 @@ public class AsyncInlineUsersClient {
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData() {
         return this.rawClient.listWithExtendedResultsAndOptionalData().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData(
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .listWithExtendedResultsAndOptionalData(requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData(
@@ -195,6 +242,10 @@ public class AsyncInlineUsersClient {
         return this.rawClient.listUsernames().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<SyncPagingIterable<String>> listUsernames(RequestOptions requestOptions) {
+        return this.rawClient.listUsernames(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<SyncPagingIterable<String>> listUsernames(ListUsernamesRequest request) {
         return this.rawClient.listUsernames(request).thenApply(response -> response.body());
     }
@@ -206,6 +257,10 @@ public class AsyncInlineUsersClient {
 
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig() {
         return this.rawClient.listWithGlobalConfig().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig(RequestOptions requestOptions) {
+        return this.rawClient.listWithGlobalConfig(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig(ListWithGlobalConfigRequest request) {

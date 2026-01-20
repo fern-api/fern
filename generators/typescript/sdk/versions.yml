@@ -1,4 +1,85 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.13
+  changelogEntry:
+    - summary: |
+        Fix nullable enum query parameters to be dropped when undefined is passed instead of being
+        sent as null. Previously, nullable query parameters like `role: nullable<UserRole>` would
+        generate code that converted undefined to null, causing the parameter to be included in the
+        request as an empty value. Now undefined values remain undefined and are properly dropped
+        from the query string.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.43.12
+  changelogEntry:
+    - summary: |
+        Fix passthrough() function to only include truly unknown/extra properties in the result.
+        Previously, when a type had `additionalProperties: true` and used property name mapping
+        (e.g., snake_case to camelCase), the passthrough would spread both the original raw object
+        and the transformed value, resulting in duplicate properties with both naming conventions.
+        Now the passthrough correctly filters out known properties before spreading, ensuring only
+        extra properties that aren't part of the schema definition are included.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.43.11
+  changelogEntry:
+    - summary: Update linters and formatters to latest versions.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.10
+  changelogEntry:
+    - summary: |
+        Update Dockerfile to only pre-cache for the default configuration options to reduce image size from 1.45GB to 823MB.
+        The following dependencies are no longer pre-cached:
+        * jest
+        * @types/jest
+        * node-fetch
+        * @types/node-fetch
+        * qs
+        * @types/qs
+        * readable-stream
+        * @types/readable-stream
+        * form-data
+        * formdata-node
+        * jest-environment-jsdom
+        * prettier
+        * oxfmt
+        * oxlint
+        * oxlint-tsgolint
+        * ts-jest
+        * form-data-encoder
+        * fetch-mock-jest
+
+        Additionally, the Dockerfile only pre-caches using pnpm, removing duplicate yarn cache.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.9
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.8
+  changelogEntry:
+    - summary: |
+        Fix wire test mock server to ignore cursor mismatches in pagination tests.
+        When pagination tests call `getNextPage()`, the SDK correctly sends the cursor from the response,
+        but the mock server was rejecting the request because the cursor didn't match the original request.
+        The mock server now accepts an `ignoredFields` option to specify which fields to ignore during
+        request body matching. The test generator extracts pagination cursor field names from the IR
+        and passes them to the mock server at code generation time.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
 - version: 3.43.7
   changelogEntry:
     - summary: |

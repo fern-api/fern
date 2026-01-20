@@ -4,135 +4,116 @@ import { SeedContentTypesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ServiceClient", () => {
-    
     test("patch", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedContentTypesClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "application" : "application" , "require_auth" : true };
-        
-        server
-            .mockEndpoint()
-            .patch("").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).build();
+        const client = new SeedContentTypesClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { application: "application", require_auth: true };
 
-        
-                    
-                            const response = await client.service.patch({
-    application: "application",
-    require_auth: true
-});
-                            expect(response).toEqual(undefined);
-                          
-                
+        server.mockEndpoint().patch("").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.service.patch({
+            application: "application",
+            require_auth: true,
+        });
+        expect(response).toEqual(undefined);
     });
-          
+
     test("patchComplex", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedContentTypesClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "name" : "name" , "age" : 1 , "active" : true , "metadata" : { "metadata" : { "key" : "value" } } , "tags" : [ "tags" , "tags" ] , "email" : "email" , "nickname" : "nickname" , "bio" : "bio" , "profileImageUrl" : "profileImageUrl" , "settings" : { "settings" : { "key" : "value" } } };
-        
-        server
-            .mockEndpoint()
-            .patch("/complex/id").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).build();
+        const client = new SeedContentTypesClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {
+            name: "name",
+            age: 1,
+            active: true,
+            metadata: { metadata: { key: "value" } },
+            tags: ["tags", "tags"],
+            email: "email",
+            nickname: "nickname",
+            bio: "bio",
+            profileImageUrl: "profileImageUrl",
+            settings: { settings: { key: "value" } },
+        };
 
-        
-                    
-                            const response = await client.service.patchComplex("id", {
-    name: "name",
-    age: 1,
-    active: true,
-    metadata: {
-        "metadata": {
-            "key": "value"
-        }
-    },
-    tags: ["tags", "tags"],
-    email: "email",
-    nickname: "nickname",
-    bio: "bio",
-    profileImageUrl: "profileImageUrl",
-    settings: {
-        "settings": {
-            "key": "value"
-        }
-    }
-});
-                            expect(response).toEqual(undefined);
-                          
-                
+        server.mockEndpoint().patch("/complex/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.service.patchComplex("id", {
+            name: "name",
+            age: 1,
+            active: true,
+            metadata: {
+                metadata: {
+                    key: "value",
+                },
+            },
+            tags: ["tags", "tags"],
+            email: "email",
+            nickname: "nickname",
+            bio: "bio",
+            profileImageUrl: "profileImageUrl",
+            settings: {
+                settings: {
+                    key: "value",
+                },
+            },
+        });
+        expect(response).toEqual(undefined);
     });
-          
+
     test("namedPatchWithMixed", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedContentTypesClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "appId" : "appId" , "instructions" : "instructions" , "active" : true };
-        
-        server
-            .mockEndpoint()
-            .patch("/named-mixed/id").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).build();
+        const client = new SeedContentTypesClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { appId: "appId", instructions: "instructions", active: true };
 
-        
-                    
-                            const response = await client.service.namedPatchWithMixed("id", {
-    appId: "appId",
-    instructions: "instructions",
-    active: true
-});
-                            expect(response).toEqual(undefined);
-                          
-                
+        server.mockEndpoint().patch("/named-mixed/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.service.namedPatchWithMixed("id", {
+            appId: "appId",
+            instructions: "instructions",
+            active: true,
+        });
+        expect(response).toEqual(undefined);
     });
-          
+
     test("optionalMergePatchTest", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedContentTypesClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "requiredField" : "requiredField" , "optionalString" : "optionalString" , "optionalInteger" : 1 , "optionalBoolean" : true , "nullableString" : "nullableString" };
-        
+        const client = new SeedContentTypesClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {
+            requiredField: "requiredField",
+            optionalString: "optionalString",
+            optionalInteger: 1,
+            optionalBoolean: true,
+            nullableString: "nullableString",
+        };
+
         server
             .mockEndpoint()
-            .patch("/optional-merge-patch-test").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).build();
+            .patch("/optional-merge-patch-test")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
 
-        
-                    
-                            const response = await client.service.optionalMergePatchTest({
-    requiredField: "requiredField",
-    optionalString: "optionalString",
-    optionalInteger: 1,
-    optionalBoolean: true,
-    nullableString: "nullableString"
-});
-                            expect(response).toEqual(undefined);
-                          
-                
+        const response = await client.service.optionalMergePatchTest({
+            requiredField: "requiredField",
+            optionalString: "optionalString",
+            optionalInteger: 1,
+            optionalBoolean: true,
+            nullableString: "nullableString",
+        });
+        expect(response).toEqual(undefined);
     });
-          
+
     test("regularPatch", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedContentTypesClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "field1" : "field1" , "field2" : 1 };
-        
-        server
-            .mockEndpoint()
-            .patch("/regular/id").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).build();
+        const client = new SeedContentTypesClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { field1: "field1", field2: 1 };
 
-        
-                    
-                            const response = await client.service.regularPatch("id", {
-    field1: "field1",
-    field2: 1
-});
-                            expect(response).toEqual(undefined);
-                          
-                
+        server.mockEndpoint().patch("/regular/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.service.regularPatch("id", {
+            field1: "field1",
+            field2: 1,
+        });
+        expect(response).toEqual(undefined);
     });
-          
 });

@@ -263,7 +263,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     public getRootClientClassName(): string {
-        return `Client`;
+        return this.customConfig.clientModuleName ?? "Client";
     }
 
     public getReferenceToInternalJSONRequest(): ruby.ClassReference {
@@ -382,6 +382,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             }
         }
         return undefined;
+    }
+
+    public get selfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
     }
 
     public isMultipleBaseUrlsEnvironment(): boolean {
