@@ -375,15 +375,15 @@ function convertResponse({
             if (
                 example.response.type === "ok" &&
                 example.response.value.type === "body" &&
-                example.response.value.value != null
+                example.response.value.jsonExample != null
             ) {
                 if (example.name && example.name.originalName !== "") {
                     openapiExamples[example.name.originalName] = {
-                        value: example.response.value.value.jsonExample
+                        value: example.response.value.jsonExample
                     };
                 } else {
                     openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                        value: example.response.value.value.jsonExample
+                        value: example.response.value.jsonExample
                     };
                 }
             }
@@ -646,7 +646,11 @@ function convertQueryParameter({
         description: queryParameter.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: queryParameter.valueType, typesByName }),
         schema: queryParameter.allowMultiple
-            ? convertTypeReference(TypeReference.container(ContainerType.list(queryParameter.valueType)))
+            ? convertTypeReference(
+                  TypeReference.container(
+                      ContainerType.list({ itemType: queryParameter.valueType, validation: undefined })
+                  )
+              )
             : convertTypeReference(queryParameter.valueType)
     };
 
