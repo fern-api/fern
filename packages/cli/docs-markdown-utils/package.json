@@ -56,7 +56,7 @@
     "@types/mdast": "^4.0.4",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "diff": "^5.2.0",
+    "diff": "^8.0.3",
     "typescript": "5.9.3",
     "vitest": "^4.0.8",
     "zod": "^3.22.3"
