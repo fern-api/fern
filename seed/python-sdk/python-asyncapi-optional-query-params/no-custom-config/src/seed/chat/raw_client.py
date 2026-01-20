@@ -30,7 +30,7 @@ class RawChatClient:
         simple_param: typing.Optional[str] = None,
         optional_bool: typing.Optional[bool] = None,
         no_default_string: typing.Optional[str] = None,
-        complex_param: SessionSettings,
+        complex_param: typing.Optional[SessionSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[ChatSocketClient]:
         """
@@ -47,7 +47,7 @@ class RawChatClient:
         no_default_string : typing.Optional[str]
             A string parameter without a default value - should still be optional
 
-        complex_param : SessionSettings
+        complex_param : typing.Optional[SessionSettings]
             Session settings object
 
         request_options : typing.Optional[RequestOptions]
@@ -110,7 +110,7 @@ class AsyncRawChatClient:
         simple_param: typing.Optional[str] = None,
         optional_bool: typing.Optional[bool] = None,
         no_default_string: typing.Optional[str] = None,
-        complex_param: SessionSettings,
+        complex_param: typing.Optional[SessionSettings] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncChatSocketClient]:
         """
@@ -127,7 +127,7 @@ class AsyncRawChatClient:
         no_default_string : typing.Optional[str]
             A string parameter without a default value - should still be optional
 
-        complex_param : SessionSettings
+        complex_param : typing.Optional[SessionSettings]
             Session settings object
 
         request_options : typing.Optional[RequestOptions]
