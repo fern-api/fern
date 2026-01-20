@@ -357,6 +357,9 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
+  python-docstring-escape:
+    - customConfig: null
+      outputFolder: no-custom-config
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2

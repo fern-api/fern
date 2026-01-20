@@ -1,0 +1,26 @@
+types:
+  User:
+    docs: |
+      A user object with DOMAIN\_username format for authentication.
+      The username field uses the FOO\_BAR naming convention.
+    properties:
+      id: string
+      name:
+        type: string
+        docs: |
+          The user's name in DOMAIN\_username format.
+          Example: CORP\_john.doe
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    get:
+      docs: |
+        Get a user by ID. Returns user with DOMAIN\_username format.
+        The response uses FOO\_BAR naming convention.
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: string
+      response: User
