@@ -1209,6 +1209,58 @@
       },
       "additionalProperties": false
     },
+    "fernDefinition.validation.ContainerValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "fernDefinition.validation.MapValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "fernDefinition.validation.ValidationSchema": {
       "anyOf": [
         {
@@ -1216,6 +1268,12 @@
         },
         {
           "$ref": "#/definitions/fernDefinition.validation.NumberValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.validation.ContainerValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.validation.MapValidationSchema"
         }
       ]
     },
