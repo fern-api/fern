@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/SendMessageType"
+    },
+    "text": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "text"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SendMessageType": {
+      "type": "string",
+      "enum": [
+        "send"
+      ]
+    }
+  }
+}

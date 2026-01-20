@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/ReceiveMessageType"
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "content"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ReceiveMessageType": {
+      "type": "string",
+      "enum": [
+        "receive"
+      ]
+    }
+  }
+}
