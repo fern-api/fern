@@ -7,4 +7,6 @@ import * as FernIr from "../../../index";
 export interface MapType {
     keyType: FernIr.TypeReference;
     valueType: FernIr.TypeReference;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }

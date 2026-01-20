@@ -425,6 +425,38 @@ function maybeNumberValidation(
     };
 }
 
+function maybeContainerValidation(
+    schema: { minItems?: number; maxItems?: number } | undefined
+): RawSchemas.ValidationSchema | undefined {
+    if (schema == null) {
+        return undefined;
+    }
+    const { minItems, maxItems } = schema;
+    if (minItems == null && maxItems == null) {
+        return undefined;
+    }
+    return {
+        minItems,
+        maxItems
+    };
+}
+
+function maybeMapValidation(
+    schema: { minProperties?: number; maxProperties?: number } | undefined
+): RawSchemas.ValidationSchema | undefined {
+    if (schema == null) {
+        return undefined;
+    }
+    const { minProperties, maxProperties } = schema;
+    if (minProperties == null && maxProperties == null) {
+        return undefined;
+    }
+    return {
+        minProperties,
+        maxProperties
+    };
+}
+
 /**
  * Ensures that a number is within the specified range for its type.
  * Returns `undefined` if the number is outside the valid range for the given type.
@@ -510,14 +542,23 @@ export function buildArrayTypeReference({
         declarationDepth
     });
     const type = `list<${getTypeFromTypeReference(item)}>`;
-    if (schema.description == null && schema.title == null) {
+    const validation = maybeContainerValidation(schema);
+    if (schema.description == null && schema.title == null && validation == null) {
         return type;
     }
-    return {
-        ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
+    if (schema.description != null) {
+        result.docs = schema.description;
+    }
+    if (schema.availability != null) {
+        result.availability = convertAvailability(schema.availability);
+    }
+    if (validation != null) {
+        result.validation = validation;
+    }
+    return result;
 }
 
 export function buildMapTypeReference({
@@ -547,7 +588,8 @@ export function buildMapTypeReference({
     });
     const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     const type = `map<${getTypeFromTypeReference(keyTypeReference)}, ${getTypeFromTypeReference(valueTypeReference)}>`;
-    if (schema.description == null && encoding == null && schema.title == null) {
+    const validation = maybeMapValidation(schema);
+    if (schema.description == null && encoding == null && schema.title == null && validation == null) {
         return type;
     }
     const result: RawSchemas.TypeReferenceSchema = {
@@ -561,6 +603,9 @@ export function buildMapTypeReference({
     }
     if (schema.availability != null) {
         result.availability = convertAvailability(schema.availability);
+    }
+    if (validation != null) {
+        result.validation = validation;
     }
     return result;
 }

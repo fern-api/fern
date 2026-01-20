@@ -10,11 +10,15 @@ export const MapType: core.serialization.ObjectSchema<serializers.MapType.Raw, F
     core.serialization.objectWithoutOptionalProperties({
         keyType: core.serialization.lazy(() => serializers.TypeReference),
         valueType: core.serialization.lazy(() => serializers.TypeReference),
+        minProperties: core.serialization.number().optional(),
+        maxProperties: core.serialization.number().optional(),
     });
 
 export declare namespace MapType {
     export interface Raw {
         keyType: serializers.TypeReference.Raw;
         valueType: serializers.TypeReference.Raw;
+        minProperties?: number | null;
+        maxProperties?: number | null;
     }
 }

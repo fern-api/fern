@@ -39,6 +39,24 @@ types:
       - CIRCLE
       - TRIANGLE
 
+  WordList:
+    type: list<Word>
+    validation:
+      minItems: 1
+      maxItems: 10
+
+  WordSet:
+    type: set<Word>
+    validation:
+      minItems: 1
+      maxItems: 5
+
+  WordMap:
+    type: map<string, Word>
+    validation:
+      minProperties: 1
+      maxProperties: 5
+
   Type:
     docs: |
       Defines properties with default values and validation rules.
