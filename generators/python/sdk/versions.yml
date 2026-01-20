@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.48.2
+  changelogEntry:
+    - summary: |
+        Fix SyntaxWarning for invalid escape sequence in generator's docstring.
+        Python 3.12+ raises SyntaxWarning for invalid escape sequences like `\_` in docstrings.
+        Changed the escape_docstring function's docstring to use a raw string (r"...") to avoid this warning.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 62
+
 - version: 4.48.1
   changelogEntry:
     - summary: |
