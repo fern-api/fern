@@ -77,7 +77,8 @@ public final class SyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegat
 
     @Override
     public Optional<MethodSpec> getBodyOnlyMethodSpec() {
-        return httpEndpointMethodSpecs.getBodyOnlyMethodSpec().map(methodSpec -> MethodSpec.methodBuilder(methodSpec.name)
+        return httpEndpointMethodSpecs.getBodyOnlyMethodSpec().map(methodSpec -> MethodSpec.methodBuilder(
+                        methodSpec.name)
                 .addJavadoc(methodSpec.javadoc)
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)

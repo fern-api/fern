@@ -375,7 +375,8 @@ public abstract class AbstractEndpointWriter {
             Optional<TypeName> bodyTypeName = variables.getBodyTypeName();
             if (bodyTypeName.isPresent()) {
                 String bodyParamName = variables.getBodyParameterName();
-                ParameterSpec bodyParam = ParameterSpec.builder(bodyTypeName.get(), bodyParamName).build();
+                ParameterSpec bodyParam =
+                        ParameterSpec.builder(bodyTypeName.get(), bodyParamName).build();
                 String wrapperTypeName = variables
                         .sdkRequest()
                         .get()
@@ -389,8 +390,7 @@ public abstract class AbstractEndpointWriter {
                         .addParameters(variables.pathParameters)
                         .addParameter(bodyParam)
                         .returns(endpointWithoutRequestOptions.returnType);
-                List<String> bodyOnlyParamNames = Stream.concat(
-                                variables.pathParameters.stream(), Stream.of(bodyParam))
+                List<String> bodyOnlyParamNames = Stream.concat(variables.pathParameters.stream(), Stream.of(bodyParam))
                         .map(parameterSpec -> parameterSpec.name)
                         .collect(Collectors.toList());
                 responseParserGenerator.addBodyOnlyReturnStatement(
@@ -402,16 +402,18 @@ public abstract class AbstractEndpointWriter {
                         variables.getBodyPropertyName());
                 bodyOnlyMethodSpec = bodyOnlyMethodBuilder.build();
 
-                MethodSpec.Builder bodyOnlyWithRequestOptionsMethodBuilder =
-                        MethodSpec.methodBuilder(endpointWithRequestOptions.name)
-                                .addJavadoc(endpointWithRequestOptions.javadoc)
-                                .addModifiers(Modifier.PUBLIC)
-                                .addParameters(variables.pathParameters)
-                                .addParameter(bodyParam)
-                                .returns(endpointWithRequestOptions.returnType);
+                MethodSpec.Builder bodyOnlyWithRequestOptionsMethodBuilder = MethodSpec.methodBuilder(
+                                endpointWithRequestOptions.name)
+                        .addJavadoc(endpointWithRequestOptions.javadoc)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameters(variables.pathParameters)
+                        .addParameter(bodyParam)
+                        .returns(endpointWithRequestOptions.returnType);
                 if (httpEndpoint.getIdempotent()) {
                     bodyOnlyWithRequestOptionsMethodBuilder.addParameter(ParameterSpec.builder(
-                                    clientGeneratorContext.getPoetClassNameFactory().getIdempotentRequestOptionsClassName(),
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getIdempotentRequestOptionsClassName(),
                                     AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                             .build());
                 } else {

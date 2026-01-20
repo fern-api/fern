@@ -187,8 +187,9 @@ public abstract class AbstractClientGeneratorUtils {
                 if (httpEndpointMethodSpecs.getBodyOnlyMethodSpec().isPresent()) {
                     rawClientImplBuilder.addMethod(
                             rawHttpEndpointMethodSpecs.getBodyOnlyMethodSpec().get());
-                    implBuilder.addMethod(
-                            delegatingHttpEndpointMethodSpecs.getBodyOnlyMethodSpec().get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getBodyOnlyMethodSpec()
+                            .get());
                 }
 
                 if (httpEndpointMethodSpecs
