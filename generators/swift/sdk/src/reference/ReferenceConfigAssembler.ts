@@ -1,9 +1,9 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { HttpEndpoint, HttpService } from "@fern-api/ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
 import { ClientGeneratorContext, EndpointMethodGenerator } from "../generators";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";

@@ -1,5 +1,5 @@
+import { AliasTypeDeclaration } from "@fern-api/ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
-import { AliasTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 

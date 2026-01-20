@@ -1,5 +1,5 @@
+import { TypeDeclaration } from "@fern-api/ir-sdk";
 import { BaseSwiftCustomConfigSchema, NameRegistry, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import type { AbstractSwiftGeneratorContext } from ".";
 
 export function registerUndiscriminatedUnionVariants({

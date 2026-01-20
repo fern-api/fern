@@ -1,4 +1,4 @@
-import { dynamic, EndpointId } from "@fern-fern/ir-sdk/api";
+import { dynamic, EndpointId } from "@fern-api/ir-sdk";
 
 import { convertEndpoints, Endpoint } from "./convertEndpoints";
 

@@ -1,9 +1,9 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { EndpointId, FeatureId, HttpEndpoint } from "@fern-api/ir-sdk";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {

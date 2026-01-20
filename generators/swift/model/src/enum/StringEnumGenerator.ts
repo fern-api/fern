@@ -1,7 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { EnumTypeDeclaration } from "@fern-api/ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
-
-import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 export declare namespace StringEnumGenerator {
     type Source =

@@ -1,9 +1,9 @@
 import { AbstractGeneratorAgent, RawGithubConfig, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { generateReadme, generateReference, githubPr, githubPush } from "@fern-api/generator-cli";
+import { IntermediateRepresentation, PublishingConfig } from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
 
 import { ReadmeConfigBuilder } from "./readme";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";

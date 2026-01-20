@@ -1,5 +1,5 @@
+import { TypeReference } from "@fern-api/ir-sdk";
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { LiteralEnumGenerator } from "../../literal";
 import { ModelGeneratorContext } from "../../ModelGeneratorContext";
 import { AdditionalPropertiesMetadata, computeAdditionalPropertiesMetadata } from "./additional-properties";

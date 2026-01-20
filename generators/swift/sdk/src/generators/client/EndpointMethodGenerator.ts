@@ -1,6 +1,6 @@
 import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-api/ir-sdk";
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";

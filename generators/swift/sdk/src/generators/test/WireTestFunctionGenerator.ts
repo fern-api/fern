@@ -1,7 +1,7 @@
 import { assertDefined } from "@fern-api/core-utils";
+import { dynamic, ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-api/ir-sdk";
 import { LiteralEnum, Referencer, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
-import { dynamic, ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest";
 

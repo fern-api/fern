@@ -1,6 +1,5 @@
+import { SingleBaseUrlEnvironments } from "@fern-api/ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
-
-import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 

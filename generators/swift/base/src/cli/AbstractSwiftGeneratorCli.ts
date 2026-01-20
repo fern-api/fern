@@ -1,8 +1,7 @@
 import { AbstractGeneratorCli, File, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
 import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext";
 

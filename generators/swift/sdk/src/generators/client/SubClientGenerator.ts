@@ -1,5 +1,5 @@
+import { Subpackage } from "@fern-api/ir-sdk";
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { Subpackage } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { EndpointMethodGenerator } from "./EndpointMethodGenerator";

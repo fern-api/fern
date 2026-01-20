@@ -1,5 +1,5 @@
 import { assertDefined } from "@fern-api/core-utils";
-import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
 export class CycleDetector {
     public constructor(private readonly ir: IntermediateRepresentation) {}

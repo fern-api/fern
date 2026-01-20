@@ -1,6 +1,6 @@
 import { assertDefined } from "@fern-api/core-utils";
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-api/ir-sdk";
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { LiteralEnumGenerator } from "../literal";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
