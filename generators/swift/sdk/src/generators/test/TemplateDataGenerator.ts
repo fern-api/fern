@@ -1,8 +1,8 @@
 import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { dynamic, HttpEndpoint } from "@fern-api/ir-sdk";
 import { TestTemplateFileId } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
-import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest";
 

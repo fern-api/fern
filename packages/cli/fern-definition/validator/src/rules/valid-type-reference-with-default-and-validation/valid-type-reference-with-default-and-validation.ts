@@ -76,15 +76,20 @@ function validateResolvedType({
         return [];
     }
 
-    if (
-        resolvedType._type === "container" &&
-        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
-    ) {
-        return validateResolvedType({
-            resolvedType: resolvedType.container.itemType,
-            _default,
-            validation
-        });
+    if (resolvedType._type === "container") {
+        if (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable") {
+            return validateResolvedType({
+                resolvedType: resolvedType.container.itemType,
+                _default,
+                validation
+            });
+        }
+        if (resolvedType.container._type === "list" || resolvedType.container._type === "set") {
+            return validateListOrSetDefaultAndValidation({ _default, validation });
+        }
+        if (resolvedType.container._type === "map") {
+            return validateMapDefaultAndValidation({ _default, validation });
+        }
     }
 
     let typeName: string = resolvedType._type;
@@ -377,4 +382,68 @@ function isRawStringValidation(
         maybeStringValidation.pattern != null ||
         maybeStringValidation.format != null
     );
+}
+
+function isRawContainerValidation(
+    validation: RawSchemas.ValidationSchema
+): validation is RawSchemas.ContainerValidationSchema {
+    const maybeContainerValidation = validation as RawSchemas.ContainerValidationSchema;
+    return maybeContainerValidation.minItems != null || maybeContainerValidation.maxItems != null;
+}
+
+function isRawMapValidation(validation: RawSchemas.ValidationSchema): validation is RawSchemas.MapValidationSchema {
+    const maybeMapValidation = validation as RawSchemas.MapValidationSchema;
+    return maybeMapValidation.minProperties != null || maybeMapValidation.maxProperties != null;
+}
+
+function validateListOrSetDefaultAndValidation({
+    _default,
+    validation
+}: {
+    _default: unknown | undefined;
+    validation: RawSchemas.ValidationSchema | undefined;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [];
+
+    if (_default != null) {
+        violations.push({
+            message: `Default values are not supported for list/set types`,
+            severity: "fatal"
+        });
+    }
+
+    if (validation != null && !isRawContainerValidation(validation)) {
+        violations.push({
+            message: `Validation rules '${JSON.stringify(validation)}' are not compatible with list/set types. Use minItems/maxItems.`,
+            severity: "fatal"
+        });
+    }
+
+    return violations;
+}
+
+function validateMapDefaultAndValidation({
+    _default,
+    validation
+}: {
+    _default: unknown | undefined;
+    validation: RawSchemas.ValidationSchema | undefined;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [];
+
+    if (_default != null) {
+        violations.push({
+            message: `Default values are not supported for map types`,
+            severity: "fatal"
+        });
+    }
+
+    if (validation != null && !isRawMapValidation(validation)) {
+        violations.push({
+            message: `Validation rules '${JSON.stringify(validation)}' are not compatible with map types. Use minProperties/maxProperties.`,
+            severity: "fatal"
+        });
+    }
+
+    return violations;
 }

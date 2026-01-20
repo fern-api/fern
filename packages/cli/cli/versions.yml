@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.0
+  changelogEntry:
+    - summary: |
+        Add support for container validation rules in Fern definitions. List and set types now support `minItems`/`maxItems` validation, and map types support `minProperties`/`maxProperties` validation.
+      type: feat
+  createdAt: "2026-01-20"
+  irVersion: 63
+
 - version: 3.47.5
   changelogEntry:
     - summary: |

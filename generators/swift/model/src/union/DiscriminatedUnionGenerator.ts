@@ -1,6 +1,6 @@
 import { assertNever, noop } from "@fern-api/core-utils";
+import { UnionTypeDeclaration } from "@fern-api/ir-sdk";
 import { Referencer, sanitizeSelf, swift } from "@fern-api/swift-codegen";
-import { UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 

@@ -289,8 +289,8 @@
     openapi: ../openapi.yml
 types:
   AliasArray:
-    docs: Alias for array of strings
     type: list<string>
+    docs: Alias for array of strings
   AliasObject:
     docs: Alias for an object
     properties:

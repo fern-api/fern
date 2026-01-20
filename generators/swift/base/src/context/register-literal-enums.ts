@@ -1,6 +1,6 @@
 import { noop } from "@fern-api/core-utils";
+import { ObjectProperty, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 import { BaseSwiftCustomConfigSchema, NameRegistry, swift } from "@fern-api/swift-codegen";
-import { ObjectProperty, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { AbstractSwiftGeneratorContext } from "./AbstractSwiftGeneratorContext";
 
@@ -128,7 +128,7 @@ export function registerLiteralEnumsForTypeReference({
                     registerLiteralEnumsForTypeReference({
                         parentSymbol,
                         registry,
-                        typeReference: lt
+                        typeReference: lt.list
                     });
                 },
                 nullable: (typeReference) => {
@@ -145,11 +145,11 @@ export function registerLiteralEnumsForTypeReference({
                         typeReference
                     });
                 },
-                set: (typeReference) => {
+                set: (st) => {
                     registerLiteralEnumsForTypeReference({
                         parentSymbol,
                         registry,
-                        typeReference
+                        typeReference: st.set
                     });
                 },
                 _other: noop

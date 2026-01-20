@@ -594,8 +594,8 @@ types:
   Errors:
     properties:
       errors:
-        docs: A list of errors
         type: list<Error>
+        docs: A list of errors
     source:
       openapi: ../openapi.json
   EndUsersMeta:

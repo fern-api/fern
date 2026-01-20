@@ -1,4 +1,4 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint } from "@fern-api/ir-sdk";
 
 type PathPart =
     | {

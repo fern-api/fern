@@ -417,13 +417,13 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
         list: (listType) => {
             return {
                 type: "array",
-                items: convertTypeReference(listType)
+                items: convertTypeReference(listType.list)
             };
         },
         set: (setType) => {
             return {
                 type: "array",
-                items: convertTypeReference(setType)
+                items: convertTypeReference(setType.set)
             };
         },
         map: (mapType) => {

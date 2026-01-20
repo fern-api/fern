@@ -131,21 +131,21 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
     return irTypeReference._visit<FdrCjsSdk.api.v1.register.TypeReference>({
         container: (container) => {
             return Ir.types.ContainerType._visit<FdrCjsSdk.api.v1.register.TypeReference>(container, {
-                list: (itemType) => {
+                list: (listType) => {
                     return {
                         type: "list",
-                        itemType: convertTypeReference(itemType),
-                        minItems: undefined,
-                        maxItems: undefined
+                        itemType: convertTypeReference(listType.list),
+                        minItems: listType.minItems,
+                        maxItems: listType.maxItems
                     };
                 },
-                map: ({ keyType, valueType }) => {
+                map: (mapType) => {
                     return {
                         type: "map",
-                        keyType: convertTypeReference(keyType),
-                        valueType: convertTypeReference(valueType),
-                        minProperties: undefined,
-                        maxProperties: undefined
+                        keyType: convertTypeReference(mapType.keyType),
+                        valueType: convertTypeReference(mapType.valueType),
+                        minProperties: mapType.minProperties,
+                        maxProperties: mapType.maxProperties
                     };
                 },
                 optional: (itemType) => {
@@ -161,12 +161,12 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         itemType: convertTypeReference(itemType)
                     };
                 },
-                set: (itemType) => {
+                set: (setType) => {
                     return {
                         type: "set",
-                        itemType: convertTypeReference(itemType),
-                        minItems: undefined,
-                        maxItems: undefined
+                        itemType: convertTypeReference(setType.set),
+                        minItems: setType.minItems,
+                        maxItems: setType.maxItems
                     };
                 },
                 literal: (literal) => {

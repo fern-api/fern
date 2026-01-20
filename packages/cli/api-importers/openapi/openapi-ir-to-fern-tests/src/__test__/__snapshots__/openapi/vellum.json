@@ -2748,10 +2748,10 @@ Used to submit feedback regarding the quality of previously generated completion
               validation:
                 minLength: 1
             requests:
+              type: list<GenerateRequest>
               docs: >-
                 The generation requests to make. Supplying multiple will perform
                 a bulk request to the LLM provided when possible.
-              type: list<GenerateRequest>
             options:
               type: optional<nullable<GenerateOptionsRequest>>
               docs: >-
@@ -2819,10 +2819,10 @@ Used to submit feedback regarding the quality of previously generated completion
               validation:
                 minLength: 1
             requests:
+              type: list<GenerateRequest>
               docs: >-
                 The generation requests to make. Supplying multiple will perform
                 a bulk request to the LLM provided when possible.
-              type: list<GenerateRequest>
             options:
               type: optional<nullable<GenerateOptionsRequest>>
               docs: >-
@@ -2957,10 +2957,10 @@ Used to submit feedback regarding the quality of previously generated completion
               validation:
                 minLength: 1
             actuals:
+              type: list<SubmitCompletionActualRequest>
               docs: >-
                 Feedback regarding the quality of previously generated
                 completions
-              type: list<SubmitCompletionActualRequest>
         content-type: application/json
       url: Predict
       errors:
@@ -3360,8 +3360,8 @@ types:
   GenerateResponse:
     properties:
       results:
-        docs: The results of each generation request.
         type: list<GenerateResult>
+        docs: The results of each generation request.
     source:
       openapi: ../openapi.yml
   GenerateResult:
@@ -3381,10 +3381,10 @@ types:
   GenerateResultData:
     properties:
       completions:
+        type: list<EnrichedNormalizedCompletion>
         docs: >-
           The generated completions. This will generally be a list of length
           one.
-        type: list<EnrichedNormalizedCompletion>
     source:
       openapi: ../openapi.yml
   GenerateResultError:
@@ -3488,8 +3488,8 @@ types:
           The generation parameters that are passed to the LLM provider at
           runtime.
       input_variables:
-        docs: Names of the input variables specified in the prompt template.
         type: list<PromptTemplateInputVariable>
+        docs: Names of the input variables specified in the prompt template.
       prompt_template:
         type: optional<string>
         docs: The template used to generate prompts for this model version.
@@ -3788,8 +3788,8 @@ types:
         default: 2
       prompt_block_data: PromptTemplateBlockDataRequest
       input_variables:
-        docs: Names of the input variables specified in the prompt template.
         type: list<PromptTemplateInputVariableRequest>
+        docs: Names of the input variables specified in the prompt template.
     source:
       openapi: ../openapi.yml
   RegisterPromptResponse:
@@ -3879,8 +3879,8 @@ types:
         type: optional<string>
         default: Untitled Scenario
       inputs:
-        docs: The inputs for the scenario
         type: list<ScenarioInput>
+        docs: The inputs for the scenario
       id:
         type: string
         docs: The id of the scenario
@@ -3961,10 +3961,10 @@ types:
   SearchResponse:
     properties:
       results:
+        type: list<SearchResult>
         docs: >-
           The results of the search. Each result represents a chunk that matches
           the search query.
-        type: list<SearchResult>
     source:
       openapi: ../openapi.yml
   SearchResult:
@@ -5958,8 +5958,8 @@ service:
               type: optional<string>
               default: Untitled Scenario
             inputs:
-              docs: The inputs for the scenario
               type: list<root.ScenarioInputRequest>
+              docs: The inputs for the scenario
             scenario_id:
               type: optional<string>
               docs: >-

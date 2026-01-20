@@ -1,7 +1,7 @@
 import { assertDefined } from "@fern-api/core-utils";
+import { dynamic, Package, Subpackage } from "@fern-api/ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
-import { dynamic, Package, Subpackage } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { WireTestFunctionGenerator } from "./WireTestFunctionGenerator";
 

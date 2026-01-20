@@ -1107,6 +1107,58 @@
       },
       "additionalProperties": false
     },
+    "validation.ContainerValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation.MapValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "validation.ValidationSchema": {
       "anyOf": [
         {
@@ -1114,6 +1166,12 @@
         },
         {
           "$ref": "#/definitions/validation.NumberValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/validation.ContainerValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/validation.MapValidationSchema"
         }
       ]
     },
