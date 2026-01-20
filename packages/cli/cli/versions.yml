@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.2
+  changelogEntry:
+    - summary: |
+        Skip loading AI examples during SDK generation. AI examples are now only loaded for docs generation (`fern generate --docs`), not for SDK generation (`fern generate`).
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
 - version: 3.47.1
   changelogEntry:
     - summary: |
