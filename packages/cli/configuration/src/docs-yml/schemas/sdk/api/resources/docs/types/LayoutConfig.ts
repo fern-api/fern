@@ -88,4 +88,6 @@ export interface LayoutConfig {
     hideNavLinks?: boolean;
     /** If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter. */
     hideFeedback?: boolean;
+    /** Sets the maximum depth of the table of contents. This can be overridden for a specific page using the frontmatter. */
+    maxTocDepth?: number;
 }
