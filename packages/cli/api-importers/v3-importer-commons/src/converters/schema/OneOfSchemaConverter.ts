@@ -285,7 +285,9 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         type: TypeReference.container(
                             ContainerType.map({
                                 keyType: AbstractConverter.STRING,
-                                valueType: TypeReference.unknown()
+                                valueType: TypeReference.unknown(),
+                                minProperties: undefined,
+                                maxProperties: undefined
                             })
                         ),
                         docs: subSchema.description
@@ -408,7 +410,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
     private containerTypeIsWrappedPrimitive(type: ContainerType): boolean {
         switch (type.type) {
             case "list":
-                return this.typeReferenceIsWrappedPrimitive(type.list);
+                return this.typeReferenceIsWrappedPrimitive(type.itemType);
             case "map":
                 return (
                     this.typeReferenceIsWrappedPrimitive(type.keyType) &&
@@ -419,7 +421,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             case "optional":
                 return this.typeReferenceIsWrappedPrimitive(type.optional);
             case "set":
-                return this.typeReferenceIsWrappedPrimitive(type.set);
+                return this.typeReferenceIsWrappedPrimitive(type.itemType);
             case "literal":
                 return true;
             default:
