@@ -27,18 +27,18 @@ public partial class SeedUndiscriminatedUnionsClient : ISeedUndiscriminatedUnion
         }
         _client = new RawClient(clientOptions);
         Union = new UnionClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public UnionClient Union { get; }
 
-    public SeedUndiscriminatedUnionsClient.RawAccessClient Raw { get; }
+    public SeedUndiscriminatedUnionsClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

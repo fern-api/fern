@@ -10,10 +10,10 @@ public partial class SubmissionClient : ISubmissionClient
     internal SubmissionClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public SubmissionClient.RawAccessClient Raw { get; }
+    public SubmissionClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// Returns sessionId and execution server URL for session. Spins up server.
@@ -74,11 +74,11 @@ public partial class SubmissionClient : ISubmissionClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

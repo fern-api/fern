@@ -12,7 +12,7 @@ public partial class InlineUsersClient : IInlineUsersClient
         {
             _client = client;
             InlineUsers = new InlineUsersClient_(_client);
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -23,13 +23,13 @@ public partial class InlineUsersClient : IInlineUsersClient
 
     public InlineUsersClient_ InlineUsers { get; }
 
-    public InlineUsersClient.RawAccessClient Raw { get; }
+    public InlineUsersClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

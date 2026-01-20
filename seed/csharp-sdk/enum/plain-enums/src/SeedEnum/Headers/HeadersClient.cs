@@ -9,10 +9,10 @@ public partial class HeadersClient : IHeadersClient
     internal HeadersClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public HeadersClient.RawAccessClient Raw { get; }
+    public HeadersClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Headers.SendAsync(
@@ -34,11 +34,11 @@ public partial class HeadersClient : IHeadersClient
         await Raw.SendAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

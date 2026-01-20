@@ -11,7 +11,7 @@ public partial class SimpleClient : ISimpleClient
         try
         {
             _client = client;
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -20,7 +20,7 @@ public partial class SimpleClient : ISimpleClient
         }
     }
 
-    public SimpleClient.RawAccessClient Raw { get; }
+    public SimpleClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Simple.GetSomethingAsync();
@@ -38,11 +38,11 @@ public partial class SimpleClient : ISimpleClient
             .ConfigureAwait(false);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -10,10 +10,10 @@ public partial class RetriesClient : IRetriesClient
     internal RetriesClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public RetriesClient.RawAccessClient Raw { get; }
+    public RetriesClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Retries.GetUsersAsync();
@@ -27,11 +27,11 @@ public partial class RetriesClient : IRetriesClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

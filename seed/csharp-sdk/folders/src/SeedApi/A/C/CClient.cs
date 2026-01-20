@@ -10,10 +10,10 @@ public partial class CClient : ICClient
     internal CClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public CClient.RawAccessClient Raw { get; }
+    public CClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.A.C.FooAsync();
@@ -26,11 +26,11 @@ public partial class CClient : ICClient
         await Raw.FooAsync(options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

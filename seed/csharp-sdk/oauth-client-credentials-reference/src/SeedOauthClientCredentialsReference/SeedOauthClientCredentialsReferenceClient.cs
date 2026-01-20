@@ -42,20 +42,20 @@ public partial class SeedOauthClientCredentialsReferenceClient
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
         Simple = new SimpleClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public AuthClient Auth { get; }
 
     public SimpleClient Simple { get; }
 
-    public SeedOauthClientCredentialsReferenceClient.RawAccessClient Raw { get; }
+    public SeedOauthClientCredentialsReferenceClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

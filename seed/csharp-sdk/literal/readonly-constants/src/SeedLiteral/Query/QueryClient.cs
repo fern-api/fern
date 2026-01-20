@@ -10,10 +10,10 @@ public partial class QueryClient : IQueryClient
     internal QueryClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public QueryClient.RawAccessClient Raw { get; }
+    public QueryClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Query.SendAsync(
@@ -41,11 +41,11 @@ public partial class QueryClient : IQueryClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

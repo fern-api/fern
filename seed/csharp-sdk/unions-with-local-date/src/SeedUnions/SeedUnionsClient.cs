@@ -29,7 +29,7 @@ public partial class SeedUnionsClient : ISeedUnionsClient
         Bigunion = new BigunionClient(_client);
         Types = new TypesClient(_client);
         Union = new UnionClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public BigunionClient Bigunion { get; }
@@ -38,13 +38,13 @@ public partial class SeedUnionsClient : ISeedUnionsClient
 
     public UnionClient Union { get; }
 
-    public SeedUnionsClient.RawAccessClient Raw { get; }
+    public SeedUnionsClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

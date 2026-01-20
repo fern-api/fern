@@ -9,10 +9,10 @@ public partial class MultipartFormClient : IMultipartFormClient
     internal MultipartFormClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public MultipartFormClient.RawAccessClient Raw { get; }
+    public MultipartFormClient.WithRawResponseClient Raw { get; }
 
     public async Task MultipartFormAsync(
         MultipartFormRequest request,
@@ -23,11 +23,11 @@ public partial class MultipartFormClient : IMultipartFormClient
         await Raw.MultipartFormAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

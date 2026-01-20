@@ -10,10 +10,10 @@ public partial class TestGroupClient : ITestGroupClient
     internal TestGroupClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public TestGroupClient.RawAccessClient Raw { get; }
+    public TestGroupClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// Post a nullable request body
@@ -33,11 +33,11 @@ public partial class TestGroupClient : ITestGroupClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

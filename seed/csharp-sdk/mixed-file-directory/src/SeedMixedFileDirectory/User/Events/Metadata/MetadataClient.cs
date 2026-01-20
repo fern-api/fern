@@ -11,10 +11,10 @@ public partial class MetadataClient : IMetadataClient
     internal MetadataClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public MetadataClient.RawAccessClient Raw { get; }
+    public MetadataClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// Get event metadata.
@@ -32,11 +32,11 @@ public partial class MetadataClient : IMetadataClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

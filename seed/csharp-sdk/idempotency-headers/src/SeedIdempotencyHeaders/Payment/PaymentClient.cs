@@ -10,10 +10,10 @@ public partial class PaymentClient : IPaymentClient
     internal PaymentClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public PaymentClient.RawAccessClient Raw { get; }
+    public PaymentClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
@@ -40,11 +40,11 @@ public partial class PaymentClient : IPaymentClient
         await Raw.DeleteAsync(paymentId, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

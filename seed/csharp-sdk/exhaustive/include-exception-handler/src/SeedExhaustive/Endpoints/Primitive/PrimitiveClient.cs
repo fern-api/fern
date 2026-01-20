@@ -13,7 +13,7 @@ public partial class PrimitiveClient : IPrimitiveClient
         try
         {
             _client = client;
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -22,7 +22,7 @@ public partial class PrimitiveClient : IPrimitiveClient
         }
     }
 
-    public PrimitiveClient.RawAccessClient Raw { get; }
+    public PrimitiveClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnStringAsync("string");
@@ -204,11 +204,11 @@ public partial class PrimitiveClient : IPrimitiveClient
             .ConfigureAwait(false);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

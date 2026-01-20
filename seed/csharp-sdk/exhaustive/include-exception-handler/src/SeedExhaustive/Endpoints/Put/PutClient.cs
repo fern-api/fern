@@ -13,7 +13,7 @@ public partial class PutClient : IPutClient
         try
         {
             _client = client;
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -22,7 +22,7 @@ public partial class PutClient : IPutClient
         }
     }
 
-    public PutClient.RawAccessClient Raw { get; }
+    public PutClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.Put.AddAsync(new PutRequest { Id = "id" });
@@ -42,11 +42,11 @@ public partial class PutClient : IPutClient
             .ConfigureAwait(false);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

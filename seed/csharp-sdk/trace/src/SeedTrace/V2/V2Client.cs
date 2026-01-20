@@ -13,14 +13,14 @@ public partial class V2Client : IV2Client
         _client = client;
         Problem = new ProblemClient(_client);
         V3 = new V3Client(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public ProblemClient Problem { get; }
 
     public V3Client V3 { get; }
 
-    public V2Client.RawAccessClient Raw { get; }
+    public V2Client.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.V2.TestAsync();
@@ -33,11 +33,11 @@ public partial class V2Client : IV2Client
         await Raw.TestAsync(options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

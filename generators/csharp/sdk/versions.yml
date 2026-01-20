@@ -13,16 +13,17 @@
         // Raw path - explicit access to HTTP metadata
         var response = await client.Raw.GetUserAsync("123");
 
-        Console.WriteLine(response.StatusCode);                      // OK
-        Console.WriteLine((int)response.StatusCode);                 // 200
-        Console.WriteLine(response.Url);                             // https://api.example.com/users/123
-        Console.WriteLine(response.Headers["X-Request-Id"].First()); // abc-123
-        Console.WriteLine(response.Body.Name);                       // Jane Doe
+        Console.WriteLine(response.RawResponse.StatusCode);                      // OK
+        Console.WriteLine((int)response.RawResponse.StatusCode);                 // 200
+        Console.WriteLine(response.RawResponse.Url);                             // https://api.example.com/users/123
+        Console.WriteLine(response.RawResponse.Headers["X-Request-Id"].First()); // abc-123
+        Console.WriteLine(response.Data.Name);                                   // Jane Doe
         ```
 
         Key features:
-        * `RawResponse<T>` wrapper type containing StatusCode, Url, Headers, and Body
-        * `RawAccessClient` nested class exposed via `.Raw` property on all clients
+        * `WithRawResponse<T>` wrapper type containing `Data` (parsed body) and `RawResponse` (HTTP metadata)
+        * `RawResponse` record containing `StatusCode`, `Url`, and `Headers` (without parsed body)
+        * `WithRawResponseClient` nested class exposed via `.Raw` property on all clients
         * Zero overhead on default path - no extra allocations when not using `.Raw`
         * Headers are case-insensitive and include both response and content headers
         * All HTTP metadata is copied before HttpResponseMessage disposal

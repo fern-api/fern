@@ -29,12 +29,12 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         }
         _client = new RawClient(clientOptions);
         System = new SystemClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public SystemClient System { get; }
 
-    public RawAccessClient Raw { get; }
+    public WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.CreateUserAsync(
@@ -78,11 +78,11 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

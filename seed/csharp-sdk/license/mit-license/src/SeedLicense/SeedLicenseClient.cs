@@ -26,10 +26,10 @@ public partial class SeedLicenseClient : ISeedLicenseClient
             }
         }
         _client = new RawClient(clientOptions);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public SeedLicenseClient.RawAccessClient Raw { get; }
+    public SeedLicenseClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.GetAsync();
@@ -42,11 +42,11 @@ public partial class SeedLicenseClient : ISeedLicenseClient
         await Raw.GetAsync(options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

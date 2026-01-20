@@ -10,10 +10,10 @@ public partial class ApiClient : IApiClient
     internal ApiClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public ApiClient.RawAccessClient Raw { get; }
+    public ApiClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.NestedNoAuth.Api.GetSomethingAsync();
@@ -26,11 +26,11 @@ public partial class ApiClient : IApiClient
         await Raw.GetSomethingAsync(options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

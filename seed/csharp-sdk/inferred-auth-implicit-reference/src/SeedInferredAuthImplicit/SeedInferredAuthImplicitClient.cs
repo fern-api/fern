@@ -49,7 +49,7 @@ public partial class SeedInferredAuthImplicitClient : ISeedInferredAuthImplicitC
         NestedNoAuth = new NestedNoAuthClient(_client);
         Nested = new NestedClient(_client);
         Simple = new SimpleClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public AuthClient Auth { get; }
@@ -60,13 +60,13 @@ public partial class SeedInferredAuthImplicitClient : ISeedInferredAuthImplicitC
 
     public SimpleClient Simple { get; }
 
-    public SeedInferredAuthImplicitClient.RawAccessClient Raw { get; }
+    public SeedInferredAuthImplicitClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

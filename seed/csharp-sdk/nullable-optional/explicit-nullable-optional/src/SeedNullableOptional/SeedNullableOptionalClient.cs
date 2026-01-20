@@ -27,18 +27,18 @@ public partial class SeedNullableOptionalClient : ISeedNullableOptionalClient
         }
         _client = new RawClient(clientOptions);
         NullableOptional = new NullableOptionalClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public NullableOptionalClient NullableOptional { get; }
 
-    public SeedNullableOptionalClient.RawAccessClient Raw { get; }
+    public SeedNullableOptionalClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -10,10 +10,10 @@ public partial class TypesClient : ITypesClient
     internal TypesClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public TypesClient.RawAccessClient Raw { get; }
+    public TypesClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Types.GetAsync("date-example");
@@ -41,11 +41,11 @@ public partial class TypesClient : ITypesClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

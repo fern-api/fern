@@ -27,18 +27,18 @@ public partial class SeedNoRetriesClient : ISeedNoRetriesClient
         }
         _client = new RawClient(clientOptions);
         Retries = new RetriesClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public RetriesClient Retries { get; }
 
-    public SeedNoRetriesClient.RawAccessClient Raw { get; }
+    public SeedNoRetriesClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

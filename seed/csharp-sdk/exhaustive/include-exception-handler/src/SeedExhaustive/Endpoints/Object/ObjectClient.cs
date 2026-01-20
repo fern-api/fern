@@ -14,7 +14,7 @@ public partial class ObjectClient : IObjectClient
         try
         {
             _client = client;
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -23,7 +23,7 @@ public partial class ObjectClient : IObjectClient
         }
     }
 
-    public ObjectClient.RawAccessClient Raw { get; }
+    public ObjectClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
@@ -276,11 +276,11 @@ public partial class ObjectClient : IObjectClient
             .ConfigureAwait(false);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

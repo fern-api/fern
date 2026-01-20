@@ -11,10 +11,10 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
     internal InlineUsersClient_(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public InlineUsersClient_.RawAccessClient Raw { get; }
+    public InlineUsersClient_.WithRawResponseClient Raw { get; }
 
     private async Task<ListUsersPaginationResponse> ListWithCursorPaginationInternalAsync(
         ListUsersCursorPaginationRequest request,
@@ -662,11 +662,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         return pager;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

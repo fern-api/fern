@@ -33,7 +33,7 @@ public partial class SeedApiClient : ISeedApiClient
             }
             _client = new RawClient(clientOptions);
             Imdb = new ImdbClient(_client);
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -45,13 +45,13 @@ public partial class SeedApiClient : ISeedApiClient
 
     public ImdbClient Imdb { get; }
 
-    public SeedApiClient.RawAccessClient Raw { get; }
+    public SeedApiClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -10,10 +10,10 @@ public partial class OptionalClient : IOptionalClient
     internal OptionalClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public OptionalClient.RawAccessClient Raw { get; }
+    public OptionalClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Optional.SendOptionalBodyAsync(
@@ -80,11 +80,11 @@ public partial class OptionalClient : IOptionalClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

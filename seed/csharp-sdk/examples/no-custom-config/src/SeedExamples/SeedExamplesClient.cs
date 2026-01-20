@@ -34,7 +34,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
         File = new FileClient(_client);
         Health = new HealthClient(_client);
         Service = new ServiceClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public FileClient File { get; }
@@ -43,7 +43,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
 
     public ServiceClient Service { get; }
 
-    public SeedExamplesClient.RawAccessClient Raw { get; }
+    public SeedExamplesClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
@@ -71,11 +71,11 @@ public partial class SeedExamplesClient : ISeedExamplesClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

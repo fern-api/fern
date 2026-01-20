@@ -27,18 +27,18 @@ public partial class SeedUnknownAsAnyClient : ISeedUnknownAsAnyClient
         }
         _client = new RawClient(clientOptions);
         Unknown = new UnknownClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public UnknownClient Unknown { get; }
 
-    public SeedUnknownAsAnyClient.RawAccessClient Raw { get; }
+    public SeedUnknownAsAnyClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

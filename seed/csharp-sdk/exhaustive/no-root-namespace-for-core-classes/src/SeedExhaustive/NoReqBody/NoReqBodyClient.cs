@@ -11,10 +11,10 @@ public partial class NoReqBodyClient : INoReqBodyClient
     internal NoReqBodyClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public NoReqBodyClient.RawAccessClient Raw { get; }
+    public NoReqBodyClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.NoReqBody.GetWithNoRequestBodyAsync();
@@ -40,11 +40,11 @@ public partial class NoReqBodyClient : INoReqBodyClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

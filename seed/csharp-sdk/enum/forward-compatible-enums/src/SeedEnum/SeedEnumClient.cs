@@ -31,7 +31,7 @@ public partial class SeedEnumClient : ISeedEnumClient
         MultipartForm = new MultipartFormClient(_client);
         PathParam = new PathParamClient(_client);
         QueryParam = new QueryParamClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public HeadersClient Headers { get; }
@@ -44,13 +44,13 @@ public partial class SeedEnumClient : ISeedEnumClient
 
     public QueryParamClient QueryParam { get; }
 
-    public SeedEnumClient.RawAccessClient Raw { get; }
+    public SeedEnumClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

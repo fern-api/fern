@@ -27,18 +27,18 @@ public partial class SeedMultiLineDocsClient : ISeedMultiLineDocsClient
         }
         _client = new RawClient(clientOptions);
         User = new UserClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public UserClient User { get; }
 
-    public SeedMultiLineDocsClient.RawAccessClient Raw { get; }
+    public SeedMultiLineDocsClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

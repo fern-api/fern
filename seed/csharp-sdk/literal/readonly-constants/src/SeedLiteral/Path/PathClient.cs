@@ -10,10 +10,10 @@ public partial class PathClient : IPathClient
     internal PathClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public PathClient.RawAccessClient Raw { get; }
+    public PathClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Path.SendAsync("123");
@@ -28,11 +28,11 @@ public partial class PathClient : IPathClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

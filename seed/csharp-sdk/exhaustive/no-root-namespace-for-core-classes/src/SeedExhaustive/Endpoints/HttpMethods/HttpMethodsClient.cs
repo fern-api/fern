@@ -12,10 +12,10 @@ public partial class HttpMethodsClient : IHttpMethodsClient
     internal HttpMethodsClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public HttpMethodsClient.RawAccessClient Raw { get; }
+    public HttpMethodsClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestGetAsync("id");
@@ -105,11 +105,11 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -11,10 +11,10 @@ public partial class UrlsClient : IUrlsClient
     internal UrlsClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public UrlsClient.RawAccessClient Raw { get; }
+    public UrlsClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.Urls.WithMixedCaseAsync();
@@ -64,11 +64,11 @@ public partial class UrlsClient : IUrlsClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -9,10 +9,10 @@ public partial class DummyClient : IDummyClient
     internal DummyClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public DummyClient.RawAccessClient Raw { get; }
+    public DummyClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
@@ -65,11 +65,11 @@ public partial class DummyClient : IDummyClient
         }
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

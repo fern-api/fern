@@ -32,18 +32,18 @@ public partial class SeedSingleUrlEnvironmentNoDefaultClient
         }
         _client = new RawClient(clientOptions);
         Dummy = new DummyClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public DummyClient Dummy { get; }
 
-    public SeedSingleUrlEnvironmentNoDefaultClient.RawAccessClient Raw { get; }
+    public SeedSingleUrlEnvironmentNoDefaultClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -27,10 +27,10 @@ public partial class System : ISystem
             }
         }
         _client = new RawClient(clientOptions);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public System.RawAccessClient Raw { get; }
+    public System.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.CreateUserAsync(
@@ -108,11 +108,11 @@ public partial class System : ISystem
         await Raw.EmptyResponseAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

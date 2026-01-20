@@ -10,10 +10,10 @@ public partial class UserClient : IUserClient
     internal UserClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public UserClient.RawAccessClient Raw { get; }
+    public UserClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.User.GetUsernameAsync(
@@ -81,11 +81,11 @@ public partial class UserClient : IUserClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

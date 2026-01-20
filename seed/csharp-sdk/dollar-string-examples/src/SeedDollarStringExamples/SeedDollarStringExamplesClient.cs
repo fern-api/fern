@@ -26,16 +26,16 @@ public partial class SeedDollarStringExamplesClient : ISeedDollarStringExamplesC
             }
         }
         _client = new RawClient(clientOptions);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public SeedDollarStringExamplesClient.RawAccessClient Raw { get; }
+    public SeedDollarStringExamplesClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

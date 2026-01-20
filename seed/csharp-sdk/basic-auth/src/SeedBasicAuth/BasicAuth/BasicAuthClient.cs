@@ -10,10 +10,10 @@ public partial class BasicAuthClient : IBasicAuthClient
     internal BasicAuthClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public BasicAuthClient.RawAccessClient Raw { get; }
+    public BasicAuthClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// GET request with basic auth scheme
@@ -48,11 +48,11 @@ public partial class BasicAuthClient : IBasicAuthClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

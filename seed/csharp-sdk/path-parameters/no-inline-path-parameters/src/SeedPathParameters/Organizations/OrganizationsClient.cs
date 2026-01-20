@@ -10,10 +10,10 @@ public partial class OrganizationsClient : IOrganizationsClient
     internal OrganizationsClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public OrganizationsClient.RawAccessClient Raw { get; }
+    public OrganizationsClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
@@ -87,11 +87,11 @@ public partial class OrganizationsClient : IOrganizationsClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

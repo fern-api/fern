@@ -10,18 +10,18 @@ public partial class V3Client : IV3Client
     {
         _client = client;
         Problem = new ProblemClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public ProblemClient Problem { get; }
 
-    public V3Client.RawAccessClient Raw { get; }
+    public V3Client.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

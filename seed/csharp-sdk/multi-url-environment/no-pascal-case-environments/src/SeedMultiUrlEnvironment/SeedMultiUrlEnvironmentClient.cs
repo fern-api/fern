@@ -29,20 +29,20 @@ public partial class SeedMultiUrlEnvironmentClient : ISeedMultiUrlEnvironmentCli
         _client = new RawClient(clientOptions);
         Ec2 = new Ec2Client(_client);
         S3 = new S3Client(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public Ec2Client Ec2 { get; }
 
     public S3Client S3 { get; }
 
-    public SeedMultiUrlEnvironmentClient.RawAccessClient Raw { get; }
+    public SeedMultiUrlEnvironmentClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -28,20 +28,20 @@ public partial class SeedMixedFileDirectoryClient : ISeedMixedFileDirectoryClien
         _client = new RawClient(clientOptions);
         Organization = new OrganizationClient(_client);
         User = new UserClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public OrganizationClient Organization { get; }
 
     public UserClient User { get; }
 
-    public SeedMixedFileDirectoryClient.RawAccessClient Raw { get; }
+    public SeedMixedFileDirectoryClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

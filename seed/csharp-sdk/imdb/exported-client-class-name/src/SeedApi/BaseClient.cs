@@ -28,18 +28,18 @@ public partial class BaseClient : IBaseClient
         }
         _client = new RawClient(clientOptions);
         Imdb = new ImdbClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public ImdbClient Imdb { get; }
 
-    public BaseClient.RawAccessClient Raw { get; }
+    public BaseClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

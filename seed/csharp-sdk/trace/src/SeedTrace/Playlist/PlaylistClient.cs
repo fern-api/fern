@@ -10,10 +10,10 @@ public partial class PlaylistClient : IPlaylistClient
     internal PlaylistClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public PlaylistClient.RawAccessClient Raw { get; }
+    public PlaylistClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// Create a new playlist
@@ -151,11 +151,11 @@ public partial class PlaylistClient : IPlaylistClient
         await Raw.DeletePlaylistAsync(serviceParam, playlistId, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

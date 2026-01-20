@@ -9,10 +9,10 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
     internal ReqWithHeadersClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public ReqWithHeadersClient.RawAccessClient Raw { get; }
+    public ReqWithHeadersClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
@@ -33,11 +33,11 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
         await Raw.GetWithCustomHeaderAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

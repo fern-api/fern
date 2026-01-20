@@ -41,7 +41,7 @@ public partial class SeedLiteralClient : ISeedLiteralClient
         Path = new PathClient(_client);
         Query = new QueryClient(_client);
         Reference = new ReferenceClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public HeadersClient Headers { get; }
@@ -54,13 +54,13 @@ public partial class SeedLiteralClient : ISeedLiteralClient
 
     public ReferenceClient Reference { get; }
 
-    public SeedLiteralClient.RawAccessClient Raw { get; }
+    public SeedLiteralClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

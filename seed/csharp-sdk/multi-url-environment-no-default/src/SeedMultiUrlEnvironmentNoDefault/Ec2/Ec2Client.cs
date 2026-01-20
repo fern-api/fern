@@ -9,10 +9,10 @@ public partial class Ec2Client : IEc2Client
     internal Ec2Client(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public Ec2Client.RawAccessClient Raw { get; }
+    public Ec2Client.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
@@ -26,11 +26,11 @@ public partial class Ec2Client : IEc2Client
         await Raw.BootInstanceAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

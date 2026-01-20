@@ -10,10 +10,10 @@ public partial class SyspropClient : ISyspropClient
     internal SyspropClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public SyspropClient.RawAccessClient Raw { get; }
+    public SyspropClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
@@ -40,11 +40,11 @@ public partial class SyspropClient : ISyspropClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

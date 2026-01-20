@@ -10,10 +10,10 @@ public partial class PathParamClient : IPathParamClient
     internal PathParamClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public PathParamClient.RawAccessClient Raw { get; }
+    public PathParamClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
@@ -28,11 +28,11 @@ public partial class PathParamClient : IPathParamClient
         await Raw.SendAsync(operand, operandOrColor, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

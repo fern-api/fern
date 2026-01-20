@@ -9,10 +9,10 @@ public partial class PackageClient : IPackageClient
     internal PackageClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public PackageClient.RawAccessClient Raw { get; }
+    public PackageClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Package.TestAsync(new TestRequest { For = "for" });
@@ -26,11 +26,11 @@ public partial class PackageClient : IPackageClient
         await Raw.TestAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

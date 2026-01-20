@@ -27,10 +27,10 @@ public partial class SeedValidationClient : ISeedValidationClient
             }
         }
         _client = new RawClient(clientOptions);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public SeedValidationClient.RawAccessClient Raw { get; }
+    public SeedValidationClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.CreateAsync(
@@ -73,11 +73,11 @@ public partial class SeedValidationClient : ISeedValidationClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

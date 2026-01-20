@@ -10,10 +10,10 @@ public partial class InlinedClient : IInlinedClient
     internal InlinedClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public InlinedClient.RawAccessClient Raw { get; }
+    public InlinedClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Inlined.SendAsync(
@@ -43,11 +43,11 @@ public partial class InlinedClient : IInlinedClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

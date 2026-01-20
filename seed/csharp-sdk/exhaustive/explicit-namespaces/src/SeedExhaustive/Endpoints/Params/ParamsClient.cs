@@ -11,10 +11,10 @@ public partial class ParamsClient : IParamsClient
     internal ParamsClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public ParamsClient.RawAccessClient Raw { get; }
+    public ParamsClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// GET with path param
@@ -151,11 +151,11 @@ public partial class ParamsClient : IParamsClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

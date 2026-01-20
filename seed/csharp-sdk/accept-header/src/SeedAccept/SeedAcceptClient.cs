@@ -28,18 +28,18 @@ public partial class SeedAcceptClient : ISeedAcceptClient
         }
         _client = new RawClient(clientOptions);
         Service = new ServiceClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public ServiceClient Service { get; }
 
-    public SeedAcceptClient.RawAccessClient Raw { get; }
+    public SeedAcceptClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

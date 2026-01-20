@@ -10,10 +10,10 @@ public partial class BigunionClient : IBigunionClient
     internal BigunionClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public BigunionClient.RawAccessClient Raw { get; }
+    public BigunionClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Bigunion.GetAsync("id");
@@ -60,11 +60,11 @@ public partial class BigunionClient : IBigunionClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

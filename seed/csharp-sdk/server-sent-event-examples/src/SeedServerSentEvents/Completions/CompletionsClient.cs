@@ -10,10 +10,10 @@ public partial class CompletionsClient : ICompletionsClient
     internal CompletionsClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public CompletionsClient.RawAccessClient Raw { get; }
+    public CompletionsClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
@@ -77,11 +77,11 @@ public partial class CompletionsClient : ICompletionsClient
         }
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

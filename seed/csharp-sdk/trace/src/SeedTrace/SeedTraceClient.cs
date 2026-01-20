@@ -41,7 +41,7 @@ public partial class SeedTraceClient : ISeedTraceClient
         Problem = new ProblemClient(_client);
         Submission = new SubmissionClient(_client);
         Sysprop = new SyspropClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public V2Client V2 { get; }
@@ -60,13 +60,13 @@ public partial class SeedTraceClient : ISeedTraceClient
 
     public SyspropClient Sysprop { get; }
 
-    public SeedTraceClient.RawAccessClient Raw { get; }
+    public SeedTraceClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

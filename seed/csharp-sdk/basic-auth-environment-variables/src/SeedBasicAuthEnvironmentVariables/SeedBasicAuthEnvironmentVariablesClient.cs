@@ -40,23 +40,23 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
         }
         _client = new RawClient(clientOptions);
         BasicAuth = new BasicAuthClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public BasicAuthClient BasicAuth { get; }
 
-    public SeedBasicAuthEnvironmentVariablesClient.RawAccessClient Raw { get; }
+    public SeedBasicAuthEnvironmentVariablesClient.WithRawResponseClient Raw { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {
         return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

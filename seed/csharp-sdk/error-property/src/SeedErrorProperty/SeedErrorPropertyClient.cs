@@ -27,18 +27,18 @@ public partial class SeedErrorPropertyClient : ISeedErrorPropertyClient
         }
         _client = new RawClient(clientOptions);
         PropertyBasedError = new PropertyBasedErrorClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public PropertyBasedErrorClient PropertyBasedError { get; }
 
-    public SeedErrorPropertyClient.RawAccessClient Raw { get; }
+    public SeedErrorPropertyClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

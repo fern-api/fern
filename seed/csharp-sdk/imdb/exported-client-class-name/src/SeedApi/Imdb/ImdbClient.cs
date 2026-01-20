@@ -10,10 +10,10 @@ public partial class ImdbClient : IImdbClient
     internal ImdbClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public ImdbClient.RawAccessClient Raw { get; }
+    public ImdbClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// Add a movie to the database using the movies/* /... path.
@@ -44,11 +44,11 @@ public partial class ImdbClient : IImdbClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

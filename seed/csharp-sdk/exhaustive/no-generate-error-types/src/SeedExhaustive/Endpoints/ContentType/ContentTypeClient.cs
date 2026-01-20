@@ -11,10 +11,10 @@ public partial class ContentTypeClient : IContentTypeClient
     internal ContentTypeClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public ContentTypeClient.RawAccessClient Raw { get; }
+    public ContentTypeClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
@@ -74,11 +74,11 @@ public partial class ContentTypeClient : IContentTypeClient
         await Raw.PostJsonPatchContentWithCharsetTypeAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

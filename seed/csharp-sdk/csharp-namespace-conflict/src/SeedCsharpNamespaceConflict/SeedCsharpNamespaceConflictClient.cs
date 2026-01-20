@@ -27,18 +27,18 @@ public partial class SeedCsharpNamespaceConflictClient : ISeedCsharpNamespaceCon
         }
         _client = new RawClient(clientOptions);
         Tasktest = new TasktestClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public TasktestClient Tasktest { get; }
 
-    public SeedCsharpNamespaceConflictClient.RawAccessClient Raw { get; }
+    public SeedCsharpNamespaceConflictClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

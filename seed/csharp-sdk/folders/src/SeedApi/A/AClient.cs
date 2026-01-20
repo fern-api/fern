@@ -13,20 +13,20 @@ public partial class AClient : IAClient
         _client = client;
         B = new BClient(_client);
         C = new CClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public BClient B { get; }
 
     public CClient C { get; }
 
-    public AClient.RawAccessClient Raw { get; }
+    public AClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

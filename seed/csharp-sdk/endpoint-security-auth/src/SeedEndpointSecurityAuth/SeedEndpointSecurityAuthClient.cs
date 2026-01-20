@@ -75,25 +75,25 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
         User = new UserClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public AuthClient Auth { get; }
 
     public UserClient User { get; }
 
-    public SeedEndpointSecurityAuthClient.RawAccessClient Raw { get; }
+    public SeedEndpointSecurityAuthClient.WithRawResponseClient Raw { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {
         return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

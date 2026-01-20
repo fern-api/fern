@@ -14,7 +14,7 @@ public partial class ContainerClient : IContainerClient
         try
         {
             _client = client;
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -23,7 +23,7 @@ public partial class ContainerClient : IContainerClient
         }
     }
 
-    public ContainerClient.RawAccessClient Raw { get; }
+    public ContainerClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
@@ -205,11 +205,11 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

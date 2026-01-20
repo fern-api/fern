@@ -30,14 +30,14 @@ public partial class SeedApiClient : ISeedApiClient
         _client = new RawClient(clientOptions);
         A = new AClient(_client);
         Folder = new FolderClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public AClient A { get; }
 
     public FolderClient Folder { get; }
 
-    public SeedApiClient.RawAccessClient Raw { get; }
+    public SeedApiClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.FooAsync();
@@ -50,11 +50,11 @@ public partial class SeedApiClient : ISeedApiClient
         await Raw.FooAsync(options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

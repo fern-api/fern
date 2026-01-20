@@ -11,10 +11,10 @@ public partial class ProblemClient : IProblemClient
     internal ProblemClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public ProblemClient.RawAccessClient Raw { get; }
+    public ProblemClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// Returns lightweight versions of all problems
@@ -84,11 +84,11 @@ public partial class ProblemClient : IProblemClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

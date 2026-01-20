@@ -9,10 +9,10 @@ public partial class ServiceClient : IServiceClient
     internal ServiceClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public ServiceClient.RawAccessClient Raw { get; }
+    public ServiceClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Service.PatchAsync(
@@ -145,11 +145,11 @@ public partial class ServiceClient : IServiceClient
         await Raw.RegularPatchAsync(id, request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

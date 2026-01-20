@@ -26,10 +26,10 @@ public partial class SeedExtendsClient : ISeedExtendsClient
             }
         }
         _client = new RawClient(clientOptions);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public SeedExtendsClient.RawAccessClient Raw { get; }
+    public SeedExtendsClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.ExtendedInlineRequestBodyAsync(
@@ -50,11 +50,11 @@ public partial class SeedExtendsClient : ISeedExtendsClient
         await Raw.ExtendedInlineRequestBodyAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

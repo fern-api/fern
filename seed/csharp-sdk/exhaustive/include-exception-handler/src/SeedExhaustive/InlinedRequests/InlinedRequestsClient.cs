@@ -13,7 +13,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
         try
         {
             _client = client;
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -22,7 +22,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
         }
     }
 
-    public InlinedRequestsClient.RawAccessClient Raw { get; }
+    public InlinedRequestsClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// POST with custom object in request body, response is an object
@@ -71,11 +71,11 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
             .ConfigureAwait(false);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

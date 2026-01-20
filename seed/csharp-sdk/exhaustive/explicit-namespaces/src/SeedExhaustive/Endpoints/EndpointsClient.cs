@@ -26,7 +26,7 @@ public partial class EndpointsClient : IEndpointsClient
         Put = new PutClient(_client);
         Union = new SeedExhaustive.Endpoints.Union.UnionClient(_client);
         Urls = new UrlsClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public ContainerClient Container { get; }
@@ -49,13 +49,13 @@ public partial class EndpointsClient : IEndpointsClient
 
     public UrlsClient Urls { get; }
 
-    public EndpointsClient.RawAccessClient Raw { get; }
+    public EndpointsClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

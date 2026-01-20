@@ -10,10 +10,10 @@ public partial class BClient : IBClient
     internal BClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public BClient.RawAccessClient Raw { get; }
+    public BClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.A.B.FooAsync();
@@ -26,11 +26,11 @@ public partial class BClient : IBClient
         await Raw.FooAsync(options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -27,18 +27,18 @@ public partial class SeedNurseryApiClient : ISeedNurseryApiClient
         }
         _client = new RawClient(clientOptions);
         Package = new PackageClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public PackageClient Package { get; }
 
-    public SeedNurseryApiClient.RawAccessClient Raw { get; }
+    public SeedNurseryApiClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

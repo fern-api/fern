@@ -36,7 +36,7 @@ public partial class SeedPaginationClient : ISeedPaginationClient
             Complex = new ComplexClient(_client);
             InlineUsers = new InlineUsersClient(_client);
             Users = new UsersClient(_client);
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -52,13 +52,13 @@ public partial class SeedPaginationClient : ISeedPaginationClient
 
     public UsersClient Users { get; }
 
-    public SeedPaginationClient.RawAccessClient Raw { get; }
+    public SeedPaginationClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

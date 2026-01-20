@@ -9,10 +9,10 @@ public partial class EmptyClient : IEmptyClient
     internal EmptyClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public EmptyClient.RawAccessClient Raw { get; }
+    public EmptyClient.WithRawResponseClient Raw { get; }
 
     public EmptyRealtimeApi CreateEmptyRealtimeApi()
     {
@@ -24,11 +24,11 @@ public partial class EmptyClient : IEmptyClient
         return new EmptyRealtimeApi(options);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

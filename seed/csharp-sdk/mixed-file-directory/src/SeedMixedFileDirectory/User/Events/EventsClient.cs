@@ -13,12 +13,12 @@ public partial class EventsClient : IEventsClient
     {
         _client = client;
         Metadata = new MetadataClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public MetadataClient Metadata { get; }
 
-    public EventsClient.RawAccessClient Raw { get; }
+    public EventsClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// List all user events.
@@ -36,11 +36,11 @@ public partial class EventsClient : IEventsClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

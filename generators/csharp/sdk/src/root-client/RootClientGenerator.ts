@@ -447,7 +447,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    innerWriter.writeLine("Raw = new RawAccessClient(_client);");
+                    innerWriter.writeLine("Raw = new WithRawResponseClient(_client);");
                 };
 
                 if (this.settings.includeExceptionHandler) {
@@ -813,14 +813,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private generateRawAccessClient(class_: ast.Class) {
         const rawAccessClientReference = this.csharp.classReference({
-            name: "RawAccessClient",
+            name: "WithRawResponseClient",
             enclosingType: class_.reference
         });
+
+        // Check if any subpackage has the name "Raw" to avoid naming collision
+        const hasRawSubpackage = this.getSubpackages().some((subpackage) => {
+            const propertyName = this.model.getPropertyNameFor(subpackage);
+            return propertyName === "Raw";
+        });
+
+        const rawPropertyName = hasRawSubpackage ? "Raw_" : "Raw";
 
         class_.addField({
             access: ast.Access.Public,
             get: true,
-            origin: class_.explicit("Raw"),
+            origin: class_.explicit(rawPropertyName),
             type: rawAccessClientReference
         });
 

@@ -27,10 +27,10 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
             }
         }
         _client = new RawClient(clientOptions);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public SeedPropertyAccessClient.RawAccessClient Raw { get; }
+    public SeedPropertyAccessClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.CreateUserAsync(
@@ -58,11 +58,11 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

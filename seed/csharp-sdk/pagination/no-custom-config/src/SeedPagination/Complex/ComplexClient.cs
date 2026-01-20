@@ -10,10 +10,10 @@ public partial class ComplexClient : IComplexClient
     internal ComplexClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public ComplexClient.RawAccessClient Raw { get; }
+    public ComplexClient.WithRawResponseClient Raw { get; }
 
     private async Task<PaginatedConversationResponse> SearchInternalAsync(
         string index,
@@ -77,11 +77,11 @@ public partial class ComplexClient : IComplexClient
         return pager;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

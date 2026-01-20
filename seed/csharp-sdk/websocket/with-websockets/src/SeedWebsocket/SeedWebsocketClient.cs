@@ -28,23 +28,23 @@ public partial class SeedWebsocketClient : ISeedWebsocketClient
         }
         _client = new RawClient(clientOptions);
         Empty = new EmptyClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public EmptyClient Empty { get; }
 
-    public SeedWebsocketClient.RawAccessClient Raw { get; }
+    public SeedWebsocketClient.WithRawResponseClient Raw { get; }
 
     public RealtimeApi CreateRealtimeApi(RealtimeApi.Options options)
     {
         return new RealtimeApi(options);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -10,10 +10,10 @@ public partial class HomepageClient : IHomepageClient
     internal HomepageClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public HomepageClient.RawAccessClient Raw { get; }
+    public HomepageClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Homepage.GetHomepageProblemsAsync();
@@ -39,11 +39,11 @@ public partial class HomepageClient : IHomepageClient
         await Raw.SetHomepageProblemsAsync(request, options, cancellationToken);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

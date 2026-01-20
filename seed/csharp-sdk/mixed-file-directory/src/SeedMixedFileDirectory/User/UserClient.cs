@@ -12,12 +12,12 @@ public partial class UserClient : IUserClient
     {
         _client = client;
         Events = new EventsClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public EventsClient Events { get; }
 
-    public UserClient.RawAccessClient Raw { get; }
+    public UserClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// List all users.
@@ -35,11 +35,11 @@ public partial class UserClient : IUserClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -11,10 +11,10 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
     internal InlinedRequestsClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public InlinedRequestsClient.RawAccessClient Raw { get; }
+    public InlinedRequestsClient.WithRawResponseClient Raw { get; }
 
     /// <summary>
     /// POST with custom object in request body, response is an object
@@ -58,11 +58,11 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

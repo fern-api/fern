@@ -11,10 +11,10 @@ public partial class PutClient : IPutClient
     internal PutClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public PutClient.RawAccessClient Raw { get; }
+    public PutClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Endpoints.Put.AddAsync(new PutRequest { Id = "id" });
@@ -29,11 +29,11 @@ public partial class PutClient : IPutClient
         return response.Data;
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

@@ -31,7 +31,7 @@ public partial class SeedCrossPackageTypeNamesClient : ISeedCrossPackageTypeName
         FolderA = new FolderAClient(_client);
         FolderD = new FolderDClient(_client);
         Foo = new FooClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public FolderAClient FolderA { get; }
@@ -40,13 +40,13 @@ public partial class SeedCrossPackageTypeNamesClient : ISeedCrossPackageTypeName
 
     public FooClient Foo { get; }
 
-    public SeedCrossPackageTypeNamesClient.RawAccessClient Raw { get; }
+    public SeedCrossPackageTypeNamesClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

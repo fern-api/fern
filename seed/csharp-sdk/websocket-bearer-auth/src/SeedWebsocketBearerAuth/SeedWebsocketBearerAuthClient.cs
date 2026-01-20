@@ -31,21 +31,21 @@ public partial class SeedWebsocketBearerAuthClient : ISeedWebsocketBearerAuthCli
             }
         }
         _client = new RawClient(clientOptions);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public SeedWebsocketBearerAuthClient.RawAccessClient Raw { get; }
+    public SeedWebsocketBearerAuthClient.WithRawResponseClient Raw { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {
         return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

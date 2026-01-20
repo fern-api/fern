@@ -12,7 +12,7 @@ public partial class DataserviceClient : IDataserviceClient
         try
         {
             _client = client;
-            Raw = new RawAccessClient(_client);
+            Raw = new WithRawResponseClient(_client);
         }
         catch (Exception ex)
         {
@@ -21,7 +21,7 @@ public partial class DataserviceClient : IDataserviceClient
         }
     }
 
-    public DataserviceClient.RawAccessClient Raw { get; }
+    public DataserviceClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Dataservice.FooAsync();
@@ -40,11 +40,11 @@ public partial class DataserviceClient : IDataserviceClient
             .ConfigureAwait(false);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

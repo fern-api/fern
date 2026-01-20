@@ -47,7 +47,7 @@ public partial class SeedOauthClientCredentialsWithVariablesClient
         Nested = new NestedClient(_client);
         Service = new ServiceClient(_client);
         Simple = new SimpleClient(_client);
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
     public AuthClient Auth { get; }
@@ -60,13 +60,13 @@ public partial class SeedOauthClientCredentialsWithVariablesClient
 
     public SimpleClient Simple { get; }
 
-    public SeedOauthClientCredentialsWithVariablesClient.RawAccessClient Raw { get; }
+    public SeedOauthClientCredentialsWithVariablesClient.WithRawResponseClient Raw { get; }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }

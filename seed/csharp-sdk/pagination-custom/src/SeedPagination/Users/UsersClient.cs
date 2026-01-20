@@ -10,10 +10,10 @@ public partial class UsersClient : IUsersClient
     internal UsersClient(RawClient client)
     {
         _client = client;
-        Raw = new RawAccessClient(_client);
+        Raw = new WithRawResponseClient(_client);
     }
 
-    public UsersClient.RawAccessClient Raw { get; }
+    public UsersClient.WithRawResponseClient Raw { get; }
 
     /// <example><code>
     /// await client.Users.ListUsernamesCustomAsync(
@@ -77,11 +77,11 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
     }
 
-    public partial class RawAccessClient
+    public partial class WithRawResponseClient
     {
         private readonly RawClient _client;
 
-        internal RawAccessClient(RawClient client)
+        internal WithRawResponseClient(RawClient client)
         {
             _client = client;
         }
