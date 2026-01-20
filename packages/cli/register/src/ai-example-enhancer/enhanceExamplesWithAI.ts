@@ -56,7 +56,16 @@ class ConcurrentEndpointProcessor {
     private readonly maxConcurrency: number;
     private activeRequests = new Map<string, QueuedRequest>();
     private pendingQueue: Array<() => Promise<ProcessingResult>> = [];
-    private results = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
+    private results = new Map<
+        string,
+        {
+            enhancedReq?: unknown;
+            enhancedRes?: unknown;
+            extractedHeaders?: Record<string, unknown>;
+            extractedPathParams?: Record<string, unknown>;
+            extractedQueryParams?: Record<string, unknown>;
+        }
+    >();
     private stats: ConcurrencyStats = { pending: 0, active: 0, completed: 0, failed: 0, totalStarted: 0 };
     private completedSinceLastCallback: ProcessingResult[] = [];
 
@@ -67,9 +76,18 @@ class ConcurrentEndpointProcessor {
         this.maxConcurrency = maxConcurrency;
     }
 
-    public async processAll(
-        workItems: Array<() => Promise<ProcessingResult>>
-    ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
+    public async processAll(workItems: Array<() => Promise<ProcessingResult>>): Promise<
+        Map<
+            string,
+            {
+                enhancedReq?: unknown;
+                enhancedRes?: unknown;
+                extractedHeaders?: Record<string, unknown>;
+                extractedPathParams?: Record<string, unknown>;
+                extractedQueryParams?: Record<string, unknown>;
+            }
+        >
+    > {
         this.pendingQueue = [...workItems];
         this.stats.pending = this.pendingQueue.length;
         this.stats.totalStarted = this.pendingQueue.length;
@@ -134,7 +152,10 @@ class ConcurrentEndpointProcessor {
             this.stats.completed++;
             this.results.set(result.endpointKey, {
                 enhancedReq: result.enhancedReq,
-                enhancedRes: result.enhancedRes
+                enhancedRes: result.enhancedRes,
+                extractedHeaders: result.extractedHeaders,
+                extractedPathParams: result.extractedPathParams,
+                extractedQueryParams: result.extractedQueryParams
             });
         } else {
             this.stats.failed++;
@@ -774,7 +795,18 @@ async function processEndpointsConcurrently(
     statusId?: string,
     apiStats?: { count: number; total: number },
     circuitBreaker?: CircuitBreaker
-): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
+): Promise<
+    Map<
+        string,
+        {
+            enhancedReq?: unknown;
+            enhancedRes?: unknown;
+            extractedHeaders?: Record<string, unknown>;
+            extractedPathParams?: Record<string, unknown>;
+            extractedQueryParams?: Record<string, unknown>;
+        }
+    >
+> {
     // Process endpoints using rolling window queue instead of blocking chunks
     const maxConcurrentRequests = parseInt(process.env.FERN_AI_MAX_CONCURRENT || "25", 10);
 
@@ -864,6 +896,9 @@ async function processEndpointsConcurrently(
                         endpointKey: result.endpointKey,
                         enhancedReq: result.enhancedReq,
                         enhancedRes: result.enhancedRes,
+                        extractedHeaders: result.extractedHeaders,
+                        extractedPathParams: result.extractedPathParams,
+                        extractedQueryParams: result.extractedQueryParams,
                         success: true
                     };
                 } else {
