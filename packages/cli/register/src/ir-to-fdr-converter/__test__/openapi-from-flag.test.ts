@@ -2628,7 +2628,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/min-max-values-ir.snap");
     });
 
-    it("should handle OpenAPI with summary field in overrides", async () => {
+    it("should capture baseline for OpenAPI summary field processing", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(
