@@ -913,7 +913,7 @@
           "availability": undefined,
           "basePath": undefined,
           "baseUrl": "Production server",
-          "displayName": "List all payments",
+          "displayName": "List payments (main spec summary - no override)",
           "docs": "List all payments",
           "errors": [],
           "fullPath": {

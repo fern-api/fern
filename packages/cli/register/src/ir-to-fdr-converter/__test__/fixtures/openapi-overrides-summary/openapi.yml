@@ -12,6 +12,7 @@ paths:
   /authorize:
     post:
       operationId: authorize
+      summary: Authorize (main spec summary)
       description: Obtain an access token using client credentials
       security: []
       tags:
@@ -63,6 +64,7 @@ paths:
   /payments:
     get:
       operationId: listPayments
+      summary: List payments (main spec summary - no override)
       description: List all payments
       responses:
         '200':
@@ -75,6 +77,7 @@ paths:
                   $ref: '#/components/schemas/Payment'
     post:
       operationId: createPayment
+      summary: Create payment (main spec summary - will be overridden)
       description: Create a new payment
       requestBody:
         required: true

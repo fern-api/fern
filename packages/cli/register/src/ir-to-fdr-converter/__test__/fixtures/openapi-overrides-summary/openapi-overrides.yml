@@ -19,7 +19,6 @@ paths:
 
   /payments:
     get:
-      summary: List all payments
       x-fern-sdk-group-name:
         - cardPayments
         - payments

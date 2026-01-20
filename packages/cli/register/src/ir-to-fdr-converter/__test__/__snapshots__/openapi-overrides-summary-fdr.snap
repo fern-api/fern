@@ -393,7 +393,7 @@
           "includeInApiExplorer": undefined,
           "method": "GET",
           "multiAuth": undefined,
-          "name": "List all payments",
+          "name": "List payments (main spec summary - no override)",
           "originalEndpointId": "endpoint_cardPayments/payments.list",
           "path": {
             "parts": [
