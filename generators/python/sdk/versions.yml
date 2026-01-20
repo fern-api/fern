@@ -8,9 +8,6 @@
         This is useful when `.fernignore` preserves directories (like `legacy/` or `tests/integration/`)
         that contain code incompatible with the generated SDK.
       type: feat
-    - summary: |
-        Fix SyntaxWarning for invalid escape sequence in generator's own docstring (Python 3.12+).
-      type: fix
   createdAt: "2026-01-20"
   irVersion: 62
 
