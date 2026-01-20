@@ -8,14 +8,14 @@ import * as core from "../../../../core";
 
 export const ListType: core.serialization.ObjectSchema<serializers.ListType.Raw, FernIr.ListType> =
     core.serialization.objectWithoutOptionalProperties({
-        itemType: core.serialization.lazy(() => serializers.TypeReference),
+        list: core.serialization.lazy(() => serializers.TypeReference),
         minItems: core.serialization.number().optional(),
         maxItems: core.serialization.number().optional(),
     });
 
 export declare namespace ListType {
     export interface Raw {
-        itemType: serializers.TypeReference.Raw;
+        list: serializers.TypeReference.Raw;
         minItems?: number | null;
         maxItems?: number | null;
     }

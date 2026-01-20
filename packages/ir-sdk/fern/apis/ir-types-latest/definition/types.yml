@@ -223,13 +223,13 @@ types:
 
   ListType:
     properties:
-      itemType: TypeReference
+      list: TypeReference
       minItems: optional<integer>
       maxItems: optional<integer>
 
   SetType:
     properties:
-      itemType: TypeReference
+      set: TypeReference
       minItems: optional<integer>
       maxItems: optional<integer>
 

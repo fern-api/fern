@@ -5,7 +5,7 @@
 import * as FernIr from "../../../index";
 
 export interface ListType {
-    itemType: FernIr.TypeReference;
+    list: FernIr.TypeReference;
     minItems: number | undefined;
     maxItems: number | undefined;
 }

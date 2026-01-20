@@ -33,7 +33,7 @@ export function generateContainerExample({
         case "list": {
             const example = generateTypeReferenceExample({
                 fieldName,
-                typeReference: containerType.itemType,
+                typeReference: containerType.list,
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
@@ -46,7 +46,7 @@ export function generateContainerExample({
                 type: "success",
                 example: ExampleContainer.list({
                     list: [example.example, example.example],
-                    itemType: containerType.itemType
+                    itemType: containerType.list
                 }),
                 jsonExample: [example.jsonExample, example.jsonExample]
             };
@@ -124,7 +124,7 @@ export function generateContainerExample({
         case "set": {
             const example = generateTypeReferenceExample({
                 fieldName,
-                typeReference: containerType.itemType,
+                typeReference: containerType.set,
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
@@ -137,7 +137,7 @@ export function generateContainerExample({
                 type: "success",
                 example: ExampleContainer.set({
                     set: [example.example],
-                    itemType: containerType.itemType
+                    itemType: containerType.set
                 }),
                 jsonExample: [example.jsonExample]
             };
@@ -195,7 +195,7 @@ export function generateEmptyContainerExample({
                 type: "success",
                 example: ExampleContainer.list({
                     list: [],
-                    itemType: containerType.itemType
+                    itemType: containerType.list
                 }),
                 jsonExample: []
             };
@@ -246,7 +246,7 @@ export function generateEmptyContainerExample({
                 type: "success",
                 example: ExampleContainer.set({
                     set: [],
-                    itemType: containerType.itemType
+                    itemType: containerType.set
                 }),
                 jsonExample: []
             };

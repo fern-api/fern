@@ -5,7 +5,7 @@
 import * as FernIr from "../../../index";
 
 export interface SetType {
-    itemType: FernIr.TypeReference;
+    set: FernIr.TypeReference;
     minItems: number | undefined;
     maxItems: number | undefined;
 }

@@ -134,7 +134,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 list: (listType) => {
                     return {
                         type: "list",
-                        itemType: convertTypeReference(listType.itemType),
+                        itemType: convertTypeReference(listType.list),
                         minItems: listType.minItems,
                         maxItems: listType.maxItems
                     };
@@ -164,7 +164,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 set: (setType) => {
                     return {
                         type: "set",
-                        itemType: convertTypeReference(setType.itemType),
+                        itemType: convertTypeReference(setType.set),
                         minItems: setType.minItems,
                         maxItems: setType.maxItems
                     };

@@ -8,14 +8,14 @@ import * as core from "../../../../core";
 
 export const SetType: core.serialization.ObjectSchema<serializers.SetType.Raw, FernIr.SetType> =
     core.serialization.objectWithoutOptionalProperties({
-        itemType: core.serialization.lazy(() => serializers.TypeReference),
+        set: core.serialization.lazy(() => serializers.TypeReference),
         minItems: core.serialization.number().optional(),
         maxItems: core.serialization.number().optional(),
     });
 
 export declare namespace SetType {
     export interface Raw {
-        itemType: serializers.TypeReference.Raw;
+        set: serializers.TypeReference.Raw;
         minItems?: number | null;
         maxItems?: number | null;
     }

@@ -27,11 +27,11 @@ export function parseInlineType({ type, file, _default, validation }: parseInlin
                 ),
             list: (valueType) =>
                 TypeReference.container(
-                    ContainerType.list({ itemType: valueType, minItems: undefined, maxItems: undefined })
+                    ContainerType.list({ list: valueType, minItems: undefined, maxItems: undefined })
                 ),
             set: (valueType) =>
                 TypeReference.container(
-                    ContainerType.set({ itemType: valueType, minItems: undefined, maxItems: undefined })
+                    ContainerType.set({ set: valueType, minItems: undefined, maxItems: undefined })
                 ),
             optional: (valueType) => TypeReference.container(ContainerType.optional(valueType)),
             nullable: (valueType) => TypeReference.container(ContainerType.nullable(valueType)),

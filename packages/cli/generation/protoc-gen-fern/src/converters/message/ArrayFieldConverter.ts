@@ -23,7 +23,7 @@ export declare namespace ArrayFieldConverter {
 export class ArrayFieldConverter extends AbstractConverter<ProtofileConverterContext, ArrayFieldConverter.Output> {
     private static LIST_UNKNOWN = TypeReference.container(
         ContainerType.list({
-            itemType: TypeReference.unknown(),
+            list: TypeReference.unknown(),
             minItems: undefined,
             maxItems: undefined
         })
@@ -56,7 +56,7 @@ export class ArrayFieldConverter extends AbstractConverter<ProtofileConverterCon
                 return {
                     typeReference: TypeReference.container(
                         ContainerType.list({
-                            itemType: convertedField.type,
+                            list: convertedField.type,
                             minItems: undefined,
                             maxItems: undefined
                         })

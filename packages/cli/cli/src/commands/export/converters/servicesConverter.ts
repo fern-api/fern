@@ -649,7 +649,7 @@ function convertQueryParameter({
             ? convertTypeReference(
                   TypeReference.container(
                       ContainerType.list({
-                          itemType: queryParameter.valueType,
+                          list: queryParameter.valueType,
                           minItems: undefined,
                           maxItems: undefined
                       })

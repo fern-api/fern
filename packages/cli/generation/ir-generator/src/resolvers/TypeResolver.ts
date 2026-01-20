@@ -167,7 +167,7 @@ export class TypeResolverImpl implements TypeResolver {
                               },
                               originalTypeReference: TypeReference.container(
                                   ContainerType.list({
-                                      itemType: itemType.originalTypeReference,
+                                      list: itemType.originalTypeReference,
                                       minItems: undefined,
                                       maxItems: undefined
                                   })
@@ -210,7 +210,7 @@ export class TypeResolverImpl implements TypeResolver {
                               },
                               originalTypeReference: TypeReference.container(
                                   ContainerType.set({
-                                      itemType: itemType.originalTypeReference,
+                                      set: itemType.originalTypeReference,
                                       minItems: undefined,
                                       maxItems: undefined
                                   })

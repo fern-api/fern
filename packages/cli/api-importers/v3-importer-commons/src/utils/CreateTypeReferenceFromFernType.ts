@@ -125,7 +125,7 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 }
                 return FernIr.TypeReference.container(
                     FernIr.ContainerType.list({
-                        itemType,
+                        list: itemType,
                         minItems: undefined,
                         maxItems: undefined
                     })
@@ -149,7 +149,7 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 }
                 return FernIr.TypeReference.container(
                     FernIr.ContainerType.set({
-                        itemType,
+                        set: itemType,
                         minItems: undefined,
                         maxItems: undefined
                     })
