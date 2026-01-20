@@ -1,0 +1,32 @@
+# This file manages overrides for various Fern generators
+# Testing the summary field in OpenAPI overrides
+
+paths:
+  /authorize:
+    post:
+      summary: Request an access token
+      x-fern-sdk-group-name:
+        - auth
+      x-fern-sdk-method-name: retrieveToken
+
+  /contacts/{contactId}:
+    get:
+      summary: Retrieve a contact
+      x-fern-sdk-group-name:
+        - boarding
+        - contacts
+      x-fern-sdk-method-name: retrieve
+
+  /payments:
+    get:
+      summary: List all payments
+      x-fern-sdk-group-name:
+        - cardPayments
+        - payments
+      x-fern-sdk-method-name: list
+    post:
+      summary: Create a new payment
+      x-fern-sdk-group-name:
+        - cardPayments
+        - payments
+      x-fern-sdk-method-name: create
