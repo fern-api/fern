@@ -39,15 +39,16 @@ export function generateRustTypeForTypeReference(
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
                     // Propagate wrapInBox to the element type
-                    const elementType = isFloatingPointType(setType.itemType)
+                    const itemType = (setType as unknown as { itemType: TypeReference }).itemType;
+                    const elementType = isFloatingPointType(itemType)
                         ? rust.Type.reference(
                               rust.reference({
                                   name: "OrderedFloat",
                                   module: "ordered_float",
-                                  genericArgs: [generateRustTypeForTypeReference(setType.itemType, context, wrapInBox)]
+                                  genericArgs: [generateRustTypeForTypeReference(itemType, context, wrapInBox)]
                               })
                           )
-                        : generateRustTypeForTypeReference(setType.itemType, context, wrapInBox);
+                        : generateRustTypeForTypeReference(itemType, context, wrapInBox);
 
                     return rust.Type.reference(
                         rust.reference({
@@ -63,7 +64,13 @@ export function generateRustTypeForTypeReference(
                 list: (listType) =>
                     // Vec is heap-allocated, but we need to Box the inner type if it's recursive
                     // This generates Vec<Box<T>> for recursive types, not Box<Vec<T>>
-                    rust.Type.vec(generateRustTypeForTypeReference(listType.itemType, context, wrapInBox)),
+                    rust.Type.vec(
+                        generateRustTypeForTypeReference(
+                            (listType as unknown as { itemType: TypeReference }).itemType,
+                            context,
+                            wrapInBox
+                        )
+                    ),
                 _other: () => {
                     // Fallback for unknown container types
                     return rust.Type.reference(
