@@ -591,6 +591,12 @@ async function startDocsRegisterFailed(
             error: JSON.stringify(error)
         }
     });
+
+    const authErrorMessage = getAuthenticationErrorMessage(error);
+    if (authErrorMessage != null) {
+        return context.failAndThrow(authErrorMessage);
+    }
+
     switch (error.error) {
         case "InvalidCustomDomainError":
             return context.failAndThrow(
@@ -601,10 +607,14 @@ async function startDocsRegisterFailed(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
         case "UnauthorizedError":
-            return context.failAndThrow("Please make sure that your FERN_TOKEN is set.");
+            return context.failAndThrow(
+                "You do not have permission to publish docs. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+                    "If you believe this is an error, please contact support@buildwithfern.com"
+            );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                "Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner."
+                "You do not belong to this organization. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+                    "If you believe this is an error, please contact support@buildwithfern.com"
             );
         case "UnavailableError":
             return context.failAndThrow(
@@ -613,6 +623,29 @@ async function startDocsRegisterFailed(
         default:
             return context.failAndThrow("Failed to publish docs.", error);
     }
+}
+
+function getAuthenticationErrorMessage(error: unknown): string | undefined {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+
+    if (content?.reason === "status-code") {
+        const statusCode = content.statusCode as number | undefined;
+        const body = content.body as string | undefined;
+
+        if (statusCode === 401 || statusCode === 403) {
+            const baseMessage =
+                "You do not have permission to publish docs. Please run 'fern login' to ensure you are logged in with the correct account.";
+            const contactMessage = "If you believe this is an error, please contact support@buildwithfern.com";
+
+            if (body != null && typeof body === "string" && body.length > 0) {
+                return `${baseMessage}\n\nDetails: ${body}\n\n${contactMessage}`;
+            }
+            return `${baseMessage}\n\n${contactMessage}`;
+        }
+    }
+
+    return undefined;
 }
 
 function parseBasePath(domain: string): string | undefined {
