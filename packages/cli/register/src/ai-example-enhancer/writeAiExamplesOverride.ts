@@ -130,9 +130,22 @@ export async function writeAiExamplesOverride({
                     }
                 }
 
-                // Unwrap FDR typed value wrappers from request body first
+                // Extract the inner value if the request body is wrapped in a "body" key
+                // The Lambda response sometimes wraps the request in { "body": { ... } }
+                let requestBodyToProcess = example.requestBody;
+                if (
+                    requestBodyToProcess !== null &&
+                    requestBodyToProcess !== undefined &&
+                    typeof requestBodyToProcess === "object" &&
+                    !Array.isArray(requestBodyToProcess) &&
+                    "body" in requestBodyToProcess
+                ) {
+                    requestBodyToProcess = (requestBodyToProcess as Record<string, unknown>).body;
+                }
+
+                // Unwrap FDR typed value wrappers from request body
                 // This converts { "file": { "type": "filename", "value": "test.wav" } } to { "file": "test.wav" }
-                const unwrappedRequestBody = unwrapExampleValue(example.requestBody);
+                const unwrappedRequestBody = unwrapExampleValue(requestBodyToProcess);
 
                 // Filter out path/query/header params from request body and extract any AI-generated values
                 // The AI model sometimes incorrectly includes these in the request body
