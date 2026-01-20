@@ -19,6 +19,9 @@ name: Create PRs to Remediate vulns
 # ============================================================
 
 on:
+  schedule:
+    # Run nightly at 8pm EST (1am UTC next day)
+    - cron: "0 1 * * *"
   workflow_dispatch: # Allow manual triggering
     inputs:
       scan_only:
@@ -30,6 +33,8 @@ on:
 jobs:
   create-dependabot-prs:
     name: Check Dependabot alerts
+    # Skip this job when triggered by cron schedule
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -392,13 +397,21 @@ jobs:
         run: |
           grype docker:java-sdk:grype-scan -o json > grype-report.json
 
+      - name: Upload grype scan results
+        uses: actions/upload-artifact@v4
+        with:
+          name: grype-scan-results-java-sdk
+          path: grype-report.json
+          retention-days: 30
+
       # ============================================================
       # IGNORED CVEs CONFIGURATION
       # Add CVEs here that have been reviewed and accepted as risks.
       # Format: One CVE ID per line in the ignored_cves input
       # ============================================================
       - name: Process vulnerabilities and create PR
-        if: ${{ inputs.scan_only != true }}
+        # Skip PR creation for cron runs (scan_only=true) or when explicitly set
+        if: ${{ github.event_name != 'schedule' && inputs.scan_only != true }}
         uses: ./.github/actions/process-grype-vulns
         with:
           container_name: java-sdk
