@@ -82,9 +82,10 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     rm glob-11.1.0.tgz
 
 # Patch npm's bundled tar to 7.5.3 to fix CVE-2026-23745 (path traversal via hardlinks/symlinks)
+# Note: We use curl instead of npm pack because npm pack depends on tar itself
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     rm -rf tar && \
-    npm pack tar@7.5.3 && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.3.tgz -o tar-7.5.3.tgz && \
     tar -xzf tar-7.5.3.tgz && \
     mv package tar && \
     rm tar-7.5.3.tgz
