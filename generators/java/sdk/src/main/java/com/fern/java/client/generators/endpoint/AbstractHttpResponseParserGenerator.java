@@ -118,7 +118,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             MethodSpec endpointWithRequestOptions,
             List<String> bodyOnlyParamNames,
             ParameterSpec bodyParam,
-            String wrapperTypeName,
+            TypeName wrapperTypeName,
             String bodyPropertyName);
 
     public abstract void addBodyOnlyWithRequestOptionsReturnStatement(
@@ -126,7 +126,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             MethodSpec endpointWithRequestOptions,
             List<String> bodyOnlyWithRequestOptionsParamNames,
             ParameterSpec bodyParam,
-            String wrapperTypeName,
+            TypeName wrapperTypeName,
             String bodyPropertyName);
 
     public abstract CodeBlock getByteArrayEndpointBaseMethodBody(

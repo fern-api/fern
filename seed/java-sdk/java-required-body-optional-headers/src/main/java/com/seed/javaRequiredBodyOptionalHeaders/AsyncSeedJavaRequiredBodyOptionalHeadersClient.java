@@ -5,6 +5,7 @@ package com.seed.javaRequiredBodyOptionalHeaders;
 
 import com.seed.javaRequiredBodyOptionalHeaders.core.ClientOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.RequestOptions;
+import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserInlinedRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithOptionsRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithRequiredHeaderRequest;
@@ -178,6 +179,20 @@ public class AsyncSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<List<User>> getUsers(GetUsersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUsers(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a user with inlined body and optional header.
+     */
+    public CompletableFuture<User> createUserInlined(CreateUserInlinedRequest request) {
+        return this.rawClient.createUserInlined(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a user with inlined body and optional header.
+     */
+    public CompletableFuture<User> createUserInlined(CreateUserInlinedRequest request, RequestOptions requestOptions) {
+        return this.rawClient.createUserInlined(request, requestOptions).thenApply(response -> response.body());
     }
 
     public static AsyncSeedJavaRequiredBodyOptionalHeadersClientBuilder builder() {

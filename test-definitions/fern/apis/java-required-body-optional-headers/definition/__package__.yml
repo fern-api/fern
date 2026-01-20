@@ -91,6 +91,27 @@ service:
             docs: Maximum number of users to return
       response: list<User>
 
+    # Endpoint with inlined body and optional header - should NOT generate body-only overloads
+    # (inlined bodies don't have a standalone type)
+    createUserInlined:
+      docs: Create a user with inlined body and optional header.
+      method: POST
+      path: /users/inlined
+      request:
+        name: CreateUserInlinedRequest
+        headers:
+          X-Trace-Id:
+            type: optional<string>
+            docs: Optional trace ID for request tracing
+        body:
+          properties:
+            name: string
+            email: string
+            age:
+              type: optional<integer>
+              docs: User's age
+      response: User
+
 types:
   UserData:
     docs: User data for creation/update

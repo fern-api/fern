@@ -52,4 +52,9 @@ public class NoRequestEndpointWriterVariableNameContext extends AbstractEndpoint
     public String getBodyPropertyName() {
         return "body";
     }
+
+    @Override
+    public Optional<TypeName> getWrapperTypeName() {
+        return Optional.empty();
+    }
 }

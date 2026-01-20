@@ -5,6 +5,7 @@ package com.seed.javaRequiredBodyOptionalHeaders;
 
 import com.seed.javaRequiredBodyOptionalHeaders.core.ClientOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.RequestOptions;
+import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserInlinedRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithOptionsRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithRequiredHeaderRequest;
@@ -175,6 +176,20 @@ public class SeedJavaRequiredBodyOptionalHeadersClient {
      */
     public List<User> getUsers(GetUsersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUsers(request, requestOptions).body();
+    }
+
+    /**
+     * Create a user with inlined body and optional header.
+     */
+    public User createUserInlined(CreateUserInlinedRequest request) {
+        return this.rawClient.createUserInlined(request).body();
+    }
+
+    /**
+     * Create a user with inlined body and optional header.
+     */
+    public User createUserInlined(CreateUserInlinedRequest request, RequestOptions requestOptions) {
+        return this.rawClient.createUserInlined(request, requestOptions).body();
     }
 
     public static SeedJavaRequiredBodyOptionalHeadersClientBuilder builder() {

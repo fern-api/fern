@@ -117,4 +117,12 @@ public class OnlyRequestEndpointWriterVariableNameContext extends AbstractEndpoi
     public String getBodyPropertyName() {
         return "body";
     }
+
+    @Override
+    public Optional<TypeName> getWrapperTypeName() {
+        if (generatedWrappedRequest != null) {
+            return Optional.of(generatedWrappedRequest.getClassName());
+        }
+        return Optional.empty();
+    }
 }

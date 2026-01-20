@@ -189,6 +189,8 @@ public abstract class AbstractEndpointWriterVariableNameContext {
 
     public abstract String getBodyPropertyName();
 
+    public abstract Optional<TypeName> getWrapperTypeName();
+
     private HttpUrlBuilder.PathParamInfo convertPathParameter(PathParameter pathParameter) {
         TypeName typeName =
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParameter.getValueType());

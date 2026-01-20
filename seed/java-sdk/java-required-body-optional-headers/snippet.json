@@ -77,6 +77,19 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.GetUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.getUsers(\n            GetUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.GetUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.getUsers(\n            GetUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "ab5b2af2",
+            "id": {
+                "method": "POST",
+                "path": "/api/users/inlined",
+                "identifier_override": "endpoint_.createUserInlined"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserInlinedRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserInlined(\n            CreateUserInlinedRequest\n                .builder()\n                .name(\"name\")\n                .email(\"email\")\n                .xTraceId(\"X-Trace-Id\")\n                .age(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserInlinedRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserInlined(\n            CreateUserInlinedRequest\n                .builder()\n                .name(\"name\")\n                .email(\"email\")\n                .xTraceId(\"X-Trace-Id\")\n                .age(1)\n                .build()\n        );\n    }\n}\n"
+            }
         }
     ],
     "types": {}

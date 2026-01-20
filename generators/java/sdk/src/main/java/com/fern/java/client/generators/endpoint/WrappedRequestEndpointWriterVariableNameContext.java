@@ -103,8 +103,10 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
         if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
             GeneratedWrappedRequest.RequestBodyGetter bodyGetter =
                     generatedWrappedRequest.requestBodyGetter().get();
+            // For inlined bodies, return empty so body-only overloads are skipped
+            // (inlined bodies don't have a standalone type)
             if (bodyGetter instanceof GeneratedWrappedRequest.InlinedRequestBodyGetters) {
-                return Optional.of(generatedWrappedRequest.getClassName());
+                return Optional.empty();
             } else if (bodyGetter instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter) {
                 GeneratedWrappedRequest.ReferencedRequestBodyGetter referencedGetter =
                         (GeneratedWrappedRequest.ReferencedRequestBodyGetter) bodyGetter;
@@ -150,5 +152,10 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
             }
         }
         return "body";
+    }
+
+    @Override
+    public Optional<TypeName> getWrapperTypeName() {
+        return Optional.of(generatedWrappedRequest.getClassName());
     }
 }

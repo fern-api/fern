@@ -373,16 +373,11 @@ public abstract class AbstractEndpointWriter {
                         .getShape()
                         .visit(new SdkRequestHasRequiredBodyWithOnlyOptionalWrapperAdditions())) {
             Optional<TypeName> bodyTypeName = variables.getBodyTypeName();
-            if (bodyTypeName.isPresent()) {
+            Optional<TypeName> wrapperTypeName = variables.getWrapperTypeName();
+            if (bodyTypeName.isPresent() && wrapperTypeName.isPresent()) {
                 String bodyParamName = variables.getBodyParameterName();
                 ParameterSpec bodyParam =
                         ParameterSpec.builder(bodyTypeName.get(), bodyParamName).build();
-                String wrapperTypeName = variables
-                        .sdkRequest()
-                        .get()
-                        .getRequestParameterName()
-                        .getCamelCase()
-                        .getUnsafeName();
 
                 MethodSpec.Builder bodyOnlyMethodBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
                         .addJavadoc(endpointWithRequestOptions.javadoc)
@@ -398,7 +393,7 @@ public abstract class AbstractEndpointWriter {
                         endpointWithRequestOptions,
                         bodyOnlyParamNames,
                         bodyParam,
-                        wrapperTypeName,
+                        wrapperTypeName.get(),
                         variables.getBodyPropertyName());
                 bodyOnlyMethodSpec = bodyOnlyMethodBuilder.build();
 
@@ -428,7 +423,7 @@ public abstract class AbstractEndpointWriter {
                         endpointWithRequestOptions,
                         bodyOnlyWithRequestOptionsParamNames,
                         bodyParam,
-                        wrapperTypeName,
+                        wrapperTypeName.get(),
                         variables.getBodyPropertyName());
                 bodyOnlyWithRequestOptionsMethodSpec = bodyOnlyWithRequestOptionsMethodBuilder.build();
             }

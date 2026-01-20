@@ -450,3 +450,89 @@ client.getUsers(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.createUserInlined(request) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a user with inlined body and optional header.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.createUserInlined(
+    CreateUserInlinedRequest
+        .builder()
+        .name("name")
+        .email("email")
+        .xTraceId("X-Trace-Id")
+        .age(1)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xTraceId:** `Optional<String>` — Optional trace ID for request tracing
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**age:** `Optional<Integer>` — User's age
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

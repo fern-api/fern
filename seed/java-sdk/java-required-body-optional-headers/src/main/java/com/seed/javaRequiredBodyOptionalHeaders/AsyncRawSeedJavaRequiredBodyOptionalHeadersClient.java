@@ -12,6 +12,7 @@ import com.seed.javaRequiredBodyOptionalHeaders.core.RequestOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.SeedJavaRequiredBodyOptionalHeadersApiException;
 import com.seed.javaRequiredBodyOptionalHeaders.core.SeedJavaRequiredBodyOptionalHeadersException;
 import com.seed.javaRequiredBodyOptionalHeaders.core.SeedJavaRequiredBodyOptionalHeadersHttpResponse;
+import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserInlinedRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithOptionsRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithRequiredHeaderRequest;
@@ -45,7 +46,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
      * Create a new user. Has required body and optional header.
      */
     public CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> createUser(UserData body) {
-        return createUser(UserData.builder().body(body).build());
+        return createUser(CreateUserRequest.builder().body(body).build());
     }
 
     /**
@@ -53,7 +54,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> createUser(
             UserData body, RequestOptions requestOptions) {
-        return createUser(UserData.builder().body(body).build(), requestOptions);
+        return createUser(CreateUserRequest.builder().body(body).build(), requestOptions);
     }
 
     /**
@@ -135,7 +136,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> updateUser(
             String userId, UserData body) {
-        return updateUser(userId, UserData.builder().body(body).build());
+        return updateUser(userId, UpdateUserRequest.builder().body(body).build());
     }
 
     /**
@@ -143,7 +144,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> updateUser(
             String userId, UserData body, RequestOptions requestOptions) {
-        return updateUser(userId, UserData.builder().body(body).build(), requestOptions);
+        return updateUser(userId, UpdateUserRequest.builder().body(body).build(), requestOptions);
     }
 
     /**
@@ -226,7 +227,8 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> createUserWithOptions(
             UserData body) {
-        return createUserWithOptions(UserData.builder().body(body).build());
+        return createUserWithOptions(
+                CreateUserWithOptionsRequest.builder().body(body).build());
     }
 
     /**
@@ -234,7 +236,8 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> createUserWithOptions(
             UserData body, RequestOptions requestOptions) {
-        return createUserWithOptions(UserData.builder().body(body).build(), requestOptions);
+        return createUserWithOptions(
+                CreateUserWithOptionsRequest.builder().body(body).build(), requestOptions);
     }
 
     /**
@@ -519,6 +522,79 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBodyString, new TypeReference<List<User>>() {}),
                                 response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedJavaRequiredBodyOptionalHeadersApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedJavaRequiredBodyOptionalHeadersException(
+                            "Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedJavaRequiredBodyOptionalHeadersException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Create a user with inlined body and optional header.
+     */
+    public CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> createUserInlined(
+            CreateUserInlinedRequest request) {
+        return createUserInlined(request, null);
+    }
+
+    /**
+     * Create a user with inlined body and optional header.
+     */
+    public CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> createUserInlined(
+            CreateUserInlinedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("api")
+                .addPathSegments("users/inlined");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        if (request.getXTraceId().isPresent()) {
+            _requestBuilder.addHeader("X-Trace-Id", request.getXTraceId().get());
+        }
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedJavaRequiredBodyOptionalHeadersHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response));
                         return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

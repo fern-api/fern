@@ -103,7 +103,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec endpointWithRequestOptions,
             List<String> bodyOnlyParamNames,
             ParameterSpec bodyParam,
-            String wrapperTypeName,
+            TypeName wrapperTypeName,
             String bodyPropertyName) {
         StringBuilder paramList = new StringBuilder();
         for (int i = 0; i < bodyOnlyParamNames.size() - 1; i++) {
@@ -118,7 +118,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
         paramList.append("$T.builder().$L($L).build()");
         bodyOnlyMethodBuilder.addStatement(
                 "return " + endpointWithRequestOptions.name + "(" + paramList + ")",
-                bodyParam.type,
+                wrapperTypeName,
                 bodyPropertyName,
                 bodyParam.name);
     }
@@ -129,7 +129,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec endpointWithRequestOptions,
             List<String> bodyOnlyWithRequestOptionsParamNames,
             ParameterSpec bodyParam,
-            String wrapperTypeName,
+            TypeName wrapperTypeName,
             String bodyPropertyName) {
         StringBuilder paramList = new StringBuilder();
         for (int i = 0; i < bodyOnlyWithRequestOptionsParamNames.size() - 1; i++) {
@@ -145,7 +145,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
         paramList.append(AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
         bodyOnlyWithRequestOptionsMethodBuilder.addStatement(
                 "return " + endpointWithRequestOptions.name + "(" + paramList + ")",
-                bodyParam.type,
+                wrapperTypeName,
                 bodyPropertyName,
                 bodyParam.name);
     }
