@@ -71,11 +71,11 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                         exampleTypeFromEndpointResponse.type === "body"
                     ) {
                         if (
-                            exampleTypeFromEndpointResponse.value?.shape.type === "named" &&
-                            exampleTypeFromEndpointResponse.value.shape.shape.type === "object"
+                            exampleTypeFromEndpointResponse.shape.type === "named" &&
+                            exampleTypeFromEndpointResponse.shape.shape.type === "object"
                         ) {
-                            exampleProperty = exampleTypeFromEndpointResponse.value.shape.shape.properties.find(
-                                (example) => {
+                            exampleProperty = exampleTypeFromEndpointResponse.shape.shape.properties.find(
+                                (example: ExampleObjectProperty) => {
                                     return example.name.wireValue === property.name.wireValue;
                                 }
                             );
@@ -417,13 +417,13 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
         list: (listType) => {
             return {
                 type: "array",
-                items: convertTypeReference(listType)
+                items: convertTypeReference(listType.itemType)
             };
         },
         set: (setType) => {
             return {
                 type: "array",
-                items: convertTypeReference(setType)
+                items: convertTypeReference(setType.itemType)
             };
         },
         map: (mapType) => {

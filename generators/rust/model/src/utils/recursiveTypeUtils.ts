@@ -54,7 +54,13 @@ function checkRecursion(
 
             // For List<T>, check if T is recursive
             // Note: Vec already heap-allocates, but we still need to detect the recursion
-            list: (innerType) => checkRecursion(targetTypeId, innerType, ir, visitedPath),
+            list: (listType) =>
+                checkRecursion(
+                    targetTypeId,
+                    (listType as unknown as { itemType: TypeReference }).itemType,
+                    ir,
+                    visitedPath
+                ),
 
             // For Map<K, V>, check both key and value types
             map: (mapType) =>
@@ -62,7 +68,13 @@ function checkRecursion(
                 checkRecursion(targetTypeId, mapType.keyType, ir, visitedPath),
 
             // For Set<T>, check if T is recursive
-            set: (innerType) => checkRecursion(targetTypeId, innerType, ir, visitedPath),
+            set: (setType) =>
+                checkRecursion(
+                    targetTypeId,
+                    (setType as unknown as { itemType: TypeReference }).itemType,
+                    ir,
+                    visitedPath
+                ),
 
             // Literals cannot be recursive
             literal: () => false,
@@ -205,9 +217,11 @@ export function getReferencedTypeId(typeReference: TypeReference): string | unde
         return typeReference.container._visit<string | undefined>({
             optional: (inner) => getReferencedTypeId(inner),
             nullable: (inner) => getReferencedTypeId(inner),
-            list: (inner) => getReferencedTypeId(inner),
+            list: (listType) =>
+                getReferencedTypeId((listType as unknown as { itemType: TypeReference }).itemType),
             map: (mapType) => getReferencedTypeId(mapType.valueType),
-            set: (inner) => getReferencedTypeId(inner),
+            set: (setType) =>
+                getReferencedTypeId((setType as unknown as { itemType: TypeReference }).itemType),
             literal: () => undefined,
             _other: () => undefined
         });

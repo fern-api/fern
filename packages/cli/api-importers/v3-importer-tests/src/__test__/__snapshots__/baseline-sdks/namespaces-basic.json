@@ -445,7 +445,7 @@
                 "docs": "A list of pets",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Pet",
                         "camelCase": {
@@ -918,7 +918,7 @@
                 "docs": "A list of pets",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Pet",
                         "camelCase": {

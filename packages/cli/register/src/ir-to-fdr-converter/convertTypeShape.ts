@@ -131,21 +131,21 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
     return irTypeReference._visit<FdrCjsSdk.api.v1.register.TypeReference>({
         container: (container) => {
             return Ir.types.ContainerType._visit<FdrCjsSdk.api.v1.register.TypeReference>(container, {
-                list: (itemType) => {
+                list: ({ itemType, validation }) => {
                     return {
                         type: "list",
                         itemType: convertTypeReference(itemType),
-                        minItems: undefined,
-                        maxItems: undefined
+                        minItems: validation?.minItems,
+                        maxItems: validation?.maxItems
                     };
                 },
-                map: ({ keyType, valueType }) => {
+                map: ({ keyType, valueType, validation }) => {
                     return {
                         type: "map",
                         keyType: convertTypeReference(keyType),
                         valueType: convertTypeReference(valueType),
-                        minProperties: undefined,
-                        maxProperties: undefined
+                        minProperties: validation?.minProperties,
+                        maxProperties: validation?.maxProperties
                     };
                 },
                 optional: (itemType) => {
@@ -161,12 +161,12 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         itemType: convertTypeReference(itemType)
                     };
                 },
-                set: (itemType) => {
+                set: ({ itemType, validation }) => {
                     return {
                         type: "set",
                         itemType: convertTypeReference(itemType),
-                        minItems: undefined,
-                        maxItems: undefined
+                        minItems: validation?.minItems,
+                        maxItems: validation?.maxItems
                     };
                 },
                 literal: (literal) => {

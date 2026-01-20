@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v63.3.0] - 2026-01-15
+- Feature: Add validation support for container types (list, set, map):
+  Changed `list` in `ContainerType` from `TypeReference` to `ListType` with `itemType` and `validation` properties
+  Changed `set` in `ContainerType` from `TypeReference` to `SetType` with `itemType` and `validation` properties
+  Added `validation` property to `MapType` with `minProperties`/`maxProperties`
+  Added `ListValidationRules` with `minItems`/`maxItems`
+  Added `SetValidationRules` with `minItems`/`maxItems`
+  Added `MapValidationRules` with `minProperties`/`maxProperties`
+
 ## [v63.2.0] - 2026-01-13
 - Feature: Add support for min and max validation keywords:
   Added validation rules for numeric types: `FloatValidationRules`, `LongValidationRules`, `UintValidationRules`, `Uint64ValidationRules` (with min, max, exclusiveMin, exclusiveMax, multipleOf)

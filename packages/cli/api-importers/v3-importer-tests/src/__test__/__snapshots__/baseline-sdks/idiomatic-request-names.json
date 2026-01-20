@@ -273,7 +273,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "User",
                         "camelCase": {

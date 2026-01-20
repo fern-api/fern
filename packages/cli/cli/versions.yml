@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.0
+  changelogEntry:
+    - summary: |
+        Add support for container type validation in the IR. This includes structural changes to `list` and `set` types (now `ListType` and `SetType` with `itemType` and `validation` properties), and `MapType` now includes `validation` with `minProperties`/`maxProperties`. The OpenAPI parser now propagates `minItems`/`maxItems` for arrays and `minProperties`/`maxProperties` for maps to the Fern IR, and the ir-to-fdr-converter maps these validation fields to FDR format.
+      type: feat
+  createdAt: "2026-01-20"
+  irVersion: 63
+
 - version: 3.47.2
   changelogEntry:
     - summary: |

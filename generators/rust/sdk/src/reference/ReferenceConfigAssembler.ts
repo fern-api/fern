@@ -280,8 +280,8 @@ export class ReferenceConfigAssembler {
             },
             container: (container) => {
                 return container._visit<string>({
-                    list: (list) => {
-                        const innerType = this.getRustTypeForTypeReference(list);
+                    list: (listType) => {
+                        const innerType = this.getRustTypeForTypeReference(listType.itemType);
                         return `Vec<${innerType}>`;
                     },
                     optional: (optional) => {
@@ -292,8 +292,8 @@ export class ReferenceConfigAssembler {
                         const innerType = this.getRustTypeForTypeReference(nullable);
                         return `Option<${innerType}>`;
                     },
-                    set: (set) => {
-                        const innerType = this.getRustTypeForTypeReference(set);
+                    set: (setType) => {
+                        const innerType = this.getRustTypeForTypeReference(setType.itemType);
                         return `Vec<${innerType}>`;
                     },
                     map: (map) => {

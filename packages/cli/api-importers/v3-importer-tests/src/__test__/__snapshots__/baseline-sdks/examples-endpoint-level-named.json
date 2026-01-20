@@ -1100,7 +1100,7 @@
                 "docs": "List of trees",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Tree",
                         "camelCase": {
@@ -2358,7 +2358,7 @@
                 },
                 "valueType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "CreateSucculentsRequestSucculentsItem",
                         "camelCase": {

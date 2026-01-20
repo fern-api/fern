@@ -77,7 +77,7 @@ export function generateEndpointExample({
         serviceHeaders: [],
         rootPathParameters: [],
         request: undefined,
-        response: ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined)),
+        response: ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined as unknown as ExampleTypeReference)),
         docs: undefined
     };
 
