@@ -2,12 +2,8 @@
 - version: 3.33.0
   changelogEntry:
     - summary: |
-        Generate backward-compatible body-only overloads when adding optional headers or query parameters
-        to endpoints with required request bodies. This prevents compile breaks when optional headers or
-        query parameters are added to endpoints that already have a required body.
-        For example, `createUser(UserData body)` and `createUser(UserData body, RequestOptions requestOptions)`
-        overloads are now generated in addition to the request wrapper variants when the wrapper only adds
-        optional headers and/or query parameters.
+        Generate body-only method overloads for endpoints with required body and optional headers/query params.
+        This prevents breaking changes when optional headers or query params are added to existing endpoints.
       type: feat
   createdAt: "2026-01-20"
   irVersion: 63
