@@ -16,6 +16,7 @@ export function withContext<T extends GlobalArgs>(
         const context = createContext(args);
         try {
             await handler(context, args);
+            process.exit(0);
         } catch (error) {
             handleError(context, error);
             process.exit(1);

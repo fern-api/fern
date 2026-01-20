@@ -1,0 +1,3 @@
+rootProject.name = 'java-required-body-optional-headers'
+
+include 'sample-app'
