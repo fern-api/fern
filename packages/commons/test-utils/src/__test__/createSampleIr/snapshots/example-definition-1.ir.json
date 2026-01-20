@@ -1083,6 +1083,8 @@
                   "type": "named",
                   "typeId": "type_types:OrderItem",
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "container",
