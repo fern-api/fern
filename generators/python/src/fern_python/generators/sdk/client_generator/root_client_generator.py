@@ -12,6 +12,7 @@ from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient, RootClient
 from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
 from fern_python.generators.sdk.client_generator.base_client_generator import BaseClientGeneratorKwargs
@@ -246,7 +247,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         writer.write_node(param.type_hint)
                 if param.docs is not None:
                     with writer.indent():
-                        writer.write_line(param.docs)
+                        writer.write_line(escape_docstring(param.docs))
 
         # Overload 1: client_id + client_secret
         overload_1_param_names: list[str] = [

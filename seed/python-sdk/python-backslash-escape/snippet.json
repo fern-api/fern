@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_user.get"
             },
             "snippet": {
-                "sync_client": "from seed import SeedPythonBackslashEscape\n\nclient = SeedPythonBackslashEscape(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get(\n    id=\"id\",\n    domain=\"domain\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPythonBackslashEscape\n\nclient = AsyncSeedPythonBackslashEscape(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get(\n        id=\"id\",\n        domain=\"domain\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPythonBackslashEscape\n\nclient = SeedPythonBackslashEscape(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get(\n    id=\"id\",\n    domain=\"domain\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPythonBackslashEscape\n\nclient = AsyncSeedPythonBackslashEscape(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get(\n        id=\"id\",\n        domain=\"domain\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

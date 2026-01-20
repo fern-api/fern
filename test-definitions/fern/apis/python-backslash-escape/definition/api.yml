@@ -1,1 +1,9 @@
 name: python-backslash-escape
+
+variables:
+  apiKey:
+    type: string
+    docs: |
+      The API key for authentication.
+      Use DOMAIN\username format for Windows authentication.
+      Other backslash examples: FOO\_BAR, path\to\file, C:\Users\name

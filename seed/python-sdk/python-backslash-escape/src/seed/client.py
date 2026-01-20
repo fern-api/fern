@@ -20,6 +20,13 @@ class SeedPythonBackslashEscape:
     base_url : str
         The base url to use for requests from the client.
 
+    api_key : str
+        The API key for authentication.
+
+        Use DOMAIN\\username format for Windows authentication.
+
+        Other backslash examples: FOO\\_BAR, path\\to\\file, C:\\Users\\name
+
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -37,6 +44,7 @@ class SeedPythonBackslashEscape:
     from seed import SeedPythonBackslashEscape
 
     client = SeedPythonBackslashEscape(
+        api_key="YOUR_API_KEY",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -45,6 +53,7 @@ class SeedPythonBackslashEscape:
         self,
         *,
         base_url: str,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -55,6 +64,7 @@ class SeedPythonBackslashEscape:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
+            api_key=api_key,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -83,6 +93,13 @@ class AsyncSeedPythonBackslashEscape:
     base_url : str
         The base url to use for requests from the client.
 
+    api_key : str
+        The API key for authentication.
+
+        Use DOMAIN\\username format for Windows authentication.
+
+        Other backslash examples: FOO\\_BAR, path\\to\\file, C:\\Users\\name
+
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -100,6 +117,7 @@ class AsyncSeedPythonBackslashEscape:
     from seed import AsyncSeedPythonBackslashEscape
 
     client = AsyncSeedPythonBackslashEscape(
+        api_key="YOUR_API_KEY",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -108,6 +126,7 @@ class AsyncSeedPythonBackslashEscape:
         self,
         *,
         base_url: str,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -118,6 +137,7 @@ class AsyncSeedPythonBackslashEscape:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
+            api_key=api_key,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None

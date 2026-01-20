@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.48.2
+  changelogEntry:
+    - summary: |
+        Fix backslash escaping in OAuth client credentials docstrings. Parameter docs in the
+        root client class docstring now properly escape backslashes to avoid Python SyntaxWarning
+        for invalid escape sequences.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 62
+
 - version: 4.48.1
   changelogEntry:
     - summary: |
