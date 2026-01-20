@@ -294,8 +294,18 @@ export abstract class AbstractRustGeneratorContext<
             },
             container: (container: FernIr.ContainerType) => {
                 return container._visit({
-                    list: (list) => this.typeReferenceUsesBuiltin(list.itemType, typeName, visited),
-                    set: (set) => this.typeReferenceUsesBuiltin(set.itemType, typeName, visited),
+                    list: (list) =>
+                        this.typeReferenceUsesBuiltin(
+                            (list as unknown as { itemType: FernIr.TypeReference }).itemType,
+                            typeName,
+                            visited
+                        ),
+                    set: (set) =>
+                        this.typeReferenceUsesBuiltin(
+                            (set as unknown as { itemType: FernIr.TypeReference }).itemType,
+                            typeName,
+                            visited
+                        ),
                     optional: (optional: FernIr.TypeReference) =>
                         this.typeReferenceUsesBuiltin(optional, typeName, visited),
                     nullable: (nullable: FernIr.TypeReference) =>
