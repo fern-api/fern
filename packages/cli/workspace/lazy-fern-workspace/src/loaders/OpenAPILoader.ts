@@ -14,10 +14,12 @@ export class OpenAPILoader {
 
     public async loadDocuments({
         context,
-        specs
+        specs,
+        loadAiExamples = false
     }: {
         context: TaskContext;
         specs: OpenAPISpec[];
+        loadAiExamples?: boolean;
     }): Promise<Document[]> {
         const documents: Document[] = [];
         for (const spec of specs) {
@@ -38,7 +40,8 @@ export class OpenAPILoader {
                             absolutePathToOpenAPI: spec.absoluteFilepath,
                             context,
                             absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides,
-                            absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays
+                            absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays,
+                            loadAiExamples
                         });
                         if (isOpenAPIV3(openAPI)) {
                             documents.push({
