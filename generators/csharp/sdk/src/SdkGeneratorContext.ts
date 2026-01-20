@@ -26,6 +26,7 @@ import {
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
+import { DefaultValueExtractor } from "./DefaultValueExtractor";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
@@ -360,6 +361,52 @@ export class SdkGeneratorContext extends GeneratorContext {
 
     public getNameForField(name: NameAndWireValue): string {
         return name.name.pascalCase.safeName;
+    }
+
+    /**
+     * Checks if an endpoint's wrapped request has any properties with default values.
+     * Used to determine whether to call .WithDefaults() in the endpoint method.
+     *
+     * @param endpoint The HTTP endpoint to check
+     * @param serviceId The service ID for the endpoint (to access service headers)
+     * @returns true if the wrapped request has any properties with defaults
+     */
+    public wrappedRequestHasDefaults(endpoint: HttpEndpoint, serviceId: ServiceId): boolean {
+        if (!this.generation.settings.useDefaultRequestParameterValues) {
+            return false;
+        }
+
+        const extractor = new DefaultValueExtractor(this);
+
+        // Check query parameters (non-allowMultiple only)
+        for (const query of endpoint.queryParameters) {
+            if (!query.allowMultiple && extractor.extractDefault(query.valueType) != null) {
+                return true;
+            }
+        }
+
+        // Check headers (endpoint + service)
+        const service = this.getHttpService(serviceId);
+        const headers = [...(service?.headers ?? []), ...endpoint.headers];
+        for (const header of headers) {
+            if (extractor.extractDefault(header.valueType) != null) {
+                return true;
+            }
+        }
+
+        // Check inlined request body properties
+        if (endpoint.requestBody?.type === "inlinedRequestBody") {
+            for (const property of [
+                ...endpoint.requestBody.properties,
+                ...(endpoint.requestBody.extendedProperties ?? [])
+            ]) {
+                if (extractor.extractDefault(property.valueType) != null) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
