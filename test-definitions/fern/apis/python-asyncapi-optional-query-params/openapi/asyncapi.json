@@ -1,0 +1,131 @@
+{
+  "asyncapi": "2.6.0",
+  "info": {
+    "title": "Test AsyncAPI Optional Query Params",
+    "version": "1.0.0"
+  },
+  "channels": {
+    "/chat": {
+      "bindings": {
+        "ws": {
+          "query": {
+            "properties": {
+              "simple_param": {
+                "default": "",
+                "description": "A simple string parameter with a default value",
+                "type": "string"
+              },
+              "optional_bool": {
+                "default": false,
+                "description": "An optional boolean parameter with a default value",
+                "type": "boolean"
+              },
+              "no_default_string": {
+                "description": "A string parameter without a default value - should still be optional",
+                "type": "string"
+              },
+              "complex_param": {
+                "$ref": "#/components/schemas/SessionSettings",
+                "description": "A complex object parameter without a default value - should be optional"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        }
+      },
+      "description": "Test WebSocket channel with optional query parameters",
+      "publish": {
+        "message": {
+          "oneOf": [
+            {
+              "$ref": "#/components/messages/SendMessage"
+            }
+          ]
+        }
+      },
+      "subscribe": {
+        "message": {
+          "payload": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReceiveMessage"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "messages": {
+      "SendMessage": {
+        "description": "A message sent by the client",
+        "name": "SendMessage",
+        "payload": {
+          "$ref": "#/components/schemas/SendMessage"
+        }
+      }
+    },
+    "schemas": {
+      "SessionSettings": {
+        "type": "object",
+        "description": "Session settings object",
+        "properties": {
+          "audio": {
+            "type": "object",
+            "properties": {
+              "channels": {
+                "description": "Number of audio channels",
+                "type": "integer"
+              },
+              "sample_rate": {
+                "description": "Audio sample rate",
+                "type": "integer"
+              }
+            }
+          },
+          "context": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "description": "Context text",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "SendMessage": {
+        "type": "object",
+        "description": "A message sent by the client",
+        "properties": {
+          "type": {
+            "const": "send",
+            "type": "string"
+          },
+          "text": {
+            "type": "string",
+            "description": "The message text"
+          }
+        },
+        "required": ["type", "text"]
+      },
+      "ReceiveMessage": {
+        "type": "object",
+        "description": "A message received from the server",
+        "properties": {
+          "type": {
+            "const": "receive",
+            "type": "string"
+          },
+          "content": {
+            "type": "string",
+            "description": "The message content"
+          }
+        },
+        "required": ["type", "content"]
+      }
+    }
+  }
+}

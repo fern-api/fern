@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "audio": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SessionSettingsAudio"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "context": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SessionSettingsContext"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "SessionSettingsAudio": {
+      "type": "object",
+      "properties": {
+        "channels": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sample_rate": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SessionSettingsContext": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
