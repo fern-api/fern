@@ -278,7 +278,12 @@ function findMatchingOpenAPIPath(examplePath: string, availablePaths: string[]):
     return undefined;
 }
 
-function extractHeaderParameterNames(openApiSpecJson: string, endpointPath: string, method: string): string[] {
+function extractParameterNamesByType(
+    openApiSpecJson: string,
+    endpointPath: string,
+    method: string,
+    paramType: "header" | "query" | "path"
+): string[] {
     try {
         const spec = JSON.parse(openApiSpecJson) as OpenAPIV3.Document;
         if (!spec.paths) {
@@ -303,7 +308,7 @@ function extractHeaderParameterNames(openApiSpecJson: string, endpointPath: stri
             return [];
         }
 
-        const headerNames: string[] = [];
+        const paramNames: string[] = [];
 
         const allParameters = [...(pathItem.parameters ?? []), ...(operation.parameters ?? [])];
 
@@ -311,15 +316,27 @@ function extractHeaderParameterNames(openApiSpecJson: string, endpointPath: stri
             if ("$ref" in param) {
                 continue;
             }
-            if (param.in === "header") {
-                headerNames.push(param.name);
+            if (param.in === paramType) {
+                paramNames.push(param.name);
             }
         }
 
-        return headerNames;
+        return paramNames;
     } catch {
         return [];
     }
+}
+
+function extractHeaderParameterNames(openApiSpecJson: string, endpointPath: string, method: string): string[] {
+    return extractParameterNamesByType(openApiSpecJson, endpointPath, method, "header");
+}
+
+function extractQueryParameterNames(openApiSpecJson: string, endpointPath: string, method: string): string[] {
+    return extractParameterNamesByType(openApiSpecJson, endpointPath, method, "query");
+}
+
+function extractPathParameterNames(openApiSpecJson: string, endpointPath: string, method: string): string[] {
+    return extractParameterNamesByType(openApiSpecJson, endpointPath, method, "path");
 }
 
 async function pruneOpenAPISpecForBatch(
@@ -1007,13 +1024,21 @@ async function processEndpoint(
         const responseChanged = result.enhancedResponseExample !== request.originalResponseExample;
 
         if (requestChanged || responseChanged) {
-            // Extract header parameter names from the OpenAPI spec for filtering
+            // Extract parameter names from the OpenAPI spec for filtering
+            // This ensures we only filter out actual parameters defined in the spec,
+            // not form data fields that happen to have the same name
             const headerParameterNames = prunedOpenApiSpec
                 ? extractHeaderParameterNames(prunedOpenApiSpec, workItem.example.path, workItem.endpoint.method)
                 : [];
+            const queryParameterNames = prunedOpenApiSpec
+                ? extractQueryParameterNames(prunedOpenApiSpec, workItem.example.path, workItem.endpoint.method)
+                : [];
+            const pathParameterNames = prunedOpenApiSpec
+                ? extractPathParameterNames(prunedOpenApiSpec, workItem.example.path, workItem.endpoint.method)
+                : [];
 
-            // Build a headers object for filtering that includes both existing headers
-            // and header parameter names from the OpenAPI spec (which may not have values yet)
+            // Build parameter objects for filtering using ONLY spec-defined parameter names
+            // This prevents form data fields from being incorrectly extracted as query/path params
             const headersForFiltering: Record<string, unknown> = { ...(workItem.example.headers ?? {}) };
             if (headerParameterNames.length > 0) {
                 for (const headerName of headerParameterNames) {
@@ -1023,12 +1048,24 @@ async function processEndpoint(
                 }
             }
 
-            // Unwrap FDR typed value wrappers and filter the request body to extract headers
+            // Build query params object using spec-defined names only
+            const queryParamsForFiltering: Record<string, unknown> = {};
+            for (const queryName of queryParameterNames) {
+                queryParamsForFiltering[queryName] = workItem.example.queryParameters?.[queryName] ?? "";
+            }
+
+            // Build path params object using spec-defined names only
+            const pathParamsForFiltering: Record<string, unknown> = {};
+            for (const pathName of pathParameterNames) {
+                pathParamsForFiltering[pathName] = workItem.example.pathParameters?.[pathName] ?? "";
+            }
+
+            // Unwrap FDR typed value wrappers and filter the request body to extract parameters
             const unwrappedRequestBody = unwrapExampleValue(result.enhancedRequestExample);
             const { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders } = filterRequestBody(
                 unwrappedRequestBody,
-                workItem.example.pathParameters,
-                workItem.example.queryParameters,
+                pathParamsForFiltering,
+                queryParamsForFiltering,
                 headersForFiltering
             );
 
@@ -1065,7 +1102,9 @@ async function processEndpoint(
                 headers: workItem.example.headers,
                 requestBody: requestChanged ? result.enhancedRequestExample : undefined,
                 responseBody: responseChanged ? result.enhancedResponseExample : undefined,
-                headerParameterNames: headerParameterNames.length > 0 ? headerParameterNames : undefined
+                headerParameterNames: headerParameterNames.length > 0 ? headerParameterNames : undefined,
+                queryParameterNames: queryParameterNames.length > 0 ? queryParameterNames : undefined,
+                pathParameterNames: pathParameterNames.length > 0 ? pathParameterNames : undefined
             };
 
             enhancedExampleRecords.push(enhancedExampleRecord);

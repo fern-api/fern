@@ -14,6 +14,8 @@ export interface EnhancedExampleRecord {
     requestBody?: unknown;
     responseBody?: unknown;
     headerParameterNames?: string[];
+    queryParameterNames?: string[];
+    pathParameterNames?: string[];
 }
 
 /**
@@ -101,8 +103,8 @@ export async function writeAiExamplesOverride({
                 let queryParams = { ...(example.queryParameters ?? {}) };
                 let headerParams = { ...(example.headers ?? {}) };
 
-                // Build a headers object for filtering that includes both existing headers
-                // and header parameter names from the OpenAPI spec (which may not have values yet)
+                // Build parameter objects for filtering using ONLY spec-defined parameter names
+                // This prevents form data fields from being incorrectly extracted as query/path params
                 const headersForFiltering: Record<string, unknown> = { ...headerParams };
                 if (example.headerParameterNames) {
                     for (const headerName of example.headerParameterNames) {
@@ -112,16 +114,38 @@ export async function writeAiExamplesOverride({
                     }
                 }
 
+                // Build query params object using spec-defined names only
+                const queryParamsForFiltering: Record<string, unknown> = {};
+                if (example.queryParameterNames) {
+                    for (const queryName of example.queryParameterNames) {
+                        queryParamsForFiltering[queryName] = queryParams[queryName] ?? "";
+                    }
+                }
+
+                // Build path params object using spec-defined names only
+                const pathParamsForFiltering: Record<string, unknown> = {};
+                if (example.pathParameterNames) {
+                    for (const pathName of example.pathParameterNames) {
+                        pathParamsForFiltering[pathName] = pathParams[pathName] ?? "";
+                    }
+                }
+
                 // Unwrap FDR typed value wrappers from request body first
                 // This converts { "file": { "type": "filename", "value": "test.wav" } } to { "file": "test.wav" }
                 const unwrappedRequestBody = unwrapExampleValue(example.requestBody);
 
                 // Filter out path/query/header params from request body and extract any AI-generated values
                 // The AI model sometimes incorrectly includes these in the request body
+                // Use spec-defined parameter names to avoid extracting form data fields
                 let filteredRequestBody: unknown = unwrappedRequestBody;
                 if (unwrappedRequestBody !== undefined) {
                     const { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders } =
-                        filterRequestBody(unwrappedRequestBody, pathParams, queryParams, headersForFiltering);
+                        filterRequestBody(
+                            unwrappedRequestBody,
+                            pathParamsForFiltering,
+                            queryParamsForFiltering,
+                            headersForFiltering
+                        );
                     filteredRequestBody = filteredBody;
 
                     // Merge extracted values into the appropriate parameter sections
