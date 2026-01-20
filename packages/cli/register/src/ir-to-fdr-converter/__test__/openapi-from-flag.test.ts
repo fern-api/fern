@@ -2627,3 +2627,4 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/min-max-values-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/min-max-values-ir.snap");
     });
+
