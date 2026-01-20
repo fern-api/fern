@@ -611,8 +611,10 @@ function convertWebhookGroup(webhookGroup: IrVersions.V63.WebhookGroup): IrVersi
 }
 
 function convertWebhook(webhook: IrVersions.V63.Webhook): IrVersions.V62.webhooks.Webhook {
+    // Destructure to exclude fileUploadPayload which doesn't exist in v62
+    const { fileUploadPayload: _, ...webhookWithoutFileUpload } = webhook;
     return {
-        ...webhook,
+        ...webhookWithoutFileUpload,
         headers: webhook.headers.map((h) => convertHttpHeader(h)),
         payload: convertWebhookPayload(webhook.payload),
         // Responses contain TypeReferences that need conversion, but since skipValidation is true

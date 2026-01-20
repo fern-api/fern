@@ -64,7 +64,7 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
                     availability: convertIrAvailability(header.availability)
                 })
             ),
-            payload: convertWebhookPayload(webhook.payload),
+            payload: convertWebhookPayloadWithFileUpload(webhook.payload, webhook.fileUploadPayload),
             examples: webhookExamples,
             responses: webhook.responses?.map(convertResponse).filter(isNonNullish)
         };
@@ -1299,6 +1299,68 @@ function convertHttpEndpointExample({
             )
             .filter(isNonNullish)
     };
+}
+
+function convertWebhookPayloadWithFileUpload(
+    irWebhookPayload: Ir.webhooks.WebhookPayload,
+    fileUploadPayload: Ir.http.FileUploadRequest | undefined
+): FdrCjsSdk.api.v1.register.WebhookPayload {
+    if (fileUploadPayload != null) {
+        return {
+            type: {
+                type: "formData",
+                name: fileUploadPayload.name.originalName,
+                description: fileUploadPayload.docs ?? undefined,
+                availability: undefined,
+                properties: fileUploadPayload.properties
+                    .map((property) => {
+                        return property._visit<FdrCjsSdk.api.v1.register.FormDataProperty | undefined>({
+                            file: (file) => {
+                                const fileValue = file._visit<
+                                    FdrCjsSdk.api.v1.register.FormDataFileProperty | undefined
+                                >({
+                                    file: (singleFile) => ({
+                                        type: "file",
+                                        key: FdrCjsSdk.PropertyKey(singleFile.key.wireValue),
+                                        isOptional: singleFile.isOptional,
+                                        contentType: singleFile.contentType,
+                                        description: singleFile.docs ?? undefined,
+                                        availability: undefined
+                                    }),
+                                    fileArray: (multipleFiles) => ({
+                                        type: "fileArray",
+                                        key: FdrCjsSdk.PropertyKey(multipleFiles.key.wireValue),
+                                        isOptional: multipleFiles.isOptional,
+                                        contentType: multipleFiles.contentType,
+                                        description: multipleFiles.docs ?? undefined,
+                                        availability: undefined
+                                    }),
+                                    _other: () => undefined
+                                });
+                                if (fileValue == null) {
+                                    return;
+                                }
+                                return { type: "file", value: fileValue };
+                            },
+                            bodyProperty: (bodyProperty) => ({
+                                type: "bodyProperty",
+                                key: FdrCjsSdk.PropertyKey(bodyProperty.name.wireValue),
+                                valueType: convertTypeReference(bodyProperty.valueType),
+                                contentType: bodyProperty.contentType,
+                                description: bodyProperty.docs ?? undefined,
+                                availability: convertIrAvailability(bodyProperty.availability),
+                                exploded: bodyProperty.style === "exploded",
+                                propertyAccess: undefined
+                            }),
+                            _other: () => undefined
+                        });
+                    })
+                    .filter(isNonNullish)
+            },
+            description: fileUploadPayload.docs ?? undefined
+        };
+    }
+    return convertWebhookPayload(irWebhookPayload);
 }
 
 function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): FdrCjsSdk.api.v1.register.WebhookPayload {

@@ -4,6 +4,7 @@ import { dynamic, Name, NameAndWireValue } from "@fern-fern/ir-sdk/api";
 import {
     And,
     Annotation,
+    AnnotationGroup,
     AnonymousFunction,
     AstNode,
     Set as AstSet,
@@ -233,6 +234,17 @@ export class CSharp {
      */
     public annotation(args: Annotation.Args): Annotation {
         return new Annotation(args, this.generation);
+    }
+
+    /**
+     * Creates a C# annotation group (multiple attributes in a single bracket).
+     *
+     * @param args - Configuration for the annotation group including multiple references
+     * @returns An AnnotationGroup object representing multiple C# attributes
+     * @example [Nullable, Optional]
+     */
+    public annotationGroup(args: AnnotationGroup.Args): AnnotationGroup {
+        return new AnnotationGroup(args, this.generation);
     }
 
     /**

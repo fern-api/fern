@@ -428,6 +428,14 @@ types:
   EditThisPageConfig:
     properties:
       github: optional<GithubEditThisPageConfig>
+      launch:
+        type: optional<EditThisPageLaunch>
+        docs: The launch method for "Edit this page" button. Defaults to github.
+
+  EditThisPageLaunch:
+    enum:
+      - github
+      - dashboard
 
   GithubEditThisPageConfig:
     properties:
