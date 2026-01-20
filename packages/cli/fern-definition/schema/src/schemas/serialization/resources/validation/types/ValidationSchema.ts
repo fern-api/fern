@@ -7,12 +7,23 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { StringValidationSchema } from "./StringValidationSchema";
 import { NumberValidationSchema } from "./NumberValidationSchema";
+import { ContainerValidationSchema } from "./ContainerValidationSchema";
+import { MapValidationSchema } from "./MapValidationSchema";
 
 export const ValidationSchema: core.serialization.Schema<
     serializers.ValidationSchema.Raw,
     FernDefinition.ValidationSchema
-> = core.serialization.undiscriminatedUnion([StringValidationSchema, NumberValidationSchema]);
+> = core.serialization.undiscriminatedUnion([
+    StringValidationSchema,
+    NumberValidationSchema,
+    ContainerValidationSchema,
+    MapValidationSchema,
+]);
 
 export declare namespace ValidationSchema {
-    export type Raw = StringValidationSchema.Raw | NumberValidationSchema.Raw;
+    export type Raw =
+        | StringValidationSchema.Raw
+        | NumberValidationSchema.Raw
+        | ContainerValidationSchema.Raw
+        | MapValidationSchema.Raw;
 }
