@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.4
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI query parameters with `$ref` types being incorrectly marked as required. Parameters not listed in the `required` array are now correctly treated as optional, regardless of whether they reference complex object types or have default values.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
 - version: 3.47.3
   changelogEntry:
     - summary: |

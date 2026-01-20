@@ -27,7 +27,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             parameter: this.parameter,
             context: this.context
         }).convert();
-        const parameterIsOptional = fernOptional ?? this.parameter.required === false;
+        const parameterIsOptional = fernOptional ?? this.parameter.required !== true;
         const maybeParameterSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = this.parameter.schema ?? {
             ...this.parameter,
             type: "string",
