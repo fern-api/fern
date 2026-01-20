@@ -632,16 +632,12 @@ function getAuthenticationErrorMessage(error: unknown, organization: string): st
 
     if (content?.reason === "status-code") {
         const statusCode = content.statusCode as number | undefined;
-        const body = content.body as string | undefined;
 
         if (statusCode === 401 || statusCode === 403) {
             const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
             const contactMessage =
                 "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
 
-            if (body != null && typeof body === "string" && body.length > 0) {
-                return `${baseMessage}\n\nDetails: ${body}\n\n${contactMessage}`;
-            }
             return `${baseMessage}\n\n${contactMessage}`;
         }
     }
