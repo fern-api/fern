@@ -39,15 +39,15 @@ export function generateRustTypeForTypeReference(
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
                     // Propagate wrapInBox to the element type
-                    const elementType = isFloatingPointType(setType)
+                    const elementType = isFloatingPointType(setType.itemType)
                         ? rust.Type.reference(
                               rust.reference({
                                   name: "OrderedFloat",
                                   module: "ordered_float",
-                                  genericArgs: [generateRustTypeForTypeReference(setType, context, wrapInBox)]
+                                  genericArgs: [generateRustTypeForTypeReference(setType.itemType, context, wrapInBox)]
                               })
                           )
-                        : generateRustTypeForTypeReference(setType, context, wrapInBox);
+                        : generateRustTypeForTypeReference(setType.itemType, context, wrapInBox);
 
                     return rust.Type.reference(
                         rust.reference({
@@ -63,7 +63,7 @@ export function generateRustTypeForTypeReference(
                 list: (listType) =>
                     // Vec is heap-allocated, but we need to Box the inner type if it's recursive
                     // This generates Vec<Box<T>> for recursive types, not Box<Vec<T>>
-                    rust.Type.vec(generateRustTypeForTypeReference(listType, context, wrapInBox)),
+                    rust.Type.vec(generateRustTypeForTypeReference(listType.itemType, context, wrapInBox)),
                 _other: () => {
                     // Fallback for unknown container types
                     return rust.Type.reference(

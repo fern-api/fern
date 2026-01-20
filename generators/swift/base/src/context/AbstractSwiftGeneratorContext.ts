@@ -300,14 +300,20 @@ export abstract class AbstractSwiftGeneratorContext<
                             this.getSwiftTypeReferenceFromScope(type.keyType, fromSymbol),
                             this.getSwiftTypeReferenceFromScope(type.valueType, fromSymbol)
                         ),
-                    set: () => referencer.referenceAsIsType("JSONValue"),
+                    set: (setType) =>
+                        swift.TypeReference.array(
+                            this.getSwiftTypeReferenceFromScope(setType.itemType, fromSymbol)
+                        ),
                     nullable: (ref) =>
                         this.customConfig.nullableAsOptional
                             ? swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol))
                             : swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
                     optional: (ref) =>
                         swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
-                    list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+                    list: (listType) =>
+                        swift.TypeReference.array(
+                            this.getSwiftTypeReferenceFromScope(listType.itemType, fromSymbol)
+                        ),
                     _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             case "primitive":

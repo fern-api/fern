@@ -80,7 +80,7 @@ function hasHashMapInType(typeRef: TypeReference): boolean {
             map: () => true,
             optional: (innerType: TypeReference) => hasHashMapInType(innerType),
             nullable: (innerType: TypeReference) => hasHashMapInType(innerType),
-            list: (innerType: TypeReference) => hasHashMapInType(innerType),
+            list: (listType) => hasHashMapInType(listType.itemType),
             set: () => false,
             literal: () => false,
             _other: () => false
@@ -100,7 +100,7 @@ function hasHashSetInType(typeRef: TypeReference): boolean {
             set: () => true,
             optional: (innerType: TypeReference) => hasHashSetInType(innerType),
             nullable: (innerType: TypeReference) => hasHashSetInType(innerType),
-            list: (innerType: TypeReference) => hasHashSetInType(innerType),
+            list: (listType) => hasHashSetInType(listType.itemType),
             map: () => false,
             literal: () => false,
             _other: () => false
@@ -138,8 +138,8 @@ function hasBigIntInType(typeRef: TypeReference): boolean {
         return typeRef.container._visit({
             optional: (innerType: TypeReference) => hasBigIntInType(innerType),
             nullable: (innerType: TypeReference) => hasBigIntInType(innerType),
-            list: (innerType: TypeReference) => hasBigIntInType(innerType),
-            set: (innerType: TypeReference) => hasBigIntInType(innerType),
+            list: (listType) => hasBigIntInType(listType.itemType),
+            set: (setType) => hasBigIntInType(setType.itemType),
             map: (mapType: { keyType: TypeReference; valueType: TypeReference }) =>
                 hasBigIntInType(mapType.keyType) || hasBigIntInType(mapType.valueType),
             literal: () => false,
@@ -170,7 +170,7 @@ export function hasFloatingPointSets(properties: (ObjectProperty | InlinedReques
 
         // Check if this is a set of floating point numbers
         if (typeRef.type === "container" && typeRef.container.type === "set") {
-            const setElementType = typeRef.container.set;
+            const setElementType = typeRef.container.itemType;
             return isFloatingPointType(setElementType);
         }
         return false;

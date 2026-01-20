@@ -355,7 +355,7 @@ export class TypeContextImpl implements TypeContext {
                     return this.needsRequestResponseTypeVariant(typeReference.container.nullable);
                 }
                 if (typeReference.container.type === "list") {
-                    return this.needsRequestResponseTypeVariant(typeReference.container.list);
+                    return this.needsRequestResponseTypeVariant(typeReference.container.list.itemType);
                 }
                 if (typeReference.container.type === "map") {
                     const keyResult = this.needsRequestResponseTypeVariant(typeReference.container.keyType);
@@ -641,11 +641,11 @@ export class TypeContextImpl implements TypeContext {
         return type._visit({
             container: (container) =>
                 container._visit({
-                    list: (value: FernIr.TypeReference) => this.isInline(value),
+                    list: (listType: FernIr.ListType) => this.isInline(listType.itemType),
                     map: (value: FernIr.MapType) => this.isInline(value.keyType) || this.isInline(value.valueType),
                     nullable: (value: FernIr.TypeReference) => this.isInline(value),
                     optional: (value: FernIr.TypeReference) => this.isInline(value),
-                    set: (value: FernIr.TypeReference) => this.isInline(value),
+                    set: (setType: FernIr.SetType) => this.isInline(setType.itemType),
                     literal: () => false,
                     _other: () => false
                 }),

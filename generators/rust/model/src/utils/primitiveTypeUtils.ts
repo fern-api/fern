@@ -286,7 +286,7 @@ export function typeSupportsHashAndEq(
         },
         container: (container) => {
             return container._visit({
-                list: (listType) => typeSupportsHashAndEq(listType, context, analysisStack),
+                list: (listType) => typeSupportsHashAndEq(listType.itemType, context, analysisStack),
                 optional: (optionalType) => typeSupportsHashAndEq(optionalType, context, analysisStack),
                 nullable: (nullableType) => typeSupportsHashAndEq(nullableType, context, analysisStack),
                 map: () => false, // HashMap/BTreeMap don't implement Hash
@@ -315,13 +315,13 @@ export function typeSupportsPartialEq(
         },
         container: (container) => {
             return container._visit({
-                list: (listType) => typeSupportsPartialEq(listType, context, analysisStack),
+                list: (listType) => typeSupportsPartialEq(listType.itemType, context, analysisStack),
                 optional: (optionalType) => typeSupportsPartialEq(optionalType, context, analysisStack),
                 nullable: (nullableType) => typeSupportsPartialEq(nullableType, context, analysisStack),
                 map: (mapType) =>
                     typeSupportsPartialEq(mapType.keyType, context, analysisStack) &&
                     typeSupportsPartialEq(mapType.valueType, context, analysisStack), // HashMap supports PartialEq!
-                set: (setType) => typeSupportsPartialEq(setType, context, analysisStack), // HashSet supports PartialEq!
+                set: (setType) => typeSupportsPartialEq(setType.itemType, context, analysisStack), // HashSet supports PartialEq!
                 literal: () => true,
                 _other: () => false
             });
@@ -467,8 +467,8 @@ export function extractNamedTypesFromTypeReference(
         }
     } else if (typeRef.type === "container") {
         typeRef.container._visit({
-            list: (listType) => extractNamedTypesFromTypeReference(listType, typeNames, visited),
-            set: (setType) => extractNamedTypesFromTypeReference(setType, typeNames, visited),
+            list: (listType) => extractNamedTypesFromTypeReference(listType.itemType, typeNames, visited),
+            set: (setType) => extractNamedTypesFromTypeReference(setType.itemType, typeNames, visited),
             optional: (optionalType) => extractNamedTypesFromTypeReference(optionalType, typeNames, visited),
             nullable: (nullableType) => extractNamedTypesFromTypeReference(nullableType, typeNames, visited),
             map: (mapType) => {

@@ -396,8 +396,8 @@ export class SubClientGenerator {
                 return container._visit({
                     optional: (innerType) => this.isCustomType(innerType),
                     nullable: (innerType) => this.isCustomType(innerType),
-                    list: (innerType) => this.isCustomType(innerType),
-                    set: (innerType) => this.isCustomType(innerType),
+                    list: (listType) => this.isCustomType(listType.itemType),
+                    set: (setType) => this.isCustomType(setType.itemType),
                     map: (mapType) => this.isCustomType(mapType.keyType) || this.isCustomType(mapType.valueType),
                     literal: () => false,
                     _other: () => false
