@@ -218,6 +218,14 @@
   createdAt: "2026-01-16"
   irVersion: 63
 
+- version: 3.46.1
+  changelogEntry:
+    - summary: |
+        Fix protobuf air-gapped detection to use the correct function. Both `ProtobufOpenAPIGenerator` and `ProtobufIRGenerator` were incorrectly calling `detectAirGappedMode()` with a file path instead of a URL, causing air-gapped detection to fail. They now use `detectAirGappedModeForProtobuf()` which properly tests network connectivity using `buf dep update`.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
 - version: 3.46.0
   changelogEntry:
     - summary: |
