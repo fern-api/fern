@@ -208,7 +208,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath
                     );
                 } else {
-                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
                 }
             } else {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
@@ -260,7 +260,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath
                     );
                 } else {
-                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
                 }
             }
         },
@@ -583,7 +583,8 @@ function convertToFilePathPairs(
 
 async function startDocsRegisterFailed(
     error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
-    context: TaskContext
+    context: TaskContext,
+    organization: string
 ): Promise<never> {
     await context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -592,7 +593,7 @@ async function startDocsRegisterFailed(
         }
     });
 
-    const authErrorMessage = getAuthenticationErrorMessage(error);
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization);
     if (authErrorMessage != null) {
         return context.failAndThrow(authErrorMessage);
     }
@@ -608,13 +609,13 @@ async function startDocsRegisterFailed(
             );
         case "UnauthorizedError":
             return context.failAndThrow(
-                "You do not have permission to publish docs. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
-                    "If you believe this is an error, please contact support@buildwithfern.com"
+                `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
             );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                "You do not belong to this organization. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
-                    "If you believe this is an error, please contact support@buildwithfern.com"
+                `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
             );
         case "UnavailableError":
             return context.failAndThrow(
@@ -625,7 +626,7 @@ async function startDocsRegisterFailed(
     }
 }
 
-function getAuthenticationErrorMessage(error: unknown): string | undefined {
+function getAuthenticationErrorMessage(error: unknown, organization: string): string | undefined {
     const errorObj = error as Record<string, unknown>;
     const content = errorObj?.content as Record<string, unknown> | undefined;
 
@@ -634,9 +635,9 @@ function getAuthenticationErrorMessage(error: unknown): string | undefined {
         const body = content.body as string | undefined;
 
         if (statusCode === 401 || statusCode === 403) {
-            const baseMessage =
-                "You do not have permission to publish docs. Please run 'fern login' to ensure you are logged in with the correct account.";
-            const contactMessage = "If you believe this is an error, please contact support@buildwithfern.com";
+            const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
+            const contactMessage =
+                "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
 
             if (body != null && typeof body === "string" && body.length > 0) {
                 return `${baseMessage}\n\nDetails: ${body}\n\n${contactMessage}`;
