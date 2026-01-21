@@ -329,124 +329,6 @@
     }
   },
   "types": {
-    "DateTime": {
-      "name": "DateTime",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "datetime"
-          }
-        }
-      },
-      "description": "A date-time string in ISO 8601 format"
-    },
-    "Date": {
-      "name": "Date",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "date"
-          }
-        }
-      },
-      "description": "A date string in ISO 8601 format (YYYY-MM-DD)"
-    },
-    "Email": {
-      "name": "Email",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "email"
-          }
-        }
-      },
-      "description": "A valid email address"
-    },
-    "URL": {
-      "name": "URL",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "uri"
-          }
-        }
-      },
-      "description": "A valid URL string"
-    },
-    "UUID": {
-      "name": "UUID",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
-      },
-      "description": "A universally unique identifier"
-    },
-    "JSON": {
-      "name": "JSON",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "unknown"
-        }
-      },
-      "description": "Arbitrary JSON data"
-    },
-    "Upload": {
-      "name": "Upload",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "binary"
-          }
-        }
-      },
-      "description": "A file upload scalar"
-    },
-    "BigInt": {
-      "name": "BigInt",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "long"
-          }
-        }
-      },
-      "description": "A large integer value"
-    },
-    "Decimal": {
-      "name": "Decimal",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      },
-      "description": "A decimal number for precise calculations"
-    },
     "User": {
       "name": "User",
       "shape": {
@@ -466,8 +348,12 @@
           {
             "key": "uuid",
             "valueType": {
-              "type": "id",
-              "value": "UUID"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "UUID",
+                "description": "A universally unique identifier"
+              }
             },
             "description": "The user's unique UUID"
           },
@@ -484,8 +370,12 @@
           {
             "key": "email",
             "valueType": {
-              "type": "id",
-              "value": "Email"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "Email",
+                "description": "A valid email address"
+              }
             },
             "description": "The user's email address"
           },
@@ -502,8 +392,12 @@
           {
             "key": "balance",
             "valueType": {
-              "type": "id",
-              "value": "Decimal"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "Decimal",
+                "description": "A decimal number for precise calculations"
+              }
             },
             "description": "The user's account balance"
           },
@@ -539,32 +433,48 @@
           {
             "key": "createdAt",
             "valueType": {
-              "type": "id",
-              "value": "DateTime"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "DateTime",
+                "description": "A date-time string in ISO 8601 format"
+              }
             },
             "description": "When the user was created"
           },
           {
             "key": "birthDate",
             "valueType": {
-              "type": "id",
-              "value": "Date"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "Date",
+                "description": "A date string in ISO 8601 format (YYYY-MM-DD)"
+              }
             },
             "description": "The user's date of birth"
           },
           {
             "key": "profileUrl",
             "valueType": {
-              "type": "id",
-              "value": "URL"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "URL",
+                "description": "A valid URL string"
+              }
             },
             "description": "The user's profile URL"
           },
           {
             "key": "metadata",
             "valueType": {
-              "type": "id",
-              "value": "JSON"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "JSON",
+                "description": "Arbitrary JSON data"
+              }
             },
             "description": "Additional metadata as JSON"
           }
@@ -640,16 +550,24 @@
           {
             "key": "publishedAt",
             "valueType": {
-              "type": "id",
-              "value": "DateTime"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "DateTime",
+                "description": "A date-time string in ISO 8601 format"
+              }
             },
             "description": "When the post was published"
           },
           {
             "key": "viewCount",
             "valueType": {
-              "type": "id",
-              "value": "BigInt"
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "BigInt",
+                "description": "A large integer value"
+              }
             },
             "description": "The number of views"
           }

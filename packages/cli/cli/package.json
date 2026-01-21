@@ -26,7 +26,9 @@
     "fern:local": "./dist/cli.cjs",
     "fern:prod": "./dist/cli.cjs"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
@@ -64,7 +66,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-preview": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.144.2-a27b15635",
+    "@fern-api/fdr-sdk": "0.144.5-237710d75",
     "@fern-api/docs-validator": "workspace:*",
     "@fern-api/fern-definition-formatter": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",

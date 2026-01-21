@@ -151,19 +151,9 @@ export class GraphQLConverter {
                     this.processingTypes.delete(typeName);
                 }
             } else if (type instanceof GraphQLScalarType && !this.isBuiltInScalar(typeName)) {
-                // Handle custom scalar types as alias types
-                this.processingTypes.add(typeName);
-                try {
-                    this.types[typeId] = {
-                        name: typeName,
-                        shape: this.convertScalarTypeDefinition(type),
-                        displayName: undefined,
-                        description: type.description ?? undefined,
-                        availability: undefined
-                    };
-                } finally {
-                    this.processingTypes.delete(typeName);
-                }
+                // Skip custom scalar types - they are now handled as scalar primitive types directly
+                // instead of creating alias type definitions
+                continue;
             }
         }
     }
@@ -386,11 +376,15 @@ export class GraphQLConverter {
                     };
             }
         } else {
-            // For custom scalars, return a reference to the alias type we created
+            // For custom scalars, return a scalar primitive type
             return {
-                type: "id",
-                value: FdrAPI.TypeId(type.name),
-                default: undefined
+                type: "primitive",
+                value: {
+                    type: "scalar",
+                    name: type.name,
+                    description: type.description ?? undefined,
+                    default: undefined
+                }
             };
         }
     }
