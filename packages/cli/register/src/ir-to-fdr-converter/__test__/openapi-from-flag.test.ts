@@ -2885,22 +2885,16 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(basicAuthScheme).toBeDefined();
         expect(basicAuthScheme?.type).toBe("basic");
 
-        // Document current behavior: x-fern-basic custom names are NOT flowing through to the IR
+        // Verify that x-fern-basic custom names are correctly flowing through to the IR
         // The OpenAPI spec has x-fern-basic with username.name="project_id" and password.name="api_token"
-        // but the IR shows the default "username" and "password" values instead.
-        // This is a known issue - the custom names from x-fern-basic are being lost in the pipeline.
         if (basicAuthScheme?.type === "basic") {
-            // Current behavior (BUG): defaults are used instead of custom names
-            // Expected behavior: should be "project_id" and "api_token"
-            console.log("=== x-fern-basic Test Results ===");
-            console.log(
-                `IR username.originalName: "${basicAuthScheme.username.originalName}" (expected: "project_id")`
-            );
-            console.log(`IR password.originalName: "${basicAuthScheme.password.originalName}" (expected: "api_token")`);
+            // Verify custom names from x-fern-basic are used
+            expect(basicAuthScheme.username.originalName).toBe("project_id");
+            expect(basicAuthScheme.password.originalName).toBe("api_token");
 
-            // Document the current (incorrect) behavior
-            expect(basicAuthScheme.username.originalName).toBe("username"); // BUG: should be "project_id"
-            expect(basicAuthScheme.password.originalName).toBe("password"); // BUG: should be "api_token"
+            // Verify env vars are also passed through
+            expect(basicAuthScheme.usernameEnvVar).toBe("PLANT_STORE_PROJECT_ID");
+            expect(basicAuthScheme.passwordEnvVar).toBe("PLANT_STORE_API_TOKEN");
         }
 
         // Validate FDR auth schemes
@@ -2911,18 +2905,13 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             const basicAuth = Object.values(fdrAuthSchemes).find((scheme) => scheme.type === "basicAuth");
             expect(basicAuth).toBeDefined();
             if (basicAuth?.type === "basicAuth") {
-                // Document current behavior: FDR also has default names instead of custom names
-                console.log(`FDR usernameName: "${basicAuth.usernameName}" (expected: "project_id")`);
-                console.log(`FDR passwordName: "${basicAuth.passwordName}" (expected: "api_token")`);
-
-                // Document the current (incorrect) behavior
-                expect(basicAuth.usernameName).toBe("username"); // BUG: should be "project_id"
-                expect(basicAuth.passwordName).toBe("password"); // BUG: should be "api_token"
+                // Verify custom names from x-fern-basic flow through to FDR
+                expect(basicAuth.usernameName).toBe("project_id");
+                expect(basicAuth.passwordName).toBe("api_token");
             }
         }
 
         // Snapshot the complete output for regression testing
-        // These snapshots document the current behavior and can be used to verify when the fix is implemented
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-ir.snap");
     });

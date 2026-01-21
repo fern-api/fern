@@ -2,16 +2,16 @@
   "apiName": "Plant Store API",
   "auth": {
     "description": "Basic authentication with custom field names",
-    "passwordName": "password",
+    "passwordName": "api_token",
     "type": "basicAuth",
-    "usernameName": "username",
+    "usernameName": "project_id",
   },
   "authSchemes": {
     "basicAuth": {
       "description": "Basic authentication with custom field names",
-      "passwordName": "password",
+      "passwordName": "api_token",
       "type": "basicAuth",
-      "usernameName": "username",
+      "usernameName": "project_id",
     },
   },
   "globalHeaders": [],

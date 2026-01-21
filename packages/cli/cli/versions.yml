@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.9
+  changelogEntry:
+    - summary: |
+        Fix x-fern-basic, x-fern-bearer, and x-fern-header OpenAPI extensions not being read in the OpenAPI to IR converter. Custom field names and environment variables specified in these extensions are now correctly propagated to the IR and FDR output, enabling custom labels in the API explorer.
+      type: fix
+  createdAt: "2026-01-21"
+  irVersion: 63
+
 - version: 3.47.8
   changelogEntry:
     - summary: |
