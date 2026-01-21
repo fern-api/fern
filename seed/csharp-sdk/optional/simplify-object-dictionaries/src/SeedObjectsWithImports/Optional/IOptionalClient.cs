@@ -2,13 +2,13 @@ namespace SeedObjectsWithImports;
 
 public partial interface IOptionalClient
 {
-    Task<string> SendOptionalBodyAsync(
+    WithRawResponseTask<string> SendOptionalBodyAsync(
         object? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> SendOptionalTypedBodyAsync(
+    WithRawResponseTask<string> SendOptionalTypedBodyAsync(
         SendOptionalBodyRequest? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -18,7 +18,7 @@ public partial interface IOptionalClient
     /// Tests optional(nullable(T)) where T has only optional properties.
     /// This should not generate wire tests expecting {} when Optional.empty() is passed.
     /// </summary>
-    Task<DeployResponse> SendOptionalNullableWithAllOptionalPropertiesAsync(
+    WithRawResponseTask<DeployResponse> SendOptionalNullableWithAllOptionalPropertiesAsync(
         string actionId,
         string id,
         DeployParams? request,

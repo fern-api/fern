@@ -13,16 +13,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <summary>
-    /// This endpoint returns a file by its name.
-    /// </summary>
-    /// <example><code>
-    /// await client.File.Service.GetFileAsync(
-    ///     "file.txt",
-    ///     new GetFileRequest { XFileApiVersion = "0.0.2" }
-    /// );
-    /// </code></example>
-    public async Task<SeedExamples.File> GetFileAsync(
+    private async Task<WithRawResponse<SeedExamples.File>> GetFileAsyncCore(
         string filename,
         GetFileRequest request,
         RequestOptions? options = null,
@@ -50,14 +41,28 @@ public partial class ServiceClient : IServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
+                return new WithRawResponse<SeedExamples.File>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
@@ -78,5 +83,26 @@ public partial class ServiceClient : IServiceClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// This endpoint returns a file by its name.
+    /// </summary>
+    /// <example><code>
+    /// await client.File.Service.GetFileAsync(
+    ///     "file.txt",
+    ///     new GetFileRequest { XFileApiVersion = "0.0.2" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SeedExamples.File> GetFileAsync(
+        string filename,
+        GetFileRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SeedExamples.File>(
+            GetFileAsyncCore(filename, request, options, cancellationToken)
+        );
     }
 }

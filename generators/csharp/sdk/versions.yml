@@ -1,4 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.16.0
+  changelogEntry:
+    - summary: |
+        Add support for accessing raw HTTP response data alongside typed response objects using `.WithRawResponse()`.
+
+        HTTP endpoint methods now return `WithRawResponseTask<T>`, which provides two usage patterns:
+        * **Default behavior**: Direct `await` returns just the typed data (zero-allocation fast path)
+        * **Raw response access**: Await with `.WithRawResponse()` returns both data and HTTP metadata
+
+        Example usage:
+        ```csharp
+        // Default behavior - returns just the data
+        var userData = await client.Users.GetAsync("user-123");
+
+        // Access raw response metadata
+        var result = await client.Users.GetAsync("user-123").WithRawResponse();
+        var data = result.Data;
+        var statusCode = result.RawResponse.StatusCode;  // HttpStatusCode
+        var headers = result.RawResponse.Headers;        // ResponseHeaders
+        var url = result.RawResponse.Url;                // Uri
+
+        // Access specific headers (case-insensitive)
+        if (headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            Console.WriteLine($"Request ID: {requestId}");
+        }
+
+        // Check content type and length
+        var contentType = headers.ContentType;
+        var contentLength = headers.ContentLength;
+        ```
+
+        New types:
+        * `WithRawResponseTask<T>` - Awaitable task wrapper supporting both usage patterns
+        * `WithRawResponse<T>` - Container for data + raw response metadata
+        * `RawResponse` - HTTP response metadata (status code, headers, URL)
+        * `ResponseHeaders` - Case-insensitive header collection with enumeration support
+
+        Benefits:
+        * Zero overhead when raw response access isn't needed
+        * Backward compatible - implicit conversion to `Task<T>` supported
+        * Type-safe access to HTTP metadata when debugging or logging
+        * Case-insensitive header lookups following HTTP standards
+      type: feat
+  createdAt: "2026-01-20"
+  irVersion: 62
+
 - version: 2.15.0
   changelogEntry:
     - summary: |

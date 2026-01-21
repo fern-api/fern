@@ -29,12 +29,7 @@ public partial class SeedApiClient : ISeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.SubmitFormDataAsync(
-    ///     new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
-    /// );
-    /// </code></example>
-    public async Task<PostSubmitResponse> SubmitFormDataAsync(
+    private async Task<WithRawResponse<PostSubmitResponse>> SubmitFormDataAsyncCore(
         PostSubmitRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -59,14 +54,28 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<PostSubmitResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<PostSubmitResponse>(responseBody)!;
+                return new WithRawResponse<PostSubmitResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -75,5 +84,21 @@ public partial class SeedApiClient : ISeedApiClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.SubmitFormDataAsync(
+    ///     new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<PostSubmitResponse> SubmitFormDataAsync(
+        PostSubmitRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<PostSubmitResponse>(
+            SubmitFormDataAsyncCore(request, options, cancellationToken)
+        );
     }
 }

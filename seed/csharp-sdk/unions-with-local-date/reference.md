@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">GetAsync</a>(id) -> BigUnion</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">GetAsync</a>(id) -> WithRawResponseTask&lt;BigUnion&gt;</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Bigunion.GetAsync("id");
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateAsync</a>(BigUnion { ... }) -> bool</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateAsync</a>(BigUnion { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -82,7 +82,7 @@ await client.Bigunion.UpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable&lt;BigUnion&gt; { ... }) -> Dictionary&lt;string, bool&gt;</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable&lt;BigUnion&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, bool&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -129,7 +129,7 @@ await client.Bigunion.UpdateManyAsync(
 </details>
 
 ## Types
-<details><summary><code>client.Types.<a href="/src/SeedUnions/Types/TypesClient.cs">GetAsync</a>(id) -> UnionWithTime</code></summary>
+<details><summary><code>client.Types.<a href="/src/SeedUnions/Types/TypesClient.cs">GetAsync</a>(id) -> WithRawResponseTask&lt;UnionWithTime&gt;</code></summary>
 <dl>
 <dd>
 
@@ -169,7 +169,7 @@ await client.Types.GetAsync("date-example");
 </dl>
 </details>
 
-<details><summary><code>client.Types.<a href="/src/SeedUnions/Types/TypesClient.cs">UpdateAsync</a>(UnionWithTime { ... }) -> bool</code></summary>
+<details><summary><code>client.Types.<a href="/src/SeedUnions/Types/TypesClient.cs">UpdateAsync</a>(UnionWithTime { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -210,7 +210,7 @@ await client.Types.UpdateAsync(new UnionWithTime(new UnionWithTime.Date(new Date
 </details>
 
 ## Union
-<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">GetAsync</a>(id) -> Shape</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">GetAsync</a>(id) -> WithRawResponseTask&lt;Shape&gt;</code></summary>
 <dl>
 <dd>
 
@@ -250,7 +250,7 @@ await client.Union.GetAsync("id");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">UpdateAsync</a>(Shape { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">UpdateAsync</a>(Shape { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
