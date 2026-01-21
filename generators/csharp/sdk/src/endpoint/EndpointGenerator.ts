@@ -82,7 +82,8 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             }) ?? false;
 
         // Check if rawReturn is WithRawResponseTask<T>
-        const isWithRawResponseTask = rawReturn != null && (rawReturn as any).name === "WithRawResponseTask";
+        const isWithRawResponseTask =
+            rawReturn != null && "name" in rawReturn && rawReturn.name === "WithRawResponseTask";
 
         // For interface methods:
         // - Streaming endpoints return IAsyncEnumerable<T> directly (async iterator pattern)

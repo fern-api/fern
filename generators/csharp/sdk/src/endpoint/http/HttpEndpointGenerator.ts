@@ -126,7 +126,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         // - Public method is non-async and returns WithRawResponseTask<T>
         // - Private "Core" method is async and contains the actual implementation
         // - No exception handler wrapping (Core method handles it)
-        const isWithRawResponseTask = return_ != null && (return_ as any).name === "WithRawResponseTask";
+        const isWithRawResponseTask = return_ != null && "name" in return_ && return_.name === "WithRawResponseTask";
 
         const body = this.csharp.codeblock((writer) => {
             if (isWithRawResponseTask) {
