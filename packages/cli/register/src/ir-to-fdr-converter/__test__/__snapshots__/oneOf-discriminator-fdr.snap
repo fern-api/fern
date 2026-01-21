@@ -72,7 +72,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": undefined,
+              "name": "oneOfExamplesOneOfExampleExample",
               "path": "/oneOf/discriminator",
               "pathParameters": {},
               "queryParameters": {},

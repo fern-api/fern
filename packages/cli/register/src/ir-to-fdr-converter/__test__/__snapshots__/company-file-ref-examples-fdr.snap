@@ -20,7 +20,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "createACompanyExample",
             "path": "/companies",
             "pathParameters": {},
             "queryParameters": {},

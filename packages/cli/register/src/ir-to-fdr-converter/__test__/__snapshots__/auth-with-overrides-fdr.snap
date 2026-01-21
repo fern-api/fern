@@ -79,7 +79,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": undefined,
+              "name": "listExample",
               "path": "/users",
               "pathParameters": {},
               "queryParameters": {},
@@ -203,7 +203,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": undefined,
+              "name": "getExample",
               "path": "/users/id",
               "pathParameters": {
                 "id": "id",

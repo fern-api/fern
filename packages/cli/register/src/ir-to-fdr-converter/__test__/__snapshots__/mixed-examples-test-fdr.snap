@@ -20,7 +20,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "Successfully created user",
             "path": "/user",
             "pathParameters": {},
             "queryParameters": {},
@@ -162,7 +162,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "getProductExample",
             "path": "/product/productId",
             "pathParameters": {
               "productId": "productId",

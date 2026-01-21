@@ -165,7 +165,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": undefined,
+              "name": "sessionsCreateSessionExample",
               "path": "/sessions/create",
               "pathParameters": {},
               "queryParameters": {},

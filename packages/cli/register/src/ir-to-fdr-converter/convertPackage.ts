@@ -957,7 +957,7 @@ function convertV2HttpEndpointExample({
 
     const responseBodyValue = example.response?.body != null ? example.response.body.value : undefined;
     return {
-        name: shouldUseExampleName ? exampleName : undefined,
+        name: example.displayName ?? (shouldUseExampleName ? exampleName : undefined),
         description: "",
         path: example.request?.endpoint.path ?? "",
         pathParameters: example.request?.pathParameters ?? {},

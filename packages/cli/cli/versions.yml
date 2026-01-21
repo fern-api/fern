@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI example summary not appearing as tab titles in API reference docs. The `displayName` (derived from OpenAPI `summary` field) is now always preserved in FDR output, even when there's only one example per status code. Previously, example names were only shown when multiple examples had the same status code.
+      type: fix
+  createdAt: "2026-01-21"
+  irVersion: 63
+
 - version: 3.48.1
   changelogEntry:
     - summary: |

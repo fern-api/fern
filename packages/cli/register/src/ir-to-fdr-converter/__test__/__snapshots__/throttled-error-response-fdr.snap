@@ -67,7 +67,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "getResourceExample",
             "path": "/api/resource",
             "pathParameters": {},
             "queryParameters": {},
