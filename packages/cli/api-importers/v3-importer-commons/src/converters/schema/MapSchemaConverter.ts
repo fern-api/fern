@@ -8,6 +8,8 @@ import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 export declare namespace MapSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
         schemaOrReferenceOrBoolean: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
+        minProperties?: number;
+        maxProperties?: number;
     }
 
     export interface Output {
@@ -19,10 +21,20 @@ export declare namespace MapSchemaConverter {
 
 export class MapSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, MapSchemaConverter.Output> {
     private readonly schemaOrReferenceOrBoolean: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
+    private readonly minProperties: number | undefined;
+    private readonly maxProperties: number | undefined;
 
-    constructor({ context, breadcrumbs, schemaOrReferenceOrBoolean }: MapSchemaConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        schemaOrReferenceOrBoolean,
+        minProperties,
+        maxProperties
+    }: MapSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schemaOrReferenceOrBoolean = schemaOrReferenceOrBoolean;
+        this.minProperties = minProperties;
+        this.maxProperties = maxProperties;
     }
     public convert(): MapSchemaConverter.Output | undefined {
         const maybeUnknownMap = this.tryConvertUnknownMap();
@@ -44,8 +56,8 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
                 ContainerType.map({
                     keyType: AbstractConverter.STRING,
                     valueType: TypeReference.unknown(),
-                    minProperties: undefined,
-                    maxProperties: undefined
+                    minProperties: this.minProperties,
+                    maxProperties: this.maxProperties
                 })
             );
             return {
@@ -77,8 +89,8 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
                 ContainerType.map({
                     keyType: AbstractConverter.STRING,
                     valueType: convertedAdditionalProperties.type,
-                    minProperties: undefined,
-                    maxProperties: undefined
+                    minProperties: this.minProperties,
+                    maxProperties: this.maxProperties
                 })
             );
             const referencedTypes = new Set<string>();

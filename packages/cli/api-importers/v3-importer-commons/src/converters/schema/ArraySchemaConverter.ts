@@ -62,8 +62,8 @@ export class ArraySchemaConverter extends AbstractConverter<
                     typeReference: TypeReference.container(
                         ContainerType.list({
                             list: convertedSchema.type,
-                            minItems: undefined,
-                            maxItems: undefined
+                            minItems: this.schema.minItems,
+                            maxItems: this.schema.maxItems
                         })
                     ),
                     referencedTypes,
