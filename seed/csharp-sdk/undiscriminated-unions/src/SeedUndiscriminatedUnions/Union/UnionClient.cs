@@ -13,19 +13,18 @@ public partial class UnionClient : IUnionClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Union.GetAsync("string");
-    /// </code></example>
-    public async Task<
-        OneOf<
-            string,
-            IEnumerable<string>,
-            int,
-            IEnumerable<int>,
-            IEnumerable<IEnumerable<int>>,
-            HashSet<string>
+    private async Task<
+        WithRawResponse<
+            OneOf<
+                string,
+                IEnumerable<string>,
+                int,
+                IEnumerable<int>,
+                IEnumerable<IEnumerable<int>>,
+                HashSet<string>
+            >
         >
-    > GetAsync(
+    > GetAsyncCore(
         OneOf<
             string,
             IEnumerable<string>,
@@ -56,7 +55,7 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<
+                var responseData = JsonUtils.Deserialize<
                     OneOf<
                         string,
                         IEnumerable<string>,
@@ -66,13 +65,36 @@ public partial class UnionClient : IUnionClient
                         HashSet<string>
                     >
                 >(responseBody)!;
+                return new WithRawResponse<
+                    OneOf<
+                        string,
+                        IEnumerable<string>,
+                        int,
+                        IEnumerable<int>,
+                        IEnumerable<IEnumerable<int>>,
+                        HashSet<string>
+                    >
+                >()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUndiscriminatedUnionsApiException(
@@ -83,10 +105,9 @@ public partial class UnionClient : IUnionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Union.GetMetadataAsync();
-    /// </code></example>
-    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
+    private async Task<
+        WithRawResponse<Dictionary<OneOf<KeyType, string>, string>>
+    > GetMetadataAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -108,16 +129,30 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
-                    responseBody
-                )!;
+                var responseData = JsonUtils.Deserialize<
+                    Dictionary<OneOf<KeyType, string>, string>
+                >(responseBody)!;
+                return new WithRawResponse<Dictionary<OneOf<KeyType, string>, string>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUndiscriminatedUnionsApiException(
@@ -128,18 +163,7 @@ public partial class UnionClient : IUnionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Union.UpdateMetadataAsync(
-    ///     new Dictionary&lt;string, object?&gt;()
-    ///     {
-    ///         {
-    ///             "string",
-    ///             new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<bool> UpdateMetadataAsync(
+    private async Task<WithRawResponse<bool>> UpdateMetadataAsyncCore(
         OneOf<Dictionary<string, object?>?, NamedMetadata> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -163,14 +187,28 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
+                return new WithRawResponse<bool>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUndiscriminatedUnionsApiException(
@@ -181,21 +219,7 @@ public partial class UnionClient : IUnionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Union.CallAsync(
-    ///     new Request
-    ///     {
-    ///         Union = new Dictionary&lt;string, object?&gt;()
-    ///         {
-    ///             {
-    ///                 "string",
-    ///                 new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
-    ///             },
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<bool> CallAsync(
+    private async Task<WithRawResponse<bool>> CallAsyncCore(
         Request request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -219,14 +243,28 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
+                return new WithRawResponse<bool>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUndiscriminatedUnionsApiException(
@@ -237,12 +275,9 @@ public partial class UnionClient : IUnionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Union.DuplicateTypesUnionAsync("string");
-    /// </code></example>
-    public async Task<
-        OneOf<string, IEnumerable<string>, int, HashSet<string>>
-    > DuplicateTypesUnionAsync(
+    private async Task<
+        WithRawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>
+    > DuplicateTypesUnionAsyncCore(
         OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -266,16 +301,32 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<
+                var responseData = JsonUtils.Deserialize<
                     OneOf<string, IEnumerable<string>, int, HashSet<string>>
                 >(responseBody)!;
+                return new WithRawResponse<
+                    OneOf<string, IEnumerable<string>, int, HashSet<string>>
+                >()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUndiscriminatedUnionsApiException(
@@ -286,10 +337,7 @@ public partial class UnionClient : IUnionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Union.NestedUnionsAsync("string");
-    /// </code></example>
-    public async Task<string> NestedUnionsAsync(
+    private async Task<WithRawResponse<string>> NestedUnionsAsyncCore(
         OneOf<
             string,
             IEnumerable<string>,
@@ -322,14 +370,28 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUndiscriminatedUnionsApiException(
@@ -340,15 +402,7 @@ public partial class UnionClient : IUnionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Union.TestCamelCasePropertiesAsync(
-    ///     new PaymentRequest
-    ///     {
-    ///         PaymentMethod = new TokenizeCard { Method = "card", CardNumber = "1234567890123456" },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<string> TestCamelCasePropertiesAsync(
+    private async Task<WithRawResponse<string>> TestCamelCasePropertiesAsyncCore(
         PaymentRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -372,14 +426,28 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUndiscriminatedUnionsApiException(
@@ -388,5 +456,158 @@ public partial class UnionClient : IUnionClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Union.GetAsync("string");
+    /// </code></example>
+    public WithRawResponseTask<
+        OneOf<
+            string,
+            IEnumerable<string>,
+            int,
+            IEnumerable<int>,
+            IEnumerable<IEnumerable<int>>,
+            HashSet<string>
+        >
+    > GetAsync(
+        OneOf<
+            string,
+            IEnumerable<string>,
+            int,
+            IEnumerable<int>,
+            IEnumerable<IEnumerable<int>>,
+            HashSet<string>
+        > request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<
+            OneOf<
+                string,
+                IEnumerable<string>,
+                int,
+                IEnumerable<int>,
+                IEnumerable<IEnumerable<int>>,
+                HashSet<string>
+            >
+        >(GetAsyncCore(request, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Union.GetMetadataAsync();
+    /// </code></example>
+    public WithRawResponseTask<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Dictionary<OneOf<KeyType, string>, string>>(
+            GetMetadataAsyncCore(options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Union.UpdateMetadataAsync(
+    ///     new Dictionary&lt;string, object?&gt;()
+    ///     {
+    ///         {
+    ///             "string",
+    ///             new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<bool> UpdateMetadataAsync(
+        OneOf<Dictionary<string, object?>?, NamedMetadata> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<bool>(
+            UpdateMetadataAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Union.CallAsync(
+    ///     new Request
+    ///     {
+    ///         Union = new Dictionary&lt;string, object?&gt;()
+    ///         {
+    ///             {
+    ///                 "string",
+    ///                 new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<bool> CallAsync(
+        Request request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<bool>(CallAsyncCore(request, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Union.DuplicateTypesUnionAsync("string");
+    /// </code></example>
+    public WithRawResponseTask<
+        OneOf<string, IEnumerable<string>, int, HashSet<string>>
+    > DuplicateTypesUnionAsync(
+        OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<OneOf<string, IEnumerable<string>, int, HashSet<string>>>(
+            DuplicateTypesUnionAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Union.NestedUnionsAsync("string");
+    /// </code></example>
+    public WithRawResponseTask<string> NestedUnionsAsync(
+        OneOf<
+            string,
+            IEnumerable<string>,
+            OneOf<
+                int,
+                HashSet<string>,
+                IEnumerable<string>,
+                OneOf<bool, HashSet<string>, IEnumerable<string>>
+            >
+        > request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            NestedUnionsAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Union.TestCamelCasePropertiesAsync(
+    ///     new PaymentRequest
+    ///     {
+    ///         PaymentMethod = new TokenizeCard { Method = "card", CardNumber = "1234567890123456" },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<string> TestCamelCasePropertiesAsync(
+        PaymentRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            TestCamelCasePropertiesAsyncCore(request, options, cancellationToken)
+        );
     }
 }

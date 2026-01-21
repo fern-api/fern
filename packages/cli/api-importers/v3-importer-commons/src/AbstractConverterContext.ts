@@ -442,17 +442,18 @@ export abstract class AbstractConverterContext<Spec extends object> {
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
         breadcrumbs: string[];
         defaultExampleName?: string;
-    }): Array<[string, unknown]> {
+    }): Array<[string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject]> {
         if (mediaTypeObject == null) {
             return [];
         }
-        const examples: Array<[string, unknown]> = [];
+        const examples: Array<[string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject]> = [];
         if (mediaTypeObject.example != null) {
             const exampleName = this.generateUniqueName({
                 prefix: defaultExampleName ?? `${breadcrumbs.join("_")}_example`,
                 existingNames: []
             });
-            examples.push([exampleName, mediaTypeObject.example]);
+            // Wrap raw example value in an ExampleObject structure
+            examples.push([exampleName, { value: mediaTypeObject.example }]);
         }
         if (mediaTypeObject.examples != null) {
             examples.push(...Object.entries(mediaTypeObject.examples));
@@ -481,6 +482,49 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return resolved.value;
         }
         return schemaOrReference;
+    }
+
+    /**
+     * Resolves an example reference recursively until we get a non-reference object.
+     * This handles cases where an example in components/examples itself references another example.
+     * @param example The example object or reference to resolve
+     * @param breadcrumbs Path for error reporting
+     * @param maxDepth Maximum recursion depth to prevent infinite loops (default: 10)
+     * @returns The resolved example object, or undefined if resolution fails
+     */
+    public resolveExampleRecursively({
+        example,
+        breadcrumbs,
+        maxDepth = 10
+    }: {
+        example: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject;
+        breadcrumbs: string[];
+        maxDepth?: number;
+    }): OpenAPIV3_1.ExampleObject | undefined {
+        let current: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject = example;
+        let depth = 0;
+
+        while (this.isReferenceObject(current)) {
+            if (depth >= maxDepth) {
+                this.errorCollector.collect({
+                    message: `Maximum reference depth (${maxDepth}) exceeded while resolving example reference`,
+                    path: breadcrumbs
+                });
+                return undefined;
+            }
+            const resolved = this.resolveReference<OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject>({
+                reference: current,
+                breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            current = resolved.value;
+            depth++;
+        }
+
+        return current;
     }
 
     public resolveExample(example: unknown): unknown {
@@ -719,7 +763,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isExampleWithSummary(example: unknown): example is { summary: string } {
-        return typeof example === "object" && example != null && "summary" in example;
+        return (
+            typeof example === "object" &&
+            example != null &&
+            "summary" in example &&
+            typeof (example as { summary: unknown }).summary === "string" &&
+            (example as { summary: string }).summary.length > 0
+        );
     }
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {

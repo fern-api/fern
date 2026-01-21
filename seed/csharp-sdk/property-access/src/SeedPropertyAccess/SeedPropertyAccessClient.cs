@@ -29,23 +29,7 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.CreateUserAsync(
-    ///     new User
-    ///     {
-    ///         Id = "id",
-    ///         Email = "email",
-    ///         Password = "password",
-    ///         Profile = new UserProfile
-    ///         {
-    ///             Name = "name",
-    ///             Verification = new UserProfileVerification { Verified = "verified" },
-    ///             Ssn = "ssn",
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<User> CreateUserAsync(
+    private async Task<WithRawResponse<User>> CreateUserAsyncCore(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -69,14 +53,28 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPropertyAccessException("Failed to deserialize response", e);
+                throw new SeedPropertyAccessApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPropertyAccessApiException(
@@ -85,5 +83,32 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.CreateUserAsync(
+    ///     new User
+    ///     {
+    ///         Id = "id",
+    ///         Email = "email",
+    ///         Password = "password",
+    ///         Profile = new UserProfile
+    ///         {
+    ///             Name = "name",
+    ///             Verification = new UserProfileVerification { Verified = "verified" },
+    ///             Ssn = "ssn",
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<User> CreateUserAsync(
+        User request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            CreateUserAsyncCore(request, options, cancellationToken)
+        );
     }
 }

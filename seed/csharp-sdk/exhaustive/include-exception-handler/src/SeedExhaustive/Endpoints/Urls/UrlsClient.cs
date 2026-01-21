@@ -21,10 +21,7 @@ public partial class UrlsClient : IUrlsClient
         }
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Urls.WithMixedCaseAsync();
-    /// </code></example>
-    public async Task<string> WithMixedCaseAsync(
+    private async Task<WithRawResponse<string>> WithMixedCaseAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -49,14 +46,30 @@ public partial class UrlsClient : IUrlsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -69,10 +82,7 @@ public partial class UrlsClient : IUrlsClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Urls.NoEndingSlashAsync();
-    /// </code></example>
-    public async Task<string> NoEndingSlashAsync(
+    private async Task<WithRawResponse<string>> NoEndingSlashAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -97,14 +107,30 @@ public partial class UrlsClient : IUrlsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -117,10 +143,7 @@ public partial class UrlsClient : IUrlsClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Urls.WithEndingSlashAsync();
-    /// </code></example>
-    public async Task<string> WithEndingSlashAsync(
+    private async Task<WithRawResponse<string>> WithEndingSlashAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -145,14 +168,30 @@ public partial class UrlsClient : IUrlsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -165,10 +204,7 @@ public partial class UrlsClient : IUrlsClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Urls.WithUnderscoresAsync();
-    /// </code></example>
-    public async Task<string> WithUnderscoresAsync(
+    private async Task<WithRawResponse<string>> WithUnderscoresAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -193,14 +229,30 @@ public partial class UrlsClient : IUrlsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -211,5 +263,53 @@ public partial class UrlsClient : IUrlsClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Urls.WithMixedCaseAsync();
+    /// </code></example>
+    public WithRawResponseTask<string> WithMixedCaseAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(WithMixedCaseAsyncCore(options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Urls.NoEndingSlashAsync();
+    /// </code></example>
+    public WithRawResponseTask<string> NoEndingSlashAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(NoEndingSlashAsyncCore(options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Urls.WithEndingSlashAsync();
+    /// </code></example>
+    public WithRawResponseTask<string> WithEndingSlashAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            WithEndingSlashAsyncCore(options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Urls.WithUnderscoresAsync();
+    /// </code></example>
+    public WithRawResponseTask<string> WithUnderscoresAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            WithUnderscoresAsyncCore(options, cancellationToken)
+        );
     }
 }

@@ -102,6 +102,10 @@ export class ClientConfigGenerator {
         const environmentEnumName = this.getEnvironmentEnumName();
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
 
+        // Platform headers for Fern SDK identification
+        const sdkName = this.context.getCrateName();
+        const sdkVersion = this.context.getCrateVersion();
+
         const defaultMethod = rust.method({
             name: "default",
             parameters: [],
@@ -149,7 +153,13 @@ export class ClientConfigGenerator {
                     },
                     {
                         name: "custom_headers",
-                        value: Expression.functionCall("HashMap::new", [])
+                        value: Expression.raw(
+                            `HashMap::from([
+            ("X-Fern-Language".to_string(), "Rust".to_string()),
+            ("X-Fern-SDK-Name".to_string(), "${sdkName}".to_string()),
+            ("X-Fern-SDK-Version".to_string(), "${sdkVersion}".to_string()),
+        ])`
+                        )
                     },
                     {
                         name: "user_agent",

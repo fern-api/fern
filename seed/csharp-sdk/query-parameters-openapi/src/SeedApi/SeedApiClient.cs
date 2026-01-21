@@ -29,68 +29,7 @@ public partial class SeedApiClient : ISeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.SearchAsync(
-    ///     new SearchRequest
-    ///     {
-    ///         Limit = 1,
-    ///         Id = "id",
-    ///         Date = new DateOnly(2023, 1, 15),
-    ///         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         Bytes = "bytes",
-    ///         User = new User
-    ///         {
-    ///             Name = "name",
-    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///         },
-    ///         UserList =
-    ///         [
-    ///             new User
-    ///             {
-    ///                 Name = "name",
-    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///             },
-    ///         ],
-    ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         KeyValue = new Dictionary&lt;string, string&gt;() { { "keyValue", "keyValue" } },
-    ///         OptionalString = "optionalString",
-    ///         NestedUser = new NestedUser
-    ///         {
-    ///             Name = "name",
-    ///             User = new User
-    ///             {
-    ///                 Name = "name",
-    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///             },
-    ///         },
-    ///         OptionalUser = new User
-    ///         {
-    ///             Name = "name",
-    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///         },
-    ///         ExcludeUser =
-    ///         [
-    ///             new User
-    ///             {
-    ///                 Name = "name",
-    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///             },
-    ///         ],
-    ///         Filter = ["filter"],
-    ///         Neighbor = new User
-    ///         {
-    ///             Name = "name",
-    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///         },
-    ///         NeighborRequired = new User
-    ///         {
-    ///             Name = "name",
-    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<SearchResponse> SearchAsync(
+    private async Task<WithRawResponse<SearchResponse>> SearchAsyncCore(
         SearchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -155,14 +94,28 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SearchResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<SearchResponse>(responseBody)!;
+                return new WithRawResponse<SearchResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -171,5 +124,77 @@ public partial class SeedApiClient : ISeedApiClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.SearchAsync(
+    ///     new SearchRequest
+    ///     {
+    ///         Limit = 1,
+    ///         Id = "id",
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Bytes = "bytes",
+    ///         User = new User
+    ///         {
+    ///             Name = "name",
+    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         },
+    ///         UserList =
+    ///         [
+    ///             new User
+    ///             {
+    ///                 Name = "name",
+    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///             },
+    ///         ],
+    ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         KeyValue = new Dictionary&lt;string, string&gt;() { { "keyValue", "keyValue" } },
+    ///         OptionalString = "optionalString",
+    ///         NestedUser = new NestedUser
+    ///         {
+    ///             Name = "name",
+    ///             User = new User
+    ///             {
+    ///                 Name = "name",
+    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///             },
+    ///         },
+    ///         OptionalUser = new User
+    ///         {
+    ///             Name = "name",
+    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         },
+    ///         ExcludeUser =
+    ///         [
+    ///             new User
+    ///             {
+    ///                 Name = "name",
+    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///             },
+    ///         ],
+    ///         Filter = ["filter"],
+    ///         Neighbor = new User
+    ///         {
+    ///             Name = "name",
+    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         },
+    ///         NeighborRequired = new User
+    ///         {
+    ///             Name = "name",
+    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SearchResponse> SearchAsync(
+        SearchRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SearchResponse>(
+            SearchAsyncCore(request, options, cancellationToken)
+        );
     }
 }

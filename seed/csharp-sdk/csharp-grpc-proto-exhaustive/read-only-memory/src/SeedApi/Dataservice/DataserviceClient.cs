@@ -12,10 +12,7 @@ public partial class DataserviceClient : IDataserviceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Dataservice.FooAsync();
-    /// </code></example>
-    public async Task<Dictionary<string, object?>> FooAsync(
+    private async Task<WithRawResponse<Dictionary<string, object?>>> FooAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -37,14 +34,30 @@ public partial class DataserviceClient : IDataserviceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Dictionary<string, object?>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Dictionary<string, object?>>(
+                    responseBody
+                )!;
+                return new WithRawResponse<Dictionary<string, object?>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -53,5 +66,18 @@ public partial class DataserviceClient : IDataserviceClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Dataservice.FooAsync();
+    /// </code></example>
+    public WithRawResponseTask<Dictionary<string, object?>> FooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Dictionary<string, object?>>(
+            FooAsyncCore(options, cancellationToken)
+        );
     }
 }

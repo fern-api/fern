@@ -2,12 +2,12 @@ namespace SeedAnyAuth;
 
 public partial interface IUserClient
 {
-    Task<IEnumerable<User>> GetAsync(
+    WithRawResponseTask<IEnumerable<User>> GetAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> GetAdminsAsync(
+    WithRawResponseTask<IEnumerable<User>> GetAdminsAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

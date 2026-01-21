@@ -4,12 +4,12 @@ namespace SeedHttpHead;
 
 public partial interface IUserClient
 {
-    Task<HttpResponseHeaders> HeadAsync(
+    WithRawResponseTask<HttpResponseHeaders> HeadAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> ListAsync(
+    WithRawResponseTask<IEnumerable<User>> ListAsync(
         ListUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
