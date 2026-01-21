@@ -2,6 +2,7 @@
 "/"
 "/just-file"
 "/just-file-with-query-params"
+"/just-file-with-optional-query-params"
 "/with-content-type"
 "/with-form-encoding"
 "/"
