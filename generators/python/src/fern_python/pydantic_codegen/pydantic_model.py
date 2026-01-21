@@ -477,7 +477,7 @@ class PydanticModel:
             writer.write_line("")
             writer.write("@")
             writer.write_reference(Pydantic(self._version).root_validator())
-            writer.write_line("(pre=True)")
+            writer.write_line("(pre=True)  # type: ignore[override]")
             writer.write("def _parse_nested_json_strings(cls, values: ")
             writer.write_reference(
                 AST.ClassReference(
