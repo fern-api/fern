@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.48.2
+  changelogEntry:
+    - summary: |
+        Automatically parse JSON strings for nested object fields in Pydantic models.
+        This fixes SSE event parsing where nested objects arrive as JSON strings over the wire.
+        The model validator now attempts to parse string values that look like JSON objects or arrays
+        before Pydantic validation, allowing proper deserialization without manual intervention.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 62
+
 - version: 4.48.1
   changelogEntry:
     - summary: |

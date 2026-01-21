@@ -3,6 +3,7 @@
 # nopycln: file
 import datetime as dt
 import inspect
+import json
 from collections import defaultdict
 from typing import Any, Callable, ClassVar, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
@@ -35,6 +36,23 @@ from typing_extensions import TypeAlias
 
 T = TypeVar("T")
 Model = TypeVar("Model", bound=pydantic.BaseModel)
+
+
+def _maybe_parse_json_string(value: Any) -> Any:
+    """
+    Attempt to parse a string value as JSON if it looks like a JSON object or array.
+    This handles cases where nested objects are sent as JSON strings over the wire
+    (e.g., in SSE events where the data field contains a stringified JSON object).
+    """
+    if isinstance(value, str):
+        try:
+            # Only attempt to parse if it looks like JSON (starts with { or [)
+            stripped = value.strip()
+            if stripped.startswith(("{", "[")):
+                return json.loads(value)
+        except (json.JSONDecodeError, ValueError):
+            pass
+    return value
 
 
 def parse_obj_as(type_: Type[T], object_: Any) -> T:
@@ -124,6 +142,10 @@ class UniversalBaseModel(pydantic.BaseModel):
                 if alias != name and name in original_keys and alias not in rewritten:
                     rewritten[alias] = rewritten.pop(name)
 
+            # Parse JSON strings for fields that expect objects
+            for key in rewritten:
+                rewritten[key] = _maybe_parse_json_string(rewritten[key])
+
             return rewritten
 
         @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
@@ -169,6 +191,10 @@ class UniversalBaseModel(pydantic.BaseModel):
             for name, alias in name_to_alias.items():
                 if alias != name and name in original_keys and alias not in rewritten:
                     rewritten[alias] = rewritten.pop(name)
+
+            # Parse JSON strings for fields that expect objects
+            for key in rewritten:
+                rewritten[key] = _maybe_parse_json_string(rewritten[key])
 
             return rewritten
 
