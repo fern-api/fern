@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.15.0
+  changelogEntry:
+    - summary: |
+        Add platform headers (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version) to all HTTP
+        requests. These headers help identify SDK usage and version for API analytics and debugging.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 62
+
 - version: 0.14.3
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.

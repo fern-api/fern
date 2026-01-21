@@ -13,8 +13,8 @@ export type YamlPath = ReadonlyArray<string | number>;
  * Wraps a parsed YAML Document to provide source location lookups.
  */
 export class YamlDocument {
-    private readonly absoluteFilePath: AbsoluteFilePath;
-    private readonly relativeFilePath: RelativeFilePath;
+    public readonly absoluteFilePath: AbsoluteFilePath;
+    public readonly relativeFilePath: RelativeFilePath;
     private readonly document: Document;
     private readonly source: string;
 

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">CreateAsync</a>(CreateRequest { ... }) -> Type</code></summary>
+<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">CreateAsync</a>(CreateRequest { ... }) -> WithRawResponseTask&lt;Type&gt;</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ await client.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">GetAsync</a>(GetRequest { ... }) -> Type</code></summary>
+<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">GetAsync</a>(GetRequest { ... }) -> WithRawResponseTask&lt;Type&gt;</code></summary>
 <dl>
 <dd>
 

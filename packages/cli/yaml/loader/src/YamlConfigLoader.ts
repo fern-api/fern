@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import type { Sourced } from "@fern-api/source";
 import { z } from "zod";
+import { ReferenceResolver } from "./ReferenceResolver";
 import { ValidationIssue } from "./ValidationIssue";
 import type { YamlDocument } from "./YamlDocument";
 import { YamlParser } from "./YamlParser";
@@ -31,10 +32,12 @@ export namespace YamlConfigLoader {
 export class YamlConfigLoader {
     private readonly parser: YamlParser;
     private readonly cwd: AbsoluteFilePath;
+    private readonly referenceResolver: ReferenceResolver;
 
     constructor({ cwd }: { cwd: AbsoluteFilePath }) {
         this.parser = new YamlParser();
         this.cwd = cwd;
+        this.referenceResolver = new ReferenceResolver({ cwd });
     }
 
     /**
@@ -42,6 +45,7 @@ export class YamlConfigLoader {
      *
      * @param absoluteFilePath - The absolute path to the YAML file.
      * @param schema - The zod schema to validate against.
+     * @param resolveReferences - Whether to resolve `$ref` references before validation (default: true).
      * @returns Result with either the parsed config (both plain and sourced) or validation errors.
      *
      * @example
@@ -56,14 +60,22 @@ export class YamlConfigLoader {
      */
     public async load<S extends z.ZodSchema>({
         absoluteFilePath,
-        schema
+        schema,
+        resolveReferences = true
     }: {
         absoluteFilePath: AbsoluteFilePath;
         schema: S;
+        resolveReferences?: boolean;
     }): Promise<YamlConfigLoader.Result<z.infer<S>>> {
         const document = await this.parseDocument(absoluteFilePath);
-
-        const parseResult = schema.safeParse(document.toJS());
+        const resolved = await this.resolveReferences({ document, resolveReferences });
+        if (!resolved.success) {
+            return {
+                success: false,
+                issues: resolved.issues
+            };
+        }
+        const parseResult = schema.safeParse(resolved.data);
         if (!parseResult.success) {
             const issues = parseResult.error.issues.map((issue) => {
                 // Zod paths are PropertyKey[] but YAML paths are string | number
@@ -71,7 +83,11 @@ export class YamlConfigLoader {
                 return new ValidationIssue({
                     yamlPath,
                     message: this.formatZodIssue(issue),
-                    location: document.getSourceLocation(yamlPath)
+                    location: this.referenceResolver.getSourceLocationWithMappings({
+                        document,
+                        pathMappings: resolved.pathMappings,
+                        yamlPath
+                    })
                 });
             });
 
@@ -80,12 +96,11 @@ export class YamlConfigLoader {
                 issues
             };
         }
-
-        const resolver = new YamlSourceResolver(document);
+        const sourceResolver = new YamlSourceResolver(document);
         return {
             success: true,
             data: parseResult.data,
-            sourced: resolver.toSourced(parseResult.data),
+            sourced: sourceResolver.toSourced(parseResult.data),
             absoluteFilePath,
             relativeFilePath: RelativeFilePath.of(relative(this.cwd, absoluteFilePath))
         };
@@ -99,6 +114,30 @@ export class YamlConfigLoader {
                 `Failed to parse YAML file ${absoluteFilePath}: ${err instanceof Error ? err.message : String(err)}`
             );
         }
+    }
+
+    private async resolveReferences({
+        document,
+        resolveReferences
+    }: {
+        document: YamlDocument;
+        resolveReferences: boolean;
+    }): Promise<ReferenceResolver.Result> {
+        if (!resolveReferences) {
+            return {
+                success: true,
+                data: document.toJS(),
+                pathMappings: []
+            };
+        }
+        const resolveResult = await this.referenceResolver.resolve({ document });
+        if (!resolveResult.success) {
+            return {
+                success: false,
+                issues: resolveResult.issues
+            };
+        }
+        return resolveResult;
     }
 
     private formatZodIssue(issue: z.core.$ZodIssue): string {

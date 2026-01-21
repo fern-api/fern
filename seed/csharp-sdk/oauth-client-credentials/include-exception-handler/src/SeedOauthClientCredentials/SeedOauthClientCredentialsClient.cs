@@ -27,7 +27,7 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
             );
             clientOptions ??= new ClientOptions();
             clientOptions.ExceptionHandler = new ExceptionHandler(
-                new SeedOauthClientCredentialsExceptionInterceptor()
+                new SeedOauthClientCredentialsExceptionInterceptor(clientOptions)
             );
             foreach (var header in defaultHeaders)
             {
@@ -53,7 +53,7 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
         }
         catch (Exception ex)
         {
-            var interceptor = new SeedOauthClientCredentialsExceptionInterceptor();
+            var interceptor = new SeedOauthClientCredentialsExceptionInterceptor(clientOptions);
             interceptor.Intercept(ex);
             throw;
         }

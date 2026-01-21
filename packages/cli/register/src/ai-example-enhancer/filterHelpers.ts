@@ -1,4 +1,62 @@
 /**
+ * Checks if a value looks like an FDR typed value wrapper (has `type` and/or `value` properties).
+ * These wrappers are used internally but should be unwrapped for x-fern-examples.
+ */
+export function isFdrTypedValueWrapper(value: unknown): value is { type?: string; value?: unknown } {
+    if (value === null || value === undefined || typeof value !== "object" || Array.isArray(value)) {
+        return false;
+    }
+    const obj = value as Record<string, unknown>;
+    const keys = Object.keys(obj);
+    if (keys.length === 0 || keys.length > 2) {
+        return false;
+    }
+    const hasType = "type" in obj && typeof obj.type === "string";
+    const hasValue = "value" in obj;
+    return (
+        (hasType && keys.length === 1) || (hasType && hasValue && keys.length === 2) || (hasValue && keys.length === 1)
+    );
+}
+
+/**
+ * Unwraps FDR typed value wrappers from an example body.
+ * Converts structures like `{ "file": { "type": "filename", "value": "test.wav" } }`
+ * to plain values like `{ "file": "test.wav" }`.
+ * This is needed because x-fern-examples expects plain values, not the internal FDR structure.
+ */
+export function unwrapExampleValue(value: unknown): unknown {
+    if (value === null || value === undefined) {
+        return value;
+    }
+
+    if (Array.isArray(value)) {
+        return value.map(unwrapExampleValue);
+    }
+
+    if (typeof value !== "object") {
+        return value;
+    }
+
+    const obj = value as Record<string, unknown>;
+
+    if (isFdrTypedValueWrapper(obj)) {
+        if ("value" in obj) {
+            return unwrapExampleValue(obj.value);
+        }
+        return undefined;
+    }
+
+    const result: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(obj)) {
+        const unwrapped = unwrapExampleValue(val);
+        if (unwrapped !== undefined) {
+            result[key] = unwrapped;
+        }
+    }
+    return result;
+}
+
+/**
  * Checks if a value is an empty object (i.e., {})
  */
 export function isEmptyObject(value: unknown): boolean {

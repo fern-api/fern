@@ -2,25 +2,25 @@ namespace SeedExamples;
 
 public partial interface IServiceClient
 {
-    Task<Movie> GetMovieAsync(
+    WithRawResponseTask<Movie> GetMovieAsync(
         string movieId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> CreateMovieAsync(
+    WithRawResponseTask<string> CreateMovieAsync(
         Movie request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Metadata> GetMetadataAsync(
+    WithRawResponseTask<Metadata> GetMetadataAsync(
         GetMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Response> CreateBigEntityAsync(
+    WithRawResponseTask<Response> CreateBigEntityAsync(
         BigEntity request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

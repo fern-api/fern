@@ -12,10 +12,7 @@ public partial class RetriesClient : IRetriesClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Retries.GetUsersAsync();
-    /// </code></example>
-    public async Task<IEnumerable<User>> GetUsersAsync(
+    private async Task<WithRawResponse<IEnumerable<User>>> GetUsersAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -37,14 +34,28 @@ public partial class RetriesClient : IRetriesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<User>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedNoRetriesException("Failed to deserialize response", e);
+                throw new SeedNoRetriesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedNoRetriesApiException(
@@ -53,5 +64,18 @@ public partial class RetriesClient : IRetriesClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Retries.GetUsersAsync();
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<User>> GetUsersAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<User>>(
+            GetUsersAsyncCore(options, cancellationToken)
+        );
     }
 }

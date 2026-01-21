@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">EchoAsync</a>(string { ... }) -> string</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">EchoAsync</a>(string { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf&lt;BasicType, ComplexType&gt; { ... }) -> Identifier</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf&lt;BasicType, ComplexType&gt; { ... }) -> WithRawResponseTask&lt;Identifier&gt;</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ await client.CreateTypeAsync(BasicType.Primitive);
 </details>
 
 ## File Notification Service
-<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> Exception</code></summary>
+<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> WithRawResponseTask&lt;Exception&gt;</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x")
 </details>
 
 ## File Service
-<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, GetFileRequest { ... }) -> File</code></summary>
+<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, GetFileRequest { ... }) -> WithRawResponseTask&lt;File&gt;</code></summary>
 <dl>
 <dd>
 
@@ -241,7 +241,7 @@ await client.Health.Service.CheckAsync("id-2sdx82h");
 </dl>
 </details>
 
-<details><summary><code>client.Health.Service.<a href="/src/SeedExamples/Health/Service/ServiceClient.cs">PingAsync</a>() -> bool</code></summary>
+<details><summary><code>client.Health.Service.<a href="/src/SeedExamples/Health/Service/ServiceClient.cs">PingAsync</a>() -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -281,7 +281,7 @@ await client.Health.Service.PingAsync();
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMovieAsync</a>(movieId) -> Movie</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMovieAsync</a>(movieId) -> WithRawResponseTask&lt;Movie&gt;</code></summary>
 <dl>
 <dd>
 
@@ -321,7 +321,7 @@ await client.Service.GetMovieAsync("movie-c06a4ad7");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateMovieAsync</a>(Movie { ... }) -> string</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateMovieAsync</a>(Movie { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -385,7 +385,7 @@ await client.Service.CreateMovieAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> Metadata</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> WithRawResponseTask&lt;Metadata&gt;</code></summary>
 <dl>
 <dd>
 
@@ -432,7 +432,7 @@ await client.Service.GetMetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateBigEntityAsync</a>(BigEntity { ... }) -> Response</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateBigEntityAsync</a>(BigEntity { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
 <dl>
 <dd>
 

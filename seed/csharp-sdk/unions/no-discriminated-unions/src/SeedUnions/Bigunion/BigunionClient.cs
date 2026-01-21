@@ -12,10 +12,7 @@ public partial class BigunionClient : IBigunionClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Bigunion.GetAsync("id");
-    /// </code></example>
-    public async Task<object> GetAsync(
+    private async Task<WithRawResponse<object>> GetAsyncCore(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -38,14 +35,28 @@ public partial class BigunionClient : IBigunionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<object>(responseBody)!;
+                return new WithRawResponse<object>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUnionsException("Failed to deserialize response", e);
+                throw new SeedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUnionsApiException(
@@ -56,10 +67,7 @@ public partial class BigunionClient : IBigunionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
-    /// </code></example>
-    public async Task<bool> UpdateAsync(
+    private async Task<WithRawResponse<bool>> UpdateAsyncCore(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -83,14 +91,28 @@ public partial class BigunionClient : IBigunionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
+                return new WithRawResponse<bool>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUnionsException("Failed to deserialize response", e);
+                throw new SeedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUnionsApiException(
@@ -101,16 +123,7 @@ public partial class BigunionClient : IBigunionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Bigunion.UpdateManyAsync(
-    ///     new List&lt;object&gt;()
-    ///     {
-    ///         new NormalSweet { Value = "value" },
-    ///         new NormalSweet { Value = "value" },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<Dictionary<string, bool>> UpdateManyAsync(
+    private async Task<WithRawResponse<Dictionary<string, bool>>> UpdateManyAsyncCore(
         IEnumerable<object> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -134,14 +147,28 @@ public partial class BigunionClient : IBigunionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Dictionary<string, bool>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Dictionary<string, bool>>(responseBody)!;
+                return new WithRawResponse<Dictionary<string, bool>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUnionsException("Failed to deserialize response", e);
+                throw new SeedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUnionsApiException(
@@ -150,5 +177,49 @@ public partial class BigunionClient : IBigunionClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Bigunion.GetAsync("id");
+    /// </code></example>
+    public WithRawResponseTask<object> GetAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<object>(GetAsyncCore(id, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
+    /// </code></example>
+    public WithRawResponseTask<bool> UpdateAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<bool>(UpdateAsyncCore(request, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Bigunion.UpdateManyAsync(
+    ///     new List&lt;object&gt;()
+    ///     {
+    ///         new NormalSweet { Value = "value" },
+    ///         new NormalSweet { Value = "value" },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Dictionary<string, bool>> UpdateManyAsync(
+        IEnumerable<object> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Dictionary<string, bool>>(
+            UpdateManyAsyncCore(request, options, cancellationToken)
+        );
     }
 }

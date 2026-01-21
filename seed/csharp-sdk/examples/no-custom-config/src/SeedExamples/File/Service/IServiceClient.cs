@@ -7,7 +7,7 @@ public partial interface IServiceClient
     /// <summary>
     /// This endpoint returns a file by its name.
     /// </summary>
-    Task<SeedExamples.File> GetFileAsync(
+    WithRawResponseTask<SeedExamples.File> GetFileAsync(
         string filename,
         GetFileRequest request,
         RequestOptions? options = null,

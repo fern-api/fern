@@ -1,3 +1,4 @@
+export { ReferenceResolver } from "./ReferenceResolver";
 export { ValidationIssue } from "./ValidationIssue";
 export { YamlConfigLoader } from "./YamlConfigLoader";
 export type { YamlPath } from "./YamlDocument";
