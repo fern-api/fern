@@ -311,10 +311,10 @@ class FernAwarePydanticModel:
         )
 
     def finish(self) -> None:
-        # Pass fields that need JSON string parsing to PydanticModel for "Both" mode
-        # (for V2-only mode, we use BeforeValidator annotation instead)
+        # Pass fields that need JSON string parsing to PydanticModel for "Both" and V2-only modes
+        # This generates a model_validator that parses JSON strings for object-typed fields
         if (
-            self._custom_config.version == PydanticVersionCompatibility.Both
+            self._custom_config.version in (PydanticVersionCompatibility.Both, PydanticVersionCompatibility.V2)
             and len(self._fields_needing_json_parsing) > 0
         ):
             self._pydantic_model.set_fields_needing_json_parsing(self._fields_needing_json_parsing)
@@ -407,17 +407,6 @@ class FernAwarePydanticModel:
         default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
         type_hint = self.get_type_hint_for_type_reference(type_reference)
-
-        # For object-typed fields in Pydantic v2-only mode, wrap with BeforeValidator to parse JSON strings
-        # This handles cases where nested objects are sent as JSON strings over the wire (e.g., in SSE events)
-        # For "Both" mode, we use a model validator instead (generated in PydanticModel._maybe_model_config)
-        if self._custom_config.version == PydanticVersionCompatibility.V2 and self._should_add_json_string_validator(
-            type_reference
-        ):
-            type_hint = AST.TypeHint.annotated(
-                type=type_hint,
-                annotation=self._context.core_utilities.get_json_string_before_validator(),
-            )
 
         return PydanticField(
             name=name,

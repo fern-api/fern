@@ -286,25 +286,3 @@ class CoreUtilities:
             return Pydantic(self._pydantic_compatibility).RootModel()
         else:  # V1 or V1_ON_V2
             return Pydantic(self._pydantic_compatibility).BaseModel()
-
-    def get_parse_json_string(self) -> AST.Reference:
-        """Get a reference to the _parse_json_string function from pydantic_utilities."""
-        return AST.Reference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                named_import="_parse_json_string",
-            ),
-        )
-
-    def get_json_string_before_validator(self) -> AST.Expression:
-        """
-        Get a BeforeValidator annotation that parses JSON strings.
-        Returns: BeforeValidator(_parse_json_string)
-        """
-        return AST.Expression(
-            AST.FunctionInvocation(
-                function_definition=Pydantic(self._pydantic_compatibility).BeforeValidator(),
-                args=[AST.Expression(self.get_parse_json_string())],
-            )
-        )

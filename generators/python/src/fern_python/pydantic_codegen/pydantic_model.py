@@ -582,8 +582,11 @@ class PydanticModel:
                     writer.write_node(v1_config_class)
             elif self._version == PydanticVersionCompatibility.V1 and v1_config_class is not None:
                 writer.write_node(v1_config_class)
-            elif self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None:
-                writer.write_node(v2_model_config)
+            elif self._version == PydanticVersionCompatibility.V2:
+                if v2_model_config is not None:
+                    writer.write_node(v2_model_config)
+                if has_json_parsing_fields:
+                    write_v2_json_validator(writer)
 
         should_write = (
             (
@@ -594,7 +597,10 @@ class PydanticModel:
                 self._version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2)
                 and v1_config_class is not None
             )
-            or (self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None)
+            or (
+                self._version == PydanticVersionCompatibility.V2
+                and (v2_model_config is not None or has_json_parsing_fields)
+            )
         )
 
         if should_write:
