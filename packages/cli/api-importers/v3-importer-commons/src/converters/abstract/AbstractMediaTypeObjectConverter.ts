@@ -142,12 +142,19 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
 
         for (const [key, example] of examples) {
             const resolvedExample = this.context.resolveExampleWithValue(example);
-            // Use summary if available, but fall back to key if summary would cause a collision
+            // Use summary if available, disambiguating with key if there's a collision
             let exampleName: string;
             if (this.context.isExampleWithSummary(example)) {
                 const summary = example.summary;
-                // If summary would cause a collision, fall back to the original key
-                exampleName = usedExampleNames.has(summary) ? key : summary;
+                if (!usedExampleNames.has(summary)) {
+                    // First occurrence of this summary - use it directly
+                    exampleName = summary;
+                } else {
+                    // Collision detected - disambiguate with key
+                    const disambiguatedName = `${summary} (${key})`;
+                    // If disambiguated name also collides (edge case), fall back to just the key
+                    exampleName = usedExampleNames.has(disambiguatedName) ? key : disambiguatedName;
+                }
             } else {
                 exampleName = key;
             }
