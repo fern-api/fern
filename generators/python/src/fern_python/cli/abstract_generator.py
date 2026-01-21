@@ -8,6 +8,7 @@ from typing import Literal, Optional, Sequence, Tuple, cast
 
 from .publisher import Publisher
 from fern_python.codegen.project import Project, ProjectConfig
+from fern_python.codegen.pyproject_toml import parse_python_version_constraint
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
@@ -150,6 +151,7 @@ class AbstractGenerator(ABC):
                     write_unit_tests=(
                         self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
                     ),
+                    python_version=python_version,
                 ),
                 publish=lambda x: None,
             )
@@ -237,6 +239,7 @@ class AbstractGenerator(ABC):
         output_mode: GithubOutputMode,
         write_unit_tests: bool,
         publish_config: GeneratorPublishConfig | None,
+        python_version: str = "^3.8",
     ) -> None:
         import logging
 
@@ -283,13 +286,15 @@ class AbstractGenerator(ABC):
             logger.info("publish_config is None; not using OIDC workflow.")
 
         # Add the CI workflow with logs for which workflow logic is selected.
+        # Parse the python_version constraint to get the minimum version for CI
+        min_python_version, _ = parse_python_version_constraint(python_version)
         workflow_path = ".github/workflows/ci.yml"
         logger.debug(f"Adding workflow file: {workflow_path} (use_oidc_workflow={use_oidc_workflow})")
         if use_oidc_workflow:
-            workflow_content = self._get_github_workflow(output_mode, write_unit_tests)
+            workflow_content = self._get_github_workflow(output_mode, write_unit_tests, min_python_version)
             logger.debug(f"CI workflow content from _get_github_workflow (OIDC):\n{workflow_content}")
         else:
-            workflow_content = self._get_github_workflow_legacy(output_mode, write_unit_tests)
+            workflow_content = self._get_github_workflow_legacy(output_mode, write_unit_tests, min_python_version)
             logger.debug(f"CI workflow content from _get_github_workflow_legacy (legacy):\n{workflow_content}")
 
         project.add_file(
@@ -304,8 +309,10 @@ class AbstractGenerator(ABC):
         project.add_source_file("tests/custom/test_client.py", client_test_content)
         logger.debug("Finished writing files for GitHub repository.")
 
-    def _get_github_workflow_legacy(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
-        workflow_yaml = """name: ci
+    def _get_github_workflow_legacy(
+        self, output_mode: GithubOutputMode, write_unit_tests: bool, min_python_version: str = "3.9"
+    ) -> str:
+        workflow_yaml = f"""name: ci
 on: [push]
 jobs:
   compile:
@@ -316,7 +323,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: {min_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -332,7 +339,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: {min_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -371,7 +378,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: {min_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -387,9 +394,11 @@ jobs:
 """
         return workflow_yaml
 
-    def _get_github_workflow(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
+    def _get_github_workflow(
+        self, output_mode: GithubOutputMode, write_unit_tests: bool, min_python_version: str = "3.9"
+    ) -> str:
         # new workflow that supports automated OIDC-attestation signing and publishing to PyPI
-        workflow_yaml = """name: ci
+        workflow_yaml = f"""name: ci
 
 on: [push]
 jobs:
@@ -401,7 +410,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: {min_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -417,7 +426,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: {min_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -445,7 +454,7 @@ jobs:
                 publish_info_union.should_generate_publish_workflow is None
                 or publish_info_union.should_generate_publish_workflow
             ):
-                workflow_yaml += """
+                workflow_yaml += f"""
   build:
     name: Build distribution
     runs-on: ubuntu-latest
@@ -455,7 +464,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: {min_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1

@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Optional, Set, cast
+from typing import List, Optional, Set, Tuple, cast
 
 from fern_python.codegen.ast.dependency.dependency import (
     Dependency,
@@ -20,6 +21,101 @@ from fern.generator_exec import (
     LicenseId,
     PypiMetadata,
 )
+
+# All known Python 3.x minor versions for classifier generation
+ALL_PYTHON_VERSIONS = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+
+
+def parse_python_version_constraint(version_constraint: str) -> Tuple[str, List[str]]:
+    """
+    Parse a Python version constraint and return the minimum version and list of supported versions.
+
+    Supports formats like:
+    - ">=3.9,<3.14" - Range with min and max
+    - "^3.8" - Caret constraint (compatible with 3.8.x, 3.9.x, etc.)
+    - "~3.9" - Tilde constraint (compatible with 3.9.x)
+    - ">=3.9" - Minimum only
+    - "3.9" - Exact version
+
+    Returns:
+        Tuple of (minimum_version, list_of_supported_versions)
+    """
+    min_version: Optional[str] = None
+    max_version: Optional[str] = None
+
+    # Handle caret constraint (^3.8 means >=3.8.0 <4.0.0)
+    caret_match = re.match(r"^\^(\d+)\.(\d+)", version_constraint)
+    if caret_match:
+        major = int(caret_match.group(1))
+        minor = int(caret_match.group(2))
+        min_version = f"{major}.{minor}"
+        # Caret allows all minor versions up to next major
+        max_version = f"{major + 1}.0"
+
+    # Handle tilde constraint (~3.9 means >=3.9.0 <3.10.0)
+    tilde_match = re.match(r"^~(\d+)\.(\d+)", version_constraint)
+    if tilde_match:
+        major = int(tilde_match.group(1))
+        minor = int(tilde_match.group(2))
+        min_version = f"{major}.{minor}"
+        max_version = f"{major}.{minor + 1}"
+
+    # Handle range constraints (>=3.9,<3.14 or >=3.9, <3.14)
+    if min_version is None:
+        # Look for >= or > constraint
+        ge_match = re.search(r">=?\s*(\d+)\.(\d+)", version_constraint)
+        if ge_match:
+            min_version = f"{ge_match.group(1)}.{ge_match.group(2)}"
+
+        # Look for < or <= constraint
+        lt_match = re.search(r"<\s*(\d+)\.(\d+)", version_constraint)
+        if lt_match:
+            max_version = f"{lt_match.group(1)}.{lt_match.group(2)}"
+
+        le_match = re.search(r"<=\s*(\d+)\.(\d+)", version_constraint)
+        if le_match:
+            major = int(le_match.group(1))
+            minor = int(le_match.group(2))
+            # <= 3.12 means we include 3.12, so max is 3.13
+            max_version = f"{major}.{minor + 1}"
+
+    # Handle exact version (just "3.9" or "3.9.0")
+    if min_version is None:
+        exact_match = re.match(r"^(\d+)\.(\d+)", version_constraint)
+        if exact_match:
+            min_version = f"{exact_match.group(1)}.{exact_match.group(2)}"
+
+    # Default to 3.8 if we couldn't parse
+    if min_version is None:
+        min_version = "3.8"
+
+    # Filter ALL_PYTHON_VERSIONS based on min and max
+    supported_versions: List[str] = []
+    for version in ALL_PYTHON_VERSIONS:
+        parts = version.split(".")
+        major, minor = int(parts[0]), int(parts[1])
+
+        # Check minimum
+        if min_version:
+            min_parts = min_version.split(".")
+            min_major, min_minor = int(min_parts[0]), int(min_parts[1])
+            if (major, minor) < (min_major, min_minor):
+                continue
+
+        # Check maximum (exclusive)
+        if max_version:
+            max_parts = max_version.split(".")
+            max_major, max_minor = int(max_parts[0]), int(max_parts[1])
+            if (major, minor) >= (max_major, max_minor):
+                continue
+
+        supported_versions.append(version)
+
+    # If no versions matched, default to the minimum version
+    if not supported_versions:
+        supported_versions = [min_version]
+
+    return min_version, supported_versions
 
 
 @dataclass(frozen=True)
@@ -53,6 +149,7 @@ class PyProjectToml:
             pypi_metadata=pypi_metadata,
             github_output_mode=github_output_mode,
             license_=license_,
+            python_version=python_version,
         )
         self._dependency_manager = dependency_manager
         self._path = path
@@ -110,6 +207,7 @@ dynamic = ["version"]
         pypi_metadata: Optional[PypiMetadata]
         github_output_mode: Optional[GithubOutputMode]
         license_: Optional[LicenseConfig]
+        python_version: str = "^3.8"
 
         def to_string(self) -> str:
             s = f'''[tool.poetry]
@@ -121,23 +219,27 @@ name = "{self.name}"'''
             authors: List[str] = []
             keywords: List[str] = []
             project_urls: List[str] = []
+
+            # Generate classifiers based on the python_version constraint
+            _, supported_versions = parse_python_version_constraint(self.python_version)
             classifiers = [
                 "Intended Audience :: Developers",
                 "Programming Language :: Python",
                 "Programming Language :: Python :: 3",
-                "Programming Language :: Python :: 3.8",
-                "Programming Language :: Python :: 3.9",
-                "Programming Language :: Python :: 3.10",
-                "Programming Language :: Python :: 3.11",
-                "Programming Language :: Python :: 3.12",
-                "Operating System :: OS Independent",
-                "Operating System :: POSIX",
-                "Operating System :: MacOS",
-                "Operating System :: POSIX :: Linux",
-                "Operating System :: Microsoft :: Windows",
-                "Topic :: Software Development :: Libraries :: Python Modules",
-                "Typing :: Typed",
             ]
+            for version in supported_versions:
+                classifiers.append(f"Programming Language :: Python :: {version}")
+            classifiers.extend(
+                [
+                    "Operating System :: OS Independent",
+                    "Operating System :: POSIX",
+                    "Operating System :: MacOS",
+                    "Operating System :: POSIX :: Linux",
+                    "Operating System :: Microsoft :: Windows",
+                    "Topic :: Software Development :: Libraries :: Python Modules",
+                    "Typing :: Typed",
+                ]
+            )
             license_evaluated = ""
             if self.pypi_metadata is not None:
                 description = (

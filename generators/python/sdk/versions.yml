@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.48.2
+  changelogEntry:
+    - summary: |
+        Fix generated CI workflow and pyproject.toml classifiers to respect the `pyproject_python_version`
+        configuration. Previously, the CI workflow always used Python 3.9 and classifiers always included
+        Python 3.8 regardless of the configured version constraint. Now, when `pyproject_python_version`
+        is set (e.g., `>=3.9,<3.14`), the CI workflow uses the minimum version from the constraint and
+        classifiers only include Python versions within the specified range.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 62
+
 - version: 4.48.1
   changelogEntry:
     - summary: |
