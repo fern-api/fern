@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.0
+  changelogEntry:
+    - summary: |
+        Add programmatic `check()` API for running `fern check` validation from Node.js code. This allows users to validate Fern definitions programmatically without using the CLI, returning structured results with violations instead of logging to console.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 63
+
 - version: 3.48.0
   changelogEntry:
     - summary: |
