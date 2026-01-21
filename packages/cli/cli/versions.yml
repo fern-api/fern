@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.48.0
+- version: 3.49.0
   changelogEntry:
     - summary: |
         Add programmatic `check()` API for running `fern check` validation from Node.js code. This allows users to validate Fern definitions programmatically without using the CLI, returning structured results with violations instead of logging to console.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.48.0
+  changelogEntry:
+    - summary: |
+        Add support for extracting examples from multipart/form-data webhook payloads. Webhooks using multipart content type now properly display example names from the OpenAPI `summary` field instead of generic "Example 1", "Example 2" labels. Also fixes webhook and WebSocket example names in FDR conversion to properly use the name field.
       type: feat
   createdAt: "2026-01-21"
   irVersion: 63
