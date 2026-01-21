@@ -425,7 +425,7 @@ class PydanticModel:
             writer.write_line("")
             writer.write("@")
             writer.write_reference(Pydantic(self._version).model_validator())
-            writer.write_line('(mode="before")')
+            writer.write_line('(mode="before")  # type: ignore # Pydantic v2')
             writer.write_line("@classmethod")
             writer.write("def _parse_nested_json_strings(cls, values: ")
             writer.write_reference(
