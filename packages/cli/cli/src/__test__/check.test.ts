@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { check, CheckResult } from "../commands/validate/check";
+import { CheckResult, check } from "../commands/validate/check";
 
 describe("check", () => {
     it("returns error when fern directory does not exist", async () => {

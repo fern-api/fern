@@ -1,12 +1,12 @@
+import { DEFINITION_DIRECTORY, getFernDirectory, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { ValidationViolation, validateFernWorkspace } from "@fern-api/fern-definition-validator";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { validateGeneratorsWorkspace } from "@fern-api/generators-validator";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { NOOP_LOGGER } from "@fern-api/logger";
 import { validateOSSWorkspace } from "@fern-api/oss-validator";
 import { loadProjectFromDirectory } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DEFINITION_DIRECTORY, getFernDirectory, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
-import { createLogger, LogLevel, NOOP_LOGGER } from "@fern-api/logger";
 
 /**
  * Result of a single API validation
@@ -49,18 +49,6 @@ export interface CheckOptions {
      * If not provided, all API workspaces will be validated.
      */
     api?: string;
-
-    /**
-     * Log level for internal logging. Defaults to no logging (silent).
-     * Set to "info", "warn", or "error" to see validation progress.
-     */
-    logLevel?: LogLevel;
-
-    /**
-     * Whether to enable logging. Defaults to false (silent).
-     * When true, logs will be output at the specified logLevel (defaults to "info").
-     */
-    enableLogging?: boolean;
 }
 
 /**
@@ -89,25 +77,10 @@ export interface CheckOptions {
  * @returns A promise that resolves to the check result
  */
 export async function check(options: CheckOptions = {}): Promise<CheckResult> {
-    const { directory, api, logLevel = LogLevel.Info, enableLogging = false } = options;
+    const { directory, api } = options;
 
-    // Use NOOP_LOGGER for silent mode, otherwise create a logger that respects log level
-    const logger = enableLogging
-        ? createLogger((level, ...args) => {
-              const levelPriority: Record<LogLevel, number> = {
-                  [LogLevel.Trace]: 0,
-                  [LogLevel.Debug]: 1,
-                  [LogLevel.Info]: 2,
-                  [LogLevel.Warn]: 3,
-                  [LogLevel.Error]: 4
-              };
-              if (levelPriority[level] >= levelPriority[logLevel]) {
-                  // eslint-disable-next-line no-console
-                  console.log(...args);
-              }
-          })
-        : NOOP_LOGGER;
-
+    // Use NOOP_LOGGER for silent operation - violations are returned in the result
+    const logger = NOOP_LOGGER;
     const context = createMockTaskContext({ logger });
 
     // Find the fern directory
