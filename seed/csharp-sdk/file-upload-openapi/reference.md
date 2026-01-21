@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>client.FileUploadExample.<a href="/src/SeedApi/FileUploadExample/FileUploadExampleClient.cs">UploadFileAsync</a>(UploadFileRequest { ... }) -> string</code></summary>
+<details><summary><code>client.FileUploadExample.<a href="/src/SeedApi/FileUploadExample/FileUploadExampleClient.cs">UploadFileAsync</a>(UploadFileRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 

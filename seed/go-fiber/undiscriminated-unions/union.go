@@ -10,7 +10,7 @@ import (
 )
 
 type PaymentRequest struct {
-	PaymentMethod *PaymentMethodUnion `json:"paymentMethod,omitempty" url:"-"`
+	PaymentMethod *PaymentMethodUnion `json:"paymentMethod" url:"-"`
 }
 
 var (

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie</a>(...) -> AsyncHttpResponse[Movie]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie</a>(...) -&gt; AsyncHttpResponse[Movie]</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.service.get_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_docs</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_docs</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -112,7 +112,7 @@ client.service.get_movie_docs(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_name</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_name</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -168,7 +168,7 @@ client.service.get_movie_name(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_metadata</a>(...) -> AsyncHttpResponse[typing.Dict[str, str]]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_metadata</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, str]]</code></summary>
 <dl>
 <dd>
 
@@ -224,7 +224,7 @@ client.service.get_movie_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie</a>(...) -> AsyncHttpResponse[typing.Optional[Movie]]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie</a>(...) -&gt; AsyncHttpResponse[typing.Optional[Movie]]</code></summary>
 <dl>
 <dd>
 
@@ -280,7 +280,7 @@ client.service.get_optional_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie_docs</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie_docs</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -336,7 +336,7 @@ client.service.get_optional_movie_docs(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie_name</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie_name</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 

@@ -38,32 +38,27 @@ export const AsIsFiles = {
     NdJsonRequest: "NdJsonRequest.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
     RawClient: "RawClient.Template.cs",
+    RawResponse: "RawResponse.Template.cs",
+    ResponseHeaders: "ResponseHeaders.Template.cs",
     StreamRequest: "StreamRequest.Template.cs",
-    WebSocketAsync: {
-        Events: {
-            Closed: "Async/Events/Closed.Template.cs",
-            Connected: "Async/Events/Connected.Template.cs",
-            Event: "Async/Events/Event.Template.cs"
-        },
-        Exceptions: {
-            WebsocketException: "Async/Exceptions/WebsocketException.Template.cs"
-        },
-        Models: {
-            Options: "Async/Models/Options.Template.cs",
-            DisconnectionInfo: "Async/Models/DisconnectionInfo.Template.cs",
-            DisconnectionType: "Async/Models/DisconnectionType.Template.cs",
-            ReconnectionInfo: "Async/Models/ReconnectionInfo.Template.cs",
-            ReconnectionType: "Async/Models/ReconnectionType.Template.cs"
-        },
-        Threading: {
-            AsyncLock: "Async/Threading/AsyncLock.Template.cs"
-        },
-        AsyncApi: "Async/AsyncApi.Template.cs",
-        ConnectionStatus: "Async/ConnectionStatus.Template.cs",
-        Query: "Async/Query.Template.cs",
-        RequestMessage: "Async/RequestMessage.Template.cs",
-        WebSocketConnection: "Async/WebSocketConnection.Template.cs",
-        WebSocketConnectionSending: "Async/WebSocketConnection.Sending.Template.cs"
+    WithRawResponse: "WithRawResponse.Template.cs",
+    WithRawResponseTask: "WithRawResponseTask.Template.cs",
+    WebSockets: {
+        AsyncLock: "WebSockets/AsyncLock.Template.cs",
+        Closed: "WebSockets/Closed.Template.cs",
+        Connected: "WebSockets/Connected.Template.cs",
+        ConnectionStatus: "WebSockets/ConnectionStatus.Template.cs",
+        DisconnectionInfo: "WebSockets/DisconnectionInfo.Template.cs",
+        DisconnectionType: "WebSockets/DisconnectionType.Template.cs",
+        Event: "WebSockets/Event.Template.cs",
+        Query: "WebSockets/Query.Template.cs",
+        ReconnectionInfo: "WebSockets/ReconnectionInfo.Template.cs",
+        ReconnectionType: "WebSockets/ReconnectionType.Template.cs",
+        RequestMessage: "WebSockets/RequestMessage.Template.cs",
+        WebSocketClient: "WebSockets/WebSocketClient.Template.cs",
+        WebSocketConnection: "WebSockets/WebSocketConnection.Template.cs",
+        WebSocketConnectionSending: "WebSockets/WebSocketConnection.Sending.Template.cs",
+        WebsocketException: "WebSockets/WebsocketException.Template.cs"
     },
     Json: {
         AdditionalProperties: "AdditionalProperties.Template.cs",
@@ -74,7 +69,10 @@ export const AsIsFiles = {
         EnumSerializer: "EnumSerializer.Template.cs",
         JsonAccessAttribute: "JsonAccessAttribute.Template.cs",
         JsonConfiguration: "JsonConfiguration.Template.cs",
+        Nullable: "NullableAttribute.Template.cs",
         OneOfSerializer: "OneOfSerializer.Template.cs",
+        Optional: "Optional.Template.cs",
+        OptionalAttribute: "OptionalAttribute.Template.cs",
         StringEnumSerializer: "StringEnumSerializer.Template.cs"
     },
     Test: {
@@ -82,6 +80,7 @@ export const AsIsFiles = {
         TemplateTestClientCs: "test/TemplateTestClient.cs",
         TemplateTestCsProj: "test/Template.Test.csproj",
         TestCustomProps: "test/Test.Custom.props.Template",
+        WithRawResponseTests: "test/WithRawResponseTests.Template.cs",
         RawClientTests: {
             AdditionalHeadersTests: "test/RawClientTests/AdditionalHeadersTests.Template.cs",
             AdditionalParametersTests: "test/RawClientTests/AdditionalParametersTests.Template.cs",
@@ -94,6 +93,7 @@ export const AsIsFiles = {
             JsonElementComparer: "test/Utils/JsonElementComparer.Template.cs",
             NUnitExtensions: "test/Utils/NUnitExtensions.Template.cs",
             OneOfComparer: "test/Utils/OneOfComparer.Template.cs",
+            OptionalComparer: "test/Utils/OptionalComparer.Template.cs",
             ReadOnlyMemoryComparer: "test/Utils/ReadOnlyMemoryComparer.Template.cs"
         },
         Pagination: [

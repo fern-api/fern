@@ -5,6 +5,7 @@ package com.seed.endpointSecurityAuth.resources.user;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.endpointSecurityAuth.core.ClientOptions;
+import com.seed.endpointSecurityAuth.core.EndpointMetadata;
 import com.seed.endpointSecurityAuth.core.ObjectMappers;
 import com.seed.endpointSecurityAuth.core.RequestOptions;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthApiException;
@@ -12,7 +13,10 @@ import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthException;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthHttpResponse;
 import com.seed.endpointSecurityAuth.resources.user.types.User;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -36,10 +40,12 @@ public class RawUserClient {
                 .newBuilder()
                 .addPathSegments("users")
                 .build();
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("Bearer", List.of())))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -71,10 +77,12 @@ public class RawUserClient {
                 .newBuilder()
                 .addPathSegments("users")
                 .build();
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("ApiKey", List.of())))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -106,10 +114,13 @@ public class RawUserClient {
                 .newBuilder()
                 .addPathSegments("users")
                 .build();
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                new EndpointMetadata(Arrays.asList(Map.of("OAuth", List.of("read-only"))))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -141,10 +152,12 @@ public class RawUserClient {
                 .newBuilder()
                 .addPathSegments("users")
                 .build();
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("Basic", List.of())))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -176,10 +189,13 @@ public class RawUserClient {
                 .newBuilder()
                 .addPathSegments("users")
                 .build();
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(
+                clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("InferredAuth", List.of())))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -211,10 +227,17 @@ public class RawUserClient {
                 .newBuilder()
                 .addPathSegments("users")
                 .build();
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(
+                Map.of("Bearer", List.of()),
+                Map.of("ApiKey", List.of()),
+                Map.of("OAuth", List.of("read-only")),
+                Map.of("Basic", List.of()),
+                Map.of("InferredAuth", List.of())))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -246,10 +269,22 @@ public class RawUserClient {
                 .newBuilder()
                 .addPathSegments("users")
                 .build();
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of(
+                "Bearer",
+                List.of(),
+                "ApiKey",
+                List.of(),
+                "OAuth",
+                List.of("read-only"),
+                "Basic",
+                List.of(),
+                "InferredAuth",
+                List.of())))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();

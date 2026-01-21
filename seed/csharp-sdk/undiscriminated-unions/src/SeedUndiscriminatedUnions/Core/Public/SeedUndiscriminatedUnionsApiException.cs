@@ -3,8 +3,12 @@ namespace SeedUndiscriminatedUnions;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedUndiscriminatedUnionsApiException(string message, int statusCode, object body)
-    : SeedUndiscriminatedUnionsException(message)
+public class SeedUndiscriminatedUnionsApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedUndiscriminatedUnionsException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

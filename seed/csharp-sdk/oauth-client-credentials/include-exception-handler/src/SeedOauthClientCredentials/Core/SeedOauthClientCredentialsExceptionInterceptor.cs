@@ -1,3 +1,5 @@
+using SeedOauthClientCredentials;
+
 namespace SeedOauthClientCredentials.Core;
 
 /// <summary>
@@ -5,6 +7,13 @@ namespace SeedOauthClientCredentials.Core;
 /// </summary>
 public class SeedOauthClientCredentialsExceptionInterceptor : IExceptionInterceptor
 {
+    private readonly ClientOptions _clientOptions;
+
+    public SeedOauthClientCredentialsExceptionInterceptor(ClientOptions clientOptions)
+    {
+        _clientOptions = clientOptions;
+    }
+
     /// <summary>
     /// Intercepts an exception and returns it after capturing.
     /// </summary>

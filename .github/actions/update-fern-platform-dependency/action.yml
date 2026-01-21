@@ -51,15 +51,21 @@ runs:
         cd packages/snippets
         pnpm add "${{ inputs.package-name }}@${{ inputs.version }}"
 
-        # Check if there are changes
+        # Install dependencies and update tests
         cd ../..
+        pnpm install
+        cd packages/snippets
+        pnpm test:update || true
+        cd ../..
+
+        # Check if there are changes
         if git diff --quiet; then
           echo "No changes detected, skipping PR creation"
           exit 0
         fi
 
-        # Commit and push (include lockfile)
-        git add packages/snippets/package.json pnpm-lock.yaml
+        # Commit and push (include lockfile and any test snapshot changes)
+        git add packages/snippets/package.json pnpm-lock.yaml packages/snippets/src/__test__/
         git commit -m "chore: update ${{ inputs.package-name }} to ${{ inputs.version }}"
         git push origin "$BRANCH_NAME"
 

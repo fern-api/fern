@@ -4,54 +4,42 @@ import { SeedUnionsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("UnionClient", () => {
-    
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        const rawResponseBody = { "type" : "circle" , "id" : "id" , "name" : "name" , "radius" : 1.1 };
-        server
-            .mockEndpoint()
-            .get("/id").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
 
-        
-                    
-                            const response = await client.union.get("id");
-                            expect(response).toEqual({
-    type: "circle",
-    id: "id",
-    name: "name",
-    radius: 1.1
-});
-                          
-                
+        const rawResponseBody = { type: "circle", id: "id", name: "name", radius: 1.1 };
+        server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.union.get("id");
+        expect(response).toEqual({
+            type: "circle",
+            id: "id",
+            name: "name",
+            radius: 1.1,
+        });
     });
-          
+
     test("update", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "type" : "circle" , "id" : "id" , "name" : "name" , "radius" : 1.1 };
+        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { type: "circle", id: "id", name: "name", radius: 1.1 };
         const rawResponseBody = true;
         server
             .mockEndpoint()
-            .patch("").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .patch("")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.union.update({
-    type: "circle",
-    id: "id",
-    name: "name",
-    radius: 1.1
-});
-                            expect(response).toEqual(true);
-                          
-                
+        const response = await client.union.update({
+            type: "circle",
+            id: "id",
+            name: "name",
+            radius: 1.1,
+        });
+        expect(response).toEqual(true);
     });
-          
 });

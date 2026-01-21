@@ -35,6 +35,10 @@ public class AsyncUserClient {
         return this.rawClient.getUser(userId).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<User> getUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getUser(userId, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<User> getUser(String userId, GetUsersRequest request) {
         return this.rawClient.getUser(userId, request).thenApply(response -> response.body());
     }
@@ -63,6 +67,10 @@ public class AsyncUserClient {
         return this.rawClient.searchUsers(userId).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<List<User>> searchUsers(String userId, RequestOptions requestOptions) {
+        return this.rawClient.searchUsers(userId, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<List<User>> searchUsers(String userId, SearchUsersRequest request) {
         return this.rawClient.searchUsers(userId, request).thenApply(response -> response.body());
     }
@@ -77,6 +85,13 @@ public class AsyncUserClient {
      */
     public CompletableFuture<User> getUserMetadata(String userId, int version) {
         return this.rawClient.getUserMetadata(userId, version).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public CompletableFuture<User> getUserMetadata(String userId, int version, RequestOptions requestOptions) {
+        return this.rawClient.getUserMetadata(userId, version, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -101,6 +116,16 @@ public class AsyncUserClient {
      */
     public CompletableFuture<User> getUserSpecifics(String userId, int version, String thought) {
         return this.rawClient.getUserSpecifics(userId, version, thought).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public CompletableFuture<User> getUserSpecifics(
+            String userId, int version, String thought, RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserSpecifics(userId, version, thought, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     /**

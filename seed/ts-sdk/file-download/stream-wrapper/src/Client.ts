@@ -2,14 +2,12 @@
 
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedFileDownloadClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedFileDownloadClient {
@@ -17,7 +15,6 @@ export class SeedFileDownloadClient {
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedFileDownloadClient.Options) {
-
         this._options = normalizeClientOptions(options);
     }
 

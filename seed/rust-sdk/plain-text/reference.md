@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_text</a>() -> Result<String, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_text</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

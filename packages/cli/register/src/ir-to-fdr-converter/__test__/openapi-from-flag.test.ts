@@ -1952,6 +1952,72 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
 
+    it("should handle OpenAPI with webhook multipart form data payloads", async () => {
+        // This test captures current parser behavior with multipart/form-data webhooks.
+        // When multipart support is added, the snapshots will change to show proper parsing.
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/webhook-multipart-form-data")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "webhook-multipart-form-data"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate basic IR structure (webhooks with multipart/form-data may not parse yet)
+        expect(intermediateRepresentation).toBeDefined();
+        expect(intermediateRepresentation.webhookGroups).toBeDefined();
+        // Note: webhookGroups may be empty if multipart/form-data isn't supported yet
+
+        // Validate FDR output structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/webhook-multipart-form-data-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot(
+            "__snapshots__/webhook-multipart-form-data-ir.snap"
+        );
+    });
+
     it("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
@@ -2560,5 +2626,205 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/min-max-values-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/min-max-values-ir.snap");
+    });
+
+    it("should capture baseline for OpenAPI summary field processing", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/openapi-overrides-summary")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "openapi-overrides-summary"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate services and endpoints were processed correctly
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/openapi-overrides-summary-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/openapi-overrides-summary-ir.snap");
+    });
+
+    it("should capture baseline for OpenAPI example summary field processing", async () => {
+        // Test OpenAPI spec with summary fields in components/examples
+        // This test establishes a baseline to show the difference when summary field processing is fixed
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/openapi-example-summary")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "openapi-example-summary"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate services and endpoints were processed correctly
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        // This captures the current behavior where example summary fields may not be propagated
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/openapi-example-summary-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/openapi-example-summary-ir.snap");
+    });
+
+    it("should handle HTTP auth schemes with capital B (Basic and Bearer)", async () => {
+        // Test OpenAPI spec with Basic and Bearer schemes using capital B (case-insensitive per OAS spec)
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/http-auth-capital-scheme")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "http-auth-capital-scheme"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate auth schemes were processed correctly
+        // The OpenAPI spec uses "Basic" and "Bearer" with capital B, which should be handled case-insensitively
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toBeDefined();
+        // Should have 2 auth schemes: basic and bearer
+        expect(intermediateRepresentation.auth.schemes.length).toBe(2);
+
+        // Validate that both basic and bearer auth schemes are present
+        const authSchemeTypes = intermediateRepresentation.auth.schemes.map((scheme) => scheme.type);
+        expect(authSchemeTypes).toContain("basic");
+        expect(authSchemeTypes).toContain("bearer");
+
+        // Validate FDR auth schemes
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {}).length).toBe(2);
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/http-auth-capital-scheme-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/http-auth-capital-scheme-ir.snap");
     });
 });

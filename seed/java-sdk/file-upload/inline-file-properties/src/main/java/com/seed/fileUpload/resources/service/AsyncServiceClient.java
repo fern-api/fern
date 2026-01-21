@@ -7,6 +7,7 @@ import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
+import com.seed.fileUpload.resources.service.requests.JustFileWithOptionalQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
@@ -78,6 +79,17 @@ public class AsyncServiceClient {
         return this.rawClient.justFileWithQueryParams(request, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Void> justFileWithOptionalQueryParams(JustFileWithOptionalQueryParamsRequest request) {
+        return this.rawClient.justFileWithOptionalQueryParams(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithOptionalQueryParams(
+            JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .justFileWithOptionalQueryParams(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> withContentType(WithContentTypeRequest request) {
         return this.rawClient.withContentType(request).thenApply(response -> response.body());
     }
@@ -143,6 +155,10 @@ public class AsyncServiceClient {
 
     public CompletableFuture<String> optionalArgs() {
         return this.rawClient.optionalArgs().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> optionalArgs(RequestOptions requestOptions) {
+        return this.rawClient.optionalArgs(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> optionalArgs(OptionalArgsRequest request) {

@@ -2,7 +2,7 @@ import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { mkdir, writeFile } from "fs/promises";
+import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext";
 
@@ -42,12 +42,31 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
             // Apply gradle-distribution-url override if configured
             await this.applyGradleDistributionUrlOverride();
 
-            this.context.logger.debug(`JavaProject: Running spotlessApply`);
-            await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
+            const enableProfiling = this.context.customConfig["enable-gradle-profiling"] === true;
+            const gradleArgs = [":spotlessApply"];
+            if (enableProfiling) {
+                gradleArgs.push("--profile");
+                this.context.logger.info(`JavaProject: Running spotlessApply with profiling enabled`);
+            } else {
+                this.context.logger.debug(`JavaProject: Running spotlessApply`);
+            }
+            await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
                 doNotPipeOutput: false,
                 cwd: this.absolutePathToOutputDirectory
             });
             this.context.logger.debug(`JavaProject: Successfully ran spotlessApply`);
+            if (enableProfiling) {
+                // Copy build/reports/ to reports/ at the root so it's not gitignored
+                const buildReportsPath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of("build/reports"));
+                const reportsPath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of("reports"));
+                const buildReportsExists = await doesPathExist(buildReportsPath, "directory");
+                if (buildReportsExists) {
+                    await cp(buildReportsPath, reportsPath, { recursive: true });
+                    this.context.logger.info(`JavaProject: Gradle profiling report copied to reports/`);
+                } else {
+                    this.context.logger.info(`JavaProject: No profiling report found in build/reports/`);
+                }
+            }
         }
     }
 

@@ -37,6 +37,10 @@ public class RawObjectClient {
         return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
     }
 
+    public BestHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(RequestOptions requestOptions) {
+        return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build(), requestOptions);
+    }
+
     public BestHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(ObjectWithOptionalField request) {
         return getAndReturnWithOptionalField(request, null);
     }
@@ -174,6 +178,12 @@ public class RawObjectClient {
     public BestHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
         return getAndReturnNestedWithOptionalField(
                 NestedObjectWithOptionalField.builder().build());
+    }
+
+    public BestHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+            RequestOptions requestOptions) {
+        return getAndReturnNestedWithOptionalField(
+                NestedObjectWithOptionalField.builder().build(), requestOptions);
     }
 
     public BestHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(

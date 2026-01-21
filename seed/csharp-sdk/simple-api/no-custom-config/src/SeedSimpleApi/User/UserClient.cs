@@ -12,10 +12,7 @@ public partial class UserClient : IUserClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.User.GetAsync("id");
-    /// </code></example>
-    public async Task<User> GetAsync(
+    private async Task<WithRawResponse<User>> GetAsyncCore(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -38,14 +35,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedSimpleApiException("Failed to deserialize response", e);
+                throw new SeedSimpleApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedSimpleApiApiException(
@@ -54,5 +65,17 @@ public partial class UserClient : IUserClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.User.GetAsync("id");
+    /// </code></example>
+    public WithRawResponseTask<User> GetAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(GetAsyncCore(id, options, cancellationToken));
     }
 }

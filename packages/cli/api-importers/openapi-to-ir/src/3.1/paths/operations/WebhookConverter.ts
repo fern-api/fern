@@ -1,4 +1,4 @@
-import { HttpResponse, V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
+import { FileUploadRequest, HttpResponse, V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
 
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
@@ -60,6 +60,7 @@ export class WebhookConverter extends AbstractOperationConverter {
         }
 
         let payload: WebhookPayload;
+        let fileUploadPayload: FileUploadRequest | undefined;
         if (requestBody.type === "inlinedRequestBody") {
             payload = WebhookPayload.inlinedPayload({
                 name: requestBody.name,
@@ -70,6 +71,21 @@ export class WebhookConverter extends AbstractOperationConverter {
             payload = WebhookPayload.reference({
                 payloadType: requestBody.requestBodyType,
                 docs: requestBody.docs
+            });
+        } else if (requestBody.type === "fileUpload") {
+            // For multipart form data webhooks, we populate the fileUploadPayload field
+            // and create a placeholder inlined payload
+            fileUploadPayload = {
+                name: requestBody.name,
+                properties: requestBody.properties,
+                docs: requestBody.docs,
+                v2Examples: requestBody.v2Examples,
+                contentType: requestBody.contentType
+            };
+            payload = WebhookPayload.inlinedPayload({
+                name: requestBody.name,
+                extends: [],
+                properties: []
             });
         } else {
             return undefined;
@@ -91,6 +107,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 method: httpMethod,
                 headers,
                 payload,
+                fileUploadPayload,
                 responses: responses.length > 0 ? responses : undefined,
                 examples: [],
                 availability: this.context.getAvailability({

@@ -15,6 +15,7 @@ export const OpenApiSpecSchema: core.serialization.ObjectSchema<
     openapi: core.serialization.string(),
     origin: core.serialization.string().optional(),
     overrides: OverridesSchema.optional(),
+    overlays: core.serialization.string().optional(),
     namespace: core.serialization.string().optional(),
     settings: OpenApiSettingsSchema.optional(),
 });
@@ -24,6 +25,7 @@ export declare namespace OpenApiSpecSchema {
         openapi: string;
         origin?: string | null;
         overrides?: OverridesSchema.Raw | null;
+        overlays?: string | null;
         namespace?: string | null;
         settings?: OpenApiSettingsSchema.Raw | null;
     }

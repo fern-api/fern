@@ -12,6 +12,10 @@ public interface HttpEndpointMethodSpecs {
 
     Optional<MethodSpec> getNoRequestBodyWithRequestOptionsMethodSpec();
 
+    Optional<MethodSpec> getBodyOnlyMethodSpec();
+
+    Optional<MethodSpec> getBodyOnlyWithRequestOptionsMethodSpec();
+
     Optional<MethodSpec> getByteArrayMethodSpec();
 
     Optional<MethodSpec> getNonRequestOptionsByteArrayMethodSpec();

@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:multi-line-docs/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:multi-line-docs-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

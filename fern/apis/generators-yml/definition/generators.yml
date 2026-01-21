@@ -520,6 +520,7 @@ types:
       openapi: string
       origin: optional<string>
       overrides: optional<OverridesSchema>
+      overlays: optional<string>
       namespace: optional<string>
       settings: optional<OpenAPISettingsSchema>
 

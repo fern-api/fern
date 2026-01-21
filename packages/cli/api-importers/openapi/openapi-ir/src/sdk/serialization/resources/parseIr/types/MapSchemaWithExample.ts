@@ -22,6 +22,8 @@ export const MapSchemaWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         key: PrimitiveSchemaWithExample,
         value: core.serialization.lazy(() => serializers.SchemaWithExample),
+        minProperties: core.serialization.number().optional(),
+        maxProperties: core.serialization.number().optional(),
         example: core.serialization.unknown().optional(),
     })
     .extend(WithSdkGroupName)
@@ -46,6 +48,8 @@ export declare namespace MapSchemaWithExample {
             WithInline.Raw {
         key: PrimitiveSchemaWithExample.Raw;
         value: serializers.SchemaWithExample.Raw;
+        minProperties?: number | null;
+        maxProperties?: number | null;
         example?: unknown | null;
     }
 }

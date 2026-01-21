@@ -1,4 +1,5 @@
 export { addPrefixToString } from "./addPrefixToString";
+export { applyOpenAPIOverlay, type Overlay, type OverlayAction } from "./applyOpenAPIOverlay";
 export {
     assert,
     assertDefined,

@@ -16,16 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersOffsetStepPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        Limit: fern.Int(
-            1,
-        ),
-        Order: fern.OrderAsc.Ptr(),
-    }
-    client.Users.ListWithOffsetStepPagination(
+    request := &fern.ListUsersMixedTypeCursorPaginationRequest{}
+    client.Users.ListWithMixedTypeCursorPagination(
         context.TODO(),
         request,
     )

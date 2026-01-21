@@ -97,6 +97,12 @@ public class AsyncRawSeedApiClient {
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
+            String id, RequestOptions requestOptions) {
+        return postWithNonNullableNamedRequestBodyType(
+                id, NonNullableObject.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
             String id, NonNullableObject request) {
         return postWithNonNullableNamedRequestBodyType(id, request, null);
     }

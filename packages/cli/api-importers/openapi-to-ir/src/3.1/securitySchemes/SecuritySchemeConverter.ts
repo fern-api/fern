@@ -24,7 +24,8 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
     public convert(): AuthScheme | undefined {
         switch (this.securityScheme.type) {
             case "http": {
-                if (this.securityScheme.scheme === "bearer") {
+                // Case insensitivity for securityScheme.scheme required per OAS spec
+                if (this.securityScheme.scheme?.toLowerCase() === "bearer") {
                     return AuthScheme.bearer({
                         key: this.schemeId,
                         token: this.context.casingsGenerator.generateName("token"),
@@ -32,7 +33,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         docs: this.securityScheme.description
                     });
                 }
-                if (this.securityScheme.scheme === "basic") {
+                if (this.securityScheme.scheme?.toLowerCase() === "basic") {
                     return AuthScheme.basic({
                         key: this.schemeId,
                         username: this.context.casingsGenerator.generateName("username"),

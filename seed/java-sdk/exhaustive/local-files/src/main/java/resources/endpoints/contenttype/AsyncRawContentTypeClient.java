@@ -42,6 +42,11 @@ public class AsyncRawContentTypeClient {
   }
 
   public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentType(
+      RequestOptions requestOptions) {
+    return postJsonPatchContentType(ObjectWithOptionalField.builder().build(),requestOptions);
+  }
+
+  public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentType(
       ObjectWithOptionalField request) {
     return postJsonPatchContentType(request,null);
   }
@@ -98,6 +103,11 @@ public class AsyncRawContentTypeClient {
 
   public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentWithCharsetType() {
     return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
+  }
+
+  public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentWithCharsetType(
+      RequestOptions requestOptions) {
+    return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build(),requestOptions);
   }
 
   public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentWithCharsetType(

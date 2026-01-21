@@ -284,15 +284,54 @@ types:
   LongType:
     properties:
       default: optional<long>
+      validation: optional<LongValidationRules>
+
+  LongValidationRules:
+    properties:
+      min: optional<long>
+      max: optional<long>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<long>
 
   UintType:
-    properties: {}
+    properties:
+      default: optional<uint>
+      validation: optional<UintValidationRules>
+
+  UintValidationRules:
+    properties:
+      min: optional<uint>
+      max: optional<uint>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<uint>
 
   Uint64Type:
-    properties: {}
+    properties:
+      default: optional<uint64>
+      validation: optional<Uint64ValidationRules>
+
+  Uint64ValidationRules:
+    properties:
+      min: optional<uint64>
+      max: optional<uint64>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<uint64>
 
   FloatType:
-    properties: {}
+    properties:
+      default: optional<float>
+      validation: optional<FloatValidationRules>
+
+  FloatValidationRules:
+    properties:
+      min: optional<float>
+      max: optional<float>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<float>
 
   DoubleType:
     properties:

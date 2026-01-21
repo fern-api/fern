@@ -12,13 +12,7 @@ public partial class OrganizationClient : IOrganizationClient
         _client = client;
     }
 
-    /// <summary>
-    /// Create a new organization.
-    /// </summary>
-    /// <example><code>
-    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
-    /// </code></example>
-    public async Task<Organization> CreateAsync(
+    private async Task<WithRawResponse<Organization>> CreateAsyncCore(
         CreateOrganizationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -42,14 +36,28 @@ public partial class OrganizationClient : IOrganizationClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Organization>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Organization>(responseBody)!;
+                return new WithRawResponse<Organization>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
+                throw new SeedMixedFileDirectoryApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedMixedFileDirectoryApiException(
@@ -58,5 +66,22 @@ public partial class OrganizationClient : IOrganizationClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Create a new organization.
+    /// </summary>
+    /// <example><code>
+    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
+    /// </code></example>
+    public WithRawResponseTask<Organization> CreateAsync(
+        CreateOrganizationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Organization>(
+            CreateAsyncCore(request, options, cancellationToken)
+        );
     }
 }

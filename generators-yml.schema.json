@@ -1981,6 +1981,16 @@
             }
           ]
         },
+        "overlays": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "namespace": {
           "oneOf": [
             {

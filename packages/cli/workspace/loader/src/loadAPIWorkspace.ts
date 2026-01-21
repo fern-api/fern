@@ -39,6 +39,10 @@ export async function loadSingleNamespaceAPIWorkspace({
                 absoluteFilepathToOverrides = join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides));
             }
         }
+        const absoluteFilepathToOverlays =
+            definition.overlays != null
+                ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
+                : undefined;
         if (definition.schema.type === "protobuf") {
             const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
             const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot);
@@ -137,11 +141,26 @@ export async function loadSingleNamespaceAPIWorkspace({
                 }
             }
         }
+        if (
+            definition.overlays != null &&
+            absoluteFilepathToOverlays != null &&
+            !(await doesPathExist(absoluteFilepathToOverlays))
+        ) {
+            return {
+                didSucceed: false,
+                failures: {
+                    [RelativeFilePath.of(definition.overlays)]: {
+                        type: WorkspaceLoaderFailureType.FILE_MISSING
+                    }
+                }
+            };
+        }
         const apiSettings = getAPIDefinitionSettings(definition.settings);
         specs.push({
             type: "openapi",
             absoluteFilepath,
             absoluteFilepathToOverrides,
+            absoluteFilepathToOverlays,
             settings: {
                 ...apiSettings,
                 audiences: definition.audiences ?? []

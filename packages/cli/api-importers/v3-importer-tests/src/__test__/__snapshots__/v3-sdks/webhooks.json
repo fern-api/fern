@@ -61,6 +61,7 @@
               "primitive": {
                 "v1": "LONG",
                 "v2": {
+                  "validation": {},
                   "type": "long"
                 }
               },

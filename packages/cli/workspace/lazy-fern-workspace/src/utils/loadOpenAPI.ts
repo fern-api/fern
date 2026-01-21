@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
-
+import { applyOverlays } from "../loaders/applyOverlays";
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
 import { parseOpenAPI } from "./parseOpenAPI";
 
@@ -53,11 +53,15 @@ const OPENAPI_EXAMPLES_KEYS = [
 export async function loadOpenAPI({
     context,
     absolutePathToOpenAPI,
-    absolutePathToOpenAPIOverrides
+    absolutePathToOpenAPIOverrides,
+    absolutePathToOpenAPIOverlays,
+    loadAiExamples = false
 }: {
     context: TaskContext;
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToOpenAPIOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+    absolutePathToOpenAPIOverlays: AbsoluteFilePath | undefined;
+    loadAiExamples?: boolean;
 }): Promise<OpenAPI.Document> {
     const parsed = await parseOpenAPI({
         absolutePathToOpenAPI
@@ -106,57 +110,71 @@ export async function loadOpenAPI({
         });
     }
 
-    const aiExamplesOverrideFilepath = join(
-        dirname(absolutePathToOpenAPI),
-        RelativeFilePath.of("ai_examples_override.yml")
-    );
+    // Apply OpenAPI Overlays (after overrides)
+    if (absolutePathToOpenAPIOverlays != null) {
+        result = await applyOverlays<OpenAPI.Document>({
+            absoluteFilePathToOverlay: absolutePathToOpenAPIOverlays,
+            absoluteFilePathToOpenAPI: absolutePathToOpenAPI,
+            context,
+            data: result
+        });
+    }
 
-    try {
-        const overrideContent = await readFile(aiExamplesOverrideFilepath, "utf-8");
-        const overrideData = yaml.load(overrideContent) as {
-            paths?: Record<string, Record<string, { "x-fern-examples"?: unknown[] }>>;
-        };
+    // Only load AI examples when explicitly requested (e.g., for docs generation)
+    // SDK generation should not include AI examples
+    if (loadAiExamples) {
+        const aiExamplesOverrideFilepath = join(
+            dirname(absolutePathToOpenAPI),
+            RelativeFilePath.of("ai_examples_override.yml")
+        );
 
-        if (overrideData?.paths && result.paths) {
-            for (const [path, methods] of Object.entries(overrideData.paths)) {
-                if (methods && typeof methods === "object") {
-                    for (const [method, methodData] of Object.entries(methods)) {
-                        const lowerMethod = method.toLowerCase();
-                        // Try exact match first
-                        let pathItem = result.paths[path];
+        try {
+            const overrideContent = await readFile(aiExamplesOverrideFilepath, "utf-8");
+            const overrideData = yaml.load(overrideContent) as {
+                paths?: Record<string, Record<string, { "x-fern-examples"?: unknown[] }>>;
+            };
 
-                        // If no exact match, try pattern matching for path parameters
-                        // Example: /apis/apiId/versions/versionId should match /apis/{apiId}/versions/{versionId}
-                        if (!pathItem && result.paths) {
-                            const matchingPath = findMatchingOpenAPIPath(path, Object.keys(result.paths));
-                            if (matchingPath) {
-                                pathItem = result.paths[matchingPath];
-                                context.logger.debug(
-                                    `Matched override path "${path}" to OpenAPI path "${matchingPath}" using pattern matching`
-                                );
-                            }
-                        }
+            if (overrideData?.paths && result.paths) {
+                for (const [path, methods] of Object.entries(overrideData.paths)) {
+                    if (methods && typeof methods === "object") {
+                        for (const [method, methodData] of Object.entries(methods)) {
+                            const lowerMethod = method.toLowerCase();
+                            // Try exact match first
+                            let pathItem = result.paths[path];
 
-                        if (pathItem && typeof pathItem === "object") {
-                            const pathItemObj = pathItem as Record<string, unknown>;
-                            const operation = pathItemObj[lowerMethod];
-                            if (operation && typeof operation === "object") {
-                                const operationObj = operation as Record<string, unknown>;
-                                if (!operationObj["x-fern-examples"] && methodData["x-fern-examples"]) {
-                                    operationObj["x-fern-examples"] = methodData["x-fern-examples"];
+                            // If no exact match, try pattern matching for path parameters
+                            // Example: /apis/apiId/versions/versionId should match /apis/{apiId}/versions/{versionId}
+                            if (!pathItem && result.paths) {
+                                const matchingPath = findMatchingOpenAPIPath(path, Object.keys(result.paths));
+                                if (matchingPath) {
+                                    pathItem = result.paths[matchingPath];
                                     context.logger.debug(
-                                        `Added AI examples for ${method.toUpperCase()} ${path} from override file`
+                                        `Matched override path "${path}" to OpenAPI path "${matchingPath}" using pattern matching`
                                     );
+                                }
+                            }
+
+                            if (pathItem && typeof pathItem === "object") {
+                                const pathItemObj = pathItem as Record<string, unknown>;
+                                const operation = pathItemObj[lowerMethod];
+                                if (operation && typeof operation === "object") {
+                                    const operationObj = operation as Record<string, unknown>;
+                                    if (!operationObj["x-fern-examples"] && methodData["x-fern-examples"]) {
+                                        operationObj["x-fern-examples"] = methodData["x-fern-examples"];
+                                        context.logger.debug(
+                                            `Added AI examples for ${method.toUpperCase()} ${path} from override file`
+                                        );
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+            context.logger.debug(`Processed AI examples from ${aiExamplesOverrideFilepath}`);
+        } catch (error) {
+            // Silently ignore if AI examples override file doesn't exist
         }
-        context.logger.debug(`Processed AI examples from ${aiExamplesOverrideFilepath}`);
-    } catch (error) {
-        // Silently ignore if AI examples override file doesn't exist
     }
 
     // If AI examples were added (result !== parsed) but no override files were processed,

@@ -4,7 +4,7 @@ import { url } from "../../src/core";
 import { toJson } from "../../src/core/json";
 import { withFormUrlEncoded } from "./withFormUrlEncoded";
 import { withHeaders } from "./withHeaders";
-import { withJson } from "./withJson";
+import { type WithJsonOptions, withJson } from "./withJson";
 
 type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 
@@ -26,7 +26,7 @@ interface RequestHeadersStage extends RequestBodyStage, ResponseStage {
 }
 
 interface RequestBodyStage extends ResponseStage {
-    jsonBody(body: unknown): ResponseStage;
+    jsonBody(body: unknown, options?: WithJsonOptions): ResponseStage;
     formUrlEncodedBody(body: unknown): ResponseStage;
 }
 
@@ -129,11 +129,11 @@ class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodySta
         return this;
     }
 
-    jsonBody(body: unknown): ResponseStage {
+    jsonBody(body: unknown, options?: WithJsonOptions): ResponseStage {
         if (body === undefined) {
             throw new Error("Undefined is not valid JSON. Do not call jsonBody if you want an empty body.");
         }
-        this.predicates.push((resolver) => withJson(body, resolver));
+        this.predicates.push((resolver) => withJson(body, resolver, options));
         return this;
     }
 

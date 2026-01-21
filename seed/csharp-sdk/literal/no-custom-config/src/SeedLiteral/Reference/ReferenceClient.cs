@@ -12,30 +12,7 @@ public partial class ReferenceClient : IReferenceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Reference.SendAsync(
-    ///     new SendRequest
-    ///     {
-    ///         Prompt = "You are a helpful assistant",
-    ///         Stream = false,
-    ///         Context = "You're super wise",
-    ///         Query = "What is the weather today",
-    ///         ContainerObject = new ContainerObject
-    ///         {
-    ///             NestedObjects = new List&lt;NestedObjectWithLiterals&gt;()
-    ///             {
-    ///                 new NestedObjectWithLiterals
-    ///                 {
-    ///                     Literal1 = "literal1",
-    ///                     Literal2 = "literal2",
-    ///                     StrProp = "strProp",
-    ///                 },
-    ///             },
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<SendResponse> SendAsync(
+    private async Task<WithRawResponse<SendResponse>> SendAsyncCore(
         SendRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -59,14 +36,28 @@ public partial class ReferenceClient : IReferenceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                return new WithRawResponse<SendResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedLiteralException("Failed to deserialize response", e);
+                throw new SeedLiteralApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedLiteralApiException(
@@ -75,5 +66,39 @@ public partial class ReferenceClient : IReferenceClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Reference.SendAsync(
+    ///     new SendRequest
+    ///     {
+    ///         Prompt = "You are a helpful assistant",
+    ///         Stream = false,
+    ///         Context = "You're super wise",
+    ///         Query = "What is the weather today",
+    ///         ContainerObject = new ContainerObject
+    ///         {
+    ///             NestedObjects = new List&lt;NestedObjectWithLiterals&gt;()
+    ///             {
+    ///                 new NestedObjectWithLiterals
+    ///                 {
+    ///                     Literal1 = "literal1",
+    ///                     Literal2 = "literal2",
+    ///                     StrProp = "strProp",
+    ///                 },
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SendResponse> SendAsync(
+        SendRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SendResponse>(
+            SendAsyncCore(request, options, cancellationToken)
+        );
     }
 }

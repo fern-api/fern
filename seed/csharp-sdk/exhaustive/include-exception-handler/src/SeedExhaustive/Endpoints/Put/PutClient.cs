@@ -21,10 +21,7 @@ public partial class PutClient : IPutClient
         }
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Put.AddAsync(new PutRequest { Id = "id" });
-    /// </code></example>
-    public async Task<PutResponse> AddAsync(
+    private async Task<WithRawResponse<PutResponse>> AddAsyncCore(
         PutRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -53,14 +50,30 @@ public partial class PutClient : IPutClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PutResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<PutResponse>(responseBody)!;
+                        return new WithRawResponse<PutResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -71,5 +84,19 @@ public partial class PutClient : IPutClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Put.AddAsync(new PutRequest { Id = "id" });
+    /// </code></example>
+    public WithRawResponseTask<PutResponse> AddAsync(
+        PutRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<PutResponse>(
+            AddAsyncCore(request, options, cancellationToken)
+        );
     }
 }

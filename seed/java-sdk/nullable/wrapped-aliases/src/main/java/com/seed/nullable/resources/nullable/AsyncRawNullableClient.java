@@ -42,6 +42,10 @@ public class AsyncRawNullableClient {
         return getUsers(GetUsersRequest.builder().build());
     }
 
+    public CompletableFuture<SeedNullableHttpResponse<List<User>>> getUsers(RequestOptions requestOptions) {
+        return getUsers(GetUsersRequest.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<SeedNullableHttpResponse<List<User>>> getUsers(GetUsersRequest request) {
         return getUsers(request, null);
     }
@@ -169,6 +173,10 @@ public class AsyncRawNullableClient {
 
     public CompletableFuture<SeedNullableHttpResponse<Boolean>> deleteUser() {
         return deleteUser(DeleteUserRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedNullableHttpResponse<Boolean>> deleteUser(RequestOptions requestOptions) {
+        return deleteUser(DeleteUserRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedNullableHttpResponse<Boolean>> deleteUser(DeleteUserRequest request) {

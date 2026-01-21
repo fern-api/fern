@@ -110,7 +110,7 @@ client.organizations().getOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.searchOrganizations(tenantId, organizationId) -> List&lt;Organization&gt;</code></summary>
+<details><summary><code>client.organizations.searchOrganizations(tenantId, organizationId) -> List&amp;lt;Organization&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -352,7 +352,7 @@ client.user().updateUser(
 </dl>
 </details>
 
-<details><summary><code>client.user.searchUsers(tenantId, userId) -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.searchUsers(tenantId, userId) -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 

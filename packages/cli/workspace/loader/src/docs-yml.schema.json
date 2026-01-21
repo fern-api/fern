@@ -195,6 +195,16 @@
         }
       ]
     },
+    "ai-examples": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AiExamplesConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -383,6 +393,13 @@
       ],
       "additionalProperties": false
     },
+    "docs.EditThisPageLaunch": {
+      "type": "string",
+      "enum": [
+        "github",
+        "dashboard"
+      ]
+    },
     "docs.EditThisPageConfig": {
       "type": "object",
       "properties": {
@@ -390,6 +407,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.GithubEditThisPageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "launch": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.EditThisPageLaunch"
             },
             {
               "type": "null"
@@ -1552,6 +1579,16 @@
     "docs.PlaygroundSettings": {
       "type": "object",
       "properties": {
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "environments": {
           "oneOf": [
             {
@@ -2278,6 +2315,38 @@
       ],
       "additionalProperties": false
     },
+    "docs.PythonDocsConfiguration": {
+      "type": "object",
+      "properties": {
+        "python-docs": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "python-docs"
+      ],
+      "additionalProperties": false
+    },
     "docs.ChangelogConfiguration": {
       "type": "object",
       "properties": {
@@ -2482,6 +2551,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.PythonDocsConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LinkConfiguration"
@@ -3733,6 +3805,16 @@
               "type": "null"
             }
           ]
+        },
+        "exclude-apis": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -3867,6 +3949,32 @@
               "items": {
                 "$ref": "#/definitions/docs.AIChatDatasource"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.AiExamplesConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "style": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"

@@ -35,6 +35,7 @@ import com.fern.java.client.generators.endpoint.RawHttpEndpointMethodSpecs;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -180,6 +181,25 @@ public abstract class AbstractClientGeneratorUtils {
                             .get());
                     implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
                             .getNoRequestBodyWithRequestOptionsMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs.getBodyOnlyMethodSpec().isPresent()) {
+                    rawClientImplBuilder.addMethod(
+                            rawHttpEndpointMethodSpecs.getBodyOnlyMethodSpec().get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getBodyOnlyMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getBodyOnlyWithRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getBodyOnlyWithRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getBodyOnlyWithRequestOptionsMethodSpec()
                             .get());
                 }
 
@@ -373,7 +393,8 @@ public abstract class AbstractClientGeneratorUtils {
     }
 
     private MethodSpec.Builder getBaseSubpackageMethod(Subpackage subpackage, ClassName subpackageClientInterface) {
-        return MethodSpec.methodBuilder(subpackage.getName().getCamelCase().getSafeName())
+        return MethodSpec.methodBuilder(KeyWordUtils.getKeyWordCompatibleMethodName(
+                        subpackage.getName().getCamelCase().getSafeName()))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(subpackageClientInterface);
     }

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->echo_($request) -> string</code></summary>
+<details><summary><code>$client-&gt;echo_($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ $client->echo_(
 </dl>
 </details>
 
-<details><summary><code>$client->createType($request) -> Identifier</code></summary>
+<details><summary><code>$client-&gt;createType($request) -> Identifier</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ $client->echo_(
 </details>
 
 ## File Notification Service
-<details><summary><code>$client->file->notification->service->getException($notificationId) -> Exception</code></summary>
+<details><summary><code>$client-&gt;file-&gt;notification-&gt;service-&gt;getException($notificationId) -> Exception</code></summary>
 <dl>
 <dd>
 
@@ -127,7 +127,7 @@ $client->file->notification->service->getException(
 </details>
 
 ## File Service
-<details><summary><code>$client->file->service->getFile($filename, $request) -> File</code></summary>
+<details><summary><code>$client-&gt;file-&gt;service-&gt;getFile($filename, $request) -> File</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +187,7 @@ $client->file->service->getFile(
 </details>
 
 ## Health Service
-<details><summary><code>$client->health->service->check($id)</code></summary>
+<details><summary><code>$client-&gt;health-&gt;service-&gt;check($id)</code></summary>
 <dl>
 <dd>
 
@@ -243,7 +243,7 @@ $client->health->service->check(
 </dl>
 </details>
 
-<details><summary><code>$client->health->service->ping() -> bool</code></summary>
+<details><summary><code>$client-&gt;health-&gt;service-&gt;ping() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -283,7 +283,7 @@ $client->health->service->ping();
 </details>
 
 ## Service
-<details><summary><code>$client->service->getMovie($movieId) -> Movie</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovie($movieId) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -325,7 +325,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->service->createMovie($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;createMovie($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -388,7 +388,7 @@ $client->service->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->service->getMetadata($request) -> Metadata</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMetadata($request) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -452,7 +452,7 @@ $client->service->getMetadata(
 </dl>
 </details>
 
-<details><summary><code>$client->service->createBigEntity($request) -> Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;createBigEntity($request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -704,7 +704,7 @@ $client->service->createBigEntity(
 </dl>
 </details>
 
-<details><summary><code>$client->service->refreshToken($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;refreshToken($request)</code></summary>
 <dl>
 <dd>
 

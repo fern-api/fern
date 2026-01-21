@@ -60,6 +60,10 @@ public class AsyncUnionClient {
         return this.rawClient.call().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Boolean> call(RequestOptions requestOptions) {
+        return this.rawClient.call(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Boolean> call(Request request) {
         return this.rawClient.call(request).thenApply(response -> response.body());
     }
