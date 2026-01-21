@@ -380,7 +380,14 @@
           "const": "oauth"
         },
         "type": {
-          "const": "client-credentials"
+          "enum": [
+            "client-credentials",
+            "authorization-code",
+            "password",
+            "device-code",
+            "token-exchange",
+            "refresh-token"
+          ]
         },
         "scopes": {
           "oneOf": [
@@ -447,6 +454,72 @@
               "type": "null"
             }
           ]
+        },
+        "authorization-endpoint": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The authorization endpoint URL (for authorization-code flow)"
+        },
+        "redirect-uri": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The redirect URI after authorization (for authorization-code flow)"
+        },
+        "use-pkce": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether to use PKCE for enhanced security (for authorization-code flow)"
+        },
+        "username-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The environment variable for the username (for password flow)"
+        },
+        "password-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The environment variable for the password (for password flow)"
+        },
+        "device-authorization-endpoint": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The device authorization endpoint URL (for device-code flow)"
         }
       },
       "required": [
