@@ -2,8 +2,16 @@
 - version: 3.48.0
   changelogEntry:
     - summary: |
-        Add support for extracting examples from multipart/form-data webhook payloads. Webhooks using multipart content type now properly display example names from the OpenAPI `summary` field instead of generic "Example 1", "Example 2" labels.
+        Add support for extracting examples from multipart/form-data webhook payloads. Webhooks using multipart content type now properly display example names from the OpenAPI `summary` field instead of generic "Example 1", "Example 2" labels. Also fixes webhook and WebSocket example names in FDR conversion to properly use the name field.
       type: feat
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.47.9
+  changelogEntry:
+    - summary: |
+        Fix Go package name normalization in dynamic IR generation. The CLI now normalizes Go package names by stripping the `https://` prefix to match how upload keys are generated.
+      type: fix
   createdAt: "2026-01-21"
   irVersion: 63
 

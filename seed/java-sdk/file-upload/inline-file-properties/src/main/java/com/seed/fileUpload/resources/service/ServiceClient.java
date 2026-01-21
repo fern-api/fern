@@ -7,6 +7,7 @@ import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
+import com.seed.fileUpload.resources.service.requests.JustFileWithOptionalQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
@@ -71,6 +72,15 @@ public class ServiceClient {
 
     public void justFileWithQueryParams(JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
         this.rawClient.justFileWithQueryParams(request, requestOptions).body();
+    }
+
+    public void justFileWithOptionalQueryParams(JustFileWithOptionalQueryParamsRequest request) {
+        this.rawClient.justFileWithOptionalQueryParams(request).body();
+    }
+
+    public void justFileWithOptionalQueryParams(
+            JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
+        this.rawClient.justFileWithOptionalQueryParams(request, requestOptions).body();
     }
 
     public void withContentType(WithContentTypeRequest request) {
