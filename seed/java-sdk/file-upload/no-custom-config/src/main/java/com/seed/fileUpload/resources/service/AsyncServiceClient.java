@@ -7,6 +7,7 @@ import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
+import com.seed.fileUpload.resources.service.requests.JustFileWithOptionalQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
@@ -90,6 +91,18 @@ public class AsyncServiceClient {
             File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .justFileWithQueryParams(file, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithOptionalQueryParams(
+            File file, JustFileWithOptionalQueryParamsRequest request) {
+        return this.rawClient.justFileWithOptionalQueryParams(file, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithOptionalQueryParams(
+            File file, JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .justFileWithOptionalQueryParams(file, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 
