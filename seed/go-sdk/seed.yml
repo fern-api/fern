@@ -256,6 +256,9 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: PayrocPager
+  go-optional-literal-alias:
+    - outputFolder: .
+      customConfig: null
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:

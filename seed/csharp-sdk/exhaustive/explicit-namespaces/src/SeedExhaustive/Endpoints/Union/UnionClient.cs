@@ -14,12 +14,7 @@ public partial class UnionClient : IUnionClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Union.GetAndReturnUnionAsync(
-    ///     new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
-    /// );
-    /// </code></example>
-    public async Task<Animal> GetAndReturnUnionAsync(
+    private async Task<WithRawResponse<Animal>> GetAndReturnUnionAsyncCore(
         Animal request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -43,14 +38,28 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Animal>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Animal>(responseBody)!;
+                return new WithRawResponse<Animal>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExhaustiveApiException(
@@ -59,5 +68,21 @@ public partial class UnionClient : IUnionClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Union.GetAndReturnUnionAsync(
+    ///     new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Animal> GetAndReturnUnionAsync(
+        Animal request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Animal>(
+            GetAndReturnUnionAsyncCore(request, options, cancellationToken)
+        );
     }
 }

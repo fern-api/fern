@@ -12,10 +12,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.GetMovieAsync("movie-c06a4ad7");
-    /// </code></example>
-    public async Task<Movie> GetMovieAsync(
+    private async Task<WithRawResponse<Movie>> GetMovieAsyncCore(
         string movieId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -38,14 +35,28 @@ public partial class ServiceClient : IServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Movie>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Movie>(responseBody)!;
+                return new WithRawResponse<Movie>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExamplesApiException(
@@ -56,34 +67,7 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
-    /// <example><code>
-    /// await client.Service.CreateMovieAsync(
-    ///     new Movie
-    ///     {
-    ///         Id = "movie-c06a4ad7",
-    ///         Prequel = "movie-cv9b914f",
-    ///         Title = "The Boy and the Heron",
-    ///         From = "Hayao Miyazaki",
-    ///         Rating = 8,
-    ///         Type = "movie",
-    ///         Tag = "tag-wf9as23d",
-    ///         Metadata = new Dictionary&lt;string, object?&gt;()
-    ///         {
-    ///             {
-    ///                 "actors",
-    ///                 new List&lt;object?&gt;() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
-    ///             },
-    ///             { "releaseDate", "2023-12-08" },
-    ///             {
-    ///                 "ratings",
-    ///                 new Dictionary&lt;object, object?&gt;() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
-    ///             },
-    ///         },
-    ///         Revenue = 1000000,
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<string> CreateMovieAsync(
+    private async Task<WithRawResponse<string>> CreateMovieAsyncCore(
         Movie request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -107,14 +91,28 @@ public partial class ServiceClient : IServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExamplesApiException(
@@ -125,17 +123,7 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
-    /// <example><code>
-    /// await client.Service.GetMetadataAsync(
-    ///     new GetMetadataRequest
-    ///     {
-    ///         Shallow = false,
-    ///         Tag = ["development"],
-    ///         XApiVersion = "0.0.1",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<Metadata> GetMetadataAsync(
+    private async Task<WithRawResponse<Metadata>> GetMetadataAsyncCore(
         GetMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -169,14 +157,28 @@ public partial class ServiceClient : IServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Metadata>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Metadata>(responseBody)!;
+                return new WithRawResponse<Metadata>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExamplesApiException(
@@ -185,6 +187,135 @@ public partial class ServiceClient : IServiceClient
                 responseBody
             );
         }
+    }
+
+    private async Task<WithRawResponse<Response>> CreateBigEntityAsyncCore(
+        BigEntity request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/big-entity",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<Response>(responseBody)!;
+                return new WithRawResponse<Response>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.Service.GetMovieAsync("movie-c06a4ad7");
+    /// </code></example>
+    public WithRawResponseTask<Movie> GetMovieAsync(
+        string movieId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Movie>(
+            GetMovieAsyncCore(movieId, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Service.CreateMovieAsync(
+    ///     new Movie
+    ///     {
+    ///         Id = "movie-c06a4ad7",
+    ///         Prequel = "movie-cv9b914f",
+    ///         Title = "The Boy and the Heron",
+    ///         From = "Hayao Miyazaki",
+    ///         Rating = 8,
+    ///         Type = "movie",
+    ///         Tag = "tag-wf9as23d",
+    ///         Metadata = new Dictionary&lt;string, object?&gt;()
+    ///         {
+    ///             {
+    ///                 "actors",
+    ///                 new List&lt;object?&gt;() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+    ///             },
+    ///             { "releaseDate", "2023-12-08" },
+    ///             {
+    ///                 "ratings",
+    ///                 new Dictionary&lt;object, object?&gt;() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
+    ///             },
+    ///         },
+    ///         Revenue = 1000000,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<string> CreateMovieAsync(
+        Movie request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            CreateMovieAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Service.GetMetadataAsync(
+    ///     new GetMetadataRequest
+    ///     {
+    ///         Shallow = false,
+    ///         Tag = ["development"],
+    ///         XApiVersion = "0.0.1",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Metadata> GetMetadataAsync(
+        GetMetadataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Metadata>(
+            GetMetadataAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <example><code>
@@ -406,46 +537,15 @@ public partial class ServiceClient : IServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Response> CreateBigEntityAsync(
+    public WithRawResponseTask<Response> CreateBigEntityAsync(
         BigEntity request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/big-entity",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<Response>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedExamplesException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamplesApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask<Response>(
+            CreateBigEntityAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <example><code>

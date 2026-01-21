@@ -27,6 +27,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
+    "dist:cli:dev": "node build.dev.mjs",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@fern-api/cli-logger": "workspace:*",
+    "tsup": "^8.5.0",
     "@fern-api/config": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",

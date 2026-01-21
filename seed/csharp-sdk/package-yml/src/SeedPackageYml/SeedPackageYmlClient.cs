@@ -32,10 +32,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
 
     public ServiceClient Service { get; }
 
-    /// <example><code>
-    /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
-    /// </code></example>
-    public async Task<string> EchoAsync(
+    private async Task<WithRawResponse<string>> EchoAsyncCore(
         string id,
         EchoRequest request,
         RequestOptions? options = null,
@@ -60,14 +57,28 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPackageYmlException("Failed to deserialize response", e);
+                throw new SeedPackageYmlApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPackageYmlApiException(
@@ -76,5 +87,20 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
+    /// </code></example>
+    public WithRawResponseTask<string> EchoAsync(
+        string id,
+        EchoRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            EchoAsyncCore(id, request, options, cancellationToken)
+        );
     }
 }

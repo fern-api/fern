@@ -5,7 +5,7 @@ public partial interface IBasicAuthClient
     /// <summary>
     /// GET request with basic auth scheme
     /// </summary>
-    Task<bool> GetWithBasicAuthAsync(
+    WithRawResponseTask<bool> GetWithBasicAuthAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
@@ -13,7 +13,7 @@ public partial interface IBasicAuthClient
     /// <summary>
     /// POST request with basic auth scheme
     /// </summary>
-    Task<bool> PostWithBasicAuthAsync(
+    WithRawResponseTask<bool> PostWithBasicAuthAsync(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

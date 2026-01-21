@@ -2,13 +2,13 @@ namespace SeedInferredAuthImplicitNoExpiry;
 
 public partial interface IAuthClient
 {
-    Task<TokenResponse> GetTokenWithClientCredentialsAsync(
+    WithRawResponseTask<TokenResponse> GetTokenWithClientCredentialsAsync(
         GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<TokenResponse> RefreshTokenAsync(
+    WithRawResponseTask<TokenResponse> RefreshTokenAsync(
         RefreshTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

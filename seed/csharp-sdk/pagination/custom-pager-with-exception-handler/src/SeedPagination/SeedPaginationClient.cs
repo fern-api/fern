@@ -23,7 +23,7 @@ public partial class SeedPaginationClient : ISeedPaginationClient
             );
             clientOptions ??= new ClientOptions();
             clientOptions.ExceptionHandler = new ExceptionHandler(
-                new SeedPaginationExceptionInterceptor()
+                new SeedPaginationExceptionInterceptor(clientOptions)
             );
             foreach (var header in defaultHeaders)
             {
@@ -39,7 +39,7 @@ public partial class SeedPaginationClient : ISeedPaginationClient
         }
         catch (Exception ex)
         {
-            var interceptor = new SeedPaginationExceptionInterceptor();
+            var interceptor = new SeedPaginationExceptionInterceptor(clientOptions);
             interceptor.Intercept(ex);
             throw;
         }

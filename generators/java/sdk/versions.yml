@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.33.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error in generated InputStream overloads for file upload endpoints. The
+        `requestOptions.getQueryParameters()` code block is now only emitted in methods that have
+        `RequestOptions` as a parameter.
+      type: fix
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Generate body-only method overloads for endpoints with required body and optional headers/query params.
+        This prevents breaking changes when optional headers or query params are added to existing endpoints.
+      type: feat
+  createdAt: "2026-01-20"
+  irVersion: 63
+
+- version: 3.32.1
+  changelogEntry:
+    - summary: |
+        Update container to fix CVE-2026-23745 (node-tar path traversal via hardlinks/symlinks) and
+        CVE-2025-66293 (libpng out-of-bounds read). Patches npm's bundled tar to 7.5.3 and updates
+        libpng16-16 to the latest available version.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
 - version: 3.32.0
   changelogEntry:
     - summary: |

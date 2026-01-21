@@ -5,7 +5,7 @@ public partial interface IServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    Task<string> GetWithBearerTokenAsync(
+    WithRawResponseTask<string> GetWithBearerTokenAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

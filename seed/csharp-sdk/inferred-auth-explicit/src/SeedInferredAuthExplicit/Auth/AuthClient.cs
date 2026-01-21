@@ -12,20 +12,7 @@ public partial class AuthClient : IAuthClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Auth.GetTokenWithClientCredentialsAsync(
-    ///     new GetTokenRequest
-    ///     {
-    ///         XApiKey = "X-Api-Key",
-    ///         ClientId = "client_id",
-    ///         ClientSecret = "client_secret",
-    ///         Audience = "https://api.example.com",
-    ///         GrantType = "client_credentials",
-    ///         Scope = "scope",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(
+    private async Task<WithRawResponse<TokenResponse>> GetTokenWithClientCredentialsAsyncCore(
         GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -53,14 +40,28 @@ public partial class AuthClient : IAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                return new WithRawResponse<TokenResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedInferredAuthExplicitException("Failed to deserialize response", e);
+                throw new SeedInferredAuthExplicitApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedInferredAuthExplicitApiException(
@@ -71,21 +72,7 @@ public partial class AuthClient : IAuthClient
         }
     }
 
-    /// <example><code>
-    /// await client.Auth.RefreshTokenAsync(
-    ///     new RefreshTokenRequest
-    ///     {
-    ///         XApiKey = "X-Api-Key",
-    ///         ClientId = "client_id",
-    ///         ClientSecret = "client_secret",
-    ///         RefreshToken = "refresh_token",
-    ///         Audience = "https://api.example.com",
-    ///         GrantType = "refresh_token",
-    ///         Scope = "scope",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<TokenResponse> RefreshTokenAsync(
+    private async Task<WithRawResponse<TokenResponse>> RefreshTokenAsyncCore(
         RefreshTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -113,14 +100,28 @@ public partial class AuthClient : IAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                return new WithRawResponse<TokenResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedInferredAuthExplicitException("Failed to deserialize response", e);
+                throw new SeedInferredAuthExplicitApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedInferredAuthExplicitApiException(
@@ -129,5 +130,54 @@ public partial class AuthClient : IAuthClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Auth.GetTokenWithClientCredentialsAsync(
+    ///     new GetTokenRequest
+    ///     {
+    ///         XApiKey = "X-Api-Key",
+    ///         ClientId = "client_id",
+    ///         ClientSecret = "client_secret",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "client_credentials",
+    ///         Scope = "scope",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<TokenResponse> GetTokenWithClientCredentialsAsync(
+        GetTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TokenResponse>(
+            GetTokenWithClientCredentialsAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Auth.RefreshTokenAsync(
+    ///     new RefreshTokenRequest
+    ///     {
+    ///         XApiKey = "X-Api-Key",
+    ///         ClientId = "client_id",
+    ///         ClientSecret = "client_secret",
+    ///         RefreshToken = "refresh_token",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "refresh_token",
+    ///         Scope = "scope",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<TokenResponse> RefreshTokenAsync(
+        RefreshTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TokenResponse>(
+            RefreshTokenAsyncCore(request, options, cancellationToken)
+        );
     }
 }

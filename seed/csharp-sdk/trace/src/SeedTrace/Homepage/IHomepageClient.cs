@@ -2,7 +2,7 @@ namespace SeedTrace;
 
 public partial interface IHomepageClient
 {
-    Task<IEnumerable<string>> GetHomepageProblemsAsync(
+    WithRawResponseTask<IEnumerable<string>> GetHomepageProblemsAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

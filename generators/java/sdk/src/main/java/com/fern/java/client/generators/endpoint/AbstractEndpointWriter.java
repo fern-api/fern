@@ -192,7 +192,11 @@ public abstract class AbstractEndpointWriter {
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
                 convertPathParametersToSpecMap(httpEndpoint.getPathParameters()),
                 clientGeneratorContext);
-        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(variables.getQueryParams());
+        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl =
+                httpUrlBuilder.generateBuilder(variables.getQueryParams(), true);
+        // Generate a separate URL builder for methods without RequestOptions in scope
+        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrlNoRequestOptions =
+                httpUrlBuilder.generateBuilder(variables.getQueryParams(), false);
         endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 
         // Step 5: Get request initializer
@@ -362,6 +366,71 @@ public abstract class AbstractEndpointWriter {
                     paramNamesWoBodyWithRequestOptions,
                     bodyParameterSpec);
             endpointWithoutRequestWithRequestOptions = endpointWithoutRequestWithRequestOptionsBuilder.build();
+        }
+
+        MethodSpec bodyOnlyMethodSpec = null;
+        MethodSpec bodyOnlyWithRequestOptionsMethodSpec = null;
+        if (variables.sdkRequest().isPresent()
+                && variables
+                        .sdkRequest()
+                        .get()
+                        .getShape()
+                        .visit(new SdkRequestHasRequiredBodyWithOnlyOptionalWrapperAdditions())) {
+            Optional<TypeName> bodyTypeName = variables.getBodyTypeName();
+            Optional<TypeName> wrapperTypeName = variables.getWrapperTypeName();
+            if (bodyTypeName.isPresent() && wrapperTypeName.isPresent()) {
+                String bodyParamName = variables.getBodyParameterName();
+                ParameterSpec bodyParam =
+                        ParameterSpec.builder(bodyTypeName.get(), bodyParamName).build();
+
+                MethodSpec.Builder bodyOnlyMethodBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                        .addJavadoc(endpointWithRequestOptions.javadoc)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameters(variables.pathParameters)
+                        .addParameter(bodyParam)
+                        .returns(endpointWithoutRequestOptions.returnType);
+                List<String> bodyOnlyParamNames = Stream.concat(variables.pathParameters.stream(), Stream.of(bodyParam))
+                        .map(parameterSpec -> parameterSpec.name)
+                        .collect(Collectors.toList());
+                responseParserGenerator.addBodyOnlyReturnStatement(
+                        bodyOnlyMethodBuilder,
+                        endpointWithRequestOptions,
+                        bodyOnlyParamNames,
+                        bodyParam,
+                        wrapperTypeName.get(),
+                        variables.getBodyPropertyName());
+                bodyOnlyMethodSpec = bodyOnlyMethodBuilder.build();
+
+                MethodSpec.Builder bodyOnlyWithRequestOptionsMethodBuilder = MethodSpec.methodBuilder(
+                                endpointWithRequestOptions.name)
+                        .addJavadoc(endpointWithRequestOptions.javadoc)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameters(variables.pathParameters)
+                        .addParameter(bodyParam)
+                        .returns(endpointWithRequestOptions.returnType);
+                if (httpEndpoint.getIdempotent()) {
+                    bodyOnlyWithRequestOptionsMethodBuilder.addParameter(ParameterSpec.builder(
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getIdempotentRequestOptionsClassName(),
+                                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                            .build());
+                } else {
+                    bodyOnlyWithRequestOptionsMethodBuilder.addParameter(requestOptionsParameterSpec());
+                }
+                List<String> bodyOnlyWithRequestOptionsParamNames = Stream.concat(
+                                variables.pathParameters.stream(), Stream.of(bodyParam))
+                        .map(parameterSpec -> parameterSpec.name)
+                        .collect(Collectors.toList());
+                responseParserGenerator.addBodyOnlyWithRequestOptionsReturnStatement(
+                        bodyOnlyWithRequestOptionsMethodBuilder,
+                        endpointWithRequestOptions,
+                        bodyOnlyWithRequestOptionsParamNames,
+                        bodyParam,
+                        wrapperTypeName.get(),
+                        variables.getBodyPropertyName());
+                bodyOnlyWithRequestOptionsMethodSpec = bodyOnlyWithRequestOptionsMethodBuilder.build();
+            }
         }
 
         Optional<BytesRequest> maybeBytes = httpEndpoint
@@ -537,7 +606,7 @@ public abstract class AbstractEndpointWriter {
                                 .returns(endpointWithRequestOptions.returnType);
 
                         CodeBlock.Builder methodBody = CodeBlock.builder()
-                                .add(generatedHttpUrl.initialization())
+                                .add(generatedHttpUrlNoRequestOptions.initialization())
                                 .addStatement(
                                         "$T fs = new $T($N, $N, null)",
                                         fileStreamClassName,
@@ -608,7 +677,7 @@ public abstract class AbstractEndpointWriter {
                                 .returns(endpointWithRequestOptions.returnType);
 
                         CodeBlock.Builder withMediaTypeBody = CodeBlock.builder()
-                                .add(generatedHttpUrl.initialization())
+                                .add(generatedHttpUrlNoRequestOptions.initialization())
                                 .addStatement(
                                         "$T fs = new $T($N, $N, $N)",
                                         fileStreamClassName,
@@ -808,6 +877,8 @@ public abstract class AbstractEndpointWriter {
                 endpointWithoutRequestOptions,
                 endpointWithoutRequest,
                 endpointWithoutRequestWithRequestOptions,
+                bodyOnlyMethodSpec,
+                bodyOnlyWithRequestOptionsMethodSpec,
                 byteArrayMethodSpec,
                 nonRequestOptionsByteArrayMethodSpec,
                 inputStreamMethodSpec,
@@ -910,6 +981,50 @@ public abstract class AbstractEndpointWriter {
                         .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
             }
             return isOptional;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    private class SdkRequestHasRequiredBodyWithOnlyOptionalWrapperAdditions
+            implements SdkRequestShape.Visitor<Boolean> {
+
+        @Override
+        public Boolean visitJustRequestBody(SdkRequestBodyType justRequestBody) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitWrapper(SdkRequestWrapper wrapper) {
+            if (!httpEndpoint.getRequestBody().isPresent()) {
+                return false;
+            }
+            boolean bodyIsRequired = !httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
+            if (!bodyIsRequired) {
+                return false;
+            }
+            boolean allHeadersOptional = httpEndpoint.getHeaders().isEmpty()
+                    || httpEndpoint.getHeaders().stream().allMatch(httpHeader -> httpHeader
+                            .getValueType()
+                            .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
+            boolean allQueryParamsOptional = httpEndpoint.getQueryParameters().isEmpty()
+                    || httpEndpoint.getQueryParameters().stream().allMatch(queryParameter -> queryParameter
+                            .getValueType()
+                            .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
+            boolean allInlinePathParamsOptional = !inlinePathParams
+                    || httpEndpoint.getPathParameters().isEmpty()
+                    || httpEndpoint.getPathParameters().stream().allMatch(pathParameter -> pathParameter
+                            .getValueType()
+                            .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
+            boolean hasOnlyOptionalWrapperAdditions =
+                    allHeadersOptional && allQueryParamsOptional && allInlinePathParamsOptional;
+            boolean hasWrapperAdditions = !httpEndpoint.getHeaders().isEmpty()
+                    || !httpEndpoint.getQueryParameters().isEmpty()
+                    || (inlinePathParams && !httpEndpoint.getPathParameters().isEmpty());
+            return hasOnlyOptionalWrapperAdditions && hasWrapperAdditions;
         }
 
         @Override

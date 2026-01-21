@@ -76,6 +76,13 @@ export class DynamicTypeInstantiationMapper {
                             aliasImportPath
                         });
                     }
+                    // Special case: nullable + alias-of-literal
+                    // For fields like `SortField *SortField` where `type SortField = string` with literal value,
+                    // we use the primitive's pointer helper (e.g., fern.String("DEFAULT")) instead of
+                    // trying to take the address of a type conversion which is invalid Go.
+                    if (named?.type === "alias" && named.typeReference.type === "literal") {
+                        return this.convertLiteralToOptionalPrimitive(named.typeReference.value);
+                    }
                 }
                 // Default behavior for all other nullables
                 return go.TypeInstantiation.optional(
@@ -108,6 +115,13 @@ export class DynamicTypeInstantiationMapper {
                             aliasName,
                             aliasImportPath
                         });
+                    }
+                    // Special case: optional + alias-of-literal
+                    // For fields like `SortField *SortField` where `type SortField = string` with literal value,
+                    // we use the primitive's pointer helper (e.g., fern.String("DEFAULT")) instead of
+                    // trying to take the address of a type conversion which is invalid Go.
+                    if (named?.type === "alias" && named.typeReference.type === "literal") {
+                        return this.convertLiteralToOptionalPrimitive(named.typeReference.value);
                     }
                 }
                 // Default behavior for all other optionals
@@ -335,6 +349,17 @@ export class DynamicTypeInstantiationMapper {
                 return go.TypeInstantiation.bool(literal.value);
             case "string":
                 return go.TypeInstantiation.string(literal.value);
+            default:
+                assertNever(literal);
+        }
+    }
+
+    private convertLiteralToOptionalPrimitive(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
+        switch (literal.type) {
+            case "boolean":
+                return go.TypeInstantiation.optional(go.TypeInstantiation.bool(literal.value));
+            case "string":
+                return go.TypeInstantiation.optional(go.TypeInstantiation.string(literal.value));
             default:
                 assertNever(literal);
         }

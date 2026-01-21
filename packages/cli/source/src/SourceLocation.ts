@@ -9,21 +9,30 @@ export class SourceLocation {
     public readonly line: number;
     public readonly column: number;
 
+    /**
+     * If this location was resolved from a `$ref`, this contains the location
+     * of the file that contained the `$ref` reference.
+     */
+    public readonly refFrom?: SourceLocation;
+
     constructor({
         absoluteFilePath,
         relativeFilePath,
         line,
-        column
+        column,
+        refFrom
     }: {
         absoluteFilePath: AbsoluteFilePath;
         relativeFilePath: RelativeFilePath;
         line: number;
         column: number;
+        refFrom?: SourceLocation;
     }) {
         this.absoluteFilePath = absoluteFilePath;
         this.relativeFilePath = relativeFilePath;
         this.line = line;
         this.column = column;
+        this.refFrom = refFrom;
     }
 
     /**
@@ -45,5 +54,20 @@ export class SourceLocation {
      */
     public toAbsoluteString(): string {
         return `${this.absoluteFilePath}:${this.line}:${this.column}`;
+    }
+
+    /**
+     * Creates a new SourceLocation with the given `$ref` location.
+     * This is used when resolving `$ref` references to track where
+     * the reference originated.
+     */
+    public withRefFrom(refFrom: SourceLocation): SourceLocation {
+        return new SourceLocation({
+            absoluteFilePath: this.absoluteFilePath,
+            relativeFilePath: this.relativeFilePath,
+            line: this.line,
+            column: this.column,
+            refFrom: refFrom
+        });
     }
 }
