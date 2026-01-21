@@ -12,25 +12,7 @@ public partial class InlinedClient : IInlinedClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Inlined.SendAsync(
-    ///     new SendLiteralsInlinedRequest
-    ///     {
-    ///         Temperature = 10.1,
-    ///         Prompt = "You are a helpful assistant",
-    ///         Context = "You're super wise",
-    ///         AliasedContext = "You're super wise",
-    ///         MaybeContext = "You're super wise",
-    ///         ObjectWithLiteral = new ATopLevelLiteral
-    ///         {
-    ///             NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
-    ///         },
-    ///         Stream = false,
-    ///         Query = "What is the weather today",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<SendResponse> SendAsync(
+    private async Task<WithRawResponse<SendResponse>> SendAsyncCore(
         SendLiteralsInlinedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -54,14 +36,28 @@ public partial class InlinedClient : IInlinedClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                return new WithRawResponse<SendResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedLiteralException("Failed to deserialize response", e);
+                throw new SeedLiteralApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedLiteralApiException(
@@ -70,5 +66,34 @@ public partial class InlinedClient : IInlinedClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Inlined.SendAsync(
+    ///     new SendLiteralsInlinedRequest
+    ///     {
+    ///         Temperature = 10.1,
+    ///         Prompt = "You are a helpful assistant",
+    ///         Context = "You're super wise",
+    ///         AliasedContext = "You're super wise",
+    ///         MaybeContext = "You're super wise",
+    ///         ObjectWithLiteral = new ATopLevelLiteral
+    ///         {
+    ///             NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
+    ///         },
+    ///         Stream = false,
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SendResponse> SendAsync(
+        SendLiteralsInlinedRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SendResponse>(
+            SendAsyncCore(request, options, cancellationToken)
+        );
     }
 }

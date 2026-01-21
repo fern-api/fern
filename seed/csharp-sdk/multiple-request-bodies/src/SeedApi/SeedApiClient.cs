@@ -31,10 +31,9 @@ public partial class SeedApiClient : ISeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.UploadJsonDocumentAsync(new UploadDocumentRequest());
-    /// </code></example>
-    public async Task<OneOf<DocumentMetadata, DocumentUploadResult>> UploadJsonDocumentAsync(
+    private async Task<
+        WithRawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
+    > UploadJsonDocumentAsyncCore(
         UploadDocumentRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -59,16 +58,30 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<OneOf<DocumentMetadata, DocumentUploadResult>>(
-                    responseBody
-                )!;
+                var responseData = JsonUtils.Deserialize<
+                    OneOf<DocumentMetadata, DocumentUploadResult>
+                >(responseBody)!;
+                return new WithRawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -79,7 +92,9 @@ public partial class SeedApiClient : ISeedApiClient
         }
     }
 
-    public async Task<OneOf<DocumentMetadata, DocumentUploadResult>> UploadPdfDocumentAsync(
+    private async Task<
+        WithRawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>
+    > UploadPdfDocumentAsyncCore(
         Stream request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -104,16 +119,30 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<OneOf<DocumentMetadata, DocumentUploadResult>>(
-                    responseBody
-                )!;
+                var responseData = JsonUtils.Deserialize<
+                    OneOf<DocumentMetadata, DocumentUploadResult>
+                >(responseBody)!;
+                return new WithRawResponse<OneOf<DocumentMetadata, DocumentUploadResult>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -122,5 +151,34 @@ public partial class SeedApiClient : ISeedApiClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.UploadJsonDocumentAsync(new UploadDocumentRequest());
+    /// </code></example>
+    public WithRawResponseTask<
+        OneOf<DocumentMetadata, DocumentUploadResult>
+    > UploadJsonDocumentAsync(
+        UploadDocumentRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<OneOf<DocumentMetadata, DocumentUploadResult>>(
+            UploadJsonDocumentAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    public WithRawResponseTask<
+        OneOf<DocumentMetadata, DocumentUploadResult>
+    > UploadPdfDocumentAsync(
+        Stream request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<OneOf<DocumentMetadata, DocumentUploadResult>>(
+            UploadPdfDocumentAsyncCore(request, options, cancellationToken)
+        );
     }
 }

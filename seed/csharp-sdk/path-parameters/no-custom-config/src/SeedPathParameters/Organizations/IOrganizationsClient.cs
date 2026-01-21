@@ -2,20 +2,20 @@ namespace SeedPathParameters;
 
 public partial interface IOrganizationsClient
 {
-    Task<Organization> GetOrganizationAsync(
+    WithRawResponseTask<Organization> GetOrganizationAsync(
         string tenantId,
         string organizationId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<User> GetOrganizationUserAsync(
+    WithRawResponseTask<User> GetOrganizationUserAsync(
         GetOrganizationUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<Organization>> SearchOrganizationsAsync(
+    WithRawResponseTask<IEnumerable<Organization>> SearchOrganizationsAsync(
         string tenantId,
         string organizationId,
         SearchOrganizationsRequest request,

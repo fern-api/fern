@@ -1,6 +1,6 @@
 # Reference
 ## PropertyBasedError
-<details><summary><code>client.PropertyBasedError.<a href="/src/SeedErrorProperty/PropertyBasedError/PropertyBasedErrorClient.cs">ThrowErrorAsync</a>() -> string</code></summary>
+<details><summary><code>client.PropertyBasedError.<a href="/src/SeedErrorProperty/PropertyBasedError/PropertyBasedErrorClient.cs">ThrowErrorAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 

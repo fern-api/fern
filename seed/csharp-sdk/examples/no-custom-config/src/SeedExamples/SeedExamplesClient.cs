@@ -42,10 +42,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
 
     public ServiceClient Service { get; }
 
-    /// <example><code>
-    /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
-    /// </code></example>
-    public async Task<string> EchoAsync(
+    private async Task<WithRawResponse<string>> EchoAsyncCore(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -69,14 +66,28 @@ public partial class SeedExamplesClient : ISeedExamplesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExamplesApiException(
@@ -87,10 +98,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
         }
     }
 
-    /// <example><code>
-    /// await client.CreateTypeAsync(BasicType.Primitive);
-    /// </code></example>
-    public async Task<Identifier> CreateTypeAsync(
+    private async Task<WithRawResponse<Identifier>> CreateTypeAsyncCore(
         OneOf<BasicType, ComplexType> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -114,14 +122,28 @@ public partial class SeedExamplesClient : ISeedExamplesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Identifier>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Identifier>(responseBody)!;
+                return new WithRawResponse<Identifier>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExamplesApiException(
@@ -130,5 +152,31 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
+    /// </code></example>
+    public WithRawResponseTask<string> EchoAsync(
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(EchoAsyncCore(request, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.CreateTypeAsync(BasicType.Primitive);
+    /// </code></example>
+    public WithRawResponseTask<Identifier> CreateTypeAsync(
+        OneOf<BasicType, ComplexType> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Identifier>(
+            CreateTypeAsyncCore(request, options, cancellationToken)
+        );
     }
 }

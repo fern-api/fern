@@ -298,7 +298,8 @@ export class RawClient extends WithGeneration {
             on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
             arguments_: [request, this.csharp.codeblock(this.names.parameters.cancellationToken)],
-            async: true
+            async: true,
+            configureAwait: false
         });
     }
 

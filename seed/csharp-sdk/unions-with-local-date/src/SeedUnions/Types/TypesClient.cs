@@ -12,10 +12,7 @@ public partial class TypesClient : ITypesClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Types.GetAsync("date-example");
-    /// </code></example>
-    public async Task<UnionWithTime> GetAsync(
+    private async Task<WithRawResponse<UnionWithTime>> GetAsyncCore(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -38,14 +35,28 @@ public partial class TypesClient : ITypesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<UnionWithTime>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<UnionWithTime>(responseBody)!;
+                return new WithRawResponse<UnionWithTime>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUnionsException("Failed to deserialize response", e);
+                throw new SeedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUnionsApiException(
@@ -56,10 +67,7 @@ public partial class TypesClient : ITypesClient
         }
     }
 
-    /// <example><code>
-    /// await client.Types.UpdateAsync(new UnionWithTime(new UnionWithTime.Date(new DateOnly(1994, 1, 1))));
-    /// </code></example>
-    public async Task<bool> UpdateAsync(
+    private async Task<WithRawResponse<bool>> UpdateAsyncCore(
         UnionWithTime request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -83,14 +91,28 @@ public partial class TypesClient : ITypesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
+                return new WithRawResponse<bool>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUnionsException("Failed to deserialize response", e);
+                throw new SeedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUnionsApiException(
@@ -99,5 +121,29 @@ public partial class TypesClient : ITypesClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Types.GetAsync("date-example");
+    /// </code></example>
+    public WithRawResponseTask<UnionWithTime> GetAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<UnionWithTime>(GetAsyncCore(id, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Types.UpdateAsync(new UnionWithTime(new UnionWithTime.Date(new DateOnly(1994, 1, 1))));
+    /// </code></example>
+    public WithRawResponseTask<bool> UpdateAsync(
+        UnionWithTime request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<bool>(UpdateAsyncCore(request, options, cancellationToken));
     }
 }

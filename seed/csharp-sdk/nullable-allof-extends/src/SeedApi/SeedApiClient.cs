@@ -29,13 +29,7 @@ public partial class SeedApiClient : ISeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <summary>
-    /// Returns a RootObject which inherits from a nullable schema.
-    /// </summary>
-    /// <example><code>
-    /// await client.GetTestAsync();
-    /// </code></example>
-    public async Task<RootObject> GetTestAsync(
+    private async Task<WithRawResponse<RootObject>> GetTestAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -57,14 +51,28 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<RootObject>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<RootObject>(responseBody)!;
+                return new WithRawResponse<RootObject>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -75,13 +83,7 @@ public partial class SeedApiClient : ISeedApiClient
         }
     }
 
-    /// <summary>
-    /// Creates a test object with nullable allOf in request body.
-    /// </summary>
-    /// <example><code>
-    /// await client.CreateTestAsync(new RootObject());
-    /// </code></example>
-    public async Task<RootObject> CreateTestAsync(
+    private async Task<WithRawResponse<RootObject>> CreateTestAsyncCore(
         RootObject request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -106,14 +108,28 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<RootObject>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<RootObject>(responseBody)!;
+                return new WithRawResponse<RootObject>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -122,5 +138,36 @@ public partial class SeedApiClient : ISeedApiClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Returns a RootObject which inherits from a nullable schema.
+    /// </summary>
+    /// <example><code>
+    /// await client.GetTestAsync();
+    /// </code></example>
+    public WithRawResponseTask<RootObject> GetTestAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<RootObject>(GetTestAsyncCore(options, cancellationToken));
+    }
+
+    /// <summary>
+    /// Creates a test object with nullable allOf in request body.
+    /// </summary>
+    /// <example><code>
+    /// await client.CreateTestAsync(new RootObject());
+    /// </code></example>
+    public WithRawResponseTask<RootObject> CreateTestAsync(
+        RootObject request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<RootObject>(
+            CreateTestAsyncCore(request, options, cancellationToken)
+        );
     }
 }
