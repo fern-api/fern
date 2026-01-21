@@ -63,12 +63,14 @@ function getApplicationUrlFormEncodedRequest({
 }
 
 function findMultipartFormDataRequest({
-    content
+    content,
+    context
 }: {
     content: Record<string, OpenAPIV3.MediaTypeObject>;
+    context: AbstractOpenAPIV3ParserContext;
 }): [string, OpenAPIV3.MediaTypeObject] | undefined {
     for (const [mediaType, mediaTypeObject] of Object.entries(content)) {
-        const result = getMultipartFormDataRequest({ mediaType, mediaTypeObject });
+        const result = getMultipartFormDataRequest({ mediaType, mediaTypeObject, context });
         if (result) {
             return [mediaType, mediaTypeObject];
         }
@@ -78,18 +80,25 @@ function findMultipartFormDataRequest({
 
 function getMultipartFormDataRequest({
     mediaType,
-    mediaTypeObject
+    mediaTypeObject,
+    context
 }: {
     mediaType: string;
     mediaTypeObject: OpenAPIV3.MediaTypeObject;
+    context: AbstractOpenAPIV3ParserContext;
 }):
     | {
           schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
           encoding: Record<string, OpenAPIV3.EncodingObject> | undefined;
+          examples: NamedFullExample[];
       }
     | undefined {
     if (MediaType.parse(mediaType)?.isMultipart()) {
-        return { schema: mediaTypeObject.schema, encoding: mediaTypeObject.encoding };
+        return {
+            schema: mediaTypeObject.schema,
+            encoding: mediaTypeObject.encoding,
+            examples: getExamples(mediaTypeObject, context)
+        };
     }
     return undefined;
 }
@@ -163,7 +172,7 @@ export function convertToSingleRequest({
         });
     }
 
-    const multipartFormDataRequest = findMultipartFormDataRequest({ content });
+    const multipartFormDataRequest = findMultipartFormDataRequest({ content, context });
     const jsonRequest = findApplicationJsonRequest({ content, context });
 
     // convert as application/json
@@ -295,9 +304,10 @@ export function convertRequest({
         });
     }
 
-    const multipartFormData = getMultipartFormDataRequest({ mediaType, mediaTypeObject });
+    const multipartFormData = getMultipartFormDataRequest({ mediaType, mediaTypeObject, context });
     const multipartSchema = multipartFormData?.schema;
     const multipartEncoding = multipartFormData?.encoding;
+    const multipartExamples = multipartFormData?.examples;
 
     // convert as multipart request
     if (multipartSchema) {
@@ -361,7 +371,8 @@ export function convertRequest({
             description: resolvedMultipartSchema.schema.description,
             properties,
             source,
-            sdkMethodName
+            sdkMethodName,
+            fullExamples: multipartExamples
         });
     }
 
