@@ -7,6 +7,14 @@
   createdAt: "2026-01-21"
   irVersion: 63
 
+- version: 3.47.8
+  changelogEntry:
+    - summary: |
+        Support auth schemes Bearer and Basic with a capital B.
+      type: fix
+  createdAt: "2026-01-21"
+  irVersion: 63
+
 - version: 3.47.7
   changelogEntry:
     - summary: |
