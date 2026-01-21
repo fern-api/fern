@@ -134,3 +134,10 @@ fixtures:
     - customConfig:
         packageLicenseFile: "LICENSE.md"
       outputFolder: custom-license-file
+    - customConfig:
+        packageLicenseFile: ""
+      outputFolder: empty-license-file
+    - customConfig:
+        packageLicense: "Apache-2.0"
+        packageLicenseFile: "LICENSE.md"
+      outputFolder: both-license-options
