@@ -38,7 +38,7 @@ function convertAuthScheme({
                 type: "basicAuth",
                 passwordName: scheme.password.originalName,
                 usernameName: scheme.username.originalName,
-                description: scheme.docs
+                description: scheme.docs,
             };
         case "bearer":
             return {
