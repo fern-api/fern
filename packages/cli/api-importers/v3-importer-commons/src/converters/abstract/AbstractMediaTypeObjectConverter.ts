@@ -117,6 +117,32 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         return { ...convertedSchema, examples: undefined };
     }
 
+    /**
+     * Determines the unique identifier for an example, handling duplicate summary collisions.
+     * Uses the summary if available, disambiguating with key if there's a collision.
+     */
+    private getIdForExample({
+        key,
+        example,
+        usedExampleNames
+    }: {
+        key: string;
+        example: unknown;
+        usedExampleNames: Set<string>;
+    }): string {
+        if (this.context.isExampleWithSummary(example)) {
+            const summary = example.summary;
+            if (!usedExampleNames.has(summary)) {
+                return summary;
+            }
+            // Collision detected - disambiguate with key
+            const disambiguatedName = `${summary} (${key})`;
+            // If disambiguated name also collides (edge case), fall back to just the key
+            return usedExampleNames.has(disambiguatedName) ? key : disambiguatedName;
+        }
+        return key;
+    }
+
     protected convertMediaTypeObjectExamples({
         mediaTypeObject,
         generateOptionalProperties,
@@ -137,27 +163,11 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
             defaultExampleName: `${[...this.group, this.method].join("_")}_example`
         });
 
-        // Track used example names to detect collisions from duplicate summaries
         const usedExampleNames = new Set<string>();
 
         for (const [key, example] of examples) {
             const resolvedExample = this.context.resolveExampleWithValue(example);
-            // Use summary if available, disambiguating with key if there's a collision
-            let exampleName: string;
-            if (this.context.isExampleWithSummary(example)) {
-                const summary = example.summary;
-                if (!usedExampleNames.has(summary)) {
-                    // First occurrence of this summary - use it directly
-                    exampleName = summary;
-                } else {
-                    // Collision detected - disambiguate with key
-                    const disambiguatedName = `${summary} (${key})`;
-                    // If disambiguated name also collides (edge case), fall back to just the key
-                    exampleName = usedExampleNames.has(disambiguatedName) ? key : disambiguatedName;
-                }
-            } else {
-                exampleName = key;
-            }
+            const exampleName = this.getIdForExample({ key, example, usedExampleNames });
             usedExampleNames.add(exampleName);
 
             if (resolvedExample != null) {
