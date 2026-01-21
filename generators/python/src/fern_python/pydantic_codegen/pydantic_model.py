@@ -540,7 +540,8 @@ class PydanticModel:
                 has_v2_content = v2_model_config is not None or has_json_parsing_fields
                 has_v1_content = v1_config_class is not None or has_json_parsing_fields
 
-                if has_v2_content or has_v1_content:
+                if has_v2_content and has_v1_content:
+                    # Both v1 and v2 have content: write if/else block
                     writer.write("if ")
                     writer.write_node(self._is_pydantic_v2)
                     writer.write_line(":")
@@ -549,14 +550,33 @@ class PydanticModel:
                             writer.write_node(v2_model_config)
                         if has_json_parsing_fields:
                             write_v2_json_validator(writer)
-                    if has_v1_content:
-                        writer.write_newline_if_last_line_not()
-                        writer.write_line("else:")
-                        with writer.indent():
-                            if v1_config_class is not None:
-                                writer.write_node(v1_config_class)
-                            if has_json_parsing_fields:
-                                write_v1_json_validator(writer)
+                    writer.write_newline_if_last_line_not()
+                    writer.write_line("else:")
+                    with writer.indent():
+                        if v1_config_class is not None:
+                            writer.write_node(v1_config_class)
+                        if has_json_parsing_fields:
+                            write_v1_json_validator(writer)
+                elif has_v2_content:
+                    # Only v2 has content: write if block without else
+                    writer.write("if ")
+                    writer.write_node(self._is_pydantic_v2)
+                    writer.write_line(":")
+                    with writer.indent():
+                        if v2_model_config is not None:
+                            writer.write_node(v2_model_config)
+                        if has_json_parsing_fields:
+                            write_v2_json_validator(writer)
+                elif has_v1_content:
+                    # Only v1 has content: write if not block
+                    writer.write("if not ")
+                    writer.write_node(self._is_pydantic_v2)
+                    writer.write_line(":")
+                    with writer.indent():
+                        if v1_config_class is not None:
+                            writer.write_node(v1_config_class)
+                        if has_json_parsing_fields:
+                            write_v1_json_validator(writer)
             elif self._version == PydanticVersionCompatibility.V1_ON_V2:
                 if v1_config_class is not None:
                     writer.write_node(v1_config_class)
