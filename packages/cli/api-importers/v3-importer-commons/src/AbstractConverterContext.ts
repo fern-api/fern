@@ -483,6 +483,49 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return schemaOrReference;
     }
 
+    /**
+     * Resolves an example reference recursively until we get a non-reference object.
+     * This handles cases where an example in components/examples itself references another example.
+     * @param example The example object or reference to resolve
+     * @param breadcrumbs Path for error reporting
+     * @param maxDepth Maximum recursion depth to prevent infinite loops (default: 10)
+     * @returns The resolved example object, or undefined if resolution fails
+     */
+    public resolveExampleRecursively({
+        example,
+        breadcrumbs,
+        maxDepth = 10
+    }: {
+        example: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject;
+        breadcrumbs: string[];
+        maxDepth?: number;
+    }): OpenAPIV3_1.ExampleObject | undefined {
+        let current: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject = example;
+        let depth = 0;
+
+        while (this.isReferenceObject(current)) {
+            if (depth >= maxDepth) {
+                this.errorCollector.collect({
+                    message: `Maximum reference depth (${maxDepth}) exceeded while resolving example reference`,
+                    path: breadcrumbs
+                });
+                return undefined;
+            }
+            const resolved = this.resolveReference<OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject>({
+                reference: current,
+                breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            current = resolved.value;
+            depth++;
+        }
+
+        return current;
+    }
+
     public resolveExample(example: unknown): unknown {
         if (!this.isReferenceObject(example)) {
             return example;
