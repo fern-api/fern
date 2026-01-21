@@ -1,0 +1,107 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "string",
+      "enum": [
+        "JOB_UPDATE",
+        "HEARTBEAT",
+        "ERROR"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event": {
+          "const": "JOB_UPDATE"
+        },
+        "data": {
+          "$ref": "#/definitions/SseJobUpdateData"
+        }
+      },
+      "required": [
+        "event",
+        "data"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "HEARTBEAT"
+        }
+      },
+      "required": [
+        "event"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "ERROR"
+        },
+        "data": {
+          "$ref": "#/definitions/SseErrorData"
+        }
+      },
+      "required": [
+        "event",
+        "data"
+      ]
+    }
+  ],
+  "definitions": {
+    "SseJobUpdateData": {
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SseErrorData": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
