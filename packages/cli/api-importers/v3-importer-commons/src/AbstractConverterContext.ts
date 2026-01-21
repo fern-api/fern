@@ -442,17 +442,18 @@ export abstract class AbstractConverterContext<Spec extends object> {
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
         breadcrumbs: string[];
         defaultExampleName?: string;
-    }): Array<[string, unknown]> {
+    }): Array<[string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject]> {
         if (mediaTypeObject == null) {
             return [];
         }
-        const examples: Array<[string, unknown]> = [];
+        const examples: Array<[string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject]> = [];
         if (mediaTypeObject.example != null) {
             const exampleName = this.generateUniqueName({
                 prefix: defaultExampleName ?? `${breadcrumbs.join("_")}_example`,
                 existingNames: []
             });
-            examples.push([exampleName, mediaTypeObject.example]);
+            // Wrap raw example value in an ExampleObject structure
+            examples.push([exampleName, { value: mediaTypeObject.example }]);
         }
         if (mediaTypeObject.examples != null) {
             examples.push(...Object.entries(mediaTypeObject.examples));
