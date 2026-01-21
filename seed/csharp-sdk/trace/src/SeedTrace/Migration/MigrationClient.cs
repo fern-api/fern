@@ -12,12 +12,7 @@ public partial class MigrationClient : IMigrationClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Migration.GetAttemptedMigrationsAsync(
-    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
-    /// );
-    /// </code></example>
-    public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
+    private async Task<WithRawResponse<IEnumerable<Migration>>> GetAttemptedMigrationsAsyncCore(
         GetAttemptedMigrationsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -44,14 +39,28 @@ public partial class MigrationClient : IMigrationClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<Migration>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<Migration>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<Migration>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -60,5 +69,21 @@ public partial class MigrationClient : IMigrationClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Migration.GetAttemptedMigrationsAsync(
+    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
+        GetAttemptedMigrationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<Migration>>(
+            GetAttemptedMigrationsAsyncCore(request, options, cancellationToken)
+        );
     }
 }

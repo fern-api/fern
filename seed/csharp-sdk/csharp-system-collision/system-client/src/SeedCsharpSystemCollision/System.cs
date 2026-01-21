@@ -29,20 +29,7 @@ public partial class System : ISystem
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.CreateUserAsync(
-    ///     new User
-    ///     {
-    ///         Line1 = "line1",
-    ///         Line2 = "line2",
-    ///         City = "city",
-    ///         State = "state",
-    ///         Zip = "zip",
-    ///         Country = "USA",
-    ///     }
-    /// );
-    /// </code></example>
-    public async global::System.Threading.Tasks.Task<User> CreateUserAsync(
+    private async global::System.Threading.Tasks.Task<WithRawResponse<User>> CreateUserAsyncCore(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -66,14 +53,28 @@ public partial class System : ISystem
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SystemException("Failed to deserialize response", e);
+                throw new SystemApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SystemApiException(
@@ -84,24 +85,7 @@ public partial class System : ISystem
         }
     }
 
-    /// <example><code>
-    /// await client.CreateTaskAsync(
-    ///     new SeedCsharpSystemCollision.Task
-    ///     {
-    ///         Name = "name",
-    ///         User = new User
-    ///         {
-    ///             Line1 = "line1",
-    ///             Line2 = "line2",
-    ///             City = "city",
-    ///             State = "state",
-    ///             Zip = "zip",
-    ///             Country = "USA",
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async global::System.Threading.Tasks.Task<Task> CreateTaskAsync(
+    private async global::System.Threading.Tasks.Task<WithRawResponse<Task>> CreateTaskAsyncCore(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -125,14 +109,28 @@ public partial class System : ISystem
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Task>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Task>(responseBody)!;
+                return new WithRawResponse<Task>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SystemException("Failed to deserialize response", e);
+                throw new SystemApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SystemApiException(
@@ -141,6 +139,58 @@ public partial class System : ISystem
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.CreateUserAsync(
+    ///     new User
+    ///     {
+    ///         Line1 = "line1",
+    ///         Line2 = "line2",
+    ///         City = "city",
+    ///         State = "state",
+    ///         Zip = "zip",
+    ///         Country = "USA",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<User> CreateUserAsync(
+        User request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            CreateUserAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.CreateTaskAsync(
+    ///     new SeedCsharpSystemCollision.Task
+    ///     {
+    ///         Name = "name",
+    ///         User = new User
+    ///         {
+    ///             Line1 = "line1",
+    ///             Line2 = "line2",
+    ///             City = "city",
+    ///             State = "state",
+    ///             Zip = "zip",
+    ///             Country = "USA",
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Task> CreateTaskAsync(
+        Task request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Task>(
+            CreateTaskAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <example><code>

@@ -22,12 +22,7 @@ public partial class ContainerClient : IContainerClient
         }
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
-    ///     new List&lt;string&gt;() { "string", "string" }
-    /// );
-    /// </code></example>
-    public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
+    private async Task<WithRawResponse<IEnumerable<string>>> GetAndReturnListOfPrimitivesAsyncCore(
         IEnumerable<string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -54,14 +49,32 @@ public partial class ContainerClient : IContainerClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<IEnumerable<string>>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<IEnumerable<string>>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -74,16 +87,9 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
-    ///     new List&lt;ObjectWithRequiredField&gt;()
-    ///     {
-    ///         new ObjectWithRequiredField { String = "string" },
-    ///         new ObjectWithRequiredField { String = "string" },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
+    private async Task<
+        WithRawResponse<IEnumerable<ObjectWithRequiredField>>
+    > GetAndReturnListOfObjectsAsyncCore(
         IEnumerable<ObjectWithRequiredField> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,16 +116,32 @@ public partial class ContainerClient : IContainerClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(
-                            responseBody
-                        )!;
+                        var responseData = JsonUtils.Deserialize<
+                            IEnumerable<ObjectWithRequiredField>
+                        >(responseBody)!;
+                        return new WithRawResponse<IEnumerable<ObjectWithRequiredField>>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -132,12 +154,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
-    ///     new HashSet&lt;string&gt;() { "string" }
-    /// );
-    /// </code></example>
-    public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
+    private async Task<WithRawResponse<HashSet<string>>> GetAndReturnSetOfPrimitivesAsyncCore(
         HashSet<string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -164,14 +181,30 @@ public partial class ContainerClient : IContainerClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
+                        return new WithRawResponse<HashSet<string>>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -184,12 +217,9 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
-    ///     new HashSet&lt;ObjectWithRequiredField&gt;() { new ObjectWithRequiredField { String = "string" } }
-    /// );
-    /// </code></example>
-    public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
+    private async Task<
+        WithRawResponse<HashSet<ObjectWithRequiredField>>
+    > GetAndReturnSetOfObjectsAsyncCore(
         HashSet<ObjectWithRequiredField> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -216,16 +246,32 @@ public partial class ContainerClient : IContainerClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(
+                        var responseData = JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(
                             responseBody
                         )!;
+                        return new WithRawResponse<HashSet<ObjectWithRequiredField>>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -238,12 +284,9 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
-    ///     new Dictionary&lt;string, string&gt;() { { "string", "string" } }
-    /// );
-    /// </code></example>
-    public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
+    private async Task<
+        WithRawResponse<Dictionary<string, string>>
+    > GetAndReturnMapPrimToPrimAsyncCore(
         Dictionary<string, string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -270,14 +313,32 @@ public partial class ContainerClient : IContainerClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<Dictionary<string, string>>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<Dictionary<string, string>>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -290,20 +351,9 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
-    ///     new Dictionary&lt;string, ObjectWithRequiredField&gt;()
-    ///     {
-    ///         {
-    ///             "string",
-    ///             new ObjectWithRequiredField { String = "string" }
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<
-        Dictionary<string, ObjectWithRequiredField>
-    > GetAndReturnMapOfPrimToObjectAsync(
+    private async Task<
+        WithRawResponse<Dictionary<string, ObjectWithRequiredField>>
+    > GetAndReturnMapOfPrimToObjectAsyncCore(
         Dictionary<string, ObjectWithRequiredField> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -330,16 +380,32 @@ public partial class ContainerClient : IContainerClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
-                            responseBody
-                        )!;
+                        var responseData = JsonUtils.Deserialize<
+                            Dictionary<string, ObjectWithRequiredField>
+                        >(responseBody)!;
+                        return new WithRawResponse<Dictionary<string, ObjectWithRequiredField>>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -352,12 +418,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
-    ///     new ObjectWithRequiredField { String = "string" }
-    /// );
-    /// </code></example>
-    public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
+    private async Task<WithRawResponse<ObjectWithRequiredField?>> GetAndReturnOptionalAsyncCore(
         ObjectWithRequiredField? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -384,14 +445,32 @@ public partial class ContainerClient : IContainerClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ObjectWithRequiredField?>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ObjectWithRequiredField?>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -402,5 +481,129 @@ public partial class ContainerClient : IContainerClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
+    ///     new List&lt;string&gt;() { "string", "string" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
+        IEnumerable<string> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<string>>(
+            GetAndReturnListOfPrimitivesAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
+    ///     new List&lt;ObjectWithRequiredField&gt;()
+    ///     {
+    ///         new ObjectWithRequiredField { String = "string" },
+    ///         new ObjectWithRequiredField { String = "string" },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
+        IEnumerable<ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<ObjectWithRequiredField>>(
+            GetAndReturnListOfObjectsAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
+    ///     new HashSet&lt;string&gt;() { "string" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
+        HashSet<string> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<HashSet<string>>(
+            GetAndReturnSetOfPrimitivesAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
+    ///     new HashSet&lt;ObjectWithRequiredField&gt;() { new ObjectWithRequiredField { String = "string" } }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
+        HashSet<ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<HashSet<ObjectWithRequiredField>>(
+            GetAndReturnSetOfObjectsAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
+    ///     new Dictionary&lt;string, string&gt;() { { "string", "string" } }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
+        Dictionary<string, string> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Dictionary<string, string>>(
+            GetAndReturnMapPrimToPrimAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
+    ///     new Dictionary&lt;string, ObjectWithRequiredField&gt;()
+    ///     {
+    ///         {
+    ///             "string",
+    ///             new ObjectWithRequiredField { String = "string" }
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<
+        Dictionary<string, ObjectWithRequiredField>
+    > GetAndReturnMapOfPrimToObjectAsync(
+        Dictionary<string, ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Dictionary<string, ObjectWithRequiredField>>(
+            GetAndReturnMapOfPrimToObjectAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
+    ///     new ObjectWithRequiredField { String = "string" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
+        ObjectWithRequiredField? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithRequiredField?>(
+            GetAndReturnOptionalAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -9,7 +9,7 @@ public partial interface ISyspropClient
         CancellationToken cancellationToken = default
     );
 
-    Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(
+    WithRawResponseTask<Dictionary<Language, int>> GetNumWarmInstancesAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

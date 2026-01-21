@@ -16,13 +16,7 @@ public partial class UserClient : IUserClient
 
     public EventsClient Events { get; }
 
-    /// <summary>
-    /// List all users.
-    /// </summary>
-    /// <example><code>
-    /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
-    /// </code></example>
-    public async Task<IEnumerable<User>> ListAsync(
+    private async Task<WithRawResponse<IEnumerable<User>>> ListAsyncCore(
         ListUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -51,14 +45,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<User>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
+                throw new SeedMixedFileDirectoryApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedMixedFileDirectoryApiException(
@@ -67,5 +75,22 @@ public partial class UserClient : IUserClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// List all users.
+    /// </summary>
+    /// <example><code>
+    /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<User>> ListAsync(
+        ListUsersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<User>>(
+            ListAsyncCore(request, options, cancellationToken)
+        );
     }
 }
