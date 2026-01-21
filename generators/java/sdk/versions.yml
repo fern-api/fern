@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.33.2
+  changelogEntry:
+    - summary: |
+        Re-publish to verify Docker Hub and generator registry sync.
+      type: chore
+  createdAt: "2026-01-21"
+  irVersion: 63
+
 - version: 3.33.1
   changelogEntry:
     - summary: |
