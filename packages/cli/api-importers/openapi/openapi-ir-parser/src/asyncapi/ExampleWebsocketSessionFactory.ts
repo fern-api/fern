@@ -238,14 +238,21 @@ export class ExampleWebsocketSessionFactory {
     }
 
     private isSchemaRequired(schema: SchemaWithExample): boolean {
-        return isSchemaRequired(this.getResolvedSchema(schema));
+        const resolved = this.getResolvedSchema(schema);
+        if (resolved == null) {
+            // If schema can't be resolved, treat as not required to avoid errors
+            return false;
+        }
+        return isSchemaRequired(resolved);
     }
 
-    private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
+    private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample | undefined {
         while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema];
             if (resolvedSchema == null) {
-                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`);
+                // Return undefined instead of throwing to gracefully handle
+                // missing schema references (e.g., schemas marked with x-fern-ignore)
+                return undefined;
             }
             schema = resolvedSchema;
         }
