@@ -2,13 +2,13 @@ namespace SeedApi;
 
 public partial interface ISeedApiClient
 {
-    Task<Foo> GetFooAsync(
+    WithRawResponseTask<Foo> GetFooAsync(
         GetFooRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Foo> UpdateFooAsync(
+    WithRawResponseTask<Foo> UpdateFooAsync(
         string id,
         UpdateFooRequest request,
         RequestOptions? options = null,

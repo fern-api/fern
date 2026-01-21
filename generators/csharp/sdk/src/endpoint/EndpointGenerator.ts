@@ -81,16 +81,26 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
                 _other: () => false
             }) ?? false;
 
-        // Wrap return type in Task<T> for interface methods, EXCEPT for streaming endpoints
-        // which use async iterators that return IAsyncEnumerable<T> directly
+        // Check if rawReturn is WithRawResponseTask<T>
+        const isWithRawResponseTask = rawReturn != null && (rawReturn as any).name === "WithRawResponseTask";
+
+        // For interface methods:
+        // - Streaming endpoints return IAsyncEnumerable<T> directly (async iterator pattern)
+        // - WithRawResponseTask<T> is already task-like, don't wrap in Task<>
+        // - Empty responses return Task
         let return_: ast.Type;
         if (isStreaming) {
-            // Streaming endpoints return IAsyncEnumerable<T> directly (async iterator pattern)
+            // Streaming endpoints return IAsyncEnumerable<T> directly
             return_ = rawReturn ?? this.System.Threading.Tasks.Task();
+        } else if (isWithRawResponseTask) {
+            // WithRawResponseTask<T> is already task-like, use it directly
+            return_ = rawReturn;
+        } else if (rawReturn != null) {
+            // Other non-streaming endpoints (like HEAD requests that return HttpResponseHeaders)
+            return_ = rawReturn;
         } else {
-            // Regular async methods return Task<T>
-            return_ =
-                rawReturn != null ? this.System.Threading.Tasks.Task(rawReturn) : this.System.Threading.Tasks.Task();
+            // Empty responses return Task
+            return_ = this.System.Threading.Tasks.Task();
         }
 
         interface_.addMethod({

@@ -29,13 +29,7 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <summary>
-    /// Get timezone information with + offset
-    /// </summary>
-    /// <example><code>
-    /// await client.GetTimeZoneAsync();
-    /// </code></example>
-    public async Task<TimeZoneModel> GetTimeZoneAsync(
+    private async Task<WithRawResponse<TimeZoneModel>> GetTimeZoneAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -57,14 +51,28 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<TimeZoneModel>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<TimeZoneModel>(responseBody)!;
+                return new WithRawResponse<TimeZoneModel>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedCsharpXmlEntitiesException("Failed to deserialize response", e);
+                throw new SeedCsharpXmlEntitiesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedCsharpXmlEntitiesApiException(
@@ -73,5 +81,21 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Get timezone information with + offset
+    /// </summary>
+    /// <example><code>
+    /// await client.GetTimeZoneAsync();
+    /// </code></example>
+    public WithRawResponseTask<TimeZoneModel> GetTimeZoneAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TimeZoneModel>(
+            GetTimeZoneAsyncCore(options, cancellationToken)
+        );
     }
 }

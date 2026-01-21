@@ -13,10 +13,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.FolderA.Service.GetDirectThreadAsync();
-    /// </code></example>
-    public async Task<Response> GetDirectThreadAsync(
+    private async Task<WithRawResponse<Response>> GetDirectThreadAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -38,14 +35,28 @@ public partial class ServiceClient : IServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Response>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Response>(responseBody)!;
+                return new WithRawResponse<Response>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedCrossPackageTypeNamesException("Failed to deserialize response", e);
+                throw new SeedCrossPackageTypeNamesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedCrossPackageTypeNamesApiException(
@@ -54,5 +65,18 @@ public partial class ServiceClient : IServiceClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.FolderA.Service.GetDirectThreadAsync();
+    /// </code></example>
+    public WithRawResponseTask<Response> GetDirectThreadAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Response>(
+            GetDirectThreadAsyncCore(options, cancellationToken)
+        );
     }
 }

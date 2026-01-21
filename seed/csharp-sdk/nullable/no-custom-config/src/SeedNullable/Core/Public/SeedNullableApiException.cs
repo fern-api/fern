@@ -3,8 +3,12 @@ namespace SeedNullable;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedNullableApiException(string message, int statusCode, object body)
-    : SeedNullableException(message)
+public class SeedNullableApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedNullableException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

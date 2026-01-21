@@ -12,10 +12,7 @@ public partial class UnionClient : IUnionClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Union.GetAsync("id");
-    /// </code></example>
-    public async Task<object> GetAsync(
+    private async Task<WithRawResponse<object>> GetAsyncCore(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -38,14 +35,28 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<object>(responseBody)!;
+                return new WithRawResponse<object>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUnionsException("Failed to deserialize response", e);
+                throw new SeedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUnionsApiException(
@@ -56,10 +67,7 @@ public partial class UnionClient : IUnionClient
         }
     }
 
-    /// <example><code>
-    /// await client.Union.UpdateAsync(new Circle { Radius = 1.1 });
-    /// </code></example>
-    public async Task<bool> UpdateAsync(
+    private async Task<WithRawResponse<bool>> UpdateAsyncCore(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -83,14 +91,28 @@ public partial class UnionClient : IUnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
+                return new WithRawResponse<bool>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUnionsException("Failed to deserialize response", e);
+                throw new SeedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUnionsApiException(
@@ -99,5 +121,29 @@ public partial class UnionClient : IUnionClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Union.GetAsync("id");
+    /// </code></example>
+    public WithRawResponseTask<object> GetAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<object>(GetAsyncCore(id, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Union.UpdateAsync(new Circle { Radius = 1.1 });
+    /// </code></example>
+    public WithRawResponseTask<bool> UpdateAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<bool>(UpdateAsyncCore(request, options, cancellationToken));
     }
 }

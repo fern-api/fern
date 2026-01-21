@@ -178,7 +178,11 @@ export class SdkGeneratorContext extends GeneratorContext {
                 // AsIsFiles.NdJsonRequest,
                 AsIsFiles.QueryStringConverter,
                 AsIsFiles.RawClient,
-                AsIsFiles.StreamRequest
+                AsIsFiles.RawResponse,
+                AsIsFiles.ResponseHeaders,
+                AsIsFiles.StreamRequest,
+                AsIsFiles.WithRawResponse,
+                AsIsFiles.WithRawResponseTask
             ]
         );
 
@@ -221,6 +225,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
             AsIsFiles.Test.QueryStringConverterTests,
+            AsIsFiles.Test.WithRawResponseTests,
             AsIsFiles.Test.RawClientTests.AdditionalHeadersTests,
             AsIsFiles.Test.RawClientTests.AdditionalParametersTests,
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
@@ -268,7 +273,12 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        const files = [AsIsFiles.FileParameter];
+        const files = [
+            AsIsFiles.FileParameter,
+            AsIsFiles.RawResponse,
+            AsIsFiles.WithRawResponse,
+            AsIsFiles.WithRawResponseTask
+        ];
         if (this.settings.generateNewAdditionalProperties) {
             files.push(AsIsFiles.Json.AdditionalProperties);
         }
