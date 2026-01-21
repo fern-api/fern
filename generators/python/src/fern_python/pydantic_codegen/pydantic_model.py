@@ -83,9 +83,15 @@ class PydanticModel:
         self._field_metadata_getter = field_metadata_getter
         self._use_pydantic_field_aliases = use_pydantic_field_aliases
         self._positional_single_property_constructors = positional_single_property_constructors
+        # Track JSON field names that need JSON string parsing (for "Both" mode model validators)
+        self._fields_needing_json_parsing: List[str] = []
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
+
+    def set_fields_needing_json_parsing(self, fields: List[str]) -> None:
+        """Set the JSON field names that need JSON string parsing (for "Both" mode model validators)."""
+        self._fields_needing_json_parsing = fields
 
     def add_field(self, unsanitized_field: PydanticField) -> None:
         field = (
@@ -411,29 +417,146 @@ class PydanticModel:
     def _maybe_model_config(self) -> None:
         v1_config_class = self._get_v1_config_class()
         v2_model_config = self._get_v2_model_config()
+        has_json_parsing_fields = len(self._fields_needing_json_parsing) > 0
+
+        def write_v2_json_validator(writer: AST.NodeWriter) -> None:
+            """Write the Pydantic v2 model_validator for JSON string parsing."""
+            writer.write_newline_if_last_line_not()
+            writer.write_line("")
+            writer.write("@")
+            writer.write_reference(Pydantic(self._version).model_validator())
+            writer.write_line('(mode="before")')
+            writer.write_line("@classmethod")
+            writer.write("def _parse_nested_json_strings(cls, values: ")
+            writer.write_reference(
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                    qualified_name_excluding_import=("Any",),
+                )
+            )
+            writer.write(") -> ")
+            writer.write_reference(
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                    qualified_name_excluding_import=("Any",),
+                )
+            )
+            writer.write_line(":")
+            with writer.indent():
+                writer.write_line("if isinstance(values, dict):")
+                with writer.indent():
+                    for field_name in self._fields_needing_json_parsing:
+                        writer.write_line(f'if "{field_name}" in values and isinstance(values["{field_name}"], str):')
+                        with writer.indent():
+                            writer.write_line("try:")
+                            with writer.indent():
+                                writer.write("values = {**values, ")
+                                writer.write(f'"{field_name}": ')
+                                writer.write_reference(
+                                    AST.ClassReference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                                        qualified_name_excluding_import=("loads",),
+                                    )
+                                )
+                                writer.write_line(f'(values["{field_name}"])}}')
+                            writer.write_line("except (")
+                            writer.write_reference(
+                                AST.ClassReference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                                    qualified_name_excluding_import=("JSONDecodeError",),
+                                )
+                            )
+                            writer.write_line(", ValueError):")
+                            with writer.indent():
+                                writer.write_line("pass")
+                writer.write_line("return values")
+
+        def write_v1_json_validator(writer: AST.NodeWriter) -> None:
+            """Write the Pydantic v1 root_validator for JSON string parsing."""
+            writer.write_newline_if_last_line_not()
+            writer.write_line("")
+            writer.write("@")
+            writer.write_reference(Pydantic(self._version).root_validator())
+            writer.write_line("(pre=True)")
+            writer.write("def _parse_nested_json_strings(cls, values: ")
+            writer.write_reference(
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                    qualified_name_excluding_import=("Dict",),
+                )
+            )
+            writer.write("[str, ")
+            writer.write_reference(
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                    qualified_name_excluding_import=("Any",),
+                )
+            )
+            writer.write("]) -> ")
+            writer.write_reference(
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                    qualified_name_excluding_import=("Dict",),
+                )
+            )
+            writer.write("[str, ")
+            writer.write_reference(
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                    qualified_name_excluding_import=("Any",),
+                )
+            )
+            writer.write_line("]:")
+            with writer.indent():
+                for field_name in self._fields_needing_json_parsing:
+                    writer.write_line(f'if "{field_name}" in values and isinstance(values["{field_name}"], str):')
+                    with writer.indent():
+                        writer.write_line("try:")
+                        with writer.indent():
+                            writer.write("values = {**values, ")
+                            writer.write(f'"{field_name}": ')
+                            writer.write_reference(
+                                AST.ClassReference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                                    qualified_name_excluding_import=("loads",),
+                                )
+                            )
+                            writer.write_line(f'(values["{field_name}"])}}')
+                        writer.write_line("except (")
+                        writer.write_reference(
+                            AST.ClassReference(
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                                qualified_name_excluding_import=("JSONDecodeError",),
+                            )
+                        )
+                        writer.write_line(", ValueError):")
+                        with writer.indent():
+                            writer.write_line("pass")
+                writer.write_line("return values")
 
         def write_extras(writer: AST.NodeWriter) -> None:
             if self._version == PydanticVersionCompatibility.Both:
-                if v1_config_class is not None and v2_model_config is not None:
+                # For "Both" mode, we need to generate conditional code for v1 and v2
+                has_v2_content = v2_model_config is not None or has_json_parsing_fields
+                has_v1_content = v1_config_class is not None or has_json_parsing_fields
+
+                if has_v2_content or has_v1_content:
                     writer.write("if ")
                     writer.write_node(self._is_pydantic_v2)
                     writer.write_line(":")
                     with writer.indent():
-                        writer.write_node(v2_model_config)
-                    writer.write_newline_if_last_line_not()
-                    writer.write_line("else:")
-                    with writer.indent():
-                        writer.write_node(v1_config_class)
-                elif v1_config_class is not None or v2_model_config is not None:
-                    writer.write("if ")
-                    if v2_model_config is None:
-                        writer.write("not ")
-                    writer.write_node(self._is_pydantic_v2)
-                    writer.write_line(":")
-                    with writer.indent():
-                        non_none_config = v1_config_class if v1_config_class is not None else v2_model_config
-                        assert non_none_config is not None
-                        writer.write_node(non_none_config)
+                        if v2_model_config is not None:
+                            writer.write_node(v2_model_config)
+                        if has_json_parsing_fields:
+                            write_v2_json_validator(writer)
+                    if has_v1_content:
+                        writer.write_newline_if_last_line_not()
+                        writer.write_line("else:")
+                        with writer.indent():
+                            if v1_config_class is not None:
+                                writer.write_node(v1_config_class)
+                            if has_json_parsing_fields:
+                                write_v1_json_validator(writer)
             elif self._version == PydanticVersionCompatibility.V1_ON_V2:
                 if v1_config_class is not None:
                     writer.write_node(v1_config_class)
@@ -442,17 +565,19 @@ class PydanticModel:
             elif self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None:
                 writer.write_node(v2_model_config)
 
-        if (
+        should_write = (
             (
                 self._version == PydanticVersionCompatibility.Both
-                and (v1_config_class is not None or v2_model_config is not None)
+                and (v1_config_class is not None or v2_model_config is not None or has_json_parsing_fields)
             )
             or (
                 self._version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2)
                 and v1_config_class is not None
             )
             or (self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None)
-        ):
+        )
+
+        if should_write:
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self) -> None:

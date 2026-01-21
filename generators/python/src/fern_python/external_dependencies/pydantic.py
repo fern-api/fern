@@ -103,6 +103,14 @@ class Pydantic:
         # V1 and V1_ON_V2 use root_validator
         return AST.Expression(f"root_validator(pre={str(pre).lower()})")
 
+    def model_validator(self) -> AST.ClassReference:
+        """Get a reference to pydantic.model_validator (Pydantic v2 only)."""
+        return _export(self.version_compatibility, "model_validator")
+
+    def root_validator(self) -> AST.ClassReference:
+        """Get a reference to pydantic.root_validator (Pydantic v1)."""
+        return _export(self.version_compatibility, "root_validator")
+
     def model_validate_method(self) -> str:
         if self.version_compatibility == PydanticVersionCompatibility.V2:
             return "model_validate"

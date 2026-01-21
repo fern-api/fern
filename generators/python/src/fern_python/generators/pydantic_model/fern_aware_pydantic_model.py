@@ -107,6 +107,8 @@ class FernAwarePydanticModel:
         self._force_update_forward_refs = force_update_forward_refs
         self._forward_referenced_models: set[ir_types.TypeId] = set()
         self._self_referential_union_member_dependencies: set[ir_types.TypeId] = set()
+        # Track JSON field names that need JSON string parsing (object-typed fields)
+        self._fields_needing_json_parsing: List[str] = []
 
     def to_reference(self) -> LocalClassReference:
         return self._pydantic_model.to_reference()
@@ -136,6 +138,10 @@ class FernAwarePydanticModel:
             default_value=default_value,
         )
         self._pydantic_model.add_field(field)
+
+        # Track fields that need JSON string parsing for "Both" mode
+        if self._should_add_json_string_validator(type_reference):
+            self._fields_needing_json_parsing.append(json_field_name)
 
         type_ids = self._context.maybe_get_type_ids_for_type_reference(type_reference)
         if type_ids is not None:
@@ -305,6 +311,14 @@ class FernAwarePydanticModel:
         )
 
     def finish(self) -> None:
+        # Pass fields that need JSON string parsing to PydanticModel for "Both" mode
+        # (for V2-only mode, we use BeforeValidator annotation instead)
+        if (
+            self._custom_config.version == PydanticVersionCompatibility.Both
+            and len(self._fields_needing_json_parsing) > 0
+        ):
+            self._pydantic_model.set_fields_needing_json_parsing(self._fields_needing_json_parsing)
+
         if self._custom_config.include_validators:
             if self._pydantic_model._v1_or_v2_root_type is None and self._custom_config.version in (
                 PydanticVersionCompatibility.V1,
@@ -394,9 +408,12 @@ class FernAwarePydanticModel:
     ) -> PydanticField:
         type_hint = self.get_type_hint_for_type_reference(type_reference)
 
-        # For object-typed fields in Pydantic v2, wrap with BeforeValidator to parse JSON strings
+        # For object-typed fields in Pydantic v2-only mode, wrap with BeforeValidator to parse JSON strings
         # This handles cases where nested objects are sent as JSON strings over the wire (e.g., in SSE events)
-        if self._should_add_json_string_validator(type_reference):
+        # For "Both" mode, we use a model validator instead (generated in PydanticModel._maybe_model_config)
+        if self._custom_config.version == PydanticVersionCompatibility.V2 and self._should_add_json_string_validator(
+            type_reference
+        ):
             type_hint = AST.TypeHint.annotated(
                 type=type_hint,
                 annotation=self._context.core_utilities.get_json_string_before_validator(),
@@ -413,19 +430,12 @@ class FernAwarePydanticModel:
 
     def _should_add_json_string_validator(self, type_reference: ir_types.TypeReference) -> bool:
         """
-        Determine if a field should have a BeforeValidator to parse JSON strings.
-        Returns True if:
-        1. The field is an object type (can be a Fern model)
-        2. We're using Pydantic v2 only (BeforeValidator is a v2 feature and doesn't exist in v1)
+        Determine if a field should have JSON string parsing.
+        Returns True if the field is an object type (can be a Fern model).
 
-        Note: We only add BeforeValidator for V2-only mode, not for "Both" mode,
-        because BeforeValidator doesn't exist in Pydantic v1 and would break v1 compatibility.
+        For V2-only mode, this is used to add BeforeValidator annotation.
+        For "Both" mode, this is used to track fields that need a model validator.
         """
-        # Only add BeforeValidator for Pydantic v2-only mode
-        # "Both" mode needs to work with v1 which doesn't have BeforeValidator
-        if self._custom_config.version != PydanticVersionCompatibility.V2:
-            return False
-
         # Check if the type reference is an object type (can be a Fern model)
         types: Dict[ir_types.TypeId, ir_types.TypeDeclaration] = {
             type_id: self._context.get_declaration_for_type_id(type_id) for type_id in self._context.ir.types.keys()
