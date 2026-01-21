@@ -43,7 +43,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
     }
 
     private getExtension<T>(key: string): T | undefined {
-        const value = (this.securityScheme as Record<string, unknown>)[key];
+        const value = (this.securityScheme as unknown as Record<string, unknown>)[key];
         return value as T | undefined;
     }
 
