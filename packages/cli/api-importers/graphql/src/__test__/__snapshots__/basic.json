@@ -9,22 +9,16 @@
         {
           "name": "id",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "User"
-        }
+        "type": "id",
+        "value": "User"
       }
     },
     "query_users": {
@@ -36,22 +30,16 @@
         {
           "name": "filter",
           "type": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "UserFilter"
-            }
+            "type": "id",
+            "value": "UserFilter"
           }
         },
         {
           "name": "limit",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "integer"
-              }
+              "type": "integer"
             }
           },
           "defaultValue": 10
@@ -59,28 +47,19 @@
         {
           "name": "offset",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "integer"
-              }
+              "type": "integer"
             }
           },
           "defaultValue": 0
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemShape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "User"
-            }
-          }
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "User"
         }
       }
     },
@@ -93,22 +72,16 @@
         {
           "name": "id",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "Post"
-        }
+        "type": "id",
+        "value": "Post"
       }
     },
     "query_posts": {
@@ -120,38 +93,26 @@
         {
           "name": "status",
           "type": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "PostStatus"
-            }
+            "type": "id",
+            "value": "PostStatus"
           }
         },
         {
           "name": "limit",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "integer"
-              }
+              "type": "integer"
             }
           },
           "defaultValue": 10
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemShape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Post"
-            }
-          }
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "Post"
         }
       }
     },
@@ -164,27 +125,18 @@
         {
           "name": "query",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemShape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "SearchResult"
-            }
-          }
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "SearchResult"
         }
       }
     },
@@ -197,20 +149,14 @@
         {
           "name": "input",
           "type": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "CreateUserInput"
-            }
+            "type": "id",
+            "value": "CreateUserInput"
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "User"
-        }
+        "type": "id",
+        "value": "User"
       }
     },
     "mutation_updateUser": {
@@ -222,56 +168,41 @@
         {
           "name": "id",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         },
         {
           "name": "name",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         },
         {
           "name": "email",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         },
         {
           "name": "role",
           "type": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "UserRole"
-            }
+            "type": "id",
+            "value": "UserRole"
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "User"
-        }
+        "type": "id",
+        "value": "User"
       }
     },
     "mutation_deleteUser": {
@@ -283,23 +214,17 @@
         {
           "name": "id",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         }
       ],
       "returnType": {
-        "type": "alias",
+        "type": "primitive",
         "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
+          "type": "boolean"
         }
       }
     },
@@ -312,20 +237,14 @@
         {
           "name": "input",
           "type": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "CreatePostInput"
-            }
+            "type": "id",
+            "value": "CreatePostInput"
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "Post"
-        }
+        "type": "id",
+        "value": "Post"
       }
     },
     "mutation_updatePostStatus": {
@@ -337,32 +256,23 @@
         {
           "name": "id",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         },
         {
           "name": "status",
           "type": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "PostStatus"
-            }
+            "type": "id",
+            "value": "PostStatus"
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "Post"
-        }
+        "type": "id",
+        "value": "Post"
       }
     },
     "subscription_userCreated": {
@@ -371,11 +281,8 @@
       "name": "userCreated",
       "description": "Subscribe to new user creations",
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "User"
-        }
+        "type": "id",
+        "value": "User"
       }
     },
     "subscription_postCreated": {
@@ -387,22 +294,16 @@
         {
           "name": "authorId",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "Post"
-        }
+        "type": "id",
+        "value": "Post"
       }
     },
     "subscription_postStatusChanged": {
@@ -414,26 +315,138 @@
         {
           "name": "postId",
           "type": {
-            "type": "alias",
+            "type": "primitive",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+              "type": "string"
             }
           }
         }
       ],
       "returnType": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "Post"
-        }
+        "type": "id",
+        "value": "Post"
       }
     }
   },
   "types": {
+    "DateTime": {
+      "name": "DateTime",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "datetime"
+          }
+        }
+      },
+      "description": "A date-time string in ISO 8601 format"
+    },
+    "Date": {
+      "name": "Date",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "date"
+          }
+        }
+      },
+      "description": "A date string in ISO 8601 format (YYYY-MM-DD)"
+    },
+    "Email": {
+      "name": "Email",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "description": "A valid email address"
+    },
+    "URL": {
+      "name": "URL",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "description": "A valid URL string"
+    },
+    "UUID": {
+      "name": "UUID",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "description": "A universally unique identifier"
+    },
+    "JSON": {
+      "name": "JSON",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      },
+      "description": "Arbitrary JSON data"
+    },
+    "Upload": {
+      "name": "Upload",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "description": "A file upload scalar"
+    },
+    "BigInt": {
+      "name": "BigInt",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "long"
+          }
+        }
+      },
+      "description": "A large integer value"
+    },
+    "Decimal": {
+      "name": "Decimal",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "double"
+          }
+        }
+      },
+      "description": "A decimal number for precise calculations"
+    },
     "User": {
       "name": "User",
       "shape": {
@@ -442,109 +455,118 @@
         "properties": [
           {
             "key": "id",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The unique identifier for the user"
           },
           {
+            "key": "uuid",
+            "valueType": {
+              "type": "id",
+              "value": "UUID"
+            },
+            "description": "The user's unique UUID"
+          },
+          {
             "key": "name",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The user's display name"
           },
           {
             "key": "email",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
+            "valueType": {
+              "type": "id",
+              "value": "Email"
             },
             "description": "The user's email address"
           },
           {
             "key": "age",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
+                "type": "integer"
               }
             },
             "description": "The user's age"
           },
           {
             "key": "balance",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "double"
-                }
-              }
+            "valueType": {
+              "type": "id",
+              "value": "Decimal"
             },
             "description": "The user's account balance"
           },
           {
             "key": "isActive",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
-                }
+                "type": "boolean"
               }
             },
             "description": "Whether the user is active"
           },
           {
             "key": "role",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "UserRole"
-              }
+            "valueType": {
+              "type": "id",
+              "value": "UserRole"
             },
             "description": "The user's role in the system"
           },
           {
             "key": "posts",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Post"
-                  }
-                }
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "Post"
               }
             },
             "description": "The user's posts"
+          },
+          {
+            "key": "createdAt",
+            "valueType": {
+              "type": "id",
+              "value": "DateTime"
+            },
+            "description": "When the user was created"
+          },
+          {
+            "key": "birthDate",
+            "valueType": {
+              "type": "id",
+              "value": "Date"
+            },
+            "description": "The user's date of birth"
+          },
+          {
+            "key": "profileUrl",
+            "valueType": {
+              "type": "id",
+              "value": "URL"
+            },
+            "description": "The user's profile URL"
+          },
+          {
+            "key": "metadata",
+            "valueType": {
+              "type": "id",
+              "value": "JSON"
+            },
+            "description": "Additional metadata as JSON"
           }
         ]
       },
@@ -558,83 +580,78 @@
         "properties": [
           {
             "key": "id",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The unique identifier for the post"
           },
           {
             "key": "title",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The post title"
           },
           {
             "key": "content",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The post content"
           },
           {
             "key": "author",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "User"
-              }
+            "valueType": {
+              "type": "id",
+              "value": "User"
             },
             "description": "The post author"
           },
           {
             "key": "status",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "PostStatus"
-              }
+            "valueType": {
+              "type": "id",
+              "value": "PostStatus"
             },
             "description": "The post status"
           },
           {
             "key": "tags",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
             "description": "Tags associated with the post"
+          },
+          {
+            "key": "publishedAt",
+            "valueType": {
+              "type": "id",
+              "value": "DateTime"
+            },
+            "description": "When the post was published"
+          },
+          {
+            "key": "viewCount",
+            "valueType": {
+              "type": "id",
+              "value": "BigInt"
+            },
+            "description": "The number of views"
           }
         ]
       },
@@ -685,24 +702,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "typeName": "User",
             "displayName": "User",
-            "shape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "User"
-              }
+            "type": {
+              "type": "id",
+              "value": "User"
             },
             "description": "A user in the system"
           },
           {
+            "typeName": "Post",
             "displayName": "Post",
-            "shape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "Post"
-              }
+            "type": {
+              "type": "id",
+              "value": "Post"
             },
             "description": "A blog post"
           }
@@ -718,38 +731,29 @@
         "properties": [
           {
             "key": "name",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The user's name"
           },
           {
             "key": "email",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The user's email"
           },
           {
             "key": "role",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "UserRole"
-              }
+            "valueType": {
+              "type": "id",
+              "value": "UserRole"
             },
             "description": "The user's role"
           }
@@ -765,57 +769,42 @@
         "properties": [
           {
             "key": "title",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The post title"
           },
           {
             "key": "content",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The post content"
           },
           {
             "key": "authorId",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The author's user ID"
           },
           {
             "key": "tags",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
@@ -833,24 +822,18 @@
         "properties": [
           {
             "key": "role",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "UserRole"
-              }
+            "valueType": {
+              "type": "id",
+              "value": "UserRole"
             },
             "description": "Filter by role"
           },
           {
             "key": "isActive",
-            "valueShape": {
-              "type": "alias",
+            "valueType": {
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
-                }
+                "type": "boolean"
               }
             },
             "description": "Filter by active status"
