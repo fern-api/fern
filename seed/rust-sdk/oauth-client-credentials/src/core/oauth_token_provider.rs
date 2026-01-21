@@ -1,5 +1,7 @@
+use std::future::Future;
 use std::sync::Mutex;
 use std::time::{Duration, Instant};
+use tokio::sync::Mutex as AsyncMutex;
 
 /// Buffer time in seconds subtracted from token expiration to ensure
 /// we refresh the token before it actually expires.
@@ -21,19 +23,27 @@ const DEFAULT_EXPIRY_SECONDS: u64 = 3600; // 1 hour fallback
 ///
 /// let provider = OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
 ///
-/// // Get or fetch a token
+/// // Get or fetch a token (sync)
 /// let token = provider.get_or_fetch(|| {
 ///     // Your token fetching logic here
 ///     // Returns (access_token, expires_in_seconds)
-///     Ok(("token".to_string(), 3600))
+///     Ok(("token".to_string(), Some(3600)))
 /// })?;
+///
+/// // Get or fetch a token (async)
+/// let token = provider.get_or_fetch_async(|| async {
+///     // Your async token fetching logic here
+///     Ok(("token".to_string(), Some(3600)))
+/// }).await?;
 /// ```
 pub struct OAuthTokenProvider {
     client_id: String,
     client_secret: String,
     inner: Mutex<OAuthTokenProviderInner>,
-    /// Separate mutex to ensure only one thread fetches a new token at a time
+    /// Separate mutex to ensure only one thread fetches a new token at a time (sync)
     fetch_lock: Mutex<()>,
+    /// Async mutex for async token fetching
+    async_fetch_lock: AsyncMutex<()>,
 }
 
 struct OAuthTokenProviderInner {
@@ -52,6 +62,7 @@ impl OAuthTokenProvider {
                 expires_at: None,
             }),
             fetch_lock: Mutex::new(()),
+            async_fetch_lock: AsyncMutex::new(()),
         }
     }
 
@@ -104,7 +115,7 @@ impl OAuthTokenProvider {
         None
     }
 
-    /// Returns a valid token, fetching a new one if necessary.
+    /// Returns a valid token, fetching a new one if necessary (synchronous version).
     ///
     /// The `fetch_func` is called at most once even if multiple threads call `get_or_fetch`
     /// concurrently when the token is expired. It should return `(access_token, expires_in_seconds)`.
@@ -118,7 +129,7 @@ impl OAuthTokenProvider {
     ///
     /// ```rust,ignore
     /// let token = provider.get_or_fetch(|| {
-    ///     // Call your OAuth endpoint here
+    ///     // Call your OAuth endpoint here (sync)
     ///     let response = auth_client.get_token(&provider.client_id(), &provider.client_secret())?;
     ///     Ok((response.access_token, response.expires_in.unwrap_or(3600)))
     /// })?;
@@ -142,6 +153,58 @@ impl OAuthTokenProvider {
 
         // Fetch new token
         let (access_token, expires_in) = fetch_func()?;
+
+        // Use default expiry if not provided
+        let effective_expires_in = if expires_in > 0 {
+            expires_in
+        } else {
+            DEFAULT_EXPIRY_SECONDS
+        };
+
+        self.set_token(access_token.clone(), effective_expires_in);
+        Ok(access_token)
+    }
+
+    /// Returns a valid token, fetching a new one if necessary (async version).
+    ///
+    /// This is the async version of `get_or_fetch` for use with async token fetching.
+    /// The `fetch_func` is called at most once even if multiple tasks call `get_or_fetch_async`
+    /// concurrently when the token is expired.
+    ///
+    /// # Arguments
+    ///
+    /// * `fetch_func` - An async function that fetches a new token. Returns `Result<(String, u64), E>`
+    ///   where the tuple contains (access_token, expires_in_seconds).
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let token = provider.get_or_fetch_async(|| async {
+    ///     // Call your OAuth endpoint here (async)
+    ///     let response = auth_client.get_token(&provider.client_id(), &provider.client_secret()).await?;
+    ///     Ok((response.access_token, response.expires_in.unwrap_or(3600)))
+    /// }).await?;
+    /// ```
+    pub async fn get_or_fetch_async<F, Fut, E>(&self, fetch_func: F) -> Result<String, E>
+    where
+        F: FnOnce() -> Fut,
+        Fut: Future<Output = Result<(String, u64), E>>,
+    {
+        // Fast path: check if we have a valid token
+        if let Some(token) = self.get_token() {
+            return Ok(token);
+        }
+
+        // Slow path: acquire async fetch lock to ensure only one task fetches
+        let _fetch_guard = self.async_fetch_lock.lock().await;
+
+        // Double-check after acquiring lock (another task may have fetched)
+        if let Some(token) = self.get_token() {
+            return Ok(token);
+        }
+
+        // Fetch new token
+        let (access_token, expires_in) = fetch_func().await?;
 
         // Use default expiry if not provided
         let effective_expires_in = if expires_in > 0 {

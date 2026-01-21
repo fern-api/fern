@@ -68,6 +68,16 @@ export class ClientConfigGenerator {
                 visibility: PUBLIC
             }),
             rust.field({
+                name: "client_id",
+                type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
+                name: "client_secret",
+                type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
                 name: "timeout",
                 type: rust.Type.reference(rust.reference({ name: "Duration" })),
                 visibility: PUBLIC
@@ -141,6 +151,14 @@ export class ClientConfigGenerator {
                     },
                     {
                         name: "password",
+                        value: Expression.none()
+                    },
+                    {
+                        name: "client_id",
+                        value: Expression.none()
+                    },
+                    {
+                        name: "client_secret",
                         value: Expression.none()
                     },
                     {
