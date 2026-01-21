@@ -2,6 +2,7 @@
 
 # nopycln: file
 import datetime as dt
+import json
 from collections import defaultdict
 from typing import Any, Callable, Dict, List, Mapping, Tuple, Type, TypeVar, Union, cast
 
@@ -33,6 +34,19 @@ from typing_extensions import TypeAlias
 
 T = TypeVar("T")
 Model = TypeVar("Model", bound=pydantic.BaseModel)
+
+
+def _parse_json_string(value: Any) -> Any:
+    """
+    Parse a JSON string into a Python object.
+    Used as a BeforeValidator for fields that expect objects but may receive JSON strings.
+    """
+    if isinstance(value, str):
+        try:
+            return json.loads(value)
+        except (json.JSONDecodeError, ValueError):
+            pass
+    return value
 
 
 def parse_obj_as(type_: Type[T], object_: Any) -> T:

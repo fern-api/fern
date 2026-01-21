@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import typing
 
 import pydantic
@@ -198,7 +199,28 @@ class NestedObjectWithOptionalField(UniversalBaseModel):
             v = validator(v, values)
         return v
 
-    if not IS_PYDANTIC_V2:
+    if IS_PYDANTIC_V2:
+
+        @pydantic.model_validator(mode="before")  # type: ignore # Pydantic v2
+        @classmethod
+        def _parse_nested_json_strings(cls, values: typing.Any) -> typing.Any:
+            if isinstance(values, dict):
+                if "NestedObject" in values and isinstance(values["NestedObject"], str):
+                    try:
+                        values = {**values, "NestedObject": json.loads(values["NestedObject"])}
+                    except (json.JSONDecodeError, ValueError):
+                        pass
+            return values
+    else:
 
         class Config:
             extra = pydantic.Extra.ignore
+
+        @pydantic.root_validator(pre=True)  # type: ignore[override]
+        def _parse_nested_json_strings(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+            if "NestedObject" in values and isinstance(values["NestedObject"], str):
+                try:
+                    values = {**values, "NestedObject": json.loads(values["NestedObject"])}
+                except (json.JSONDecodeError, ValueError):
+                    pass
+            return values
