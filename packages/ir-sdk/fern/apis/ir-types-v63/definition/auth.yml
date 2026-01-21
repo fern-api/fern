@@ -1,0 +1,163 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  http: http.yml
+  types: types.yml
+  commons: commons.yml
+types:
+  EnvironmentVariable: string
+  AuthSchemeKey: string
+  AuthScope: string
+
+  ApiAuth:
+    extends: commons.WithDocs
+    properties:
+      requirement: AuthSchemesRequirement
+      schemes: list<AuthScheme>
+
+  AuthSchemesRequirement:
+    enum:
+      - ALL
+      - ANY
+      - ENDPOINT_SECURITY
+
+  AuthScheme:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      bearer: BearerAuthScheme
+      basic: BasicAuthScheme
+      header: HeaderAuthScheme
+      oauth: OAuthScheme
+      inferred: InferredAuthScheme
+
+  BaseAuthScheme:
+    extends: commons.WithDocs
+    properties:
+      key:
+        type: AuthSchemeKey
+        docs: |
+          The unique key for this auth scheme. This will be used to reference the scheme in endpoint auth requirements.
+          Defaults to the type of the auth scheme if not provided.
+
+  InferredAuthScheme:
+    extends: BaseAuthScheme
+    properties:
+      tokenEndpoint: InferredAuthSchemeTokenEndpoint
+      # refreshEndpoint: optional<InferredAuthSchemeRefreshEndpoint>
+
+  InferredAuthSchemeTokenEndpoint:
+    properties:
+      endpoint: commons.EndpointReference
+      expiryProperty: optional<http.ResponseProperty>
+      authenticatedRequestHeaders: list<InferredAuthenticatedRequestHeader>
+
+  # InferredAuthSchemeRefreshEndpoint:
+  #   properties:
+  #     endpoint: commons.EndpointReference
+  #     expiryProperty: http.ResponseProperty
+  #     authenticatedRequestHeaders:
+  #       type: list<InferredAuthenticatedRequestHeader>
+  #       docs: These headers will override the headers defined on the tokenEndpoint.
+
+  InferredAuthenticatedRequestHeader:
+    docs: A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
+      These are not headers for the authorization endpoint.
+    properties:
+      responseProperty:
+        type: http.ResponseProperty
+        docs: The property to retrieve the header value from the get token or refresh endpoint response.
+      headerName:
+        type: string
+        docs: |
+          The header name to put the token in for any authenticated HTTP request. 
+          Defaults to `Authorization`.
+      valuePrefix:
+        type: optional<string>
+        docs: |
+          Commonly used for setting the `Authorization` scheme, but could be used for other things.
+          For `Authorization` header, the default will be `Bearer `, but `undefined` for other headers.
+
+  BearerAuthScheme:
+    extends: BaseAuthScheme
+    properties:
+      token: commons.Name
+      tokenEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the token.
+
+  OAuthScheme:
+    extends: BaseAuthScheme
+    docs: |
+      We currently assume the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer"
+    properties:
+      configuration: OAuthConfiguration
+
+  OAuthConfiguration:
+    union:
+      clientCredentials: OAuthClientCredentials
+
+  OAuthClientCredentials:
+    properties:
+      clientIdEnvVar: optional<EnvironmentVariable>
+      clientSecretEnvVar: optional<EnvironmentVariable>
+      tokenPrefix: optional<string>
+      tokenHeader: optional<string>
+      scopes: optional<list<string>>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshEndpoint>
+
+  OAuthTokenEndpoint:
+    properties:
+      endpointReference: commons.EndpointReference
+      requestProperties: OAuthAccessTokenRequestProperties
+      responseProperties: OAuthAccessTokenResponseProperties
+
+  OAuthRefreshEndpoint:
+    properties:
+      endpointReference: commons.EndpointReference
+      requestProperties: OAuthRefreshTokenRequestProperties
+      responseProperties: OAuthAccessTokenResponseProperties
+
+  OAuthAccessTokenRequestProperties:
+    docs: The properties required to retrieve an OAuth token.
+    properties:
+      clientId: http.RequestProperty
+      clientSecret: http.RequestProperty
+      scopes: optional<http.RequestProperty>
+      customProperties: optional<list<http.RequestProperty>>
+
+  OAuthAccessTokenResponseProperties:
+    docs: The properties to map to the corresponding OAuth token primitive.
+    properties:
+      accessToken: http.ResponseProperty
+      expiresIn: optional<http.ResponseProperty>
+      refreshToken: optional<http.ResponseProperty>
+
+  OAuthRefreshTokenRequestProperties:
+    docs: The properties required to retrieve an OAuth refresh token.
+    properties:
+      refreshToken: http.RequestProperty
+
+  BasicAuthScheme:
+    extends: BaseAuthScheme
+    properties:
+      username: commons.Name
+      usernameEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the username.
+      password: commons.Name
+      passwordEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the password.
+
+  HeaderAuthScheme:
+    extends: BaseAuthScheme
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+      prefix: optional<string>
+      headerEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the header.
