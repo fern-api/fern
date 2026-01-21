@@ -4,9 +4,17 @@
 
 import * as FernDefinition from "../../../index";
 
+export type OAuthGrantType =
+    | "client-credentials"
+    | "authorization-code"
+    | "password"
+    | "device-code"
+    | "token-exchange"
+    | "refresh-token";
+
 export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     scheme: "oauth";
-    type: "client-credentials";
+    type: OAuthGrantType;
     scopes?: FernDefinition.AuthScope[];
     "client-id-env"?: string;
     "client-secret-env"?: string;
@@ -16,4 +24,16 @@ export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     "token-header"?: string;
     "get-token": FernDefinition.OAuthGetTokenEndpointSchema;
     "refresh-token"?: FernDefinition.OAuthRefreshTokenEndpointSchema;
+    /** The authorization endpoint URL (for authorization-code flow) */
+    "authorization-endpoint"?: string;
+    /** The redirect URI after authorization (for authorization-code flow) */
+    "redirect-uri"?: string;
+    /** Whether to use PKCE for enhanced security (for authorization-code flow) */
+    "use-pkce"?: boolean;
+    /** The environment variable for the username (for password flow) */
+    "username-env"?: string;
+    /** The environment variable for the password (for password flow) */
+    "password-env"?: string;
+    /** The device authorization endpoint URL (for device-code flow) */
+    "device-authorization-endpoint"?: string;
 }
