@@ -27,7 +27,7 @@ import { SubClientGenerator } from "./generators/SubClientGenerator";
 import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
+import { convertDynamicEndpointSnippetRequest, convertIr, generateGitHubWorkflowFiles } from "./utils";
 import { WireTestGenerator } from "./wire-tests";
 
 const execAsync = promisify(exec);
@@ -183,6 +183,21 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.writeForDownload(context);
+
+        if (context.ir.selfHosted) {
+            const githubOutputMode = context.config.output.mode;
+            if (githubOutputMode.type === "github") {
+                const workflowFiles = generateGitHubWorkflowFiles({
+                    githubOutputMode,
+                    publishConfig: context.ir.publishConfig,
+                    crateName: context.getCrateName()
+                });
+                for (const file of workflowFiles) {
+                    context.project.addSourceFiles(file);
+                }
+                await context.project.persist();
+            }
+        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
