@@ -22,6 +22,7 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static FORWARD_COMPATIBLE_ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "FORWARD_COMPATIBLE_ENUMS";
+    private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSE";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -110,6 +111,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
+        snippets[ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID] = this.buildRawResponseSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
@@ -170,6 +172,35 @@ try {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
+`)
+        );
+    }
+
+    private buildRawResponseSnippets(): string[] {
+        const rawResponseEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID);
+        return rawResponseEndpoints.map((rawResponseEndpoint) =>
+            this.writeCode(`
+using ${this.namespaces.root};
+
+// Access raw response data (status code, headers, etc.) alongside the parsed response
+var result = await ${this.getMethodCall(rawResponseEndpoint)}(...).WithRawResponse();
+
+// Access the parsed data
+var data = result.Data;
+
+// Access raw response metadata
+var statusCode = result.RawResponse.StatusCode;
+var headers = result.RawResponse.Headers;
+var url = result.RawResponse.Url;
+
+// Access specific headers (case-insensitive)
+if (headers.TryGetValue("X-Request-Id", out var requestId))
+{
+    System.Console.WriteLine($"Request ID: {requestId}");
+}
+
+// For the default behavior, simply await without .WithRawResponse()
+var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
 `)
         );
     }

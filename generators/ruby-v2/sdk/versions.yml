@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc81
+  changelogEntry:
+    - summary: |
+        Add support for self-hosted mode. When enabled, the generator can clone the user's GitHub
+        repository, generate SDK code, and commit/push changes or create a PR directly to the user's
+        repo. This feature respects .fernignore files to preserve user customizations. The generator
+        now passes ir.selfHosted to the base generator agent instead of hardcoding false.
+      type: feat
+  createdAt: "2026-01-16"
+  irVersion: 61
+
 - version: 1.0.0-rc80
   changelogEntry:
     - summary: |

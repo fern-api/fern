@@ -208,7 +208,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath
                     );
                 } else {
-                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
                 }
             } else {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
@@ -260,7 +260,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath
                     );
                 } else {
-                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
                 }
             }
         },
@@ -289,7 +289,9 @@ export async function publishDocs({
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
             let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
-            if (!disableDynamicSnippets) {
+            if (Object.keys(snippetsConfig).length === 0) {
+                context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
+            } else if (!disableDynamicSnippets) {
                 // Check for existing SDK dynamic IRs before generating
                 const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
                     fdr,
@@ -581,7 +583,8 @@ function convertToFilePathPairs(
 
 async function startDocsRegisterFailed(
     error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
-    context: TaskContext
+    context: TaskContext,
+    organization: string
 ): Promise<never> {
     await context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -589,6 +592,12 @@ async function startDocsRegisterFailed(
             error: JSON.stringify(error)
         }
     });
+
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization);
+    if (authErrorMessage != null) {
+        return context.failAndThrow(authErrorMessage);
+    }
+
     switch (error.error) {
         case "InvalidCustomDomainError":
             return context.failAndThrow(
@@ -599,10 +608,14 @@ async function startDocsRegisterFailed(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
         case "UnauthorizedError":
-            return context.failAndThrow("Please make sure that your FERN_TOKEN is set.");
+            return context.failAndThrow(
+                `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+            );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                "Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner."
+                `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
             );
         case "UnavailableError":
             return context.failAndThrow(
@@ -611,6 +624,25 @@ async function startDocsRegisterFailed(
         default:
             return context.failAndThrow("Failed to publish docs.", error);
     }
+}
+
+function getAuthenticationErrorMessage(error: unknown, organization: string): string | undefined {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+
+    if (content?.reason === "status-code") {
+        const statusCode = content.statusCode as number | undefined;
+
+        if (statusCode === 401 || statusCode === 403) {
+            const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
+            const contactMessage =
+                "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
+
+            return `${baseMessage}\n\n${contactMessage}`;
+        }
+    }
+
+    return undefined;
 }
 
 function parseBasePath(domain: string): string | undefined {
@@ -904,12 +936,6 @@ async function generateLanguageSpecificDynamicIRs({
 
     if (!workspace) {
         return undefined;
-    }
-
-    if (Object.keys(snippetsConfig).length === 0) {
-        context.logger.warn(`WARNING: No snippets defined for ${workspace.workspaceName}.`);
-        context.logger.warn("Did you add snippets to your docs configuration?");
-        context.logger.warn("For more info: https://buildwithfern.com/learn/docs/api-references/sdk-snippets");
     }
 
     let snippetConfiguration = {

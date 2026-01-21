@@ -2,6 +2,8 @@ import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { addAuthCommand } from "./commands/auth";
+import { addCheckCommand } from "./commands/check";
+import { addSdkCommand } from "./commands/sdk";
 import { GlobalArgs } from "./context/GlobalArgs";
 
 export async function runCliV2(argv?: string[]): Promise<void> {
@@ -21,9 +23,22 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
         })
         .strict()
         .demandCommand()
-        .recommendCommands();
+        .recommendCommands()
+        .fail((msg, err, y) => {
+            if (err != null) {
+                process.stderr.write(`${err.message}\n`);
+                process.exit(1);
+            }
+            if (msg != null) {
+                process.stderr.write(`Error: ${msg}\n\n`);
+            }
+            y.showHelp();
+            process.exit(1);
+        });
 
     addAuthCommand(cli);
+    addCheckCommand(cli);
+    addSdkCommand(cli);
 
     return cli;
 }

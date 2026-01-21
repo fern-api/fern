@@ -24,6 +24,7 @@ export * from "./ChangelogFolderRelativePath";
 export * from "./DocsInstance";
 export * from "./CustomDomain";
 export * from "./EditThisPageConfig";
+export * from "./EditThisPageLaunch";
 export * from "./GithubEditThisPageConfig";
 export * from "./VersionConfig";
 export * from "./Availability";

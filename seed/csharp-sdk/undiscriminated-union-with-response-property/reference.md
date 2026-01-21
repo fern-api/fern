@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponsePropertyClient.cs">GetUnionAsync</a>() -> UnionResponse</code></summary>
+<details><summary><code>client.<a href="/src/SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponsePropertyClient.cs">GetUnionAsync</a>() -> WithRawResponseTask&lt;UnionResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -24,7 +24,7 @@ await client.GetUnionAsync();
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponsePropertyClient.cs">ListUnionsAsync</a>() -> UnionListResponse</code></summary>
+<details><summary><code>client.<a href="/src/SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponsePropertyClient.cs">ListUnionsAsync</a>() -> WithRawResponseTask&lt;UnionListResponse&gt;</code></summary>
 <dl>
 <dd>
 

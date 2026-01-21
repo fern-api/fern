@@ -27,7 +27,7 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # CVE-2024-46901: subversion vulnerability
 # Go stdlib CVEs (60+): git-lfs 3.0.2 embeds Go 1.18.1 with many critical vulnerabilities
 # CVE-2024-10524, CVE-2021-31879: wget vulnerabilities
-# CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506: libpng16-16 vulnerabilities
+# CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506, CVE-2025-66293: libpng16-16 vulnerabilities
 # CVE-2021-46848, CVE-2025-13151: libtasn1-6 vulnerabilities
 # CVE-2025-68973: gnupg/gpg vulnerabilities
 # Use purge instead of remove to fully remove packages from dpkg database
@@ -80,6 +80,15 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     tar -xzf glob-11.1.0.tgz && \
     mv package glob && \
     rm glob-11.1.0.tgz
+
+# Patch npm's bundled tar to 7.5.3 to fix CVE-2026-23745 (path traversal via hardlinks/symlinks)
+# Note: We use curl instead of npm pack because npm pack depends on tar itself
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    rm -rf tar && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.3.tgz -o tar-7.5.3.tgz && \
+    tar -xzf tar-7.5.3.tgz && \
+    mv package tar && \
+    rm tar-7.5.3.tgz
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2

@@ -17,13 +17,7 @@ public partial class EventsClient : IEventsClient
 
     public MetadataClient Metadata { get; }
 
-    /// <summary>
-    /// List all user events.
-    /// </summary>
-    /// <example><code>
-    /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
-    /// </code></example>
-    public async Task<IEnumerable<Event>> ListEventsAsync(
+    private async Task<WithRawResponse<IEnumerable<Event>>> ListEventsAsyncCore(
         ListUserEventsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -52,14 +46,28 @@ public partial class EventsClient : IEventsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<Event>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
+                throw new SeedMixedFileDirectoryApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedMixedFileDirectoryApiException(
@@ -68,5 +76,22 @@ public partial class EventsClient : IEventsClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// List all user events.
+    /// </summary>
+    /// <example><code>
+    /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<Event>> ListEventsAsync(
+        ListUserEventsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<Event>>(
+            ListEventsAsyncCore(request, options, cancellationToken)
+        );
     }
 }

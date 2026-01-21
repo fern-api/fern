@@ -5,7 +5,7 @@ public partial interface IServiceClient
     /// <summary>
     /// List resources with pagination
     /// </summary>
-    Task<IEnumerable<Resource>> ListResourcesAsync(
+    WithRawResponseTask<IEnumerable<Resource>> ListResourcesAsync(
         ListResourcesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -14,7 +14,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Get a single resource
     /// </summary>
-    Task<Resource> GetResourceAsync(
+    WithRawResponseTask<Resource> GetResourceAsync(
         string resourceId,
         GetResourceRequest request,
         RequestOptions? options = null,
@@ -24,7 +24,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Search resources with complex parameters
     /// </summary>
-    Task<SearchResponse> SearchResourcesAsync(
+    WithRawResponseTask<SearchResponse> SearchResourcesAsync(
         SearchResourcesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -33,7 +33,7 @@ public partial interface IServiceClient
     /// <summary>
     /// List or search for users
     /// </summary>
-    Task<PaginatedUserResponse> ListUsersAsync(
+    WithRawResponseTask<PaginatedUserResponse> ListUsersAsync(
         ListUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -42,7 +42,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Get a user by ID
     /// </summary>
-    Task<User> GetUserByIdAsync(
+    WithRawResponseTask<User> GetUserByIdAsync(
         string userId,
         GetUserRequest request,
         RequestOptions? options = null,
@@ -52,7 +52,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Create a new user
     /// </summary>
-    Task<User> CreateUserAsync(
+    WithRawResponseTask<User> CreateUserAsync(
         CreateUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -61,7 +61,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Update a user
     /// </summary>
-    Task<User> UpdateUserAsync(
+    WithRawResponseTask<User> UpdateUserAsync(
         string userId,
         UpdateUserRequest request,
         RequestOptions? options = null,
@@ -80,7 +80,7 @@ public partial interface IServiceClient
     /// <summary>
     /// List all connections
     /// </summary>
-    Task<IEnumerable<Connection>> ListConnectionsAsync(
+    WithRawResponseTask<IEnumerable<Connection>> ListConnectionsAsync(
         ListConnectionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -89,7 +89,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Get a connection by ID
     /// </summary>
-    Task<Connection> GetConnectionAsync(
+    WithRawResponseTask<Connection> GetConnectionAsync(
         string connectionId,
         GetConnectionRequest request,
         RequestOptions? options = null,
@@ -99,7 +99,7 @@ public partial interface IServiceClient
     /// <summary>
     /// List all clients/applications
     /// </summary>
-    Task<PaginatedClientResponse> ListClientsAsync(
+    WithRawResponseTask<PaginatedClientResponse> ListClientsAsync(
         ListClientsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -108,7 +108,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Get a client by ID
     /// </summary>
-    Task<Client> GetClientAsync(
+    WithRawResponseTask<Client> GetClientAsync(
         string clientId,
         GetClientRequest request,
         RequestOptions? options = null,

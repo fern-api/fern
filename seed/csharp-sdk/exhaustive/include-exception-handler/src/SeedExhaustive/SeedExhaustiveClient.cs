@@ -23,7 +23,7 @@ public partial class SeedExhaustiveClient : ISeedExhaustiveClient
             );
             clientOptions ??= new ClientOptions();
             clientOptions.ExceptionHandler = new ExceptionHandler(
-                new SeedExhaustiveExceptionInterceptor()
+                new SeedExhaustiveExceptionInterceptor(clientOptions)
             );
             foreach (var header in defaultHeaders)
             {
@@ -41,7 +41,7 @@ public partial class SeedExhaustiveClient : ISeedExhaustiveClient
         }
         catch (Exception ex)
         {
-            var interceptor = new SeedExhaustiveExceptionInterceptor();
+            var interceptor = new SeedExhaustiveExceptionInterceptor(clientOptions);
             interceptor.Intercept(ex);
             throw;
         }

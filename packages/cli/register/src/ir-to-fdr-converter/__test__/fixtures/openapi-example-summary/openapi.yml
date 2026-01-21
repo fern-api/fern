@@ -1,0 +1,95 @@
+openapi: 3.1.0
+info:
+  title: Example Summary Test
+  version: '1'
+paths:
+  /payments:
+    get:
+      operationId: listPayments
+      summary: List payments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentList'
+              examples:
+                paginatedPayment:
+                  $ref: '#/components/examples/paginatedPayment'
+    post:
+      operationId: createPayment
+      summary: Create a payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+            examples:
+              cardPayment:
+                $ref: '#/components/examples/cardPayment'
+              applePayPayment:
+                $ref: '#/components/examples/applePayPayment'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+              examples:
+                paymentResponse:
+                  $ref: '#/components/examples/paymentResponse'
+components:
+  schemas:
+    PaymentRequest:
+      type: object
+      properties:
+        amount:
+          type: integer
+        currency:
+          type: string
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+    PaymentList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        hasMore:
+          type: boolean
+  examples:
+    cardPayment:
+      summary: Card Payment
+      value:
+        amount: 4999
+        currency: USD
+    applePayPayment:
+      summary: Apple Pay Payment
+      value:
+        amount: 2999
+        currency: USD
+    paymentResponse:
+      summary: Payment Response
+      value:
+        id: PAY123
+        amount: 4999
+        currency: USD
+    paginatedPayment:
+      summary: Paginated Payment List
+      value:
+        data:
+          - id: PAY123
+            amount: 4999
+            currency: USD
+        hasMore: false

@@ -6,16 +6,19 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubEditThisPageConfig } from "./GithubEditThisPageConfig";
+import { EditThisPageLaunch } from "./EditThisPageLaunch";
 
 export const EditThisPageConfig: core.serialization.ObjectSchema<
     serializers.EditThisPageConfig.Raw,
     FernDocsConfig.EditThisPageConfig
 > = core.serialization.object({
     github: GithubEditThisPageConfig.optional(),
+    launch: EditThisPageLaunch.optional(),
 });
 
 export declare namespace EditThisPageConfig {
     export interface Raw {
         github?: GithubEditThisPageConfig.Raw | null;
+        launch?: EditThisPageLaunch.Raw | null;
     }
 }

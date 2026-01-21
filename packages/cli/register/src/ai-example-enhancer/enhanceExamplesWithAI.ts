@@ -8,6 +8,7 @@ import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
+import { filterRequestBody, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers";
 import { LambdaExampleEnhancer } from "./lambdaClient";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
 import { AIExampleEnhancerConfig, ConcurrencyStats, ProcessingResult, ProgressCallback, QueuedRequest } from "./types";
@@ -55,7 +56,16 @@ class ConcurrentEndpointProcessor {
     private readonly maxConcurrency: number;
     private activeRequests = new Map<string, QueuedRequest>();
     private pendingQueue: Array<() => Promise<ProcessingResult>> = [];
-    private results = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
+    private results = new Map<
+        string,
+        {
+            enhancedReq?: unknown;
+            enhancedRes?: unknown;
+            extractedHeaders?: Record<string, unknown>;
+            extractedPathParams?: Record<string, unknown>;
+            extractedQueryParams?: Record<string, unknown>;
+        }
+    >();
     private stats: ConcurrencyStats = { pending: 0, active: 0, completed: 0, failed: 0, totalStarted: 0 };
     private completedSinceLastCallback: ProcessingResult[] = [];
 
@@ -66,9 +76,18 @@ class ConcurrentEndpointProcessor {
         this.maxConcurrency = maxConcurrency;
     }
 
-    public async processAll(
-        workItems: Array<() => Promise<ProcessingResult>>
-    ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
+    public async processAll(workItems: Array<() => Promise<ProcessingResult>>): Promise<
+        Map<
+            string,
+            {
+                enhancedReq?: unknown;
+                enhancedRes?: unknown;
+                extractedHeaders?: Record<string, unknown>;
+                extractedPathParams?: Record<string, unknown>;
+                extractedQueryParams?: Record<string, unknown>;
+            }
+        >
+    > {
         this.pendingQueue = [...workItems];
         this.stats.pending = this.pendingQueue.length;
         this.stats.totalStarted = this.pendingQueue.length;
@@ -133,7 +152,10 @@ class ConcurrentEndpointProcessor {
             this.stats.completed++;
             this.results.set(result.endpointKey, {
                 enhancedReq: result.enhancedReq,
-                enhancedRes: result.enhancedRes
+                enhancedRes: result.enhancedRes,
+                extractedHeaders: result.extractedHeaders,
+                extractedPathParams: result.extractedPathParams,
+                extractedQueryParams: result.extractedQueryParams
             });
         } else {
             this.stats.failed++;
@@ -254,6 +276,67 @@ function findMatchingOpenAPIPath(examplePath: string, availablePaths: string[]):
     }
 
     return undefined;
+}
+
+function extractParameterNamesByType(
+    openApiSpecJson: string,
+    endpointPath: string,
+    method: string,
+    paramType: "header" | "query" | "path"
+): string[] {
+    try {
+        const spec = JSON.parse(openApiSpecJson) as OpenAPIV3.Document;
+        if (!spec.paths) {
+            return [];
+        }
+
+        const availablePaths = Object.keys(spec.paths);
+        const matchingPath = findMatchingOpenAPIPath(endpointPath, availablePaths);
+        if (!matchingPath) {
+            return [];
+        }
+
+        const pathItem = spec.paths[matchingPath];
+        if (!pathItem) {
+            return [];
+        }
+
+        const operation = pathItem[method.toLowerCase() as keyof OpenAPIV3.PathItemObject] as
+            | OpenAPIV3.OperationObject
+            | undefined;
+        if (!operation) {
+            return [];
+        }
+
+        const paramNames: string[] = [];
+
+        const allParameters = [...(pathItem.parameters ?? []), ...(operation.parameters ?? [])];
+
+        for (const param of allParameters) {
+            if ("$ref" in param) {
+                continue;
+            }
+            if (param.in === paramType) {
+                paramNames.push(param.name);
+            }
+        }
+
+        return paramNames;
+    } catch {
+        return [];
+    }
+}
+
+function extractHeaderParameterNames(openApiSpecJson: string, endpointPath: string, method: string): string[] {
+    return extractParameterNamesByType(openApiSpecJson, endpointPath, method, "header");
+}
+
+function extractQueryParameterNames(openApiSpecJson: string, endpointPath: string, method: string): string[] {
+    return extractParameterNamesByType(openApiSpecJson, endpointPath, method, "query");
+}
+
+function extractPathParameterNames(openApiSpecJson: string, endpointPath: string, method: string): string[] {
+    return extractParameterNamesByType(openApiSpecJson, endpointPath, method, "path");
 }
 
 async function pruneOpenAPISpecForBatch(
@@ -729,7 +812,18 @@ async function processEndpointsConcurrently(
     statusId?: string,
     apiStats?: { count: number; total: number },
     circuitBreaker?: CircuitBreaker
-): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
+): Promise<
+    Map<
+        string,
+        {
+            enhancedReq?: unknown;
+            enhancedRes?: unknown;
+            extractedHeaders?: Record<string, unknown>;
+            extractedPathParams?: Record<string, unknown>;
+            extractedQueryParams?: Record<string, unknown>;
+        }
+    >
+> {
     // Process endpoints using rolling window queue instead of blocking chunks
     const maxConcurrentRequests = parseInt(process.env.FERN_AI_MAX_CONCURRENT || "25", 10);
 
@@ -819,6 +913,9 @@ async function processEndpointsConcurrently(
                         endpointKey: result.endpointKey,
                         enhancedReq: result.enhancedReq,
                         enhancedRes: result.enhancedRes,
+                        extractedHeaders: result.extractedHeaders,
+                        extractedPathParams: result.extractedPathParams,
+                        extractedQueryParams: result.extractedQueryParams,
                         success: true
                     };
                 } else {
@@ -878,7 +975,14 @@ async function processEndpoint(
     apiStats?: { count: number; total: number },
     endpointNumber?: number,
     circuitBreaker?: CircuitBreaker
-): Promise<{ endpointKey: string; enhancedReq?: unknown; enhancedRes?: unknown } | null> {
+): Promise<{
+    endpointKey: string;
+    enhancedReq?: unknown;
+    enhancedRes?: unknown;
+    extractedHeaders?: Record<string, unknown>;
+    extractedPathParams?: Record<string, unknown>;
+    extractedQueryParams?: Record<string, unknown>;
+} | null> {
     const endpointKey = workItem.endpointKey;
 
     context.logger.debug(`Processing endpoint ${endpointNumber}: ${workItem.endpoint.method} ${workItem.example.path}`);
@@ -920,6 +1024,75 @@ async function processEndpoint(
         const responseChanged = result.enhancedResponseExample !== request.originalResponseExample;
 
         if (requestChanged || responseChanged) {
+            // Extract parameter names from the OpenAPI spec for filtering
+            // This ensures we only filter out actual parameters defined in the spec,
+            // not form data fields that happen to have the same name
+            const headerParameterNames = prunedOpenApiSpec
+                ? extractHeaderParameterNames(prunedOpenApiSpec, workItem.example.path, workItem.endpoint.method)
+                : [];
+            const queryParameterNames = prunedOpenApiSpec
+                ? extractQueryParameterNames(prunedOpenApiSpec, workItem.example.path, workItem.endpoint.method)
+                : [];
+            const pathParameterNames = prunedOpenApiSpec
+                ? extractPathParameterNames(prunedOpenApiSpec, workItem.example.path, workItem.endpoint.method)
+                : [];
+
+            // Build parameter objects for filtering using ONLY spec-defined parameter names
+            // This prevents form data fields from being incorrectly extracted as query/path params
+            const headersForFiltering: Record<string, unknown> = { ...(workItem.example.headers ?? {}) };
+            if (headerParameterNames.length > 0) {
+                for (const headerName of headerParameterNames) {
+                    if (!(headerName in headersForFiltering)) {
+                        headersForFiltering[headerName] = "";
+                    }
+                }
+            }
+
+            // Build query params object using spec-defined names only
+            const queryParamsForFiltering: Record<string, unknown> = {};
+            for (const queryName of queryParameterNames) {
+                queryParamsForFiltering[queryName] = workItem.example.queryParameters?.[queryName] ?? "";
+            }
+
+            // Build path params object using spec-defined names only
+            const pathParamsForFiltering: Record<string, unknown> = {};
+            for (const pathName of pathParameterNames) {
+                pathParamsForFiltering[pathName] = workItem.example.pathParameters?.[pathName] ?? "";
+            }
+
+            // Unwrap FDR typed value wrappers and filter the request body to extract parameters
+            const unwrappedRequestBody = unwrapExampleValue(result.enhancedRequestExample);
+            const { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders } = filterRequestBody(
+                unwrappedRequestBody,
+                pathParamsForFiltering,
+                queryParamsForFiltering,
+                headersForFiltering
+            );
+
+            // Merge extracted headers with original headers
+            const mergedHeaders: Record<string, unknown> = { ...(workItem.example.headers ?? {}) };
+            for (const [key, value] of Object.entries(extractedHeaders)) {
+                if (value !== undefined && value !== null && value !== "") {
+                    mergedHeaders[key] = value;
+                }
+            }
+
+            // Merge extracted path params with original path params
+            const mergedPathParams: Record<string, unknown> = { ...(workItem.example.pathParameters ?? {}) };
+            for (const [key, value] of Object.entries(extractedPathParams)) {
+                if (value !== undefined && value !== null && value !== "") {
+                    mergedPathParams[key] = value;
+                }
+            }
+
+            // Merge extracted query params with original query params
+            const mergedQueryParams: Record<string, unknown> = { ...(workItem.example.queryParameters ?? {}) };
+            for (const [key, value] of Object.entries(extractedQueryParams)) {
+                if (value !== undefined && value !== null && value !== "") {
+                    mergedQueryParams[key] = value;
+                }
+            }
+
             // Create enhanced example record
             const enhancedExampleRecord: EnhancedExampleRecord = {
                 endpoint: workItem.example.path,
@@ -928,7 +1101,10 @@ async function processEndpoint(
                 queryParameters: workItem.example.queryParameters,
                 headers: workItem.example.headers,
                 requestBody: requestChanged ? result.enhancedRequestExample : undefined,
-                responseBody: responseChanged ? result.enhancedResponseExample : undefined
+                responseBody: responseChanged ? result.enhancedResponseExample : undefined,
+                headerParameterNames: headerParameterNames.length > 0 ? headerParameterNames : undefined,
+                queryParameterNames: queryParameterNames.length > 0 ? queryParameterNames : undefined,
+                pathParameterNames: pathParameterNames.length > 0 ? pathParameterNames : undefined
             };
 
             enhancedExampleRecords.push(enhancedExampleRecord);
@@ -946,8 +1122,11 @@ async function processEndpoint(
 
             return {
                 endpointKey,
-                enhancedReq: result.enhancedRequestExample,
-                enhancedRes: result.enhancedResponseExample
+                enhancedReq: filteredBody,
+                enhancedRes: result.enhancedResponseExample,
+                extractedHeaders: Object.keys(mergedHeaders).length > 0 ? mergedHeaders : undefined,
+                extractedPathParams: Object.keys(mergedPathParams).length > 0 ? mergedPathParams : undefined,
+                extractedQueryParams: Object.keys(mergedQueryParams).length > 0 ? mergedQueryParams : undefined
             };
         }
 
@@ -972,7 +1151,16 @@ async function processEndpoint(
 
 function applyEnhancementResults(
     pkg: FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-    enhancementResults: Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>
+    enhancementResults: Map<
+        string,
+        {
+            enhancedReq?: unknown;
+            enhancedRes?: unknown;
+            extractedHeaders?: Record<string, unknown>;
+            extractedPathParams?: Record<string, unknown>;
+            extractedQueryParams?: Record<string, unknown>;
+        }
+    >
 ): FdrCjsSdk.api.v1.register.ApiDefinitionPackage {
     const enhancedEndpoints = pkg.endpoints.map((endpoint) => {
         const endpointV3 = endpoint as unknown as EndpointV3;
@@ -986,19 +1174,79 @@ function applyEnhancementResults(
                     ...example
                 };
 
-                if (enhancementResult.enhancedReq !== undefined && example.requestBodyV3) {
+                if (enhancementResult.enhancedReq !== undefined) {
                     enhancedExample.requestBody = enhancementResult.enhancedReq;
-                    enhancedExample.requestBodyV3 = {
-                        ...example.requestBodyV3,
-                        value: enhancementResult.enhancedReq
+                    if (example.requestBodyV3) {
+                        // Check if the value contains FDR typed value wrappers (form data structure)
+                        // Form data has a structure like: { "file": { "type": "filename", "value": "..." }, "text": { "type": "json", "value": "..." } }
+                        const isFormData =
+                            typeof example.requestBodyV3.value === "object" &&
+                            example.requestBodyV3.value !== null &&
+                            !Array.isArray(example.requestBodyV3.value) &&
+                            Object.values(example.requestBodyV3.value as Record<string, unknown>).some((v) =>
+                                isFdrTypedValueWrapper(v)
+                            );
+
+                        if (isFormData) {
+                            const enhancedReq = enhancementResult.enhancedReq as Record<string, unknown>;
+                            const originalValue = example.requestBodyV3.value as Record<
+                                string,
+                                { type?: string; value?: unknown }
+                            >;
+                            const updatedValue: Record<string, { type?: string; value?: unknown }> = {};
+
+                            // Update each field's value while preserving the FDR typed value wrapper structure
+                            for (const [key, wrapper] of Object.entries(originalValue)) {
+                                if (key in enhancedReq) {
+                                    updatedValue[key] = { ...wrapper, value: enhancedReq[key] };
+                                } else {
+                                    updatedValue[key] = wrapper;
+                                }
+                            }
+
+                            enhancedExample.requestBodyV3 = {
+                                ...example.requestBodyV3,
+                                value: updatedValue
+                            };
+                        } else {
+                            enhancedExample.requestBodyV3 = {
+                                ...example.requestBodyV3,
+                                value: enhancementResult.enhancedReq
+                            };
+                        }
+                    } else {
+                        enhancedExample.requestBodyV3 = { type: "json", value: enhancementResult.enhancedReq };
+                    }
+                }
+
+                if (enhancementResult.enhancedRes !== undefined) {
+                    enhancedExample.responseBody = enhancementResult.enhancedRes;
+                    enhancedExample.responseBodyV3 = example.responseBodyV3
+                        ? { ...example.responseBodyV3, value: enhancementResult.enhancedRes }
+                        : { type: "json", value: enhancementResult.enhancedRes };
+                }
+
+                // Apply extracted headers to the example
+                if (enhancementResult.extractedHeaders !== undefined) {
+                    enhancedExample.headers = {
+                        ...(example.headers ?? {}),
+                        ...enhancementResult.extractedHeaders
                     };
                 }
 
-                if (enhancementResult.enhancedRes !== undefined && example.responseBodyV3) {
-                    enhancedExample.responseBody = enhancementResult.enhancedRes;
-                    enhancedExample.responseBodyV3 = {
-                        ...example.responseBodyV3,
-                        value: enhancementResult.enhancedRes
+                // Apply extracted path parameters to the example
+                if (enhancementResult.extractedPathParams !== undefined) {
+                    enhancedExample.pathParameters = {
+                        ...(example.pathParameters ?? {}),
+                        ...enhancementResult.extractedPathParams
+                    };
+                }
+
+                // Apply extracted query parameters to the example
+                if (enhancementResult.extractedQueryParams !== undefined) {
+                    enhancedExample.queryParameters = {
+                        ...(example.queryParameters ?? {}),
+                        ...enhancementResult.extractedQueryParams
                     };
                 }
 
