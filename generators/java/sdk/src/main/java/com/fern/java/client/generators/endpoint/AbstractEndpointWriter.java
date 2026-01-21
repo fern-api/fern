@@ -192,7 +192,11 @@ public abstract class AbstractEndpointWriter {
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
                 convertPathParametersToSpecMap(httpEndpoint.getPathParameters()),
                 clientGeneratorContext);
-        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(variables.getQueryParams());
+        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl =
+                httpUrlBuilder.generateBuilder(variables.getQueryParams(), true);
+        // Generate a separate URL builder for methods without RequestOptions in scope
+        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrlNoRequestOptions =
+                httpUrlBuilder.generateBuilder(variables.getQueryParams(), false);
         endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 
         // Step 5: Get request initializer
@@ -602,7 +606,7 @@ public abstract class AbstractEndpointWriter {
                                 .returns(endpointWithRequestOptions.returnType);
 
                         CodeBlock.Builder methodBody = CodeBlock.builder()
-                                .add(generatedHttpUrl.initialization())
+                                .add(generatedHttpUrlNoRequestOptions.initialization())
                                 .addStatement(
                                         "$T fs = new $T($N, $N, null)",
                                         fileStreamClassName,
@@ -673,7 +677,7 @@ public abstract class AbstractEndpointWriter {
                                 .returns(endpointWithRequestOptions.returnType);
 
                         CodeBlock.Builder withMediaTypeBody = CodeBlock.builder()
-                                .add(generatedHttpUrl.initialization())
+                                .add(generatedHttpUrlNoRequestOptions.initialization())
                                 .addStatement(
                                         "$T fs = new $T($N, $N, $N)",
                                         fileStreamClassName,
