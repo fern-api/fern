@@ -1,0 +1,482 @@
+{
+  "apiName": "Plant Store API",
+  "auth": {
+    "description": "Basic authentication with custom field names",
+    "passwordName": "password",
+    "type": "basicAuth",
+    "usernameName": "username",
+  },
+  "authSchemes": {
+    "basicAuth": {
+      "description": "Basic authentication with custom field names",
+      "passwordName": "password",
+      "type": "basicAuth",
+      "usernameName": "username",
+    },
+  },
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": true,
+        "authV2": [
+          "basicAuth",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.plantstore.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.plantstore.example.com/v1",
+            "id": "https://api.plantstore.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Unauthorized",
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "UNAUTHORIZED",
+                    "message": "Invalid credentials",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
+            "isWildcard": undefined,
+            "name": "UnauthorizedError",
+            "statusCode": 401,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/plants",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": [
+              {
+                "id": "plant-123",
+                "name": "Monstera Deliciosa",
+                "species": "Monstera",
+              },
+            ],
+            "responseBodyV3": {
+              "type": "json",
+              "value": [
+                {
+                  "id": "plant-123",
+                  "name": "Monstera Deliciosa",
+                  "species": "Monstera",
+                },
+              ],
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "listPlants",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": [
+          {
+            "schemes": [
+              "basicAuth",
+            ],
+          },
+        ],
+        "name": "List all plants",
+        "originalEndpointId": "endpoint_.listPlants",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/plants",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "List of plants",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "Plant",
+              },
+              "maxItems": undefined,
+              "minItems": undefined,
+              "type": "list",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "List of plants",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "itemType": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "Plant",
+                  },
+                  "maxItems": undefined,
+                  "minItems": undefined,
+                  "type": "list",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": true,
+        "authV2": [
+          "basicAuth",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.plantstore.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.plantstore.example.com/v1",
+            "id": "https://api.plantstore.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Unauthorized",
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "UNAUTHORIZED",
+                    "message": "Invalid credentials",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
+            "isWildcard": undefined,
+            "name": "UnauthorizedError",
+            "statusCode": 401,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/plants/plantId",
+            "pathParameters": {
+              "plantId": "plantId",
+            },
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "id": "plant-123",
+              "name": "Monstera Deliciosa",
+              "species": "Monstera",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "plant-123",
+                "name": "Monstera Deliciosa",
+                "species": "Monstera",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getPlant",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": [
+          {
+            "schemes": [
+              "basicAuth",
+            ],
+          },
+        ],
+        "name": "Get a plant by ID",
+        "originalEndpointId": "endpoint_.getPlant",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/plants/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "plantId",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "explode": undefined,
+              "key": "plantId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Plant details",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Plant",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Plant details",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Plant",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "Plant",
+      "Error",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "Error": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Error",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "code",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "Plant": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Plant",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Plant identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Plant name",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Plant species",
+            "key": "species",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
