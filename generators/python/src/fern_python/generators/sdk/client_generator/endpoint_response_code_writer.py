@@ -144,7 +144,20 @@ class EndpointResponseCodeWriter:
                                     AST.YieldStatement(
                                         self._context.core_utilities.get_construct(
                                             self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
+                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()")
+                                            if self._context.custom_config.sse_event_in_data_payload
+                                            else AST.Expression(
+                                                AST.FunctionInvocation(
+                                                    function_definition=AST.Reference(
+                                                        qualified_name_excluding_import=(),
+                                                        import_=AST.ReferenceImport(
+                                                            module=AST.Module.built_in(("dataclasses",)),
+                                                            named_import="asdict",
+                                                        ),
+                                                    ),
+                                                    args=[AST.Expression(EndpointResponseCodeWriter.SSE_VARIABLE)],
+                                                )
+                                            ),
                                         ),
                                     ),
                                 ],

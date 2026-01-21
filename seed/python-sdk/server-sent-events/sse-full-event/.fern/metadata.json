@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "sse_event_in_data_payload": false
+  },
+  "sdkVersion": "0.0.1"
+}

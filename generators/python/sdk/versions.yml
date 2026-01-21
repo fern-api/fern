@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.49.0
+  changelogEntry:
+    - summary: |
+        Add `sse_event_in_data_payload` config option. When set to `true` (default), SSE events are
+        parsed from just the data field using `_sse.json()`. When set to `false`, SSE events are
+        parsed from the whole event object using `asdict(_sse)`, allowing access to all SSE fields
+        (event, data, id, retry).
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 62
+
 - version: 4.48.1
   changelogEntry:
     - summary: |

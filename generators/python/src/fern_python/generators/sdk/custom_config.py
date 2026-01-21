@@ -127,6 +127,10 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     custom_pager_name: Optional[str] = None
 
+    # When true (default), SSE events are parsed from just the data field using _sse.json().
+    # When false, SSE events are parsed from the whole event object using asdict(_sse).
+    sse_event_in_data_payload: bool = True
+
     class Config:
         extra = pydantic.Extra.forbid
 
