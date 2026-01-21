@@ -1,4 +1,4 @@
-<% if (additionalProperties) { %>using global::System.Reflection; <% } %>
+using global::System.Reflection;
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;

@@ -4,22 +4,22 @@ namespace SeedExhaustive.Endpoints.Urls;
 
 public partial interface IUrlsClient
 {
-    Task<string> WithMixedCaseAsync(
+    WithRawResponseTask<string> WithMixedCaseAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> NoEndingSlashAsync(
+    WithRawResponseTask<string> NoEndingSlashAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> WithEndingSlashAsync(
+    WithRawResponseTask<string> WithEndingSlashAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> WithUnderscoresAsync(
+    WithRawResponseTask<string> WithUnderscoresAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

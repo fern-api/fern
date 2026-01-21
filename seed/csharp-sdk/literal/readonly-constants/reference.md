@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.Headers.<a href="/src/SeedLiteral/Headers/HeadersClient.cs">SendAsync</a>(SendLiteralsInHeadersRequest { ... }) -> SendResponse</code></summary>
+<details><summary><code>client.Headers.<a href="/src/SeedLiteral/Headers/HeadersClient.cs">SendAsync</a>(SendLiteralsInHeadersRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ await client.Headers.SendAsync(
 </details>
 
 ## Inlined
-<details><summary><code>client.Inlined.<a href="/src/SeedLiteral/Inlined/InlinedClient.cs">SendAsync</a>(SendLiteralsInlinedRequest { ... }) -> SendResponse</code></summary>
+<details><summary><code>client.Inlined.<a href="/src/SeedLiteral/Inlined/InlinedClient.cs">SendAsync</a>(SendLiteralsInlinedRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -104,7 +104,7 @@ await client.Inlined.SendAsync(
 </details>
 
 ## Path
-<details><summary><code>client.Path.<a href="/src/SeedLiteral/Path/PathClient.cs">SendAsync</a>(id) -> SendResponse</code></summary>
+<details><summary><code>client.Path.<a href="/src/SeedLiteral/Path/PathClient.cs">SendAsync</a>(id) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +145,7 @@ await client.Path.SendAsync("123");
 </details>
 
 ## Query
-<details><summary><code>client.Query.<a href="/src/SeedLiteral/Query/QueryClient.cs">SendAsync</a>(SendLiteralsInQueryRequest { ... }) -> SendResponse</code></summary>
+<details><summary><code>client.Query.<a href="/src/SeedLiteral/Query/QueryClient.cs">SendAsync</a>(SendLiteralsInQueryRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -199,7 +199,7 @@ await client.Query.SendAsync(
 </details>
 
 ## Reference
-<details><summary><code>client.Reference.<a href="/src/SeedLiteral/Reference/ReferenceClient.cs">SendAsync</a>(SendRequest { ... }) -> SendResponse</code></summary>
+<details><summary><code>client.Reference.<a href="/src/SeedLiteral/Reference/ReferenceClient.cs">SendAsync</a>(SendRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 

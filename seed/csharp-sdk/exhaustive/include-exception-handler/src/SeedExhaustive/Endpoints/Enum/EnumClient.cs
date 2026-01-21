@@ -22,10 +22,7 @@ public partial class EnumClient : IEnumClient
         }
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
-    /// </code></example>
-    public async Task<WeatherReport> GetAndReturnEnumAsync(
+    private async Task<WithRawResponse<WeatherReport>> GetAndReturnEnumAsyncCore(
         WeatherReport request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -52,14 +49,30 @@ public partial class EnumClient : IEnumClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<WeatherReport>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<WeatherReport>(responseBody)!;
+                        return new WithRawResponse<WeatherReport>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -70,5 +83,19 @@ public partial class EnumClient : IEnumClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
+    /// </code></example>
+    public WithRawResponseTask<WeatherReport> GetAndReturnEnumAsync(
+        WeatherReport request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<WeatherReport>(
+            GetAndReturnEnumAsyncCore(request, options, cancellationToken)
+        );
     }
 }

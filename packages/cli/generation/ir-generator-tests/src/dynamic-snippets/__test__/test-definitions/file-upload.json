@@ -1802,6 +1802,250 @@
             },
             "examples": null
         },
+        "endpoint_service.justFileWithOptionalQueryParams": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "justFileWithOptionalQueryParams",
+                    "camelCase": {
+                        "unsafeName": "justFileWithOptionalQueryParams",
+                        "safeName": "justFileWithOptionalQueryParams"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "just_file_with_optional_query_params",
+                        "safeName": "just_file_with_optional_query_params"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS",
+                        "safeName": "JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "JustFileWithOptionalQueryParams",
+                        "safeName": "JustFileWithOptionalQueryParams"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/just-file-with-optional-query-params"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "JustFileWithOptionalQueryParamsRequest",
+                        "camelCase": {
+                            "unsafeName": "justFileWithOptionalQueryParamsRequest",
+                            "safeName": "justFileWithOptionalQueryParamsRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "just_file_with_optional_query_params_request",
+                            "safeName": "just_file_with_optional_query_params_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS_REQUEST",
+                            "safeName": "JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "JustFileWithOptionalQueryParamsRequest",
+                            "safeName": "JustFileWithOptionalQueryParamsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "maybeString",
+                                "camelCase": {
+                                    "unsafeName": "maybeString",
+                                    "safeName": "maybeString"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "maybe_string",
+                                    "safeName": "maybe_string"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MAYBE_STRING",
+                                    "safeName": "MAYBE_STRING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MaybeString",
+                                    "safeName": "MaybeString"
+                                }
+                            },
+                            "wireValue": "maybeString"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "maybeInteger",
+                                "camelCase": {
+                                    "unsafeName": "maybeInteger",
+                                    "safeName": "maybeInteger"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "maybe_integer",
+                                    "safeName": "maybe_integer"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MAYBE_INTEGER",
+                                    "safeName": "MAYBE_INTEGER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MaybeInteger",
+                                    "safeName": "MaybeInteger"
+                                }
+                            },
+                            "wireValue": "maybeInteger"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": {
+                    "type": "fileUpload",
+                    "properties": [
+                        {
+                            "type": "file",
+                            "name": {
+                                "originalName": "file",
+                                "camelCase": {
+                                    "unsafeName": "file",
+                                    "safeName": "file"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "file",
+                                    "safeName": "file"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FILE",
+                                    "safeName": "FILE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "File",
+                                    "safeName": "File"
+                                }
+                            },
+                            "wireValue": "file"
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_service.withContentType": {
             "auth": null,
             "declaration": {

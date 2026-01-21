@@ -12,10 +12,7 @@ public partial class DummyClient : IDummyClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Dummy.GetDummyAsync();
-    /// </code></example>
-    public async Task<string> GetDummyAsync(
+    private async Task<WithRawResponse<string>> GetDummyAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -37,14 +34,28 @@ public partial class DummyClient : IDummyClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedNoEnvironmentException("Failed to deserialize response", e);
+                throw new SeedNoEnvironmentApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedNoEnvironmentApiException(
@@ -53,5 +64,16 @@ public partial class DummyClient : IDummyClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Dummy.GetDummyAsync();
+    /// </code></example>
+    public WithRawResponseTask<string> GetDummyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(GetDummyAsyncCore(options, cancellationToken));
     }
 }

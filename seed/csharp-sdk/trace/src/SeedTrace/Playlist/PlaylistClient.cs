@@ -12,25 +12,7 @@ public partial class PlaylistClient : IPlaylistClient
         _client = client;
     }
 
-    /// <summary>
-    /// Create a new playlist
-    /// </summary>
-    /// <example><code>
-    /// await client.Playlist.CreatePlaylistAsync(
-    ///     1,
-    ///     new CreatePlaylistRequest
-    ///     {
-    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         Body = new PlaylistCreateRequest
-    ///         {
-    ///             Name = "name",
-    ///             Problems = new List&lt;string&gt;() { "problems", "problems" },
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<Playlist> CreatePlaylistAsync(
+    private async Task<WithRawResponse<Playlist>> CreatePlaylistAsyncCore(
         int serviceParam,
         CreatePlaylistRequest request,
         RequestOptions? options = null,
@@ -67,14 +49,28 @@ public partial class PlaylistClient : IPlaylistClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Playlist>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Playlist>(responseBody)!;
+                return new WithRawResponse<Playlist>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -85,23 +81,7 @@ public partial class PlaylistClient : IPlaylistClient
         }
     }
 
-    /// <summary>
-    /// Returns the user's playlists
-    /// </summary>
-    /// <example><code>
-    /// await client.Playlist.GetPlaylistsAsync(
-    ///     1,
-    ///     new GetPlaylistsRequest
-    ///     {
-    ///         Limit = 1,
-    ///         OtherField = "otherField",
-    ///         MultiLineDocs = "multiLineDocs",
-    ///         OptionalMultipleField = ["optionalMultipleField"],
-    ///         MultipleField = ["multipleField"],
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(
+    private async Task<WithRawResponse<IEnumerable<Playlist>>> GetPlaylistsAsyncCore(
         int serviceParam,
         GetPlaylistsRequest request,
         RequestOptions? options = null,
@@ -138,14 +118,28 @@ public partial class PlaylistClient : IPlaylistClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<Playlist>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<Playlist>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<Playlist>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -156,13 +150,7 @@ public partial class PlaylistClient : IPlaylistClient
         }
     }
 
-    /// <summary>
-    /// Returns a playlist
-    /// </summary>
-    /// <example><code>
-    /// await client.Playlist.GetPlaylistAsync(1, "playlistId");
-    /// </code></example>
-    public async Task<Playlist> GetPlaylistAsync(
+    private async Task<WithRawResponse<Playlist>> GetPlaylistAsyncCore(
         int serviceParam,
         string playlistId,
         RequestOptions? options = null,
@@ -190,14 +178,28 @@ public partial class PlaylistClient : IPlaylistClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Playlist>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Playlist>(responseBody)!;
+                return new WithRawResponse<Playlist>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -208,21 +210,7 @@ public partial class PlaylistClient : IPlaylistClient
         }
     }
 
-    /// <summary>
-    /// Updates a playlist
-    /// </summary>
-    /// <example><code>
-    /// await client.Playlist.UpdatePlaylistAsync(
-    ///     1,
-    ///     "playlistId",
-    ///     new UpdatePlaylistRequest
-    ///     {
-    ///         Name = "name",
-    ///         Problems = new List&lt;string&gt;() { "problems", "problems" },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<Playlist?> UpdatePlaylistAsync(
+    private async Task<WithRawResponse<Playlist?>> UpdatePlaylistAsyncCore(
         int serviceParam,
         string playlistId,
         UpdatePlaylistRequest? request,
@@ -252,14 +240,28 @@ public partial class PlaylistClient : IPlaylistClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Playlist?>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Playlist?>(responseBody)!;
+                return new WithRawResponse<Playlist?>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -268,6 +270,109 @@ public partial class PlaylistClient : IPlaylistClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Create a new playlist
+    /// </summary>
+    /// <example><code>
+    /// await client.Playlist.CreatePlaylistAsync(
+    ///     1,
+    ///     new CreatePlaylistRequest
+    ///     {
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Body = new PlaylistCreateRequest
+    ///         {
+    ///             Name = "name",
+    ///             Problems = new List&lt;string&gt;() { "problems", "problems" },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Playlist> CreatePlaylistAsync(
+        int serviceParam,
+        CreatePlaylistRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Playlist>(
+            CreatePlaylistAsyncCore(serviceParam, request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Returns the user's playlists
+    /// </summary>
+    /// <example><code>
+    /// await client.Playlist.GetPlaylistsAsync(
+    ///     1,
+    ///     new GetPlaylistsRequest
+    ///     {
+    ///         Limit = 1,
+    ///         OtherField = "otherField",
+    ///         MultiLineDocs = "multiLineDocs",
+    ///         OptionalMultipleField = ["optionalMultipleField"],
+    ///         MultipleField = ["multipleField"],
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<Playlist>> GetPlaylistsAsync(
+        int serviceParam,
+        GetPlaylistsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<Playlist>>(
+            GetPlaylistsAsyncCore(serviceParam, request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Returns a playlist
+    /// </summary>
+    /// <example><code>
+    /// await client.Playlist.GetPlaylistAsync(1, "playlistId");
+    /// </code></example>
+    public WithRawResponseTask<Playlist> GetPlaylistAsync(
+        int serviceParam,
+        string playlistId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Playlist>(
+            GetPlaylistAsyncCore(serviceParam, playlistId, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Updates a playlist
+    /// </summary>
+    /// <example><code>
+    /// await client.Playlist.UpdatePlaylistAsync(
+    ///     1,
+    ///     "playlistId",
+    ///     new UpdatePlaylistRequest
+    ///     {
+    ///         Name = "name",
+    ///         Problems = new List&lt;string&gt;() { "problems", "problems" },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Playlist?> UpdatePlaylistAsync(
+        int serviceParam,
+        string playlistId,
+        UpdatePlaylistRequest? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Playlist?>(
+            UpdatePlaylistAsyncCore(serviceParam, playlistId, request, options, cancellationToken)
+        );
     }
 
     /// <summary>

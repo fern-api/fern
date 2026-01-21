@@ -2,73 +2,41 @@ openapi: 3.0.3
 info:
   title: OpenAPI Overrides Summary Test
   version: 1.0.0
-  description: Test API for validating summary field in OpenAPI overrides
-
-servers:
-  - url: https://api.example.com/v1
-    description: Production server
-
 paths:
   /authorize:
     post:
       operationId: authorize
-      summary: Authorize (main spec summary)
-      description: Obtain an access token using client credentials
-      security: []
-      tags:
-        - Authentication
-      parameters:
-        - in: header
-          name: x-api-key
-          required: true
-          schema:
-            type: string
-          description: The API key of the application
+      summary: Authorize (main spec)
       responses:
         '200':
-          description: Successful response
+          description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-                  token_type:
-                    type: string
-                  expires_in:
-                    type: integer
-                required:
-                  - access_token
-                  - token_type
-                  - expires_in
-
-  /contacts/{contactId}:
+                $ref: '#/components/schemas/AuthResponse'
+  /contacts/{id}:
     get:
       operationId: getContact
-      description: Retrieve a contact by ID
       parameters:
-        - name: contactId
+        - name: id
           in: path
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: Contact found
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Contact'
-
   /payments:
     get:
       operationId: listPayments
-      summary: List payments (main spec summary - no override)
-      description: List all payments
+      summary: List payments (main spec only)
       responses:
         '200':
-          description: List of payments
+          description: OK
           content:
             application/json:
               schema:
@@ -77,24 +45,27 @@ paths:
                   $ref: '#/components/schemas/Payment'
     post:
       operationId: createPayment
-      summary: Create payment (main spec summary - will be overridden)
-      description: Create a new payment
+      summary: Create payment (main spec)
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePaymentRequest'
+              $ref: '#/components/schemas/PaymentRequest'
       responses:
         '201':
-          description: Payment created
+          description: Created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Payment'
-
 components:
   schemas:
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
     Contact:
       type: object
       properties:
@@ -102,12 +73,6 @@ components:
           type: string
         name:
           type: string
-        email:
-          type: string
-      required:
-        - id
-        - name
-
     Payment:
       type: object
       properties:
@@ -115,22 +80,8 @@ components:
           type: string
         amount:
           type: number
-        currency:
-          type: string
-        status:
-          type: string
-      required:
-        - id
-        - amount
-        - currency
-
-    CreatePaymentRequest:
+    PaymentRequest:
       type: object
       properties:
         amount:
           type: number
-        currency:
-          type: string
-      required:
-        - amount
-        - currency

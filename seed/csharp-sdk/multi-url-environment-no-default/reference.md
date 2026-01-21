@@ -41,7 +41,7 @@ await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
 </details>
 
 ## S3
-<details><summary><code>client.S3.<a href="/src/SeedMultiUrlEnvironmentNoDefault/S3/S3Client.cs">GetPresignedUrlAsync</a>(GetPresignedUrlRequest { ... }) -> string</code></summary>
+<details><summary><code>client.S3.<a href="/src/SeedMultiUrlEnvironmentNoDefault/S3/S3Client.cs">GetPresignedUrlAsync</a>(GetPresignedUrlRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 

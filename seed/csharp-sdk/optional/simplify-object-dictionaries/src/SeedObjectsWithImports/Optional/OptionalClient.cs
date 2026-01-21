@@ -12,18 +12,7 @@ public partial class OptionalClient : IOptionalClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Optional.SendOptionalBodyAsync(
-    ///     new Dictionary&lt;string, object?&gt;()
-    ///     {
-    ///         {
-    ///             "string",
-    ///             new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<string> SendOptionalBodyAsync(
+    private async Task<WithRawResponse<string>> SendOptionalBodyAsyncCore(
         object? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -47,14 +36,28 @@ public partial class OptionalClient : IOptionalClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedObjectsWithImportsException("Failed to deserialize response", e);
+                throw new SeedObjectsWithImportsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedObjectsWithImportsApiException(
@@ -65,12 +68,7 @@ public partial class OptionalClient : IOptionalClient
         }
     }
 
-    /// <example><code>
-    /// await client.Optional.SendOptionalTypedBodyAsync(
-    ///     new SendOptionalBodyRequest { Message = "message" }
-    /// );
-    /// </code></example>
-    public async Task<string> SendOptionalTypedBodyAsync(
+    private async Task<WithRawResponse<string>> SendOptionalTypedBodyAsyncCore(
         SendOptionalBodyRequest? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -94,14 +92,28 @@ public partial class OptionalClient : IOptionalClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedObjectsWithImportsException("Failed to deserialize response", e);
+                throw new SeedObjectsWithImportsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedObjectsWithImportsApiException(
@@ -112,18 +124,9 @@ public partial class OptionalClient : IOptionalClient
         }
     }
 
-    /// <summary>
-    /// Tests optional(nullable(T)) where T has only optional properties.
-    /// This should not generate wire tests expecting {} when Optional.empty() is passed.
-    /// </summary>
-    /// <example><code>
-    /// await client.Optional.SendOptionalNullableWithAllOptionalPropertiesAsync(
-    ///     "actionId",
-    ///     "id",
-    ///     new DeployParams { UpdateDraft = true }
-    /// );
-    /// </code></example>
-    public async Task<DeployResponse> SendOptionalNullableWithAllOptionalPropertiesAsync(
+    private async Task<
+        WithRawResponse<DeployResponse>
+    > SendOptionalNullableWithAllOptionalPropertiesAsyncCore(
         string actionId,
         string id,
         DeployParams? request,
@@ -153,14 +156,28 @@ public partial class OptionalClient : IOptionalClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<DeployResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<DeployResponse>(responseBody)!;
+                return new WithRawResponse<DeployResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedObjectsWithImportsException("Failed to deserialize response", e);
+                throw new SeedObjectsWithImportsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedObjectsWithImportsApiException(
@@ -169,5 +186,73 @@ public partial class OptionalClient : IOptionalClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Optional.SendOptionalBodyAsync(
+    ///     new Dictionary&lt;string, object?&gt;()
+    ///     {
+    ///         {
+    ///             "string",
+    ///             new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<string> SendOptionalBodyAsync(
+        object? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            SendOptionalBodyAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Optional.SendOptionalTypedBodyAsync(
+    ///     new SendOptionalBodyRequest { Message = "message" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<string> SendOptionalTypedBodyAsync(
+        SendOptionalBodyRequest? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            SendOptionalTypedBodyAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Tests optional(nullable(T)) where T has only optional properties.
+    /// This should not generate wire tests expecting {} when Optional.empty() is passed.
+    /// </summary>
+    /// <example><code>
+    /// await client.Optional.SendOptionalNullableWithAllOptionalPropertiesAsync(
+    ///     "actionId",
+    ///     "id",
+    ///     new DeployParams { UpdateDraft = true }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<DeployResponse> SendOptionalNullableWithAllOptionalPropertiesAsync(
+        string actionId,
+        string id,
+        DeployParams? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<DeployResponse>(
+            SendOptionalNullableWithAllOptionalPropertiesAsyncCore(
+                actionId,
+                id,
+                request,
+                options,
+                cancellationToken
+            )
+        );
     }
 }
