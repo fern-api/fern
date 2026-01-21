@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import typing
 
 import pydantic
@@ -18,12 +19,32 @@ class Base(UniversalBaseModel):
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+
+        @pydantic.model_validator(mode="before")  # type: ignore # Pydantic v2
+        @classmethod
+        def _parse_nested_json_strings(cls, values: typing.Any) -> typing.Any:
+            if isinstance(values, dict):
+                if "foo" in values and isinstance(values["foo"], str):
+                    try:
+                        values = {**values, "foo": json.loads(values["foo"])}
+                    except (json.JSONDecodeError, ValueError):
+                        pass
+            return values
     else:
 
         class Config:
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+        @pydantic.root_validator(pre=True)  # type: ignore[override]
+        def _parse_nested_json_strings(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+            if "foo" in values and isinstance(values["foo"], str):
+                try:
+                    values = {**values, "foo": json.loads(values["foo"])}
+                except (json.JSONDecodeError, ValueError):
+                    pass
+            return values
 
 
 class UserOrAdminDiscriminated_User(Base):
@@ -39,12 +60,32 @@ class UserOrAdminDiscriminated_User(Base):
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+
+        @pydantic.model_validator(mode="before")  # type: ignore # Pydantic v2
+        @classmethod
+        def _parse_nested_json_strings(cls, values: typing.Any) -> typing.Any:
+            if isinstance(values, dict):
+                if "profile" in values and isinstance(values["profile"], str):
+                    try:
+                        values = {**values, "profile": json.loads(values["profile"])}
+                    except (json.JSONDecodeError, ValueError):
+                        pass
+            return values
     else:
 
         class Config:
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+        @pydantic.root_validator(pre=True)  # type: ignore[override]
+        def _parse_nested_json_strings(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+            if "profile" in values and isinstance(values["profile"], str):
+                try:
+                    values = {**values, "profile": json.loads(values["profile"])}
+                except (json.JSONDecodeError, ValueError):
+                    pass
+            return values
 
 
 class UserOrAdminDiscriminated_Admin(Base):
