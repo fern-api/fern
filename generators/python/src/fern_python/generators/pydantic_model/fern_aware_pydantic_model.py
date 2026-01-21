@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from types import TracebackType
-from typing import List, Optional, Sequence, Tuple, Type
+from typing import Dict, List, Optional, Sequence, Tuple, Type
 
 from ..context.pydantic_generator_context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
+from .model_utilities import can_tr_be_fern_model
 from .validators import (
     PydanticV1CustomRootTypeValidatorsGenerator,
     PydanticValidatorsGenerator,
@@ -393,6 +394,14 @@ class FernAwarePydanticModel:
     ) -> PydanticField:
         type_hint = self.get_type_hint_for_type_reference(type_reference)
 
+        # For object-typed fields in Pydantic v2, wrap with BeforeValidator to parse JSON strings
+        # This handles cases where nested objects are sent as JSON strings over the wire (e.g., in SSE events)
+        if self._should_add_json_string_validator(type_reference):
+            type_hint = AST.TypeHint.annotated(
+                type=type_hint,
+                annotation=self._context.core_utilities.get_json_string_before_validator(),
+            )
+
         return PydanticField(
             name=name,
             pascal_case_field_name=pascal_case_field_name,
@@ -401,6 +410,26 @@ class FernAwarePydanticModel:
             description=description,
             default_value=default_value,
         )
+
+    def _should_add_json_string_validator(self, type_reference: ir_types.TypeReference) -> bool:
+        """
+        Determine if a field should have a BeforeValidator to parse JSON strings.
+        Returns True if:
+        1. The field is an object type (can be a Fern model)
+        2. We're using Pydantic v2 (BeforeValidator is a v2 feature)
+        """
+        # Only add BeforeValidator for Pydantic v2 (BeforeValidator doesn't exist in v1)
+        if self._custom_config.version not in (
+            PydanticVersionCompatibility.V2,
+            PydanticVersionCompatibility.Both,
+        ):
+            return False
+
+        # Check if the type reference is an object type (can be a Fern model)
+        types: Dict[ir_types.TypeId, ir_types.TypeDeclaration] = {
+            type_id: self._context.get_declaration_for_type_id(type_id) for type_id in self._context.ir.types.keys()
+        }
+        return can_tr_be_fern_model(type_reference, types)
 
     def __enter__(self) -> FernAwarePydanticModel:
         return self

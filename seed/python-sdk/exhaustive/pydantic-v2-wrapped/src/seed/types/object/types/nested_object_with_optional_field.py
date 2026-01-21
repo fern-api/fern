@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import UniversalBaseModel, _parse_json_string
 from ....core.serialization import FieldMetadata
 from .object_with_optional_field import ObjectWithOptionalField
 
@@ -12,7 +12,10 @@ from .object_with_optional_field import ObjectWithOptionalField
 class NestedObjectWithOptionalField(UniversalBaseModel):
     string: typing.Optional[str] = None
     nested_object: typing_extensions.Annotated[
-        typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")
-    ] = pydantic.Field(alias="NestedObject", default=None)
+        typing_extensions.Annotated[
+            typing.Optional[ObjectWithOptionalField], pydantic.BeforeValidator(_parse_json_string)
+        ],
+        FieldMetadata(alias="NestedObject"),
+    ] = pydantic.Field(alias="NestedObject")
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

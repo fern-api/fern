@@ -2,7 +2,7 @@
 import datetime as dt
 import json
 from collections import defaultdict
-from typing import Any, Callable, ClassVar, Dict, List, Mapping, Tuple, Type, TypeVar, Union, cast
+from typing import Any, Callable, Dict, List, Mapping, Tuple, Type, TypeVar, Union, cast
 
 import pydantic
 
@@ -34,18 +34,14 @@ T = TypeVar("T")
 Model = TypeVar("Model", bound=pydantic.BaseModel)
 
 
-def _maybe_parse_json_string(value: Any) -> Any:
+def _parse_json_string(value: Any) -> Any:
     """
-    Attempt to parse a string value as JSON if it looks like a JSON object or array.
-    This handles cases where nested objects are sent as JSON strings over the wire
-    (e.g., in SSE events where the data field contains a stringified JSON object).
+    Parse a JSON string into a Python object.
+    Used as a BeforeValidator for fields that expect objects but may receive JSON strings.
     """
     if isinstance(value, str):
         try:
-            # Only attempt to parse if it looks like JSON (starts with { or [)
-            stripped = value.strip()
-            if stripped.startswith(("{", "[")):
-                return json.loads(value)
+            return json.loads(value)
         except (json.JSONDecodeError, ValueError):
             pass
     return value
@@ -67,51 +63,13 @@ def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    if IS_PYDANTIC_V2:
-        model_config: ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore[typeddict-unknown-key]
-            populate_by_name=True,
-            # Allow fields beginning with `model_` to be used in the model
-            protected_namespaces=(),
-        )
-
-        @pydantic.model_validator(mode="before")  # type: ignore[attr-defined]
-        @classmethod
-        def _parse_json_strings(cls, data: Any) -> Any:
-            """
-            Parse JSON strings for fields that expect objects.
-            """
-            if not isinstance(data, Mapping):
-                return data
-
-            rewritten: Dict[str, Any] = dict(data)
-            for key in rewritten:
-                rewritten[key] = _maybe_parse_json_string(rewritten[key])
-
-            return rewritten
-
-    else:
-
-        class Config:
-            populate_by_name = True
-            smart_union = True
-            allow_population_by_field_name = True
-            json_encoders = {dt.datetime: serialize_datetime}
-            # Allow fields beginning with `model_` to be used in the model
-            protected_namespaces = ()
-
-        @pydantic.root_validator(pre=True)
-        def _parse_json_strings(cls, values: Any) -> Any:
-            """
-            Parse JSON strings for fields that expect objects.
-            """
-            if not isinstance(values, Mapping):
-                return values
-
-            rewritten: Dict[str, Any] = dict(values)
-            for key in rewritten:
-                rewritten[key] = _maybe_parse_json_string(rewritten[key])
-
-            return rewritten
+    class Config:
+        populate_by_name = True
+        smart_union = True
+        allow_population_by_field_name = True
+        json_encoders = {dt.datetime: serialize_datetime}
+        # Allow fields beginning with `model_` to be used in the model
+        protected_namespaces = ()
 
     def json(self, **kwargs: Any) -> str:
         kwargs_with_defaults = {

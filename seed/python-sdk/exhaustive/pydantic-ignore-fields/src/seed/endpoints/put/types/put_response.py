@@ -3,12 +3,15 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+import typing_extensions
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, _parse_json_string
 from .error import Error
 
 
 class PutResponse(UniversalBaseModel):
-    errors: typing.Optional[typing.List[Error]] = None
+    errors: typing_extensions.Annotated[
+        typing.Optional[typing.List[Error]], pydantic.BeforeValidator(_parse_json_string)
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

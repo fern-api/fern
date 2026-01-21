@@ -76,6 +76,27 @@ class Pydantic:
     def RootModel(self) -> AST.ClassReference:
         return _export(self.version_compatibility, "RootModel")
 
+    def BeforeValidator(self) -> AST.ClassReference:
+        """
+        Get a reference to pydantic.BeforeValidator (Pydantic v2) or pydantic.validator (Pydantic v1).
+        BeforeValidator is used to transform input data before validation.
+        """
+        if self.version_compatibility in (PydanticVersionCompatibility.V2, PydanticVersionCompatibility.Both):
+            # In Pydantic v2, BeforeValidator is in pydantic.functional_validators
+            return AST.ClassReference(
+                import_=AST.ReferenceImport(
+                    module=AST.Module.external(
+                        dependency=_get_dependency(self.version_compatibility),
+                        module_path=("pydantic",),
+                    ),
+                ),
+                qualified_name_excluding_import=("BeforeValidator",),
+            )
+        else:
+            # In Pydantic v1 and v1_on_v2, we don't have BeforeValidator
+            # This should not be called for v1-only mode
+            raise RuntimeError("BeforeValidator is only available in Pydantic v2")
+
     def validator(self, pre: bool = False) -> AST.Expression:
         if self.version_compatibility == PydanticVersionCompatibility.V2:
             return AST.Expression(f'validator("*", pre={str(pre).lower()})')
