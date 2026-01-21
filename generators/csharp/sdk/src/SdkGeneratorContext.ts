@@ -26,7 +26,6 @@ import {
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
-import { DefaultValueExtractor } from "./DefaultValueExtractor";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
