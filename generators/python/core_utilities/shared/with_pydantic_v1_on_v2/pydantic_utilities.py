@@ -1,7 +1,6 @@
 # nopycln: file
 import datetime as dt
 import inspect
-import json
 from collections import defaultdict
 from typing import Any, Callable, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
