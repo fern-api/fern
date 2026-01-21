@@ -6,6 +6,7 @@ import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { loadFernYml } from "../config/fern-yml/loadFernYml";
 import { SdkConfigConverter } from "../sdk/config/SdkConfigConverter";
+import type { Target } from "../sdk/config/Target";
 
 describe("SdkConfigConverter", () => {
     let testDir: string;
@@ -190,7 +191,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                const imagesByLang = Object.fromEntries(result.config.targets.map((t) => [t.lang, t.image]));
+                const imagesByLang = Object.fromEntries(result.config.targets.map((t: Target) => [t.lang, t.image]));
                 expect(imagesByLang).toEqual({
                     csharp: "fernapi/fern-csharp-sdk",
                     go: "fernapi/fern-go-sdk",
@@ -595,7 +596,7 @@ sdks:
             if (result.success) {
                 expect(result.config.targets).toHaveLength(3);
 
-                const targetsByName = Object.fromEntries(result.config.targets.map((t) => [t.name, t]));
+                const targetsByName = Object.fromEntries(result.config.targets.map((t: Target) => [t.name, t]));
                 expect(targetsByName["python"]?.version).toBe("1.0.0");
                 expect(targetsByName["typescript"]?.version).toBe("2.0.0");
                 expect(targetsByName["go"]?.version).toBe("0.5.0");
