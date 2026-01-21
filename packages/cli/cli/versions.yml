@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.0
+  changelogEntry:
+    - summary: |
+        Add support for OAS 3.2 `itemSchema` field in `text/event-stream` responses. When parsing OpenAPI specs, `itemSchema` (which describes each individual streamed item) is now treated the same as `schema`, enabling SSE streaming support without requiring the `x-fern-streaming` extension.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 63
+
 - version: 3.47.5
   changelogEntry:
     - summary: |

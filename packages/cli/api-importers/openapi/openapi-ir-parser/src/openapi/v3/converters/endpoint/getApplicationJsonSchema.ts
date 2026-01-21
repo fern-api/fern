@@ -23,7 +23,11 @@ export function getTextEventStreamObject(
             if (mediaObject == null) {
                 continue;
             }
-            const schema = mediaObject.schema;
+            // OAS 3.2 introduced itemSchema for SSE streaming - it describes each individual
+            // streamed item rather than the complete response. We treat it the same as schema.
+            const itemSchema = (mediaObject as { itemSchema?: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject })
+                .itemSchema;
+            const schema = itemSchema ?? mediaObject.schema;
 
             return {
                 contentType,

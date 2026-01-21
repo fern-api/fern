@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/definitions/SseJobUpdateData"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SseJobUpdateData": {
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

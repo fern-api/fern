@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: SSE Item Schema API
+  version: 1.0.0
+  description: Test API for OAS 3.2 itemSchema support in SSE streaming
+paths:
+  /jobs/{jobId}/stream:
+    get:
+      operationId: streamJobUpdates
+      summary: Stream job updates via SSE
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      x-fern-streaming:
+        format: sse
+      responses:
+        "200":
+          description: SSE stream of job updates
+          content:
+            text/event-stream:
+              itemSchema:
+                oneOf:
+                  - $ref: "#/components/schemas/SseJobUpdate"
+                  - $ref: "#/components/schemas/SseHeartbeat"
+                  - $ref: "#/components/schemas/SseError"
+                discriminator:
+                  propertyName: event
+                  mapping:
+                    JOB_UPDATE: "#/components/schemas/SseJobUpdate"
+                    HEARTBEAT: "#/components/schemas/SseHeartbeat"
+                    ERROR: "#/components/schemas/SseError"
+components:
+  schemas:
+    SseJobUpdate:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          const: JOB_UPDATE
+        data:
+          type: object
+          properties:
+            jobId:
+              type: string
+            state:
+              type: string
+    SseHeartbeat:
+      type: object
+      required:
+        - event
+      properties:
+        event:
+          type: string
+          const: HEARTBEAT
+    SseError:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          const: ERROR
+        data:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
