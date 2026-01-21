@@ -182,7 +182,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -360,7 +362,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -2307,7 +2311,9 @@
                                             "typeId": "type_organizations:Organization",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,
@@ -6595,7 +6601,9 @@
                                             "typeId": "type_user:User",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,

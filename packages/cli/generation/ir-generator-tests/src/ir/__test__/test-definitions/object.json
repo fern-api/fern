@@ -463,7 +463,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -511,7 +513,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -569,7 +573,9 @@
                                             "default": null
                                         }
                                     }
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,
@@ -703,9 +709,13 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -768,9 +778,13 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -820,7 +834,9 @@
                                             }
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -2383,7 +2399,9 @@
                                                                 "validation": null
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }
@@ -2568,7 +2586,9 @@
                                                                 "validation": null
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "minProperties": null,
+                                                    "maxProperties": null
                                                 }
                                             }
                                         }

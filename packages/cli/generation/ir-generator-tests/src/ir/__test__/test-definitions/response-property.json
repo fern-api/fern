@@ -326,7 +326,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,
@@ -1208,7 +1210,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,
@@ -3956,7 +3960,9 @@
                                                         "validation": null
                                                     }
                                                 }
-                                            }
+                                            },
+                                            "minProperties": null,
+                                            "maxProperties": null
                                         }
                                     },
                                     "propertyAccess": null,

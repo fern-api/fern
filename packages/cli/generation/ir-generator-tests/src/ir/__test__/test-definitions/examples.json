@@ -1123,7 +1123,9 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 }
                             }
@@ -1501,7 +1503,9 @@
                                                                 "validation": null
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "minProperties": null,
+                                                    "maxProperties": null
                                                 }
                                             }
                                         }
@@ -2566,7 +2570,9 @@
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "minProperties": null,
+                                                                "maxProperties": null
                                                             }
                                                         }
                                                     }
@@ -4228,7 +4234,9 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,
@@ -8679,7 +8687,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -9293,7 +9303,9 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,
@@ -12049,7 +12061,9 @@
                                             "typeId": "type_types:File",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -12161,7 +12175,9 @@
                                             "typeId": "type_types:Directory",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -12786,7 +12802,9 @@
                                                         "typeId": "type_types:File",
                                                         "default": null,
                                                         "inline": null
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }
@@ -13547,7 +13565,9 @@
                                                                                                         "typeId": "type_types:File",
                                                                                                         "default": null,
                                                                                                         "inline": null
-                                                                                                    }
+                                                                                                    },
+                                                                                                    "minItems": null,
+                                                                                                    "maxItems": null
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -13797,7 +13817,9 @@
                                                         "typeId": "type_types:Directory",
                                                         "default": null,
                                                         "inline": null
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }
@@ -14126,7 +14148,9 @@
                                             "typeId": "type_types:Node",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -14238,7 +14262,9 @@
                                             "typeId": "type_types:Tree",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -14944,7 +14970,9 @@
                                                         "typeId": "type_types:Node",
                                                         "default": null,
                                                         "inline": null
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }
@@ -15685,7 +15713,9 @@
                                                                                                         "typeId": "type_types:Node",
                                                                                                         "default": null,
                                                                                                         "inline": null
-                                                                                                    }
+                                                                                                    },
+                                                                                                    "minItems": null,
+                                                                                                    "maxItems": null
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -15939,7 +15969,9 @@
                                                         "typeId": "type_types:Tree",
                                                         "default": null,
                                                         "inline": null
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }
@@ -16498,7 +16530,9 @@
                                             "typeId": "type_types:Node",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -17101,7 +17135,9 @@
                                                         "typeId": "type_types:Node",
                                                         "default": null,
                                                         "inline": null
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }
@@ -17346,7 +17382,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,
@@ -17394,7 +17432,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -20236,7 +20276,9 @@
                                     "typeId": "type_:Identifier",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,

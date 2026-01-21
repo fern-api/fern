@@ -108,7 +108,9 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "minProperties": null,
+                        "maxProperties": null
                     }
                 },
                 "resolvedType": {
@@ -156,7 +158,9 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "minProperties": null,
+                        "maxProperties": null
                     }
                 }
             },
@@ -240,7 +244,9 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "minItems": null,
+                        "maxItems": null
                     }
                 },
                 "resolvedType": {
@@ -277,7 +283,9 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "minItems": null,
+                        "maxItems": null
                     }
                 }
             },
@@ -361,7 +369,9 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "minItems": null,
+                        "maxItems": null
                     }
                 },
                 "resolvedType": {
@@ -398,7 +408,9 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "minItems": null,
+                        "maxItems": null
                     }
                 }
             },
@@ -848,7 +860,9 @@
                                     "typeId": "type_:RootType1FooMapValue",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,
@@ -916,7 +930,9 @@
                                     "typeId": "type_:RootType1FooListItem",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -984,7 +1000,9 @@
                                     "typeId": "type_:RootType1FooSetItem",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -3043,7 +3061,9 @@
                                     "typeId": "type_:UndiscriminatedUnion1InlineListItem1",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": "lorem ipsum"
@@ -3083,7 +3103,9 @@
                                     "typeId": "type_:UndiscriminatedUnion1InlineSetItem1",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": "lorem ipsum"
@@ -3134,7 +3156,9 @@
                                     "typeId": "type_:UndiscriminatedUnion1InlineMapItem1",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "docs": "lorem ipsum"

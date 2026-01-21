@@ -202,7 +202,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
