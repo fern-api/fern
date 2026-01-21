@@ -1,0 +1,87 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI Overrides Summary Test
+  version: 1.0.0
+paths:
+  /authorize:
+    post:
+      operationId: authorize
+      summary: Authorize (main spec)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /contacts/{id}:
+    get:
+      operationId: getContact
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+  /payments:
+    get:
+      operationId: listPayments
+      summary: List payments (main spec only)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+    post:
+      operationId: createPayment
+      summary: Create payment (main spec)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+components:
+  schemas:
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    Contact:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+    PaymentRequest:
+      type: object
+      properties:
+        amount:
+          type: number

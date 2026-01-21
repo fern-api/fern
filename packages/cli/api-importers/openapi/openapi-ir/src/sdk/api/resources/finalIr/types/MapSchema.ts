@@ -16,4 +16,6 @@ export interface MapSchema
         FernOpenapiIr.WithInline {
     key: FernOpenapiIr.PrimitiveSchema;
     value: FernOpenapiIr.Schema;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }

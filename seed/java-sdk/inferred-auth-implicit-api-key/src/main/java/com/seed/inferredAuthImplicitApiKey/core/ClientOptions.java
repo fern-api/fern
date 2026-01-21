@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:inferred-auth-implicit-api-key/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:inferred-auth-implicit-api-key-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

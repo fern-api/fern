@@ -1,0 +1,1376 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:UserData": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "UserData",
+                    "camelCase": {
+                        "unsafeName": "userData",
+                        "safeName": "userData"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_data",
+                        "safeName": "user_data"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_DATA",
+                        "safeName": "USER_DATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserData",
+                        "safeName": "UserData"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "email",
+                            "camelCase": {
+                                "unsafeName": "email",
+                                "safeName": "email"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "email",
+                                "safeName": "email"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EMAIL",
+                                "safeName": "EMAIL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Email",
+                                "safeName": "Email"
+                            }
+                        },
+                        "wireValue": "email"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "age",
+                            "camelCase": {
+                                "unsafeName": "age",
+                                "safeName": "age"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "age",
+                                "safeName": "age"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AGE",
+                                "safeName": "AGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Age",
+                                "safeName": "Age"
+                            }
+                        },
+                        "wireValue": "age"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:User": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "User",
+                    "camelCase": {
+                        "unsafeName": "user",
+                        "safeName": "user"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user",
+                        "safeName": "user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER",
+                        "safeName": "USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "User",
+                        "safeName": "User"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        },
+                        "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "email",
+                            "camelCase": {
+                                "unsafeName": "email",
+                                "safeName": "email"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "email",
+                                "safeName": "email"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EMAIL",
+                                "safeName": "EMAIL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Email",
+                                "safeName": "Email"
+                            }
+                        },
+                        "wireValue": "email"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "age",
+                            "camelCase": {
+                                "unsafeName": "age",
+                                "safeName": "age"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "age",
+                                "safeName": "age"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AGE",
+                                "safeName": "AGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Age",
+                                "safeName": "Age"
+                            }
+                        },
+                        "wireValue": "age"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "createdAt",
+                            "camelCase": {
+                                "unsafeName": "createdAt",
+                                "safeName": "createdAt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "created_at",
+                                "safeName": "created_at"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CREATED_AT",
+                                "safeName": "CREATED_AT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CreatedAt",
+                                "safeName": "CreatedAt"
+                            }
+                        },
+                        "wireValue": "createdAt"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.createUser": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createUser",
+                    "camelCase": {
+                        "unsafeName": "createUser",
+                        "safeName": "createUser"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_user",
+                        "safeName": "create_user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_USER",
+                        "safeName": "CREATE_USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateUser",
+                        "safeName": "CreateUser"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/api/users"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreateUserRequest",
+                        "camelCase": {
+                            "unsafeName": "createUserRequest",
+                            "safeName": "createUserRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_user_request",
+                            "safeName": "create_user_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_USER_REQUEST",
+                            "safeName": "CREATE_USER_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateUserRequest",
+                            "safeName": "CreateUserRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Correlation-Id",
+                                "camelCase": {
+                                    "unsafeName": "xCorrelationID",
+                                    "safeName": "xCorrelationID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_correlation_id",
+                                    "safeName": "x_correlation_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_CORRELATION_ID",
+                                    "safeName": "X_CORRELATION_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XCorrelationID",
+                                    "safeName": "XCorrelationID"
+                                }
+                            },
+                            "wireValue": "X-Correlation-Id"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:UserData"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.updateUser": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "updateUser",
+                    "camelCase": {
+                        "unsafeName": "updateUser",
+                        "safeName": "updateUser"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "update_user",
+                        "safeName": "update_user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPDATE_USER",
+                        "safeName": "UPDATE_USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpdateUser",
+                        "safeName": "UpdateUser"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "PUT",
+                "path": "/api/users/{userId}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "UpdateUserRequest",
+                        "camelCase": {
+                            "unsafeName": "updateUserRequest",
+                            "safeName": "updateUserRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "update_user_request",
+                            "safeName": "update_user_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPDATE_USER_REQUEST",
+                            "safeName": "UPDATE_USER_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UpdateUserRequest",
+                            "safeName": "UpdateUserRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userID",
+                                    "safeName": "userID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserID",
+                                    "safeName": "UserID"
+                                }
+                            },
+                            "wireValue": "userId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "dryRun",
+                                "camelCase": {
+                                    "unsafeName": "dryRun",
+                                    "safeName": "dryRun"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "dry_run",
+                                    "safeName": "dry_run"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DRY_RUN",
+                                    "safeName": "DRY_RUN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "DryRun",
+                                    "safeName": "DryRun"
+                                }
+                            },
+                            "wireValue": "dryRun"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "BOOLEAN"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:UserData"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createUserWithOptions": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createUserWithOptions",
+                    "camelCase": {
+                        "unsafeName": "createUserWithOptions",
+                        "safeName": "createUserWithOptions"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_user_with_options",
+                        "safeName": "create_user_with_options"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_USER_WITH_OPTIONS",
+                        "safeName": "CREATE_USER_WITH_OPTIONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateUserWithOptions",
+                        "safeName": "CreateUserWithOptions"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/api/users/with-options"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreateUserWithOptionsRequest",
+                        "camelCase": {
+                            "unsafeName": "createUserWithOptionsRequest",
+                            "safeName": "createUserWithOptionsRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_user_with_options_request",
+                            "safeName": "create_user_with_options_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_USER_WITH_OPTIONS_REQUEST",
+                            "safeName": "CREATE_USER_WITH_OPTIONS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateUserWithOptionsRequest",
+                            "safeName": "CreateUserWithOptionsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "validate",
+                                "camelCase": {
+                                    "unsafeName": "validate",
+                                    "safeName": "validate"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "validate",
+                                    "safeName": "validate"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VALIDATE",
+                                    "safeName": "VALIDATE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Validate",
+                                    "safeName": "Validate"
+                                }
+                            },
+                            "wireValue": "validate"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "BOOLEAN"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Request-Id",
+                                "camelCase": {
+                                    "unsafeName": "xRequestID",
+                                    "safeName": "xRequestID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_request_id",
+                                    "safeName": "x_request_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_REQUEST_ID",
+                                    "safeName": "X_REQUEST_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XRequestID",
+                                    "safeName": "XRequestID"
+                                }
+                            },
+                            "wireValue": "X-Request-Id"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:UserData"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createUserWithRequiredHeader": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createUserWithRequiredHeader",
+                    "camelCase": {
+                        "unsafeName": "createUserWithRequiredHeader",
+                        "safeName": "createUserWithRequiredHeader"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_user_with_required_header",
+                        "safeName": "create_user_with_required_header"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_USER_WITH_REQUIRED_HEADER",
+                        "safeName": "CREATE_USER_WITH_REQUIRED_HEADER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateUserWithRequiredHeader",
+                        "safeName": "CreateUserWithRequiredHeader"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/api/users/required-header"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreateUserWithRequiredHeaderRequest",
+                        "camelCase": {
+                            "unsafeName": "createUserWithRequiredHeaderRequest",
+                            "safeName": "createUserWithRequiredHeaderRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_user_with_required_header_request",
+                            "safeName": "create_user_with_required_header_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_USER_WITH_REQUIRED_HEADER_REQUEST",
+                            "safeName": "CREATE_USER_WITH_REQUIRED_HEADER_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateUserWithRequiredHeaderRequest",
+                            "safeName": "CreateUserWithRequiredHeaderRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:UserData"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createUserWithRequiredQuery": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createUserWithRequiredQuery",
+                    "camelCase": {
+                        "unsafeName": "createUserWithRequiredQuery",
+                        "safeName": "createUserWithRequiredQuery"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_user_with_required_query",
+                        "safeName": "create_user_with_required_query"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_USER_WITH_REQUIRED_QUERY",
+                        "safeName": "CREATE_USER_WITH_REQUIRED_QUERY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateUserWithRequiredQuery",
+                        "safeName": "CreateUserWithRequiredQuery"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/api/users/required-query"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreateUserWithRequiredQueryRequest",
+                        "camelCase": {
+                            "unsafeName": "createUserWithRequiredQueryRequest",
+                            "safeName": "createUserWithRequiredQueryRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_user_with_required_query_request",
+                            "safeName": "create_user_with_required_query_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_USER_WITH_REQUIRED_QUERY_REQUEST",
+                            "safeName": "CREATE_USER_WITH_REQUIRED_QUERY_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateUserWithRequiredQueryRequest",
+                            "safeName": "CreateUserWithRequiredQueryRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "tenantId",
+                                "camelCase": {
+                                    "unsafeName": "tenantID",
+                                    "safeName": "tenantID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "tenant_id",
+                                    "safeName": "tenant_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TENANT_ID",
+                                    "safeName": "TENANT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TenantID",
+                                    "safeName": "TenantID"
+                                }
+                            },
+                            "wireValue": "tenantId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:UserData"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getUsers": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getUsers",
+                    "camelCase": {
+                        "unsafeName": "getUsers",
+                        "safeName": "getUsers"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_users",
+                        "safeName": "get_users"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_USERS",
+                        "safeName": "GET_USERS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetUsers",
+                        "safeName": "GetUsers"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/api/users"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "GetUsersRequest",
+                        "camelCase": {
+                            "unsafeName": "getUsersRequest",
+                            "safeName": "getUsersRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_users_request",
+                            "safeName": "get_users_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_USERS_REQUEST",
+                            "safeName": "GET_USERS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetUsersRequest",
+                            "safeName": "GetUsersRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "limit",
+                                "camelCase": {
+                                    "unsafeName": "limit",
+                                    "safeName": "limit"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "limit",
+                                    "safeName": "limit"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LIMIT",
+                                    "safeName": "LIMIT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Limit",
+                                    "safeName": "Limit"
+                                }
+                            },
+                            "wireValue": "limit"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createUserInlined": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createUserInlined",
+                    "camelCase": {
+                        "unsafeName": "createUserInlined",
+                        "safeName": "createUserInlined"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_user_inlined",
+                        "safeName": "create_user_inlined"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_USER_INLINED",
+                        "safeName": "CREATE_USER_INLINED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateUserInlined",
+                        "safeName": "CreateUserInlined"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/api/users/inlined"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreateUserInlinedRequest",
+                        "camelCase": {
+                            "unsafeName": "createUserInlinedRequest",
+                            "safeName": "createUserInlinedRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_user_inlined_request",
+                            "safeName": "create_user_inlined_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_USER_INLINED_REQUEST",
+                            "safeName": "CREATE_USER_INLINED_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateUserInlinedRequest",
+                            "safeName": "CreateUserInlinedRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Trace-Id",
+                                "camelCase": {
+                                    "unsafeName": "xTraceID",
+                                    "safeName": "xTraceID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_trace_id",
+                                    "safeName": "x_trace_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_TRACE_ID",
+                                    "safeName": "X_TRACE_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XTraceID",
+                                    "safeName": "XTraceID"
+                                }
+                            },
+                            "wireValue": "X-Trace-Id"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "name",
+                                    "camelCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NAME",
+                                        "safeName": "NAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Name",
+                                        "safeName": "Name"
+                                    }
+                                },
+                                "wireValue": "name"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "email",
+                                    "camelCase": {
+                                        "unsafeName": "email",
+                                        "safeName": "email"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "email",
+                                        "safeName": "email"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "EMAIL",
+                                        "safeName": "EMAIL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Email",
+                                        "safeName": "Email"
+                                    }
+                                },
+                                "wireValue": "email"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "age",
+                                    "camelCase": {
+                                        "unsafeName": "age",
+                                        "safeName": "age"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "age",
+                                        "safeName": "age"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "AGE",
+                                        "safeName": "AGE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Age",
+                                        "safeName": "Age"
+                                    }
+                                },
+                                "wireValue": "age"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

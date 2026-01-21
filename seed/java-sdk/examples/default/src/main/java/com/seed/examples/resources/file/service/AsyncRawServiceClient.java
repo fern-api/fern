@@ -42,6 +42,13 @@ public class AsyncRawServiceClient {
     /**
      * This endpoint returns a file by its name.
      */
+    public CompletableFuture<SeedExamplesHttpResponse<File>> getFile(String filename, RequestOptions requestOptions) {
+        return getFile(filename, GetFileRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * This endpoint returns a file by its name.
+     */
     public CompletableFuture<SeedExamplesHttpResponse<File>> getFile(String filename, GetFileRequest request) {
         return getFile(filename, request, null);
     }

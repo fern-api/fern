@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v63
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -305,6 +305,27 @@ fixtures:
       outputFolder: default
   java-with-property-conflict:
     - outputFolder: default
+  java-output-directory:
+    # Test with no output-directory config (should use default PROJECT_ROOT)
+    - customConfig:
+        package-prefix: com.test.sdk
+      outputMode: local_files
+      outputFolder: no-config
+      skipScripts: true
+    # Test with explicit project-root (should behave same as default)
+    - customConfig:
+        package-prefix: com.test.sdk
+        output-directory: project-root
+      outputMode: local_files
+      outputFolder: project-root
+      skipScripts: true
+    # Test with source-root (should NOT add src/main/java)
+    - customConfig:
+        package-prefix: com.test.sdk
+        output-directory: source-root
+      outputMode: local_files
+      outputFolder: source-root
+      skipScripts: true
 scripts:
   - image: fernapi/java-seed
     commands:

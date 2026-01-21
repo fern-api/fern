@@ -5,14 +5,22 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { NamedFullExample } from "./NamedFullExample";
 import { MultipartRequest } from "../../finalIr/types/MultipartRequest";
 import { WithSdkMethodName } from "../../commons/types/WithSdkMethodName";
 
 export const ParseMultipartRequest: core.serialization.ObjectSchema<
     serializers.ParseMultipartRequest.Raw,
     FernOpenapiIr.ParseMultipartRequest
-> = core.serialization.objectWithoutOptionalProperties({}).extend(MultipartRequest).extend(WithSdkMethodName);
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        fullExamples: core.serialization.list(NamedFullExample).optional(),
+    })
+    .extend(MultipartRequest)
+    .extend(WithSdkMethodName);
 
 export declare namespace ParseMultipartRequest {
-    export interface Raw extends MultipartRequest.Raw, WithSdkMethodName.Raw {}
+    export interface Raw extends MultipartRequest.Raw, WithSdkMethodName.Raw {
+        fullExamples?: NamedFullExample.Raw[] | null;
+    }
 }

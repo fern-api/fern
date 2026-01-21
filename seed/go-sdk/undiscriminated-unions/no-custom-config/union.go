@@ -14,7 +14,7 @@ var (
 )
 
 type PaymentRequest struct {
-	PaymentMethod *PaymentMethodUnion `json:"paymentMethod,omitempty" url:"-"`
+	PaymentMethod *PaymentMethodUnion `json:"paymentMethod" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`

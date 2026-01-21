@@ -2,9 +2,10 @@
 
 /** lorem ipsum */
 export const UndiscriminatedUnion1InlineEnum1 = {
-        Sunny: "SUNNY",
-        Cloudy: "CLOUDY",
-        Raining: "RAINING",
-        Snowing: "SNOWING"
-    } as const;
-export type UndiscriminatedUnion1InlineEnum1 = typeof UndiscriminatedUnion1InlineEnum1[keyof typeof UndiscriminatedUnion1InlineEnum1];
+    Sunny: "SUNNY",
+    Cloudy: "CLOUDY",
+    Raining: "RAINING",
+    Snowing: "SNOWING",
+} as const;
+export type UndiscriminatedUnion1InlineEnum1 =
+    (typeof UndiscriminatedUnion1InlineEnum1)[keyof typeof UndiscriminatedUnion1InlineEnum1];

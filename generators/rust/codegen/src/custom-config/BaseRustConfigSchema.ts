@@ -19,6 +19,9 @@ export const BaseRustCustomConfigSchema = z.object({
     // =========================================================================
     packageDescription: z.string().optional(),
     packageLicense: z.string().optional(),
+    // Path to a custom license file (e.g., "LICENSE.md"). When set, uses `license-file` instead of `license` in Cargo.toml.
+    // This is useful when your license is not a standard SPDX identifier.
+    packageLicenseFile: z.string().optional(),
     packageRepository: z.string().optional(),
     packageDocumentation: z.string().optional(),
 

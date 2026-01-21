@@ -255,6 +255,24 @@ fixtures:
   csharp-xml-entities:
     - customConfig: null
       outputFolder: no-custom-config
+  nullable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        experimental-explicit-nullable-optional: true
+      outputFolder: explicit-nullable-optional
+  nullable-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        experimental-explicit-nullable-optional: true
+      outputFolder: explicit-nullable-optional
+  required-nullable:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        experimental-explicit-nullable-optional: true
+      outputFolder: explicit-nullable-optional
 allowedFailures:
   - any-auth
   - endpoint-security-auth

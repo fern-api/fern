@@ -29,6 +29,10 @@ public class AsyncSinglePropertyClient {
         return this.rawClient.doThing(id).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<String> doThing(String id, RequestOptions requestOptions) {
+        return this.rawClient.doThing(id, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<String> doThing(String id, GetThingRequest request) {
         return this.rawClient.doThing(id, request).thenApply(response -> response.body());
     }

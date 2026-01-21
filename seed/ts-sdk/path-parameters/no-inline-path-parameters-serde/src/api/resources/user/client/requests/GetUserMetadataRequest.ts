@@ -4,5 +4,4 @@
  * @example
  *     {}
  */
-export interface GetUserMetadataRequest {
-}
+export type GetUserMetadataRequest = {};

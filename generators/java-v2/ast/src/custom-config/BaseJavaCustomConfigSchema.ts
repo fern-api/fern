@@ -30,6 +30,10 @@ export const BaseJavaCustomConfigSchema = z.object({
     "gradle-distribution-url": z.string().optional(),
     "gradle-plugin-management": z.string().optional(),
     "gradle-central-dependency-management": z.boolean().optional(),
+    "output-directory": z.enum(["source-root", "project-root"]).optional(),
+
+    // Hidden options (for debugging).
+    "enable-gradle-profiling": z.boolean().optional(),
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()

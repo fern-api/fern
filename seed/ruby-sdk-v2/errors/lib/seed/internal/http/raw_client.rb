@@ -47,17 +47,19 @@ module Seed
         # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
         # @return [URI::Generic] The URL.
         def build_url(request)
+          encoded_query = request.encode_query
+
           # If the path is already an absolute URL, use it directly
           if request.path.start_with?("http://", "https://")
             url = request.path
-            url = "#{url}?#{encode_query(request.query)}" if request.query&.any?
+            url = "#{url}?#{encode_query(encoded_query)}" if encoded_query&.any?
             return URI.parse(url)
           end
 
           path = request.path.start_with?("/") ? request.path[1..] : request.path
           base = request.base_url || @base_url
           url = "#{base.chomp("/")}/#{path}"
-          url = "#{url}?#{encode_query(request.query)}" if request.query&.any?
+          url = "#{url}?#{encode_query(encoded_query)}" if encoded_query&.any?
           URI.parse(url)
         end
 

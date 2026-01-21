@@ -11,7 +11,7 @@ import { ReadableStream } from "stream/web";
 
 import { CliContext } from "../../cli-context/CliContext";
 
-async function fetchAndWriteFile(url: string, path: string, logger: Logger): Promise<void> {
+async function fetchAndWriteFile(url: string, path: string, logger: Logger, indent: number): Promise<void> {
     const resp = await fetch(url);
     if (resp.ok && resp.body) {
         logger.debug("Origin successfully fetched, writing to file");
@@ -22,9 +22,9 @@ async function fetchAndWriteFile(url: string, path: string, logger: Logger): Pro
         // Read and format file
         const fileContents = await readFile(path, "utf8");
         try {
-            await writeFile(path, JSON.stringify(JSON.parse(fileContents), undefined, 2), "utf8");
+            await writeFile(path, JSON.stringify(JSON.parse(fileContents), undefined, indent), "utf8");
         } catch (e) {
-            await writeFile(path, yaml.dump(yaml.load(fileContents)), "utf8");
+            await writeFile(path, yaml.dump(yaml.load(fileContents), { indent }), "utf8");
         }
         logger.debug("File written successfully");
     }
@@ -32,10 +32,12 @@ async function fetchAndWriteFile(url: string, path: string, logger: Logger): Pro
 
 export async function updateApiSpec({
     cliContext,
-    project: { apiWorkspaces }
+    project: { apiWorkspaces },
+    indent
 }: {
     cliContext: CliContext;
     project: Project;
+    indent: number;
 }): Promise<void> {
     // Filter to the specified API, if provided, if not then run through them all
     for (const workspace of apiWorkspaces) {
@@ -63,7 +65,8 @@ export async function updateApiSpec({
                     await processDefinitions({
                         cliContext,
                         workspacePath: workspace.absoluteFilePath,
-                        apiLocations: generatorConfig.api.definitions
+                        apiLocations: generatorConfig.api.definitions,
+                        indent
                     });
                     return;
                 } else if (generatorConfig.api.type === "multiNamespace") {
@@ -72,7 +75,8 @@ export async function updateApiSpec({
                         await processDefinitions({
                             cliContext,
                             workspacePath: workspace.absoluteFilePath,
-                            apiLocations: generatorConfig.api.rootDefinitions
+                            apiLocations: generatorConfig.api.rootDefinitions,
+                            indent
                         });
                     }
 
@@ -81,7 +85,8 @@ export async function updateApiSpec({
                         await processDefinitions({
                             cliContext,
                             workspacePath: workspace.absoluteFilePath,
-                            apiLocations
+                            apiLocations,
+                            indent
                         });
                     }
                 }
@@ -94,11 +99,13 @@ export async function updateApiSpec({
 async function getAndFetchFromAPIDefinitionLocation({
     cliContext,
     workspacePath,
-    apiLocation
+    apiLocation,
+    indent
 }: {
     cliContext: CliContext;
     workspacePath: AbsoluteFilePath;
     apiLocation: generatorsYml.APIDefinitionLocation;
+    indent: number;
 }) {
     if (apiLocation.schema.type === "protobuf") {
         cliContext.logger.info("Encountered conjure API definition, skipping API update.");
@@ -109,7 +116,8 @@ async function getAndFetchFromAPIDefinitionLocation({
         await fetchAndWriteFile(
             apiLocation.origin,
             join(workspacePath, RelativeFilePath.of(apiLocation.schema.path)),
-            cliContext.logger
+            cliContext.logger,
+            indent
         );
     }
 }
@@ -117,17 +125,20 @@ async function getAndFetchFromAPIDefinitionLocation({
 async function processDefinitions({
     cliContext,
     workspacePath,
-    apiLocations
+    apiLocations,
+    indent
 }: {
     cliContext: CliContext;
     workspacePath: AbsoluteFilePath;
     apiLocations: generatorsYml.APIDefinitionLocation[];
+    indent: number;
 }) {
     for (const apiLocation of apiLocations) {
         await getAndFetchFromAPIDefinitionLocation({
             cliContext,
             workspacePath,
-            apiLocation
+            apiLocation,
+            indent
         });
     }
 }

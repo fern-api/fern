@@ -18,33 +18,33 @@ export class BearerAuthProvider implements core.AuthProvider {
         return options?.[WRAPPER_PROPERTY]?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
     }
 
-    public async getAuthRequest({ endpointMetadata }: {
-            endpointMetadata?: core.EndpointMetadata;
-        } = {}): Promise<core.AuthRequest> {
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const token =
+            (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM])) ?? process.env?.[ENV_TOKEN];
+        if (token == null) {
+            throw new errors.SeedAnyAuthError({
+                message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+            });
+        }
 
-                const token = 
-                    (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM])) ??
-                    process.env?.[ENV_TOKEN];
-                if (token == null) {
-                    throw new errors.SeedAnyAuthError({
-                        message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
-                    });
-                }
-
-                return {
-                    headers: { Authorization: `Bearer ${token}` },
-                };
-                
+        return {
+            headers: { Authorization: `Bearer ${token}` },
+        };
     }
 }
 
 export namespace BearerAuthProvider {
     export const AUTH_SCHEME = "Bearer" as const;
-    export const AUTH_CONFIG_ERROR_MESSAGE: string = `Please provide '${TOKEN_PARAM}' when initializing the client, or set the '${ENV_TOKEN}' environment variable` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        `Please provide '${TOKEN_PARAM}' when initializing the client, or set the '${ENV_TOKEN}' environment variable` as const;
     export type Options = AuthOptions;
     export type AuthOptions = {
-                [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> | undefined };
-            };
+        [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> | undefined };
+    };
 
     export function createInstance(options: Options): core.AuthProvider {
         return new BearerAuthProvider(options);

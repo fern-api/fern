@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client->user->createUser($request) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUser($request) -> User</code></summary>
 <dl>
 <dd>
 

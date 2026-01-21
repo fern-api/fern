@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->getMovie($request) -> Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovie($request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->service->getMovieDocs($request) -> Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovieDocs($request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->service->getMovieName($request) -> StringResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovieName($request) -> StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -126,7 +126,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->service->getMovieMetadata($request) -> Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovieMetadata($request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -168,7 +168,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->service->getOptionalMovie($request) -> ?Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getOptionalMovie($request) -> ?Response</code></summary>
 <dl>
 <dd>
 
@@ -210,7 +210,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->service->getOptionalMovieDocs($request) -> ?WithDocs</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getOptionalMovieDocs($request) -> ?WithDocs</code></summary>
 <dl>
 <dd>
 
@@ -252,7 +252,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->service->getOptionalMovieName($request) -> ?StringResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getOptionalMovieName($request) -> ?StringResponse</code></summary>
 <dl>
 <dd>
 

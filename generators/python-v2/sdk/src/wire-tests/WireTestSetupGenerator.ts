@@ -69,7 +69,7 @@ export class WireTestSetupGenerator {
   wiremock:
     image: wiremock/wiremock:3.9.1
     ports:
-      - "8080:8080"
+      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]
@@ -121,13 +121,22 @@ The WireMock container lifecycle itself is managed by a top-level pytest
 plugin (wiremock_pytest_plugin.py) so that the container is started exactly
 once per test run, even when using pytest-xdist.
 """
+
+import inspect
+import os
 from typing import Any, Dict, Optional
 
 import requests
-import inspect
 
 ${clientImport}
 ${environmentSetup.imports}
+
+
+def _get_wiremock_base_url() -> str:
+    """Returns the WireMock base URL using the dynamically assigned port."""
+    port = os.environ.get("WIREMOCK_PORT", "8080")
+    return f"http://localhost:{port}"
+
 
 def get_client(test_id: str) -> ${clientClassName}:
     """
@@ -140,12 +149,13 @@ def get_client(test_id: str) -> ${clientClassName}:
         A configured client instance with all required auth parameters.
     """
     test_headers = {"X-Test-Id": test_id}
+    base_url = _get_wiremock_base_url()
 
     # Prefer passing headers directly if the client constructor supports it.
     try:
         if "headers" in inspect.signature(${clientClassName}).parameters:
             return ${clientClassName}(
-                ${environmentSetup.param},
+                ${environmentSetup.paramDynamic},
                 headers=test_headers,
 ${clientConstructorParams}
             )
@@ -155,7 +165,7 @@ ${clientConstructorParams}
     import httpx
 
     return ${clientClassName}(
-        ${environmentSetup.param},
+        ${environmentSetup.paramDynamic},
         httpx_client=httpx.Client(headers=test_headers),
 ${clientConstructorParams}
     )
@@ -169,7 +179,7 @@ def verify_request_count(
     expected: int,
 ) -> None:
     """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety"""
-    wiremock_admin_url = "http://localhost:8080/__admin"
+    wiremock_admin_url = f"{_get_wiremock_base_url()}/__admin"
     request_body: Dict[str, Any] = {
         "method": method,
         "urlPath": url_path,
@@ -224,12 +234,11 @@ by pytest's normal test collection rules.
 
 import os
 import subprocess
-from typing import Optional
 
 import pytest
 
-
 _STARTED: bool = False
+_WIREMOCK_PORT: str = "8080"  # Default, will be updated after container starts
 
 
 def _compose_file() -> str:
@@ -241,22 +250,54 @@ def _compose_file() -> str:
     return os.path.join(wiremock_dir, "docker-compose.test.yml")
 
 
-def _start_wiremock() -> None:
-    """Starts the WireMock container using docker-compose."""
-    global _STARTED
-    if _STARTED:
-        return
+def _project_name() -> str:
+    """Returns a unique project name for this test fixture to avoid container name conflicts."""
+    tests_dir = os.path.dirname(__file__)
+    project_root = os.path.abspath(os.path.join(tests_dir, ".."))
+    # Use the last two directory names to create a unique project name
+    # e.g., "python-streaming-parameter-openapi-with-wire-tests"
+    parent = os.path.basename(os.path.dirname(project_root))
+    current = os.path.basename(project_root)
+    return f"{parent}-{current}".replace("_", "-").lower()
 
+
+def _get_wiremock_port() -> str:
+    """Gets the dynamically assigned port for the WireMock container."""
     compose_file = _compose_file()
-    print("\\nStarting WireMock container...")
+    project = _project_name()
     try:
-        subprocess.run(
-            ["docker", "compose", "-f", compose_file, "up", "-d", "--wait"],
+        result = subprocess.run(
+            ["docker", "compose", "-f", compose_file, "-p", project, "port", "wiremock", "8080"],
             check=True,
             capture_output=True,
             text=True,
         )
-        print("WireMock container is ready")
+        # Output is like "0.0.0.0:32768" or "[::]:32768"
+        port = result.stdout.strip().split(":")[-1]
+        return port
+    except subprocess.CalledProcessError:
+        return "8080"  # Fallback to default
+
+
+def _start_wiremock() -> None:
+    """Starts the WireMock container using docker-compose."""
+    global _STARTED, _WIREMOCK_PORT
+    if _STARTED:
+        return
+
+    compose_file = _compose_file()
+    project = _project_name()
+    print(f"\\nStarting WireMock container (project: {project})...")
+    try:
+        subprocess.run(
+            ["docker", "compose", "-f", compose_file, "-p", project, "up", "-d", "--wait"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        _WIREMOCK_PORT = _get_wiremock_port()
+        os.environ["WIREMOCK_PORT"] = _WIREMOCK_PORT
+        print(f"WireMock container is ready on port {_WIREMOCK_PORT}")
         _STARTED = True
     except subprocess.CalledProcessError as e:
         print(f"Failed to start WireMock: {e.stderr}")
@@ -266,9 +307,10 @@ def _start_wiremock() -> None:
 def _stop_wiremock() -> None:
     """Stops and removes the WireMock container."""
     compose_file = _compose_file()
+    project = _project_name()
     print("\\nStopping WireMock container...")
     subprocess.run(
-        ["docker", "compose", "-f", compose_file, "down", "-v"],
+        ["docker", "compose", "-f", compose_file, "-p", project, "down", "-v"],
         check=False,
         capture_output=True,
     )
@@ -381,14 +423,15 @@ def pytest_unconfigure(config: pytest.Config) -> None:
      * create a custom environment instance that points all URLs to WireMock.
      * If no environments are defined, we use base_url directly.
      */
-    private buildEnvironmentSetup(): { imports: string; param: string } {
+    private buildEnvironmentSetup(): { imports: string; param: string; paramDynamic: string } {
         const environments = this.ir.environments;
 
         if (environments?.environments.type !== "multipleBaseUrls") {
             // No environments defined - use base_url directly
             return {
                 imports: "",
-                param: 'base_url="http://localhost:8080"'
+                param: 'base_url="http://localhost:8080"',
+                paramDynamic: "base_url=base_url"
             };
         }
 
@@ -398,14 +441,20 @@ def pytest_unconfigure(config: pytest.Config) -> None:
             const environmentClassName = this.getEnvironmentClassName();
             const modulePath = this.getModulePath();
 
-            // Build kwargs for all base URLs pointing to WireMock
+            // Build kwargs for all base URLs pointing to WireMock (static version for backwards compat)
             const baseUrlKwargs = envConfig.baseUrls
                 .map((baseUrl) => `${baseUrl.name.snakeCase.safeName}="http://localhost:8080"`)
                 .join(", ");
 
+            // Build kwargs for all base URLs using dynamic base_url variable
+            const baseUrlKwargsDynamic = envConfig.baseUrls
+                .map((baseUrl) => `${baseUrl.name.snakeCase.safeName}=base_url`)
+                .join(", ");
+
             return {
                 imports: `from ${modulePath}.environment import ${environmentClassName}`,
-                param: `environment=${environmentClassName}(${baseUrlKwargs})`
+                param: `environment=${environmentClassName}(${baseUrlKwargs})`,
+                paramDynamic: `environment=${environmentClassName}(${baseUrlKwargsDynamic})`
             };
         }
 

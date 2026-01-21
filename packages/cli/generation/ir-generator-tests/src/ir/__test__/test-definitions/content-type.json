@@ -462,6 +462,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -1810,6 +1811,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Update with JSON merge patch - complex types.\nThis endpoint demonstrates the distinction between:\n- optional<T> fields (can be present or absent, but not null)\n- optional<nullable<T>> fields (can be present, absent, or null)"
                 },
@@ -2399,6 +2401,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Named request with mixed optional/nullable fields and merge-patch content type.\nThis should trigger the NPE issue when optional fields aren't initialized."
                 },
@@ -3036,6 +3039,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.\nThis endpoint should:\n1. Not NPE when fields are not provided (tests initialization)\n2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)"
                 },
@@ -3534,6 +3538,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Regular PATCH endpoint without merge-patch semantics"
                 }

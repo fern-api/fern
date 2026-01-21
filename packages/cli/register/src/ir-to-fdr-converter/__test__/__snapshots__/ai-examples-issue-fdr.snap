@@ -138,6 +138,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -246,6 +247,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -273,8 +276,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "double",
                 },
               },
@@ -409,6 +415,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -450,8 +458,11 @@
                   "type": "primitive",
                   "value": {
                     "default": undefined,
+                    "exclusiveMaximum": undefined,
+                    "exclusiveMinimum": undefined,
                     "maximum": undefined,
                     "minimum": undefined,
+                    "multipleOf": undefined,
                     "type": "double",
                   },
                 },
@@ -472,8 +483,11 @@
                   "type": "primitive",
                   "value": {
                     "default": undefined,
+                    "exclusiveMaximum": undefined,
+                    "exclusiveMinimum": undefined,
                     "maximum": undefined,
                     "minimum": undefined,
+                    "multipleOf": undefined,
                     "type": "integer",
                   },
                 },

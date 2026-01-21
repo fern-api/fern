@@ -4,26 +4,20 @@ import { SeedMultiUrlEnvironmentClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("Ec2Client", () => {
-    
     test("bootInstance", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMultiUrlEnvironmentClient({ "maxRetries" : 0 , "token" : "test" , "environment" : { "ec2" : server.baseUrl , "s3" : server.baseUrl } });
-        const rawRequestBody = { "size" : "size" };
-        
-        server
-            .mockEndpoint()
-            .post("/ec2/boot").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).build();
+        const client = new SeedMultiUrlEnvironmentClient({
+            maxRetries: 0,
+            token: "test",
+            environment: { ec2: server.baseUrl, s3: server.baseUrl },
+        });
+        const rawRequestBody = { size: "size" };
 
-        
-                    
-                            const response = await client.ec2.bootInstance({
-    size: "size"
-});
-                            expect(response).toEqual(undefined);
-                          
-                
+        server.mockEndpoint().post("/ec2/boot").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.ec2.bootInstance({
+            size: "size",
+        });
+        expect(response).toEqual(undefined);
     });
-          
 });

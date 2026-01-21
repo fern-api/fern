@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>client.file_upload_example.<a href="src/seed/file_upload_example/client.py">upload_file</a>(...) -> AsyncHttpResponse[FileId]</code></summary>
+<details><summary><code>client.file_upload_example.<a href="src/seed/file_upload_example/client.py">upload_file</a>(...) -&gt; AsyncHttpResponse[FileId]</code></summary>
 <dl>
 <dd>
 

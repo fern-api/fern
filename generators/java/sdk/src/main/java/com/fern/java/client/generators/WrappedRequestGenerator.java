@@ -438,7 +438,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         @Override
         public List<ObjectProperty> visitBytes(BytesRequest bytes) {
             TypeReference base64TypeReference = TypeReference.primitive(
-                    PrimitiveType.builder().v1(PrimitiveTypeV1.BASE_64).build());
+                    PrimitiveType.builder().v1(PrimitiveTypeV1.STRING).build());
             return List.of(ObjectProperty.builder()
                     .name(NameAndWireValue.builder()
                             .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())

@@ -4,4 +4,6 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-export interface ParseMultipartRequest extends FernOpenapiIr.MultipartRequest, FernOpenapiIr.WithSdkMethodName {}
+export interface ParseMultipartRequest extends FernOpenapiIr.MultipartRequest, FernOpenapiIr.WithSdkMethodName {
+    fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;
+}

@@ -1,3 +1,4 @@
+import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
@@ -7,12 +8,8 @@ import { Workspace } from "@fern-api/workspace-loader";
 import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
-
 import { CliEnvironment } from "./CliEnvironment";
-import { Log } from "./Log";
-import { logErrorMessage } from "./logErrorMessage";
 import { TaskContextImpl } from "./TaskContextImpl";
-import { TtyAwareLogger } from "./TtyAwareLogger";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";

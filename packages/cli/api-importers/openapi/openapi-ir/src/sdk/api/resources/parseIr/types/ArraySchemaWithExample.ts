@@ -14,5 +14,7 @@ export interface ArraySchemaWithExample
         FernOpenapiIr.WithTitle,
         FernOpenapiIr.WithInline {
     value: FernOpenapiIr.SchemaWithExample;
+    minItems: number | undefined;
+    maxItems: number | undefined;
     example: unknown[] | undefined;
 }

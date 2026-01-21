@@ -1021,7 +1021,8 @@
               }
             },
             "type": "offset"
-          }
+          },
+          "responseHeaders": []
         }
       ]
     }

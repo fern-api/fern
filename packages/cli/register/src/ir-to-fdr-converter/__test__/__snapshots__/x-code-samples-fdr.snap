@@ -158,6 +158,7 @@ func main() {
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {

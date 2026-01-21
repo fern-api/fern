@@ -383,6 +383,11 @@ public class AsyncRawContainerClient {
   }
 
   public CompletableFuture<SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
+      RequestOptions requestOptions) {
+    return getAndReturnOptional(Optional.empty(),requestOptions);
+  }
+
+  public CompletableFuture<SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
       Optional<ObjectWithRequiredField> request) {
     return getAndReturnOptional(request,null);
   }

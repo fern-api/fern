@@ -159,6 +159,11 @@ public class RawHttpMethodsClient {
   }
 
   public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPatch(String id,
+      RequestOptions requestOptions) {
+    return testPatch(id,ObjectWithOptionalField.builder().build(),requestOptions);
+  }
+
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPatch(String id,
       ObjectWithOptionalField request) {
     return testPatch(id,request,null);
   }

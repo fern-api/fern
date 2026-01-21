@@ -4,7 +4,7 @@ namespace SeedUndiscriminatedUnions;
 
 public partial interface IUnionClient
 {
-    Task<
+    WithRawResponseTask<
         OneOf<
             string,
             IEnumerable<string>,
@@ -26,30 +26,32 @@ public partial interface IUnionClient
         CancellationToken cancellationToken = default
     );
 
-    Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
+    WithRawResponseTask<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<bool> UpdateMetadataAsync(
+    WithRawResponseTask<bool> UpdateMetadataAsync(
         OneOf<Dictionary<string, object?>?, NamedMetadata> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<bool> CallAsync(
+    WithRawResponseTask<bool> CallAsync(
         Request request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<OneOf<string, IEnumerable<string>, int, HashSet<string>>> DuplicateTypesUnionAsync(
+    WithRawResponseTask<
+        OneOf<string, IEnumerable<string>, int, HashSet<string>>
+    > DuplicateTypesUnionAsync(
         OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> NestedUnionsAsync(
+    WithRawResponseTask<string> NestedUnionsAsync(
         OneOf<
             string,
             IEnumerable<string>,
@@ -64,7 +66,7 @@ public partial interface IUnionClient
         CancellationToken cancellationToken = default
     );
 
-    Task<string> TestCamelCasePropertiesAsync(
+    WithRawResponseTask<string> TestCamelCasePropertiesAsync(
         PaymentRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

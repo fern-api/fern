@@ -20,6 +20,134 @@ public partial class AuthClient : IAuthClient
         }
     }
 
+    private async Task<WithRawResponse<TokenResponse>> GetTokenWithClientCredentialsAsyncCore(
+        GetTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new FormRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/token",
+                            Body = request,
+                            ContentType = "application/x-www-form-urlencoded",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                        return new WithRawResponse<TokenResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedOauthClientCredentialsApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedOauthClientCredentialsApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<WithRawResponse<TokenResponse>> RefreshTokenAsyncCore(
+        RefreshTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new FormRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/token",
+                            Body = request,
+                            ContentType = "application/x-www-form-urlencoded",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                        return new WithRawResponse<TokenResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedOauthClientCredentialsApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedOauthClientCredentialsApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
     /// <example><code>
     /// await client.Auth.GetTokenWithClientCredentialsAsync(
     ///     new GetTokenRequest
@@ -32,54 +160,15 @@ public partial class AuthClient : IAuthClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(
+    public WithRawResponseTask<TokenResponse> GetTokenWithClientCredentialsAsync(
         GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/token",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedOauthClientCredentialsException(
-                            "Failed to deserialize response",
-                            e
-                        );
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedOauthClientCredentialsApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<TokenResponse>(
+            GetTokenWithClientCredentialsAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <example><code>
@@ -95,53 +184,14 @@ public partial class AuthClient : IAuthClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<TokenResponse> RefreshTokenAsync(
+    public WithRawResponseTask<TokenResponse> RefreshTokenAsync(
         RefreshTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/token",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedOauthClientCredentialsException(
-                            "Failed to deserialize response",
-                            e
-                        );
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedOauthClientCredentialsApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<TokenResponse>(
+            RefreshTokenAsyncCore(request, options, cancellationToken)
+        );
     }
 }

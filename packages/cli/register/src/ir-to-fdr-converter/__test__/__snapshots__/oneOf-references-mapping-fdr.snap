@@ -171,6 +171,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -582,6 +583,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "primitive",

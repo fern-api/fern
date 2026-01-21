@@ -44,7 +44,10 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
             case FieldDescriptorProto_Type.FLOAT: {
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Float,
-                    v2: PrimitiveTypeV2.float({})
+                    v2: PrimitiveTypeV2.float({
+                        default: undefined,
+                        validation: undefined
+                    })
                 });
             }
             case FieldDescriptorProto_Type.INT32: {
@@ -60,7 +63,8 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Long,
                     v2: PrimitiveTypeV2.long({
-                        default: undefined
+                        default: undefined,
+                        validation: undefined
                     })
                 });
             }
@@ -68,7 +72,8 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Uint,
                     v2: PrimitiveTypeV2.uint({
-                        default: undefined
+                        default: undefined,
+                        validation: undefined
                     })
                 });
             }
@@ -76,7 +81,8 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Uint64,
                     v2: PrimitiveTypeV2.uint64({
-                        default: undefined
+                        default: undefined,
+                        validation: undefined
                     })
                 });
             }

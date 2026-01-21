@@ -10,6 +10,7 @@ import { WebhookName } from "./WebhookName";
 import { WebhookHttpMethod } from "./WebhookHttpMethod";
 import { HttpHeader } from "../../http/types/HttpHeader";
 import { WebhookPayload } from "./WebhookPayload";
+import { FileUploadRequest } from "../../http/types/FileUploadRequest";
 import { HttpResponse } from "../../http/types/HttpResponse";
 import { ExampleWebhookCall } from "./ExampleWebhookCall";
 import { V2WebhookExamples } from "../../examples/types/V2WebhookExamples";
@@ -23,6 +24,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
         method: WebhookHttpMethod,
         headers: core.serialization.list(HttpHeader),
         payload: WebhookPayload,
+        fileUploadPayload: FileUploadRequest.optional(),
         responses: core.serialization.list(HttpResponse).optional(),
         examples: core.serialization.list(ExampleWebhookCall).optional(),
         v2Examples: V2WebhookExamples.optional(),
@@ -37,6 +39,7 @@ export declare namespace Webhook {
         method: WebhookHttpMethod.Raw;
         headers: HttpHeader.Raw[];
         payload: WebhookPayload.Raw;
+        fileUploadPayload?: FileUploadRequest.Raw | null;
         responses?: HttpResponse.Raw[] | null;
         examples?: ExampleWebhookCall.Raw[] | null;
         v2Examples?: V2WebhookExamples.Raw | null;

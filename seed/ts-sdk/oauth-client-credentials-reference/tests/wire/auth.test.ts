@@ -5,32 +5,34 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockOAuthScheme } from "./mockAuth";
 
 describe("AuthClient", () => {
-    
     test("getToken", async () => {
-        const server = mockServerPool.createServer();mockOAuthScheme(server);
+        const server = mockServerPool.createServer();
+        mockOAuthScheme(server);
 
-        const client = new SeedOauthClientCredentialsReferenceClient({ "maxRetries" : 0 , "clientId" : "client_id" , "clientSecret" : "client_secret" , "environment" : server.baseUrl });
-        const rawRequestBody = { "client_id" : "client_id" , "client_secret" : "client_secret" };
-        const rawResponseBody = { "access_token" : "access_token" , "expires_in" : 3600 };
+        const client = new SeedOauthClientCredentialsReferenceClient({
+            maxRetries: 0,
+            clientId: "client_id",
+            clientSecret: "client_secret",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { client_id: "client_id", client_secret: "client_secret" };
+        const rawResponseBody = { access_token: "access_token", expires_in: 3600 };
         server
             .mockEndpoint()
-            .post("/token").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/token")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.auth.getToken({
-    client_id: "client_id",
-    client_secret: "client_secret"
-});
-                            expect(response).toEqual({
-    access_token: "access_token",
-    expires_in: 3600
-});
-                          
-                
+        const response = await client.auth.getToken({
+            client_id: "client_id",
+            client_secret: "client_secret",
+        });
+        expect(response).toEqual({
+            access_token: "access_token",
+            expires_in: 3600,
+        });
     });
-          
 });

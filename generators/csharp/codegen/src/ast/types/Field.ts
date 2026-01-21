@@ -7,6 +7,7 @@ import { MemberNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { Access } from "../language/Access";
 import { Annotation } from "../language/Annotation";
+import { AnnotationGroup } from "../language/AnnotationGroup";
 import { CodeBlock } from "../language/CodeBlock";
 import { XmlDocBlock } from "../language/XmlDocBlock";
 import { ClassReference } from "./ClassReference";
@@ -17,6 +18,10 @@ export declare namespace Field {
         get?: (writer: Writer) => void;
         set?: (writer: Writer) => void;
         init?: (writer: Writer) => void;
+        /** For C# events: the add accessor */
+        add?: (writer: Writer) => void;
+        /** For C# events: the remove accessor */
+        remove?: (writer: Writer) => void;
     };
 
     interface Args extends MemberNode.Args {
@@ -54,7 +59,7 @@ export declare namespace Field {
         /* Whether the field is readonly */
         readonly?: boolean;
         /* Field annotations */
-        annotations?: (Annotation | ClassReference)[];
+        annotations?: (Annotation | AnnotationGroup | ClassReference)[];
         /* The initializer for the field */
         initializer?: CodeBlock | ClassInstantiation;
         /* The summary tag (used for describing the field) */
@@ -74,6 +79,8 @@ export declare namespace Field {
 
         /* If specified, use the accessor methods for the field implementation */
         accessors?: Accessors;
+        /* If true, the field is a C# event (uses event keyword with add/remove accessors) */
+        isEvent?: boolean;
     }
 }
 
@@ -98,7 +105,7 @@ export class Field extends MemberNode {
     private readonly init: Access | boolean;
     private readonly set: Access | boolean;
     private readonly new_: boolean;
-    private readonly annotations: Annotation[];
+    private readonly annotations: (Annotation | AnnotationGroup)[];
     private readonly initializer?: CodeBlock | ClassInstantiation;
     private readonly doc: XmlDocBlock;
     private readonly jsonPropertyName?: string;
@@ -110,8 +117,11 @@ export class Field extends MemberNode {
         get?: (writer: Writer) => void;
         set?: (writer: Writer) => void;
         init?: (writer: Writer) => void;
+        add?: (writer: Writer) => void;
+        remove?: (writer: Writer) => void;
     };
     private readonly override?: boolean;
+    private readonly isEvent_: boolean;
     constructor(
         {
             name,
@@ -134,6 +144,7 @@ export class Field extends MemberNode {
             interfaceReference,
             accessors,
             override,
+            isEvent,
             origin,
             enclosingType
         }: Field.Args,
@@ -174,6 +185,7 @@ export class Field extends MemberNode {
         this.interfaceReference = interfaceReference;
         this.accessors = accessors;
         this.override = override ?? false;
+        this.isEvent_ = isEvent ?? false;
         if (this.jsonPropertyName != null) {
             this.annotations = [
                 this.csharp.annotation({
@@ -219,6 +231,10 @@ export class Field extends MemberNode {
         return this.type.isOptional;
     }
 
+    public get isEvent(): boolean {
+        return this.isEvent_;
+    }
+
     public write(writer: Writer): void {
         writer.writeNode(this.doc);
 
@@ -251,12 +267,32 @@ export class Field extends MemberNode {
         if (this.readonly) {
             writer.write("readonly ");
         }
+        // For C# events, add the event keyword
+        if (this.isEvent_) {
+            writer.write("event ");
+        }
         writer.writeNode(this.type);
         writer.write(" ");
         if (this.interfaceReference) {
             writer.write(`${this.interfaceReference.name}.`);
         }
         writer.write(this.name);
+
+        // Handle C# events with add/remove accessors
+        if (this.isEvent_ && this.accessors?.add && this.accessors?.remove) {
+            writer.writeLine("");
+            writer.writeLine("{");
+            writer.indent();
+            writer.write("add => ");
+            this.accessors.add(writer);
+            writer.writeLine(";");
+            writer.write("remove => ");
+            this.accessors.remove(writer);
+            writer.writeLine(";");
+            writer.dedent();
+            writer.writeLine("}");
+            return;
+        }
 
         // TODO: refactor useExpressionBodiedPropertySyntax to be an argument that defaults to false
         // expression body will run the code every time, which is not the intended/expected behavior of initializer

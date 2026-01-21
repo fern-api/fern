@@ -4,8 +4,8 @@
         "outDir": null,
         "rootDir": "..",
         "baseUrl": "..",
-            "types": ["vitest/globals"]
+        "types": ["vitest/globals"]
     },
-    "include": ["../src","../tests"],
+    "include": ["../src", "../tests"],
     "exclude": []
 }

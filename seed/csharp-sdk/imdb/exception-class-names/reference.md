@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">CreateMovieAsync</a>(CreateMovieRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">CreateMovieAsync</a>(CreateMovieRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rat
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetMovieAsync</a>(movieId) -> Movie</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetMovieAsync</a>(movieId) -> WithRawResponseTask&lt;Movie&gt;</code></summary>
 <dl>
 <dd>
 

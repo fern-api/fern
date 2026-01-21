@@ -21,6 +21,9 @@ export interface FixtureConfigurations {
     /** Overrides the default output mode */
     outputMode?: FernSeedConfig.OutputMode;
     license?: unknown;
-    /** List of script names to skip. */
-    skipScripts?: string[];
+    /**
+     * Either a boolean to skip all scripts, or a list of script names to skip.
+     * When true, all build and test scripts will be skipped for this fixture.
+     */
+    skipScripts?: FernSeedConfig.SkipScripts;
 }

@@ -21,7 +21,7 @@ public partial class SeedApiClient : ISeedApiClient
             );
             clientOptions ??= new ClientOptions();
             clientOptions.ExceptionHandler = new ExceptionHandler(
-                new SeedApiExceptionInterceptor()
+                new SeedApiExceptionInterceptor(clientOptions)
             );
             foreach (var header in defaultHeaders)
             {
@@ -35,7 +35,7 @@ public partial class SeedApiClient : ISeedApiClient
         }
         catch (Exception ex)
         {
-            var interceptor = new SeedApiExceptionInterceptor();
+            var interceptor = new SeedApiExceptionInterceptor(clientOptions);
             interceptor.Intercept(ex);
             throw;
         }

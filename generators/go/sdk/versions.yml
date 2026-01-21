@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.22.8
+  changelogEntry:
+    - summary: Fix internal v1-side failure to pass alwaysSendRequiredProperties when visiting inlined request bodies.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 60
+
+- version: 1.22.7
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 60
+
+- version: 1.22.6
+  changelogEntry:
+    - summary: |
+        Update CI workflow to match robust wiremock testing implementation from seed configuration.
+        The GitHub Actions workflow now uses unique project naming, proper port extraction, and
+        reliable cleanup with separate setup/test/teardown steps to prevent Docker Compose
+        conflicts and ensure consistent test execution.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 60
+
+- version: 1.22.5
+  changelogEntry:
+    - summary: |
+        Gracefully handle `go fmt` failures during generation. When formatting fails, the generator
+        now logs a warning and continues to output the generated files instead of failing the entire
+        generation. This allows developers to debug generated output even when formatting issues occur.
+      type: fix
+  createdAt: "2026-01-12"
+  irVersion: 60
+
+- version: 1.22.5
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets for optional aliases to literal types. Previously, the generator
+        would produce invalid Go code like `&SortField("DEFAULT")` which tries to take the
+        address of a type conversion. Now it correctly uses the primitive's pointer helper
+        function (e.g., `fern.String("DEFAULT")`) for optional literal aliases.
+      type: fix
+  createdAt: "2026-01-12"
+  irVersion: 60
 
 - version: 1.22.4
   changelogEntry:

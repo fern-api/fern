@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->getAccount($accountId) -> Account</code></summary>
+<details><summary><code>$client-&gt;getAccount($accountId) -> Account</code></summary>
 <dl>
 <dd>
 

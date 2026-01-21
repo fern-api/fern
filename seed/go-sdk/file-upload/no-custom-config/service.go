@@ -110,13 +110,13 @@ type MyRequest struct {
 	Integer               int                     `json:"integer" url:"-"`
 	MaybeInteger          *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings []string                `json:"optional_list_of_strings,omitempty" url:"-"`
-	ListOfObjects         []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
+	ListOfObjects         []*MyObject             `json:"list_of_objects" url:"-"`
 	OptionalMetadata      interface{}             `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType    *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
 	OptionalId            *Id                     `json:"optional_id,omitempty" url:"-"`
-	AliasObject           MyAliasObject           `json:"alias_object,omitempty" url:"-"`
-	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
-	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+	AliasObject           MyAliasObject           `json:"alias_object" url:"-"`
+	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object" url:"-"`
+	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -410,7 +410,7 @@ func (o ObjectType) Ptr() *ObjectType {
 type WithContentTypeRequest struct {
 	File   io.Reader `json:"-" url:"-"`
 	Foo    string    `json:"foo" url:"-"`
-	Bar    *MyObject `json:"bar,omitempty" url:"-"`
+	Bar    *MyObject `json:"bar" url:"-"`
 	FooBar *MyObject `json:"foo_bar,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -433,14 +433,14 @@ type MyOtherRequest struct {
 	Integer                    int                     `json:"integer" url:"-"`
 	MaybeInteger               *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings      []string                `json:"optional_list_of_strings,omitempty" url:"-"`
-	ListOfObjects              []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
+	ListOfObjects              []*MyObject             `json:"list_of_objects" url:"-"`
 	OptionalMetadata           interface{}             `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType         *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
 	OptionalId                 *Id                     `json:"optional_id,omitempty" url:"-"`
-	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals,omitempty" url:"-"`
-	AliasObject                MyAliasObject           `json:"alias_object,omitempty" url:"-"`
-	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
-	AliasListOfObject          MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals" url:"-"`
+	AliasObject                MyAliasObject           `json:"alias_object" url:"-"`
+	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object" url:"-"`
+	AliasListOfObject          MyCollectionAliasObject `json:"alias_list_of_object" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -456,7 +456,7 @@ func (m *MyOtherRequest) require(field *big.Int) {
 type WithFormEncodingRequest struct {
 	File io.Reader `json:"-" url:"-"`
 	Foo  string    `json:"foo" url:"-"`
-	Bar  *MyObject `json:"bar,omitempty" url:"-"`
+	Bar  *MyObject `json:"bar" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -471,7 +471,7 @@ func (w *WithFormEncodingRequest) require(field *big.Int) {
 
 type InlineTypeRequest struct {
 	File    io.Reader     `json:"-" url:"-"`
-	Request *MyInlineType `json:"request,omitempty" url:"-"`
+	Request *MyInlineType `json:"request" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`

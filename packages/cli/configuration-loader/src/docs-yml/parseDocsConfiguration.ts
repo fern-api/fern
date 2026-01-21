@@ -1086,6 +1086,14 @@ async function convertNavigationItem({
             context
         });
     }
+    if (isRawPythonDocsSectionConfig(rawConfig)) {
+        return {
+            type: "pythonDocsSection",
+            githubUrl: rawConfig.pythonDocs,
+            title: rawConfig.title ?? undefined,
+            slug: rawConfig.slug ?? undefined
+        };
+    }
     assertNever(rawConfig);
 }
 
@@ -1260,6 +1268,10 @@ function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.Changel
 
 function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {
     return isPlainObject(item) && typeof item.folder === "string";
+}
+
+function isRawPythonDocsSectionConfig(item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration {
+    return isPlainObject(item) && typeof item.pythonDocs === "string";
 }
 
 function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {

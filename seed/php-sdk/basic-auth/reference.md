@@ -1,6 +1,6 @@
 # Reference
 ## BasicAuth
-<details><summary><code>$client->basicAuth->getWithBasicAuth() -> bool</code></summary>
+<details><summary><code>$client-&gt;basicAuth-&gt;getWithBasicAuth() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ $client->basicAuth->getWithBasicAuth();
 </dl>
 </details>
 
-<details><summary><code>$client->basicAuth->postWithBasicAuth($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;basicAuth-&gt;postWithBasicAuth($request) -> bool</code></summary>
 <dl>
 <dd>
 
