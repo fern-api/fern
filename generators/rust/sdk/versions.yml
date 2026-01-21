@@ -1,16 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.14.4
-  changelogEntry:
-    - summary: |
-        Add GitHub CI workflow generation for self-hosted mode. When self-hosted mode is enabled,
-        the generator now creates a `.github/workflows/ci.yml` file with compile, test, and publish
-        jobs. The publish job is triggered on tag pushes and publishes the crate to crates.io.
-        Also generates a comprehensive `.gitignore` file.
-      type: feat
-  createdAt: "2026-01-21"
-  irVersion: 62
-
 - version: 0.14.3
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
