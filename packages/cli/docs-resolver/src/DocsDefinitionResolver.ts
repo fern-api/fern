@@ -1213,7 +1213,10 @@ export class DocsDefinitionResolver {
         if (item.tagDescriptionPages && useV3Parser) {
             try {
                 const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
-                const openApiIr = await openapiWorkspace.getOpenAPIIr({ context: this.taskContext });
+                const openApiIr = await openapiWorkspace.getOpenAPIIr({
+                    context: this.taskContext,
+                    loadAiExamples: true
+                });
                 if (openApiIr.tags.tagsById) {
                     openApiTags = Object.fromEntries(
                         Object.entries(openApiIr.tags.tagsById)

@@ -1,0 +1,96 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "1593af41",
+            "id": {
+                "method": "POST",
+                "path": "/api/users",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUser(\n            CreateUserRequest\n                .builder()\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .xCorrelationId(\"X-Correlation-Id\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUser(\n            CreateUserRequest\n                .builder()\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .xCorrelationId(\"X-Correlation-Id\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "1515ac80",
+            "id": {
+                "method": "PUT",
+                "path": "/api/users/{userId}",
+                "identifier_override": "endpoint_.updateUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.UpdateUserRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.updateUser(\n            \"userId\",\n            UpdateUserRequest\n                .builder()\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .dryRun(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.UpdateUserRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.updateUser(\n            \"userId\",\n            UpdateUserRequest\n                .builder()\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .dryRun(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5b6a8e51",
+            "id": {
+                "method": "POST",
+                "path": "/api/users/with-options",
+                "identifier_override": "endpoint_.createUserWithOptions"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithOptionsRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserWithOptions(\n            CreateUserWithOptionsRequest\n                .builder()\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .xRequestId(\"X-Request-Id\")\n                .validate(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithOptionsRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserWithOptions(\n            CreateUserWithOptionsRequest\n                .builder()\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .xRequestId(\"X-Request-Id\")\n                .validate(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5430c960",
+            "id": {
+                "method": "POST",
+                "path": "/api/users/required-header",
+                "identifier_override": "endpoint_.createUserWithRequiredHeader"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithRequiredHeaderRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserWithRequiredHeader(\n            CreateUserWithRequiredHeaderRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithRequiredHeaderRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserWithRequiredHeader(\n            CreateUserWithRequiredHeaderRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "67c16f6",
+            "id": {
+                "method": "POST",
+                "path": "/api/users/required-query",
+                "identifier_override": "endpoint_.createUserWithRequiredQuery"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithRequiredQueryRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserWithRequiredQuery(\n            CreateUserWithRequiredQueryRequest\n                .builder()\n                .tenantId(\"tenantId\")\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithRequiredQueryRequest;\nimport com.seed.javaRequiredBodyOptionalHeaders.types.UserData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserWithRequiredQuery(\n            CreateUserWithRequiredQueryRequest\n                .builder()\n                .tenantId(\"tenantId\")\n                .body(\n                    UserData\n                        .builder()\n                        .name(\"name\")\n                        .email(\"email\")\n                        .age(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "231b4aaa",
+            "id": {
+                "method": "GET",
+                "path": "/api/users",
+                "identifier_override": "endpoint_.getUsers"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.GetUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.getUsers(\n            GetUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.GetUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.getUsers(\n            GetUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ab5b2af2",
+            "id": {
+                "method": "POST",
+                "path": "/api/users/inlined",
+                "identifier_override": "endpoint_.createUserInlined"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserInlinedRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserInlined(\n            CreateUserInlinedRequest\n                .builder()\n                .name(\"name\")\n                .email(\"email\")\n                .xTraceId(\"X-Trace-Id\")\n                .age(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaRequiredBodyOptionalHeaders.SeedJavaRequiredBodyOptionalHeadersClient;\nimport com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserInlinedRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaRequiredBodyOptionalHeadersClient client = SeedJavaRequiredBodyOptionalHeadersClient\n            .builder()\n            .build();\n\n        client.createUserInlined(\n            CreateUserInlinedRequest\n                .builder()\n                .name(\"name\")\n                .email(\"email\")\n                .xTraceId(\"X-Trace-Id\")\n                .age(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
