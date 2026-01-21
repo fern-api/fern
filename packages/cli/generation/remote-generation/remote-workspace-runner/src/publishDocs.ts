@@ -27,6 +27,7 @@ import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { measureImageSizes } from "./measureImageSizes";
 import { asyncPool } from "./utils/asyncPool";
+import { parseRepository } from "@fern-api/github";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -693,7 +694,10 @@ async function checkAndDownloadExistingSdkDynamicIRs({
         return undefined;
     }
 }
-
+function normalizeRepositoryToPackageName(repository: string): string {
+    const parsed = parseRepository(repository);
+    return `${parsed.remote}/${parsed.owner}/${parsed.repo}`;
+}
 async function buildSnippetConfigurationWithVersions({
     fdr,
     workspace,
@@ -729,7 +733,7 @@ async function buildSnippetConfigurationWithVersions({
         },
         {
             language: "go",
-            snippetName: snippetsConfig.goSdk?.githubRepo,
+            snippetName: snippetsConfig.goSdk?.githubRepo && normalizeRepositoryToPackageName(snippetsConfig.goSdk?.githubRepo),
             explicitVersion: snippetsConfig.goSdk?.version
         },
         {
@@ -911,7 +915,7 @@ async function generateLanguageSpecificDynamicIRs({
         typescript: snippetsConfig.typescriptSdk?.package,
         python: snippetsConfig.pythonSdk?.package,
         java: snippetsConfig.javaSdk?.coordinate,
-        go: snippetsConfig.goSdk?.githubRepo,
+        go: snippetsConfig.goSdk?.githubRepo && normalizeRepositoryToPackageName(snippetsConfig.goSdk?.githubRepo),
         csharp: snippetsConfig.csharpSdk?.package,
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
