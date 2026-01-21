@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.15.0
+  changelogEntry:
+    - summary: |
+        Add OAuthTokenProvider for automatic OAuth token management with caching and refresh support.
+        The provider implements thread-safe token caching with a 2-minute expiration buffer,
+        double-checked locking pattern for concurrent access, and automatic token refresh.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 62
+
 - version: 0.14.3
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.

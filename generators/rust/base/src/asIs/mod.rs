@@ -1,6 +1,7 @@
 //! Core client infrastructure
 
 mod http_client;
+mod oauth_token_provider;
 mod request_options;
 mod query_parameter_builder;
 #[cfg(feature = "sse")]
@@ -9,6 +10,7 @@ mod utils;
 pub mod flexible_datetime;
 
 pub use http_client::{ByteStream, HttpClient};
+pub use oauth_token_provider::OAuthTokenProvider;
 pub use request_options::RequestOptions;
 pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};
 #[cfg(feature = "sse")]
