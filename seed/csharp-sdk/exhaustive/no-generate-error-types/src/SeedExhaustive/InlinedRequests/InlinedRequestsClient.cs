@@ -13,6 +13,64 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
         _client = client;
     }
 
+    private async Task<
+        WithRawResponse<ObjectWithOptionalField>
+    > PostWithObjectBodyandResponseAsyncCore(
+        PostWithObjectBody request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/req-bodies/object",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                return new WithRawResponse<ObjectWithOptionalField>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     /// <summary>
     /// POST with custom object in request body, response is an object
     /// </summary>
@@ -41,45 +99,14 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
+    public WithRawResponseTask<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
         PostWithObjectBody request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/req-bodies/object",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExhaustiveApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask<ObjectWithOptionalField>(
+            PostWithObjectBodyandResponseAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -21,10 +21,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
         }
     }
 
-    /// <example><code>
-    /// await client.NoReqBody.GetWithNoRequestBodyAsync();
-    /// </code></example>
-    public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
+    private async Task<WithRawResponse<ObjectWithOptionalField>> GetWithNoRequestBodyAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -49,14 +46,32 @@ public partial class NoReqBodyClient : INoReqBodyClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ObjectWithOptionalField>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -69,10 +84,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.NoReqBody.PostWithNoRequestBodyAsync();
-    /// </code></example>
-    public async Task<string> PostWithNoRequestBodyAsync(
+    private async Task<WithRawResponse<string>> PostWithNoRequestBodyAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -97,14 +109,30 @@ public partial class NoReqBodyClient : INoReqBodyClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -115,5 +143,31 @@ public partial class NoReqBodyClient : INoReqBodyClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.NoReqBody.GetWithNoRequestBodyAsync();
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithOptionalField>(
+            GetWithNoRequestBodyAsyncCore(options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.NoReqBody.PostWithNoRequestBodyAsync();
+    /// </code></example>
+    public WithRawResponseTask<string> PostWithNoRequestBodyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            PostWithNoRequestBodyAsyncCore(options, cancellationToken)
+        );
     }
 }

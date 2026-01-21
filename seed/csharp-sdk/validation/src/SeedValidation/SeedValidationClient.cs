@@ -29,18 +29,7 @@ public partial class SeedValidationClient : ISeedValidationClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.CreateAsync(
-    ///     new CreateRequest
-    ///     {
-    ///         Decimal = 2.2,
-    ///         Even = 100,
-    ///         Name = "fern",
-    ///         Shape = Shape.Square,
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<Type> CreateAsync(
+    private async Task<WithRawResponse<Type>> CreateAsyncCore(
         CreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -64,14 +53,28 @@ public partial class SeedValidationClient : ISeedValidationClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Type>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Type>(responseBody)!;
+                return new WithRawResponse<Type>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedValidationException("Failed to deserialize response", e);
+                throw new SeedValidationApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedValidationApiException(
@@ -82,17 +85,7 @@ public partial class SeedValidationClient : ISeedValidationClient
         }
     }
 
-    /// <example><code>
-    /// await client.GetAsync(
-    ///     new GetRequest
-    ///     {
-    ///         Decimal = 2.2,
-    ///         Even = 100,
-    ///         Name = "fern",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<Type> GetAsync(
+    private async Task<WithRawResponse<Type>> GetAsyncCore(
         GetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -120,14 +113,28 @@ public partial class SeedValidationClient : ISeedValidationClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Type>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Type>(responseBody)!;
+                return new WithRawResponse<Type>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedValidationException("Failed to deserialize response", e);
+                throw new SeedValidationApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedValidationApiException(
@@ -136,5 +143,44 @@ public partial class SeedValidationClient : ISeedValidationClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.CreateAsync(
+    ///     new CreateRequest
+    ///     {
+    ///         Decimal = 2.2,
+    ///         Even = 100,
+    ///         Name = "fern",
+    ///         Shape = Shape.Square,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Type> CreateAsync(
+        CreateRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Type>(CreateAsyncCore(request, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.GetAsync(
+    ///     new GetRequest
+    ///     {
+    ///         Decimal = 2.2,
+    ///         Even = 100,
+    ///         Name = "fern",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Type> GetAsync(
+        GetRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Type>(GetAsyncCore(request, options, cancellationToken));
     }
 }
