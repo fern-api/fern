@@ -5,11 +5,10 @@
   changelogEntry:
     - summary: |
         Add type-aware JSON string parsing for nested object fields in Pydantic models.
-        When a field is typed as an object in the OpenAPI schema, the generator now wraps it with
-        `Annotated[FieldType, BeforeValidator(_parse_json_string)]` to automatically parse JSON strings
+        When a field is typed as an object in the OpenAPI schema, the generator now adds a
+        `model_validator` (v2) or `root_validator` (v1) that automatically parses JSON strings
         that arrive over the wire (e.g., in SSE events). String-typed fields remain unchanged.
-        This feature only applies to Pydantic v2-only configurations; v1-only and "Both" (v1+v2)
-        configurations are unaffected since BeforeValidator doesn't exist in Pydantic v1.
+        This feature works for both "Both" (v1+v2) and V2-only configurations.
       type: fix
   createdAt: "2026-01-20"
   irVersion: 62
