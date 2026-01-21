@@ -138,7 +138,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     rawClientReference
                 );
             } else {
-                this.writeUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference, serviceId);
+                this.writeUnpagedMethodBody(
+                    endpointSignatureInfo,
+                    writer,
+                    rawClient,
+                    endpoint,
+                    rawClientReference,
+                    serviceId
+                );
             }
         });
 
