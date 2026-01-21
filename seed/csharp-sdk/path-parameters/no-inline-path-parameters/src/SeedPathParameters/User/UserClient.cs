@@ -12,10 +12,7 @@ public partial class UserClient : IUserClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
-    /// </code></example>
-    public async Task<User> GetUserAsync(
+    private async Task<WithRawResponse<User>> GetUserAsyncCore(
         string tenantId,
         string userId,
         GetUsersRequest request,
@@ -44,14 +41,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -62,17 +73,7 @@ public partial class UserClient : IUserClient
         }
     }
 
-    /// <example><code>
-    /// await client.User.CreateUserAsync(
-    ///     "tenant_id",
-    ///     new User
-    ///     {
-    ///         Name = "name",
-    ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<User> CreateUserAsync(
+    private async Task<WithRawResponse<User>> CreateUserAsyncCore(
         string tenantId,
         User request,
         RequestOptions? options = null,
@@ -100,14 +101,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -118,21 +133,7 @@ public partial class UserClient : IUserClient
         }
     }
 
-    /// <example><code>
-    /// await client.User.UpdateUserAsync(
-    ///     "tenant_id",
-    ///     "user_id",
-    ///     new UpdateUserRequest
-    ///     {
-    ///         Body = new User
-    ///         {
-    ///             Name = "name",
-    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<User> UpdateUserAsync(
+    private async Task<WithRawResponse<User>> UpdateUserAsyncCore(
         string tenantId,
         string userId,
         UpdateUserRequest request,
@@ -162,14 +163,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -180,10 +195,7 @@ public partial class UserClient : IUserClient
         }
     }
 
-    /// <example><code>
-    /// await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
-    /// </code></example>
-    public async Task<IEnumerable<User>> SearchUsersAsync(
+    private async Task<WithRawResponse<IEnumerable<User>>> SearchUsersAsyncCore(
         string tenantId,
         string userId,
         SearchUsersRequest request,
@@ -218,14 +230,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<User>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -236,13 +262,7 @@ public partial class UserClient : IUserClient
         }
     }
 
-    /// <summary>
-    /// Test endpoint with path parameter that has a text prefix (v{version})
-    /// </summary>
-    /// <example><code>
-    /// await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMetadataRequest());
-    /// </code></example>
-    public async Task<User> GetUserMetadataAsync(
+    private async Task<WithRawResponse<User>> GetUserMetadataAsyncCore(
         string tenantId,
         string userId,
         int version,
@@ -273,14 +293,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -291,19 +325,7 @@ public partial class UserClient : IUserClient
         }
     }
 
-    /// <summary>
-    /// Test endpoint with path parameters listed in different order than found in path
-    /// </summary>
-    /// <example><code>
-    /// await client.User.GetUserSpecificsAsync(
-    ///     "tenant_id",
-    ///     "user_id",
-    ///     1,
-    ///     "thought",
-    ///     new GetUserSpecificsRequest()
-    /// );
-    /// </code></example>
-    public async Task<User> GetUserSpecificsAsync(
+    private async Task<WithRawResponse<User>> GetUserSpecificsAsyncCore(
         string tenantId,
         string userId,
         int version,
@@ -336,14 +358,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -352,5 +388,141 @@ public partial class UserClient : IUserClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
+    /// </code></example>
+    public WithRawResponseTask<User> GetUserAsync(
+        string tenantId,
+        string userId,
+        GetUsersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            GetUserAsyncCore(tenantId, userId, request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.User.CreateUserAsync(
+    ///     "tenant_id",
+    ///     new User
+    ///     {
+    ///         Name = "name",
+    ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<User> CreateUserAsync(
+        string tenantId,
+        User request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            CreateUserAsyncCore(tenantId, request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.User.UpdateUserAsync(
+    ///     "tenant_id",
+    ///     "user_id",
+    ///     new UpdateUserRequest
+    ///     {
+    ///         Body = new User
+    ///         {
+    ///             Name = "name",
+    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<User> UpdateUserAsync(
+        string tenantId,
+        string userId,
+        UpdateUserRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            UpdateUserAsyncCore(tenantId, userId, request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<User>> SearchUsersAsync(
+        string tenantId,
+        string userId,
+        SearchUsersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<User>>(
+            SearchUsersAsyncCore(tenantId, userId, request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Test endpoint with path parameter that has a text prefix (v{version})
+    /// </summary>
+    /// <example><code>
+    /// await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMetadataRequest());
+    /// </code></example>
+    public WithRawResponseTask<User> GetUserMetadataAsync(
+        string tenantId,
+        string userId,
+        int version,
+        GetUserMetadataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            GetUserMetadataAsyncCore(tenantId, userId, version, request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Test endpoint with path parameters listed in different order than found in path
+    /// </summary>
+    /// <example><code>
+    /// await client.User.GetUserSpecificsAsync(
+    ///     "tenant_id",
+    ///     "user_id",
+    ///     1,
+    ///     "thought",
+    ///     new GetUserSpecificsRequest()
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<User> GetUserSpecificsAsync(
+        string tenantId,
+        string userId,
+        int version,
+        string thought,
+        GetUserSpecificsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            GetUserSpecificsAsyncCore(
+                tenantId,
+                userId,
+                version,
+                thought,
+                request,
+                options,
+                cancellationToken
+            )
+        );
     }
 }

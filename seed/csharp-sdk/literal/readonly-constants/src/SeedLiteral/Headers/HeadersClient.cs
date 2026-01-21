@@ -12,17 +12,7 @@ public partial class HeadersClient : IHeadersClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Headers.SendAsync(
-    ///     new SendLiteralsInHeadersRequest
-    ///     {
-    ///         EndpointVersion = "02-12-2024",
-    ///         Async = true,
-    ///         Query = "What is the weather today",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<SendResponse> SendAsync(
+    private async Task<WithRawResponse<SendResponse>> SendAsyncCore(
         SendLiteralsInHeadersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -54,14 +44,28 @@ public partial class HeadersClient : IHeadersClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                return new WithRawResponse<SendResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedLiteralException("Failed to deserialize response", e);
+                throw new SeedLiteralApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedLiteralApiException(
@@ -70,5 +74,26 @@ public partial class HeadersClient : IHeadersClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Headers.SendAsync(
+    ///     new SendLiteralsInHeadersRequest
+    ///     {
+    ///         EndpointVersion = "02-12-2024",
+    ///         Async = true,
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SendResponse> SendAsync(
+        SendLiteralsInHeadersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SendResponse>(
+            SendAsyncCore(request, options, cancellationToken)
+        );
     }
 }

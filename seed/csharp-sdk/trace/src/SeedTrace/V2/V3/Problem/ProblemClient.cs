@@ -13,13 +13,9 @@ public partial class ProblemClient : IProblemClient
         _client = client;
     }
 
-    /// <summary>
-    /// Returns lightweight versions of all problems
-    /// </summary>
-    /// <example><code>
-    /// await client.V2.V3.Problem.GetLightweightProblemsAsync();
-    /// </code></example>
-    public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync(
+    private async Task<
+        WithRawResponse<IEnumerable<LightweightProblemInfoV2>>
+    > GetLightweightProblemsAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -41,14 +37,30 @@ public partial class ProblemClient : IProblemClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<LightweightProblemInfoV2>>(
+                    responseBody
+                )!;
+                return new WithRawResponse<IEnumerable<LightweightProblemInfoV2>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -59,13 +71,7 @@ public partial class ProblemClient : IProblemClient
         }
     }
 
-    /// <summary>
-    /// Returns latest versions of all problems
-    /// </summary>
-    /// <example><code>
-    /// await client.V2.V3.Problem.GetProblemsAsync();
-    /// </code></example>
-    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(
+    private async Task<WithRawResponse<IEnumerable<ProblemInfoV2>>> GetProblemsAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -87,14 +93,28 @@ public partial class ProblemClient : IProblemClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<ProblemInfoV2>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -105,13 +125,7 @@ public partial class ProblemClient : IProblemClient
         }
     }
 
-    /// <summary>
-    /// Returns latest version of a problem
-    /// </summary>
-    /// <example><code>
-    /// await client.V2.V3.Problem.GetLatestProblemAsync("problemId");
-    /// </code></example>
-    public async Task<ProblemInfoV2> GetLatestProblemAsync(
+    private async Task<WithRawResponse<ProblemInfoV2>> GetLatestProblemAsyncCore(
         string problemId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,14 +151,28 @@ public partial class ProblemClient : IProblemClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+                return new WithRawResponse<ProblemInfoV2>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -155,13 +183,7 @@ public partial class ProblemClient : IProblemClient
         }
     }
 
-    /// <summary>
-    /// Returns requested version of a problem
-    /// </summary>
-    /// <example><code>
-    /// await client.V2.V3.Problem.GetProblemVersionAsync("problemId", 1);
-    /// </code></example>
-    public async Task<ProblemInfoV2> GetProblemVersionAsync(
+    private async Task<WithRawResponse<ProblemInfoV2>> GetProblemVersionAsyncCore(
         string problemId,
         int problemVersion,
         RequestOptions? options = null,
@@ -189,14 +211,28 @@ public partial class ProblemClient : IProblemClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+                return new WithRawResponse<ProblemInfoV2>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -205,5 +241,72 @@ public partial class ProblemClient : IProblemClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Returns lightweight versions of all problems
+    /// </summary>
+    /// <example><code>
+    /// await client.V2.V3.Problem.GetLightweightProblemsAsync();
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<LightweightProblemInfoV2>>(
+            GetLightweightProblemsAsyncCore(options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Returns latest versions of all problems
+    /// </summary>
+    /// <example><code>
+    /// await client.V2.V3.Problem.GetProblemsAsync();
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<ProblemInfoV2>> GetProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<ProblemInfoV2>>(
+            GetProblemsAsyncCore(options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Returns latest version of a problem
+    /// </summary>
+    /// <example><code>
+    /// await client.V2.V3.Problem.GetLatestProblemAsync("problemId");
+    /// </code></example>
+    public WithRawResponseTask<ProblemInfoV2> GetLatestProblemAsync(
+        string problemId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ProblemInfoV2>(
+            GetLatestProblemAsyncCore(problemId, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Returns requested version of a problem
+    /// </summary>
+    /// <example><code>
+    /// await client.V2.V3.Problem.GetProblemVersionAsync("problemId", 1);
+    /// </code></example>
+    public WithRawResponseTask<ProblemInfoV2> GetProblemVersionAsync(
+        string problemId,
+        int problemVersion,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ProblemInfoV2>(
+            GetProblemVersionAsyncCore(problemId, problemVersion, options, cancellationToken)
+        );
     }
 }

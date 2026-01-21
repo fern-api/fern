@@ -38,13 +38,13 @@ public partial interface IServiceClient
         CancellationToken cancellationToken = default
     );
 
-    Task<string> OptionalArgsAsync(
+    WithRawResponseTask<string> OptionalArgsAsync(
         OptionalArgsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> WithInlineTypeAsync(
+    WithRawResponseTask<string> WithInlineTypeAsync(
         InlineTypeRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -12,13 +12,7 @@ public partial class NoAuthClient : INoAuthClient
         _client = client;
     }
 
-    /// <summary>
-    /// POST request with no auth
-    /// </summary>
-    /// <example><code>
-    /// await client.NoAuth.PostWithNoAuthAsync(new Dictionary&lt;object, object?&gt;() { { "key", "value" } });
-    /// </code></example>
-    public async Task<bool> PostWithNoAuthAsync(
+    private async Task<WithRawResponse<bool>> PostWithNoAuthAsyncCore(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -42,14 +36,28 @@ public partial class NoAuthClient : INoAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
+                return new WithRawResponse<bool>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExhaustiveApiException(
@@ -58,5 +66,22 @@ public partial class NoAuthClient : INoAuthClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// POST request with no auth
+    /// </summary>
+    /// <example><code>
+    /// await client.NoAuth.PostWithNoAuthAsync(new Dictionary&lt;object, object?&gt;() { { "key", "value" } });
+    /// </code></example>
+    public WithRawResponseTask<bool> PostWithNoAuthAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<bool>(
+            PostWithNoAuthAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -20,7 +20,7 @@ public partial interface IUserClient
         CancellationToken cancellationToken = default
     );
 
-    Task<User> GetUsernameAsync(
+    WithRawResponseTask<User> GetUsernameAsync(
         GetUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

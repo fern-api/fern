@@ -12,23 +12,7 @@ public partial class QueryClient : IQueryClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Query.SendAsync(
-    ///     new SendLiteralsInQueryRequest
-    ///     {
-    ///         Prompt = "You are a helpful assistant",
-    ///         OptionalPrompt = "You are a helpful assistant",
-    ///         AliasPrompt = "You are a helpful assistant",
-    ///         AliasOptionalPrompt = "You are a helpful assistant",
-    ///         Stream = false,
-    ///         OptionalStream = false,
-    ///         AliasStream = false,
-    ///         AliasOptionalStream = false,
-    ///         Query = "What is the weather today",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<SendResponse> SendAsync(
+    private async Task<WithRawResponse<SendResponse>> SendAsyncCore(
         SendLiteralsInQueryRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,14 +60,28 @@ public partial class QueryClient : IQueryClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                return new WithRawResponse<SendResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedLiteralException("Failed to deserialize response", e);
+                throw new SeedLiteralApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedLiteralApiException(
@@ -92,5 +90,32 @@ public partial class QueryClient : IQueryClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Query.SendAsync(
+    ///     new SendLiteralsInQueryRequest
+    ///     {
+    ///         Prompt = "You are a helpful assistant",
+    ///         OptionalPrompt = "You are a helpful assistant",
+    ///         AliasPrompt = "You are a helpful assistant",
+    ///         AliasOptionalPrompt = "You are a helpful assistant",
+    ///         Stream = false,
+    ///         OptionalStream = false,
+    ///         AliasStream = false,
+    ///         AliasOptionalStream = false,
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SendResponse> SendAsync(
+        SendLiteralsInQueryRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SendResponse>(
+            SendAsyncCore(request, options, cancellationToken)
+        );
     }
 }

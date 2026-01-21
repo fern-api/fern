@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalBodyAsync</a>(object? { ... }) -> string</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalBodyAsync</a>(object? { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ await client.Optional.SendOptionalBodyAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalTypedBodyAsync</a>(SendOptionalBodyRequest? { ... }) -> string</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalTypedBodyAsync</a>(SendOptionalBodyRequest? { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -90,7 +90,7 @@ await client.Optional.SendOptionalTypedBodyAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalNullableWithAllOptionalPropertiesAsync</a>(actionId, id, DeployParams? { ... }) -> DeployResponse</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalNullableWithAllOptionalPropertiesAsync</a>(actionId, id, DeployParams? { ... }) -> WithRawResponseTask&lt;DeployResponse&gt;</code></summary>
 <dl>
 <dd>
 
