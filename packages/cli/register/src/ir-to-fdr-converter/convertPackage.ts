@@ -32,7 +32,8 @@ export function convertPackage(
         pointsTo:
             irPackage.navigationConfig != null
                 ? FdrCjsSdk.api.v1.SubpackageId(irPackage.navigationConfig.pointsTo)
-                : undefined
+                : undefined,
+        graphqlOperations: undefined
     };
 }
 
