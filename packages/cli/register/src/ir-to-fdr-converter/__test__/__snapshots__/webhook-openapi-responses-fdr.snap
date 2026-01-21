@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_paymentSessions",
@@ -35,6 +36,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
+      "graphqlOperations": undefined,
       "name": "documents",
       "pointsTo": undefined,
       "subpackageId": "subpackage_documents",
@@ -214,6 +216,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
+      "graphqlOperations": undefined,
       "name": "paymentSessions",
       "pointsTo": undefined,
       "subpackageId": "subpackage_paymentSessions",
