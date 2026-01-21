@@ -6,11 +6,6 @@
 //!
 //! ```rust
 //! use seed_pagination::prelude::*;
-//! use seed_pagination::{
-//!     MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator,
-//!     MultipleFilterSearchRequestValue, SearchRequest, SearchRequestQuery, SingleFilterSearchRequest,
-//!     SingleFilterSearchRequestOperator, StartingAfterPaging,
-//! };
 //!
 //! #[tokio::main]
 //! async fn main() {

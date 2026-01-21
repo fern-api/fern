@@ -115,6 +115,8 @@ export class EndpointSnippetGenerator {
         const useStatements: rust.UseStatement[] = [];
 
         // Use prelude import for all crate types
+        // The prelude re-exports all types via `pub use crate::api::*;`
+        // so no additional type imports are needed
         useStatements.push(
             new rust.UseStatement({
                 path: `${this.context.getCrateName()}::prelude`,
@@ -122,25 +124,12 @@ export class EndpointSnippetGenerator {
             })
         );
 
-        // Collect additional type imports from the endpoint request
-        const typeImports = new Set<string>();
-        this.collectEndpointTypeImports(endpoint, typeImports);
-
-        // Add specific type imports that may not be in prelude (e.g., union variant types)
-        if (typeImports.size > 0) {
-            useStatements.push(
-                new rust.UseStatement({
-                    path: this.context.getCrateName(),
-                    items: Array.from(typeImports)
-                })
-            );
-        }
-
         return useStatements;
     }
 
     /**
      * Collect all type imports needed for an endpoint's request parameters.
+     * Note: Currently unused as prelude::* exports all types, but kept for potential future use.
      */
     private collectEndpointTypeImports(endpoint: FernIr.dynamic.Endpoint, imports: Set<string>): void {
         const request = endpoint.request;

@@ -31,6 +31,11 @@ public class AsyncUsersClient {
     }
 
     public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listUsernamesCustom(
+            RequestOptions requestOptions) {
+        return this.rawClient.listUsernamesCustom(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listUsernamesCustom(
             ListUsernamesRequestCustom request) {
         return this.rawClient.listUsernamesCustom(request).thenApply(response -> response.body());
     }

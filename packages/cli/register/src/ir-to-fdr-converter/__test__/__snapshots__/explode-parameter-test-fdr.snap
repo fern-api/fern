@@ -120,6 +120,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -231,6 +232,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -255,6 +258,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -279,6 +284,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -303,6 +310,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -319,8 +328,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "integer",
                 },
               },
@@ -344,10 +356,13 @@
                 "type": "id",
                 "value": "Item",
               },
+              "maxItems": undefined,
+              "minItems": undefined,
               "type": "list",
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -362,6 +377,8 @@
                     "type": "id",
                     "value": "Item",
                   },
+                  "maxItems": undefined,
+                  "minItems": undefined,
                   "type": "list",
                 },
               },
@@ -482,6 +499,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -586,6 +604,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -674,6 +694,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "unknown",

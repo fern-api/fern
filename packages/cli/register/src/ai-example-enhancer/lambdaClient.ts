@@ -1,6 +1,11 @@
 import { FernToken } from "@fern-api/auth";
+import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
+
+// Configuration constants for AI enhancement
+const DEFAULT_AI_ENHANCEMENT_MAX_RETRIES = 0; // 0 retries = 1 attempt total
+const DEFAULT_AI_ENHANCEMENT_TIMEOUT_MS = 15000; // 15 seconds
 
 type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">> &
     Pick<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">;
@@ -24,8 +29,8 @@ export class LambdaExampleEnhancer {
             enabled: config.enabled,
             openaiApiKey: config.openaiApiKey,
             model: config.model ?? "gpt-4o-mini",
-            maxRetries: config.maxRetries ?? 1, // Single retry - caller handles additional retries
-            requestTimeoutMs: 75000, // Increased timeout for larger batches
+            maxRetries: config.maxRetries ?? DEFAULT_AI_ENHANCEMENT_MAX_RETRIES,
+            requestTimeoutMs: config.requestTimeoutMs ?? DEFAULT_AI_ENHANCEMENT_TIMEOUT_MS,
             styleInstructions: config.styleInstructions
         };
         this.context = context;
@@ -98,6 +103,16 @@ export class LambdaExampleEnhancer {
             };
         }
 
+        // Check for air-gapped environment before attempting network calls
+        const isAirGapped = await detectAirGappedMode(`${this.venusOrigin}/health`, this.context.logger);
+        if (isAirGapped) {
+            this.context.logger.debug("Skipping AI example enhancement in air-gapped environment");
+            return {
+                enhancedRequestExample: request.originalRequestExample,
+                enhancedResponseExample: request.originalResponseExample
+            };
+        }
+
         // Fetch JWT from Venus (cached after first call)
         let jwt: string;
         try {
@@ -113,10 +128,11 @@ export class LambdaExampleEnhancer {
         }
 
         let lastError: Error | undefined;
-        for (let attempt = 1; attempt <= this.config.maxRetries; attempt++) {
+        const maxAttempts = this.config.maxRetries + 1; // maxRetries=0 means 1 attempt, maxRetries=1 means 2 attempts
+        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 this.context.logger.debug(
-                    `Enhancing example for ${request.method} ${request.endpointPath} via lambda (attempt ${attempt}/${this.config.maxRetries})`
+                    `Enhancing example for ${request.method} ${request.endpointPath} via lambda (attempt ${attempt}/${maxAttempts})`
                 );
 
                 const requestBody = {
@@ -168,17 +184,15 @@ export class LambdaExampleEnhancer {
                 lastError = error as Error;
                 this.context.logger.warn(`Attempt ${attempt} failed to enhance example: ${error}`);
 
-                if (attempt < this.config.maxRetries) {
-                    // Exponential backoff
+                if (attempt < maxAttempts) {
+                    // Exponential backoff before retry
                     const delay = Math.min(1000 * Math.pow(2, attempt - 1), 10000);
                     await new Promise((resolve) => setTimeout(resolve, delay));
                 }
             }
         }
 
-        this.context.logger.error(
-            `Failed to enhance example after ${this.config.maxRetries} attempts: ${lastError?.message}`
-        );
+        this.context.logger.error(`Failed to enhance example after ${maxAttempts} attempts: ${lastError?.message}`);
 
         // Return original examples if enhancement fails
         return {

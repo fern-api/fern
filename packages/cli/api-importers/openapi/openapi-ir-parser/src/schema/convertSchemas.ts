@@ -761,7 +761,9 @@ export function convertSchemaObject(
                 namespace,
                 groupName,
                 example: getExampleAsArray({ schema, logger: context.logger, fallback }),
-                source
+                source,
+                minItems: schema.minItems,
+                maxItems: schema.maxItems
             });
         }
 
@@ -787,7 +789,9 @@ export function convertSchemaObject(
                 groupName,
                 encoding,
                 example: schema.example,
-                source
+                source,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         }
 
@@ -1233,7 +1237,9 @@ export function convertSchemaObject(
                 additionalProperties: schema.additionalProperties,
                 availability,
                 encoding,
-                source
+                source,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         }
 
@@ -1277,7 +1283,9 @@ export function convertSchemaObject(
                 namespace,
                 groupName,
                 encoding,
-                example: schema.example
+                example: schema.example,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         }
 

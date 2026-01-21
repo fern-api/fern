@@ -268,6 +268,14 @@ public class AsyncRawServiceClient {
      * List or search for users
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> listUsers(
+            RequestOptions requestOptions) {
+        return listUsers(ListUsersRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> listUsers(
             ListUsersRequest request) {
         return listUsers(request, null);
     }
@@ -354,6 +362,14 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<User>> getUserById(String userId) {
         return getUserById(userId, GetUserRequest.builder().build());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> getUserById(
+            String userId, RequestOptions requestOptions) {
+        return getUserById(userId, GetUserRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -496,6 +512,14 @@ public class AsyncRawServiceClient {
      * Update a user
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<User>> updateUser(
+            String userId, RequestOptions requestOptions) {
+        return updateUser(userId, UpdateUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> updateUser(
             String userId, UpdateUserRequest request) {
         return updateUser(userId, request, null);
     }
@@ -626,6 +650,14 @@ public class AsyncRawServiceClient {
      * List all connections
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> listConnections(
+            RequestOptions requestOptions) {
+        return listConnections(ListConnectionsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all connections
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> listConnections(
             ListConnectionsRequest request) {
         return listConnections(request, null);
     }
@@ -704,6 +736,14 @@ public class AsyncRawServiceClient {
      * Get a connection by ID
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> getConnection(
+            String connectionId, RequestOptions requestOptions) {
+        return getConnection(connectionId, GetConnectionRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> getConnection(
             String connectionId, GetConnectionRequest request) {
         return getConnection(connectionId, request, null);
     }
@@ -767,6 +807,14 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> listClients() {
         return listClients(ListClientsRequest.builder().build());
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> listClients(
+            RequestOptions requestOptions) {
+        return listClients(ListClientsRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -864,6 +912,14 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<Client>> getClient(String clientId) {
         return getClient(clientId, GetClientRequest.builder().build());
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<Client>> getClient(
+            String clientId, RequestOptions requestOptions) {
+        return getClient(clientId, GetClientRequest.builder().build(), requestOptions);
     }
 
     /**

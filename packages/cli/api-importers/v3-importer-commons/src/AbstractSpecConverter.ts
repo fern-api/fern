@@ -193,7 +193,12 @@ export abstract class AbstractSpecConverter<
             Object.entries(ir.websocketChannels ?? {}).filter(([channelId]) => filteredChannels.has(channelId))
         );
         ir.webhookGroups = Object.fromEntries(
-            Object.entries(ir.webhookGroups).filter(([webhookId]) => filteredWebhooks.has(webhookId))
+            Object.entries(ir.webhookGroups).map(([webhookGroupId, webhookGroup]) => {
+                const filteredWebhookGroup = webhookGroup.filter(
+                    (webhook) => webhook.id != null && filteredWebhooks.has(webhook.id)
+                );
+                return [webhookGroupId, filteredWebhookGroup];
+            })
         );
         return ir;
     }

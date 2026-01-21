@@ -39,6 +39,12 @@ export class LocalScriptRunner extends ScriptRunner {
             return { type: "success" };
         }
 
+        // If skipScripts is true, skip all scripts for this fixture
+        if (skipScripts === true) {
+            taskContext.logger.info(`Skipping all scripts for ${id} (configured in fixture)`);
+            return { type: "success" };
+        }
+
         const scripts = this.workspace.workspaceConfig.scripts ?? [];
 
         let buildTimeMs: number | undefined;
@@ -48,7 +54,7 @@ export class LocalScriptRunner extends ScriptRunner {
 
         const buildStartTime = Date.now();
         for (const script of scripts) {
-            if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
+            if (Array.isArray(skipScripts) && script.name != null && skipScripts.includes(script.name)) {
                 taskContext.logger.info(`Skipping script "${script.name}" for ${id} (configured in fixture)`);
                 continue;
             }
@@ -84,7 +90,7 @@ export class LocalScriptRunner extends ScriptRunner {
 
         const testStartTime = Date.now();
         for (const script of scripts) {
-            if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
+            if (Array.isArray(skipScripts) && script.name != null && skipScripts.includes(script.name)) {
                 continue;
             }
 

@@ -138,10 +138,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public async getOpenAPIIr(
         {
             context,
-            relativePathToDependency
+            relativePathToDependency,
+            loadAiExamples = false
         }: {
             context: TaskContext;
             relativePathToDependency?: RelativeFilePath;
+            loadAiExamples?: boolean;
         },
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
@@ -150,7 +152,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             context,
             documents: await this.loader.loadDocuments({
                 context,
-                specs: openApiSpecs
+                specs: openApiSpecs,
+                loadAiExamples
             }),
             options: {
                 ...settings,
@@ -478,12 +481,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 const absoluteFilepathToOverrides = spec.overrides
                     ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides))
                     : undefined;
+                const absoluteFilepathToOverlays = spec.overlays
+                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
+                    : undefined;
 
                 // Create a minimal OpenAPI spec with default settings
                 const openApiSpec: OpenAPISpec = {
                     type: "openapi",
                     absoluteFilepath,
                     absoluteFilepathToOverrides,
+                    absoluteFilepathToOverlays,
                     // Use default settings from existing specs for compatibility
                     settings: this.specs.length > 0 ? this.specs[0]?.settings : undefined,
                     source: {

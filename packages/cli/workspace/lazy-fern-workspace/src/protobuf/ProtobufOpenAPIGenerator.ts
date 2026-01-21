@@ -1,9 +1,9 @@
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { cp, readFile, unlink, writeFile } from "fs/promises";
+import { access, cp, readFile, unlink, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { getProtobufYamlV1 } from "./utils";
+import { detectAirGappedMode, getProtobufYamlV1 } from "./utils";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
@@ -11,6 +11,7 @@ const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/op
 
 export class ProtobufOpenAPIGenerator {
     private context: TaskContext;
+    private isAirGapped: boolean | undefined;
 
     constructor({ context }: { context: TaskContext }) {
         this.context = context;
@@ -56,6 +57,11 @@ export class ProtobufOpenAPIGenerator {
         deps: string[];
         existingBufLockContents?: string;
     }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
+        // Detect air-gapped mode once at the start if we have dependencies
+        if (deps.length > 0 && this.isAirGapped === undefined) {
+            this.isAirGapped = await detectAirGappedMode(absoluteFilepathToProtobufRoot, this.context.logger);
+        }
+
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({
             absoluteFilepathToProtobufRoot,
             relativeFilepathToProtobufRoot
@@ -140,14 +146,26 @@ export class ProtobufOpenAPIGenerator {
                 await writeFile(bufLockPath, existingBufLockContents);
                 cleanupBufLock = true;
             } else if (deps.length > 0) {
-                const bufDepUpdateResult = await buf(["dep", "update"]);
+                // If we're in air-gapped mode, skip buf dep update entirely
+                if (this.isAirGapped) {
+                    this.context.logger.debug("Air-gapped mode: skipping buf dep update");
+                    // Verify buf.lock exists in the working directory (should have been copied from source)
+                    try {
+                        await access(bufLockPath);
+                    } catch {
+                        this.context.failAndThrow(
+                            "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies."
+                        );
+                    }
+                } else {
+                    // Run buf dep update to populate the cache (needed at build time)
+                    await buf(["dep", "update"]);
+                }
+                // Read buf.lock contents for caching
                 try {
                     bufLockContents = await readFile(bufLockPath, "utf-8");
-                } catch (err) {
+                } catch {
                     bufLockContents = undefined;
-                }
-                if (bufDepUpdateResult.exitCode !== 0) {
-                    this.context.failAndThrow(bufDepUpdateResult.stderr);
                 }
             }
 

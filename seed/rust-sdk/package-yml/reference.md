@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">echo</a>(id: String, request: EchoRequest) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">echo</a>(id: String, request: EchoRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,6 @@
 
 ```rust
 use seed_package_yml::prelude::*;
-use seed_package_yml::EchoRequest;
 
 #[tokio::main]
 async fn main() {
@@ -59,7 +58,7 @@ async fn main() {
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">nop</a>(id: String, nested_id: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">nop</a>(id: String, nested_id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

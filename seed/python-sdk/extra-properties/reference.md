@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -> AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 

@@ -75,6 +75,11 @@ types:
       next: string
       data: list<User>
 
+  ListUsersTopLevelCursorPaginationResponse:
+    properties:
+      next_cursor: optional<string>
+      data: list<User>
+
   Page:
     properties:
       page:
@@ -154,6 +159,44 @@ service:
                 The object that contains the cursor used for pagination
                 in order to fetch the next page of results.
       response: ListUsersPaginationResponse
+
+    listWithTopLevelBodyCursorPagination:
+      docs: |
+        Pagination endpoint with a top-level cursor field in the request body.
+        This tests that the mock server correctly ignores cursor mismatches
+        when getNextPage() is called with a different cursor value.
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /top-level-cursor
+      request:
+        name: ListUsersTopLevelBodyCursorPaginationRequest
+        body:
+          properties:
+            cursor:
+              type: optional<string>
+              docs: |
+                The cursor used for pagination in order to fetch
+                the next page of results.
+            filter:
+              type: optional<string>
+              docs: An optional filter to apply to the results.
+      response: ListUsersTopLevelCursorPaginationResponse
+      examples:
+        - name: WithCursor
+          request:
+            cursor: "initial_cursor"
+            filter: "active"
+          response:
+            body:
+              next_cursor: "next_cursor_value"
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
 
     listWithOffsetPagination:
       pagination:

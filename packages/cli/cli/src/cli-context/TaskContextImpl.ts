@@ -1,3 +1,4 @@
+import { Log, logErrorMessage } from "@fern-api/cli-logger";
 import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
@@ -11,9 +12,6 @@ import {
     TaskResult
 } from "@fern-api/task-context";
 import chalk from "chalk";
-
-import { Log } from "./Log";
-import { logErrorMessage } from "./logErrorMessage";
 
 export declare namespace TaskContextImpl {
     export interface Init {

@@ -49,6 +49,11 @@ public class AsyncRawUserClient {
                 .addPathSegments("user")
                 .addPathSegments("username");
         QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -107,6 +112,11 @@ public class AsyncRawUserClient {
                 .addPathSegments("user")
                 .addPathSegments("username-referenced");
         QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -158,17 +168,26 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<SeedRequestParametersHttpResponse<Void>> createUsernameOptional(
+            RequestOptions requestOptions) {
+        return createUsernameOptional(Optional.empty(), requestOptions);
+    }
+
+    public CompletableFuture<SeedRequestParametersHttpResponse<Void>> createUsernameOptional(
             Optional<CreateUsernameBodyOptionalProperties> request) {
         return createUsernameOptional(request, null);
     }
 
     public CompletableFuture<SeedRequestParametersHttpResponse<Void>> createUsernameOptional(
             Optional<CreateUsernameBodyOptionalProperties> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("user")
-                .addPathSegments("username-optional")
-                .build();
+                .addPathSegments("username-optional");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -180,7 +199,7 @@ public class AsyncRawUserClient {
             throw new SeedRequestParametersException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -252,6 +271,11 @@ public class AsyncRawUserClient {
         QueryStringMapper.addQueryParameter(httpUrl, "bigIntParam", request.getBigIntParam(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "excludeUser", request.getExcludeUser(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), true);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

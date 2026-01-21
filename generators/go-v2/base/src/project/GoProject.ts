@@ -84,10 +84,17 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
         const isModule = this.getModuleConfig({ config: this.context.config }) != null;
         if (files.length > 0 && isModule) {
-            await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
-                doNotPipeOutput: true,
-                cwd: this.absolutePathToOutputDirectory
-            });
+            try {
+                await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
+                    doNotPipeOutput: true,
+                    cwd: this.absolutePathToOutputDirectory
+                });
+            } catch (error) {
+                this.context.logger.warn(
+                    `Failed to format Go files with 'go fmt': ${error instanceof Error ? error.message : String(error)}. ` +
+                        "The generated files have been written but may not be properly formatted."
+                );
+            }
         }
         return this.absolutePathToOutputDirectory;
     }

@@ -12,15 +12,7 @@ public partial class TestGroupClient : ITestGroupClient
         _client = client;
     }
 
-    /// <summary>
-    /// Post a nullable request body
-    /// </summary>
-    /// <example><code>
-    /// await client.TestGroup.TestMethodNameAsync(
-    ///     new TestMethodNameTestGroupRequest { PathParam = "path_param", Body = new PlainObject() }
-    /// );
-    /// </code></example>
-    public async Task<object> TestMethodNameAsync(
+    private async Task<WithRawResponse<object>> TestMethodNameAsyncCore(
         TestMethodNameTestGroupRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -58,14 +50,28 @@ public partial class TestGroupClient : ITestGroupClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<object>(responseBody)!;
+                return new WithRawResponse<object>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
@@ -88,5 +94,24 @@ public partial class TestGroupClient : ITestGroupClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Post a nullable request body
+    /// </summary>
+    /// <example><code>
+    /// await client.TestGroup.TestMethodNameAsync(
+    ///     new TestMethodNameTestGroupRequest { PathParam = "path_param", Body = new PlainObject() }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<object> TestMethodNameAsync(
+        TestMethodNameTestGroupRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<object>(
+            TestMethodNameAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -159,6 +159,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -289,6 +290,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -375,8 +377,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },
@@ -454,8 +459,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },

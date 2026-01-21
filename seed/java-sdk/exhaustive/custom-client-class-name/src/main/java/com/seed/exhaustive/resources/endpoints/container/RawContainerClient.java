@@ -314,6 +314,10 @@ public class RawContainerClient {
         return getAndReturnOptional(Optional.empty());
     }
 
+    public BestHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(RequestOptions requestOptions) {
+        return getAndReturnOptional(Optional.empty(), requestOptions);
+    }
+
     public BestHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request) {
         return getAndReturnOptional(request, null);

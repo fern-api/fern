@@ -55,6 +55,18 @@ service:
           properties:
             file: file
 
+    justFileWithOptionalQueryParams:
+      path: /just-file-with-optional-query-params
+      method: POST
+      request:
+        name: JustFileWithOptionalQueryParamsRequest
+        query-parameters:
+          maybeString: optional<string>
+          maybeInteger: optional<integer>
+        body:
+          properties:
+            file: file
+
     withContentType:
       path: "/with-content-type"
       method: POST

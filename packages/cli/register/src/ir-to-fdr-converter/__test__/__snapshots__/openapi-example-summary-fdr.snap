@@ -1,0 +1,524 @@
+{
+  "apiName": "Example Summary Test",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/payments",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "data": [
+                {
+                  "amount": 4999,
+                  "currency": "USD",
+                  "id": "PAY123",
+                },
+              ],
+              "hasMore": false,
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "data": [
+                  {
+                    "amount": 4999,
+                    "currency": "USD",
+                    "id": "PAY123",
+                  },
+                ],
+                "hasMore": false,
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "listPayments",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "List payments",
+        "originalEndpointId": "endpoint_.listPayments",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/payments",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "OK",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "PaymentList",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "OK",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "PaymentList",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "Payment Response",
+            "path": "/payments",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": {
+              "type": "json",
+              "value": undefined,
+            },
+            "responseBody": {
+              "amount": 4999,
+              "currency": "USD",
+              "id": "PAY123",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": 4999,
+                "currency": "USD",
+                "id": "PAY123",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "Card Payment",
+            "path": "/payments",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "amount": 4999,
+              "currency": "USD",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": 4999,
+                "currency": "USD",
+              },
+            },
+            "responseBody": {
+              "amount": 4999,
+              "currency": "USD",
+              "id": "PAY123",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": 4999,
+                "currency": "USD",
+                "id": "PAY123",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "Apple Pay Payment",
+            "path": "/payments",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "amount": 2999,
+              "currency": "USD",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": 2999,
+                "currency": "USD",
+              },
+            },
+            "responseBody": {
+              "amount": 4999,
+              "currency": "USD",
+              "id": "PAY123",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": 4999,
+                "currency": "USD",
+                "id": "PAY123",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "createPayment",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create a payment",
+        "originalEndpointId": "endpoint_.createPayment",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/payments",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "PaymentRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "PaymentRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "OK",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Payment",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "OK",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Payment",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "PaymentRequest",
+      "Payment",
+      "PaymentList",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "Payment": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Payment",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "amount",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "integer",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "currency",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "PaymentList": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "PaymentList",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "data",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Payment",
+                },
+                "maxItems": undefined,
+                "minItems": undefined,
+                "type": "list",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "hasMore",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "type": "boolean",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "PaymentRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "PaymentRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "amount",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "integer",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "currency",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

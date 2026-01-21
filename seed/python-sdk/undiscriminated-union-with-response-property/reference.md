@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_union</a>() -> AsyncHttpResponse[MyUnion]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_union</a>() -&gt; AsyncHttpResponse[MyUnion]</code></summary>
 <dl>
 <dd>
 
@@ -45,7 +45,7 @@ client.get_union()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">list_unions</a>() -> AsyncHttpResponse[typing.List[MyUnion]]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">list_unions</a>() -&gt; AsyncHttpResponse[typing.List[MyUnion]]</code></summary>
 <dl>
 <dd>
 

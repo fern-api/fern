@@ -2,13 +2,13 @@ namespace SeedUnions;
 
 public partial interface IUnionClient
 {
-    Task<Shape> GetAsync(
+    WithRawResponseTask<Shape> GetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<bool> UpdateAsync(
+    WithRawResponseTask<bool> UpdateAsync(
         Shape request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

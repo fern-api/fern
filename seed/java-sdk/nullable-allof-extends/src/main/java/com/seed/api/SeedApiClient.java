@@ -48,6 +48,13 @@ public class SeedApiClient {
     /**
      * Creates a test object with nullable allOf in request body.
      */
+    public RootObject createTest(RequestOptions requestOptions) {
+        return this.rawClient.createTest(requestOptions).body();
+    }
+
+    /**
+     * Creates a test object with nullable allOf in request body.
+     */
     public RootObject createTest(RootObject request) {
         return this.rawClient.createTest(request).body();
     }

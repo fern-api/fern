@@ -12,13 +12,7 @@ public partial class BasicAuthClient : IBasicAuthClient
         _client = client;
     }
 
-    /// <summary>
-    /// GET request with basic auth scheme
-    /// </summary>
-    /// <example><code>
-    /// await client.BasicAuth.GetWithBasicAuthAsync();
-    /// </code></example>
-    public async Task<bool> GetWithBasicAuthAsync(
+    private async Task<WithRawResponse<bool>> GetWithBasicAuthAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -40,17 +34,28 @@ public partial class BasicAuthClient : IBasicAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
+                return new WithRawResponse<bool>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedBasicAuthEnvironmentVariablesException(
+                throw new SeedBasicAuthEnvironmentVariablesApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
@@ -75,15 +80,7 @@ public partial class BasicAuthClient : IBasicAuthClient
         }
     }
 
-    /// <summary>
-    /// POST request with basic auth scheme
-    /// </summary>
-    /// <example><code>
-    /// await client.BasicAuth.PostWithBasicAuthAsync(
-    ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
-    /// );
-    /// </code></example>
-    public async Task<bool> PostWithBasicAuthAsync(
+    private async Task<WithRawResponse<bool>> PostWithBasicAuthAsyncCore(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -107,17 +104,28 @@ public partial class BasicAuthClient : IBasicAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
+                return new WithRawResponse<bool>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedBasicAuthEnvironmentVariablesException(
+                throw new SeedBasicAuthEnvironmentVariablesApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
@@ -142,5 +150,38 @@ public partial class BasicAuthClient : IBasicAuthClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// GET request with basic auth scheme
+    /// </summary>
+    /// <example><code>
+    /// await client.BasicAuth.GetWithBasicAuthAsync();
+    /// </code></example>
+    public WithRawResponseTask<bool> GetWithBasicAuthAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<bool>(GetWithBasicAuthAsyncCore(options, cancellationToken));
+    }
+
+    /// <summary>
+    /// POST request with basic auth scheme
+    /// </summary>
+    /// <example><code>
+    /// await client.BasicAuth.PostWithBasicAuthAsync(
+    ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<bool> PostWithBasicAuthAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<bool>(
+            PostWithBasicAuthAsyncCore(request, options, cancellationToken)
+        );
     }
 }

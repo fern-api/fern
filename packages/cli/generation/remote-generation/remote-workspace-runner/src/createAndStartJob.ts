@@ -157,8 +157,8 @@ async function createJob({
             },
             insufficientPermissions: () => {
                 return context.failAndThrow(
-                    "You do not have permission to run this generator. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
-                        "If you believe this is an error, please contact support@buildwithfern.com"
+                    `You do not have permission to run this generator for organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
                 );
             },
             orgNotConfiguredForWhitelabel: () => {

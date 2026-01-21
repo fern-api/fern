@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">SearchAsync</a>(SearchRequest { ... }) -> SearchResponse</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">SearchAsync</a>(SearchRequest { ... }) -> WithRawResponseTask&lt;SearchResponse&gt;</code></summary>
 <dl>
 <dd>
 

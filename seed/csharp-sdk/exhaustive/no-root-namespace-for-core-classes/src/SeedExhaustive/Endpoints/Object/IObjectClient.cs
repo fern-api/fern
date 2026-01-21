@@ -1,3 +1,4 @@
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -5,38 +6,38 @@ namespace SeedExhaustive.Endpoints;
 
 public partial interface IObjectClient
 {
-    Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
+    WithRawResponseTask<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
+    WithRawResponseTask<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
+    WithRawResponseTask<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
         ObjectWithMapOfMap request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
+    WithRawResponseTask<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
         NestedObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
+    WithRawResponseTask<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
         string string_,
         NestedObjectWithRequiredField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
+    WithRawResponseTask<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
         IEnumerable<NestedObjectWithRequiredField> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

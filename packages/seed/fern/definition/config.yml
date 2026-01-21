@@ -194,8 +194,16 @@ types:
         docs: Overrides the default output mode
       license: optional<unknown>
       skipScripts:
-        docs: List of script names to skip.
-        type: optional<list<string>>
+        docs: |
+          Either a boolean to skip all scripts, or a list of script names to skip.
+          When true, all build and test scripts will be skipped for this fixture.
+        type: optional<SkipScripts>
+
+  SkipScripts:
+    discriminated: false
+    union:
+      - boolean
+      - list<string>
 
   ReadmeConfig:
     properties:

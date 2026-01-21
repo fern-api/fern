@@ -1,0 +1,15 @@
+edition: 2026-01-01
+
+org: acme
+
+cli:
+  version: 0.1.0
+
+sdks:
+  autorelease: true
+  targets:
+    node:
+      lang: typescript
+      version: "1.4.0"
+      output:
+        path: ./sdks/typescript-sdk

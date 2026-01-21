@@ -26,7 +26,9 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 additionalProperties: schema.additionalProperties,
                 availability: schema.availability,
                 source: schema.source,
-                inline: schema.inline
+                inline: schema.inline,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         case "array":
             return Schema.array({
@@ -38,7 +40,9 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 title: schema.title,
                 namespace: schema.namespace,
                 groupName: schema.groupName,
-                inline: schema.inline
+                inline: schema.inline,
+                minItems: schema.minItems,
+                maxItems: schema.maxItems
             });
         case "enum":
             return Schema.enum({
@@ -121,7 +125,9 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 namespace: schema.namespace,
                 groupName: schema.groupName,
                 encoding: schema.encoding,
-                inline: schema.inline
+                inline: schema.inline,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         case "reference":
             return Schema.reference({
@@ -210,6 +216,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 description: oneOfSchema.description,
                 availability: oneOfSchema.availability,
                 discriminantProperty: oneOfSchema.discriminantProperty,
+                discriminantPropertyNameOverride: oneOfSchema.discriminantPropertyNameOverride,
                 generatedName: oneOfSchema.generatedName,
                 title: oneOfSchema.title,
                 nameOverride: oneOfSchema.nameOverride,

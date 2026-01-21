@@ -35,6 +35,13 @@ public class SeedJavaOptionalNullableQueryParamsClient {
     /**
      * Search endpoint with optional nullable query params with defaults
      */
+    public SearchResponse search(RequestOptions requestOptions) {
+        return this.rawClient.search(requestOptions).body();
+    }
+
+    /**
+     * Search endpoint with optional nullable query params with defaults
+     */
     public SearchResponse search(SearchRequest request) {
         return this.rawClient.search(request).body();
     }

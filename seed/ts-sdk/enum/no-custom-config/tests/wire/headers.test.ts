@@ -4,31 +4,26 @@ import { SeedEnumClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("HeadersClient", () => {
-    
     test("send", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedEnumClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        
+        const client = new SeedEnumClient({ maxRetries: 0, environment: server.baseUrl });
+
         server
             .mockEndpoint()
-            .post("/headers").header("operand", ">")
-                    .header("maybeOperand", ">")
-                    .header("operandOrColor", "red")
-                    .respondWith()
-            .statusCode(200).build();
+            .post("/headers")
+            .header("operand", ">")
+            .header("maybeOperand", ">")
+            .header("operandOrColor", "red")
+            .respondWith()
+            .statusCode(200)
+            .build();
 
-        
-                    
-                            const response = await client.headers.send({
-    operand: ">",
-    maybeOperand: ">",
-    operandOrColor: "red",
-    maybeOperandOrColor: undefined
-});
-                            expect(response).toEqual(undefined);
-                          
-                
+        const response = await client.headers.send({
+            operand: ">",
+            maybeOperand: ">",
+            operandOrColor: "red",
+            maybeOperandOrColor: undefined,
+        });
+        expect(response).toEqual(undefined);
     });
-          
 });

@@ -40,6 +40,7 @@ public class BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
                     .WithBodyAsJson(requestJson_0)
             )
@@ -72,6 +73,7 @@ public class BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
                     .WithBodyAsJson(requestJson_1)
             )

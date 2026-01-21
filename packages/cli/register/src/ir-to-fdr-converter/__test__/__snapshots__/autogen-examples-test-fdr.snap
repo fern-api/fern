@@ -115,6 +115,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -262,6 +263,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -381,6 +383,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",

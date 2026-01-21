@@ -151,10 +151,13 @@
                   "type": "id",
                   "value": "User",
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -169,6 +172,8 @@
                       "type": "id",
                       "value": "User",
                     },
+                    "maxItems": undefined,
+                    "minItems": undefined,
                     "type": "list",
                   },
                 },
@@ -295,6 +300,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
