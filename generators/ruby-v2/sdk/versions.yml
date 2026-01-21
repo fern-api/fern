@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc82
+  changelogEntry:
+    - summary: |
+        Add GitHub CI workflow generation for self-hosted mode. When self-hosted mode is enabled,
+        the generator now creates a `.github/workflows/ci.yml` file with compile, test, and publish
+        jobs. The publish job is triggered on tag pushes and publishes the gem to RubyGems using
+        OIDC trusted publishing. Also generates a comprehensive `.gitignore` file.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 61
+
 - version: 1.0.0-rc81
   changelogEntry:
     - summary: |
