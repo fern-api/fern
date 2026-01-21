@@ -1,6 +1,6 @@
 # Reference
 ## PropertyBasedError
-<details><summary><code>$client->propertyBasedError->throwError() -> string</code></summary>
+<details><summary><code>$client-&gt;propertyBasedError-&gt;throwError() -> string</code></summary>
 <dl>
 <dd>
 

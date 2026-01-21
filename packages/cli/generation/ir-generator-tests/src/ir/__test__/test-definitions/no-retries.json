@@ -1098,6 +1098,7 @@
                         "disabled": true
                     },
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

@@ -355,7 +355,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         }
         return this.csharp.annotation({
             reference: this.csharp.classReference({
-                origin: this.model.staticExplicit("JsonAccess"),
+                origin: this.model.staticExplicit("JsonAccessAttribute"),
                 namespace: this.namespaces.core
             }),
             argument
@@ -366,6 +366,24 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return this.csharp.annotation({
             reference: this.System.Text.Json.Serialization.JsonPropertyName,
             argument: `"${name}"`
+        });
+    }
+
+    public createOptionalAttribute(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.classReference({
+                origin: this.model.staticExplicit("OptionalAttribute"),
+                namespace: this.namespaces.core
+            })
+        });
+    }
+
+    public createNullableAttribute(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.classReference({
+                origin: this.model.staticExplicit("NullableAttribute"),
+                namespace: this.namespaces.core
+            })
         });
     }
 
@@ -469,7 +487,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     public isNullable(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "nullable";
+                if (typeReference.container.type === "nullable") {
+                    return true;
+                }
+                // Only check through optional wrapper if experimental flag is enabled
+                if (this.settings.enableExplicitNullableOptional && typeReference.container.type === "optional") {
+                    return this.isNullable(typeReference.container.optional);
+                }
+                return false;
         }
         return false;
     }

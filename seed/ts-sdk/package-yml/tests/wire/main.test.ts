@@ -4,28 +4,24 @@ import { SeedPackageYmlClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedPackageYmlClient", () => {
-    
     test("echo", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPackageYmlClient({ "maxRetries" : 0 , "id" : "id-ksfd9c1" , "environment" : server.baseUrl });
-        const rawRequestBody = { "name" : "Hello world!" , "size" : 20 };
+        const client = new SeedPackageYmlClient({ maxRetries: 0, id: "id-ksfd9c1", environment: server.baseUrl });
+        const rawRequestBody = { name: "Hello world!", size: 20 };
         const rawResponseBody = "Hello world!";
         server
             .mockEndpoint()
-            .post("/id-ksfd9c1/").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/id-ksfd9c1/")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.echo({
-    name: "Hello world!",
-    size: 20
-});
-                            expect(response).toEqual("Hello world!");
-                          
-                
+        const response = await client.echo({
+            name: "Hello world!",
+            size: 20,
+        });
+        expect(response).toEqual("Hello world!");
     });
-          
 });

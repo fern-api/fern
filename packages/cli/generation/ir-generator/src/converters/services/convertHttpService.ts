@@ -272,7 +272,8 @@ export function convertHttpService({
                 retries: convertRetries({
                     endpointSchema: endpoint
                 }),
-                apiPlayground: undefined
+                apiPlayground: undefined,
+                responseHeaders: []
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;

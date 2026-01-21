@@ -43,7 +43,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::RootObject;
 
 #[tokio::main]
 async fn main() {

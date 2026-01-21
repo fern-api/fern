@@ -185,6 +185,60 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Pagination endpoint with a top-level cursor field in the request body.
+    /// This tests that the mock server correctly ignores cursor mismatches
+    /// when getNextPage() is called with a different cursor value.
+    /// </summary>
+    private async Task<ListUsersTopLevelCursorPaginationResponse> ListWithTopLevelBodyCursorPaginationInternalAsync(
+        ListUsersTopLevelBodyCursorPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/users/top-level-cursor",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<ListUsersTopLevelCursorPaginationResponse>(
+                            responseBody
+                        )!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedPaginationException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedPaginationApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
     private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationInternalAsync(
         ListUsersOffsetPaginationRequest request,
         RequestOptions? options = null,
@@ -926,6 +980,58 @@ public partial class UsersClient : IUsersClient
                             request.Pagination.Cursor = cursor;
                         },
                         response => response.Page?.Next?.StartingAfter,
+                        response => response.Data?.ToList(),
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Pagination endpoint with a top-level cursor field in the request body.
+    /// This tests that the mock server correctly ignores cursor mismatches
+    /// when getNextPage() is called with a different cursor value.
+    /// </summary>
+    /// <example><code>
+    /// await client.Users.ListWithTopLevelBodyCursorPaginationAsync(
+    ///     new ListUsersTopLevelBodyCursorPaginationRequest
+    ///     {
+    ///         Cursor = "initial_cursor",
+    ///         Filter = "active",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<Pager<User>> ListWithTopLevelBodyCursorPaginationAsync(
+        ListUsersTopLevelBodyCursorPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await CursorPager<
+                    ListUsersTopLevelBodyCursorPaginationRequest,
+                    RequestOptions?,
+                    ListUsersTopLevelCursorPaginationResponse,
+                    string?,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithTopLevelBodyCursorPaginationInternalAsync,
+                        (request, cursor) =>
+                        {
+                            request.Cursor = cursor;
+                        },
+                        response => response.NextCursor,
                         response => response.Data?.ToList(),
                         cancellationToken
                     )

@@ -38,12 +38,12 @@ groups:
           noOptionalProperties: true
   java:
     generators:
-      - name: fernapi/java-model
-        version: 0.9.28
+      - name: fernapi/fern-java-model
+        version: 1.8.5
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV60
+          coordinate: com.fern.fern:irV63
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true

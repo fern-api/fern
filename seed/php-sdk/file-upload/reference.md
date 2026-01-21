@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->post($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;post($request)</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ $client->service->post($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->justFile($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;justFile($request)</code></summary>
 <dl>
 <dd>
 
@@ -52,7 +52,7 @@ $client->service->justFile(
 </dl>
 </details>
 
-<details><summary><code>$client->service->justFileWithQueryParams($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;justFileWithQueryParams($request)</code></summary>
 <dl>
 <dd>
 
@@ -124,7 +124,7 @@ $client->service->justFileWithQueryParams($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->withContentType($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withContentType($request)</code></summary>
 <dl>
 <dd>
 
@@ -149,7 +149,7 @@ $client->service->withContentType($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->withFormEncoding($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withFormEncoding($request)</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +174,7 @@ $client->service->withFormEncoding($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->withFormEncodedContainers($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withFormEncodedContainers($request)</code></summary>
 <dl>
 <dd>
 
@@ -199,7 +199,7 @@ $client->service->withFormEncodedContainers($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->optionalArgs($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;optionalArgs($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -226,7 +226,7 @@ $client->service->optionalArgs(
 </dl>
 </details>
 
-<details><summary><code>$client->service->withInlineType($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withInlineType($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -251,7 +251,7 @@ $client->service->withInlineType($request): string;
 </dl>
 </details>
 
-<details><summary><code>$client->service->simple()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;simple()</code></summary>
 <dl>
 <dd>
 

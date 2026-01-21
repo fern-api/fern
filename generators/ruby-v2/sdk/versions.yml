@@ -1,5 +1,62 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc81
+  changelogEntry:
+    - summary: |
+        Add support for self-hosted mode. When enabled, the generator can clone the user's GitHub
+        repository, generate SDK code, and commit/push changes or create a PR directly to the user's
+        repo. This feature respects .fernignore files to preserve user customizations. The generator
+        now passes ir.selfHosted to the base generator agent instead of hardcoding false.
+      type: feat
+  createdAt: "2026-01-16"
+  irVersion: 61
+
+- version: 1.0.0-rc80
+  changelogEntry:
+    - summary: |
+        Add support for clientModuleName config option to customize the root client class name.
+        When clientModuleName is set (e.g., "PinnacleBaseClient"), the generated root client
+        class will use that name instead of the default "Client". This restores functionality
+        that existed in the original Ruby SDK generator.
+      type: fix
+    - summary: |
+        Add support for packageName from publish config to set the gem name and module name.
+        The gem name (folder name) and module name now use the packageName from the RubyGems
+        publish config (e.g., output.publish.rubygems.packageName) as a fallback when the
+        custom config module option is not set. This restores functionality from the original
+        Ruby SDK generator where the gem name could be configured via the publish target.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 61
+
+- version: 1.0.0-rc79
+  changelogEntry:
+    - summary: |
+        Add support for additional_query_parameters in request options. Users can now pass
+        additional query parameters via request_options[:additional_query_parameters] which
+        will be merged with the endpoint's query parameters when making HTTP requests.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 61
+
+- version: 1.0.0-rc78
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 61
+
+- version: 1.0.0-rc77
+  createdAt: "2026-01-13"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add RETRIES, ADDITIONAL_HEADERS, and ADDITIONAL_QUERY_PARAMETERS sections to generated README.md.
+        These sections document how to configure automatic retries, add custom headers, and add custom
+        query parameters to API requests. The features were previously removed because they had Go-specific
+        descriptions; they are now restored with Ruby-specific documentation and code snippets.
+  irVersion: 61
+
 - version: 1.0.0-rc76
   createdAt: "2026-01-06"
   changelogEntry:
@@ -33,7 +90,7 @@
 
 - version: 1.0.0-rc75
   changelogEntry:
-    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
       type: chore
   createdAt: "2026-01-05"
   irVersion: 61

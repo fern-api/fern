@@ -19,11 +19,22 @@ name: Create PRs to Remediate vulns
 # ============================================================
 
 on:
+  schedule:
+    # Run nightly at 8pm EST (1am UTC next day)
+    - cron: "0 1 * * *"
   workflow_dispatch: # Allow manual triggering
+    inputs:
+      scan_only:
+        description: 'Skip PR creation & Slack notifications'
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   create-dependabot-prs:
     name: Check Dependabot alerts
+    # Skip this job when triggered by cron schedule
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -71,7 +82,7 @@ jobs:
             core.setOutput('alerts_json', JSON.stringify(alerts));
       - name: Create PRs and send Slack notifications
         id: create-prs
-        if: steps.fetch-alerts.outputs.alerts_json != '[]'
+        if: ${{ steps.fetch-alerts.outputs.alerts_json != '[]' && inputs.scan_only != true }}
         uses: actions/github-script@v7
         env:
           # ============================================================
@@ -354,7 +365,6 @@ jobs:
           fetch-depth: 2
 
       - name: Configure AWS Credentials
-        if: ${{ github.event_name != 'workflow_dispatch' }}
         uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
@@ -373,7 +383,6 @@ jobs:
         run: docker build -f generators/java/sdk/Dockerfile -t java-sdk:grype-scan .
 
       - name: Push to ECR (to keep AWS scans up to date)
-        if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           aws sts get-caller-identity
           docker tag java-sdk:grype-scan 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:latest-${{ github.sha }}
@@ -388,12 +397,21 @@ jobs:
         run: |
           grype docker:java-sdk:grype-scan -o json > grype-report.json
 
+      - name: Upload grype scan results
+        uses: actions/upload-artifact@v4
+        with:
+          name: grype-scan-results-java-sdk
+          path: grype-report.json
+          retention-days: 30
+
       # ============================================================
       # IGNORED CVEs CONFIGURATION
       # Add CVEs here that have been reviewed and accepted as risks.
       # Format: One CVE ID per line in the ignored_cves input
       # ============================================================
       - name: Process vulnerabilities and create PR
+        # Skip PR creation for cron runs (scan_only=true) or when explicitly set
+        if: ${{ github.event_name != 'schedule' && inputs.scan_only != true }}
         uses: ./.github/actions/process-grype-vulns
         with:
           container_name: java-sdk

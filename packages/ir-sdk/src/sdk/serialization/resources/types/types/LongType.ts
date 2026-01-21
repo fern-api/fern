@@ -5,14 +5,17 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { LongValidationRules } from "./LongValidationRules";
 
 export const LongType: core.serialization.ObjectSchema<serializers.LongType.Raw, FernIr.LongType> =
     core.serialization.objectWithoutOptionalProperties({
         default: core.serialization.number().optional(),
+        validation: LongValidationRules.optional(),
     });
 
 export declare namespace LongType {
     export interface Raw {
         default?: number | null;
+        validation?: LongValidationRules.Raw | null;
     }
 }

@@ -8,13 +8,16 @@
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../task-context"
+    },
+    {
       "path": "../../commons/fs-utils"
     },
     {
-      "path": "../auth"
+      "path": "../../core"
     },
     {
-      "path": "../task-context"
+      "path": "../auth"
     }
   ]
 }

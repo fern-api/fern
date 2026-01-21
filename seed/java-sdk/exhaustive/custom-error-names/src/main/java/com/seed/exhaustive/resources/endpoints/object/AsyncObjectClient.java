@@ -34,6 +34,10 @@ public class AsyncObjectClient {
         return this.rawClient.getAndReturnWithOptionalField().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(RequestOptions requestOptions) {
+        return this.rawClient.getAndReturnWithOptionalField(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(ObjectWithOptionalField request) {
         return this.rawClient.getAndReturnWithOptionalField(request).thenApply(response -> response.body());
     }
@@ -67,6 +71,13 @@ public class AsyncObjectClient {
 
     public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
         return this.rawClient.getAndReturnNestedWithOptionalField().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnNestedWithOptionalField(requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(

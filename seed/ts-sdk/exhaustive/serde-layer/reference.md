@@ -102,7 +102,7 @@ await client.endpoints.container.getAndReturnListOfObjects([{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> Set<string></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> Set&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -202,7 +202,7 @@ await client.endpoints.container.getAndReturnSetOfObjects([{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> Record<string, string></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> Record&lt;string, string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -253,7 +253,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> Record<string, SeedExhaustive.ObjectWithRequiredField></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> Record&lt;string, SeedExhaustive.ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 

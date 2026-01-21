@@ -16,5 +16,7 @@ export interface MapSchemaWithExample
         FernOpenapiIr.WithInline {
     key: FernOpenapiIr.PrimitiveSchemaWithExample;
     value: FernOpenapiIr.SchemaWithExample;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
     example: unknown | undefined;
 }

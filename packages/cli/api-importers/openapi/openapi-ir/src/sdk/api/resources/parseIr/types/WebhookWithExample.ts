@@ -16,6 +16,11 @@ export interface WebhookWithExample
     /** Populated as ${operationId}Payload */
     generatedPayloadName: string;
     payload: FernOpenapiIr.SchemaWithExample;
+    /**
+     * Optional multipart form data payload for webhooks that use multipart/form-data content type.
+     * This is populated when the webhook request body uses multipart/form-data encoding.
+     */
+    multipartFormData: FernOpenapiIr.MultipartFormDataWebhookPayloadWithExample | undefined;
     response: FernOpenapiIr.ResponseWithExample | undefined;
     examples: FernOpenapiIr.WebhookExampleCall[];
 }

@@ -162,6 +162,7 @@ allowedFailures:
   - variables
   - version
   - version-no-default
+  - webhook-audience
   - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth

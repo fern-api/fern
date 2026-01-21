@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>$client->package->test($request)</code></summary>
+<details><summary><code>$client-&gt;package-&gt;test($request)</code></summary>
 <dl>
 <dd>
 

@@ -4,63 +4,65 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
-    
     test("getFoo", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        const rawResponseBody = { "bar" : "bar" , "nullable_bar" : "nullable_bar" , "nullable_required_bar" : "nullable_required_bar" , "required_bar" : "required_bar" };
-        server
-            .mockEndpoint()
-            .get("/foo").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
-        
-                    
-                            const response = await client.getFoo({
-    required_baz: "required_baz",
-    required_nullable_baz: "required_nullable_baz"
-});
-                            expect(response).toEqual({
-    bar: "bar",
-    nullable_bar: "nullable_bar",
-    nullable_required_bar: "nullable_required_bar",
-    required_bar: "required_bar"
-});
-                          
-                
+        const rawResponseBody = {
+            bar: "bar",
+            nullable_bar: "nullable_bar",
+            nullable_required_bar: "nullable_required_bar",
+            required_bar: "required_bar",
+        };
+        server.mockEndpoint().get("/foo").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.getFoo({
+            required_baz: "required_baz",
+            required_nullable_baz: "required_nullable_baz",
+        });
+        expect(response).toEqual({
+            bar: "bar",
+            nullable_bar: "nullable_bar",
+            nullable_required_bar: "nullable_required_bar",
+            required_bar: "required_bar",
+        });
     });
-          
+
     test("updateFoo", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "nullable_text" : "nullable_text" , "nullable_number" : 1.1 , "non_nullable_text" : "non_nullable_text" };
-        const rawResponseBody = { "bar" : "bar" , "nullable_bar" : "nullable_bar" , "nullable_required_bar" : "nullable_required_bar" , "required_bar" : "required_bar" };
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {
+            nullable_text: "nullable_text",
+            nullable_number: 1.1,
+            non_nullable_text: "non_nullable_text",
+        };
+        const rawResponseBody = {
+            bar: "bar",
+            nullable_bar: "nullable_bar",
+            nullable_required_bar: "nullable_required_bar",
+            required_bar: "required_bar",
+        };
         server
             .mockEndpoint()
-            .patch("/foo/id").header("X-Idempotency-Key", "X-Idempotency-Key")
-                    .jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .patch("/foo/id")
+            .header("X-Idempotency-Key", "X-Idempotency-Key")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.updateFoo("id", {
-    "X-Idempotency-Key": "X-Idempotency-Key",
-    nullable_text: "nullable_text",
-    nullable_number: 1.1,
-    non_nullable_text: "non_nullable_text"
-});
-                            expect(response).toEqual({
-    bar: "bar",
-    nullable_bar: "nullable_bar",
-    nullable_required_bar: "nullable_required_bar",
-    required_bar: "required_bar"
-});
-                          
-                
+        const response = await client.updateFoo("id", {
+            "X-Idempotency-Key": "X-Idempotency-Key",
+            nullable_text: "nullable_text",
+            nullable_number: 1.1,
+            non_nullable_text: "non_nullable_text",
+        });
+        expect(response).toEqual({
+            bar: "bar",
+            nullable_bar: "nullable_bar",
+            nullable_required_bar: "nullable_required_bar",
+            required_bar: "required_bar",
+        });
     });
-          
 });

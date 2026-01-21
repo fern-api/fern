@@ -71,6 +71,47 @@ func (r *RawClient) ListWithBodyCursorPagination(
 	}, nil
 }
 
+func (r *RawClient) ListWithTopLevelBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersTopLevelBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*fern.ListUsersTopLevelCursorPaginationResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/top-level-cursor"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *fern.ListUsersTopLevelCursorPaginationResponse
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*fern.ListUsersTopLevelCursorPaginationResponse]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) ListWithBodyOffsetPagination(
 	ctx context.Context,
 	request *fern.ListUsersBodyOffsetPaginationRequest,

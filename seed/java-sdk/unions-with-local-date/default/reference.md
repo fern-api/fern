@@ -87,7 +87,7 @@ client.bigunion().update(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.updateMany(request) -> Map&lt;String, Boolean&gt;</code></summary>
+<details><summary><code>client.bigunion.updateMany(request) -> Map&amp;lt;String, Boolean&amp;gt;</code></summary>
 <dl>
 <dd>
 

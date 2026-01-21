@@ -47,6 +47,16 @@ public class SeedOauthClientCredentialsClientBuilder {
         return new _CredentialsAuth(clientId, clientSecret);
     }
 
+    /**
+     * Creates a new client builder.
+     * Use this method to start building a client with the classic builder pattern.
+     *
+     * @return A builder for configuring authentication and creating the client
+     */
+    public static _Builder builder() {
+        return new _Builder();
+    }
+
     public SeedOauthClientCredentialsClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
@@ -248,6 +258,114 @@ public class SeedOauthClientCredentialsClientBuilder {
                     .addHeader("Authorization", oAuthTokenSupplier)
                     .build();
             return new SeedOauthClientCredentialsClient(finalOptions);
+        }
+    }
+
+    public static final class _Builder {
+        private Environment environment;
+
+        private Optional<Integer> timeout = Optional.empty();
+
+        private Optional<Integer> maxRetries = Optional.empty();
+
+        private OkHttpClient httpClient;
+
+        private final Map<String, String> headers = new HashMap<>();
+
+        public _Builder url(String url) {
+            this.environment = Environment.custom(url);
+            return this;
+        }
+
+        /**
+         * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
+         */
+        public _Builder timeout(int timeout) {
+            this.timeout = Optional.of(timeout);
+            return this;
+        }
+
+        /**
+         * Sets the maximum number of retries for the client. Defaults to 2 retries.
+         */
+        public _Builder maxRetries(int maxRetries) {
+            this.maxRetries = Optional.of(maxRetries);
+            return this;
+        }
+
+        /**
+         * Sets the underlying OkHttp client
+         */
+        public _Builder httpClient(OkHttpClient httpClient) {
+            this.httpClient = httpClient;
+            return this;
+        }
+
+        /**
+         * Add a custom header to be sent with all requests.
+         * @param name The header name
+         * @param value The header value
+         * @return This builder for method chaining
+         */
+        public _Builder addHeader(String name, String value) {
+            this.headers.put(name, value);
+            return this;
+        }
+
+        /**
+         * Configure the client to use a pre-generated access token for authentication.
+         * Use this when you already have a valid access token and want to bypass
+         * the OAuth client credentials flow.
+         *
+         * @param token The access token to use for Authorization header
+         * @return A builder configured for token authentication
+         */
+        public _TokenAuth token(String token) {
+            _TokenAuth auth = new _TokenAuth(token);
+            if (this.environment != null) {
+                auth.environment = this.environment;
+            }
+            if (this.timeout.isPresent()) {
+                auth.timeout(this.timeout.get());
+            }
+            if (this.maxRetries.isPresent()) {
+                auth.maxRetries(this.maxRetries.get());
+            }
+            if (this.httpClient != null) {
+                auth.httpClient(this.httpClient);
+            }
+            for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                auth.addHeader(header.getKey(), header.getValue());
+            }
+            return auth;
+        }
+
+        /**
+         * Configure the client to use OAuth client credentials for authentication.
+         * The builder will automatically handle token acquisition and refresh.
+         *
+         * @param clientId The OAuth client ID
+         * @param clientSecret The OAuth client secret
+         * @return A builder configured for OAuth client credentials authentication
+         */
+        public _CredentialsAuth credentials(String clientId, String clientSecret) {
+            _CredentialsAuth auth = new _CredentialsAuth(clientId, clientSecret);
+            if (this.environment != null) {
+                auth.environment = this.environment;
+            }
+            if (this.timeout.isPresent()) {
+                auth.timeout(this.timeout.get());
+            }
+            if (this.maxRetries.isPresent()) {
+                auth.maxRetries(this.maxRetries.get());
+            }
+            if (this.httpClient != null) {
+                auth.httpClient(this.httpClient);
+            }
+            for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                auth.addHeader(header.getKey(), header.getValue());
+            }
+            return auth;
         }
     }
 }

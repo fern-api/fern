@@ -50,6 +50,10 @@ public class UserClient {
         this.rawClient.createUsernameOptional().body();
     }
 
+    public void createUsernameOptional(RequestOptions requestOptions) {
+        this.rawClient.createUsernameOptional(requestOptions).body();
+    }
+
     public void createUsernameOptional(Optional<CreateUsernameBodyOptionalProperties> request) {
         this.rawClient.createUsernameOptional(request).body();
     }

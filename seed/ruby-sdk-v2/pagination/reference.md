@@ -975,6 +975,84 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_top_level_body_cursor_pagination</a>(request) -> Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.users.list_with_top_level_body_cursor_pagination(
+  cursor: 'initial_cursor',
+  filter: 'active'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `String` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `String` — An optional filter to apply to the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Users::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>

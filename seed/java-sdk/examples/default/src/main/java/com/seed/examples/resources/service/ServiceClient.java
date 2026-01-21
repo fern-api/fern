@@ -58,6 +58,10 @@ public class ServiceClient {
         return this.rawClient.createBigEntity().body();
     }
 
+    public Response createBigEntity(RequestOptions requestOptions) {
+        return this.rawClient.createBigEntity(requestOptions).body();
+    }
+
     public Response createBigEntity(BigEntity request) {
         return this.rawClient.createBigEntity(request).body();
     }
@@ -68,6 +72,10 @@ public class ServiceClient {
 
     public void refreshToken() {
         this.rawClient.refreshToken().body();
+    }
+
+    public void refreshToken(RequestOptions requestOptions) {
+        this.rawClient.refreshToken(requestOptions).body();
     }
 
     public void refreshToken(Optional<RefreshTokenRequest> request) {

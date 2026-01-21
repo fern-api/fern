@@ -511,6 +511,7 @@ types:
       openapi: string
       origin: optional<string>
       overrides: optional<string>
+      overlays: optional<string>
       namespace: optional<string>
       settings: optional<OpenAPISettingsSchema>
 

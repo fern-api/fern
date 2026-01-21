@@ -1209,6 +1209,7 @@
                     ],
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Add a movie to the database"
                 }
@@ -1388,6 +1389,7 @@
                     },
                     "docs": null
                 },
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,

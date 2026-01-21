@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...) -> typing.AsyncIterator[
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...) -&gt; typing.AsyncIterator[
     AsyncHttpResponse[
         typing.AsyncIterator[
             typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]

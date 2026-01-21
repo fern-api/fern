@@ -1,6 +1,27 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix context-aware HTML encoding in reference.md generation. Return values in code blocks are now HTML encoded (e.g., `Page&lt;User, Response&gt;`), while parameter types use markdown link syntax for linked types (e.g., `[CreateUserRequest](/types/requests.ts)`) and backticks for unlinked types (e.g., `` `Record<string, string>` ``) to ensure proper rendering in markdown.
+      type: fix
+  createdAt: "2026-01-12"
+  version: 0.5.3
+
+- changelogEntry:
+    - summary: |
+        Fix how npm finds and executes generator-cli.
+      type: fix
+  createdAt: "2026-01-12"
+  version: 0.5.2
+
+- changelogEntry:
+    - summary: |
+        Fix HTML encoding of generic type parameters in reference.md generation. Characters like `<` and `>` in return types (e.g., `core.Page<User, Response>`) are now properly encoded as `&lt;` and `&gt;` to display correctly in markdown.
+      type: fix
+  createdAt: "2026-01-12"
+  version: 0.5.1
+
+- changelogEntry:
+    - summary: |
         Add support for mixed markdown and code snippets in README features. Snippets can now be either `{ type: "markdown", content: string }` for inline markdown or `{ type: "code", content: string, language?: string }` for code blocks with optional language override.
       type: feat
   createdAt: "2025-12-07"

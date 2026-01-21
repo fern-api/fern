@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>$client->completions->stream($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;stream($request)</code></summary>
 <dl>
 <dd>
 

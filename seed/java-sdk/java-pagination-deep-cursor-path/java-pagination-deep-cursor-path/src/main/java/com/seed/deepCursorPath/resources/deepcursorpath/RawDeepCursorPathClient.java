@@ -43,6 +43,10 @@ public class RawDeepCursorPathClient {
         return doThing(A.builder().build());
     }
 
+    public SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>> doThing(RequestOptions requestOptions) {
+        return doThing(A.builder().build(), requestOptions);
+    }
+
     public SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>> doThing(A request) {
         return doThing(request, null);
     }
@@ -166,6 +170,10 @@ public class RawDeepCursorPathClient {
 
     public SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>> doThingInline() {
         return doThingInline(InlineA.builder().build());
+    }
+
+    public SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>> doThingInline(RequestOptions requestOptions) {
+        return doThingInline(InlineA.builder().build(), requestOptions);
     }
 
     public SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>> doThingInline(InlineA request) {

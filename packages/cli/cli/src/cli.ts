@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { runCliV2 } from "@fern-api/cli-v2";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
@@ -205,6 +206,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addV2Command(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1159,11 +1161,17 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         "api update",
         `Pulls the latest OpenAPI spec from the specified origin in ${GENERATORS_CONFIGURATION_FILENAME} and updates the local spec.`,
         (yargs) =>
-            yargs.option("api", {
-                string: true,
-                description:
-                    "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
-            }),
+            yargs
+                .option("api", {
+                    string: true,
+                    description:
+                        "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
+                })
+                .option("indent", {
+                    type: "number",
+                    description: "Indentation width in spaces (default: 2)",
+                    default: 2
+                }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
                 command: "fern api update"
@@ -1173,7 +1181,8 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
-                })
+                }),
+                indent: argv.indent
             });
         }
     );
@@ -1773,6 +1782,11 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API"
+                })
+                .option("indent", {
+                    type: "number",
+                    description: "Indentation width in spaces (default: 2)",
+                    default: 2
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -1788,8 +1802,30 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     defaultToAllApiWorkspaces: false
                 }),
                 cliContext,
-                outputPath: resolve(cwd(), argv.outputPath)
+                outputPath: resolve(cwd(), argv.outputPath),
+                indent: argv.indent
             });
+        }
+    );
+}
+
+function addV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "v2",
+        false, // Hidden from --help while in-development.
+        (yargs) =>
+            yargs.help(false).version(false).strict(false).parserConfiguration({
+                "unknown-options-as-args": true
+            }),
+        async (argv) => {
+            try {
+                // Pass through all arguments after "v2" to the v2 CLI
+                const v2Args = argv._.slice(1).map(String);
+                await runCliV2(v2Args);
+            } catch (error) {
+                cliContext.logger.error("CLI v2 failed:", String(error));
+                cliContext.failWithoutThrowing();
+            }
         }
     );
 }

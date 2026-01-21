@@ -98,6 +98,59 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     }
 
     @Override
+    public void addBodyOnlyReturnStatement(
+            MethodSpec.Builder bodyOnlyMethodBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> bodyOnlyParamNames,
+            ParameterSpec bodyParam,
+            TypeName wrapperTypeName,
+            String bodyPropertyName) {
+        StringBuilder paramList = new StringBuilder();
+        for (int i = 0; i < bodyOnlyParamNames.size() - 1; i++) {
+            if (paramList.length() > 0) {
+                paramList.append(", ");
+            }
+            paramList.append(bodyOnlyParamNames.get(i));
+        }
+        if (paramList.length() > 0) {
+            paramList.append(", ");
+        }
+        paramList.append("$T.builder().$L($L).build()");
+        bodyOnlyMethodBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + paramList + ")",
+                wrapperTypeName,
+                bodyPropertyName,
+                bodyParam.name);
+    }
+
+    @Override
+    public void addBodyOnlyWithRequestOptionsReturnStatement(
+            MethodSpec.Builder bodyOnlyWithRequestOptionsMethodBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> bodyOnlyWithRequestOptionsParamNames,
+            ParameterSpec bodyParam,
+            TypeName wrapperTypeName,
+            String bodyPropertyName) {
+        StringBuilder paramList = new StringBuilder();
+        for (int i = 0; i < bodyOnlyWithRequestOptionsParamNames.size() - 1; i++) {
+            if (paramList.length() > 0) {
+                paramList.append(", ");
+            }
+            paramList.append(bodyOnlyWithRequestOptionsParamNames.get(i));
+        }
+        if (paramList.length() > 0) {
+            paramList.append(", ");
+        }
+        paramList.append("$T.builder().$L($L).build(), ");
+        paramList.append(AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+        bodyOnlyWithRequestOptionsMethodBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + paramList + ")",
+                wrapperTypeName,
+                bodyPropertyName,
+                bodyParam.name);
+    }
+
+    @Override
     public CodeBlock getByteArrayEndpointBaseMethodBody(
             CodeBlock.Builder methodBodyBuilder,
             MethodSpec byteArrayBaseMethodSpec,

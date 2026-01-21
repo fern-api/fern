@@ -1,4 +1,11 @@
-import { NamedFullExample, Source, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
+import {
+    MultipartFormDataWebhookPayloadWithExample,
+    NamedFullExample,
+    SchemaWithExample,
+    Source,
+    WebhookExampleCall,
+    WebhookWithExample
+} from "@fern-api/openapi-ir";
 import { createHash } from "crypto";
 
 import { getExtension } from "../../../../getExtension";
@@ -77,9 +84,38 @@ export function convertWebhookOperation({
         )
         .filter((request) => request != null)
         .map((request) => {
-            if (request == null || (request.type !== "json" && request.type !== "formUrlEncoded")) {
-                context.logger.error(`Skipping webhook ${path} because non-json and non-formUrlEncoded request body`);
+            if (
+                request == null ||
+                (request.type !== "json" && request.type !== "formUrlEncoded" && request.type !== "multipart")
+            ) {
+                context.logger.error(
+                    `Skipping webhook ${path} because non-json, non-formUrlEncoded, and non-multipart request body`
+                );
                 return undefined;
+            }
+
+            let multipartFormData: MultipartFormDataWebhookPayloadWithExample | undefined;
+            let payload: SchemaWithExample;
+
+            if (request.type === "multipart") {
+                multipartFormData = {
+                    name: request.name,
+                    properties: request.properties,
+                    description: request.description,
+                    source: request.source
+                };
+                payload = SchemaWithExample.unknown({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
+                    title: undefined,
+                    description: request.description,
+                    availability: undefined,
+                    namespace: context.namespace,
+                    groupName: undefined,
+                    example: undefined
+                });
+            } else {
+                payload = request.schema;
             }
 
             const webhook: WebhookWithExample = {
@@ -92,10 +128,11 @@ export function convertWebhookOperation({
                 tags: context.resolveTagsToTagIds(operation.tags),
                 headers: convertedParameters.headers,
                 generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
-                payload: request.schema,
+                payload,
+                multipartFormData,
                 response: convertedResponse?.value,
                 description: operation.description,
-                examples: convertWebhookExamples(request.fullExamples),
+                examples: convertWebhookExamples(request.type === "multipart" ? undefined : request.fullExamples),
                 source
             };
             return webhook;
