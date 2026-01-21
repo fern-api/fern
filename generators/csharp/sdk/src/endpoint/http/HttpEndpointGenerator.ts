@@ -192,10 +192,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId
     ) {
         const request = endpointSignatureInfo.request;
-        if (request != null && this.context.wrappedRequestHasDefaults(endpoint, serviceId)) {
-            const paramName = request.getParameterName();
-            writer.writeLine(`${paramName} = ${paramName}.WithDefaults();`);
-        }
 
         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
         if (queryParameterCodeBlock != null) {
@@ -1199,18 +1195,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             throw new Error("Request parameter is required for pagination");
         }
 
-        const hasDefaults = this.context.wrappedRequestHasDefaults(endpoint, serviceId);
-
         if (requestParameter.type.isOptional) {
             writer.writeLine("if (request is not null)");
             writer.pushScope();
         }
 
-        if (hasDefaults) {
-            writer.writeLine("request = request.WithDefaults();");
-        } else {
-            writer.writeLine("request = request with { };");
-        }
+        writer.writeLine("request = request with { };");
 
         if (requestParameter.type.isOptional) {
             writer.popScope();
@@ -1352,15 +1342,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             throw new Error("Request parameter is required for pagination");
         }
 
-        const hasDefaults = this.context.wrappedRequestHasDefaults(endpoint, serviceId);
-
         writer.writeLine("if (request is not null)");
         writer.pushScope();
-        if (hasDefaults) {
-            writer.writeLine("request = request.WithDefaults();");
-        } else {
-            writer.writeLine("request = request with { };");
-        }
+        writer.writeLine("request = request with { };");
         writer.popScope();
 
         const cursorType = this.context.csharpTypeMapper.convert({

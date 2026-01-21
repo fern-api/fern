@@ -7,7 +7,7 @@ namespace SeedRequestParameters;
 public record GetUsersRequest
 {
     [JsonIgnore]
-    public int? Limit { get; set; }
+    public int Limit { get; set; } = 10;
 
     [JsonIgnore]
     public required string Id { get; set; }
@@ -54,22 +54,9 @@ public record GetUsersRequest
     [JsonIgnore]
     public required string BigIntParam { get; set; }
 
-    /// <summary>
-    /// Returns a new instance with default values applied for unset properties.
-    /// </summary>
-    public GetUsersRequest WithDefaults()
-    {
-        return this with { Limit = Limit ?? Defaults.Limit };
-    }
-
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
-    }
-
-    private static class Defaults
-    {
-        public const int Limit = 10;
     }
 }

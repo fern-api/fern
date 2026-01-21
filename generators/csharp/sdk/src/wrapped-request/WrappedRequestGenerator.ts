@@ -15,16 +15,6 @@ import {
 import { DefaultValueExtractor, ExtractedDefault } from "../DefaultValueExtractor";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
-/**
- * Information about a property with a default value
- */
-interface PropertyWithDefault {
-    /** The property name in the generated C# code */
-    propertyName: string;
-    /** The extracted default value information */
-    defaultValue: ExtractedDefault;
-}
-
 export declare namespace WrappedRequestGenerator {
     export interface Args {
         serviceId: ServiceId;
@@ -73,8 +63,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             typeReference: TypeReference;
         }[] = [];
 
-        const propertiesWithDefaults: PropertyWithDefault[] = [];
-
         if (
             this.context.includePathParametersInWrappedRequest({
                 endpoint: this.endpoint,
@@ -106,7 +94,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 ? this.getDefaultIfEnabled(query.valueType, useDefaults)
                 : undefined;
 
-            let type = query.allowMultiple
+            const type = query.allowMultiple
                 ? this.Collection.list(
                       this.context.csharpTypeMapper.convert({
                           reference: query.valueType,
@@ -115,28 +103,22 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
 
-            // Strip 'required' from non-optional types with default values so users may omit them
-            if (defaultValue != null && !type.isOptional) {
-                type = type.asOptional();
-            }
-
             const field = class_.addField({
                 origin: query,
-                type,
+                type, // Keep original type, don't make optional for defaults
                 access: ast.Access.Public,
                 get: true,
                 set: true,
                 summary: query.docs,
-                useRequired: defaultValue == null,
-                initializer: this.context.getLiteralInitializerFromTypeReference({
-                    typeReference: query.valueType
-                }),
+                useRequired: defaultValue == null, // Remove required when there's a default
+                initializer:
+                    defaultValue != null
+                        ? this.csharp.codeblock(defaultValue.value) // Use direct default assignment
+                        : this.context.getLiteralInitializerFromTypeReference({
+                              typeReference: query.valueType
+                          }),
                 annotations: [this.System.Text.Json.Serialization.JsonIgnore]
             });
-
-            if (defaultValue != null) {
-                propertiesWithDefaults.push({ propertyName: field.name, defaultValue });
-            }
 
             if (isProtoRequest) {
                 protobufProperties.push({
@@ -151,29 +133,24 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         for (const header of [...(service?.headers ?? []), ...this.endpoint.headers]) {
             const defaultValue = this.getDefaultIfEnabled(header.valueType, useDefaults);
 
-            let type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
-
-            if (defaultValue != null && !type.isOptional) {
-                type = type.asOptional();
-            }
+            const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
 
             const field = class_.addField({
                 origin: header,
-                type,
+                type, // Keep original type, don't make optional for defaults
                 access: ast.Access.Public,
                 get: true,
                 set: true,
                 summary: header.docs,
-                useRequired: defaultValue == null,
-                initializer: this.context.getLiteralInitializerFromTypeReference({
-                    typeReference: header.valueType
-                }),
+                useRequired: defaultValue == null, // Remove required when there's a default
+                initializer:
+                    defaultValue != null
+                        ? this.csharp.codeblock(defaultValue.value) // Use direct default assignment
+                        : this.context.getLiteralInitializerFromTypeReference({
+                              typeReference: header.valueType
+                          }),
                 annotations: [this.System.Text.Json.Serialization.JsonIgnore]
             });
-
-            if (defaultValue != null) {
-                propertiesWithDefaults.push({ propertyName: field.name, defaultValue });
-            }
         }
 
         this.endpoint.requestBody?._visit({
@@ -199,25 +176,19 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
                     let field: ast.Field;
                     if (defaultValue != null) {
-                        // Generate field with optional type and no 'required' keyword
-                        let type = this.context.csharpTypeMapper.convert({ reference: property.valueType });
-                        if (!type.isOptional) {
-                            type = type.asOptional();
-                        }
+                        // Generate field with direct default assignment
+                        const type = this.context.csharpTypeMapper.convert({ reference: property.valueType });
                         field = class_.addField({
                             origin: property,
-                            type,
+                            type, // Keep original type, don't make optional for defaults
                             access: ast.Access.Public,
                             get: true,
                             set: true,
                             summary: property.docs,
-                            useRequired: false,
-                            initializer: this.context.getLiteralInitializerFromTypeReference({
-                                typeReference: property.valueType
-                            }),
+                            useRequired: false, // Remove required when there's a default
+                            initializer: this.csharp.codeblock(defaultValue.value), // Use direct default assignment
                             annotations: [this.context.createJsonPropertyNameAttribute(property.name.wireValue)]
                         });
-                        propertiesWithDefaults.push({ propertyName: field.name, defaultValue });
                     } else {
                         // Use standard field generation
                         field = generateField(class_, {
@@ -262,12 +233,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         });
 
         this.context.getToStringMethod(class_);
-
-        // Generate Defaults class and WithDefaults() method if feature flag is enabled and there are properties with defaults
-        if (this.generation.settings.useDefaultRequestParameterValues && propertiesWithDefaults.length > 0) {
-            this.generateDefaultsClass(class_, propertiesWithDefaults);
-            this.generateWithDefaultsMethod(class_, propertiesWithDefaults);
-        }
 
         if (isProtoRequest) {
             const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
@@ -413,71 +378,5 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             return undefined;
         }
         return this.defaultValueExtractor.extractDefault(typeReference);
-    }
-
-    /**
-     * Generates a private static nested class containing const/static readonly fields for default values.
-     */
-    private generateDefaultsClass(class_: ast.Class, propertiesWithDefaults: PropertyWithDefault[]): void {
-        const defaultsClass = class_.addNestedClass({
-            name: "Defaults",
-            access: ast.Access.Private,
-            static_: true,
-            type: ast.Class.ClassType.Class
-        });
-
-        for (const { propertyName, defaultValue } of propertiesWithDefaults) {
-            const fieldType = this.generation.Types.Arbitrary(defaultValue.csharpType);
-            if (defaultValue.isConst) {
-                // Use const for primitive types that support it
-                defaultsClass.addField({
-                    name: propertyName,
-                    type: fieldType,
-                    access: ast.Access.Public,
-                    const_: true,
-                    initializer: this.csharp.codeblock(defaultValue.value)
-                });
-            } else {
-                // Use static readonly for types that don't support const (e.g., BigInteger)
-                defaultsClass.addField({
-                    name: propertyName,
-                    type: fieldType,
-                    access: ast.Access.Public,
-                    static_: true,
-                    readonly: true,
-                    initializer: this.csharp.codeblock(defaultValue.value)
-                });
-            }
-        }
-    }
-
-    /**
-     * Generates a WithDefaults() method that returns a new instance with default values applied for unset properties.
-     */
-    private generateWithDefaultsMethod(class_: ast.Class, propertiesWithDefaults: PropertyWithDefault[]): void {
-        const withDefaultsBody = this.csharp.codeblock((writer: Writer) => {
-            writer.write("return this with");
-            writer.newLine();
-            writer.write("{");
-            writer.newLine();
-            writer.indent();
-            for (const [i, { propertyName }] of propertiesWithDefaults.entries()) {
-                writer.write(`${propertyName} = ${propertyName} ?? Defaults.${propertyName}`);
-                if (i < propertiesWithDefaults.length - 1) {
-                    writer.write(",");
-                }
-                writer.newLine();
-            }
-            writer.dedent();
-            writer.write("};");
-        });
-
-        class_.addMethod({
-            name: "WithDefaults",
-            access: ast.Access.Public,
-            return_: this.classReference,
-            summary: "Returns a new instance with default values applied for unset properties.",
-            body: withDefaultsBody
-        });
     }
 }

@@ -12,6 +12,92 @@ public partial class UserClient : IUserClient
         _client = client;
     }
 
+    private async Task<WithRawResponse<User>> GetUsernameAsyncCore(
+        GetUsersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["limit"] = request.Limit.ToString();
+        _query["id"] = request.Id;
+        _query["date"] = request.Date.ToString(Constants.DateFormat);
+        _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
+        _query["bytes"] = request.Bytes;
+        _query["user"] = JsonUtils.Serialize(request.User);
+        _query["userList"] = JsonUtils.Serialize(request.UserList);
+        _query["keyValue"] = JsonUtils.Serialize(request.KeyValue);
+        _query["nestedUser"] = JsonUtils.Serialize(request.NestedUser);
+        _query["excludeUser"] = request
+            .ExcludeUser.Select(_value => JsonUtils.Serialize(_value))
+            .ToList();
+        _query["filter"] = request.Filter;
+        _query["longParam"] = request.LongParam.ToString();
+        _query["bigIntParam"] = request.BigIntParam;
+        if (request.OptionalDeadline != null)
+        {
+            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
+                Constants.DateTimeFormat
+            );
+        }
+        if (request.OptionalString != null)
+        {
+            _query["optionalString"] = request.OptionalString;
+        }
+        if (request.OptionalUser != null)
+        {
+            _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/user",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedRequestParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedRequestParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     /// <example><code>
     /// await client.User.CreateUsernameAsync(
     ///     new CreateUsernameRequest
@@ -29,7 +115,6 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
-        request = request.WithDefaults();
         var _query = new Dictionary<string, object>();
         _query["tags"] = JsonUtils.Serialize(request.Tags);
         var response = await _client
@@ -204,76 +289,14 @@ public partial class UserClient : IUserClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<User> GetUsernameAsync(
+    public WithRawResponseTask<User> GetUsernameAsync(
         GetUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        request = request.WithDefaults();
-        var _query = new Dictionary<string, object>();
-        _query["limit"] = request.Limit.ToString();
-        _query["id"] = request.Id;
-        _query["date"] = request.Date.ToString(Constants.DateFormat);
-        _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
-        _query["bytes"] = request.Bytes;
-        _query["user"] = JsonUtils.Serialize(request.User);
-        _query["userList"] = JsonUtils.Serialize(request.UserList);
-        _query["keyValue"] = JsonUtils.Serialize(request.KeyValue);
-        _query["nestedUser"] = JsonUtils.Serialize(request.NestedUser);
-        _query["excludeUser"] = request
-            .ExcludeUser.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["filter"] = request.Filter;
-        _query["longParam"] = request.LongParam.ToString();
-        _query["bigIntParam"] = request.BigIntParam;
-        if (request.OptionalDeadline != null)
-        {
-            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
-                Constants.DateTimeFormat
-            );
-        }
-        if (request.OptionalString != null)
-        {
-            _query["optionalString"] = request.OptionalString;
-        }
-        if (request.OptionalUser != null)
-        {
-            _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
-        }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/user",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<User>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedRequestParametersException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedRequestParametersApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask<User>(
+            GetUsernameAsyncCore(request, options, cancellationToken)
+        );
     }
 }

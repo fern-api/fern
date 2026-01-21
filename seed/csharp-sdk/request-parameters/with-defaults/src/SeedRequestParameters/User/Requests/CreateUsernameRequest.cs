@@ -16,24 +16,11 @@ public record CreateUsernameRequest
     public required string Password { get; set; }
 
     [JsonPropertyName("name")]
-    public string? Name { get; set; }
-
-    /// <summary>
-    /// Returns a new instance with default values applied for unset properties.
-    /// </summary>
-    public CreateUsernameRequest WithDefaults()
-    {
-        return this with { Name = Name ?? Defaults.Name };
-    }
+    public string Name { get; set; } = "test";
 
     /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
-    }
-
-    private static class Defaults
-    {
-        public const string Name = "test";
     }
 }
