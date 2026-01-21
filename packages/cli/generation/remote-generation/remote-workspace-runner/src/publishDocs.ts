@@ -733,7 +733,8 @@ async function buildSnippetConfigurationWithVersions({
         },
         {
             language: "go",
-            snippetName: snippetsConfig.goSdk?.githubRepo && normalizeRepositoryToPackageName(snippetsConfig.goSdk?.githubRepo),
+            snippetName:
+                snippetsConfig.goSdk?.githubRepo && normalizeRepositoryToPackageName(snippetsConfig.goSdk?.githubRepo),
             explicitVersion: snippetsConfig.goSdk?.version
         },
         {
