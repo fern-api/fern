@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.48.1
+- version: 3.48.2
   changelogEntry:
     - summary: |
         Fix OpenAPI parsing to gracefully handle missing schema references. When a schema reference cannot be resolved (e.g., schemas marked with `x-fern-ignore`), the example builder now returns undefined instead of throwing an error. This prevents entire API documents from being skipped during parsing when they contain schemas with unresolvable references.
+      type: fix
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.48.1
+  changelogEntry:
+    - summary: |
+        Fix x-fern-basic, x-fern-bearer, and x-fern-header OpenAPI extensions not being read in the OpenAPI to IR converter. Custom field names and environment variables specified in these extensions are now correctly propagated to the IR and FDR output, enabling custom labels in the API explorer.
       type: fix
   createdAt: "2026-01-21"
   irVersion: 63

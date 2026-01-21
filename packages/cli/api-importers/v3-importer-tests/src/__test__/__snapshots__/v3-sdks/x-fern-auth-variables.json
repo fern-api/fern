@@ -42,6 +42,8 @@
             "safeName": "Password"
           }
         },
+        "usernameEnvVar": "MY_USERNAME",
+        "passwordEnvVar": "MY_PaSSwoOD",
         "type": "basic"
       }
     ]
