@@ -12,6 +12,7 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { parseRepository } from "@fern-api/github";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
@@ -27,7 +28,6 @@ import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { measureImageSizes } from "./measureImageSizes";
 import { asyncPool } from "./utils/asyncPool";
-import { parseRepository } from "@fern-api/github";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
