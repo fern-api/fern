@@ -443,6 +443,10 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+    - outputFolder: forward-compatible-enums-with-serde
+      customConfig:
+        enableForwardCompatibleEnums: true
+        noSerdeLayer: false
   pagination:
     - outputFolder: no-custom-config
       customConfig: null
