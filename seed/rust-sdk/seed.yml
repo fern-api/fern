@@ -128,3 +128,9 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+  license:
+    - customConfig: null
+      outputFolder: basic
+    - customConfig:
+        packageLicenseFile: "LICENSE.md"
+      outputFolder: custom-license-file
