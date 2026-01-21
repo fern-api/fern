@@ -83,7 +83,7 @@ public class WithRawResponseTests
     {
         // Arrange
         using var response = CreateHttpResponse(HttpStatusCode.OK);
-        response.Content = new StringContent("{}", System.Text.Encoding.UTF8, "application/json");
+        response.Content = new StringContent("{}", global::System.Text.Encoding.UTF8, "application/json");
         var headers = ResponseHeaders.FromHttpResponseMessage(response);
 
         // Act
