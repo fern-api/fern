@@ -4,9 +4,17 @@
 
 import * as GeneratorsYml from "../../../../../index";
 
+export type OAuthGrantType =
+    | "client-credentials"
+    | "authorization-code"
+    | "password"
+    | "device-code"
+    | "token-exchange"
+    | "refresh-token";
+
 export interface OAuthSchemeSchema extends GeneratorsYml.fernDefinition.WithDocsSchema {
     scheme: "oauth";
-    type: "client-credentials";
+    type: OAuthGrantType;
     scopes?: GeneratorsYml.fernDefinition.AuthScope[];
     "client-id-env"?: string;
     "client-secret-env"?: string;
@@ -16,4 +24,16 @@ export interface OAuthSchemeSchema extends GeneratorsYml.fernDefinition.WithDocs
     "token-header"?: string;
     "get-token": GeneratorsYml.fernDefinition.OAuthGetTokenEndpointSchema;
     "refresh-token"?: GeneratorsYml.fernDefinition.OAuthRefreshTokenEndpointSchema;
+    /** The authorization endpoint URL (for authorization-code flow) */
+    "authorization-endpoint"?: string;
+    /** The redirect URI after authorization (for authorization-code flow) */
+    "redirect-uri"?: string;
+    /** Whether to use PKCE for enhanced security (for authorization-code flow) */
+    "use-pkce"?: boolean;
+    /** The environment variable for the username (for password flow) */
+    "username-env"?: string;
+    /** The environment variable for the password (for password flow) */
+    "password-env"?: string;
+    /** The device authorization endpoint URL (for device-code flow) */
+    "device-authorization-endpoint"?: string;
 }

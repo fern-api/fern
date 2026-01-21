@@ -97,8 +97,96 @@ types:
   OAuthConfiguration:
     union:
       clientCredentials: OAuthClientCredentials
+      authorizationCode: OAuthAuthorizationCode
+      password: OAuthPasswordGrant
+      deviceCode: OAuthDeviceCode
+      tokenExchange: OAuthTokenExchange
+      refreshToken: OAuthRefreshToken
 
   OAuthClientCredentials:
+    properties:
+      clientIdEnvVar: optional<EnvironmentVariable>
+      clientSecretEnvVar: optional<EnvironmentVariable>
+      tokenPrefix: optional<string>
+      tokenHeader: optional<string>
+      scopes: optional<list<string>>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshEndpoint>
+
+  OAuthAuthorizationCode:
+    docs: |
+      OAuth 2.0 Authorization Code flow configuration.
+      Used for web applications where the client can securely store credentials.
+    properties:
+      clientIdEnvVar: optional<EnvironmentVariable>
+      clientSecretEnvVar: optional<EnvironmentVariable>
+      tokenPrefix: optional<string>
+      tokenHeader: optional<string>
+      scopes: optional<list<string>>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshEndpoint>
+      authorizationEndpoint:
+        type: commons.EndpointReference
+        docs: The endpoint where users authorize the application.
+      redirectUri:
+        type: optional<string>
+        docs: The callback URL after authorization.
+      usePkce:
+        type: optional<boolean>
+        docs: Whether to use PKCE (Proof Key for Code Exchange) for enhanced security.
+
+  OAuthPasswordGrant:
+    docs: |
+      OAuth 2.0 Resource Owner Password Credentials (ROPC) flow configuration.
+      Used when the application has a high degree of trust with the user.
+    properties:
+      clientIdEnvVar: optional<EnvironmentVariable>
+      clientSecretEnvVar: optional<EnvironmentVariable>
+      tokenPrefix: optional<string>
+      tokenHeader: optional<string>
+      scopes: optional<list<string>>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshEndpoint>
+      usernameEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable for the username.
+      passwordEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable for the password.
+
+  OAuthDeviceCode:
+    docs: |
+      OAuth 2.0 Device Authorization Grant flow configuration.
+      Used for devices with limited input capabilities.
+    properties:
+      clientIdEnvVar: optional<EnvironmentVariable>
+      clientSecretEnvVar: optional<EnvironmentVariable>
+      tokenPrefix: optional<string>
+      tokenHeader: optional<string>
+      scopes: optional<list<string>>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshEndpoint>
+      deviceAuthorizationEndpoint:
+        type: commons.EndpointReference
+        docs: The endpoint where the device obtains a device code.
+
+  OAuthTokenExchange:
+    docs: |
+      OAuth 2.0 Token Exchange flow configuration (RFC 8693).
+      Used for delegation and impersonation scenarios.
+    properties:
+      clientIdEnvVar: optional<EnvironmentVariable>
+      clientSecretEnvVar: optional<EnvironmentVariable>
+      tokenPrefix: optional<string>
+      tokenHeader: optional<string>
+      scopes: optional<list<string>>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshEndpoint>
+
+  OAuthRefreshToken:
+    docs: |
+      OAuth 2.0 Refresh Token flow configuration.
+      Used when the primary grant type is a refresh token.
     properties:
       clientIdEnvVar: optional<EnvironmentVariable>
       clientSecretEnvVar: optional<EnvironmentVariable>

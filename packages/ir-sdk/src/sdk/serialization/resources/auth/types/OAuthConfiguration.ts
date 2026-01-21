@@ -6,6 +6,11 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { OAuthClientCredentials } from "./OAuthClientCredentials";
+import { OAuthAuthorizationCode } from "./OAuthAuthorizationCode";
+import { OAuthPasswordGrant } from "./OAuthPasswordGrant";
+import { OAuthDeviceCode } from "./OAuthDeviceCode";
+import { OAuthTokenExchange } from "./OAuthTokenExchange";
+import { OAuthRefreshToken } from "./OAuthRefreshToken";
 
 export const OAuthConfiguration: core.serialization.Schema<
     serializers.OAuthConfiguration.Raw,
@@ -13,12 +18,27 @@ export const OAuthConfiguration: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         clientCredentials: OAuthClientCredentials,
+        authorizationCode: OAuthAuthorizationCode,
+        password: OAuthPasswordGrant,
+        deviceCode: OAuthDeviceCode,
+        tokenExchange: OAuthTokenExchange,
+        refreshToken: OAuthRefreshToken,
     })
     .transform<FernIr.OAuthConfiguration>({
         transform: (value) => {
             switch (value.type) {
                 case "clientCredentials":
                     return FernIr.OAuthConfiguration.clientCredentials(value);
+                case "authorizationCode":
+                    return FernIr.OAuthConfiguration.authorizationCode(value);
+                case "password":
+                    return FernIr.OAuthConfiguration.password(value);
+                case "deviceCode":
+                    return FernIr.OAuthConfiguration.deviceCode(value);
+                case "tokenExchange":
+                    return FernIr.OAuthConfiguration.tokenExchange(value);
+                case "refreshToken":
+                    return FernIr.OAuthConfiguration.refreshToken(value);
                 default:
                     return value as FernIr.OAuthConfiguration;
             }
@@ -27,9 +47,35 @@ export const OAuthConfiguration: core.serialization.Schema<
     });
 
 export declare namespace OAuthConfiguration {
-    export type Raw = OAuthConfiguration.ClientCredentials;
+    export type Raw =
+        | OAuthConfiguration.ClientCredentials
+        | OAuthConfiguration.AuthorizationCode
+        | OAuthConfiguration.Password
+        | OAuthConfiguration.DeviceCode
+        | OAuthConfiguration.TokenExchange
+        | OAuthConfiguration.RefreshToken;
 
     export interface ClientCredentials extends OAuthClientCredentials.Raw {
         type: "clientCredentials";
+    }
+
+    export interface AuthorizationCode extends OAuthAuthorizationCode.Raw {
+        type: "authorizationCode";
+    }
+
+    export interface Password extends OAuthPasswordGrant.Raw {
+        type: "password";
+    }
+
+    export interface DeviceCode extends OAuthDeviceCode.Raw {
+        type: "deviceCode";
+    }
+
+    export interface TokenExchange extends OAuthTokenExchange.Raw {
+        type: "tokenExchange";
+    }
+
+    export interface RefreshToken extends OAuthRefreshToken.Raw {
+        type: "refreshToken";
     }
 }

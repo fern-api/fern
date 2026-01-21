@@ -10,13 +10,28 @@ import { OAuthGetTokenEndpointSchema } from "./OAuthGetTokenEndpointSchema";
 import { OAuthRefreshTokenEndpointSchema } from "./OAuthRefreshTokenEndpointSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
+export type OAuthGrantType =
+    | "client-credentials"
+    | "authorization-code"
+    | "password"
+    | "device-code"
+    | "token-exchange"
+    | "refresh-token";
+
 export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.OAuthSchemeSchema.Raw,
     GeneratorsYml.fernDefinition.OAuthSchemeSchema
 > = core.serialization
     .object({
         scheme: core.serialization.stringLiteral("oauth"),
-        type: core.serialization.stringLiteral("client-credentials"),
+        type: core.serialization.enum_([
+            "client-credentials",
+            "authorization-code",
+            "password",
+            "device-code",
+            "token-exchange",
+            "refresh-token"
+        ]),
         scopes: core.serialization.list(AuthScope).optional(),
         "client-id-env": core.serialization.string().optional(),
         "client-secret-env": core.serialization.string().optional(),
@@ -24,13 +39,19 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
         "token-header": core.serialization.string().optional(),
         "get-token": OAuthGetTokenEndpointSchema,
         "refresh-token": OAuthRefreshTokenEndpointSchema.optional(),
+        "authorization-endpoint": core.serialization.string().optional(),
+        "redirect-uri": core.serialization.string().optional(),
+        "use-pkce": core.serialization.boolean().optional(),
+        "username-env": core.serialization.string().optional(),
+        "password-env": core.serialization.string().optional(),
+        "device-authorization-endpoint": core.serialization.string().optional()
     })
     .extend(WithDocsSchema);
 
 export declare namespace OAuthSchemeSchema {
     export interface Raw extends WithDocsSchema.Raw {
         scheme: "oauth";
-        type: "client-credentials";
+        type: OAuthGrantType;
         scopes?: AuthScope.Raw[] | null;
         "client-id-env"?: string | null;
         "client-secret-env"?: string | null;
@@ -38,5 +59,11 @@ export declare namespace OAuthSchemeSchema {
         "token-header"?: string | null;
         "get-token": OAuthGetTokenEndpointSchema.Raw;
         "refresh-token"?: OAuthRefreshTokenEndpointSchema.Raw | null;
+        "authorization-endpoint"?: string | null;
+        "redirect-uri"?: string | null;
+        "use-pkce"?: boolean | null;
+        "username-env"?: string | null;
+        "password-env"?: string | null;
+        "device-authorization-endpoint"?: string | null;
     }
 }

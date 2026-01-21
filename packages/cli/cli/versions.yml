@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.0
+  changelogEntry:
+    - summary: |
+        Add comprehensive OAuth 2.0 support in the IR and CLI. The OAuth configuration now supports all major grant types: authorization-code, password, device-code, token-exchange, and refresh-token, in addition to the existing client-credentials flow. This is a breaking change that bumps the IR version to 64.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 64
+
 - version: 3.48.1
   changelogEntry:
     - summary: |

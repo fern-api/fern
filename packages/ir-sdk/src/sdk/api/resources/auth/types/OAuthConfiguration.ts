@@ -4,11 +4,37 @@
 
 import * as FernIr from "../../../index";
 
-export type OAuthConfiguration = FernIr.OAuthConfiguration.ClientCredentials;
+export type OAuthConfiguration =
+    | FernIr.OAuthConfiguration.ClientCredentials
+    | FernIr.OAuthConfiguration.AuthorizationCode
+    | FernIr.OAuthConfiguration.Password
+    | FernIr.OAuthConfiguration.DeviceCode
+    | FernIr.OAuthConfiguration.TokenExchange
+    | FernIr.OAuthConfiguration.RefreshToken;
 
 export namespace OAuthConfiguration {
     export interface ClientCredentials extends FernIr.OAuthClientCredentials, _Utils {
         type: "clientCredentials";
+    }
+
+    export interface AuthorizationCode extends FernIr.OAuthAuthorizationCode, _Utils {
+        type: "authorizationCode";
+    }
+
+    export interface Password extends FernIr.OAuthPasswordGrant, _Utils {
+        type: "password";
+    }
+
+    export interface DeviceCode extends FernIr.OAuthDeviceCode, _Utils {
+        type: "deviceCode";
+    }
+
+    export interface TokenExchange extends FernIr.OAuthTokenExchange, _Utils {
+        type: "tokenExchange";
+    }
+
+    export interface RefreshToken extends FernIr.OAuthRefreshToken, _Utils {
+        type: "refreshToken";
     }
 
     export interface _Utils {
@@ -17,6 +43,11 @@ export namespace OAuthConfiguration {
 
     export interface _Visitor<_Result> {
         clientCredentials: (value: FernIr.OAuthClientCredentials) => _Result;
+        authorizationCode: (value: FernIr.OAuthAuthorizationCode) => _Result;
+        password: (value: FernIr.OAuthPasswordGrant) => _Result;
+        deviceCode: (value: FernIr.OAuthDeviceCode) => _Result;
+        tokenExchange: (value: FernIr.OAuthTokenExchange) => _Result;
+        refreshToken: (value: FernIr.OAuthRefreshToken) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -35,6 +66,71 @@ export const OAuthConfiguration = {
         };
     },
 
+    authorizationCode: (value: FernIr.OAuthAuthorizationCode): FernIr.OAuthConfiguration.AuthorizationCode => {
+        return {
+            ...value,
+            type: "authorizationCode",
+            _visit: function <_Result>(
+                this: FernIr.OAuthConfiguration.AuthorizationCode,
+                visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
+            ) {
+                return FernIr.OAuthConfiguration._visit(this, visitor);
+            },
+        };
+    },
+
+    password: (value: FernIr.OAuthPasswordGrant): FernIr.OAuthConfiguration.Password => {
+        return {
+            ...value,
+            type: "password",
+            _visit: function <_Result>(
+                this: FernIr.OAuthConfiguration.Password,
+                visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
+            ) {
+                return FernIr.OAuthConfiguration._visit(this, visitor);
+            },
+        };
+    },
+
+    deviceCode: (value: FernIr.OAuthDeviceCode): FernIr.OAuthConfiguration.DeviceCode => {
+        return {
+            ...value,
+            type: "deviceCode",
+            _visit: function <_Result>(
+                this: FernIr.OAuthConfiguration.DeviceCode,
+                visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
+            ) {
+                return FernIr.OAuthConfiguration._visit(this, visitor);
+            },
+        };
+    },
+
+    tokenExchange: (value: FernIr.OAuthTokenExchange): FernIr.OAuthConfiguration.TokenExchange => {
+        return {
+            ...value,
+            type: "tokenExchange",
+            _visit: function <_Result>(
+                this: FernIr.OAuthConfiguration.TokenExchange,
+                visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
+            ) {
+                return FernIr.OAuthConfiguration._visit(this, visitor);
+            },
+        };
+    },
+
+    refreshToken: (value: FernIr.OAuthRefreshToken): FernIr.OAuthConfiguration.RefreshToken => {
+        return {
+            ...value,
+            type: "refreshToken",
+            _visit: function <_Result>(
+                this: FernIr.OAuthConfiguration.RefreshToken,
+                visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
+            ) {
+                return FernIr.OAuthConfiguration._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.OAuthConfiguration,
         visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
@@ -42,6 +138,16 @@ export const OAuthConfiguration = {
         switch (value.type) {
             case "clientCredentials":
                 return visitor.clientCredentials(value);
+            case "authorizationCode":
+                return visitor.authorizationCode(value);
+            case "password":
+                return visitor.password(value);
+            case "deviceCode":
+                return visitor.deviceCode(value);
+            case "tokenExchange":
+                return visitor.tokenExchange(value);
+            case "refreshToken":
+                return visitor.refreshToken(value);
             default:
                 return visitor._other(value as any);
         }
