@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.47.6
+- version: 3.47.7
   changelogEntry:
     - summary: |
         Fix duplicate summary collision in OpenAPI examples. When multiple examples have the same summary, the second example is now disambiguated as `${summary} (${key})` instead of silently overwriting the first.
+      type: fix
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.47.6
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI example summary field propagation. The `summary` field from OpenAPI examples is now correctly propagated to the IR `displayName` field and FDR `name` field. Previously, when examples were referenced via `$ref`, the summary field was lost because the reference was not resolved before checking for the summary. Also adds support for recursive `$ref` resolution in examples.
       type: fix
   createdAt: "2026-01-21"
   irVersion: 63

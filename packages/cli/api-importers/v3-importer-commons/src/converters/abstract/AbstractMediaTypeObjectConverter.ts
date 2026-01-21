@@ -167,7 +167,12 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
 
         for (const [key, example] of examples) {
             const resolvedExample = this.context.resolveExampleWithValue(example);
-            const exampleName = this.getIdForExample({ key, example, usedExampleNames });
+            // Resolve example references recursively to handle nested $ref
+            const resolvedExampleObject = this.context.resolveExampleRecursively({
+                example,
+                breadcrumbs: this.breadcrumbs
+            });
+            const exampleName = this.getIdForExample({ key, example: resolvedExampleObject, usedExampleNames });
             usedExampleNames.add(exampleName);
 
             if (resolvedExample != null) {

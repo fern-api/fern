@@ -201,6 +201,23 @@ paths:
                       latitude: 45.0
                       longitude: -73.0
 
+  /trees/alias:
+    get:
+      summary: Get tree using aliased example (tests recursive $ref resolution)
+      operationId: getTreeAlias
+      responses:
+        "200":
+          description: Tree details using aliased example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tree"
+              examples:
+                aliasedOak:
+                  $ref: "#/components/examples/oakTreeAlias"
+                doubleAliasedOak:
+                  $ref: "#/components/examples/oakTreeDoubleAlias"
+
 components:
   schemas:
     TreeCreate:
@@ -296,3 +313,11 @@ components:
             latitude: 42.3601
             longitude: -71.0589
       summary: Example list of trees
+
+    # Test recursive $ref resolution - this example references another example
+    oakTreeAlias:
+      $ref: "#/components/examples/oakTree"
+
+    # Test double-nested $ref resolution - references the alias which references oakTree
+    oakTreeDoubleAlias:
+      $ref: "#/components/examples/oakTreeAlias"

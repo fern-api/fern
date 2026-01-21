@@ -2060,36 +2060,36 @@
           "responseHeaders": []
         },
         {
-          "id": "endpoint_.getPineTrees",
+          "id": "endpoint_.getTreeAlias",
           "name": {
-            "originalName": "getPineTrees",
+            "originalName": "getTreeAlias",
             "camelCase": {
-              "unsafeName": "getPineTrees",
-              "safeName": "getPineTrees"
+              "unsafeName": "getTreeAlias",
+              "safeName": "getTreeAlias"
             },
             "snakeCase": {
-              "unsafeName": "get_pine_trees",
-              "safeName": "get_pine_trees"
+              "unsafeName": "get_tree_alias",
+              "safeName": "get_tree_alias"
             },
             "screamingSnakeCase": {
-              "unsafeName": "GET_PINE_TREES",
-              "safeName": "GET_PINE_TREES"
+              "unsafeName": "GET_TREE_ALIAS",
+              "safeName": "GET_TREE_ALIAS"
             },
             "pascalCase": {
-              "unsafeName": "GetPineTrees",
-              "safeName": "GetPineTrees"
+              "unsafeName": "GetTreeAlias",
+              "safeName": "GetTreeAlias"
             }
           },
-          "displayName": "Get pine trees (tests duplicate summary collision handling)",
+          "displayName": "Get tree using aliased example (tests recursive $ref resolution)",
           "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
-            "head": "/trees/pines",
+            "head": "/trees/alias",
             "parts": []
           },
           "fullPath": {
-            "head": "trees/pines",
+            "head": "trees/alias",
             "parts": []
           },
           "pathParameters": [],
@@ -2099,7 +2099,7 @@
           "response": {
             "body": {
               "value": {
-                "docs": "Pine tree details - both examples have the same summary \"Pine Tree\"",
+                "docs": "Tree details using aliased example",
                 "responseBodyType": {
                   "name": {
                     "originalName": "Tree",
@@ -2132,7 +2132,7 @@
               "type": "json"
             },
             "statusCode": 200,
-            "docs": "Pine tree details - both examples have the same summary \"Pine Tree\""
+            "docs": "Tree details using aliased example"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -3324,25 +3324,25 @@
         },
         "examples": []
       },
-      "endpoint_.getPineTrees": {
+      "endpoint_.getTreeAlias": {
         "declaration": {
           "name": {
-            "originalName": "getPineTrees",
+            "originalName": "getTreeAlias",
             "camelCase": {
-              "unsafeName": "getPineTrees",
-              "safeName": "getPineTrees"
+              "unsafeName": "getTreeAlias",
+              "safeName": "getTreeAlias"
             },
             "snakeCase": {
-              "unsafeName": "get_pine_trees",
-              "safeName": "get_pine_trees"
+              "unsafeName": "get_tree_alias",
+              "safeName": "get_tree_alias"
             },
             "screamingSnakeCase": {
-              "unsafeName": "GET_PINE_TREES",
-              "safeName": "GET_PINE_TREES"
+              "unsafeName": "GET_TREE_ALIAS",
+              "safeName": "GET_TREE_ALIAS"
             },
             "pascalCase": {
-              "unsafeName": "GetPineTrees",
-              "safeName": "GetPineTrees"
+              "unsafeName": "GetTreeAlias",
+              "safeName": "GetTreeAlias"
             }
           },
           "fernFilepath": {
@@ -3352,7 +3352,7 @@
         },
         "location": {
           "method": "GET",
-          "path": "/trees/pines"
+          "path": "/trees/alias"
         },
         "request": {
           "pathParameters": [],
