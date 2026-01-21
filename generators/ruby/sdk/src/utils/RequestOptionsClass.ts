@@ -26,7 +26,6 @@ export declare namespace RequestOptions {
 
 export class RequestOptions extends Class_ {
     public timeoutProperty: Property;
-    public maxRetriesProperty: Property;
     public headerProperties: Property[];
     public additionalHeaderProperty: Property;
     public additionalQueryProperty: Property;
@@ -38,12 +37,6 @@ export class RequestOptions extends Class_ {
             name: "timeout_in_seconds",
             type: LongClassReference,
             isOptional: true
-        });
-        const maxRetriesProperty = new Property({
-            name: "max_retries",
-            type: LongClassReference,
-            isOptional: true,
-            documentation: "The number of times to retry a failed request, defaults to 2."
         });
         const headerProperties = [
             // Auth headers
@@ -87,14 +80,12 @@ export class RequestOptions extends Class_ {
                 additionalQueryProperty,
                 additionalBodyProperty,
                 timeoutProperty,
-                maxRetriesProperty,
                 ...(additionalProperties ?? [])
             ],
             documentation: "Additional options for request-specific configuration when calling APIs via the SDK."
         });
 
         this.timeoutProperty = timeoutProperty;
-        this.maxRetriesProperty = maxRetriesProperty;
         this.headerProperties = headerProperties;
         this.additionalHeaderProperty = additionalHeaderProperty;
         this.additionalQueryProperty = additionalQueryProperty;
@@ -145,9 +136,5 @@ export class RequestOptions extends Class_ {
 
     public getBaseUrlProperty(requestOptionsVariable: Variable): string {
         return `${requestOptionsVariable.write({})}&.${this.baseUrlProperty.name}`;
-    }
-
-    public getMaxRetriesProperty(requestOptionsVariable: Variable): string {
-        return `${requestOptionsVariable.write({})}&.${this.maxRetriesProperty.name}`;
     }
 }

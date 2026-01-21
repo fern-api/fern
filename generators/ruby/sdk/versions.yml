@@ -1,15 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 0.8.4
-  createdAt: "2026-01-16"
-  changelogEntry:
-    - type: feat
-      summary: >-
-        Add support for per-request max_retries override via request_options.
-        Users can now specify max_retries in request_options to override the
-        client-level max_retries setting on a per-request basis.
-  irVersion: 39
-
 - version: 0.8.3
   createdAt: "2025-11-19"
   changelogEntry:

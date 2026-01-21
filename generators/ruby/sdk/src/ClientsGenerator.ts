@@ -1,5 +1,4 @@
 import { AbstractGeneratorContext } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     Class_,
     ClassReferenceFactory,
@@ -45,7 +44,6 @@ import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClas
 import { AccessToken } from "./utils/oauth/AccessToken";
 import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
 import { RequestOptions } from "./utils/RequestOptionsClass";
-import { RetryableUtility } from "./utils/RetryableUtility";
 import { RootImportsFile } from "./utils/RootImportsFile";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
@@ -263,12 +261,6 @@ export class ClientsGenerator {
                 })
             );
         }
-
-        // Generate the Retryable module for per-request retry logic
-        const retryableCode = RetryableUtility.getRetryableModuleCode(this.clientName);
-        clientFiles.push(
-            new GeneratedFile("retryable.rb", RelativeFilePath.of(`lib/${this.gemName}/core`), retryableCode)
-        );
 
         const subpackageClassReferences = new Map<SubpackageId, ClientClassPair>();
         const locationGenerator = this.locationGenerator;
