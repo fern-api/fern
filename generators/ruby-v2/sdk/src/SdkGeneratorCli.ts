@@ -17,7 +17,6 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
-import { generateGitHubWorkflowFiles } from "./utils/writeGitHubWorkflows";
 import { WireTestGenerator } from "./wire-tests";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
@@ -50,20 +49,6 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
-
-        if (context.selfHosted) {
-            const githubOutputMode = context.config.output.mode;
-            if (githubOutputMode.type === "github") {
-                const workflowFiles = generateGitHubWorkflowFiles({
-                    githubOutputMode,
-                    publishConfig: context.ir.publishConfig
-                });
-                for (const file of workflowFiles) {
-                    context.project.addRawFiles(file);
-                }
-                await context.project.persist();
-            }
-        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
