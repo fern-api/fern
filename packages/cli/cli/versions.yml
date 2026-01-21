@@ -7,6 +7,30 @@
   createdAt: "2026-01-21"
   irVersion: 63
 
+- version: 3.47.5
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI query parameters with `$ref` types being incorrectly marked as required.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
+- version: 3.47.4
+  changelogEntry:
+    - summary: |
+        Fix AI examples headers/path/query params not appearing in docs immediately after generation.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
+- version: 3.47.3
+  changelogEntry:
+    - summary: |
+        Improve error messages for authentication errors when publishing docs.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
 - version: 3.47.2
   changelogEntry:
     - summary: |
