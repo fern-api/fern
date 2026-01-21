@@ -233,7 +233,11 @@ export class ExampleTypeFactory {
                         for (const commonProperty of schema.value.commonProperties) {
                             allProperties[commonProperty.key] = { schema: commonProperty.schema, readonly: false };
                             const resolvedSchema = this.getResolvedSchema(commonProperty.schema);
-                            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
+                            if (
+                                resolvedSchema != null &&
+                                resolvedSchema.type !== "optional" &&
+                                resolvedSchema.type !== "nullable"
+                            ) {
                                 requiredProperties[commonProperty.key] = commonProperty.schema;
                             }
                         }
@@ -842,7 +846,7 @@ export class ExampleTypeFactory {
                 continue;
             }
             const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema);
-            if (resolvedAllOfSchema.type !== "object") {
+            if (resolvedAllOfSchema == null || resolvedAllOfSchema.type !== "object") {
                 continue;
             }
             properties = {
@@ -857,7 +861,7 @@ export class ExampleTypeFactory {
         let requiredProperties: Record<string, SchemaWithExample> = {};
         for (const property of object.properties) {
             const resolvedSchema = this.getResolvedSchema(property.schema);
-            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
+            if (resolvedSchema != null && resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
                 requiredProperties[property.key] = property.schema;
             }
         }
@@ -867,7 +871,7 @@ export class ExampleTypeFactory {
                 continue;
             }
             const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema);
-            if (resolvedAllOfSchema.type !== "object") {
+            if (resolvedAllOfSchema == null || resolvedAllOfSchema.type !== "object") {
                 continue;
             }
             requiredProperties = {
@@ -878,11 +882,13 @@ export class ExampleTypeFactory {
         return requiredProperties;
     }
 
-    private getResolvedSchema(schema: SchemaWithExample) {
+    private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample | undefined {
         while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema];
             if (resolvedSchema == null) {
-                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`);
+                // Return undefined instead of throwing to gracefully handle
+                // missing schema references (e.g., schemas marked with x-fern-ignore)
+                return undefined;
             }
             schema = resolvedSchema;
         }
