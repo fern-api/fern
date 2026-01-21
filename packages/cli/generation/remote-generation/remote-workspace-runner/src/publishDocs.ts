@@ -12,7 +12,6 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { parseRepository } from "@fern-api/github";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
@@ -694,9 +693,9 @@ async function checkAndDownloadExistingSdkDynamicIRs({
         return undefined;
     }
 }
-function normalizeRepositoryToPackageName(repository: string): string {
-    const parsed = parseRepository(repository);
-    return `${parsed.remote}/${parsed.owner}/${parsed.repo}`;
+// normalize Go package names by stripping https:// prefix to match how upload keys are generated.
+function normalizeGoPackageForLookup(repository: string): string {
+    return repository.replace(/^https:\/\//, "");
 }
 async function buildSnippetConfigurationWithVersions({
     fdr,
@@ -733,8 +732,9 @@ async function buildSnippetConfigurationWithVersions({
         },
         {
             language: "go",
+            // Normalize to match S3 upload key format (github.com/owner/repo vs https://github.com/owner/repo)
             snippetName:
-                snippetsConfig.goSdk?.githubRepo && normalizeRepositoryToPackageName(snippetsConfig.goSdk?.githubRepo),
+                snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
             explicitVersion: snippetsConfig.goSdk?.version
         },
         {
@@ -916,7 +916,8 @@ async function generateLanguageSpecificDynamicIRs({
         typescript: snippetsConfig.typescriptSdk?.package,
         python: snippetsConfig.pythonSdk?.package,
         java: snippetsConfig.javaSdk?.coordinate,
-        go: snippetsConfig.goSdk?.githubRepo && normalizeRepositoryToPackageName(snippetsConfig.goSdk?.githubRepo),
+        // normalize Go package name to match generator package format for comparison logic
+        go: snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
         csharp: snippetsConfig.csharpSdk?.package,
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
