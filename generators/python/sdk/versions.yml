@@ -8,7 +8,8 @@
         When a field is typed as an object in the OpenAPI schema, the generator now wraps it with
         `Annotated[FieldType, BeforeValidator(_parse_json_string)]` to automatically parse JSON strings
         that arrive over the wire (e.g., in SSE events). String-typed fields remain unchanged.
-        This is a Pydantic v2 feature; v1-only configurations are unaffected.
+        This feature only applies to Pydantic v2-only configurations; v1-only and "Both" (v1+v2)
+        configurations are unaffected since BeforeValidator doesn't exist in Pydantic v1.
       type: fix
   createdAt: "2026-01-20"
   irVersion: 62

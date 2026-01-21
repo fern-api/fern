@@ -416,13 +416,14 @@ class FernAwarePydanticModel:
         Determine if a field should have a BeforeValidator to parse JSON strings.
         Returns True if:
         1. The field is an object type (can be a Fern model)
-        2. We're using Pydantic v2 (BeforeValidator is a v2 feature)
+        2. We're using Pydantic v2 only (BeforeValidator is a v2 feature and doesn't exist in v1)
+
+        Note: We only add BeforeValidator for V2-only mode, not for "Both" mode,
+        because BeforeValidator doesn't exist in Pydantic v1 and would break v1 compatibility.
         """
-        # Only add BeforeValidator for Pydantic v2 (BeforeValidator doesn't exist in v1)
-        if self._custom_config.version not in (
-            PydanticVersionCompatibility.V2,
-            PydanticVersionCompatibility.Both,
-        ):
+        # Only add BeforeValidator for Pydantic v2-only mode
+        # "Both" mode needs to work with v1 which doesn't have BeforeValidator
+        if self._custom_config.version != PydanticVersionCompatibility.V2:
             return False
 
         # Check if the type reference is an object type (can be a Fern model)
