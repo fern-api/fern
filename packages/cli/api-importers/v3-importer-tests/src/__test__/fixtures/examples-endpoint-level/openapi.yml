@@ -166,6 +166,23 @@ paths:
                 foo: "bar"
                 bar: 123
 
+  /trees/pines:
+    get:
+      summary: Get pine trees (tests duplicate summary collision handling)
+      operationId: getPineTrees
+      responses:
+        "200":
+          description: Pine tree details - both examples have the same summary "Pine Tree"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tree"
+              examples:
+                pine1:
+                  $ref: "#/components/examples/pineTree1"
+                pine2:
+                  $ref: "#/components/examples/pineTree2"
+
 components:
   schemas:
     TreeCreate:
@@ -261,3 +278,28 @@ components:
             latitude: 42.3601
             longitude: -71.0589
       summary: Example list of trees
+
+    # Test duplicate summary collision - these examples have the same summary
+    pineTree1:
+      value:
+        id: "111e1111-e11b-11d1-a111-111111111111"
+        species: "Pinus strobus"
+        height: 30.0
+        age: 60
+        plantedDate: "2015-06-01T00:00:00Z"
+        location:
+          latitude: 44.0
+          longitude: -72.0
+      summary: Pine Tree
+
+    pineTree2:
+      value:
+        id: "222e2222-e22b-22d2-a222-222222222222"
+        species: "Pinus sylvestris"
+        height: 22.0
+        age: 40
+        plantedDate: "2019-09-15T00:00:00Z"
+        location:
+          latitude: 45.0
+          longitude: -73.0
+      summary: Pine Tree
