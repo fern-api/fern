@@ -2893,7 +2893,9 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             // Current behavior (BUG): defaults are used instead of custom names
             // Expected behavior: should be "project_id" and "api_token"
             console.log("=== x-fern-basic Test Results ===");
-            console.log(`IR username.originalName: "${basicAuthScheme.username.originalName}" (expected: "project_id")`);
+            console.log(
+                `IR username.originalName: "${basicAuthScheme.username.originalName}" (expected: "project_id")`
+            );
             console.log(`IR password.originalName: "${basicAuthScheme.password.originalName}" (expected: "api_token")`);
 
             // Document the current (incorrect) behavior
