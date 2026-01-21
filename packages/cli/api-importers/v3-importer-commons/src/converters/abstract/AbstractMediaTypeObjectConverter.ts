@@ -137,6 +137,9 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
             defaultExampleName: `${[...this.group, this.method].join("_")}_example`
         });
 
+        // Track used example names to detect collisions from duplicate summaries
+        const usedExampleNames = new Set<string>();
+
         for (const [key, example] of examples) {
             const resolvedExample = this.context.resolveExampleWithValue(example);
             // Resolve example references recursively to handle nested $ref
@@ -144,9 +147,17 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
                 example,
                 breadcrumbs: this.breadcrumbs
             });
-            const exampleName = this.context.isExampleWithSummary(resolvedExampleObject)
-                ? resolvedExampleObject.summary
-                : key;
+            // Use summary if available, but fall back to key if summary would cause a collision
+            let exampleName: string;
+            if (this.context.isExampleWithSummary(resolvedExampleObject)) {
+                const summary = resolvedExampleObject.summary;
+                // If summary would cause a collision, fall back to the original key
+                exampleName = usedExampleNames.has(summary) ? key : summary;
+            } else {
+                exampleName = key;
+            }
+            usedExampleNames.add(exampleName);
+
             if (resolvedExample != null) {
                 if (schema != null) {
                     v2Examples.userSpecifiedExamples[exampleName] = this.generateOrValidateExample({
