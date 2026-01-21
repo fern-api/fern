@@ -1395,6 +1395,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "response": {
