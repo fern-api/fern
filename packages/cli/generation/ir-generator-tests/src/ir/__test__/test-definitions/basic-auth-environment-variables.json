@@ -48,6 +48,7 @@
                     }
                 },
                 "usernameEnvVar": "USERNAME",
+                "usernameOmit": null,
                 "password": {
                     "originalName": "accessToken",
                     "camelCase": {
@@ -68,6 +69,7 @@
                     }
                 },
                 "passwordEnvVar": "PASSWORD",
+                "passwordOmit": null,
                 "key": "Basic",
                 "docs": null
             }

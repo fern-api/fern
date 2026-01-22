@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v62
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
