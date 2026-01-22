@@ -28,7 +28,6 @@
         "undiscriminated-union-with-response-property",
         "property-access",
         "optional:no-custom-config",
-        "request-parameters",
         "server-sent-event-examples",
         "any-auth",
         "bearer-token-environment-variable"

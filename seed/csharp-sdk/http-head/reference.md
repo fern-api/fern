@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">HeadAsync</a>() -> HttpResponseHeaders</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">HeadAsync</a>() -> WithRawResponseTask&lt;HttpResponseHeaders&gt;</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ await client.User.HeadAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> IEnumerable&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 

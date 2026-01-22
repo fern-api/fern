@@ -33,18 +33,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
 
     public SystemClient System { get; }
 
-    /// <example><code>
-    /// await client.CreateUserAsync(
-    ///     new global::SeedCsharpNamespaceCollision.User
-    ///     {
-    ///         Id = "id",
-    ///         Name = "name",
-    ///         Email = "email",
-    ///         Password = "password",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<User> CreateUserAsync(
+    private async Task<WithRawResponse<User>> CreateUserAsyncCore(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -68,17 +57,28 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedCsharpNamespaceCollisionException(
+                throw new SeedCsharpNamespaceCollisionApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedCsharpNamespaceCollisionApiException(
@@ -89,18 +89,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         }
     }
 
-    /// <example><code>
-    /// await client.CreateTaskAsync(
-    ///     new global::SeedCsharpNamespaceCollision.Task
-    ///     {
-    ///         Id = "id",
-    ///         Name = "name",
-    ///         Email = "email",
-    ///         Password = "password",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<Task> CreateTaskAsync(
+    private async Task<WithRawResponse<Task>> CreateTaskAsyncCore(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -124,17 +113,28 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Task>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Task>(responseBody)!;
+                return new WithRawResponse<Task>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedCsharpNamespaceCollisionException(
+                throw new SeedCsharpNamespaceCollisionApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedCsharpNamespaceCollisionApiException(
@@ -143,5 +143,49 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.CreateUserAsync(
+    ///     new global::SeedCsharpNamespaceCollision.User
+    ///     {
+    ///         Id = "id",
+    ///         Name = "name",
+    ///         Email = "email",
+    ///         Password = "password",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<User> CreateUserAsync(
+        User request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            CreateUserAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.CreateTaskAsync(
+    ///     new global::SeedCsharpNamespaceCollision.Task
+    ///     {
+    ///         Id = "id",
+    ///         Name = "name",
+    ///         Email = "email",
+    ///         Password = "password",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Task> CreateTaskAsync(
+        Task request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Task>(
+            CreateTaskAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -6,8 +6,9 @@ namespace SeedOauthClientCredentialsWithVariables;
 public class SeedOauthClientCredentialsWithVariablesApiException(
     string message,
     int statusCode,
-    object body
-) : SeedOauthClientCredentialsWithVariablesException(message)
+    object body,
+    Exception? innerException = null
+) : SeedOauthClientCredentialsWithVariablesException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

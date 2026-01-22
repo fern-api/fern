@@ -38,7 +38,11 @@ export const AsIsFiles = {
     NdJsonRequest: "NdJsonRequest.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
     RawClient: "RawClient.Template.cs",
+    RawResponse: "RawResponse.Template.cs",
+    ResponseHeaders: "ResponseHeaders.Template.cs",
     StreamRequest: "StreamRequest.Template.cs",
+    WithRawResponse: "WithRawResponse.Template.cs",
+    WithRawResponseTask: "WithRawResponseTask.Template.cs",
     WebSockets: {
         AsyncLock: "WebSockets/AsyncLock.Template.cs",
         Closed: "WebSockets/Closed.Template.cs",
@@ -76,6 +80,7 @@ export const AsIsFiles = {
         TemplateTestClientCs: "test/TemplateTestClient.cs",
         TemplateTestCsProj: "test/Template.Test.csproj",
         TestCustomProps: "test/Test.Custom.props.Template",
+        WithRawResponseTests: "test/WithRawResponseTests.Template.cs",
         RawClientTests: {
             AdditionalHeadersTests: "test/RawClientTests/AdditionalHeadersTests.Template.cs",
             AdditionalParametersTests: "test/RawClientTests/AdditionalParametersTests.Template.cs",

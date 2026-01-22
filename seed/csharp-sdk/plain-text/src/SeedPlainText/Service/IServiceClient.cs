@@ -2,7 +2,7 @@ namespace SeedPlainText;
 
 public partial interface IServiceClient
 {
-    Task<string> GetTextAsync(
+    WithRawResponseTask<string> GetTextAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

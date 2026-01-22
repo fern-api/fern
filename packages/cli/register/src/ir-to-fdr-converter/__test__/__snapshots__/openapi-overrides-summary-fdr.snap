@@ -5,17 +5,470 @@
   "globalHeaders": [],
   "navigation": undefined,
   "rootPackage": {
-    "endpoints": [],
-    "pointsTo": undefined,
-    "subpackages": [
-      "subpackage_auth",
-      "subpackage_boarding",
-      "subpackage_cardPayments",
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/authorize",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "token": "string",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "token": "string",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "authorize",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Request token (override)",
+        "originalEndpointId": "endpoint_.authorize",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/authorize",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "OK",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "AuthResponse",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "OK",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "AuthResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/contacts/id",
+            "pathParameters": {
+              "id": "id",
+            },
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "id": "string",
+              "name": "string",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "string",
+                "name": "string",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getContact",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "Retrieve contact (override only)",
+        "originalEndpointId": "endpoint_.getContact",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/contacts/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "id",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "explode": undefined,
+              "key": "id",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "OK",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Contact",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "OK",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Contact",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/payments",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": [
+              {
+                "amount": 1.1,
+                "id": "string",
+              },
+            ],
+            "responseBodyV3": {
+              "type": "json",
+              "value": [
+                {
+                  "amount": 1.1,
+                  "id": "string",
+                },
+              ],
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "listPayments",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "List payments (main spec only)",
+        "originalEndpointId": "endpoint_.listPayments",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/payments",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "OK",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "Payment",
+              },
+              "maxItems": undefined,
+              "minItems": undefined,
+              "type": "list",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "OK",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "itemType": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "Payment",
+                  },
+                  "maxItems": undefined,
+                  "minItems": undefined,
+                  "type": "list",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/payments",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {},
+            "requestBodyV3": {
+              "type": "json",
+              "value": {},
+            },
+            "responseBody": {
+              "amount": 1.1,
+              "id": "string",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": 1.1,
+                "id": "string",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+        ],
+        "headers": [],
+        "id": "createPayment",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create payment (override)",
+        "originalEndpointId": "endpoint_.createPayment",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/payments",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "PaymentRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "PaymentRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Created",
+          "isWildcard": undefined,
+          "statusCode": 201,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Payment",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Created",
+              "isWildcard": undefined,
+              "statusCode": 201,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Payment",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
     ],
+    "pointsTo": undefined,
+    "subpackages": [],
     "types": [
+      "AuthResponse",
       "Contact",
       "Payment",
-      "CreatePaymentRequest",
+      "PaymentRequest",
     ],
     "webhooks": [],
     "websockets": [],
@@ -31,595 +484,13 @@
     "swiftSdk": undefined,
     "typescriptSdk": undefined,
   },
-  "subpackages": {
-    "subpackage_auth": {
-      "description": undefined,
-      "displayName": undefined,
-      "endpoints": [
-        {
-          "auth": false,
-          "authV2": [],
-          "availability": undefined,
-          "defaultEnvironment": "Production server",
-          "description": "Obtain an access token using client credentials",
-          "environments": [
-            {
-              "baseUrl": "https://api.example.com/v1",
-              "id": "Production server",
-            },
-          ],
-          "errors": undefined,
-          "errorsV2": [],
-          "examples": [
-            {
-              "codeSamples": undefined,
-              "description": "",
-              "headers": {
-                "x-api-key": "x-api-key",
-              },
-              "name": undefined,
-              "path": "/authorize",
-              "pathParameters": {},
-              "queryParameters": {},
-              "requestBody": undefined,
-              "requestBodyV3": undefined,
-              "responseBody": {
-                "access_token": "string",
-                "expires_in": 1,
-                "token_type": "string",
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "access_token": "string",
-                  "expires_in": 1,
-                  "token_type": "string",
-                },
-              },
-              "responseStatusCode": 200,
-            },
-          ],
-          "headers": [
-            {
-              "availability": undefined,
-              "description": "The API key of the application",
-              "key": "x-api-key",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "default": undefined,
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "regex": undefined,
-                  "type": "string",
-                },
-              },
-            },
-          ],
-          "id": "retrieveToken",
-          "includeInApiExplorer": undefined,
-          "method": "POST",
-          "multiAuth": [],
-          "name": "Request an access token",
-          "originalEndpointId": "endpoint_auth.retrieveToken",
-          "path": {
-            "parts": [
-              {
-                "type": "literal",
-                "value": "",
-              },
-              {
-                "type": "literal",
-                "value": "/authorize",
-              },
-            ],
-            "pathParameters": [],
-          },
-          "protocol": {
-            "type": "rest",
-          },
-          "queryParameters": [],
-          "request": undefined,
-          "requestsV2": {
-            "requests": undefined,
-          },
-          "response": {
-            "description": "Successful response",
-            "isWildcard": undefined,
-            "statusCode": 200,
-            "type": {
-              "type": "reference",
-              "value": {
-                "default": undefined,
-                "type": "id",
-                "value": "auth_retrieveToken_Response_200",
-              },
-            },
-          },
-          "responseHeaders": [],
-          "responsesV2": {
-            "responses": [
-              {
-                "description": "Successful response",
-                "isWildcard": undefined,
-                "statusCode": 200,
-                "type": {
-                  "type": "reference",
-                  "value": {
-                    "default": undefined,
-                    "type": "id",
-                    "value": "auth_retrieveToken_Response_200",
-                  },
-                },
-              },
-            ],
-          },
-          "slug": undefined,
-        },
-      ],
-      "name": "auth",
-      "pointsTo": undefined,
-      "subpackageId": "subpackage_auth",
-      "subpackages": [],
-      "types": [],
-      "webhooks": [],
-      "websockets": [],
-    },
-    "subpackage_boarding": {
-      "description": undefined,
-      "displayName": undefined,
-      "endpoints": [],
-      "name": "boarding",
-      "pointsTo": undefined,
-      "subpackageId": "subpackage_boarding",
-      "subpackages": [
-        "subpackage_boarding/contacts",
-      ],
-      "types": [],
-      "webhooks": [],
-      "websockets": [],
-    },
-    "subpackage_boarding/contacts": {
-      "description": undefined,
-      "displayName": undefined,
-      "endpoints": [
-        {
-          "auth": false,
-          "authV2": undefined,
-          "availability": undefined,
-          "defaultEnvironment": "Production server",
-          "description": "Retrieve a contact by ID",
-          "environments": [
-            {
-              "baseUrl": "https://api.example.com/v1",
-              "id": "Production server",
-            },
-          ],
-          "errors": undefined,
-          "errorsV2": [],
-          "examples": [
-            {
-              "codeSamples": undefined,
-              "description": "",
-              "headers": {},
-              "name": undefined,
-              "path": "/contacts/contactId",
-              "pathParameters": {
-                "contactId": "contactId",
-              },
-              "queryParameters": {},
-              "requestBody": undefined,
-              "requestBodyV3": undefined,
-              "responseBody": {
-                "email": "string",
-                "id": "string",
-                "name": "string",
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "email": "string",
-                  "id": "string",
-                  "name": "string",
-                },
-              },
-              "responseStatusCode": 200,
-            },
-          ],
-          "headers": [],
-          "id": "retrieve",
-          "includeInApiExplorer": undefined,
-          "method": "GET",
-          "multiAuth": undefined,
-          "name": "Retrieve a contact",
-          "originalEndpointId": "endpoint_boarding/contacts.retrieve",
-          "path": {
-            "parts": [
-              {
-                "type": "literal",
-                "value": "",
-              },
-              {
-                "type": "literal",
-                "value": "/contacts/",
-              },
-              {
-                "type": "pathParameter",
-                "value": "contactId",
-              },
-              {
-                "type": "literal",
-                "value": "",
-              },
-            ],
-            "pathParameters": [
-              {
-                "availability": undefined,
-                "description": undefined,
-                "explode": undefined,
-                "key": "contactId",
-                "type": {
-                  "type": "primitive",
-                  "value": {
-                    "default": undefined,
-                    "format": undefined,
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "regex": undefined,
-                    "type": "string",
-                  },
-                },
-              },
-            ],
-          },
-          "protocol": {
-            "type": "rest",
-          },
-          "queryParameters": [],
-          "request": undefined,
-          "requestsV2": {
-            "requests": undefined,
-          },
-          "response": {
-            "description": "Contact found",
-            "isWildcard": undefined,
-            "statusCode": 200,
-            "type": {
-              "type": "reference",
-              "value": {
-                "default": undefined,
-                "type": "id",
-                "value": "Contact",
-              },
-            },
-          },
-          "responseHeaders": [],
-          "responsesV2": {
-            "responses": [
-              {
-                "description": "Contact found",
-                "isWildcard": undefined,
-                "statusCode": 200,
-                "type": {
-                  "type": "reference",
-                  "value": {
-                    "default": undefined,
-                    "type": "id",
-                    "value": "Contact",
-                  },
-                },
-              },
-            ],
-          },
-          "slug": undefined,
-        },
-      ],
-      "name": "contacts",
-      "pointsTo": undefined,
-      "subpackageId": "subpackage_boarding/contacts",
-      "subpackages": [],
-      "types": [],
-      "webhooks": [],
-      "websockets": [],
-    },
-    "subpackage_cardPayments": {
-      "description": undefined,
-      "displayName": undefined,
-      "endpoints": [],
-      "name": "cardPayments",
-      "pointsTo": undefined,
-      "subpackageId": "subpackage_cardPayments",
-      "subpackages": [
-        "subpackage_cardPayments/payments",
-      ],
-      "types": [],
-      "webhooks": [],
-      "websockets": [],
-    },
-    "subpackage_cardPayments/payments": {
-      "description": undefined,
-      "displayName": undefined,
-      "endpoints": [
-        {
-          "auth": false,
-          "authV2": undefined,
-          "availability": undefined,
-          "defaultEnvironment": "Production server",
-          "description": "List all payments",
-          "environments": [
-            {
-              "baseUrl": "https://api.example.com/v1",
-              "id": "Production server",
-            },
-          ],
-          "errors": undefined,
-          "errorsV2": [],
-          "examples": [
-            {
-              "codeSamples": undefined,
-              "description": "",
-              "headers": {},
-              "name": undefined,
-              "path": "/payments",
-              "pathParameters": {},
-              "queryParameters": {},
-              "requestBody": undefined,
-              "requestBodyV3": undefined,
-              "responseBody": [
-                {
-                  "amount": 1.1,
-                  "currency": "string",
-                  "id": "string",
-                  "status": "string",
-                },
-              ],
-              "responseBodyV3": {
-                "type": "json",
-                "value": [
-                  {
-                    "amount": 1.1,
-                    "currency": "string",
-                    "id": "string",
-                    "status": "string",
-                  },
-                ],
-              },
-              "responseStatusCode": 200,
-            },
-          ],
-          "headers": [],
-          "id": "list",
-          "includeInApiExplorer": undefined,
-          "method": "GET",
-          "multiAuth": undefined,
-          "name": "List payments (main spec summary - no override)",
-          "originalEndpointId": "endpoint_cardPayments/payments.list",
-          "path": {
-            "parts": [
-              {
-                "type": "literal",
-                "value": "",
-              },
-              {
-                "type": "literal",
-                "value": "/payments",
-              },
-            ],
-            "pathParameters": [],
-          },
-          "protocol": {
-            "type": "rest",
-          },
-          "queryParameters": [],
-          "request": undefined,
-          "requestsV2": {
-            "requests": undefined,
-          },
-          "response": {
-            "description": "List of payments",
-            "isWildcard": undefined,
-            "statusCode": 200,
-            "type": {
-              "type": "reference",
-              "value": {
-                "itemType": {
-                  "default": undefined,
-                  "type": "id",
-                  "value": "Payment",
-                },
-                "maxItems": undefined,
-                "minItems": undefined,
-                "type": "list",
-              },
-            },
-          },
-          "responseHeaders": [],
-          "responsesV2": {
-            "responses": [
-              {
-                "description": "List of payments",
-                "isWildcard": undefined,
-                "statusCode": 200,
-                "type": {
-                  "type": "reference",
-                  "value": {
-                    "itemType": {
-                      "default": undefined,
-                      "type": "id",
-                      "value": "Payment",
-                    },
-                    "maxItems": undefined,
-                    "minItems": undefined,
-                    "type": "list",
-                  },
-                },
-              },
-            ],
-          },
-          "slug": undefined,
-        },
-        {
-          "auth": false,
-          "authV2": undefined,
-          "availability": undefined,
-          "defaultEnvironment": "Production server",
-          "description": "Create a new payment",
-          "environments": [
-            {
-              "baseUrl": "https://api.example.com/v1",
-              "id": "Production server",
-            },
-          ],
-          "errors": undefined,
-          "errorsV2": [],
-          "examples": [
-            {
-              "codeSamples": undefined,
-              "description": "",
-              "headers": {},
-              "name": undefined,
-              "path": "/payments",
-              "pathParameters": {},
-              "queryParameters": {},
-              "requestBody": {
-                "amount": 1.1,
-                "currency": "string",
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "amount": 1.1,
-                  "currency": "string",
-                },
-              },
-              "responseBody": {
-                "amount": 1.1,
-                "currency": "string",
-                "id": "string",
-                "status": "string",
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "amount": 1.1,
-                  "currency": "string",
-                  "id": "string",
-                  "status": "string",
-                },
-              },
-              "responseStatusCode": 201,
-            },
-          ],
-          "headers": [],
-          "id": "create",
-          "includeInApiExplorer": undefined,
-          "method": "POST",
-          "multiAuth": undefined,
-          "name": "Create a new payment",
-          "originalEndpointId": "endpoint_cardPayments/payments.create",
-          "path": {
-            "parts": [
-              {
-                "type": "literal",
-                "value": "",
-              },
-              {
-                "type": "literal",
-                "value": "/payments",
-              },
-            ],
-            "pathParameters": [],
-          },
-          "protocol": {
-            "type": "rest",
-          },
-          "queryParameters": [],
-          "request": {
-            "description": undefined,
-            "type": {
-              "contentType": "application/json",
-              "description": undefined,
-              "shape": {
-                "type": "reference",
-                "value": {
-                  "default": undefined,
-                  "type": "id",
-                  "value": "CreatePaymentRequest",
-                },
-              },
-              "type": "json",
-            },
-          },
-          "requestsV2": {
-            "requests": [
-              {
-                "description": undefined,
-                "type": {
-                  "contentType": "application/json",
-                  "description": undefined,
-                  "shape": {
-                    "type": "reference",
-                    "value": {
-                      "default": undefined,
-                      "type": "id",
-                      "value": "CreatePaymentRequest",
-                    },
-                  },
-                  "type": "json",
-                },
-              },
-            ],
-          },
-          "response": {
-            "description": "Payment created",
-            "isWildcard": undefined,
-            "statusCode": 201,
-            "type": {
-              "type": "reference",
-              "value": {
-                "default": undefined,
-                "type": "id",
-                "value": "Payment",
-              },
-            },
-          },
-          "responseHeaders": [],
-          "responsesV2": {
-            "responses": [
-              {
-                "description": "Payment created",
-                "isWildcard": undefined,
-                "statusCode": 201,
-                "type": {
-                  "type": "reference",
-                  "value": {
-                    "default": undefined,
-                    "type": "id",
-                    "value": "Payment",
-                  },
-                },
-              },
-            ],
-          },
-          "slug": undefined,
-        },
-      ],
-      "name": "payments",
-      "pointsTo": undefined,
-      "subpackageId": "subpackage_cardPayments/payments",
-      "subpackages": [],
-      "types": [],
-      "webhooks": [],
-      "websockets": [],
-    },
-  },
+  "subpackages": {},
   "types": {
-    "Contact": {
+    "AuthResponse": {
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
-      "name": "Contact",
+      "name": "AuthResponse",
       "shape": {
         "extends": [],
         "extraProperties": undefined,
@@ -627,41 +498,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "id",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "name",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "email",
+            "key": "token",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -683,11 +520,11 @@
         "type": "object",
       },
     },
-    "CreatePaymentRequest": {
+    "Contact": {
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
-      "name": "CreatePaymentRequest",
+      "name": "Contact",
       "shape": {
         "extends": [],
         "extraProperties": undefined,
@@ -695,36 +532,43 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "amount",
+            "key": "id",
             "propertyAccess": undefined,
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "exclusiveMaximum": undefined,
-                "exclusiveMinimum": undefined,
-                "maximum": undefined,
-                "minimum": undefined,
-                "multipleOf": undefined,
-                "type": "double",
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
               },
+              "type": "optional",
             },
           },
           {
             "availability": undefined,
             "description": undefined,
-            "key": "currency",
+            "key": "name",
             "propertyAccess": undefined,
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
               },
+              "type": "optional",
             },
           },
         ],
@@ -746,58 +590,6 @@
             "key": "id",
             "propertyAccess": undefined,
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "amount",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "exclusiveMaximum": undefined,
-                "exclusiveMinimum": undefined,
-                "maximum": undefined,
-                "minimum": undefined,
-                "multipleOf": undefined,
-                "type": "double",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "currency",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "status",
-            "propertyAccess": undefined,
-            "valueType": {
               "defaultValue": undefined,
               "itemType": {
                 "type": "primitive",
@@ -813,15 +605,37 @@
               "type": "optional",
             },
           },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "amount",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "double",
+                },
+              },
+              "type": "optional",
+            },
+          },
         ],
         "type": "object",
       },
     },
-    "auth_retrieveToken_Response_200": {
+    "PaymentRequest": {
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
-      "name": "auth_retrieveToken_Response_200",
+      "name": "PaymentRequest",
       "shape": {
         "extends": [],
         "extraProperties": undefined,
@@ -829,53 +643,23 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "access_token",
+            "key": "amount",
             "propertyAccess": undefined,
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "double",
+                },
               },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "token_type",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "expires_in",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "exclusiveMaximum": undefined,
-                "exclusiveMinimum": undefined,
-                "maximum": undefined,
-                "minimum": undefined,
-                "multipleOf": undefined,
-                "type": "integer",
-              },
+              "type": "optional",
             },
           },
         ],

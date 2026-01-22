@@ -12,10 +12,7 @@ public partial class HomepageClient : IHomepageClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Homepage.GetHomepageProblemsAsync();
-    /// </code></example>
-    public async Task<IEnumerable<string>> GetHomepageProblemsAsync(
+    private async Task<WithRawResponse<IEnumerable<string>>> GetHomepageProblemsAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -37,14 +34,28 @@ public partial class HomepageClient : IHomepageClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<string>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -53,6 +64,19 @@ public partial class HomepageClient : IHomepageClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Homepage.GetHomepageProblemsAsync();
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<string>> GetHomepageProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<string>>(
+            GetHomepageProblemsAsyncCore(options, cancellationToken)
+        );
     }
 
     /// <example><code>
