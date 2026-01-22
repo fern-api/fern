@@ -680,11 +680,23 @@ export class Generation {
                 origin: this.model.staticExplicit("WebSocketClient"),
                 namespace: this.namespaces.webSocketsCore
             }),
-        /** Query string builder utility for WebSocket URLs */
+        /** Query string builder utility for WebSocket URLs (legacy) */
         QueryBuilder: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("Query"),
                 namespace: this.namespaces.webSocketsCore
+            }),
+        /** High-performance query string builder with fluent API */
+        QueryStringBuilder: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("QueryStringBuilder"),
+                namespace: this.namespaces.core
+            }),
+        /** Fluent builder for constructing query strings */
+        QueryStringBuilderBuilder: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("QueryStringBuilder.Builder"),
+                namespace: this.namespaces.core
             }),
         /** OAuth token provider for authentication */
         OAuthTokenProvider: () =>
