@@ -2,7 +2,7 @@ import * as FernIr from "@fern-api/ir-sdk";
 import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, Extensions } from "../..";
+import { AbstractConverter, AbstractConverterContext, APIErrorLevel, Extensions } from "../..";
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";
 import { ExampleConverter } from "../ExampleConverter";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
@@ -562,10 +562,12 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         for (const [index, example] of examples.entries()) {
             const resolvedExample = this.context.resolveExample(example);
+            const exampleName = `${this.id}_example_${index}`;
             const convertedExample = this.generateOrValidateExample({
-                example: resolvedExample
+                example: resolvedExample,
+                exampleName
             });
-            userSpecifiedExamples[`${this.id}_example_${index}`] = convertedExample;
+            userSpecifiedExamples[exampleName] = convertedExample;
         }
 
         return userSpecifiedExamples;
@@ -573,10 +575,12 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private generateOrValidateExample({
         example,
-        ignoreErrors
+        ignoreErrors,
+        exampleName
     }: {
         example: unknown;
         ignoreErrors?: boolean;
+        exampleName?: string;
     }): unknown {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
@@ -587,9 +591,13 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const { validExample: convertedExample, errors } = exampleConverter.convert();
         if (!ignoreErrors) {
             errors.forEach((error) => {
+                const contextPrefix = exampleName
+                    ? `Example "${exampleName}" for schema "${this.id}": `
+                    : `Schema "${this.id}": `;
                 this.context.errorCollector.collect({
-                    message: error.message,
-                    path: error.path
+                    message: `${contextPrefix}${error.message}`,
+                    path: error.path,
+                    level: APIErrorLevel.WARNING
                 });
             });
         }
