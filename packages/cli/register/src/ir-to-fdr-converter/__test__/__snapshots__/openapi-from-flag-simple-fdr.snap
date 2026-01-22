@@ -14,6 +14,7 @@
         "description": "Returns the health status of the service",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -147,6 +148,7 @@
         "description": "Retrieves a user by their unique identifier",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -332,6 +334,7 @@
         "description": "Creates a new user with the provided information",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
