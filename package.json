@@ -140,7 +140,7 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.14.1",
       "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "0.144.6-a76e5b58c",
+      "@fern-api/fdr-sdk": "0.144.7-efc9f5ccf",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4"
