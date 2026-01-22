@@ -464,10 +464,6 @@ export async function publishDocs({
                     slug: pythonDocsSection.slug,
                     title: pythonDocsSection.title
                 };
-
-                // Remove placeholder pages and navigation nodes since real library docs were generated
-                removePythonDocsPlaceholder(docsDefinition);
-
                 break;
             } else if (status === "FAILED") {
                 const errorMsg = statusResponse.body.error?.message ?? "Unknown error";
@@ -1276,61 +1272,4 @@ function extractPythonDocsSectionFromConfig(
     }
 
     return undefined;
-}
-
-const PYTHON_DOCS_PLACEHOLDER_PREFIX = "__python-docs-placeholder-";
-const PYTHON_DOCS_PLACEHOLDER_SUFFIX = "__.mdx";
-
-function isPythonDocsPlaceholderPageId(pageId: string): boolean {
-    return pageId.startsWith(PYTHON_DOCS_PLACEHOLDER_PREFIX) && pageId.endsWith(PYTHON_DOCS_PLACEHOLDER_SUFFIX);
-}
-
-function removePythonDocsPlaceholder(docsDefinition: DocsDefinition): void {
-    // Remove placeholder pages from docsDefinition.pages
-    for (const pageId of Object.keys(docsDefinition.pages)) {
-        if (isPythonDocsPlaceholderPageId(pageId)) {
-            delete docsDefinition.pages[pageId as DocsV1Write.PageId];
-        }
-    }
-
-    // Remove placeholder nodes from navigation tree
-    if (docsDefinition.config.root != null) {
-        removePlaceholderFromRootNode(docsDefinition.config.root);
-    }
-}
-
-type NavigationNode = {
-    type: string;
-    pageId?: string;
-    children?: NavigationNode[];
-    child?: NavigationNode;
-};
-
-function removePlaceholderFromRootNode(root: NavigationNode): void {
-    if (root.child != null) {
-        removePlaceholderFromNode(root.child);
-    }
-}
-
-function removePlaceholderFromNode(node: NavigationNode): void {
-    // Process children arrays
-    if (node.children != null && Array.isArray(node.children)) {
-        // Filter out placeholder PageNodes
-        node.children = node.children.filter((child) => {
-            if (child.type === "page" && child.pageId != null && isPythonDocsPlaceholderPageId(child.pageId)) {
-                return false;
-            }
-            return true;
-        });
-
-        // Recursively process remaining children
-        for (const child of node.children) {
-            removePlaceholderFromNode(child);
-        }
-    }
-
-    // Process single child
-    if (node.child != null) {
-        removePlaceholderFromNode(node.child);
-    }
 }
