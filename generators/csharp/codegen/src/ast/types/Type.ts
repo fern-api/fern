@@ -270,6 +270,8 @@ export class OptionalWrapper extends ReferenceType {
     }
 
     public override write(writer: Writer): void {
+        const optionalRef = this.generation.Types.Optional;
+        writer.addReference(optionalRef);
         writer.write("Optional<");
         this.value.write(writer);
         writer.write(">");

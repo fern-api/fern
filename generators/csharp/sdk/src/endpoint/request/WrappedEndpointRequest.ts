@@ -217,6 +217,76 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
     }
 
+    private stringify({
+        reference,
+        name,
+        parameterOverride,
+        allowOptionals
+    }: {
+        reference: TypeReference;
+        name: Name;
+        parameterOverride?: string;
+        allowOptionals?: boolean;
+    }): ast.CodeBlock {
+        const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
+        const isOptional = this.isOptional({ typeReference: reference });
+        const isNullable = this.isNullable({ typeReference: reference });
+        const isStruct = this.isStruct({ typeReference: reference });
+
+        // Add .Value for nullable structs that need method calls like .ToString(format)
+        // - When experimental flag is enabled: add .Value for optional<T>, nullable<T>, or Optional<T?> where T is a struct
+        // - When experimental flag is disabled (legacy): add .Value for optional structs (which become T?)
+        // Note: strings are reference types and don't need .Value (string? doesn't have .Value)
+        const needsDotValue =
+            (allowOptionals ?? true) &&
+            isStruct &&
+            (this.context.generation.settings.enableExplicitNullableOptional ? isOptional || isNullable : isOptional);
+        const maybeDotValue = needsDotValue ? ".Value" : "";
+
+        if (this.isString(reference)) {
+            // When using experimental explicit nullable/optional, Optional<string?> needs .Value to unwrap
+            const needsOptionalValue =
+                (allowOptionals ?? true) &&
+                this.context.generation.settings.enableExplicitNullableOptional &&
+                isOptional &&
+                isNullable;
+            const optionalValue = needsOptionalValue ? ".Value" : "";
+            return this.csharp.codeblock(`${parameter}${optionalValue}`);
+        }
+
+        if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
+            return this.csharp.codeblock((writer) => {
+                writer.write(`${parameter}${maybeDotValue}.ToString(`);
+                writer.writeNode(this.Types.Constants);
+                writer.write(".DateTimeFormat)");
+            });
+        } else if (this.isDateOrDateTime({ type: "date", typeReference: reference })) {
+            return this.csharp.codeblock((writer) => {
+                writer.write(`${parameter}${maybeDotValue}.ToString(`);
+                writer.writeNode(this.Types.Constants);
+                writer.write(".DateFormat)");
+            });
+        } else if (this.isEnum({ typeReference: reference })) {
+            return this.csharp.codeblock((writer) => {
+                // Stringify is an extension method that we wrote in the core namespace, so need to add here
+                writer.addNamespace(this.namespaces.core);
+                writer.write(`${parameter}${maybeDotValue}.Stringify()`);
+            });
+        } else if (this.shouldJsonSerialize({ typeReference: reference })) {
+            return this.csharp.codeblock((writer) => {
+                writer.writeNode(
+                    this.csharp.invokeMethod({
+                        on: this.Types.JsonUtils,
+                        method: "Serialize",
+                        arguments_: [this.csharp.codeblock(`${parameter}${maybeDotValue}`)]
+                    })
+                );
+            });
+        } else {
+            return this.csharp.codeblock(`${parameter}${maybeDotValue}.ToString()`);
+        }
+    }
+
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
         if (this.endpoint.requestBody == null) {
             return undefined;
