@@ -270,7 +270,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfErrorA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -281,7 +281,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfErrorB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -359,7 +359,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfVariantA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -370,7 +370,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfVariantB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
