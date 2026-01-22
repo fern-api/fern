@@ -318,51 +318,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         Dictionary<string, object> inputDict
     )
     {
-        var result = new List<KeyValuePair<string, string>>();
-        foreach (var kvp in inputDict)
-        {
-            FlattenValue(result, kvp.Key, kvp.Value);
-        }
-
-        return result;
-    }
-
-    private static void FlattenValue(
-        List<KeyValuePair<string, string>> result,
-        string key,
-        object? value
-    )
-    {
-        switch (value)
-        {
-            case null:
-                result.Add(new KeyValuePair<string, string>(key, ""));
-                break;
-            case string str:
-                result.Add(new KeyValuePair<string, string>(key, str));
-                break;
-            case IEnumerable<object> list when value is not IDictionary<string, object>:
-            {
-                foreach (var item in list)
-                {
-                    FlattenValue(result, key, item);
-                }
-
-                break;
-            }
-            case IDictionary<string, object> dict:
-            {
-                foreach (var nested in dict)
-                {
-                    FlattenValue(result, $"{key}[{nested.Key}]", nested.Value);
-                }
-
-                break;
-            }
-            default:
-                result.Add(new KeyValuePair<string, string>(key, value.ToString() ?? ""));
-                break;
-        }
+        // Use QueryStringConverter.ToExplodedForm to handle nested objects with bracket notation
+        // This matches TypeScript SDK behavior: arrays use repeated keys, objects use bracket notation
+        return QueryStringConverter.ToExplodedForm(inputDict).ToList();
     }
 
     private static async SystemTask MergeHeadersAsync(
