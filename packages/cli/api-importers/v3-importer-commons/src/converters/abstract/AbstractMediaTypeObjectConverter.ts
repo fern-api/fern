@@ -120,6 +120,9 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
     /**
      * Determines the unique identifier for an example, handling duplicate summary collisions.
      * Uses the summary if available, disambiguating with key if there's a collision.
+     *
+     * This is used for OpenAPI request/response body examples which use the standard
+     * 'summary' field where collisions are more likely.
      */
     private getIdForExample({
         key,
