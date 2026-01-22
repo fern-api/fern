@@ -845,39 +845,65 @@ class EndpointResponseCodeWriter:
             if declaration is None:
                 return
 
-            shape = declaration.shape.get_as_union()
-            if shape.type == "object":
-                for prop in shape.properties:
+            def handle_object(obj: ir_types.ObjectTypeDeclaration) -> None:
+                for prop in obj.properties:
                     if can_tr_be_fern_model(prop.value_type, types):
                         object_typed_fields.add(prop.name.wire_value)
-            elif shape.type == "union":
-                for member in shape.types:
-                    member_shape = member.shape.get_as_union()
-                    if member_shape.type == "samePropertiesAsObject":
-                        collect_fields_from_type_id(member_shape.type_id)
-                    elif member_shape.type == "singleProperty":
-                        if can_tr_be_fern_model(member_shape.type, types):
-                            object_typed_fields.add(member_shape.name.wire_value)
-                    elif member_shape.type == "noProperties":
-                        pass
-                for prop in shape.base_properties:
-                    if can_tr_be_fern_model(prop.value_type, types):
-                        object_typed_fields.add(prop.name.wire_value)
-            elif shape.type == "undiscriminated_union":
-                for member in shape.members:
-                    member_type = member.type.get_as_union()
-                    if member_type.type == "named":
-                        collect_fields_from_type_id(member_type.type_id)
 
-        type_ref_union = type_reference.get_as_union()
-        if type_ref_union.type == "named":
-            collect_fields_from_type_id(type_ref_union.type_id)
-        elif type_ref_union.type == "container":
-            container = type_ref_union.container.get_as_union()
-            if container.type == "optional" or container.type == "nullable":
-                inner_type = container.optional if container.type == "optional" else container.nullable
-                inner_union = inner_type.get_as_union()
-                if inner_union.type == "named":
-                    collect_fields_from_type_id(inner_union.type_id)
+            def handle_union(union: ir_types.UnionTypeDeclaration) -> None:
+                for member in union.types:
+                    member.shape.visit(
+                        same_properties_as_object=lambda spao: collect_fields_from_type_id(spao.type_id),
+                        single_property=lambda sp: (
+                            object_typed_fields.add(sp.name.wire_value)
+                            if can_tr_be_fern_model(sp.type, types)
+                            else None
+                        ),
+                        no_properties=lambda: None,
+                    )
+                for prop in union.base_properties:
+                    if can_tr_be_fern_model(prop.value_type, types):
+                        object_typed_fields.add(prop.name.wire_value)
+
+            def handle_undiscriminated_union(udu: ir_types.UndiscriminatedUnionTypeDeclaration) -> None:
+                for member in udu.members:
+                    member.type.visit(
+                        named=lambda nt: collect_fields_from_type_id(nt.type_id),
+                        container=lambda _: None,
+                        primitive=lambda _: None,
+                        unknown=lambda: None,
+                    )
+
+            declaration.shape.visit(
+                alias=lambda _: None,
+                enum=lambda _: None,
+                object=handle_object,
+                union=handle_union,
+                undiscriminated_union=handle_undiscriminated_union,
+            )
+
+        type_reference.visit(
+            named=lambda nt: collect_fields_from_type_id(nt.type_id),
+            container=lambda ct: ct.visit(
+                list_=lambda _: None,
+                map_=lambda _: None,
+                optional=lambda opt: opt.visit(
+                    named=lambda nt: collect_fields_from_type_id(nt.type_id),
+                    container=lambda _: None,
+                    primitive=lambda _: None,
+                    unknown=lambda: None,
+                ),
+                nullable=lambda nul: nul.visit(
+                    named=lambda nt: collect_fields_from_type_id(nt.type_id),
+                    container=lambda _: None,
+                    primitive=lambda _: None,
+                    unknown=lambda: None,
+                ),
+                set_=lambda _: None,
+                literal=lambda _: None,
+            ),
+            primitive=lambda _: None,
+            unknown=lambda: None,
+        )
 
         return list(object_typed_fields)
