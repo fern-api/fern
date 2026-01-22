@@ -12,6 +12,7 @@ import {
     ServiceId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { DefaultValueExtractor, ExtractedDefault } from "../DefaultValueExtractor";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace WrappedRequestGenerator {
@@ -30,6 +31,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
     private serviceId: ServiceId;
     private endpoint: HttpEndpoint;
     private exampleGenerator: ExampleGenerator;
+    private defaultValueExtractor: DefaultValueExtractor;
 
     public constructor({ wrapper, context, serviceId, endpoint }: WrappedRequestGenerator.Args) {
         super(context);
@@ -39,6 +41,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.endpoint = endpoint;
         this.exampleGenerator = new ExampleGenerator(context);
+        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     protected doGenerate(): CSharpFile {
@@ -85,7 +88,12 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             }
         }
 
+        const useDefaults = this.generation.settings.useDefaultRequestParameterValues;
         for (const query of this.endpoint.queryParameters) {
+            const defaultValue = !query.allowMultiple
+                ? this.getDefaultIfEnabled(query.valueType, useDefaults)
+                : undefined;
+
             const type = query.allowMultiple
                 ? this.Collection.list(
                       this.context.csharpTypeMapper.convert({
@@ -94,17 +102,21 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                       })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
+
             const field = class_.addField({
                 origin: query,
-                type,
+                type, // Keep original type, don't make optional for defaults
                 access: ast.Access.Public,
                 get: true,
                 set: true,
                 summary: query.docs,
-                useRequired: true,
-                initializer: this.context.getLiteralInitializerFromTypeReference({
-                    typeReference: query.valueType
-                }),
+                useRequired: defaultValue == null, // Remove required when there's a default
+                initializer:
+                    defaultValue != null
+                        ? this.csharp.codeblock(defaultValue.value) // Use direct default assignment
+                        : this.context.getLiteralInitializerFromTypeReference({
+                              typeReference: query.valueType
+                          }),
                 annotations: [this.System.Text.Json.Serialization.JsonIgnore]
             });
 
@@ -117,20 +129,26 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 });
             }
         }
+
         for (const header of [...(service?.headers ?? []), ...this.endpoint.headers]) {
-            class_.addField({
+            const defaultValue = this.getDefaultIfEnabled(header.valueType, useDefaults);
+
+            const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
+
+            const field = class_.addField({
                 origin: header,
-                type: this.context.csharpTypeMapper.convert({
-                    reference: header.valueType
-                }),
+                type, // Keep original type, don't make optional for defaults
                 access: ast.Access.Public,
                 get: true,
                 set: true,
                 summary: header.docs,
-                useRequired: true,
-                initializer: this.context.getLiteralInitializerFromTypeReference({
-                    typeReference: header.valueType
-                }),
+                useRequired: defaultValue == null, // Remove required when there's a default
+                initializer:
+                    defaultValue != null
+                        ? this.csharp.codeblock(defaultValue.value) // Use direct default assignment
+                        : this.context.getLiteralInitializerFromTypeReference({
+                              typeReference: header.valueType
+                          }),
                 annotations: [this.System.Text.Json.Serialization.JsonIgnore]
             });
         }
@@ -154,11 +172,31 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    const field = generateField(class_, {
-                        property,
-                        className: this.classReference.name,
-                        context: this.context
-                    });
+                    const defaultValue = this.getDefaultIfEnabled(property.valueType, useDefaults);
+
+                    let field: ast.Field;
+                    if (defaultValue != null) {
+                        // Generate field with direct default assignment
+                        const type = this.context.csharpTypeMapper.convert({ reference: property.valueType });
+                        field = class_.addField({
+                            origin: property,
+                            type, // Keep original type, don't make optional for defaults
+                            access: ast.Access.Public,
+                            get: true,
+                            set: true,
+                            summary: property.docs,
+                            useRequired: false, // Remove required when there's a default
+                            initializer: this.csharp.codeblock(defaultValue.value), // Use direct default assignment
+                            annotations: [this.context.createJsonPropertyNameAttribute(property.name.wireValue)]
+                        });
+                    } else {
+                        // Use standard field generation
+                        field = generateField(class_, {
+                            property,
+                            className: this.classReference.name,
+                            context: this.context
+                        });
+                    }
 
                     if (isProtoRequest) {
                         protobufProperties.push({
@@ -330,5 +368,15 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
     private getDirectory(): RelativeFilePath {
         const directory = this.context.getDirectoryForServiceId(this.serviceId);
         return RelativeFilePath.of(directory ? `${directory}/Requests` : "Requests");
+    }
+
+    /**
+     * Returns the extracted default value if the feature is enabled, otherwise undefined.
+     */
+    private getDefaultIfEnabled(typeReference: TypeReference, useDefaults: boolean): ExtractedDefault | undefined {
+        if (!useDefaults) {
+            return undefined;
+        }
+        return this.defaultValueExtractor.extractDefault(typeReference);
     }
 }
