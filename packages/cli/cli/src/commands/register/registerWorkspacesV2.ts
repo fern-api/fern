@@ -1,6 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { FdrAPI } from "@fern-api/fdr-sdk";
-import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
+import { GraphQLConverter, GraphQLConverterResult } from "@fern-api/graphql-to-fdr";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { AIExampleEnhancerConfig, registerApi } from "@fern-api/register";
@@ -24,9 +23,8 @@ export async function registerWorkspacesV2({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 // Extract GraphQL operations from the workspace
-                const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> =
-                    {};
-                const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+                const graphqlOperations: GraphQLConverterResult["graphqlOperations"] = {};
+                const graphqlTypes: GraphQLConverterResult["types"] = {};
 
                 // Process GraphQL specs in the workspace
                 if (workspace instanceof OSSWorkspace) {
@@ -50,10 +48,8 @@ export async function registerWorkspacesV2({
                             // Merge the GraphQL operations and types from this spec
                             Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
 
-                            // Convert GraphQL types from api.latest to api.v1.register format
-                            for (const [typeId, typeDefinition] of Object.entries(graphqlResult.types)) {
-                                graphqlTypes[FdrAPI.TypeId(typeId)] = typeDefinition;
-                            }
+                            // Merge the GraphQL types from this spec
+                            Object.assign(graphqlTypes, graphqlResult.types);
                         } catch (error) {
                             context.logger.error(
                                 `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
