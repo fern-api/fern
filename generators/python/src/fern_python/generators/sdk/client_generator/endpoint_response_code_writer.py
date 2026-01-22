@@ -1,8 +1,9 @@
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Dict, List, Optional, Set
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
+from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
@@ -96,6 +97,21 @@ class EndpointResponseCodeWriter:
 
         stream_response_union = stream_response.get_as_union()
         if stream_response_union.type == "sse":
+            object_typed_fields = self._get_sse_object_typed_fields(stream_response_union.payload)
+            if len(object_typed_fields) > 0:
+                fields_list_str = ", ".join(f'"{f}"' for f in sorted(object_typed_fields))
+                sse_data_expression = AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=self._context.core_utilities.get_parse_sse_event(),
+                        args=[
+                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
+                            AST.Expression(f"({fields_list_str},)"),
+                        ],
+                    )
+                )
+            else:
+                sse_data_expression = AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()")
+
             iter_func_body.extend(
                 [
                     AST.VariableDeclaration(
@@ -144,7 +160,7 @@ class EndpointResponseCodeWriter:
                                     AST.YieldStatement(
                                         self._context.core_utilities.get_construct(
                                             self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
+                                            sse_data_expression,
                                         ),
                                     ),
                                 ],
@@ -808,3 +824,60 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
+
+    def _get_sse_object_typed_fields(self, type_reference: ir_types.TypeReference) -> List[str]:
+        """
+        Get the list of field names that are object-typed in the given type reference.
+        This is used to determine which fields need JSON string parsing in SSE events.
+
+        For discriminated unions, this collects object-typed fields from all variants.
+        For objects, this collects object-typed fields directly.
+        """
+        types: Dict[ir_types.TypeId, ir_types.TypeDeclaration] = {
+            type_id: self._context.pydantic_generator_context.get_declaration_for_type_id(type_id)
+            for type_id in self._context.pydantic_generator_context.ir.types.keys()
+        }
+
+        object_typed_fields: Set[str] = set()
+
+        def collect_fields_from_type_id(type_id: ir_types.TypeId) -> None:
+            declaration = types.get(type_id)
+            if declaration is None:
+                return
+
+            shape = declaration.shape.get_as_union()
+            if shape.type == "object":
+                for prop in shape.properties:
+                    if can_tr_be_fern_model(prop.value_type, types):
+                        object_typed_fields.add(prop.name.wire_value)
+            elif shape.type == "union":
+                for member in shape.types:
+                    member_shape = member.shape.get_as_union()
+                    if member_shape.type == "samePropertiesAsObject":
+                        collect_fields_from_type_id(member_shape.type_id)
+                    elif member_shape.type == "singleProperty":
+                        if can_tr_be_fern_model(member_shape.type, types):
+                            object_typed_fields.add(member_shape.name.wire_value)
+                    elif member_shape.type == "noProperties":
+                        pass
+                for prop in shape.base_properties:
+                    if can_tr_be_fern_model(prop.value_type, types):
+                        object_typed_fields.add(prop.name.wire_value)
+            elif shape.type == "undiscriminated_union":
+                for member in shape.members:
+                    member_type = member.type.get_as_union()
+                    if member_type.type == "named":
+                        collect_fields_from_type_id(member_type.type_id)
+
+        type_ref_union = type_reference.get_as_union()
+        if type_ref_union.type == "named":
+            collect_fields_from_type_id(type_ref_union.type_id)
+        elif type_ref_union.type == "container":
+            container = type_ref_union.container.get_as_union()
+            if container.type == "optional" or container.type == "nullable":
+                inner_type = container.optional if container.type == "optional" else container.nullable
+                inner_union = inner_type.get_as_union()
+                if inner_union.type == "named":
+                    collect_fields_from_type_id(inner_union.type_id)
+
+        return list(object_typed_fields)
