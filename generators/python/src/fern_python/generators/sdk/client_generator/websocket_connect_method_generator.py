@@ -269,14 +269,50 @@ class WebsocketConnectMethodGenerator:
                 else f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()"
             )
             writer.write_line(f'{self.WS_URL_VARIABLE} = {url_prefix} + "{websocket.path.head}"')
+            writer.write("query_params = ")
+            writer.write_node(HttpX.query_params())
+            writer.write_line()
             if len(parameters) > 0:
-                writer.write("query_params = ")
-                writer.write_node(HttpX.query_params())
-                writer.write_line()
                 query_params_expr = self._build_query_parameters(channel=websocket, parent_writer=writer)
                 if query_params_expr is not None:
                     writer.write_node(query_params_expr)
-                writer.write_line(f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f" + "'?{query_params}'")
+            writer.write_node(
+                AST.ConditionalTree(
+                    [
+                        AST.IfConditionLeaf(
+                            condition=AST.Expression(
+                                (
+                                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} and "
+                                    f'"additional_query_parameters" in {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}'
+                                )
+                            ),
+                            code=[
+                                AST.Expression(
+                                    f"for key, value in {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}"
+                                    '["additional_query_parameters"].items():\n'
+                                    "    query_params = query_params.add(key, value)"
+                                )
+                            ],
+                        )
+                    ],
+                    else_code=None,
+                )
+            )
+            writer.write_node(
+                AST.ConditionalTree(
+                    [
+                        AST.IfConditionLeaf(
+                            condition=AST.Expression("len(query_params) > 0"),
+                            code=[
+                                AST.Expression(
+                                    f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f" + "'?{query_params}'"
+                                )
+                            ],
+                        )
+                    ],
+                    else_code=None,
+                )
+            )
             writer.write_line(f"headers = {self._get_client_wrapper_headers_expression()}")
             headers_expr = self._extend_headers_with_websocket_headers(websocket=websocket)
             if websocket.headers and headers_expr is not None:

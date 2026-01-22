@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.48.2
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections to merge `additional_query_parameters` from `request_options` into the
+        WebSocket URL. Previously, `request_options.additional_query_parameters` was ignored for WebSocket
+        connections, only `additional_headers` was being applied.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 62
+
 - version: 4.48.1
   changelogEntry:
     - summary: |

@@ -69,7 +69,11 @@ class RealtimeClient:
             query_params = query_params.add("temperature", temperature)
         if language_code is not None:
             query_params = query_params.add("language-code", language_code)
-        ws_url = ws_url + f"?{query_params}"
+        if request_options and "additional_query_parameters" in request_options:
+            for key, value in request_options["additional_query_parameters"].items():
+                query_params = query_params.add(key, value)
+        if len(query_params) > 0:
+            ws_url = ws_url + f"?{query_params}"
         headers = self._raw_client._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
@@ -142,7 +146,11 @@ class AsyncRealtimeClient:
             query_params = query_params.add("temperature", temperature)
         if language_code is not None:
             query_params = query_params.add("language-code", language_code)
-        ws_url = ws_url + f"?{query_params}"
+        if request_options and "additional_query_parameters" in request_options:
+            for key, value in request_options["additional_query_parameters"].items():
+                query_params = query_params.add(key, value)
+        if len(query_params) > 0:
+            ws_url = ws_url + f"?{query_params}"
         headers = self._raw_client._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
