@@ -48,6 +48,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly DEBUG_PROPERTY_NAME = "debug";
     private static readonly HEADERS_PROPERTY_NAME = "headers";
     private static readonly HEADERS_VARIABLE_NAME = "_headers";
+    private static readonly QUERY_PARAMS_PROPERTY_NAME = "queryParams";
 
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
@@ -204,6 +205,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     docs: ["Arbitrary headers to send with the websocket connect request."]
                 },
                 {
+                    name: GeneratedDefaultWebsocketImplementation.QUERY_PARAMS_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                        ])
+                    ),
+                    hasQuestionToken: true,
+                    docs: ["Additional query parameters to send with the websocket connect request."]
+                },
+                {
                     name: GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)),
                     hasQuestionToken: true,
@@ -289,6 +301,15 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 undefined,
                 undefined,
                 ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME)
+            )
+        );
+
+        // Add queryParams binding
+        bindingElements.push(
+            ts.factory.createBindingElement(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.QUERY_PARAMS_PROPERTY_NAME)
             )
         );
 
@@ -518,11 +539,32 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
-            queryParameters:
-                this.channel.queryParameters.length > 0
-                    ? ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
-                    : ts.factory.createObjectLiteralExpression([], false)
+            queryParameters: this.getMergedQueryParameters()
         });
+    }
+
+    private getMergedQueryParameters(): ts.Expression {
+        const additionalQueryParams = ts.factory.createIdentifier(
+            GeneratedDefaultWebsocketImplementation.QUERY_PARAMS_PROPERTY_NAME
+        );
+
+        if (this.channel.queryParameters.length > 0) {
+            return ts.factory.createObjectLiteralExpression(
+                [
+                    ts.factory.createSpreadAssignment(
+                        ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
+                    ),
+                    ts.factory.createSpreadAssignment(additionalQueryParams)
+                ],
+                false
+            );
+        } else {
+            return ts.factory.createBinaryExpression(
+                additionalQueryParams,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                ts.factory.createObjectLiteralExpression([], false)
+            );
+        }
     }
 
     private getEnvironment(channel: WebSocketChannel, context: SdkContext): ts.Expression {
