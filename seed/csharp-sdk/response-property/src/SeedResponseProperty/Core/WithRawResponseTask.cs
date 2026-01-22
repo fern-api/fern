@@ -75,12 +75,12 @@ public readonly struct WithRawResponseTask<T>
         /// <summary>
         /// Schedules the continuation action.
         /// </summary>
-        public void OnCompleted(Action continuation) => _awaiter.OnCompleted(continuation);
+        public void OnCompleted(System.Action continuation) => _awaiter.OnCompleted(continuation);
 
         /// <summary>
         /// Schedules the continuation action without capturing the execution context.
         /// </summary>
-        public void UnsafeOnCompleted(Action continuation) =>
+        public void UnsafeOnCompleted(System.Action continuation) =>
             _awaiter.UnsafeOnCompleted(continuation);
     }
 
@@ -130,12 +130,13 @@ public readonly struct WithRawResponseTask<T>
             /// <summary>
             /// Schedules the continuation action.
             /// </summary>
-            public void OnCompleted(Action continuation) => _awaiter.OnCompleted(continuation);
+            public void OnCompleted(System.Action continuation) =>
+                _awaiter.OnCompleted(continuation);
 
             /// <summary>
             /// Schedules the continuation action without capturing the execution context.
             /// </summary>
-            public void UnsafeOnCompleted(Action continuation) =>
+            public void UnsafeOnCompleted(System.Action continuation) =>
                 _awaiter.UnsafeOnCompleted(continuation);
         }
     }
