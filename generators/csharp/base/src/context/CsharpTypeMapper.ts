@@ -138,8 +138,13 @@ export class CsharpTypeMapper extends WithGeneration {
 
     /**
      * Wraps a type in Optional<T> for explicit optional/undefined semantics.
+     * If the type is already an OptionalWrapper, returns it unchanged to avoid double-wrapping.
      */
     private asOptionalWrapper(type: ast.Type): ast.Type {
+        // Prevent double-wrapping Optional<Optional<T>>
+        if (is.OptionalWrapper(type)) {
+            return type;
+        }
         return new ast.OptionalWrapper(type, this.generation);
     }
 
