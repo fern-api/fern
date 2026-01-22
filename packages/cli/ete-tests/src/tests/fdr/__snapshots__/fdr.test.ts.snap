@@ -821,7 +821,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
             "subpackage_commons",
             "subpackage_director",
             "subpackage_imdb"
-        ]
+        ],
+        "graphqlOperations": []
     },
     "apiName": "my-api",
     "authSchemes": {},
@@ -1664,7 +1665,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
             "subpackage_commons",
             "subpackage_director",
             "subpackage_imdb"
-        ]
+        ],
+        "graphqlOperations": []
     },
     "apiName": "my-api",
     "authSchemes": {},
