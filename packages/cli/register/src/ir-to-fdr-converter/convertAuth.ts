@@ -39,6 +39,7 @@ function convertAuthScheme({
                 passwordName: scheme.password.originalName,
                 usernameName: scheme.username.originalName,
                 description: scheme.docs,
+                passwordAlwaysEmpty: undefined
             };
         case "bearer":
             return {
