@@ -51,6 +51,7 @@
           },
         },
         "passwordEnvVar": undefined,
+        "passwordOmit": false,
         "type": "basic",
         "username": {
           "camelCase": {
@@ -72,6 +73,7 @@
           },
         },
         "usernameEnvVar": undefined,
+        "usernameOmit": false,
       },
       {
         "_visit": [Function],

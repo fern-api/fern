@@ -709,6 +709,13 @@ export class OperationConverter extends AbstractOperationConverter {
         );
     }
 
+    /**
+     * Gets the example name from x-fern-examples extension.
+     *
+     * Note: This uses the 'name' field directly without collision
+     * disambiguation. This is intentional because x-fern-examples is a
+     * Fern-specific extension where users explicitly provide unique names.
+     */
     private getExampleName({
         example,
         exampleIndex

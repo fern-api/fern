@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_documentManagement",
@@ -32,6 +33,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
+      "graphqlOperations": undefined,
       "name": "documentManagement",
       "pointsTo": undefined,
       "subpackageId": "subpackage_documentManagement",
@@ -42,6 +44,7 @@
           "description": "Webhook with multipart form data including file uploads",
           "examples": [
             {
+              "name": "documentManagementDocumentUploadedWebhookExample",
               "payload": {
                 "document": "string",
                 "eventId": "evt_doc_abc123",

@@ -505,7 +505,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         type: "openapi",
                         file: absoluteFilepath
                     },
-                    namespace: spec.namespace ?? this.workspaceName
+                    namespace: spec.namespace ?? undefined
                 };
 
                 specs.push(openApiSpec);

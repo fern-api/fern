@@ -273,6 +273,12 @@ fixtures:
     - customConfig:
         experimental-explicit-nullable-optional: true
       outputFolder: explicit-nullable-optional
+  request-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use-default-request-parameter-values: true
+      outputFolder: with-defaults
 allowedFailures:
   - any-auth
   - endpoint-security-auth
