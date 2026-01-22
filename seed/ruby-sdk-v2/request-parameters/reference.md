@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username</a>(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/fern_request_parameters/user/client.rb">create_username</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ client.user.create_username(
 <dl>
 <dd>
 
-**request_options:** `Seed::User::RequestOptions` 
+**request_options:** `FernRequestParameters::User::RequestOptions` 
     
 </dd>
 </dl>
@@ -77,7 +77,7 @@ client.user.create_username(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username_with_referenced_type</a>(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/fern_request_parameters/user/client.rb">create_username_with_referenced_type</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ client.user.create_username_with_referenced_type(
 <dl>
 <dd>
 
-**request:** `Seed::User::Types::CreateUsernameBody` 
+**request:** `FernRequestParameters::User::Types::CreateUsernameBody` 
     
 </dd>
 </dl>
@@ -126,7 +126,7 @@ client.user.create_username_with_referenced_type(
 <dl>
 <dd>
 
-**request_options:** `Seed::User::RequestOptions` 
+**request_options:** `FernRequestParameters::User::RequestOptions` 
     
 </dd>
 </dl>
@@ -138,7 +138,7 @@ client.user.create_username_with_referenced_type(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username_optional</a>(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/fern_request_parameters/user/client.rb">create_username_optional</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -166,7 +166,7 @@ client.user.create_username_optional(request: {});
 <dl>
 <dd>
 
-**request:** `Seed::User::Types::CreateUsernameBodyOptionalProperties` 
+**request:** `FernRequestParameters::User::Types::CreateUsernameBodyOptionalProperties` 
     
 </dd>
 </dl>
@@ -174,7 +174,7 @@ client.user.create_username_optional(request: {});
 <dl>
 <dd>
 
-**request_options:** `Seed::User::RequestOptions` 
+**request_options:** `FernRequestParameters::User::RequestOptions` 
     
 </dd>
 </dl>
@@ -186,7 +186,7 @@ client.user.create_username_optional(request: {});
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_username</a>() -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/fern_request_parameters/user/client.rb">get_username</a>() -> FernRequestParameters::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -289,7 +289,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**user:** `Seed::User::Types::User` 
+**user:** `FernRequestParameters::User::Types::User` 
     
 </dd>
 </dl>
@@ -297,7 +297,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**user_list:** `Internal::Types::Array[Seed::User::Types::User]` 
+**user_list:** `Internal::Types::Array[FernRequestParameters::User::Types::User]` 
     
 </dd>
 </dl>
@@ -329,7 +329,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**nested_user:** `Seed::User::Types::NestedUser` 
+**nested_user:** `FernRequestParameters::User::Types::NestedUser` 
     
 </dd>
 </dl>
@@ -337,7 +337,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**optional_user:** `Seed::User::Types::User` 
+**optional_user:** `FernRequestParameters::User::Types::User` 
     
 </dd>
 </dl>
@@ -345,7 +345,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**exclude_user:** `Seed::User::Types::User` 
+**exclude_user:** `FernRequestParameters::User::Types::User` 
     
 </dd>
 </dl>
@@ -377,7 +377,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**request_options:** `Seed::User::RequestOptions` 
+**request_options:** `FernRequestParameters::User::RequestOptions` 
     
 </dd>
 </dl>
