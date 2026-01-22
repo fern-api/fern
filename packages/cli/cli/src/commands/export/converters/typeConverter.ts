@@ -74,11 +74,9 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                             exampleTypeFromEndpointResponse.shape?.type === "named" &&
                             exampleTypeFromEndpointResponse.shape.shape.type === "object"
                         ) {
-                            exampleProperty = exampleTypeFromEndpointResponse.shape.shape.properties.find(
-                                (example) => {
-                                    return example.name.wireValue === property.name.wireValue;
-                                }
-                            );
+                            exampleProperty = exampleTypeFromEndpointResponse.shape.shape.properties.find((example) => {
+                                return example.name.wireValue === property.name.wireValue;
+                            });
                         }
                     }
                     return {
