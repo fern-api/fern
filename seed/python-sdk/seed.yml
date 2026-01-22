@@ -324,6 +324,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+    - customConfig:
+        sse_event_in_data_payload: false
+      outputFolder: sse-full-event
   unions:
     - customConfig: null
       outputFolder: no-custom-config
