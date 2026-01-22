@@ -36,6 +36,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
+      "graphqlOperations": [],
       "name": "documents",
       "pointsTo": undefined,
       "subpackageId": "subpackage_documents",
