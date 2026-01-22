@@ -1,5 +1,6 @@
 package com.fern.java.output;
 
+import com.fern.java.ICustomConfig.OutputDirectory;
 import com.fern.java.utils.JavaFileWriter;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -25,7 +26,9 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
     }
 
     @Override
-    public final void writeToFile(Path directory, boolean isLocal, Optional<String> packagePrefix) throws IOException {
+    public final void writeToFile(
+            Path directory, boolean isLocal, Optional<String> packagePrefix, OutputDirectory outputDirectoryMode)
+            throws IOException {
         String packagePath;
         if (isLocal && packagePrefix.isPresent()) {
             String replacedPackageName = javaFile().packageName.replace(packagePrefix.get(), "");
@@ -39,11 +42,16 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
 
         Path filepath;
         if (testFile().isPresent() && testFile().get()) {
+            // Test files always use src/test/java structure
             filepath =
                     directory.resolve("src/test/java").resolve(packagePath).resolve(javaFile().typeSpec.name + ".java");
         } else {
-            filepath =
-                    directory.resolve("src/main/java").resolve(packagePath).resolve(javaFile().typeSpec.name + ".java");
+            // For production files, check output directory mode
+            Path baseDir = directory;
+            if (outputDirectoryMode == OutputDirectory.PROJECT_ROOT) {
+                baseDir = directory.resolve("src/main/java");
+            }
+            filepath = baseDir.resolve(packagePath).resolve(javaFile().typeSpec.name + ".java");
         }
         JavaFileWriter.write(filepath, javaFile().toString());
     }

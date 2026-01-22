@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Add `output-directory` config option to control where Java files are written during local generation.
+        - `project-root` (default): Files written to `<path>/src/main/java/` (current behavior)
+        - `source-root`: Files written directly to `<path>/` (pre-v3.8.2 behavior for embedding SDKs into existing projects)
+
+        This allows customers embedding SDKs into existing projects to avoid double `src/main/java` paths.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.33.2
+  changelogEntry:
+    - summary: |
+        Re-publish to verify Docker Hub and generator registry sync.
+      type: chore
+  createdAt: "2026-01-21"
+  irVersion: 63
+
 - version: 3.33.1
   changelogEntry:
     - summary: |

@@ -2827,4 +2827,92 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/http-auth-capital-scheme-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/http-auth-capital-scheme-ir.snap");
     });
+
+    it("should handle x-fern-basic extension with custom username/password names", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/x-fern-basic-auth")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "x-fern-basic-auth"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate auth was processed correctly
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toHaveLength(1);
+
+        // Validate the basic auth scheme structure
+        const basicAuthScheme = intermediateRepresentation.auth.schemes[0];
+        expect(basicAuthScheme).toBeDefined();
+        expect(basicAuthScheme?.type).toBe("basic");
+
+        // Verify that x-fern-basic custom names are correctly flowing through to the IR
+        // The OpenAPI spec has x-fern-basic with username.name="project_id" and password.name="api_token"
+        if (basicAuthScheme?.type === "basic") {
+            // Verify custom names from x-fern-basic are used
+            expect(basicAuthScheme.username.originalName).toBe("project_id");
+            expect(basicAuthScheme.password.originalName).toBe("api_token");
+
+            // Verify env vars are also passed through
+            expect(basicAuthScheme.usernameEnvVar).toBe("PLANT_STORE_PROJECT_ID");
+            expect(basicAuthScheme.passwordEnvVar).toBe("PLANT_STORE_API_TOKEN");
+        }
+
+        // Validate FDR auth schemes
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+        const fdrAuthSchemes = fdrApiDefinition.authSchemes;
+        expect(fdrAuthSchemes).toBeDefined();
+        if (fdrAuthSchemes) {
+            const basicAuth = Object.values(fdrAuthSchemes).find((scheme) => scheme.type === "basicAuth");
+            expect(basicAuth).toBeDefined();
+            if (basicAuth?.type === "basicAuth") {
+                // Verify custom names from x-fern-basic flow through to FDR
+                expect(basicAuth.usernameName).toBe("project_id");
+                expect(basicAuth.passwordName).toBe("api_token");
+            }
+        }
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-ir.snap");
+    });
 });
