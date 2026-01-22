@@ -301,7 +301,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         // Parse existing query string, remove keys that will be overridden, then add additional params
         var existingParams = ParseQueryString(queryString);
-        var additionalKeys = additionalQueryParameters.Select(p => p.Key).Distinct().ToHashSet();
+        var additionalKeys = new HashSet<string>(additionalQueryParameters.Select(p => p.Key).Distinct());
         var filteredParams = existingParams.Where(kv => !additionalKeys.Contains(kv.Key)).ToList();
         filteredParams.AddRange(additionalQueryParameters);
         return QueryStringBuilder.Build(filteredParams);
