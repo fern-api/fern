@@ -89,7 +89,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "testOperationExample",
+            "name": undefined,
             "path": "/test",
             "pathParameters": {},
             "queryParameters": {},

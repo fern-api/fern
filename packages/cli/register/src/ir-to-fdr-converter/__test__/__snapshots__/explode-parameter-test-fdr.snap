@@ -25,7 +25,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "getItemExample",
+            "name": undefined,
             "path": "/items/itemId",
             "pathParameters": {
               "itemId": "itemId",
@@ -159,7 +159,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "searchItemsExample",
+            "name": undefined,
             "path": "/search",
             "pathParameters": {},
             "queryParameters": {},
@@ -406,7 +406,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "getItemDetailsExample",
+            "name": undefined,
             "path": "/items/itemId/details",
             "pathParameters": {
               "itemId": "itemId",

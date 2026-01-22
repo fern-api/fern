@@ -72,7 +72,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": "anyOfExamplesAnyOfExampleNoTitlesExample",
+              "name": undefined,
               "path": "/anyOf/no-titles",
               "pathParameters": {},
               "queryParameters": {},

@@ -43,7 +43,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "createProductExample",
+            "name": undefined,
             "path": "/products",
             "pathParameters": {},
             "queryParameters": {},
@@ -216,7 +216,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "getProductExample",
+            "name": undefined,
             "path": "/products/productId",
             "pathParameters": {
               "productId": "productId",

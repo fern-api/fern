@@ -58,7 +58,7 @@ Examples should use the first available auth scheme (admin).
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "createResourceExample",
+            "name": undefined,
             "path": "/resource",
             "pathParameters": {},
             "queryParameters": {},

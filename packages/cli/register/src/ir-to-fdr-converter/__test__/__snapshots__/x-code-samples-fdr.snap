@@ -67,7 +67,7 @@ func main() {
             ],
             "description": "",
             "headers": {},
-            "name": "getUserExample",
+            "name": undefined,
             "path": "/users/userId",
             "pathParameters": {
               "userId": "userId",
