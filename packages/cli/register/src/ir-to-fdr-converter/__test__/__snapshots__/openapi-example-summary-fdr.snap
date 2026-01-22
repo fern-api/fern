@@ -20,7 +20,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "Paginated Payment List",
             "path": "/payments",
             "pathParameters": {},
             "queryParameters": {},
