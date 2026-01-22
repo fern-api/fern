@@ -45,6 +45,11 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
         this.convertChannels();
 
+        // Set apiDisplayName from namespace (folder name) if available
+        if (this.context.namespace != null) {
+            this.ir.apiDisplayName = this.context.namespace;
+        }
+
         return this.finalizeIr();
     }
 

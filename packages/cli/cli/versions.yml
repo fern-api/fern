@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.4
+  changelogEntry:
+    - summary: |
+        Use folder name (namespace) instead of OpenAPI spec title for API identification. When multiple OpenAPI specs have the same `info.title`, users can now distinguish between them using the folder name specified in `generators.yml`. This enables proper API selection in docs components like `<Schema api="folder-name" />`.
+      type: feat
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.49.3
   changelogEntry:
     - summary: |

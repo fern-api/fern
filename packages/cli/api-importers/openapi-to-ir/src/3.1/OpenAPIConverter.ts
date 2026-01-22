@@ -50,10 +50,15 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         this.updateEndpointsWithDefaultUrl(defaultUrl);
 
-        // Set apiDisplayName from OpenAPI info.title if it's a meaningful value
-        const title = this.context.spec.info?.title?.trim();
-        if (title && title !== '""') {
-            this.ir.apiDisplayName = title;
+        // Set apiDisplayName: prioritize namespace (folder name) over OpenAPI info.title
+        // This allows users to distinguish between multiple APIs with the same title
+        if (this.context.namespace != null) {
+            this.ir.apiDisplayName = this.context.namespace;
+        } else {
+            const title = this.context.spec.info?.title?.trim();
+            if (title && title !== '""') {
+                this.ir.apiDisplayName = title;
+            }
         }
 
         return this.finalizeIr();

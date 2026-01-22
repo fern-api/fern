@@ -30,6 +30,11 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
 
         this.updateEndpointsWithDefaultUrl(defaultUrl);
 
+        // Set apiDisplayName from namespace (folder name) if available
+        if (this.context.namespace != null) {
+            this.ir.apiDisplayName = this.context.namespace;
+        }
+
         return this.finalizeIr();
     }
 
