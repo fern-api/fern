@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.2
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant displayName to only use user-specified values. Previously, displayName would fall back to the type's originalName, which for OpenAPI-sourced APIs could be long generated schema names (e.g., "ObjectsObjectTypeBatchUpsertPostRequestBody..."). Now displayName is only set when explicitly specified via `display-name` in the Fern definition.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.49.1
   changelogEntry:
     - summary: |
