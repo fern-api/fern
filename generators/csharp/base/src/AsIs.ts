@@ -36,6 +36,7 @@ export const AsIsFiles = {
     MultipartFormRequest: "MultipartFormRequest.Template.cs",
     NdJsonContent: "NdJsonContent.Template.cs",
     NdJsonRequest: "NdJsonRequest.Template.cs",
+    QueryStringBuilder: "QueryStringBuilder.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
     RawClient: "RawClient.Template.cs",
     RawResponse: "RawResponse.Template.cs",
@@ -76,6 +77,7 @@ export const AsIsFiles = {
         StringEnumSerializer: "StringEnumSerializer.Template.cs"
     },
     Test: {
+        QueryStringBuilderTests: "test/QueryStringBuilderTests.Template.cs",
         QueryStringConverterTests: "test/QueryStringConverterTests.Template.cs",
         TemplateTestClientCs: "test/TemplateTestClient.cs",
         TemplateTestCsProj: "test/Template.Test.csproj",

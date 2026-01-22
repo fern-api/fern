@@ -1,4 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.18.0
+  changelogEntry:
+    - summary: |
+        Add high-performance `QueryStringBuilder` class for building query strings with proper URL encoding.
+
+        The new `QueryStringBuilder` class provides:
+        * Cross-platform optimizations using span-based APIs on .NET 6+ with StringBuilder fallback for older targets
+        * A fluent `Builder` API for constructing query strings with support for simple parameters and deep object notation
+        * Methods: `Add(key, value)`, `AddDeepObject(prefix, value)`, `AddExploded(prefix, value)`, and `Build()`
+
+        Also adds prefix parameter overloads to `QueryStringConverter.ToDeepObject()` and `QueryStringConverter.ToExplodedForm()` 
+        for building query strings with prefixed keys (e.g., `session_settings[key]=value`).
+
+        Example usage:
+        ```csharp
+        var queryString = new QueryStringBuilder.Builder()
+            .Add("access_token", "abc123")
+            .Add("config_id", "cfg-456")
+            .AddDeepObject("session_settings", new { SystemPrompt = "Hello" })
+            .Build();
+        // Result: ?access_token=abc123&config_id=cfg-456&session_settings%5BSystemPrompt%5D=Hello
+        ```
+      type: feat
+  createdAt: "2026-01-22"
+  irVersion: 62
+
 - version: 2.17.0
   changelogEntry:
     - summary: |
