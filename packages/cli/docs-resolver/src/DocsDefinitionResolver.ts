@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
-import { kebabCase } from "lodash-es";
+import { camelCase, kebabCase } from "lodash-es";
 import { Target } from "../../configuration/src/docs-yml/schemas";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
@@ -1217,7 +1217,10 @@ export class DocsDefinitionResolver {
                     openApiTags = Object.fromEntries(
                         Object.entries(openApiIr.tags.tagsById)
                             .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
-                            .map(([tagId, tag]) => [tagId, { id: String(tag.id), description: tag.description }])
+                            .map(([tagId, tag]) => [
+                                camelCase(tagId),
+                                { id: String(tag.id), description: tag.description }
+                            ])
                     );
                 }
             } catch (error) {
