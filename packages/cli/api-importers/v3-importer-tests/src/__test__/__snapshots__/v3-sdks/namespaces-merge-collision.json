@@ -1,25 +1,25 @@
 {
   "apiName": {
-    "originalName": "API 1",
+    "originalName": "shared",
     "camelCase": {
-      "unsafeName": "api1",
-      "safeName": "api1"
+      "unsafeName": "shared",
+      "safeName": "shared"
     },
     "snakeCase": {
-      "unsafeName": "api_1",
-      "safeName": "api_1"
+      "unsafeName": "shared",
+      "safeName": "shared"
     },
     "screamingSnakeCase": {
-      "unsafeName": "API_1",
-      "safeName": "API_1"
+      "unsafeName": "SHARED",
+      "safeName": "SHARED"
     },
     "pascalCase": {
-      "unsafeName": "Api1",
-      "safeName": "Api1"
+      "unsafeName": "Shared",
+      "safeName": "Shared"
     }
   },
   "selfHosted": false,
-  "apiDisplayName": "API 1",
+  "apiDisplayName": "shared",
   "auth": {
     "requirement": "ALL",
     "schemes": []
