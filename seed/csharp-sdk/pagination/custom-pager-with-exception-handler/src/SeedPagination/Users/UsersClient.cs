@@ -42,23 +42,24 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4);
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.Value.ToString();
+                    _queryBuilder.Add("page", request.Page);
                 }
                 if (request.PerPage != null)
                 {
-                    _query["per_page"] = request.PerPage.Value.ToString();
+                    _queryBuilder.Add("per_page", request.PerPage);
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Value.Stringify();
+                    _queryBuilder.AddDeepObject("order", request.Order);
                 }
                 if (request.StartingAfter != null)
                 {
-                    _query["starting_after"] = request.StartingAfter;
+                    _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -66,7 +67,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -137,11 +138,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
                 if (request.Cursor != null)
                 {
-                    _query["cursor"] = request.Cursor;
+                    _queryBuilder.Add("cursor", request.Cursor);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -149,7 +151,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -387,23 +389,24 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4);
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.Value.ToString();
+                    _queryBuilder.Add("page", request.Page);
                 }
                 if (request.PerPage != null)
                 {
-                    _query["per_page"] = request.PerPage.Value.ToString();
+                    _queryBuilder.Add("per_page", request.PerPage);
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Value.Stringify();
+                    _queryBuilder.AddDeepObject("order", request.Order);
                 }
                 if (request.StartingAfter != null)
                 {
-                    _query["starting_after"] = request.StartingAfter;
+                    _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -411,7 +414,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -482,23 +485,24 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4);
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.Value.ToString();
+                    _queryBuilder.Add("page", request.Page);
                 }
                 if (request.PerPage != null)
                 {
-                    _query["per_page"] = request.PerPage.Value.ToString();
+                    _queryBuilder.Add("per_page", request.PerPage);
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Value.Stringify();
+                    _queryBuilder.AddDeepObject("order", request.Order);
                 }
                 if (request.StartingAfter != null)
                 {
-                    _query["starting_after"] = request.StartingAfter;
+                    _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -506,7 +510,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -655,19 +659,20 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3);
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.Value.ToString();
+                    _queryBuilder.Add("page", request.Page);
                 }
                 if (request.Limit != null)
                 {
-                    _query["limit"] = request.Limit.Value.ToString();
+                    _queryBuilder.Add("limit", request.Limit);
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Value.Stringify();
+                    _queryBuilder.AddDeepObject("order", request.Order);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -675,7 +680,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -750,19 +755,20 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3);
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.Value.ToString();
+                    _queryBuilder.Add("page", request.Page);
                 }
                 if (request.Limit != null)
                 {
-                    _query["limit"] = request.Limit.Value.ToString();
+                    _queryBuilder.Add("limit", request.Limit);
                 }
                 if (request.Order != null)
                 {
-                    _query["order"] = request.Order.Value.Stringify();
+                    _queryBuilder.AddDeepObject("order", request.Order);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -770,7 +776,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -841,11 +847,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
                 if (request.Cursor != null)
                 {
-                    _query["cursor"] = request.Cursor;
+                    _queryBuilder.Add("cursor", request.Cursor);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -853,7 +860,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -928,11 +935,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
                 if (request.Cursor != null)
                 {
-                    _query["cursor"] = request.Cursor;
+                    _queryBuilder.Add("cursor", request.Cursor);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -940,7 +948,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -1010,11 +1018,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
                 if (request.StartingAfter != null)
                 {
-                    _query["starting_after"] = request.StartingAfter;
+                    _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -1022,7 +1031,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -1091,11 +1100,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
                 if (request.StartingAfter != null)
                 {
-                    _query["starting_after"] = request.StartingAfter;
+                    _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -1103,7 +1113,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -1170,11 +1180,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
                 if (request.Offset != null)
                 {
-                    _query["offset"] = request.Offset.Value.ToString();
+                    _queryBuilder.Add("offset", request.Offset);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -1182,7 +1193,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken
@@ -1251,11 +1262,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
+                var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
                 if (request.Page != null)
                 {
-                    _query["page"] = request.Page.Value.ToString();
+                    _queryBuilder.Add("page", request.Page);
                 }
+                var _queryString = _queryBuilder.Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -1263,7 +1275,7 @@ public partial class UsersClient : IUsersClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/users/optional-data",
-                            Query = _query,
+                            QueryString = _queryString,
                             Options = options,
                         },
                         cancellationToken

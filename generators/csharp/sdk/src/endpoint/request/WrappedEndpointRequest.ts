@@ -52,6 +52,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
 
         // Use QueryStringBuilder.Builder fluent API for cleaner generated code
+        const builderVar = "_queryBuilder";
         const queryStringVar = "_queryString";
 
         // Categorize query parameters by their optionality
@@ -73,17 +74,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return {
             code: this.csharp.codeblock((writer) => {
                 // Start building the query string with QueryStringBuilder.Builder
-                writer.write(
-                    `var ${queryStringVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
+                writer.writeLine(
+                    `var ${builderVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length});`
                 );
 
-                // Add required parameters directly in the fluent chain
+                // Add required parameters
                 for (const query of requiredQueryParameters) {
-                    this.writeQueryParameterBuilderCall(writer, query);
+                    this.writeQueryParameterBuilderCall(writer, query, builderVar);
+                    writer.writeLine(";");
                 }
-
-                // Close the initial builder chain with semicolon
-                writer.writeLine(";");
 
                 // Add optional parameters with null checks
                 for (const query of optionalQueryParameters) {
@@ -99,14 +98,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     } else {
                         writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference} != null`));
                     }
-                    writer.write(`${queryStringVar}`);
-                    this.writeQueryParameterBuilderCall(writer, query);
+                    this.writeQueryParameterBuilderCall(writer, query, builderVar);
                     writer.writeLine(";");
                     writer.endControlFlow();
                 }
 
                 // Build the final query string
-                writer.writeTextStatement(`${queryStringVar} = ${queryStringVar}.Build()`);
+                writer.writeTextStatement(`var ${queryStringVar} = ${builderVar}.Build()`);
             }),
             queryStringReference: queryStringVar
         };
@@ -116,14 +114,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
      * Writes a fluent builder method call for a query parameter.
      * Uses Add() for primitives and AddDeepObject() for complex types.
      */
-    private writeQueryParameterBuilderCall(writer: Writer, query: QueryParameter): void {
+    private writeQueryParameterBuilderCall(writer: Writer, query: QueryParameter, builderVar: string): void {
         const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
         const isComplexType = this.isComplexType(query.valueType);
 
         if (isComplexType) {
-            writer.write(`\n    .AddDeepObject("${query.name.wireValue}", ${queryParameterReference})`);
+            writer.write(`${builderVar}.AddDeepObject("${query.name.wireValue}", ${queryParameterReference})`);
         } else {
-            writer.write(`\n    .Add("${query.name.wireValue}", ${queryParameterReference})`);
+            writer.write(`${builderVar}.Add("${query.name.wireValue}", ${queryParameterReference})`);
         }
     }
 
