@@ -18,6 +18,7 @@ export const SingleBaseUrlEnvironment: core.serialization.ObjectSchema<
         id: EnvironmentId,
         name: Name,
         url: EnvironmentUrl,
+        audiences: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithDocs);
 
@@ -26,5 +27,6 @@ export declare namespace SingleBaseUrlEnvironment {
         id: EnvironmentId.Raw;
         name: Name.Raw;
         url: EnvironmentUrl.Raw;
+        audiences?: string[] | null;
     }
 }

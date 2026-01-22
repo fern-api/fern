@@ -18,7 +18,8 @@ export class ServersConverter3_0 extends AbstractServerConverter<ServerV3> {
             id: serverId,
             name: context.casingsGenerator.generateName(serverId),
             url: this.constructServerUrl(server.protocol, server.host),
-            docs: undefined
+            docs: undefined,
+            audiences: undefined
         };
     }
 }

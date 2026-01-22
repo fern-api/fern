@@ -8,4 +8,5 @@ export interface SingleBaseUrlEnvironment extends FernIr.WithDocs {
     id: FernIr.EnvironmentId;
     name: FernIr.Name;
     url: FernIr.EnvironmentUrl;
+    audiences: string[] | undefined;
 }

@@ -19,6 +19,7 @@ export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
         id: EnvironmentId,
         name: Name,
         urls: core.serialization.record(EnvironmentBaseUrlId, EnvironmentUrl),
+        audiences: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithDocs);
 
@@ -27,5 +28,6 @@ export declare namespace MultipleBaseUrlsEnvironment {
         id: EnvironmentId.Raw;
         name: Name.Raw;
         urls: Record<EnvironmentBaseUrlId.Raw, EnvironmentUrl.Raw>;
+        audiences?: string[] | null;
     }
 }

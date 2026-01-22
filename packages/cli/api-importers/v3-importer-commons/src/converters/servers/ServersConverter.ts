@@ -8,6 +8,7 @@ import {
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
+import { AudienceExtension } from "../../extensions/x-fern-audiences";
 import { ServerNameExtension } from "../../extensions/x-fern-server-name";
 
 const DEFAULT_BASE_URL_ID = "Base";
@@ -72,6 +73,10 @@ export class ServersConverter extends AbstractConverter<
                     ServersConverter.getServerName({ server, context: this.context }),
                     this.getServerUrl(server)
                 ]);
+                const audiences = ServersConverter.getServerAudiences({
+                    server: baseUrl,
+                    context: this.context
+                });
                 return {
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
@@ -79,7 +84,8 @@ export class ServersConverter extends AbstractConverter<
                         [defaultBaseUrlId]: this.getServerUrl(baseUrl),
                         ...Object.fromEntries(endpointLevelServers ?? [])
                     },
-                    docs: baseUrl.description
+                    docs: baseUrl.description,
+                    audiences
                 };
             });
 
@@ -98,11 +104,13 @@ export class ServersConverter extends AbstractConverter<
         const environments: SingleBaseUrlEnvironment[] = this.withExplodedServers(this.servers)
             .map((server) => {
                 const serverName = ServersConverter.getServerName({ server, context: this.context });
+                const audiences = ServersConverter.getServerAudiences({ server, context: this.context });
                 return {
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
                     url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
-                    docs: server.description
+                    docs: server.description,
+                    audiences
                 };
             })
             .filter(isNonNullish);
@@ -126,6 +134,17 @@ export class ServersConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
     }): string | undefined {
         return new ServerNameExtension({ breadcrumbs: [], server, context }).convert();
+    }
+
+    public static getServerAudiences({
+        server,
+        context
+    }: {
+        server: OpenAPIV3_1.ServerObject;
+        context: AbstractConverterContext<object>;
+    }): string[] | undefined {
+        const audienceExtension = new AudienceExtension({ breadcrumbs: [], operation: server, context });
+        return audienceExtension.convert()?.audiences;
     }
 
     public static getServerName({

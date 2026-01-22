@@ -8,4 +8,5 @@ export interface MultipleBaseUrlsEnvironment extends FernIr.WithDocs {
     id: FernIr.EnvironmentId;
     name: FernIr.Name;
     urls: Record<FernIr.EnvironmentBaseUrlId, FernIr.EnvironmentUrl>;
+    audiences: string[] | undefined;
 }
