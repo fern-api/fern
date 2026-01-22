@@ -118,57 +118,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
             if oauth.type == "clientCredentials":
-                self._root_client_constructor_params.append(
-                    ConstructorParameter(
-                        constructor_parameter_name="client_id",
-                        type_hint=AST.TypeHint.str_(),
-                        private_member_name="client_id",
-                        initializer=AST.Expression('client_id="YOUR_CLIENT_ID"'),
-                        # TODO: support OAuth credentials in templates
-                        # template=TemplateGenerator.string_template(
-                        #     is_optional=False,
-                        #     template_string_prefix="client_id",
-                        #     inputs=[
-                        #         TemplateInput.factory.payload(
-                        #             PayloadInput(
-                        #                 location="AUTH",
-                        #                 path="client_id",
-                        #             )
-                        #         )
-                        #     ]
-                        # )
-                    )
-                )
-                self._root_client_constructor_params.append(
-                    ConstructorParameter(
-                        constructor_parameter_name="client_secret",
-                        type_hint=AST.TypeHint.str_(),
-                        private_member_name="client_secret",
-                        initializer=AST.Expression('client_secret="YOUR_CLIENT_SECRET"'),
-                        # TODO: support OAuth credentials in templates
-                        # template=TemplateGenerator.string_template(
-                        #     is_optional=False,
-                        #     template_string_prefix="client_secret",
-                        #     inputs=[
-                        #         TemplateInput.factory.payload(
-                        #             PayloadInput(
-                        #                 location="AUTH",
-                        #                 path="client_secret",
-                        #             )
-                        #         )
-                        #     ]
-                        # )
-                    )
-                )
-            self._root_client_constructor_params.append(
-                ConstructorParameter(
-                    constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
-                    private_member_name=self.TOKEN_GETTER_PARAM_NAME,
-                    type_hint=AST.TypeHint.optional(
-                        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
-                    ),
-                )
-            )
+                # OAuth client-credentials parameters (client_id/client_secret/token/_token_getter_override)
+                # are handled via `_get_constructor_parameters` so that:
+                # - `token`-only auth works without requiring client_id/client_secret
+                # - env var defaults (if configured) are reflected in the runtime signature
+                # - overload signatures stay consistent with the runtime implementation
+                pass
 
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
         oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
@@ -195,11 +150,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             async_class_name="Async" + exported_client_class_name,
             constructor_parameters=(
                 self._get_constructor_parameters(is_async=False)
-                if has_inferred_auth
+                if (has_inferred_auth or is_oauth_client_credentials)
                 else self._root_client_constructor_params
             ),
             oauth_token_override=is_oauth_client_credentials,
-            use_kwargs_snippets=has_inferred_auth,
+            # OAuth token-override and inferred-auth SDKs should always use kwargs-style snippets;
+            # positional snippets are unstable and can degrade badly when defaults are expressions
+            # like os.getenv("...").
+            use_kwargs_snippets=(has_inferred_auth or is_oauth_client_credentials),
             base_url_example_value=base_url_example_value,
         )
         self._generated_root_client = root_client_builder.build()
@@ -615,6 +573,16 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
             if oauth.type == "clientCredentials":
+                # In some IR configurations (e.g. `auth: any`), other auth schemes or global
+                # variables may introduce parameters named `client_id`/`client_secret`. For
+                # OAuth token-override mode, we must ensure these are treated as optional
+                # (so `token`-only instantiation works), and that any env-var defaults are
+                # reflected in the runtime signature.
+                parameters = [
+                    param
+                    for param in parameters
+                    if param.constructor_parameter_name not in {"client_id", "client_secret"}
+                ]
                 # For OAuth client credentials, make client_id/client_secret optional
                 # so users can provide a token directly instead
                 # client_id is optional with env var fallback
@@ -1074,6 +1042,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         return _write_constructor_body
 
     def _get_inferred_auth_scheme(self) -> Optional[ir_types.InferredAuthScheme]:
+        # We currently only support wiring inferred auth at the root-client level when it is the
+        # *sole* auth scheme for the SDK. If multiple auth schemes are present (e.g. `auth: any`),
+        # we cannot safely infer which credentials should be required in the constructor.
+        if len(self._context.ir.auth.schemes) != 1:
+            return None
         maybe_inferred_auth_scheme = next(
             (scheme for scheme in self._context.ir.auth.schemes if scheme.get_as_union().type == "inferred"),
             None,
@@ -1477,6 +1450,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 - Prefer inferred-auth credentials (e.g. api_key) when present.
                 """
 
+                # Special case: OAuth token override. We want the first snippet to show the
+                # client-credentials path explicitly (not env-var expressions).
+                if self._oauth_token_override:
+                    return [
+                        ("base_url", AST.Expression('"https://yourhost.com/path/to/api"')),
+                        ("client_id", AST.Expression('"YOUR_CLIENT_ID"')),
+                        ("client_secret", AST.Expression('"YOUR_CLIENT_SECRET"')),
+                    ]
+
                 required_params = [
                     p
                     for p in self._constructor_parameters
@@ -1510,7 +1492,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
                 return kwargs
 
-            if self._use_kwargs_snippets:
+            should_use_kwargs_snippets = self._use_kwargs_snippets or self._oauth_token_override
+
+            if should_use_kwargs_snippets:
                 default_kwargs = build_default_snippet_kwargs()
 
                 async_instantiations: List[AST.Expression] = [
@@ -1542,7 +1526,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             # Add token-based instantiation example if oauth_token_override is enabled
             if self._oauth_token_override:
-                if self._use_kwargs_snippets:
+                if should_use_kwargs_snippets:
                     token_kwargs: List[typing.Tuple[str, AST.Expression]] = [
                         ("base_url", AST.Expression('"https://yourhost.com/path/to/api"')),
                         ("token", AST.Expression('"YOUR_BEARER_TOKEN"')),
