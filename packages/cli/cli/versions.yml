@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.3
+  changelogEntry:
+    - summary: |
+        Fix per-generator API overrides incorrectly falling back to workspace name for namespace. The `namespace` field in per-generator specs configuration now correctly uses the provided value (or `undefined` if not set) instead of falling back to the workspace folder name.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.49.2
   changelogEntry:
     - summary: |
