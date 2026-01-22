@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.48.2
+  changelogEntry:
+    - summary: |
+        Add automatic JSON string parsing for nested object fields in SSE events.
+        When SSE events contain nested objects that arrive as JSON strings (e.g., 
+        `'{"code": "TRANSFORM", "message": "..."}'`), the SDK now automatically parses
+        them before Pydantic validation. This is handled in the SSE response code at
+        runtime, scoped specifically to SSE handling without affecting normal JSON parsing.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 62
+
 - version: 4.48.1
   changelogEntry:
     - summary: |
