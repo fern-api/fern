@@ -481,7 +481,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 if (hasQueryParameters) {
                     writer.write(
-                        `\n    Query = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.websocketChannel.queryParameters.length})`
+                        `\n{\n    Query = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.websocketChannel.queryParameters.length})`
                     );
                     for (const queryParameter of this.websocketChannel.queryParameters) {
                         const isComplexType = this.isComplexType(queryParameter.valueType);
@@ -495,9 +495,9 @@ export class WebSocketClientGenerator extends WithGeneration {
                             );
                         }
                     }
-                    writer.writeTextStatement("\n        .Build()");
+                    writer.writeTextStatement("\n        .Build()\n}");
                 } else {
-                    writer.writeTextStatement(";");
+                    writer.writeTextStatement("");
                 }
 
                 const parts: (ast.AstNode | string)[] = [];

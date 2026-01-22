@@ -1,7 +1,7 @@
 using System.ComponentModel;
-using SeedWebsocket.Core.WebSockets;
 using System.Text.Json;
 using SeedWebsocket.Core;
+using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket;
 
@@ -21,25 +21,25 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     }
 
     /// <summary>
-    /// Event handler for ReceiveEvent. 
+    /// Event handler for ReceiveEvent.
     /// Use ReceiveEvent.Subscribe(...) to receive messages.
     /// </summary>
     public readonly Event<ReceiveEvent> ReceiveEvent = new();
 
     /// <summary>
-    /// Event handler for ReceiveSnakeCase. 
+    /// Event handler for ReceiveSnakeCase.
     /// Use ReceiveSnakeCase.Subscribe(...) to receive messages.
     /// </summary>
     public readonly Event<ReceiveSnakeCase> ReceiveSnakeCase = new();
 
     /// <summary>
-    /// Event handler for ReceiveEvent2. 
+    /// Event handler for ReceiveEvent2.
     /// Use ReceiveEvent2.Subscribe(...) to receive messages.
     /// </summary>
     public readonly Event<ReceiveEvent2> ReceiveEvent2 = new();
 
     /// <summary>
-    /// Event handler for ReceiveEvent3. 
+    /// Event handler for ReceiveEvent3.
     /// Use ReceiveEvent3.Subscribe(...) to receive messages.
     /// </summary>
     public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
@@ -47,14 +47,17 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// <summary>
     /// Constructor with options
     /// </summary>
-    public RealtimeApi (RealtimeApi.Options options){
+    public RealtimeApi(RealtimeApi.Options options)
+    {
         _options = options;
         var uri = new UriBuilder(_options.BaseUrl)
+        {
             Query = new SeedWebsocket.Core.QueryStringBuilder.Builder(capacity: 3)
                 .Add("model", _options.Model)
                 .Add("temperature", _options.Temperature)
                 .Add("language-code", _options.LanguageCode)
-                .Build();
+                .Build(),
+        };
         uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(_options.SessionId)}";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);
     }
@@ -82,7 +85,8 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// <summary>
     /// Disposes of event subscriptions
     /// </summary>
-    private void DisposeEvents() {
+    private void DisposeEvents()
+    {
         ReceiveEvent.Dispose();
         ReceiveSnakeCase.Dispose();
         ReceiveEvent2.Dispose();
@@ -92,64 +96,76 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// <summary>
     /// Dispatches incoming WebSocket messages
     /// </summary>
-    private async Task OnTextMessage(Stream stream) {
+    private async Task OnTextMessage(Stream stream)
+    {
         var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
-        if(json == null)
+        if (json == null)
         {
-            await ExceptionOccurred.RaiseEvent(new Exception("Invalid message - Not valid JSON")).ConfigureAwait(false);
+            await ExceptionOccurred
+                .RaiseEvent(new Exception("Invalid message - Not valid JSON"))
+                .ConfigureAwait(false);
             return;
         }
-        
+
         // deserialize the message to find the correct event
         {
-            if(JsonUtils.TryDeserialize(json, out ReceiveEvent? message)){
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent? message))
+            {
                 await ReceiveEvent.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        
+
         {
-            if(JsonUtils.TryDeserialize(json, out ReceiveSnakeCase? message)){
+            if (JsonUtils.TryDeserialize(json, out ReceiveSnakeCase? message))
+            {
                 await ReceiveSnakeCase.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        
+
         {
-            if(JsonUtils.TryDeserialize(json, out ReceiveEvent2? message)){
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent2? message))
+            {
                 await ReceiveEvent2.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        
+
         {
-            if(JsonUtils.TryDeserialize(json, out ReceiveEvent3? message)){
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent3? message))
+            {
                 await ReceiveEvent3.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        
-        await ExceptionOccurred.RaiseEvent(new Exception($"Unknown message: {json.ToString()}")).ConfigureAwait(false);
+
+        await ExceptionOccurred
+            .RaiseEvent(new Exception($"Unknown message: {json.ToString()}"))
+            .ConfigureAwait(false);
     }
 
     /// <summary>
     /// Asynchronously establishes a WebSocket connection.
     /// </summary>
-    public async Task ConnectAsync() {
+    public async Task ConnectAsync()
+    {
         await _client.ConnectAsync().ConfigureAwait(false);
     }
 
     /// <summary>
     /// Asynchronously closes the WebSocket connection.
     /// </summary>
-    public async Task CloseAsync() {
+    public async Task CloseAsync()
+    {
         await _client.CloseAsync().ConfigureAwait(false);
     }
 
     /// <summary>
     /// Asynchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
     /// </summary>
-    public async ValueTask DisposeAsync() {
+    public async ValueTask DisposeAsync()
+    {
         await _client.DisposeAsync();
         DisposeEvents();
         GC.SuppressFinalize(this);
@@ -158,7 +174,8 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// <summary>
     /// Synchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
     /// </summary>
-    public void Dispose() {
+    public void Dispose()
+    {
         _client.Dispose();
         DisposeEvents();
         GC.SuppressFinalize(this);
@@ -167,25 +184,25 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// <summary>
     /// Sends a SendEvent message to the server
     /// </summary>
-    public async Task Send(SendEvent message) {
-        await _client.SendInstant(
-        JsonUtils.Serialize(message)).ConfigureAwait(false);
+    public async Task Send(SendEvent message)
+    {
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Sends a SendSnakeCase message to the server
     /// </summary>
-    public async Task Send(SendSnakeCase message) {
-        await _client.SendInstant(
-        JsonUtils.Serialize(message)).ConfigureAwait(false);
+    public async Task Send(SendSnakeCase message)
+    {
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Sends a SendEvent2 message to the server
     /// </summary>
-    public async Task Send(SendEvent2 message) {
-        await _client.SendInstant(
-        JsonUtils.Serialize(message)).ConfigureAwait(false);
+    public async Task Send(SendEvent2 message)
+    {
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -206,5 +223,4 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
 
         public required string SessionId { get; set; }
     }
-
 }
