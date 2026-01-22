@@ -286,39 +286,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         if (!queryParameters.Any())
             return url;
 
-        url += "?";
-        url = queryParameters.Aggregate(
-            url,
-            (current, queryItem) =>
-            {
-                if (
-                    queryItem.Value
-                    is global::System.Collections.IEnumerable collection
-                        and not string
-                )
-                {
-                    var items = collection
-                        .Cast<object>()
-                        .Select(value =>
-                            $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(value?.ToString() ?? "")}"
-                        )
-                        .ToList();
-                    if (items.Any())
-                    {
-                        current += string.Join("&", items) + "&";
-                    }
-                }
-                else
-                {
-                    current +=
-                        $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(queryItem.Value)}&";
-                }
-
-                return current;
-            }
-        );
-        url = url[..^1];
-        return url;
+        return url + QueryStringBuilder.Build(queryParameters);
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
