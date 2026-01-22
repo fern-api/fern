@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.4
+  changelogEntry:
+    - summary: |
+        Fix ANY auth conversion to FDR multiAuth format. When the IR has `AuthSchemesRequirement.ANY`, the converter now properly represents this as multiple auth options (OR semantics) with each scheme in its own array element, rather than all schemes grouped together (AND semantics).
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.49.3
   changelogEntry:
     - summary: |
