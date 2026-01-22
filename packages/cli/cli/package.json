@@ -64,7 +64,6 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-preview": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.144.5-237710d75",
     "@fern-api/docs-validator": "workspace:*",
     "@fern-api/fern-definition-formatter": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
