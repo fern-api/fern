@@ -265,7 +265,13 @@ export async function publishDocs({
             }
         },
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context, workspaceName: workspace?.workspaceName });
+            let apiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                context,
+                workspaceName: workspace?.workspaceName
+            });
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,

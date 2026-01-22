@@ -49,7 +49,13 @@ export async function registerApi({
         token: token.value
     });
 
-    let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context, workspaceName: workspace.workspaceName });
+    let apiDefinition = convertIrToFdrApi({
+        ir,
+        snippetsConfig,
+        playgroundConfig,
+        context,
+        workspaceName: workspace.workspaceName
+    });
 
     if (aiEnhancerConfig) {
         const sources = workspace.getSources();
