@@ -366,14 +366,13 @@ function filterExampleResponse({
     return response._visit<ExampleResponse>({
         ok: (ok) =>
             ok._visit<ExampleResponse>({
-                body: (exampleTypeReference) =>
-                    ExampleResponse.ok(
-                        ExampleEndpointSuccessResponse.body(
-                            exampleTypeReference != null
-                                ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
-                                : undefined
-                        )
-                    ),
+                body: (bodyObject) => {
+                    const filtered = filterExampleTypeReference({ filteredIr, exampleTypeReference: bodyObject });
+                    if (filtered == null) {
+                        throw new Error("Failed to filter body example type reference");
+                    }
+                    return ExampleResponse.ok(ExampleEndpointSuccessResponse.body(filtered));
+                },
                 stream: (stream) =>
                     ExampleResponse.ok(
                         ExampleEndpointSuccessResponse.stream(
