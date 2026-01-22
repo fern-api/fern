@@ -15,6 +15,8 @@ export declare namespace RealtimeClient {
         languageCode?: string;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
+        /** Additional query parameters to send with the websocket connect request. */
+        queryParams?: Record<string, unknown>;
         /** Enable debug mode on the websocket. Defaults to false. */
         debug?: boolean;
         /** Number of reconnect attempts. Defaults to 30. */
@@ -30,7 +32,7 @@ export class RealtimeClient {
     }
 
     public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
-        const { sessionId, model, temperature, languageCode, headers, debug, reconnectAttempts } = args;
+        const { sessionId, model, temperature, languageCode, headers, queryParams, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, unknown> = {
             model,
             temperature,
@@ -44,7 +46,7 @@ export class RealtimeClient {
                 `/realtime/${core.url.encodePathParam(sessionId)}`,
             ),
             protocols: [],
-            queryParameters: _queryParams,
+            queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
             options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
         });
