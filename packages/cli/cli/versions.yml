@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.3
+  changelogEntry:
+    - summary: |
+        Fix `namespace: null` not being properly handled in per-generator API overrides. When using the multi-API folder structure with per-generator specs configuration, setting `namespace: null` now correctly prevents default namespace computation instead of falling back to the workspace name.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.49.2
   changelogEntry:
     - summary: |
