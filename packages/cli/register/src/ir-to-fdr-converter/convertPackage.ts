@@ -97,7 +97,8 @@ function convertService(
                     .filter((statusCode, index, array) => array.indexOf(statusCode) !== index).length > 0;
             for (const [exampleName, example] of Object.entries(userSpecifiedExamples)) {
                 endpointExample = convertV2HttpEndpointExample({
-                    shouldUseExampleName: shouldUseUserSpecifiedExampleName,
+                    // Always show user-specified displayName (OpenAPI summary), or disambiguate if needed
+                    shouldUseExampleName: shouldUseUserSpecifiedExampleName || example.displayName != null,
                     exampleName: example.displayName ?? exampleName,
                     example,
                     irEndpoint,
@@ -957,7 +958,7 @@ function convertV2HttpEndpointExample({
 
     const responseBodyValue = example.response?.body != null ? example.response.body.value : undefined;
     return {
-        name: example.displayName ?? (shouldUseExampleName ? exampleName : undefined),
+        name: shouldUseExampleName ? exampleName : undefined,
         description: "",
         path: example.request?.endpoint.path ?? "",
         pathParameters: example.request?.pathParameters ?? {},
