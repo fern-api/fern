@@ -44,7 +44,6 @@
           "description": "Webhook with multipart form data including file uploads",
           "examples": [
             {
-              "name": "documentManagementDocumentUploadedWebhookExample",
               "payload": {
                 "document": "string",
                 "eventId": "evt_doc_abc123",

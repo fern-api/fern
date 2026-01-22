@@ -24,7 +24,11 @@ impl Default for ClientConfig {
             password: None,
             timeout: Duration::from_secs(60),
             max_retries: 3,
-            custom_headers: HashMap::new(),
+            custom_headers: HashMap::from([
+                ("X-Fern-Language".to_string(), "Rust".to_string()),
+                ("X-Fern-SDK-Name".to_string(), "seed_trace".to_string()),
+                ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
+            ]),
             user_agent: "Trace Rust SDK".to_string(),
         }
     }

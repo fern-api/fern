@@ -138,7 +138,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     rawClientReference
                 );
             } else {
-                this.writeUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
+                this.writeUnpagedMethodBody(
+                    endpointSignatureInfo,
+                    writer,
+                    rawClient,
+                    endpoint,
+                    rawClientReference,
+                    serviceId
+                );
             }
         });
 
@@ -181,8 +188,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer: Writer,
         rawClient: RawClient,
         endpoint: HttpEndpoint,
-        rawClientReference: string
+        rawClientReference: string,
+        serviceId: ServiceId
     ) {
+        const request = endpointSignatureInfo.request;
+
         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
         if (queryParameterCodeBlock != null) {
             queryParameterCodeBlock.code.write(writer);
@@ -1115,7 +1125,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         itemType,
                         writer,
                         optionsParamName,
-                        endpoint
+                        endpoint,
+                        serviceId
                     });
                     break;
                 case "cursor":
@@ -1128,7 +1139,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         itemType,
                         writer,
                         optionsParamName,
-                        endpoint
+                        endpoint,
+                        serviceId
                     });
                     break;
                 case "custom":
@@ -1165,7 +1177,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         itemType,
         writer,
         optionsParamName,
-        endpoint
+        endpoint,
+        serviceId
     }: {
         endpointSignatureInfo: EndpointSignatureInfo;
         pagination: OffsetPagination;
@@ -1176,6 +1189,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer: Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;
+        serviceId: ServiceId;
     }) {
         if (!requestParameter) {
             throw new Error("Request parameter is required for pagination");
@@ -1310,7 +1324,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         itemType,
         writer,
         optionsParamName,
-        endpoint
+        endpoint,
+        serviceId
     }: {
         endpointSignatureInfo: EndpointSignatureInfo;
         pagination: CursorPagination;
@@ -1321,6 +1336,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer: Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;
+        serviceId: ServiceId;
     }) {
         if (!requestParameter) {
             throw new Error("Request parameter is required for pagination");

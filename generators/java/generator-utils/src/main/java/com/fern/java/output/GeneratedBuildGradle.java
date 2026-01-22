@@ -6,6 +6,7 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.generator.exec.model.config.LicenseConfig;
 import com.fern.generator.exec.model.config.PublishingMetadata;
+import com.fern.java.ICustomConfig;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
@@ -361,7 +362,12 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.endControlFlow();
     }
 
-    public final void writeToFile(Path directory, boolean _isLocal, Optional<String> _existingPrefix)
+    @Override
+    public final void writeToFile(
+            Path directory,
+            boolean _isLocal,
+            Optional<String> _existingPrefix,
+            ICustomConfig.OutputDirectory _outputDirectoryMode)
             throws IOException {
         Files.writeString(directory.resolve("build.gradle"), getContents());
     }
