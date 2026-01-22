@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
@@ -23,8 +24,9 @@ export async function registerWorkspacesV2({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 // Extract GraphQL operations from the workspace
-                const graphqlOperations: Record<string, any> = {};
-                const graphqlTypes: Record<string, any> = {};
+                const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> =
+                    {};
+                const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
                 // Process GraphQL specs in the workspace
                 if (workspace instanceof OSSWorkspace) {
@@ -50,7 +52,7 @@ export async function registerWorkspacesV2({
 
                             // Convert GraphQL types from api.latest to api.v1.register format
                             for (const [typeId, typeDefinition] of Object.entries(graphqlResult.types)) {
-                                graphqlTypes[typeId] = typeDefinition as any;
+                                graphqlTypes[FdrAPI.TypeId(typeId)] = typeDefinition;
                             }
                         } catch (error) {
                             context.logger.error(

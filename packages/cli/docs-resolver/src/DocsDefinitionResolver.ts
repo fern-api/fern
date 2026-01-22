@@ -1433,10 +1433,7 @@ export class DocsDefinitionResolver {
 
                 // Convert GraphQL types from api.latest to api.v1.register format
                 for (const [typeId, typeDefinition] of Object.entries(graphqlResult.types)) {
-                    // For now, use a simple type assertion since the structures are very similar
-                    // The main differences are in nested TypeReference structures which are handled by the FDR SDK
-                    graphqlTypes[FdrAPI.TypeId(typeId)] =
-                        typeDefinition as any as FdrAPI.api.v1.register.TypeDefinition;
+                    graphqlTypes[FdrAPI.TypeId(typeId)] = typeDefinition;
                 }
             } catch (error) {
                 this.taskContext.logger.error(

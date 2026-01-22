@@ -1,4 +1,10 @@
-import { APIV1Read, convertAPIDefinitionToDb, convertDbAPIDefinitionToRead, SDKSnippetHolder } from "@fern-api/fdr-sdk";
+import {
+    APIV1Read,
+    convertAPIDefinitionToDb,
+    convertDbAPIDefinitionToRead,
+    FdrAPI,
+    SDKSnippetHolder
+} from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
@@ -24,8 +30,8 @@ export function convertIrToApiDefinition({
     apiDefinitionId: string;
     playgroundConfig?: PlaygroundConfig;
     context: TaskContext;
-    graphqlOperations?: Record<string, any>;
-    graphqlTypes?: Record<string, any>;
+    graphqlOperations?: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
+    graphqlTypes?: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
 }): APIV1Read.ApiDefinition {
     // the navigation constructor doesn't need to know about snippets, so we can pass an empty object
     return convertDbAPIDefinitionToRead(
