@@ -1214,6 +1214,11 @@ export class DocsDefinitionResolver {
                     loadAiExamples: true
                 });
                 if (openApiIr.tags.tagsById) {
+                    // Tag keys must be normalized to camelCase because subpackage names are derived
+                    // from OpenAPI tags using camelCase conversion. The lookup in
+                    // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
+                    // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
+                    // tags are converted to camelCase when generating file/subpackage names.
                     openApiTags = Object.fromEntries(
                         Object.entries(openApiIr.tags.tagsById)
                             .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
