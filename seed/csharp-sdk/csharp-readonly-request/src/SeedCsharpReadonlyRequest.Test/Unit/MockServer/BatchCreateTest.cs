@@ -15,9 +15,7 @@ public class BatchCreateTest : BaseMockServerTest
               "vendors": {
                 "vendors": {
                   "id": "id",
-                  "name": "name",
-                  "created_at": "created_at",
-                  "updated_at": "updated_at"
+                  "name": "name"
                 }
               }
             }
@@ -83,9 +81,7 @@ public class BatchCreateTest : BaseMockServerTest
               "vendors": {
                 "vendor-1": {
                   "id": "vendor-1",
-                  "name": "Acme Corp",
-                  "created_at": "2024-01-01T00:00:00.000Z",
-                  "updated_at": "2024-01-01T00:00:00.000Z"
+                  "name": "Acme Corp"
                 }
               }
             }
