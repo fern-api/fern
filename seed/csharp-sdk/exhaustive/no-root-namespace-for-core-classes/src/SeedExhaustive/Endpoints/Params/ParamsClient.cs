@@ -294,9 +294,10 @@ public partial class ParamsClient : IParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["query"] = request.Query;
-        _query["number"] = request.Number.ToString();
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("query", request.Query)
+            .Add("number", request.Number);
+        _queryString = _queryString.Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -304,7 +305,7 @@ public partial class ParamsClient : IParamsClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/params",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -338,9 +339,10 @@ public partial class ParamsClient : IParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["query"] = request.Query;
-        _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("query", request.Query)
+            .Add("number", request.Number);
+        _queryString = _queryString.Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -348,7 +350,7 @@ public partial class ParamsClient : IParamsClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/params",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -384,8 +386,11 @@ public partial class ParamsClient : IParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["query"] = request.Query;
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1).Add(
+            "query",
+            request.Query
+        );
+        _queryString = _queryString.Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -396,7 +401,7 @@ public partial class ParamsClient : IParamsClient
                         "/params/path-query/{0}",
                         ValueConvert.ToPathParameterString(param)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -430,8 +435,11 @@ public partial class ParamsClient : IParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["query"] = request.Query;
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1).Add(
+            "query",
+            request.Query
+        );
+        _queryString = _queryString.Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -442,7 +450,7 @@ public partial class ParamsClient : IParamsClient
                         "/params/path-query/{0}",
                         ValueConvert.ToPathParameterString(request.Param)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

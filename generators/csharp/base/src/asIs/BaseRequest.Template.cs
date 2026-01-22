@@ -16,6 +16,11 @@ internal abstract record BaseRequest
 
     internal Dictionary<string, object> Query { get; init; } = new();
 
+    /// <summary>
+    /// Pre-built query string (without leading '?'). When set, this takes precedence over Query dictionary.
+    /// </summary>
+    internal string? QueryString { get; init; }
+
     internal Headers Headers { get; init; } = new();
 
     internal IRequestOptions? Options { get; init; }

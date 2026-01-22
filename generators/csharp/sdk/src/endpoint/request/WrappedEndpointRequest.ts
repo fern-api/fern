@@ -51,128 +51,104 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
-        // Use experimental explicit nullable/optional handling if enabled
-        if (this.context.generation.settings.enableExplicitNullableOptional) {
-            const requiredQueryParameters: QueryParameter[] = [];
-            const optionalAndNullableQueryParameters: QueryParameter[] = [];
-            const optionalOnlyQueryParameters: QueryParameter[] = [];
-            const nullableOnlyQueryParameters: QueryParameter[] = [];
+        // Use QueryStringBuilder.Builder fluent API for cleaner generated code
+        const queryStringVar = "_queryString";
 
-            for (const queryParameter of this.endpoint.queryParameters) {
-                const isOptional = !queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType);
-                const isNullable = this.context.isNullable(queryParameter.valueType);
+        // Categorize query parameters by their optionality
+        const requiredQueryParameters: QueryParameter[] = [];
+        const optionalQueryParameters: QueryParameter[] = [];
 
-                if (isOptional && isNullable) {
-                    // optional + nullable => Optional<T?> - check IsDefined, can be value or null
-                    optionalAndNullableQueryParameters.push(queryParameter);
-                } else if (isOptional) {
-                    // optional only => T? - check != null
-                    optionalOnlyQueryParameters.push(queryParameter);
-                } else if (isNullable) {
-                    // nullable only => T? - always include (can be value or null)
-                    nullableOnlyQueryParameters.push(queryParameter);
-                } else {
-                    // required => T - always include
-                    requiredQueryParameters.push(queryParameter);
-                }
+        for (const queryParameter of this.endpoint.queryParameters) {
+            const isOptional =
+                (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) ||
+                this.context.isNullable(queryParameter.valueType);
+
+            if (isOptional) {
+                optionalQueryParameters.push(queryParameter);
+            } else {
+                requiredQueryParameters.push(queryParameter);
             }
+        }
 
-            return {
-                code: this.csharp.codeblock((writer) => {
-                    writer.write(`var ${this.names.variables.query} = `);
-                    writer.writeNodeStatement(
-                        this.csharp.dictionary({
-                            keyType: this.Primitive.string,
-                            valueType: this.Primitive.object,
-                            values: undefined
-                        })
-                    );
-                    // Required params - always include
-                    for (const query of requiredQueryParameters) {
-                        this.writeQueryParameter(writer, query);
-                    }
-                    // Nullable-only params - always include (can be value or null)
-                    for (const query of nullableOnlyQueryParameters) {
-                        this.writeQueryParameter(writer, query);
-                    }
-                    // Optional-only params - include only if not null
-                    for (const query of optionalOnlyQueryParameters) {
-                        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
-                        writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference} != null`));
-                        this.writeQueryParameter(writer, query);
-                        writer.endControlFlow();
-                    }
-                    // Optional + Nullable params - include if IsDefined (can be value or null)
-                    for (const query of optionalAndNullableQueryParameters) {
-                        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+        return {
+            code: this.csharp.codeblock((writer) => {
+                // Start building the query string with QueryStringBuilder.Builder
+                writer.write(
+                    `var ${queryStringVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
+                );
+
+                // Add required parameters directly in the fluent chain
+                for (const query of requiredQueryParameters) {
+                    this.writeQueryParameterBuilderCall(writer, query);
+                }
+
+                // Close the initial builder chain with semicolon
+                writer.writeLine(";");
+
+                // Add optional parameters with null checks
+                for (const query of optionalQueryParameters) {
+                    const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+                    const isOptionalAndNullable =
+                        this.context.generation.settings.enableExplicitNullableOptional &&
+                        !query.allowMultiple &&
+                        this.context.isOptional(query.valueType) &&
+                        this.context.isNullable(query.valueType);
+
+                    if (isOptionalAndNullable) {
                         writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference}.IsDefined`));
-                        this.writeQueryParameter(writer, query);
-                        writer.endControlFlow();
-                    }
-                }),
-                queryParameterBagReference: this.names.variables.query
-            };
-        } else {
-            // Legacy behavior: simple nullable check
-            const requiredQueryParameters: QueryParameter[] = [];
-            const nullableQueryParameters: QueryParameter[] = [];
-            for (const queryParameter of this.endpoint.queryParameters) {
-                if (
-                    (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) ||
-                    this.context.isNullable(queryParameter.valueType)
-                ) {
-                    nullableQueryParameters.push(queryParameter);
-                } else {
-                    requiredQueryParameters.push(queryParameter);
-                }
-            }
-
-            return {
-                code: this.csharp.codeblock((writer) => {
-                    writer.write(`var ${this.names.variables.query} = `);
-                    writer.writeNodeStatement(
-                        this.csharp.dictionary({
-                            keyType: this.Primitive.string,
-                            valueType: this.Primitive.object,
-                            values: undefined
-                        })
-                    );
-                    for (const query of requiredQueryParameters) {
-                        this.writeQueryParameter(writer, query);
-                    }
-                    for (const query of nullableQueryParameters) {
-                        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+                    } else {
                         writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference} != null`));
-                        this.writeQueryParameter(writer, query);
-                        writer.endControlFlow();
                     }
-                }),
-                queryParameterBagReference: this.names.variables.query
-            };
+                    writer.write(`${queryStringVar}`);
+                    this.writeQueryParameterBuilderCall(writer, query);
+                    writer.writeLine(";");
+                    writer.endControlFlow();
+                }
+
+                // Build the final query string
+                writer.writeTextStatement(`${queryStringVar} = ${queryStringVar}.Build()`);
+            }),
+            queryStringReference: queryStringVar
+        };
+    }
+
+    /**
+     * Writes a fluent builder method call for a query parameter.
+     * Uses Add() for primitives and AddDeepObject() for complex types.
+     */
+    private writeQueryParameterBuilderCall(writer: Writer, query: QueryParameter): void {
+        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+        const isComplexType = this.isComplexType(query.valueType);
+
+        if (isComplexType) {
+            writer.write(`\n    .AddDeepObject("${query.name.wireValue}", ${queryParameterReference})`);
+        } else {
+            writer.write(`\n    .Add("${query.name.wireValue}", ${queryParameterReference})`);
         }
     }
 
-    private writeQueryParameter(writer: Writer, query: QueryParameter): void {
-        writer.write(`${this.names.variables.query}["${query.name.wireValue}"] = `);
-        if (!query.allowMultiple) {
-            writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
-            return;
-        }
-        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
-        if (this.isString(query.valueType)) {
-            writer.writeLine(`${queryParameterReference};`);
-            return;
-        }
-        writer.write(`${queryParameterReference}.Select(_value => `);
-        writer.writeNode(
-            this.stringify({
-                reference: query.valueType,
-                name: query.name.name,
-                parameterOverride: "_value",
-                allowOptionals: false // When allow-multiple is set, the query parameter never uses optional types.
-            })
-        );
-        writer.writeLine(").ToList();");
+    /**
+     * Determines if a type reference represents a complex type (object/named type)
+     * that should use AddDeepObject for query string serialization.
+     */
+    private isComplexType(typeReference: TypeReference): boolean {
+        return typeReference._visit({
+            container: (container) => {
+                // For optional types, check the inner type
+                if (container.type === "optional") {
+                    return this.isComplexType(container.optional);
+                }
+                if (container.type === "nullable") {
+                    return this.isComplexType(container.nullable);
+                }
+                // Lists, maps, sets are not deep objects
+                return false;
+            },
+            named: () => true,
+            primitive: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {

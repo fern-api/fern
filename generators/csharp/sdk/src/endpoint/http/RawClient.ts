@@ -46,8 +46,10 @@ export declare namespace RawClient {
         pathParameterReferences?: Record<string, string>;
         /** the headers to pass to the endpoint */
         headerBagReference?: string;
-        /** the query parameters to pass to the endpoint */
+        /** the query parameters to pass to the endpoint (legacy dictionary approach) */
         queryBagReference?: string;
+        /** pre-built query string reference (new fluent API approach) */
+        queryStringReference?: string;
         endpointRequest?: EndpointRequest;
         /** the request type, defaults to Json if none */
         requestType: RequestBodyType | undefined;
@@ -77,6 +79,7 @@ export class RawClient extends WithGeneration {
         pathParameterReferences,
         headerBagReference,
         queryBagReference,
+        queryStringReference,
         endpointRequest,
         requestType
     }: RawClient.CreateHttpRequestWrapperArgs): RawClient.CreateHttpRequestWrapperCodeBlock {
@@ -107,7 +110,13 @@ export class RawClient extends WithGeneration {
                 assignment: this.csharp.codeblock(bodyReference)
             });
         }
-        if (queryBagReference != null) {
+        // Prefer pre-built query string (new fluent API) over dictionary (legacy)
+        if (queryStringReference != null) {
+            args.push({
+                name: "QueryString",
+                assignment: this.csharp.codeblock(queryStringReference)
+            });
+        } else if (queryBagReference != null) {
             args.push({
                 name: "Query",
                 assignment: this.csharp.codeblock(queryBagReference)

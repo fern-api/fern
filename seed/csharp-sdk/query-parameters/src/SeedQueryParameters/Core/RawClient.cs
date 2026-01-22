@@ -282,11 +282,71 @@ internal partial class RawClient(ClientOptions clientOptions)
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
 
+        // Use pre-built query string if available (from QueryStringBuilder.Builder)
+        if (!string.IsNullOrEmpty(request.QueryString))
+        {
+            return url
+                + GetQueryStringWithAdditionalParameters(
+                    request.QueryString,
+                    request.Options?.AdditionalQueryParameters
+                );
+        }
+
+        // Fall back to dictionary-based query parameters (legacy)
         var queryParameters = GetQueryParameters(request);
         if (!queryParameters.Any())
             return url;
 
         return url + QueryStringBuilder.Build(queryParameters);
+    }
+
+    private static string GetQueryStringWithAdditionalParameters(
+        string queryString,
+        IEnumerable<KeyValuePair<string, string>>? additionalQueryParameters
+    )
+    {
+        if (additionalQueryParameters is null || !additionalQueryParameters.Any())
+        {
+            return queryString;
+        }
+
+        // Parse existing query string, remove keys that will be overridden, then add additional params
+        var existingParams = ParseQueryString(queryString);
+        var additionalKeys = additionalQueryParameters.Select(p => p.Key).Distinct().ToHashSet();
+        var filteredParams = existingParams.Where(kv => !additionalKeys.Contains(kv.Key)).ToList();
+        filteredParams.AddRange(additionalQueryParameters);
+        return QueryStringBuilder.Build(filteredParams);
+    }
+
+    private static List<KeyValuePair<string, string>> ParseQueryString(string queryString)
+    {
+        var result = new List<KeyValuePair<string, string>>();
+        if (string.IsNullOrEmpty(queryString))
+            return result;
+
+        // Remove leading '?' if present
+        var query = queryString.StartsWith("?") ? queryString.Substring(1) : queryString;
+        if (string.IsNullOrEmpty(query))
+            return result;
+
+        foreach (var pair in query.Split('&'))
+        {
+            var parts = pair.Split(new[] { '=' }, 2);
+            if (parts.Length == 2)
+            {
+                result.Add(
+                    new KeyValuePair<string, string>(
+                        Uri.UnescapeDataString(parts[0]),
+                        Uri.UnescapeDataString(parts[1])
+                    )
+                );
+            }
+            else if (parts.Length == 1 && !string.IsNullOrEmpty(parts[0]))
+            {
+                result.Add(new KeyValuePair<string, string>(Uri.UnescapeDataString(parts[0]), ""));
+            }
+        }
+        return result;
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
