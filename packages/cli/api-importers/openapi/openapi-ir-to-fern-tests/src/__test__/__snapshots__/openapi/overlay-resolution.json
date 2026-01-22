@@ -98,7 +98,7 @@
                     "email": "optional<nullable<string>>",
                     "lastName": "optional<string>",
                     "name": "optional<string>",
-                    "settings": "optional<UserSettings>",
+                    "settings": "optional<unknown>",
                   },
                 },
                 "content-type": "application/json",
@@ -225,7 +225,7 @@
           properties:
             name: optional<string>
             email: optional<nullable<string>>
-            settings: optional<UserSettings>
+            settings: optional<unknown>
             lastName: optional<string>
         content-type: application/json
       response:
