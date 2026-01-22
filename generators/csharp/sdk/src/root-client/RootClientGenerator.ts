@@ -568,12 +568,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const requiredParameters: ConstructorParameter[] = [];
         const optionalParameters: ConstructorParameter[] = [];
         const literalParameters: LiteralParameter[] = [];
+        const seenParameterNames = new Set<string>();
 
         for (const scheme of this.context.ir.auth.schemes) {
-            allParameters.push(...this.getParameterFromAuthScheme(scheme));
+            for (const param of this.getParameterFromAuthScheme(scheme)) {
+                if (!seenParameterNames.has(param.name)) {
+                    allParameters.push(param);
+                    seenParameterNames.add(param.name);
+                }
+            }
         }
         for (const header of this.context.ir.headers) {
-            allParameters.push(this.getParameterForHeader(header));
+            const param = this.getParameterForHeader(header);
+            if (!seenParameterNames.has(param.name)) {
+                allParameters.push(param);
+                seenParameterNames.add(param.name);
+            }
         }
 
         for (const param of allParameters) {
