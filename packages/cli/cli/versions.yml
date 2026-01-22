@@ -2,7 +2,7 @@
 - version: 3.49.3
   changelogEntry:
     - summary: |
-        Fix `namespace: null` not being properly handled in per-generator API overrides. When using the multi-API folder structure with per-generator specs configuration, setting `namespace: null` now correctly prevents default namespace computation instead of falling back to the workspace name.
+        Fix per-generator API overrides incorrectly falling back to workspace name for namespace. The `namespace` field in per-generator specs configuration now correctly uses the provided value (or `undefined` if not set) instead of falling back to the workspace folder name.
       type: fix
   createdAt: "2026-01-22"
   irVersion: 63
