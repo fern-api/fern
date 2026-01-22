@@ -405,16 +405,11 @@ function convertEndpointAuth({
     endpoint: Endpoint;
     context: OpenApiIrConverterContext;
 }): true | undefined | HttpEndpointSecurity {
-    // When auth overrides are specified in the Fern Definition, use them instead of OpenAPI security
-    if (context.authOverrides?.auth != null) {
-        // explicit empty array means no auth
-        if (endpoint.security != null && endpoint.security.length === 0) {
-            return undefined;
-        }
-        return true;
-    }
-
     if (endpoint.security == null) {
+        if (context.authOverrides?.auth != null) {
+            return true;
+        }
+
         if (context.ir.security == null) {
             return undefined;
         }
