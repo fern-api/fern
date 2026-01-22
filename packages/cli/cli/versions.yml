@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.48.4
+- version: 3.49.0
   changelogEntry:
     - summary: |
         Add support for WebSocket example names. The `name` field is now included in the IR for WebSocket examples, and all WebSocket examples are now processed in FDR conversion (not just the first one). This enables the frontend to display user-specified example names from the AsyncAPI `summary` field.
