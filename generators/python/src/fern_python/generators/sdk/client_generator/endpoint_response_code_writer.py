@@ -1,8 +1,9 @@
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Dict, List, Optional, Set
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
+from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
@@ -96,6 +97,21 @@ class EndpointResponseCodeWriter:
 
         stream_response_union = stream_response.get_as_union()
         if stream_response_union.type == "sse":
+            object_typed_fields = self._get_sse_object_typed_fields(stream_response_union.payload)
+            if len(object_typed_fields) > 0:
+                fields_list_str = ", ".join(f'"{f}"' for f in sorted(object_typed_fields))
+                sse_data_expression = AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=self._context.core_utilities.get_parse_sse_event(),
+                        args=[
+                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
+                            AST.Expression(f"({fields_list_str},)"),
+                        ],
+                    )
+                )
+            else:
+                sse_data_expression = AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()")
+
             iter_func_body.extend(
                 [
                     AST.VariableDeclaration(
@@ -144,7 +160,7 @@ class EndpointResponseCodeWriter:
                                     AST.YieldStatement(
                                         self._context.core_utilities.get_construct(
                                             self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
+                                            sse_data_expression,
                                         ),
                                     ),
                                 ],
@@ -808,3 +824,86 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
+
+    def _get_sse_object_typed_fields(self, type_reference: ir_types.TypeReference) -> List[str]:
+        """
+        Get the list of field names that are object-typed in the given type reference.
+        This is used to determine which fields need JSON string parsing in SSE events.
+
+        For discriminated unions, this collects object-typed fields from all variants.
+        For objects, this collects object-typed fields directly.
+        """
+        types: Dict[ir_types.TypeId, ir_types.TypeDeclaration] = {
+            type_id: self._context.pydantic_generator_context.get_declaration_for_type_id(type_id)
+            for type_id in self._context.pydantic_generator_context.ir.types.keys()
+        }
+
+        object_typed_fields: Set[str] = set()
+
+        def collect_fields_from_type_id(type_id: ir_types.TypeId) -> None:
+            declaration = types.get(type_id)
+            if declaration is None:
+                return
+
+            def handle_object(obj: ir_types.ObjectTypeDeclaration) -> None:
+                for prop in obj.properties:
+                    if can_tr_be_fern_model(prop.value_type, types):
+                        object_typed_fields.add(prop.name.wire_value)
+
+            def handle_union(union: ir_types.UnionTypeDeclaration) -> None:
+                for member in union.types:
+                    member.shape.visit(
+                        same_properties_as_object=lambda spao: collect_fields_from_type_id(spao.type_id),
+                        single_property=lambda sp: (
+                            object_typed_fields.add(sp.name.wire_value)
+                            if can_tr_be_fern_model(sp.type, types)
+                            else None
+                        ),
+                        no_properties=lambda: None,
+                    )
+                for prop in union.base_properties:
+                    if can_tr_be_fern_model(prop.value_type, types):
+                        object_typed_fields.add(prop.name.wire_value)
+
+            def handle_undiscriminated_union(udu: ir_types.UndiscriminatedUnionTypeDeclaration) -> None:
+                for member in udu.members:
+                    member.type.visit(
+                        named=lambda nt: collect_fields_from_type_id(nt.type_id),
+                        container=lambda _: None,
+                        primitive=lambda _: None,
+                        unknown=lambda: None,
+                    )
+
+            declaration.shape.visit(
+                alias=lambda _: None,
+                enum=lambda _: None,
+                object=handle_object,
+                union=handle_union,
+                undiscriminated_union=handle_undiscriminated_union,
+            )
+
+        type_reference.visit(
+            named=lambda nt: collect_fields_from_type_id(nt.type_id),
+            container=lambda ct: ct.visit(
+                list_=lambda _: None,
+                map_=lambda _: None,
+                optional=lambda opt: opt.visit(
+                    named=lambda nt: collect_fields_from_type_id(nt.type_id),
+                    container=lambda _: None,
+                    primitive=lambda _: None,
+                    unknown=lambda: None,
+                ),
+                nullable=lambda nul: nul.visit(
+                    named=lambda nt: collect_fields_from_type_id(nt.type_id),
+                    container=lambda _: None,
+                    primitive=lambda _: None,
+                    unknown=lambda: None,
+                ),
+                set_=lambda _: None,
+                literal=lambda _: None,
+            ),
+            primitive=lambda _: None,
+            unknown=lambda: None,
+        )
+
+        return list(object_typed_fields)

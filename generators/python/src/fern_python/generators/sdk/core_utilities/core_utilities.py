@@ -315,7 +315,7 @@ class CoreUtilities:
         file_exports = {
             "_api.py": {"EventSource", "connect_sse", "aconnect_sse"},
             "_exceptions.py": {"SSEError"},
-            "_models.py": {"ServerSentEvent"},
+            "_models.py": {"ServerSentEvent", "parse_sse_event"},
         }
 
         # Walk through all files in the folder and copy them maintaining directory structure
@@ -812,6 +812,14 @@ class CoreUtilities:
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "events"), named_import="EventType"
+            ),
+        )
+
+    def get_parse_sse_event(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "http_sse", "_models"), named_import="parse_sse_event"
             ),
         )
 
