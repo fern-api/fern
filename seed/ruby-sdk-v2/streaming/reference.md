@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate_stream</a>(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/fern_streaming/dummy/client.rb">generate_stream</a>(request) -> FernStreaming::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.dummy.generate_stream(
 <dl>
 <dd>
 
-**request_options:** `Seed::Dummy::RequestOptions` 
+**request_options:** `FernStreaming::Dummy::RequestOptions` 
     
 </dd>
 </dl>
@@ -59,7 +59,7 @@ client.dummy.generate_stream(
 </dl>
 </details>
 
-<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate</a>(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/fern_streaming/dummy/client.rb">generate</a>(request) -> FernStreaming::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -106,7 +106,7 @@ client.dummy.generate(
 <dl>
 <dd>
 
-**request_options:** `Seed::Dummy::RequestOptions` 
+**request_options:** `FernStreaming::Dummy::RequestOptions` 
     
 </dd>
 </dl>

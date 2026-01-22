@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_account</a>(account_id) -> Seed::Types::Account</code></summary>
+<details><summary><code>client.<a href="/lib/fern_simple_fhir/client.rb">get_account</a>(account_id) -> FernSimpleFhir::Types::Account</code></summary>
 <dl>
 <dd>
 
@@ -35,7 +35,7 @@ client.get_account(account_id: 'account_id');
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernSimpleFhir::RequestOptions` 
     
 </dd>
 </dl>

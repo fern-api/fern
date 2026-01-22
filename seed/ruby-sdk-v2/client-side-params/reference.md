@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_resources</a>() -> Internal::Types::Array[Seed::Types::Types::Resource]</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">list_resources</a>() -> Internal::Types::Array[FernClientSideParams::Types::Types::Resource]</code></summary>
 <dl>
 <dd>
 
@@ -106,7 +106,7 @@ client.service.list_resources(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -118,7 +118,7 @@ client.service.list_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_resource</a>(resource_id) -> Seed::Types::Types::Resource</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">get_resource</a>(resource_id) -> FernClientSideParams::Types::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -188,7 +188,7 @@ client.service.get_resource(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -200,7 +200,7 @@ client.service.get_resource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">search_resources</a>(request) -> Seed::Types::Types::SearchResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">search_resources</a>(request) -> FernClientSideParams::Types::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -279,7 +279,7 @@ client.service.search_resources(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -291,7 +291,7 @@ client.service.search_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_users</a>() -> Seed::Types::Types::PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">list_users</a>() -> FernClientSideParams::Types::Types::PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -406,7 +406,7 @@ client.service.list_users(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -418,7 +418,7 @@ client.service.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_user_by_id</a>(user_id) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">get_user_by_id</a>(user_id) -> FernClientSideParams::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -488,7 +488,7 @@ client.service.get_user_by_id(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -500,7 +500,7 @@ client.service.get_user_by_id(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_user</a>(request) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">create_user</a>(request) -> FernClientSideParams::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -552,7 +552,7 @@ client.service.create_user(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::CreateUserRequest` 
+**request:** `FernClientSideParams::Types::Types::CreateUserRequest` 
     
 </dd>
 </dl>
@@ -560,7 +560,7 @@ client.service.create_user(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -572,7 +572,7 @@ client.service.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">update_user</a>(user_id, request) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">update_user</a>(user_id, request) -> FernClientSideParams::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -633,7 +633,7 @@ client.service.update_user(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::UpdateUserRequest` 
+**request:** `FernClientSideParams::Types::Types::UpdateUserRequest` 
     
 </dd>
 </dl>
@@ -641,7 +641,7 @@ client.service.update_user(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -653,7 +653,7 @@ client.service.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">delete_user</a>(user_id) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">delete_user</a>(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -703,7 +703,7 @@ client.service.delete_user(user_id: 'userId');
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -715,7 +715,7 @@ client.service.delete_user(user_id: 'userId');
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_connections</a>() -> Internal::Types::Array[Seed::Types::Types::Connection]</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">list_connections</a>() -> Internal::Types::Array[FernClientSideParams::Types::Types::Connection]</code></summary>
 <dl>
 <dd>
 
@@ -785,7 +785,7 @@ client.service.list_connections(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -797,7 +797,7 @@ client.service.list_connections(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_connection</a>(connection_id) -> Seed::Types::Types::Connection</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">get_connection</a>(connection_id) -> FernClientSideParams::Types::Types::Connection</code></summary>
 <dl>
 <dd>
 
@@ -858,7 +858,7 @@ client.service.get_connection(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -870,7 +870,7 @@ client.service.get_connection(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_clients</a>() -> Seed::Types::Types::PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">list_clients</a>() -> FernClientSideParams::Types::Types::PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -985,7 +985,7 @@ client.service.list_clients(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -997,7 +997,7 @@ client.service.list_clients(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_client</a>(client_id) -> Seed::Types::Types::Client</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_client_side_params/service/client.rb">get_client</a>(client_id) -> FernClientSideParams::Types::Types::Client</code></summary>
 <dl>
 <dd>
 
@@ -1067,7 +1067,7 @@ client.service.get_client(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernClientSideParams::Service::RequestOptions` 
     
 </dd>
 </dl>

@@ -1,0 +1,84 @@
+# frozen_string_literal: true
+
+module FernOauthClientCredentialsWithVariables
+  module Auth
+    class Client
+      # @param client [FernOauthClientCredentialsWithVariables::Internal::Http::RawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @param request_options [Hash]
+      # @param params [FernOauthClientCredentialsWithVariables::Auth::Types::GetTokenRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [FernOauthClientCredentialsWithVariables::Auth::Types::TokenResponse]
+      def get_token_with_client_credentials(request_options: {}, **params)
+        params = FernOauthClientCredentialsWithVariables::Internal::Types::Utils.normalize_keys(params)
+        body_prop_names = %i[client_id client_secret audience grant_type scope]
+        body_bag = params.slice(*body_prop_names)
+
+        request = FernOauthClientCredentialsWithVariables::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "/token",
+          body: FernOauthClientCredentialsWithVariables::Auth::Types::GetTokenRequest.new(body_bag).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise FernOauthClientCredentialsWithVariables::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          FernOauthClientCredentialsWithVariables::Auth::Types::TokenResponse.load(response.body)
+        else
+          error_class = FernOauthClientCredentialsWithVariables::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # @param request_options [Hash]
+      # @param params [FernOauthClientCredentialsWithVariables::Auth::Types::RefreshTokenRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [FernOauthClientCredentialsWithVariables::Auth::Types::TokenResponse]
+      def refresh_token(request_options: {}, **params)
+        params = FernOauthClientCredentialsWithVariables::Internal::Types::Utils.normalize_keys(params)
+        body_prop_names = %i[client_id client_secret refresh_token audience grant_type scope]
+        body_bag = params.slice(*body_prop_names)
+
+        request = FernOauthClientCredentialsWithVariables::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "/token",
+          body: FernOauthClientCredentialsWithVariables::Auth::Types::RefreshTokenRequest.new(body_bag).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise FernOauthClientCredentialsWithVariables::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          FernOauthClientCredentialsWithVariables::Auth::Types::TokenResponse.load(response.body)
+        else
+          error_class = FernOauthClientCredentialsWithVariables::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+    end
+  end
+end
