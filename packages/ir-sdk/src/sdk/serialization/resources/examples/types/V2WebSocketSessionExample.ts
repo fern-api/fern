@@ -15,6 +15,7 @@ export const V2WebSocketSessionExample: core.serialization.ObjectSchema<
     serializers.V2WebSocketSessionExample.Raw,
     FernIr.V2WebSocketSessionExample
 > = core.serialization.objectWithoutOptionalProperties({
+    name: core.serialization.string().optional(),
     channel: V2WebSocketEndpointLocation,
     baseUrl: core.serialization.property("baseURL", core.serialization.string().optional()),
     environment: V2EnvironmentValues.optional(),
@@ -27,6 +28,7 @@ export const V2WebSocketSessionExample: core.serialization.ObjectSchema<
 
 export declare namespace V2WebSocketSessionExample {
     export interface Raw {
+        name?: string | null;
         channel: V2WebSocketEndpointLocation.Raw;
         baseURL?: string | null;
         environment?: V2EnvironmentValues.Raw | null;

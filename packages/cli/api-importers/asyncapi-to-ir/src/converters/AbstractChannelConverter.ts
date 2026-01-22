@@ -67,6 +67,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
                 return [
                     index.toString(),
                     {
+                        name: example.summary,
                         channel: {
                             method: "GET",
                             path: fullPath

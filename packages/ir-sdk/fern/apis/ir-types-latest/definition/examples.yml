@@ -66,6 +66,7 @@ types:
 
   V2WebSocketSessionExample:
     properties:
+      name: optional<string>
       channel: V2WebSocketEndpointLocation
       baseURL: optional<string>
       environment: optional<V2EnvironmentValues>

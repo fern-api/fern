@@ -71,14 +71,12 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                         exampleTypeFromEndpointResponse.type === "body"
                     ) {
                         if (
-                            exampleTypeFromEndpointResponse.value?.shape.type === "named" &&
-                            exampleTypeFromEndpointResponse.value.shape.shape.type === "object"
+                            exampleTypeFromEndpointResponse.shape?.type === "named" &&
+                            exampleTypeFromEndpointResponse.shape.shape.type === "object"
                         ) {
-                            exampleProperty = exampleTypeFromEndpointResponse.value.shape.shape.properties.find(
-                                (example) => {
-                                    return example.name.wireValue === property.name.wireValue;
-                                }
-                            );
+                            exampleProperty = exampleTypeFromEndpointResponse.shape.shape.properties.find((example) => {
+                                return example.name.wireValue === property.name.wireValue;
+                            });
                         }
                     }
                     return {
