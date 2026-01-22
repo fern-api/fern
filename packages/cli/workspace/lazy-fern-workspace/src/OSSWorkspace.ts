@@ -377,15 +377,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
                         "error",
-                        `API validation${specInfo} completed with ${errorStats.numErrors} errors and ${errorStats.numWarnings} warnings.`
+                        `API validation${specInfo} completed with ${errorStats.numErrors} errors.`
                     );
-                    context.logger.log("info", "");
                 } else if (errorStats.numWarnings > 0 && logWarnings) {
                     context.logger.log(
                         "warn",
                         `API validation${specInfo} completed with ${errorStats.numWarnings} warnings.`
                     );
-                    context.logger.log("info", "");
                 }
 
                 await errorCollector.logErrors({ logWarnings });
