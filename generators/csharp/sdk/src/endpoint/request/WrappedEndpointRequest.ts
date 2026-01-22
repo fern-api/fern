@@ -234,14 +234,22 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const isStruct = this.isStruct({ typeReference: reference });
 
         // Add .Value for nullable structs that need method calls like .ToString(format)
-        // - When experimental flag is enabled: add .Value for optional<T>, nullable<T>, or Optional<T?> where T is a struct
+        // - When experimental flag is enabled: add .Value for optional<T>, nullable<T>, or .Value.Value for Optional<T?> where T is a struct
         // - When experimental flag is disabled (legacy): add .Value for optional structs (which become T?)
         // Note: strings are reference types and don't need .Value (string? doesn't have .Value)
         const needsDotValue =
             (allowOptionals ?? true) &&
             isStruct &&
             (this.context.generation.settings.enableExplicitNullableOptional ? isOptional || isNullable : isOptional);
-        const maybeDotValue = needsDotValue ? ".Value" : "";
+
+        const needsDoubleDotValue =
+            (allowOptionals ?? true) &&
+            isStruct &&
+            this.context.generation.settings.enableExplicitNullableOptional &&
+            isOptional &&
+            isNullable;
+
+        const maybeDotValue = needsDoubleDotValue ? ".Value.Value" : needsDotValue ? ".Value" : "";
 
         if (this.isString(reference)) {
             // When using experimental explicit nullable/optional, Optional<string?> needs .Value to unwrap
