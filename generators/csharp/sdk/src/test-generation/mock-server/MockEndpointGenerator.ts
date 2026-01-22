@@ -179,9 +179,7 @@ export class MockEndpointGenerator extends WithGeneration {
     /**
      * Filters read-only properties from an inlined request body.
      */
-    private filterInlinedRequestBody(
-        exampleRequest: ExampleRequestBody.InlinedRequestBody
-    ): Record<string, unknown> {
+    private filterInlinedRequestBody(exampleRequest: ExampleRequestBody.InlinedRequestBody): Record<string, unknown> {
         const result: Record<string, unknown> = {};
 
         for (const prop of exampleRequest.properties) {
@@ -286,7 +284,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 }
                 return this.filterExampleTypeReference(container.nullable);
 
-            case "map":
+            case "map": {
                 const mapResult: Record<string, unknown> = {};
                 for (const entry of container.map) {
                     const key = entry.key.jsonExample;
@@ -295,6 +293,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     }
                 }
                 return mapResult;
+            }
 
             case "literal":
                 return container.literal;
@@ -359,16 +358,17 @@ export class MockEndpointGenerator extends WithGeneration {
     /**
      * Filters read-only properties from a union example.
      */
-    private filterUnionExample(unionShape: {
-        discriminant: { wireValue: string };
-        singleUnionType: unknown;
-    }): unknown {
+    private filterUnionExample(unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown }): unknown {
         // Union examples have a complex structure - for now, return the JSON example
         // and rely on the SDK's serialization to handle read-only properties
         const singleUnionType = unionShape.singleUnionType as {
             wireDiscriminantValue: { wireValue: string };
             shape:
-                | { type: "samePropertiesAsObject"; typeId: TypeId; object: { properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> } }
+                | {
+                      type: "samePropertiesAsObject";
+                      typeId: TypeId;
+                      object: { properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> };
+                  }
                 | { type: "singleProperty"; jsonExample: unknown; typeReference: ExampleTypeReference }
                 | { type: "noProperties" };
         };
@@ -398,7 +398,11 @@ export class MockEndpointGenerator extends WithGeneration {
      * Gets the set of read-only property wire names for a type declaration.
      */
     private getReadOnlyPropertyNamesForType(typeDeclaration: {
-        shape: { type: string; properties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>; extendedProperties?: Array<{ name: { wireValue: string }; propertyAccess?: string }> };
+        shape: {
+            type: string;
+            properties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+        };
     }): Set<string> {
         const readOnlyNames = new Set<string>();
         const shape = typeDeclaration.shape;
