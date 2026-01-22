@@ -97,8 +97,8 @@ function convertService(
                     .filter((statusCode, index, array) => array.indexOf(statusCode) !== index).length > 0;
             for (const [exampleName, example] of Object.entries(userSpecifiedExamples)) {
                 endpointExample = convertV2HttpEndpointExample({
-                    // Always show user-specified displayName (OpenAPI summary), or disambiguate if needed
-                    shouldUseExampleName: shouldUseUserSpecifiedExampleName || example.displayName != null,
+                    // Always show user-specified displayName (OpenAPI summary), or disambiguate if needed.
+                    shouldUseExampleName: example.displayName != null || shouldUseUserSpecifiedExampleName,
                     exampleName: example.displayName ?? exampleName,
                     example,
                     irEndpoint,
