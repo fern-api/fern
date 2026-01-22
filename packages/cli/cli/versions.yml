@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.49.0
+- version: 3.49.2
   changelogEntry:
     - summary: |
         Add support for `omit` field in basic auth configuration. This allows omitting the username or password from the SDK when defining basic authentication, useful for APIs that only require one of the two credentials.
