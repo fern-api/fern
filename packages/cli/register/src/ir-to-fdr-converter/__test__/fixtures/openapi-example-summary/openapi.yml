@@ -1,22 +1,22 @@
 openapi: 3.1.0
 info:
   title: Example Summary Test
-  version: '1'
+  version: "1"
 paths:
   /payments:
     get:
       operationId: listPayments
       summary: List payments
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaymentList'
+                $ref: "#/components/schemas/PaymentList"
               examples:
                 paginatedPayment:
-                  $ref: '#/components/examples/paginatedPayment'
+                  $ref: "#/components/examples/paginatedPayment"
     post:
       operationId: createPayment
       summary: Create a payment
@@ -25,22 +25,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PaymentRequest'
+              $ref: "#/components/schemas/PaymentRequest"
             examples:
               cardPayment:
-                $ref: '#/components/examples/cardPayment'
+                $ref: "#/components/examples/cardPayment"
               applePayPayment:
-                $ref: '#/components/examples/applePayPayment'
+                $ref: "#/components/examples/applePayPayment"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Payment'
+                $ref: "#/components/schemas/Payment"
               examples:
                 paymentResponse:
-                  $ref: '#/components/examples/paymentResponse'
+                  $ref: "#/components/examples/paymentResponse"
 components:
   schemas:
     PaymentRequest:
@@ -65,7 +65,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Payment'
+            $ref: "#/components/schemas/Payment"
         hasMore:
           type: boolean
   examples:
