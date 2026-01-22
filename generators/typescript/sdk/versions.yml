@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.14
+  changelogEntry:
+    - summary: |
+        Add support for additional query parameters in WebSocket connections. The `connect()` method
+        now accepts a `queryParams` option that allows passing arbitrary query parameters to be merged
+        into the WebSocket URL. This enables users to pass custom query parameters for authentication,
+        session tracking, or other purposes when establishing WebSocket connections.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.43.13
   changelogEntry:
     - summary: |
