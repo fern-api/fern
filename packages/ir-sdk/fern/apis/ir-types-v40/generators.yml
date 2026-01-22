@@ -8,11 +8,12 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: "@fern-fern/ir-v40-sdk"
+          package-name: '@fern-fern/ir-v40-sdk'
         config:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+        smart-casing: false
   sdks:
     generators:
       - name: fernapi/fern-typescript-sdk
@@ -20,10 +21,11 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: "@fern-fern/ir-v40-sdk"
+          package-name: '@fern-fern/ir-v40-sdk'
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+        smart-casing: false
       - name: fernapi/java-model
         version: 0.5.20
         output:
@@ -33,6 +35,7 @@ groups:
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
+        smart-casing: false
       - name: fernapi/fern-pydantic-model
         version: 0.8.1-rc0
         output:
@@ -43,7 +46,9 @@ groups:
           wrapped_aliases: true
           include_union_utils: true
           frozen: true
+        smart-casing: false
       - name: fernapi/fern-go-model
         version: 0.9.3
         github:
           repository: fern-api/ir-go
+        smart-casing: false
