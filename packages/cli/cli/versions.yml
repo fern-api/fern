@@ -2,7 +2,7 @@
 - version: 3.49.1
   changelogEntry:
     - summary: |
-        Fix Python library docs placeholder page appearing on published sites. The placeholder page is now removed from the docs definition after successful library docs generation, so only the real generated documentation is published.
+        Fix Python library docs placeholder page appearing on published sites. The placeholder page is now only created during `fern docs dev` (local development), not during `fern generate --docs` (publishing).
       type: fix
   createdAt: "2026-01-22"
   irVersion: 63

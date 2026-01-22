@@ -79,6 +79,12 @@ export interface DocsDefinitionResolverArgs {
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
+    /**
+     * When true, creates placeholder pages for Python library docs sections.
+     * When false (default), skips creating placeholder pages since FDR will
+     * add the generated library docs during finishDocsRegister.
+     */
+    isDevMode?: boolean;
 }
 
 export class DocsDefinitionResolver {
@@ -91,6 +97,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
+    private isDevMode: boolean;
 
     constructor({
         domain,
@@ -101,7 +108,8 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
-        targetAudiences
+        targetAudiences,
+        isDevMode = false
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -112,6 +120,7 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
+        this.isDevMode = isDevMode;
     }
 
     #idgen = NodeIdGenerator.init();
@@ -1032,9 +1041,10 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
 
-        const children = await Promise.all(
+        const childrenWithNulls = await Promise.all(
             items.map((item) => this.toNavigationChild({ prefix: id, item, parentSlug }))
         );
+        const children = childrenWithNulls.filter((child): child is FernNavigation.V1.NavigationChild => child != null);
 
         const grouped: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
@@ -1100,7 +1110,10 @@ export class DocsDefinitionResolver {
             urlSlug: item.slug ?? kebabCase(item.title),
             skipUrlSlug: item.skipUrlSlug
         });
-        const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, variantSlug)));
+        const childrenWithNulls = await Promise.all(
+            item.layout.map((item) => this.toVariantChild(item, id, variantSlug))
+        );
+        const children = childrenWithNulls.filter((child): child is FernNavigation.V1.VariantChild => child != null);
         return {
             type: "variant",
             id,
@@ -1125,15 +1138,17 @@ export class DocsDefinitionResolver {
         item: docsYml.DocsNavigationItem,
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator
-    ): Promise<FernNavigation.V1.VariantChild> {
-        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild>>({
+    ): Promise<FernNavigation.V1.VariantChild | null> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild | null>>({
             page: async (value) => this.toPageNode({ item: value, parentSlug }),
             apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
             section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug),
-            // Library sections are handled by FDR during registration, returning placeholder
-            pythonDocsSection: async (value) => this.toPythonDocsSectionPlaceholder(value, parentSlug)
+            // Library sections are handled by FDR during registration
+            // In dev mode, return placeholder page; in production mode, skip (FDR adds generated docs)
+            pythonDocsSection: async (value) =>
+                this.isDevMode ? this.toPythonDocsSectionPlaceholder(value, parentSlug) : null
         });
     }
 
@@ -1149,8 +1164,8 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator;
         hideChildren?: boolean;
         parentAvailability?: docsYml.RawSchemas.Availability;
-    }): Promise<FernNavigation.V1.NavigationChild> {
-        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild>>({
+    }): Promise<FernNavigation.V1.NavigationChild | null> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild | null>>({
             page: async (value) => this.toPageNode({ item: value, parentSlug, hideChildren, parentAvailability }),
             apiSection: async (value) =>
                 this.toApiSectionNode({ item: value, parentSlug, hideChildren, parentAvailability }),
@@ -1158,8 +1173,10 @@ export class DocsDefinitionResolver {
                 this.toSectionNode({ prefix, item: value, parentSlug, hideChildren, parentAvailability }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
-            // Library sections are handled by FDR during registration, returning placeholder
-            pythonDocsSection: async (value) => this.toPythonDocsSectionPlaceholder(value, parentSlug)
+            // Library sections are handled by FDR during registration
+            // In dev mode, return placeholder page; in production mode, skip (FDR adds generated docs)
+            pythonDocsSection: async (value) =>
+                this.isDevMode ? this.toPythonDocsSectionPlaceholder(value, parentSlug) : null
         });
     }
 
@@ -1510,17 +1527,19 @@ The generated documentation will replace this placeholder page with complete API
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: await Promise.all(
-                item.contents.map((child) =>
-                    this.toNavigationChild({
-                        prefix: id,
-                        item: child,
-                        parentSlug: slug,
-                        hideChildren: hiddenSection,
-                        parentAvailability: item.availability ?? parentAvailability
-                    })
+            children: (
+                await Promise.all(
+                    item.contents.map((child) =>
+                        this.toNavigationChild({
+                            prefix: id,
+                            item: child,
+                            parentSlug: slug,
+                            hideChildren: hiddenSection,
+                            parentAvailability: item.availability ?? parentAvailability
+                        })
+                    )
                 )
-            ),
+            ).filter((child): child is FernNavigation.V1.NavigationChild => child != null),
             authed: undefined,
             pointsTo: undefined,
             noindex,

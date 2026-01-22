@@ -272,7 +272,8 @@ export async function getPreviewDocsDefinition({
                 };
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
-        targetAudiences: undefined
+        targetAudiences: undefined,
+        isDevMode: true
     });
 
     const writeDocsDefinition = await resolver.resolve();
