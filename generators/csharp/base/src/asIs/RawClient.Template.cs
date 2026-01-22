@@ -312,27 +312,48 @@ internal partial class RawClient(ClientOptions clientOptions)
         var result = new List<KeyValuePair<string, string>>();
         foreach (var kvp in inputDict)
         {
-            switch (kvp.Value)
-            {
-                case null:
-                    result.Add(new KeyValuePair<string, string>(kvp.Key, ""));
-                    break;
-                case string str:
-                    result.Add(new KeyValuePair<string, string>(kvp.Key, str));
-                    break;
-                case IEnumerable<string> strList:
-                {
-                    foreach (var value in strList)
-                    {
-                        result.Add(new KeyValuePair<string, string>(kvp.Key, value));
-                    }
-
-                    break;
-                }
-            }
+            FlattenValue(result, kvp.Key, kvp.Value);
         }
 
         return result;
+    }
+
+    private static void FlattenValue(
+        List<KeyValuePair<string, string>> result,
+        string key,
+        object? value
+    )
+    {
+        switch (value)
+        {
+            case null:
+                result.Add(new KeyValuePair<string, string>(key, ""));
+                break;
+            case string str:
+                result.Add(new KeyValuePair<string, string>(key, str));
+                break;
+            case IEnumerable<object> list when value is not IDictionary<string, object>:
+            {
+                foreach (var item in list)
+                {
+                    FlattenValue(result, key, item);
+                }
+
+                break;
+            }
+            case IDictionary<string, object> dict:
+            {
+                foreach (var nested in dict)
+                {
+                    FlattenValue(result, $"{key}[{nested.Key}]", nested.Value);
+                }
+
+                break;
+            }
+            default:
+                result.Add(new KeyValuePair<string, string>(key, value.ToString() ?? ""));
+                break;
+        }
     }
 
     private static async SystemTask MergeHeadersAsync(
