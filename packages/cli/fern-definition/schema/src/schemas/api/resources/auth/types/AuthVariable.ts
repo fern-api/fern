@@ -4,4 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface AuthVariable extends FernDefinition.WithEnvironmentVariable, FernDefinition.WithName {}
+export interface AuthVariable extends FernDefinition.WithEnvironmentVariable, FernDefinition.WithName {
+    /** If true, the auth variable will be omitted from the SDK. */
+    omit?: boolean;
+}

@@ -12,9 +12,7 @@ export const ExampleEndpointSuccessResponse: core.serialization.Schema<
     FernIr.ExampleEndpointSuccessResponse
 > = core.serialization
     .union("type", {
-        body: core.serialization.object({
-            value: core.serialization.lazyObject(() => serializers.ExampleTypeReference).optional(),
-        }),
+        body: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
         stream: core.serialization.object({
             value: core.serialization.list(core.serialization.lazyObject(() => serializers.ExampleTypeReference)),
         }),
@@ -26,7 +24,7 @@ export const ExampleEndpointSuccessResponse: core.serialization.Schema<
         transform: (value) => {
             switch (value.type) {
                 case "body":
-                    return FernIr.ExampleEndpointSuccessResponse.body(value.value);
+                    return FernIr.ExampleEndpointSuccessResponse.body(value);
                 case "stream":
                     return FernIr.ExampleEndpointSuccessResponse.stream(value.value);
                 case "sse":
@@ -44,9 +42,8 @@ export declare namespace ExampleEndpointSuccessResponse {
         | ExampleEndpointSuccessResponse.Stream
         | ExampleEndpointSuccessResponse.Sse;
 
-    export interface Body {
+    export interface Body extends serializers.ExampleTypeReference.Raw {
         type: "body";
-        value?: serializers.ExampleTypeReference.Raw | null;
     }
 
     export interface Stream {
