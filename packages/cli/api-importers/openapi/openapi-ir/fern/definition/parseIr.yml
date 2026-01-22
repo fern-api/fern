@@ -157,6 +157,8 @@ types:
     extends:
       - finalIr.MultipartRequest
       - commons.WithSdkMethodName
+    properties:
+      fullExamples: optional<list<NamedFullExample>>
 
   ResponseWithExample:
     union:

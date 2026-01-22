@@ -50,6 +50,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "response": {
@@ -252,6 +253,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "response": {
@@ -418,6 +420,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "response": {

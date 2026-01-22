@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_documentManagement",
@@ -32,6 +33,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
+      "graphqlOperations": undefined,
       "name": "documentManagement",
       "pointsTo": undefined,
       "subpackageId": "subpackage_documentManagement",

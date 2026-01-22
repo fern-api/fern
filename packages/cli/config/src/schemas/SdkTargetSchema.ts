@@ -1,13 +1,14 @@
 import { z } from "zod";
 import { OutputSchema } from "./OutputSchema";
 import { PublishSchema } from "./PublishSchema";
+import { SdkTargetLanguageSchema } from "./SdkTargetLanguageSchema";
 
 export const SdkTargetSchema = z.object({
-    lang: z.string().optional(),
+    lang: SdkTargetLanguageSchema.optional(),
     version: z.string().optional(),
     config: z.record(z.string(), z.unknown()).optional(),
     publish: PublishSchema.optional(),
-    output: OutputSchema.optional(),
+    output: OutputSchema,
     group: z.array(z.string()).optional()
 });
 

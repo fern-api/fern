@@ -17,6 +17,8 @@ sdks:
     typescript:
       lang: typescript
       version: "1.0.0"
+      output:
+        path: ./sdks/typescript
 `;
 
 const INVALID_FERN_YML = `org: 12345`;
