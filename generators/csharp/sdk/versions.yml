@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.16.1
+- version: 2.17.1
   changelogEntry:
     - summary: |
         Fix mock server tests to exclude read-only properties from expected request JSON.
@@ -10,6 +10,19 @@
         levels, including within dictionaries, lists, and nested objects.
       type: fix
   createdAt: "2026-01-22"
+  irVersion: 62
+
+- version: 2.17.0
+  changelogEntry:
+    - summary: |
+        Respect defaults set for request parameter values.
+
+        When `use-default-request-parameter-values: true` is configured in generators.yml, the SDK will
+        generate initializers of the form `= default` for those properties of a record that have defaults.
+        Any property with a default will also have the 'required' keyword stripped if it's there, since
+        users should be allowed to omit it during initialization and rely on the default.
+      type: feat
+  createdAt: "2026-01-21"
   irVersion: 62
 
 - version: 2.16.0

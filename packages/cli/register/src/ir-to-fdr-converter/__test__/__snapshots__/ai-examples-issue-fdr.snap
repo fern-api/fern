@@ -20,7 +20,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "Successfully created plant",
             "path": "/plant",
             "pathParameters": {},
             "queryParameters": {},
@@ -159,6 +159,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
