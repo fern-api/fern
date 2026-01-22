@@ -3,6 +3,7 @@
 import typing
 from contextlib import asynccontextmanager, contextmanager
 
+import httpx
 import websockets.exceptions
 import websockets.sync.client as websockets_sync_client
 from ...core.api_error import ApiError
@@ -35,6 +36,11 @@ class RawEmptyRealtimeClient:
         EmptyRealtimeSocketClient
         """
         ws_url = self._client_wrapper.get_base_url() + "/empty/realtime/"
+        query_params = httpx.QueryParams()
+        if request_options and "additional_query_parameters" in request_options:
+            query_params = query_params.merge(request_options["additional_query_parameters"])
+        if len(query_params) > 0:
+            ws_url = ws_url + f"?{query_params}"
         headers = self._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
@@ -75,6 +81,11 @@ class AsyncRawEmptyRealtimeClient:
         AsyncEmptyRealtimeSocketClient
         """
         ws_url = self._client_wrapper.get_base_url() + "/empty/realtime/"
+        query_params = httpx.QueryParams()
+        if request_options and "additional_query_parameters" in request_options:
+            query_params = query_params.merge(request_options["additional_query_parameters"])
+        if len(query_params) > 0:
+            ws_url = ws_url + f"?{query_params}"
         headers = self._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
