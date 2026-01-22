@@ -127,7 +127,8 @@ export async function runRemoteGenerationForGenerator({
             swiftSdk: undefined,
             rustSdk: undefined
         },
-        context: interactiveTaskContext
+        context: interactiveTaskContext,
+        workspaceName: workspace.workspaceName
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),

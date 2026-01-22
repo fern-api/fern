@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.4
+  changelogEntry:
+    - summary: |
+        Use workspace folder name for API definition `apiName` field instead of the `name` from api.yml. This enables proper disambiguation of APIs in markdown components when multiple APIs have the same title (e.g., versioned APIs like `ticketing_v2`, `ticketing_v3`).
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.48.3
   changelogEntry:
     - summary: |

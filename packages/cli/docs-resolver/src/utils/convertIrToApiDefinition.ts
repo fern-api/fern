@@ -16,12 +16,14 @@ export function convertIrToApiDefinition({
     ir,
     apiDefinitionId,
     playgroundConfig,
-    context
+    context,
+    workspaceName
 }: {
     ir: IntermediateRepresentation;
     apiDefinitionId: string;
     playgroundConfig?: PlaygroundConfig;
     context: TaskContext;
+    workspaceName?: string;
 }): APIV1Read.ApiDefinition {
     // the navigation constructor doesn't need to know about snippets, so we can pass an empty object
     return convertDbAPIDefinitionToRead(
@@ -40,7 +42,8 @@ export function convertIrToApiDefinition({
                     rustSdk: undefined
                 },
                 playgroundConfig,
-                context
+                context,
+                workspaceName
             }),
             APIV1Read.ApiDefinitionId(apiDefinitionId),
             EMPTY_SNIPPET_HOLDER

@@ -1269,7 +1269,8 @@ export class DocsDefinitionResolver {
             ir,
             apiDefinitionId,
             playgroundConfig: { oauth: item.playground?.oauth },
-            context: this.taskContext
+            context: this.taskContext,
+            workspaceName: workspace.workspaceName
         });
 
         const node = new ApiReferenceNodeConverter(

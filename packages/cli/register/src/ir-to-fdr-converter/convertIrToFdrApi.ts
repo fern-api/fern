@@ -9,18 +9,20 @@ export function convertIrToFdrApi({
     ir,
     snippetsConfig,
     playgroundConfig,
-    context
+    context,
+    workspaceName
 }: {
     ir: IntermediateRepresentation;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
     context: TaskContext;
+    workspaceName?: string;
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
-        apiName: ir.apiName.originalName,
+        apiName: workspaceName ?? ir.apiName.originalName,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
         snippetsConfiguration: snippetsConfig,

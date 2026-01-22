@@ -41,6 +41,7 @@ export async function generateFdrFromOpenApiWorkspaceV3(
         playgroundConfig: {
             oauth: true
         },
-        context
+        context,
+        workspaceName: workspace.workspaceName
     });
 }

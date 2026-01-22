@@ -47,7 +47,8 @@ export async function generateFdrApiDefinitionForWorkspaces({
                         swiftSdk: undefined,
                         rustSdk: undefined
                     },
-                    context
+                    context,
+                    workspaceName: fernWorkspace.workspaceName
                 });
 
                 const resolvedOutputFilePath = AbsoluteFilePath.of(path.resolve(outputFilepath));
