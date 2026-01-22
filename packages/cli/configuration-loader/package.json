@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -34,7 +36,7 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.144.6-a76e5b58c",
+    "@fern-api/fdr-sdk": "0.144.7-efc9f5ccf",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/github": "workspace:*",
     "@fern-api/task-context": "workspace:*",
