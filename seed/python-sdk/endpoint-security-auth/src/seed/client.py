@@ -62,9 +62,7 @@ class SeedEndpointSecurityAuth:
     from seed import SeedEndpointSecurityAuth
 
     client = SeedEndpointSecurityAuth(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
+        base_url="YOUR_BASE_URL",
     )
 
     # or ...
@@ -105,8 +103,8 @@ class SeedEndpointSecurityAuth:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        client_id: str,
-        client_secret: str,
+        client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
+        client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
         token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
@@ -223,9 +221,7 @@ class AsyncSeedEndpointSecurityAuth:
     from seed import AsyncSeedEndpointSecurityAuth
 
     client = AsyncSeedEndpointSecurityAuth(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
+        base_url="YOUR_BASE_URL",
     )
 
     # or ...
@@ -266,8 +262,8 @@ class AsyncSeedEndpointSecurityAuth:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        client_id: str,
-        client_secret: str,
+        client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
+        client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
         token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
