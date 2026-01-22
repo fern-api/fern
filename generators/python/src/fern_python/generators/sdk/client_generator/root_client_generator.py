@@ -1450,15 +1450,6 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 - Prefer inferred-auth credentials (e.g. api_key) when present.
                 """
 
-                # Special case: OAuth token override. We want the first snippet to show the
-                # client-credentials path explicitly (not env-var expressions).
-                if self._oauth_token_override:
-                    return [
-                        ("base_url", AST.Expression('"https://yourhost.com/path/to/api"')),
-                        ("client_id", AST.Expression('"YOUR_CLIENT_ID"')),
-                        ("client_secret", AST.Expression('"YOUR_CLIENT_SECRET"')),
-                    ]
-
                 required_params = [
                     p
                     for p in self._constructor_parameters
@@ -1492,9 +1483,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
                 return kwargs
 
-            should_use_kwargs_snippets = self._use_kwargs_snippets or self._oauth_token_override
-
-            if should_use_kwargs_snippets:
+            if self._use_kwargs_snippets:
                 default_kwargs = build_default_snippet_kwargs()
 
                 async_instantiations: List[AST.Expression] = [
@@ -1510,9 +1499,22 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             else:
                 # Historical behavior: snippets only show parameters that have initializers
                 # (keeps examples stable for non-inferred-auth SDKs).
-                default_args = [
-                    param.initializer for param in self._constructor_parameters if param.initializer is not None
-                ]
+                oauth_param_names = {
+                    "client_id",
+                    "client_secret",
+                    RootClientGenerator.TOKEN_PARAMETER_NAME,
+                    RootClientGenerator.TOKEN_GETTER_PARAM_NAME,
+                }
+                default_args = []
+                for param in self._constructor_parameters:
+                    if param.initializer is None:
+                        continue
+                    # When OAuth token override is enabled, do not include OAuth-related parameters
+                    # in the first/default snippet. This avoids unreadable `os.getenv(...)` snippets
+                    # while keeping the "default snippet" stable.
+                    if self._oauth_token_override and param.constructor_parameter_name in oauth_param_names:
+                        continue
+                    default_args.append(param.initializer)
                 async_instantiations = [
                     AST.Expression(
                         AST.CodeWriter(create_snippet_writer(async_class_reference, args=default_args, kwargs=[]))
@@ -1526,7 +1528,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             # Add token-based instantiation example if oauth_token_override is enabled
             if self._oauth_token_override:
-                if should_use_kwargs_snippets:
+                if self._use_kwargs_snippets:
                     token_kwargs: List[typing.Tuple[str, AST.Expression]] = [
                         ("base_url", AST.Expression('"https://yourhost.com/path/to/api"')),
                         ("token", AST.Expression('"YOUR_BEARER_TOKEN"')),
