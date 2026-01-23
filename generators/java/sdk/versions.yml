@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.3
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation failure when an environment name is a Java reserved keyword
+        (e.g., "default"). The `visitMultipleBaseUrls` method now uses `getScreamingSnakeCase().getSafeName()`
+        for environment constant names, matching the pattern used in `visitSingleBaseUrl`.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
 - version: 3.34.2
   changelogEntry:
     - summary: |
