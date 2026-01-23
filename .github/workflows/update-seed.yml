@@ -1398,7 +1398,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.ACTIONS_PAT }}
+          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
           title: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
           branch: update-${{ matrix.sdk-name }}-seed
@@ -1426,7 +1426,7 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
-          token: ${{ secrets.ACTIONS_PAT }}
+          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
