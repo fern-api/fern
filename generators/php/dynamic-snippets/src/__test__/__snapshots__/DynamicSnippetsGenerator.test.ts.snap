@@ -293,6 +293,10 @@ $client->service->post(
             File->createFromString("First"),
             File->createFromString("Second"),
         ],
+        'maybeFile' => File->createFromString("example_maybe_file"),
+        'maybeFileList' => [
+            File->createFromString("example_maybe_file_list"),
+        ],
     ]),
 );
 "
