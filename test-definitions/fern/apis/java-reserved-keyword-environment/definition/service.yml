@@ -1,0 +1,8 @@
+service:
+  base-path: /
+  auth: true
+  endpoints:
+    get:
+      method: GET
+      path: /dummy
+      response: string

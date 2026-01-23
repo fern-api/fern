@@ -1,0 +1,14 @@
+name: java-reserved-keyword-environment
+auth: bearer
+environments:
+  default:
+    urls:
+      api: https://api.example.com
+      storage: https://storage.example.com
+  Production:
+    urls:
+      api: https://prod.api.example.com
+      storage: https://prod.storage.example.com
+default-environment: default
+error-discrimination:
+  strategy: status-code
