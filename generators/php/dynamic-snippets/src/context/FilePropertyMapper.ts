@@ -62,9 +62,9 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): php.TypeLiteral {
-        const fileValue = this.context.getSingleFileValue({ property, record });
+        let fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return php.TypeLiteral.nop();
+            fileValue = `example_${property.wireValue ?? "file"}`;
         }
         return php.TypeLiteral.file(fileValue);
     }
@@ -78,7 +78,8 @@ export class FilePropertyMapper {
     }): php.TypeLiteral {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return php.TypeLiteral.nop();
+            const fallback = `example_${property.wireValue ?? "files"}`;
+            return php.TypeLiteral.list({ values: [php.TypeLiteral.file(fallback)] });
         }
         return php.TypeLiteral.list({ values: fileValues.map((value) => php.TypeLiteral.file(value)) });
     }
