@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.49.0
+  changelogEntry:
+    - summary: |
+        Add `mypy_exclude` custom config option to exclude directories from mypy type checking.
+        This is useful when `.fernignore` preserves directories (like `legacy/` or `tests/integration/`)
+        that contain code incompatible with the generated SDK.
+      type: feat
+  createdAt: "2026-01-20"
+  irVersion: 62
+
 - version: 4.48.1
   changelogEntry:
     - summary: |
