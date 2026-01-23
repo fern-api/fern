@@ -188,6 +188,36 @@ class ServiceClient:
         )
         return _response.data
 
+    def just_file_with_optional_query_params(
+        self,
+        *,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = self._raw_client.just_file_with_optional_query_params(
+            file=file, maybe_string=maybe_string, maybe_integer=maybe_integer, request_options=request_options
+        )
+        return _response.data
+
     def with_content_type(
         self,
         *,
@@ -588,6 +618,36 @@ class AsyncServiceClient:
             maybe_integer=maybe_integer,
             optional_list_of_strings=optional_list_of_strings,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def just_file_with_optional_query_params(
+        self,
+        *,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = await self._raw_client.just_file_with_optional_query_params(
+            file=file, maybe_string=maybe_string, maybe_integer=maybe_integer, request_options=request_options
         )
         return _response.data
 
