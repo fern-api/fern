@@ -159,6 +159,9 @@ export class ApiReferenceNodeConverter {
 
         // Check if this subpackage corresponds to a tag with description
         const tagInfo = this.openApiTags[subpackageName];
+        this.taskContext.logger.debug(
+            `[tag-description-pages] Looking up subpackage "${subpackageName}" in openApiTags. Found: ${tagInfo != null}. Available keys: ${Object.keys(this.openApiTags).join(", ")}`
+        );
         if (!tagInfo || !tagInfo.description) {
             return undefined;
         }

@@ -1227,6 +1227,11 @@ export class DocsDefinitionResolver {
                                 { id: String(tag.id), description: tag.description }
                             ])
                     );
+                    this.taskContext.logger.debug(
+                        `[tag-description-pages] Extracted ${Object.keys(openApiTags).length} tags with descriptions: ${Object.keys(openApiTags).join(", ")}`
+                    );
+                } else {
+                    this.taskContext.logger.debug("[tag-description-pages] No tags found in OpenAPI IR");
                 }
             } catch (error) {
                 this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
