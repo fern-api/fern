@@ -51,6 +51,7 @@
           },
         },
         "passwordEnvVar": "PLANT_STORE_API_TOKEN",
+        "passwordOmit": false,
         "type": "basic",
         "username": {
           "camelCase": {
@@ -72,6 +73,7 @@
           },
         },
         "usernameEnvVar": "PLANT_STORE_PROJECT_ID",
+        "usernameOmit": false,
       },
     ],
   },

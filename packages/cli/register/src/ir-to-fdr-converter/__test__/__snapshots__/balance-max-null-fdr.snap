@@ -25,7 +25,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "getRates_example",
             "path": "/rates",
             "pathParameters": {},
             "queryParameters": {},
@@ -143,6 +143,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
