@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.7
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI error response example names not using the `summary` field. Error examples now use the OpenAPI `summary` field as the example name (similar to success response examples), enabling proper display names like "Validation Error" instead of generic keys like "validationError".
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
 - version: 3.49.6
   changelogEntry:
     - summary: |
