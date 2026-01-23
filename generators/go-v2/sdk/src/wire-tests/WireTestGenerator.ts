@@ -40,21 +40,26 @@ export class WireTestGenerator {
 
     private wiremockMappingKey({
         requestMethod,
-        requestUrlPathTemplate
+        requestUrlPathTemplate,
+        endpointName
     }: {
         requestMethod: string;
         requestUrlPathTemplate: string;
+        endpointName: string;
     }): string {
-        return `${requestMethod} - ${requestUrlPathTemplate}`;
+        return `${requestMethod} - ${requestUrlPathTemplate} - ${endpointName}`;
     }
 
     private getWireMockConfigContent(): Record<string, WireMockMapping> {
         let out: Record<string, WireMockMapping> = {};
         const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
         for (const mapping of wiremockStubMapping.mappings) {
+            // Extract endpoint name from mapping name (format: "endpointName - exampleName")
+            const endpointName = mapping.name.split(" - ")[0] ?? "";
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
-                requestUrlPathTemplate: mapping.request.urlPathTemplate
+                requestUrlPathTemplate: mapping.request.urlPathTemplate,
+                endpointName
             });
             out[key] = mapping;
         }
@@ -652,9 +657,12 @@ export class WireTestGenerator {
             basePath = `/${basePath}`;
         }
 
+        // Use displayName or originalName to match the key format used in getWireMockConfigContent
+        const endpointName = endpoint.displayName ?? endpoint.name.originalName;
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
-            requestUrlPathTemplate: basePath
+            requestUrlPathTemplate: basePath,
+            endpointName
         });
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
