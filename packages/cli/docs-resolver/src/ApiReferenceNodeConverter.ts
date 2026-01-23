@@ -69,30 +69,6 @@ export class ApiReferenceNodeConverter {
                 ? FernNavigation.V1.PageId(toRelativeFilepath(this.docsWorkspace, this.apiSection.overviewAbsolutePath))
                 : undefined;
 
-        // If no explicit overview page and tag-description-pages is enabled, try to use the tag description
-        // for the API section itself (matching by title converted to camelCase)
-        if (this.#overviewPageId == null && this.apiSection.tagDescriptionPages && this.openApiTags) {
-            const tagKey = camelCase(this.apiSection.title);
-            const tagInfo = this.openApiTags[tagKey];
-            if (tagInfo?.description) {
-                const relativeFilePath = `tag-${tagKey}.md`;
-                const virtualAbsolutePath = AbsoluteFilePath.of(`/${relativeFilePath}`);
-                this.#overviewPageId = FernNavigation.V1.PageId(relativeFilePath);
-
-                // Escape special characters in the description to prevent MDX parsing errors
-                const escapedDescription = tagInfo.description
-                    .replace(/\{/g, "\\{")
-                    .replace(/\}/g, "\\}")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;");
-
-                const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${escapedDescription}`;
-                this.#tagDescriptionContent.set(virtualAbsolutePath, markdownContent);
-                this.markdownFilesToNoIndex.set(virtualAbsolutePath, false);
-                this.markdownFilesToTags.set(virtualAbsolutePath, [tagKey]);
-            }
-        }
-
         // the overview page markdown could contain a full slug, which would be used as the base slug for the API section.
         const maybeFullSlug =
             this.apiSection.overviewAbsolutePath != null
@@ -134,12 +110,23 @@ export class ApiReferenceNodeConverter {
             this.docsWorkspace,
             this.#idgen
         ).orUndefined();
+
+        // When flattened and no explicit overview, inherit the first child's overview page (e.g., tag description).
+        // This mirrors the section inheritance logic in DocsDefinitionResolver.toSectionNode.
+        let overviewPageId = this.#overviewPageId;
+        if (overviewPageId == null && this.apiSection.flattened && this.#children.length > 0) {
+            const firstChild = this.#children[0];
+            if (firstChild?.type === "apiPackage" && firstChild.overviewPageId != null) {
+                overviewPageId = firstChild.overviewPageId;
+            }
+        }
+
         return {
             id: this.#idgen.get(this.apiDefinitionId),
             type: "apiReference",
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
-            overviewPageId: this.#overviewPageId,
+            overviewPageId,
             paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
             icon: this.resolveIconFileId(this.apiSection.icon),
