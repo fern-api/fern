@@ -3,6 +3,7 @@
   "auth": {
     "description": "Basic authentication with custom field names",
     "passwordAlwaysEmpty": undefined,
+    "passwordAlwaysEmpty": false,
     "passwordName": "api_token",
     "type": "basicAuth",
     "usernameName": "project_id",
@@ -11,6 +12,7 @@
     "basicAuth": {
       "description": "Basic authentication with custom field names",
       "passwordAlwaysEmpty": undefined,
+      "passwordAlwaysEmpty": false,
       "passwordName": "api_token",
       "type": "basicAuth",
       "usernameName": "project_id",
@@ -344,6 +346,7 @@
       },
     ],
     "graphqlOperations": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [

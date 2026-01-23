@@ -7,6 +7,7 @@
   "rootPackage": {
     "endpoints": [],
     "graphqlOperations": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_sessions",
@@ -288,6 +289,7 @@
         },
       ],
       "graphqlOperations": [],
+      "graphqlOperations": undefined,
       "name": "sessions",
       "pointsTo": undefined,
       "subpackageId": "subpackage_sessions",

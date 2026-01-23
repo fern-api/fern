@@ -74,6 +74,8 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         password: this.context.casingsGenerator.generateName(passwordName),
                         usernameEnvVar,
                         passwordEnvVar,
+                        usernameOmit: false,
+                        passwordOmit: false,
                         docs: this.securityScheme.description
                     });
                 }

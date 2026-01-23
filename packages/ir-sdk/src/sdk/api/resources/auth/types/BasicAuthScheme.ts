@@ -8,7 +8,11 @@ export interface BasicAuthScheme extends FernIr.BaseAuthScheme {
     username: FernIr.Name;
     /** The environment variable the SDK should use to read the username. */
     usernameEnvVar: FernIr.EnvironmentVariable | undefined;
+    /** If true, the username will be omitted from the SDK. */
+    usernameOmit: boolean | undefined;
     password: FernIr.Name;
     /** The environment variable the SDK should use to read the password. */
     passwordEnvVar: FernIr.EnvironmentVariable | undefined;
+    /** If true, the password will be omitted from the SDK. */
+    passwordOmit: boolean | undefined;
 }

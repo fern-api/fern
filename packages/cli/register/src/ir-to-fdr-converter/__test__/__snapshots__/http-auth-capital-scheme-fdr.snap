@@ -3,6 +3,7 @@
   "auth": {
     "description": "Basic HTTP Authentication",
     "passwordAlwaysEmpty": undefined,
+    "passwordAlwaysEmpty": false,
     "passwordName": "password",
     "type": "basicAuth",
     "usernameName": "username",
@@ -11,6 +12,7 @@
     "basicHttpAuthentication": {
       "description": "Basic HTTP Authentication",
       "passwordAlwaysEmpty": undefined,
+      "passwordAlwaysEmpty": false,
       "passwordName": "password",
       "type": "basicAuth",
       "usernameName": "username",
@@ -239,6 +241,7 @@
       },
     ],
     "graphqlOperations": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [],

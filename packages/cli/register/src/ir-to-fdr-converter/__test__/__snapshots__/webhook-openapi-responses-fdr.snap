@@ -7,6 +7,7 @@
   "rootPackage": {
     "endpoints": [],
     "graphqlOperations": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_paymentSessions",
@@ -37,6 +38,7 @@
       "displayName": undefined,
       "endpoints": [],
       "graphqlOperations": [],
+      "graphqlOperations": undefined,
       "name": "documents",
       "pointsTo": undefined,
       "subpackageId": "subpackage_documents",
@@ -47,6 +49,7 @@
           "description": "Webhook triggered when a document is uploaded via multipart form",
           "examples": [
             {
+              "name": "PDF document uploaded",
               "payload": {
                 "documentId": "doc_pdf_123",
                 "eventId": "evt_doc_001",
@@ -57,6 +60,7 @@
               },
             },
             {
+              "name": "Image document uploaded",
               "payload": {
                 "documentId": "doc_img_456",
                 "eventId": "evt_doc_002",
@@ -215,6 +219,7 @@
       "displayName": undefined,
       "endpoints": [],
       "graphqlOperations": [],
+      "graphqlOperations": undefined,
       "name": "paymentSessions",
       "pointsTo": undefined,
       "subpackageId": "subpackage_paymentSessions",
@@ -225,6 +230,7 @@
           "description": "Webhook triggered when a payment session is completed",
           "examples": [
             {
+              "name": "Small payment completed",
               "payload": {
                 "eventId": "evt_small_001",
                 "eventType": "payment_session.completed",
@@ -240,6 +246,7 @@
               },
             },
             {
+              "name": "Large payment completed",
               "payload": {
                 "eventId": "evt_large_002",
                 "eventType": "payment_session.completed",
@@ -255,6 +262,7 @@
               },
             },
             {
+              "name": "International payment in EUR",
               "payload": {
                 "eventId": "evt_intl_003",
                 "eventType": "payment_session.completed",

@@ -7,6 +7,7 @@
   "rootPackage": {
     "endpoints": [],
     "graphqlOperations": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_oneOfExamples",
@@ -195,6 +196,7 @@
         },
       ],
       "graphqlOperations": [],
+      "graphqlOperations": undefined,
       "name": "oneOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_oneOfExamples",

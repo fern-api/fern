@@ -315,6 +315,7 @@
       },
     ],
     "graphqlOperations": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
