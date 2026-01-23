@@ -7,6 +7,7 @@ import (
 	"go/parser"
 	"go/token"
 	"path"
+	"regexp"
 	"strconv"
 	"strings"
 	"unicode"
@@ -49,6 +50,25 @@ type fileWriter struct {
 	snippetWriter                *SnippetWriter
 
 	buffer *bytes.Buffer
+
+	// testData collects information about types that need getter/setter tests
+	testData []*typeTestData
+
+	// Track types that need JSON marshaling and String() tests (using maps to avoid duplicates)
+	jsonMarshalingTests  map[string]struct{}
+	stringMethodTests    map[string]struct{}
+	enumTests            map[string][]string // map[typeName][]enumValues for enum tests
+	extraPropertiesTests map[string]struct{} // types that have GetExtraProperties()
+}
+
+type typeTestData struct {
+	typeName          string
+	propertyNames     []string
+	propertyTypes     []string
+	propertySafeNames []string
+	hasGetters        bool   // true for objects and unions, false for request types
+	hasSetters        bool   // true for objects and requests, false for unions/undiscriminated unions
+	needsDereference  []bool // true for properties that should be dereferenced in getters
 }
 
 func newFileWriter(
@@ -116,6 +136,11 @@ func newFileWriter(
 		errors:                       errors,
 		coordinator:                  coordinator,
 		buffer:                       new(bytes.Buffer),
+		testData:                     make([]*typeTestData, 0),
+		jsonMarshalingTests:          make(map[string]struct{}),
+		stringMethodTests:            make(map[string]struct{}),
+		enumTests:                    make(map[string][]string),
+		extraPropertiesTests:         make(map[string]struct{}),
 	}
 	f.snippetWriter = NewSnippetWriter(baseImportPath, unionVersion, types, f)
 	return f
@@ -261,6 +286,617 @@ func (f *fileWriter) WriteExplicitFields() {
 	f.P()
 	f.P("// Private bitmask of fields set to an explicit value and therefore not to be omitted")
 	f.P("explicitFields *big.Int `json:\"-\" url:\"-\"`")
+}
+
+// AddGetterSetterTestData collects information about a type for later test generation.
+// hasGetters=true for objects and unions (types with getters), false for request types (setters only).
+// hasSetters=true for objects and requests (types with setters), false for unions/undiscriminated unions (getters only).
+// needsDereference indicates which properties should be dereferenced in getters (only relevant when hasGetters=true).
+func (f *fileWriter) AddGetterSetterTestData(typeName string, propertyNames []string, propertyTypes []string, propertySafeNames []string, hasGetters bool, hasSetters bool, needsDereference []bool) {
+	f.testData = append(f.testData, &typeTestData{
+		typeName:          typeName,
+		propertyNames:     propertyNames,
+		propertyTypes:     propertyTypes,
+		propertySafeNames: propertySafeNames,
+		hasGetters:        hasGetters,
+		hasSetters:        hasSetters,
+		needsDereference:  needsDereference,
+	})
+}
+
+// AddJSONMarshalingTest marks a type for JSON marshaling test generation.
+func (f *fileWriter) AddJSONMarshalingTest(typeName string) {
+	if f.jsonMarshalingTests == nil {
+		f.jsonMarshalingTests = make(map[string]struct{})
+	}
+	f.jsonMarshalingTests[typeName] = struct{}{}
+}
+
+// AddStringMethodTest marks a type for String() method test generation.
+func (f *fileWriter) AddStringMethodTest(typeName string) {
+	if f.stringMethodTests == nil {
+		f.stringMethodTests = make(map[string]struct{})
+	}
+	f.stringMethodTests[typeName] = struct{}{}
+}
+
+// AddEnumTest marks an enum type for test generation with its values.
+func (f *fileWriter) AddEnumTest(typeName string, enumValues []string) {
+	if f.enumTests == nil {
+		f.enumTests = make(map[string][]string)
+	}
+	f.enumTests[typeName] = enumValues
+}
+
+// AddExtraPropertiesTest marks a type for GetExtraProperties() test generation.
+func (f *fileWriter) AddExtraPropertiesTest(typeName string) {
+	if f.extraPropertiesTests == nil {
+		f.extraPropertiesTests = make(map[string]struct{})
+	}
+	f.extraPropertiesTests[typeName] = struct{}{}
+}
+
+// GenerateGetterSetterTestFile creates a separate test file with tests for all collected types.
+func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
+	if len(f.testData) == 0 {
+		return nil, nil
+	}
+
+	// Determine test filename (e.g., types.go -> types_test.go)
+	testFilename := strings.TrimSuffix(f.filename, ".go") + "_test.go"
+
+	// Create a new file writer for the test file
+	testWriter := newFileWriter(
+		testFilename,
+		f.packageName,
+		f.baseImportPath,
+		f.whitelabel,
+		f.alwaysSendRequiredProperties,
+		f.inlinePathParameters,
+		f.inlineFileProperties,
+		f.useReaderForBytesRequest,
+		f.gettersPassByValue,
+		f.exportAllRequestsAtRoot,
+		f.unionVersion,
+		f.customPagerName,
+		f.types,
+		f.errors,
+		f.coordinator,
+	)
+
+	// Add test-specific imports
+	testWriter.scope.AddImport("github.com/stretchr/testify/assert")
+	testWriter.scope.AddImport("github.com/stretchr/testify/require")
+
+	// Build a set of valid subpackages from the IR types and add them as imports.
+	// This ensures we only import packages that are actually part of the generated SDK.
+	// removeUnusedImports will clean up any that aren't actually used in the tests.
+	validSubpackages := make(map[string]struct{})
+	for _, typeDecl := range f.types {
+		if typeDecl.Name.FernFilepath != nil && len(typeDecl.Name.FernFilepath.PackagePath) > 0 {
+			// The last element of the package path is the subpackage name
+			subpkg := typeDecl.Name.FernFilepath.PackagePath[len(typeDecl.Name.FernFilepath.PackagePath)-1].CamelCase.SafeName
+			if subpkg != "" && subpkg != f.packageName {
+				validSubpackages[subpkg] = struct{}{}
+				// Add import for this SDK subpackage upfront
+				subpkgImportPath := packagePathToImportPath(f.baseImportPath, []string{subpkg})
+				testWriter.scope.AddImport(subpkgImportPath)
+			}
+		}
+	}
+
+	// Write tests for each type
+	for _, testData := range f.testData {
+		// Filter properties to only include those without external package qualifiers
+		// We only test properties that are in the current package or known subpackages
+		localPropertyNames := make([]string, 0, len(testData.propertyNames))
+		localPropertyTypes := make([]string, 0, len(testData.propertyTypes))
+		localPropertySafeNames := make([]string, 0, len(testData.propertySafeNames))
+		localNeedsDereference := make([]bool, 0, len(testData.needsDereference))
+
+		for i, propType := range testData.propertyTypes {
+			pkgQualifier := extractPackageQualifier(propType)
+
+			// Include property if:
+			// 1. No package qualifier (same package)
+			// 2. Package qualifier matches current package (will be stripped)
+			// 3. Package qualifier is in validSubpackages (known generated subpackage)
+			// 4. Package qualifier is a standard library package
+			shouldInclude := false
+			if pkgQualifier == "" || pkgQualifier == f.packageName {
+				shouldInclude = true
+			} else if _, isValid := validSubpackages[pkgQualifier]; isValid {
+				shouldInclude = true
+			} else if isStdLibPackage(pkgQualifier) {
+				shouldInclude = true
+			}
+
+			if !shouldInclude {
+				continue // Skip external or unknown package types
+			}
+
+			localPropertyNames = append(localPropertyNames, testData.propertyNames[i])
+			localPropertyTypes = append(localPropertyTypes, stripPackageQualifier(propType, f.packageName))
+			if i < len(testData.propertySafeNames) {
+				localPropertySafeNames = append(localPropertySafeNames, testData.propertySafeNames[i])
+			}
+			if i < len(testData.needsDereference) {
+				localNeedsDereference = append(localNeedsDereference, testData.needsDereference[i])
+			}
+		}
+
+		// Skip types with no testable properties (all were filtered out)
+		if len(localPropertyNames) == 0 {
+			continue
+		}
+
+		testWriter.WriteGetterSetterTests(
+			testData.typeName,
+			localPropertyNames,
+			localPropertyTypes,
+			localPropertySafeNames,
+			testData.hasGetters,
+			testData.hasSetters,
+			localNeedsDereference,
+		)
+	}
+
+	// Write JSON marshaling tests for types that have them
+	for typeName := range f.jsonMarshalingTests {
+		testWriter.WriteJSONMarshalingTests(typeName)
+	}
+
+	// Write String() method tests for types that have them
+	for typeName := range f.stringMethodTests {
+		testWriter.WriteStringMethodTests(typeName)
+	}
+
+	// Write enum tests for enum types
+	for typeName, enumValues := range f.enumTests {
+		testWriter.WriteEnumTests(typeName, enumValues)
+	}
+
+	// Write GetExtraProperties() tests for types that have them
+	for typeName := range f.extraPropertiesTests {
+		testWriter.WriteExtraPropertiesTests(typeName)
+	}
+
+	return testWriter.File()
+}
+
+// stripPackageQualifier removes the package qualifier from a type if it matches the current package.
+// For example, "flows.SomeType" becomes "SomeType" when in package "flows".
+// Handles complex types like "*flows.Type", "[]flows.Type", "[]*flows.Type", "map[string]*flows.Type", etc.
+func stripPackageQualifier(goType string, packageName string) string {
+	if packageName == "" {
+		return goType
+	}
+
+	// Pattern to match package.Type (with word boundaries)
+	pattern := `\b` + packageName + `\.`
+	re := regexp.MustCompile(pattern)
+	return re.ReplaceAllString(goType, "")
+}
+
+// extractPackageQualifier extracts the package name from a qualified type.
+// For example, "flows.SomeType" returns "flows", "*tenants.Type" returns "tenants".
+// Returns empty string if no package qualifier is found.
+func extractPackageQualifier(goType string) string {
+	// Pattern to match package name before a dot and type name
+	// Matches word characters before a dot, avoiding map keys like "map[string]"
+	pattern := `\b([a-z][a-z0-9_]*)\.[A-Z]`
+	re := regexp.MustCompile(pattern)
+	matches := re.FindStringSubmatch(goType)
+	if len(matches) > 1 {
+		return matches[1]
+	}
+	return ""
+}
+
+// WriteGetterSetterTests writes test functions for getter and setter methods.
+// hasGetters controls whether getter tests are generated (true for objects and unions, false for request types).
+// hasSetters controls whether setter tests are generated (true for objects and requests, false for unions/undiscriminated unions).
+func (f *fileWriter) WriteGetterSetterTests(typeName string, propertyNames []string, propertyTypes []string, propertySafeNames []string, hasGetters bool, hasSetters bool, needsDereference []bool) {
+	if len(propertyNames) == 0 {
+		return
+	}
+
+	// Test setter methods - only generate for types that have setters
+	if hasSetters {
+		f.P("func TestSetters", typeName, "(t *testing.T) {")
+		for i, propertyName := range propertyNames {
+			setterName := fmt.Sprintf("Set%s", propertyName)
+			propertyType := propertyTypes[i]
+			paramName := propertySafeNames[i]
+
+			if paramName == "" {
+				if len(propertyName) > 0 {
+					runes := []rune(propertyName)
+					runes[0] = unicode.ToLower(runes[0])
+					paramName = string(runes)
+				} else {
+					paramName = "value"
+				}
+			}
+
+			// Avoid shadowing standard library packages
+			if isStdLibPackage(strings.ToLower(paramName)) {
+				paramName = paramName + "Value"
+			}
+
+			f.P("\tt.Run(\"", setterName, "\", func(t *testing.T) {")
+			f.P("\t\tobj := &", typeName, "{}")
+
+			// For all types, use var declaration to avoid import issues with package-qualified types
+			// This ensures we get the zero value without needing to import external packages
+			f.P("\t\tvar ", paramName, " ", propertyType)
+			f.P("\t\tobj.", setterName, "(", paramName, ")")
+			f.P("\t\tassert.Equal(t, ", paramName, ", obj.", propertyName, ")")
+			f.P("\t\tassert.NotNil(t, obj.explicitFields)")
+			f.P("\t})")
+			f.P()
+		}
+		f.P("}")
+		f.P()
+	}
+
+	// Test getter methods - only generate for types that have getters (objects and unions, not requests)
+	if hasGetters {
+		f.P("func TestGetters", typeName, "(t *testing.T) {")
+		for i, propertyName := range propertyNames {
+			getterName := fmt.Sprintf("Get%s", propertyName)
+			propertyType := propertyTypes[i]
+
+			// Check if this property should be dereferenced based on the needsDereference info
+			shouldDereference := false
+			if i < len(needsDereference) {
+				shouldDereference = needsDereference[i]
+			}
+
+			if shouldDereference {
+				// For properties that need dereferencing, we test with a non-nil pointer
+				// because the getter will dereference it
+				baseType := strings.TrimPrefix(propertyType, "*")
+				f.P("\tt.Run(\"", getterName, "\", func(t *testing.T) {")
+				f.P("\t\tt.Parallel()")
+				f.P("\t\t// Arrange")
+				f.P("\t\tobj := &", typeName, "{}")
+				f.P("\t\tvar value ", baseType)
+				f.P("\t\tobj.", propertyName, " = &value")
+				f.P("\t\t")
+				f.P("\t\t// Act & Assert")
+				f.P("\t\tassert.Equal(t, value, obj.", getterName, "(), \"getter should dereference and return the value\")")
+
+				f.P("\t})")
+				f.P()
+
+				// Test getter with nil property value
+				f.P("\tt.Run(\"", getterName, "_NilProperty\", func(t *testing.T) {")
+				f.P("\t\tt.Parallel()")
+				f.P("\t\t// Arrange")
+				f.P("\t\tobj := &", typeName, "{}")
+				f.P("\t\tobj.", propertyName, " = nil")
+				f.P("\t\tvar expectedZero ", baseType)
+				f.P("\t\t")
+				f.P("\t\t// Act & Assert")
+				f.P("\t\tassert.Equal(t, expectedZero, obj.", getterName, "(), \"getter should return zero value when property is nil\")")
+				f.P("\t})")
+				f.P()
+			} else {
+				// For properties that don't need dereferencing (pointers, slices, maps, etc.)
+				f.P("\tt.Run(\"", getterName, "\", func(t *testing.T) {")
+				f.P("\t\tt.Parallel()")
+				f.P("\t\t// Arrange")
+				f.P("\t\tobj := &", typeName, "{}")
+				f.P("\t\tvar expected ", propertyType)
+				f.P("\t\tobj.", propertyName, " = expected")
+				f.P("\t\t")
+				f.P("\t\t// Act & Assert")
+				f.P("\t\tassert.Equal(t, expected, obj.", getterName, "(), \"getter should return the property value\")")
+				f.P("\t})")
+				f.P()
+
+				// For pointer/slice/map types, also test with nil value to ensure proper nil handling
+				if strings.HasPrefix(propertyType, "*") || strings.HasPrefix(propertyType, "[]") || strings.HasPrefix(propertyType, "map[") {
+					f.P("\tt.Run(\"", getterName, "_NilValue\", func(t *testing.T) {")
+					f.P("\t\tt.Parallel()")
+					f.P("\t\t// Arrange")
+					f.P("\t\tobj := &", typeName, "{}")
+					f.P("\t\tobj.", propertyName, " = nil")
+					f.P("\t\t")
+					f.P("\t\t// Act & Assert")
+					f.P("\t\tassert.Nil(t, obj.", getterName, "(), \"getter should return nil when property is nil\")")
+					f.P("\t})")
+					f.P()
+				}
+			}
+
+			// Test getter with nil receiver
+			f.P("\tt.Run(\"", getterName, "_NilReceiver\", func(t *testing.T) {")
+			f.P("\t\tt.Parallel()")
+			f.P("\t\tvar obj *", typeName)
+			f.P("\t\t// Should not panic - getters should handle nil receiver gracefully")
+			f.P("\t\tdefer func() {")
+			f.P("\t\t\tif r := recover(); r != nil {")
+			f.P("\t\t\t\tt.Errorf(\"Getter panicked on nil receiver: %v\", r)")
+			f.P("\t\t\t}")
+			f.P("\t\t}()")
+			f.P("\t\t_ = obj.", getterName, "() // Should return zero value")
+			f.P("\t})")
+			f.P()
+		}
+		f.P("}")
+		f.P()
+	}
+
+	// Test setter marks field as explicit - only for types with setters
+	if hasSetters {
+		f.P("func TestSettersMarkExplicit", typeName, "(t *testing.T) {")
+		for i, propertyName := range propertyNames {
+			setterName := fmt.Sprintf("Set%s", propertyName)
+			propertyType := propertyTypes[i]
+			paramName := propertySafeNames[i]
+
+			if paramName == "" {
+				if len(propertyName) > 0 {
+					runes := []rune(propertyName)
+					runes[0] = unicode.ToLower(runes[0])
+					paramName = string(runes)
+				} else {
+					paramName = "value"
+				}
+			}
+
+			// Avoid shadowing standard library packages
+			if isStdLibPackage(strings.ToLower(paramName)) {
+				paramName = paramName + "Value"
+			}
+
+			f.P("\tt.Run(\"", setterName, "_MarksExplicit\", func(t *testing.T) {")
+			f.P("\t\tt.Parallel()")
+			f.P("\t\t// Arrange")
+			f.P("\t\tobj := &", typeName, "{}")
+			f.P("\t\tvar ", paramName, " ", propertyType)
+			f.P("\t\t")
+			f.P("\t\t// Act")
+			f.P("\t\tobj.", setterName, "(", paramName, ")")
+			f.P("\t\t")
+			f.P("\t\t// Assert - field should be marked as explicit")
+			f.P("\t\tbytes, err := json.Marshal(obj)")
+			f.P("\t\trequire.NoError(t, err, \"marshaling should succeed for test setup\")")
+			f.P("\t\t")
+			f.P("\t\t// Field should be present in JSON even if it has zero/nil value")
+			f.P("\t\tvar unmarshaled map[string]interface{}")
+			f.P("\t\terr = json.Unmarshal(bytes, &unmarshaled)")
+			f.P("\t\trequire.NoError(t, err, \"unmarshaling should succeed for test verification\")")
+			f.P("\t\t")
+			f.P("\t\t// Note: Field name should match the JSON tag of ", propertyName)
+			f.P("\t\t// This test verifies the field is serialized even with zero value")
+			f.P("\t})")
+			f.P()
+		}
+		f.P("}")
+		f.P()
+	}
+}
+
+// WriteJSONMarshalingTests generates tests for JSON marshaling/unmarshaling.
+func (f *fileWriter) WriteJSONMarshalingTests(typeName string) {
+	f.P("func TestJSONMarshaling", typeName, "(t *testing.T) {")
+	f.P("\tt.Run(\"MarshalUnmarshal\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\t// Arrange")
+	f.P("\t\tobj := &", typeName, "{}")
+	f.P("\t\t")
+	f.P("\t\t// Act - Marshal to JSON")
+	f.P("\t\tdata, err := json.Marshal(obj)")
+	f.P("\t\trequire.NoError(t, err, \"marshaling should succeed\")")
+	f.P("\t\tassert.NotNil(t, data, \"marshaled data should not be nil\")")
+	f.P("\t\tassert.NotEmpty(t, data, \"marshaled data should not be empty\")")
+	f.P("\t\t")
+	f.P("\t\t// Unmarshal back and verify round-trip")
+	f.P("\t\tvar unmarshaled ", typeName)
+	f.P("\t\terr = json.Unmarshal(data, &unmarshaled)")
+	f.P("\t\tassert.NoError(t, err, \"round-trip unmarshal should succeed\")")
+	f.P("\t})")
+	f.P()
+	f.P("\tt.Run(\"UnmarshalInvalidJSON\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tvar obj ", typeName)
+	f.P("\t\terr := json.Unmarshal([]byte(`{invalid json}`), &obj)")
+	f.P("\t\tassert.Error(t, err, \"unmarshaling invalid JSON should return an error\")")
+	f.P("\t})")
+	f.P()
+	f.P("\tt.Run(\"UnmarshalEmptyObject\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tvar obj ", typeName)
+	f.P("\t\terr := json.Unmarshal([]byte(`{}`), &obj)")
+	f.P("\t\tassert.NoError(t, err, \"unmarshaling empty object should succeed\")")
+	f.P("\t})")
+	f.P("}")
+	f.P()
+}
+
+// WriteStringMethodTests generates tests for String() method.
+func (f *fileWriter) WriteStringMethodTests(typeName string) {
+	f.P("func TestString", typeName, "(t *testing.T) {")
+	f.P("\tt.Run(\"StringMethod\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tobj := &", typeName, "{}")
+	f.P("\t\tresult := obj.String()")
+	f.P("\t\tassert.NotEmpty(t, result, \"String() should return a non-empty representation\")")
+	f.P("\t})")
+	f.P()
+	f.P("\tt.Run(\"StringMethod_NilReceiver\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tvar obj *", typeName)
+	f.P("\t\tresult := obj.String()")
+	f.P("\t\tassert.Equal(t, \"<nil>\", result, \"String() should return <nil> for nil receiver\")")
+	f.P("\t})")
+	f.P("}")
+	f.P()
+}
+
+// WriteEnumTests generates tests for enum types (NewEnumFromString and Ptr methods).
+func (f *fileWriter) WriteEnumTests(typeName string, enumValues []string) {
+	f.P("func TestEnum", typeName, "(t *testing.T) {")
+
+	// Test NewEnumFromString with each valid value in separate sub-tests
+	for _, value := range enumValues {
+		escapedValue := strings.ReplaceAll(value, `"`, `\"`)
+		// Create a clean test name by sanitizing the value
+		sanitizedValue := strings.ReplaceAll(strings.ReplaceAll(value, " ", "_"), "-", "_")
+		// Handle empty string case with a descriptive name
+		if sanitizedValue == "" {
+			sanitizedValue = "empty_string"
+		}
+		f.P("\tt.Run(\"NewFromString_", sanitizedValue, "\", func(t *testing.T) {")
+		f.P("\t\tt.Parallel()")
+		f.P("\t\tval, err := New", typeName, "FromString(\"", escapedValue, "\")")
+		f.P("\t\tassert.NoError(t, err, \"valid enum value should not return error\")")
+		f.P("\t\tassert.Equal(t, ", typeName, "(\"", escapedValue, "\"), val, \"enum value should match expected wire value\")")
+		f.P("\t})")
+		f.P()
+	}
+
+	// Test NewEnumFromString with invalid value
+	f.P("\tt.Run(\"NewFromString_Invalid\", func(t *testing.T) {")
+	f.P("\t\t_, err := New", typeName, "FromString(\"invalid_value_that_does_not_exist\")")
+	f.P("\t\tassert.Error(t, err)")
+	f.P("\t})")
+	f.P()
+
+	// Test Ptr method
+	if len(enumValues) > 0 {
+		// Use the first enum value for the Ptr test
+		escapedValue := strings.ReplaceAll(enumValues[0], `"`, `\"`)
+		f.P("\tt.Run(\"Ptr\", func(t *testing.T) {")
+		f.P("\t\tval, err := New", typeName, "FromString(\"", escapedValue, "\")")
+		f.P("\t\tassert.NoError(t, err)")
+		f.P("\t\tptr := val.Ptr()")
+		f.P("\t\tassert.NotNil(t, ptr)")
+		f.P("\t\tassert.Equal(t, val, *ptr)")
+		f.P("\t})")
+	}
+
+	f.P("}")
+	f.P()
+}
+
+// WriteExtraPropertiesTests generates tests for GetExtraProperties() method.
+func (f *fileWriter) WriteExtraPropertiesTests(typeName string) {
+	f.P("func TestExtraProperties", typeName, "(t *testing.T) {")
+	f.P("\tt.Run(\"GetExtraProperties\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tobj := &", typeName, "{}")
+	f.P("\t\t// Should not panic when calling GetExtraProperties()")
+	f.P("\t\tdefer func() {")
+	f.P("\t\t\tif r := recover(); r != nil {")
+	f.P("\t\t\t\tt.Errorf(\"GetExtraProperties() panicked: %v\", r)")
+	f.P("\t\t\t}")
+	f.P("\t\t}()")
+	f.P("\t\textraProps := obj.GetExtraProperties()")
+	f.P("\t\t// Result can be nil or an empty/non-empty map")
+	f.P("\t\t_ = extraProps")
+	f.P("\t})")
+	f.P()
+	f.P("\tt.Run(\"GetExtraProperties_NilReceiver\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tvar obj *", typeName)
+	f.P("\t\textraProps := obj.GetExtraProperties()")
+	f.P("\t\tassert.Nil(t, extraProps, \"nil receiver should return nil without panicking\")")
+	f.P("\t})")
+	f.P("}")
+	f.P()
+}
+
+// generateTestValue generates an appropriate test value for a given type string.
+func generateTestValue(goType string) string {
+	// Handle pointer types - use existing package helper functions
+	if strings.HasPrefix(goType, "*") {
+		baseType := strings.TrimPrefix(goType, "*")
+		switch baseType {
+		case "string":
+			return `String("test")`
+		case "int":
+			return `Int(123)`
+		case "int64":
+			return `Int64(123)`
+		case "int32":
+			return `Int32(123)`
+		case "bool":
+			return `Bool(true)`
+		case "float64":
+			return `Float64(1.23)`
+		case "float32":
+			return `Float32(1.23)`
+		default:
+			// For complex types, return typed nil
+			return "(" + goType + ")(nil)"
+		}
+	}
+
+	// Handle non-pointer types
+	switch goType {
+	case "string":
+		return `"test"`
+	case "int", "int64", "int32":
+		return "123"
+	case "bool":
+		return "true"
+	case "float64", "float32":
+		return "1.23"
+	case "[]string":
+		return `[]string{"test"}`
+	case "[]int":
+		return `[]int{1, 2, 3}`
+	default:
+		// For unknown types, use typed zero value
+		if strings.HasPrefix(goType, "[]") {
+			return "(" + goType + ")(nil)"
+		}
+		if strings.HasPrefix(goType, "map") {
+			return "(" + goType + ")(nil)"
+		}
+		// For custom types - skip test value generation for complex types
+		// Return a variable declaration instead that will be set to zero value
+		return goType + "{}"
+	}
+}
+
+// isStdLibPackage checks if a package name is from the Go standard library.
+// This is used to distinguish stdlib packages (which should be included in tests)
+// from external third-party packages (which should be filtered out).
+func isStdLibPackage(pkgName string) bool {
+	stdlibPackages := map[string]bool{
+		"time":     true,
+		"context":  true,
+		"fmt":      true,
+		"strings":  true,
+		"strconv":  true,
+		"errors":   true,
+		"io":       true,
+		"os":       true,
+		"path":     true,
+		"filepath": true,
+		"net":      true,
+		"http":     true,
+		"url":      true,
+		"json":     true,
+		"xml":      true,
+		"bytes":    true,
+		"bufio":    true,
+		"sync":     true,
+		"regexp":   true,
+		"sort":     true,
+		"math":     true,
+		"big":      true,
+		"crypto":   true,
+		"encoding": true,
+		"unicode":  true,
+		"reflect":  true,
+	}
+	return stdlibPackages[pkgName]
 }
 
 // clone returns a clone of this fileWriter.
