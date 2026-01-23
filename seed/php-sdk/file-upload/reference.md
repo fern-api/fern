@@ -124,6 +124,54 @@ $client->service->justFileWithQueryParams($request);
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;service-&gt;justFileWithOptionalQueryParams($request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->justFileWithOptionalQueryParams($request);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$maybeString:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$maybeInteger:** `?int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;service-&gt;withContentType($request)</code></summary>
 <dl>
 <dd>

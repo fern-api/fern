@@ -44,6 +44,20 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    public func justFileWithOptionalQueryParams(maybeString: String? = nil, maybeInteger: Int? = nil, request: Requests.JustFileWithOptionalQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/just-file-with-optional-query-params",
+            contentType: .multipartFormData,
+            queryParams: [
+                "maybeString": maybeString.map { .string($0) }, 
+                "maybeInteger": maybeInteger.map { .int($0) }
+            ],
+            body: request.asMultipartFormData(),
+            requestOptions: requestOptions
+        )
+    }
+
     public func withContentType(request: Requests.WithContentTypeRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
