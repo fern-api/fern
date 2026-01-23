@@ -143,6 +143,22 @@ export class WorkspaceLoader {
                 }
             }
         }
+        const defaultGroup = workspace.sdks?.defaultGroup;
+        if (defaultGroup != null) {
+            // If a default group is specified, at least one target must specify that group.
+            if (!this.defaultGroupExists({ workspace, defaultGroup })) {
+                this.issues.push(
+                    new ValidationIssue({
+                        message: `Default group '${defaultGroup}' is not referenced by any target`,
+                        location: fernYml.sourced.$loc
+                    })
+                );
+            }
+        }
+    }
+
+    private defaultGroupExists({ workspace, defaultGroup }: { workspace: Workspace; defaultGroup: string }): boolean {
+        return workspace.sdks?.targets?.some((target) => target.groups?.includes(defaultGroup)) ?? false;
     }
 
     private getTargetSourceLocation({

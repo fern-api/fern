@@ -1,9 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.50.0
+- version: 3.51.0
   changelogEntry:
     - summary: |
         Add support for multiple override files in OpenAPI spec configuration. The `overrides` field now accepts either a single path or an array of paths. When multiple paths are provided, overrides are applied sequentially in order, allowing for layered customization of OpenAPI specs.
       type: feat
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.50.0
+  changelogEntry:
+    - summary: |
+        Add `--output` option to `fern generate` command. This allows users to specify a custom output directory for preview generation when using the `--preview` flag for SDK generation, instead of the default `.preview` directory.
+      type: feat
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.8
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI error response example names not using the `summary` field. Error examples now use the OpenAPI `summary` field as the example name (similar to success response examples), enabling proper display names like "Validation Error" instead of generic keys like "validationError". Falls back to the original key if summary is undefined or empty.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.7
+  changelogEntry:
+    - summary: |
+        Fix `group-multi-api-environments` URL name extraction for hyphenated subdomains (e.g., `ip-messaging.twilio.com` now extracts as `ip-messaging` instead of colliding with other URLs).
+      type: fix
   createdAt: "2026-01-23"
   irVersion: 63
 
