@@ -41,16 +41,12 @@ public class RawComplexClient {
 
     public SeedPaginationHttpResponse<SyncPagingIterable<Conversation>> search(
             String index, SearchRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(index)
                 .addPathSegments("conversations")
-                .addPathSegments("search");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("search")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -59,7 +55,7 @@ public class RawComplexClient {
             throw new SeedPaginationException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

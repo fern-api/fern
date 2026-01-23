@@ -45,56 +45,53 @@ public class AsyncRawReqWithHeadersClient {
 
   public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithCustomHeader(
       ReqWithHeaders request, RequestOptions requestOptions) {
-    HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("test-headers")
-      .addPathSegments("custom-header");if (requestOptions != null) {
-        requestOptions.getQueryParameters().forEach((key, value) -> {
-          httpUrl.addQueryParameter(key, value);
-        } );
-      }
-      RequestBody body;
-      try {
-        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
-      }
-      catch(Exception e) {
-        throw new RuntimeException(e);
-      }
-      Request.Builder _requestBuilder = new Request.Builder()
-        .url(httpUrl.build())
-        .method("POST", body)
-        .headers(Headers.of(clientOptions.headers(requestOptions)))
-        .addHeader("Content-Type", "application/json");
-      _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());
-      _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getXTestEndpointHeader());
-      Request okhttpRequest = _requestBuilder.build();
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-      client.newCall(okhttpRequest).enqueue(new Callback() {
-        @Override
-        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-          try (ResponseBody responseBody = response.body()) {
-            if (response.isSuccessful()) {
-              future.complete(new SeedExhaustiveHttpResponse<>(null, response));
-              return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+      .addPathSegments("custom-header")
+      .build();
+    RequestBody body;
+    try {
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+    }
+    catch(Exception e) {
+      throw new RuntimeException(e);
+    }
+    Request.Builder _requestBuilder = new Request.Builder()
+      .url(httpUrl)
+      .method("POST", body)
+      .headers(Headers.of(clientOptions.headers(requestOptions)))
+      .addHeader("Content-Type", "application/json");
+    _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());
+    _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getXTestEndpointHeader());
+    Request okhttpRequest = _requestBuilder.build();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(new SeedExhaustiveHttpResponse<>(null, response));
             return;
           }
-          catch (IOException e) {
-            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+          return;
         }
-
-        @Override
-        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        catch (IOException e) {
           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
-      });
-      return future;
-    }
+      }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
+}

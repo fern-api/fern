@@ -35,14 +35,10 @@ public class RawAuthClient {
 
     public SeedOauthClientCredentialsHttpResponse<TokenResponse> getTokenWithClientCredentials(
             GetTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("token");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("token")
+                .build();
         FormBody.Builder body = new FormBody.Builder();
         try {
             body.add("client_id", String.valueOf(request.getClientId()));
@@ -56,7 +52,7 @@ public class RawAuthClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -87,14 +83,10 @@ public class RawAuthClient {
 
     public SeedOauthClientCredentialsHttpResponse<TokenResponse> refreshToken(
             RefreshTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("token");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("token")
+                .build();
         FormBody.Builder body = new FormBody.Builder();
         try {
             body.add("client_id", String.valueOf(request.getClientId()));
@@ -109,7 +101,7 @@ public class RawAuthClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")

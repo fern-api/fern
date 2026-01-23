@@ -33,14 +33,10 @@ public class RawSeedPropertyAccessClient {
     }
 
     public SeedPropertyAccessHttpResponse<User> createUser(User request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -49,7 +45,7 @@ public class RawSeedPropertyAccessClient {
             throw new SeedPropertyAccessException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

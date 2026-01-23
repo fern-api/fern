@@ -34,15 +34,11 @@ public class RawPrimitiveClient {
     }
 
     public SeedExhaustiveHttpResponse<String> getAndReturnString(String request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("string");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("string")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -51,7 +47,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -81,15 +77,11 @@ public class RawPrimitiveClient {
     }
 
     public SeedExhaustiveHttpResponse<Integer> getAndReturnInt(int request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("integer");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("integer")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -98,7 +90,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -128,15 +120,11 @@ public class RawPrimitiveClient {
     }
 
     public SeedExhaustiveHttpResponse<Long> getAndReturnLong(long request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("long");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("long")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -145,7 +133,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -175,15 +163,11 @@ public class RawPrimitiveClient {
     }
 
     public SeedExhaustiveHttpResponse<Double> getAndReturnDouble(double request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("double");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("double")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -192,7 +176,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -222,15 +206,11 @@ public class RawPrimitiveClient {
     }
 
     public SeedExhaustiveHttpResponse<Boolean> getAndReturnBool(boolean request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("boolean");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("boolean")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -239,7 +219,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -270,15 +250,11 @@ public class RawPrimitiveClient {
 
     public SeedExhaustiveHttpResponse<OffsetDateTime> getAndReturnDatetime(
             OffsetDateTime request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("datetime");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("datetime")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -287,7 +263,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -317,15 +293,11 @@ public class RawPrimitiveClient {
     }
 
     public SeedExhaustiveHttpResponse<String> getAndReturnDate(String request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("date");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("date")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -334,7 +306,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -364,15 +336,11 @@ public class RawPrimitiveClient {
     }
 
     public SeedExhaustiveHttpResponse<UUID> getAndReturnUuid(UUID request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("uuid");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("uuid")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -381,7 +349,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -411,15 +379,11 @@ public class RawPrimitiveClient {
     }
 
     public SeedExhaustiveHttpResponse<byte[]> getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
-                .addPathSegments("base64");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("base64")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -428,7 +392,7 @@ public class RawPrimitiveClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

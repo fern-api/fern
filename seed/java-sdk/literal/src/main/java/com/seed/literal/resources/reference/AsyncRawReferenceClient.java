@@ -39,14 +39,10 @@ public class AsyncRawReferenceClient {
 
     public CompletableFuture<SeedLiteralHttpResponse<SendResponse>> send(
             SendRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("reference");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("reference")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -55,7 +51,7 @@ public class AsyncRawReferenceClient {
             throw new SeedLiteralException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

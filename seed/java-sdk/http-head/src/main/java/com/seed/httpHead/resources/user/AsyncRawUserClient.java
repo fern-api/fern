@@ -38,16 +38,12 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<SeedHttpHeadHttpResponse<Void>> head(RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("HEAD", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
@@ -92,11 +88,6 @@ public class AsyncRawUserClient {
                 .newBuilder()
                 .addPathSegments("users");
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit(), false);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

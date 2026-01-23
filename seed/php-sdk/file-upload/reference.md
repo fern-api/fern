@@ -39,9 +39,7 @@ $client->service->post($request);
 
 ```php
 $client->service->justFile(
-    new JustFileRequest([
-        'file' => File::createFromString("example_file", "example_file"),
-    ]),
+    new JustFileRequest([]),
 );
 ```
 </dd>
@@ -263,9 +261,7 @@ $client->service->withFormEncodedContainers($request);
 
 ```php
 $client->service->optionalArgs(
-    new OptionalArgsRequest([
-        'imageFile' => File::createFromString("example_image_file", "example_image_file"),
-    ]),
+    new OptionalArgsRequest([]),
 );
 ```
 </dd>

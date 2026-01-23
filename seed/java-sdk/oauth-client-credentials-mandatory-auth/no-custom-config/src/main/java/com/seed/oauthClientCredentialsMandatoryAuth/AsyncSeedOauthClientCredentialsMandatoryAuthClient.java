@@ -57,12 +57,4 @@ public class AsyncSeedOauthClientCredentialsMandatoryAuthClient {
             String clientId, String clientSecret) {
         return AsyncSeedOauthClientCredentialsMandatoryAuthClientBuilder.withCredentials(clientId, clientSecret);
     }
-
-    /**
-     * Creates a new client builder.
-     * @return A builder for configuring and creating the client
-     */
-    public static AsyncSeedOauthClientCredentialsMandatoryAuthClientBuilder._Builder builder() {
-        return AsyncSeedOauthClientCredentialsMandatoryAuthClientBuilder.builder();
-    }
 }

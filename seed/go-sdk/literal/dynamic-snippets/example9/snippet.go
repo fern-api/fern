@@ -18,7 +18,7 @@ func do() {
         Context: fern.SomeLiteral(
             "You're super wise",
         ),
-        MaybeContext: fern.String(
+        MaybeContext: &fern.SomeLiteral(
             "You're super wise",
         ),
         ContainerObject: &fern.ContainerObject{

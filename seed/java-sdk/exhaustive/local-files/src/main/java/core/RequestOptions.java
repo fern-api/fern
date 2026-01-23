@@ -23,20 +23,13 @@ public final class RequestOptions {
 
   private final Map<String, Supplier<String>> headerSuppliers;
 
-  private final Map<String, String> queryParameters;
-
-  private final Map<String, Supplier<String>> queryParameterSuppliers;
-
   private RequestOptions(String token, Optional<Integer> timeout, TimeUnit timeoutTimeUnit,
-      Map<String, String> headers, Map<String, Supplier<String>> headerSuppliers,
-      Map<String, String> queryParameters, Map<String, Supplier<String>> queryParameterSuppliers) {
+      Map<String, String> headers, Map<String, Supplier<String>> headerSuppliers) {
     this.token = token;
     this.timeout = timeout;
     this.timeoutTimeUnit = timeoutTimeUnit;
     this.headers = headers;
     this.headerSuppliers = headerSuppliers;
-    this.queryParameters = queryParameters;
-    this.queryParameterSuppliers = queryParameterSuppliers;
   }
 
   public Optional<Integer> getTimeout() {
@@ -59,14 +52,6 @@ public final class RequestOptions {
     return headers;
   }
 
-  public Map<String, String> getQueryParameters() {
-    Map<String, String> queryParameters = new HashMap<>(this.queryParameters);
-    this.queryParameterSuppliers.forEach((key, supplier) ->  {
-      queryParameters.put(key, supplier.get());
-    } );
-    return queryParameters;
-  }
-
   public static Builder builder() {
     return new Builder();
   }
@@ -81,10 +66,6 @@ public final class RequestOptions {
     private final Map<String, String> headers = new HashMap<>();
 
     private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
-
-    private final Map<String, String> queryParameters = new HashMap<>();
-
-    private final Map<String, Supplier<String>> queryParameterSuppliers = new HashMap<>();
 
     public Builder token(String token) {
       this.token = token;
@@ -112,18 +93,8 @@ public final class RequestOptions {
       return this;
     }
 
-    public Builder addQueryParameter(String key, String value) {
-      this.queryParameters.put(key, value);
-      return this;
-    }
-
-    public Builder addQueryParameter(String key, Supplier<String> value) {
-      this.queryParameterSuppliers.put(key, value);
-      return this;
-    }
-
     public RequestOptions build() {
-      return new RequestOptions(token, timeout, timeoutTimeUnit, headers, headerSuppliers, queryParameters, queryParameterSuppliers);
+      return new RequestOptions(token, timeout, timeoutTimeUnit, headers, headerSuppliers);
     }
   }
 }

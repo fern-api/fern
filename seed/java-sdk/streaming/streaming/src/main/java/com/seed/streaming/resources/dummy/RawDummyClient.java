@@ -38,14 +38,10 @@ public class RawDummyClient {
 
     public SeedStreamingHttpResponse<Iterable<StreamResponse>> generateStream(
             GenerateStreamRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("generate-stream");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("generate-stream")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -54,7 +50,7 @@ public class RawDummyClient {
             throw new SeedStreamingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -84,14 +80,10 @@ public class RawDummyClient {
     }
 
     public SeedStreamingHttpResponse<StreamResponse> generate(Generateequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("generate");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("generate")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -100,7 +92,7 @@ public class RawDummyClient {
             throw new SeedStreamingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

@@ -31,16 +31,12 @@ public class RawHeadersClient {
     }
 
     public SeedEnumHttpResponse<Void> send(SendEnumAsHeaderRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("headers");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("headers")
+                .build();
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         _requestBuilder.addHeader("operand", request.getOperand().toString());

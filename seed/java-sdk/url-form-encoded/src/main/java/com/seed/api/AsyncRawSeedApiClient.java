@@ -37,14 +37,10 @@ public class AsyncRawSeedApiClient {
 
     public CompletableFuture<SeedApiHttpResponse<PostSubmitResponse>> submitFormData(
             PostSubmitRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("submit");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("submit")
+                .build();
         FormBody.Builder body = new FormBody.Builder();
         try {
             body.add("username", String.valueOf(request.getUsername()));
@@ -53,7 +49,7 @@ public class AsyncRawSeedApiClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")

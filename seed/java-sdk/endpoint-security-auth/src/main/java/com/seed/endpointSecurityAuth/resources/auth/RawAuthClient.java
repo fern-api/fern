@@ -38,14 +38,10 @@ public class RawAuthClient {
 
     public SeedEndpointSecurityAuthHttpResponse<TokenResponse> getToken(
             GetTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("token");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("token")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -56,7 +52,7 @@ public class RawAuthClient {
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(EndpointMetadata.empty()));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(_headers))
                 .addHeader("Content-Type", "application/json")

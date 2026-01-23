@@ -46,15 +46,11 @@ public class AsyncRawContentTypeClient {
 
     public CompletableFuture<BestHttpResponse<Void>> postJsonPatchContentType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("foo")
-                .addPathSegments("bar");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("bar")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -64,7 +60,7 @@ public class AsyncRawContentTypeClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json-patch+json")
@@ -118,15 +114,11 @@ public class AsyncRawContentTypeClient {
 
     public CompletableFuture<BestHttpResponse<Void>> postJsonPatchContentWithCharsetType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("foo")
-                .addPathSegments("baz");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("baz")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -136,7 +128,7 @@ public class AsyncRawContentTypeClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json-patch+json; charset=utf-8")

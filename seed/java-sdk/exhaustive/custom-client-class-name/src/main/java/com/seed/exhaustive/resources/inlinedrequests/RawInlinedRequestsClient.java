@@ -43,15 +43,11 @@ public class RawInlinedRequestsClient {
      */
     public BestHttpResponse<ObjectWithOptionalField> postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("req-bodies")
-                .addPathSegments("object");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("object")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -60,7 +56,7 @@ public class RawInlinedRequestsClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

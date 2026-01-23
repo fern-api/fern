@@ -41,15 +41,11 @@ public class AsyncRawSeedObjectClient {
 
     public CompletableFuture<SeedObjectHttpResponse<RootType1>> getRoot(
             PostRootRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("root")
-                .addPathSegments("root");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("root")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -58,7 +54,7 @@ public class AsyncRawSeedObjectClient {
             throw new SeedObjectException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -102,15 +98,11 @@ public class AsyncRawSeedObjectClient {
 
     public CompletableFuture<SeedObjectHttpResponse<Void>> getDiscriminatedUnion(
             GetDiscriminatedUnionRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("root")
-                .addPathSegments("discriminated-union");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("discriminated-union")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -119,7 +111,7 @@ public class AsyncRawSeedObjectClient {
             throw new SeedObjectException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -162,15 +154,11 @@ public class AsyncRawSeedObjectClient {
 
     public CompletableFuture<SeedObjectHttpResponse<Void>> getUndiscriminatedUnion(
             GetUndiscriminatedUnionRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("root")
-                .addPathSegments("undiscriminated-union");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("undiscriminated-union")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -179,7 +167,7 @@ public class AsyncRawSeedObjectClient {
             throw new SeedObjectException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

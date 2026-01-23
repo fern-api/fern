@@ -20,7 +20,7 @@ func do() {
         AliasedContext: fern.SomeAliasedLiteral(
             "You're super wise",
         ),
-        MaybeContext: fern.String(
+        MaybeContext: &fern.SomeAliasedLiteral(
             "You're super wise",
         ),
         ObjectWithLiteral: &fern.ATopLevelLiteral{

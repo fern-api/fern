@@ -49,14 +49,10 @@ public class AsyncRawFileUploadExampleClient {
      */
     public CompletableFuture<SeedApiHttpResponse<String>> uploadFile(
             Optional<File> file, UploadFileRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("upload-file");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("upload-file")
+                .build();
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             multipartBodyBuilder.addFormDataPart(
@@ -71,7 +67,7 @@ public class AsyncRawFileUploadExampleClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
@@ -110,15 +106,16 @@ public class AsyncRawFileUploadExampleClient {
 
     public CompletableFuture<SeedApiHttpResponse<String>> uploadFile(
             Optional<File> file, InputStream stream, String filename) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("upload-file");
+                .addPathSegments("upload-file")
+                .build();
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
-        _requestBuilder.url(httpUrl.build());
+        _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
         _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
@@ -153,15 +150,16 @@ public class AsyncRawFileUploadExampleClient {
 
     public CompletableFuture<SeedApiHttpResponse<String>> uploadFile(
             Optional<File> file, InputStream stream, String filename, MediaType mediaType) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("upload-file");
+                .addPathSegments("upload-file")
+                .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
-        _requestBuilder.url(httpUrl.build());
+        _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
         _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
@@ -196,20 +194,16 @@ public class AsyncRawFileUploadExampleClient {
 
     public CompletableFuture<SeedApiHttpResponse<String>> uploadFile(
             Optional<File> file, InputStream stream, String filename, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("upload-file");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("upload-file")
+                .build();
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
-        _requestBuilder.url(httpUrl.build());
+        _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
         _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
@@ -251,20 +245,16 @@ public class AsyncRawFileUploadExampleClient {
             String filename,
             MediaType mediaType,
             RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("upload-file");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("upload-file")
+                .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
-        _requestBuilder.url(httpUrl.build());
+        _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
         _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();

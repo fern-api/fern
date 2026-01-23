@@ -39,15 +39,11 @@ public class AsyncRawS3Client {
 
     public CompletableFuture<SeedMultiUrlEnvironmentNoDefaultHttpResponse<String>> getPresignedUrl(
             GetPresignedUrlRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getS3URL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getS3URL())
                 .newBuilder()
                 .addPathSegments("s3")
-                .addPathSegments("presigned-url");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("presigned-url")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -56,7 +52,7 @@ public class AsyncRawS3Client {
             throw new SeedMultiUrlEnvironmentNoDefaultException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

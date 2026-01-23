@@ -20,12 +20,6 @@ public partial interface IServiceClient
         CancellationToken cancellationToken = default
     );
 
-    Task JustFileWithOptionalQueryParamsAsync(
-        JustFileWithOptionalQueryParamsRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    );
-
     Task WithContentTypeAsync(
         WithContentTypeRequest request,
         RequestOptions? options = null,

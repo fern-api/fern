@@ -48,11 +48,6 @@ public class AsyncRawMetadataClient {
                 .newBuilder()
                 .addPathSegments("users/events/metadata");
         QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId(), false);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

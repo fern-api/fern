@@ -49,11 +49,6 @@ public class RawQueryParamClient {
                     request.getMaybeOperandOrColor().get(),
                     false);
         }
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
@@ -97,11 +92,6 @@ public class RawQueryParamClient {
                     "maybeOperandOrColor",
                     request.getMaybeOperandOrColor().get(),
                     true);
-        }
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

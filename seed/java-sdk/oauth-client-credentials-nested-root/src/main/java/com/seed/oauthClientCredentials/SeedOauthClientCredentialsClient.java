@@ -65,12 +65,4 @@ public class SeedOauthClientCredentialsClient {
             String clientId, String clientSecret) {
         return SeedOauthClientCredentialsClientBuilder.withCredentials(clientId, clientSecret);
     }
-
-    /**
-     * Creates a new client builder.
-     * @return A builder for configuring and creating the client
-     */
-    public static SeedOauthClientCredentialsClientBuilder._Builder builder() {
-        return SeedOauthClientCredentialsClientBuilder.builder();
-    }
 }

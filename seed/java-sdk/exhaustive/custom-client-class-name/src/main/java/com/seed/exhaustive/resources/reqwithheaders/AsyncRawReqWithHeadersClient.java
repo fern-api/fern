@@ -37,15 +37,11 @@ public class AsyncRawReqWithHeadersClient {
 
     public CompletableFuture<BestHttpResponse<Void>> getWithCustomHeader(
             ReqWithHeaders request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test-headers")
-                .addPathSegments("custom-header");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("custom-header")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -54,7 +50,7 @@ public class AsyncRawReqWithHeadersClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");

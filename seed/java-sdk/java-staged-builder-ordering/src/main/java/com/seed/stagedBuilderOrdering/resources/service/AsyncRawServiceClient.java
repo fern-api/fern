@@ -42,15 +42,11 @@ public class AsyncRawServiceClient {
 
     public CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> createSimple(
             SimpleStaged request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("staged-builder")
-                .addPathSegments("simple");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("simple")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -59,7 +55,7 @@ public class AsyncRawServiceClient {
             throw new SeedStagedBuilderOrderingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -105,15 +101,11 @@ public class AsyncRawServiceClient {
 
     public CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> createMedium(
             MediumStaged request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("staged-builder")
-                .addPathSegments("medium");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("medium")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -122,7 +114,7 @@ public class AsyncRawServiceClient {
             throw new SeedStagedBuilderOrderingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -168,15 +160,11 @@ public class AsyncRawServiceClient {
 
     public CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> createComplex(
             ComplexStaged request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("staged-builder")
-                .addPathSegments("complex");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("complex")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -185,7 +173,7 @@ public class AsyncRawServiceClient {
             throw new SeedStagedBuilderOrderingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -231,15 +219,11 @@ public class AsyncRawServiceClient {
 
     public CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> createMixed(
             MixedStaged request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("staged-builder")
-                .addPathSegments("mixed");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("mixed")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -248,7 +232,7 @@ public class AsyncRawServiceClient {
             throw new SeedStagedBuilderOrderingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -294,15 +278,11 @@ public class AsyncRawServiceClient {
 
     public CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> createParent(
             Parent request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("staged-builder")
-                .addPathSegments("parent");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("parent")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -311,7 +291,7 @@ public class AsyncRawServiceClient {
             throw new SeedStagedBuilderOrderingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

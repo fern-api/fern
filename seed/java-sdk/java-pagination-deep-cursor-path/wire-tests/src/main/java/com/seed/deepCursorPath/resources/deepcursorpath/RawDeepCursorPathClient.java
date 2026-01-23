@@ -53,14 +53,9 @@ public class RawDeepCursorPathClient {
 
     public SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>> doThing(
             A request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -69,7 +64,7 @@ public class RawDeepCursorPathClient {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -119,14 +114,9 @@ public class RawDeepCursorPathClient {
 
     public SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>> doThingRequired(
             MainRequired request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -135,7 +125,7 @@ public class RawDeepCursorPathClient {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -192,14 +182,9 @@ public class RawDeepCursorPathClient {
 
     public SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>> doThingInline(
             InlineA request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -208,7 +193,7 @@ public class RawDeepCursorPathClient {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

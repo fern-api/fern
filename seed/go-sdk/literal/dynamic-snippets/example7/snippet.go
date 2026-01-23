@@ -17,14 +17,14 @@ func do() {
         AliasPrompt: fern.AliasToPrompt(
             "You are a helpful assistant",
         ),
-        AliasOptionalPrompt: fern.String(
+        AliasOptionalPrompt: &fern.AliasToPrompt(
             "You are a helpful assistant",
         ),
         Query: "query",
         AliasStream: fern.AliasToStream(
             false,
         ),
-        AliasOptionalStream: fern.Bool(
+        AliasOptionalStream: &fern.AliasToStream(
             false,
         ),
     }

@@ -41,18 +41,14 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<SeedEndpointSecurityAuthHttpResponse<List<User>>> getWithBearer(
             RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("Bearer", List.of())))));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
@@ -99,18 +95,14 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<SeedEndpointSecurityAuthHttpResponse<List<User>>> getWithApiKey(
             RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("ApiKey", List.of())))));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
@@ -157,19 +149,15 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<SeedEndpointSecurityAuthHttpResponse<List<User>>> getWithOAuth(
             RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(
                 new EndpointMetadata(Arrays.asList(Map.of("OAuth", List.of("read-only"))))));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
@@ -216,18 +204,14 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<SeedEndpointSecurityAuthHttpResponse<List<User>>> getWithBasic(
             RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("Basic", List.of())))));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
@@ -274,19 +258,15 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<SeedEndpointSecurityAuthHttpResponse<List<User>>> getWithInferredAuth(
             RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(
                 clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("InferredAuth", List.of())))));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
@@ -333,14 +313,10 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<SeedEndpointSecurityAuthHttpResponse<List<User>>> getWithAnyAuth(
             RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(
                 Map.of("Bearer", List.of()),
@@ -349,7 +325,7 @@ public class AsyncRawUserClient {
                 Map.of("Basic", List.of()),
                 Map.of("InferredAuth", List.of())))));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")
@@ -396,14 +372,10 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<SeedEndpointSecurityAuthHttpResponse<List<User>>> getWithAllAuth(
             RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("users")
+                .build();
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of(
                 "Bearer",
@@ -417,7 +389,7 @@ public class AsyncRawUserClient {
                 "InferredAuth",
                 List.of())))));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(_headers))
                 .addHeader("Accept", "application/json")

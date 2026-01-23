@@ -84,7 +84,7 @@ request := &fern.SendLiteralsInlinedRequest{
         AliasedContext: fern.SomeAliasedLiteral(
             "You're super wise",
         ),
-        MaybeContext: fern.String(
+        MaybeContext: &fern.SomeAliasedLiteral(
             "You're super wise",
         ),
         ObjectWithLiteral: &fern.ATopLevelLiteral{
@@ -242,13 +242,13 @@ request := &fern.SendLiteralsInQueryRequest{
         AliasPrompt: fern.AliasToPrompt(
             "You are a helpful assistant",
         ),
-        AliasOptionalPrompt: fern.String(
+        AliasOptionalPrompt: &fern.AliasToPrompt(
             "You are a helpful assistant",
         ),
         AliasStream: fern.AliasToStream(
             false,
         ),
-        AliasOptionalStream: fern.Bool(
+        AliasOptionalStream: &fern.AliasToStream(
             false,
         ),
         Query: "What is the weather today",

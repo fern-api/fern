@@ -246,61 +246,6 @@ func (r *RawClient) JustFileWithQueryParams(
 	}, nil
 }
 
-func (r *RawClient) JustFileWithOptionalQueryParams(
-	ctx context.Context,
-	request *upload.JustFileWithOptionalQueryParamsRequest,
-	opts ...option.RequestOption,
-) (*core.Response[any], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		r.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/just-file-with-optional-query-params"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	if len(queryParams) > 0 {
-		endpointURL += "?" + queryParams.Encode()
-	}
-	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
-	)
-	writer := internal.NewMultipartWriter()
-	if err := writer.WriteFile("file", request.File); err != nil {
-		return nil, err
-	}
-	if err := writer.Close(); err != nil {
-		return nil, err
-	}
-	headers.Set("Content-Type", writer.ContentType())
-
-	raw, err := r.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         writer.Buffer(),
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &core.Response[any]{
-		StatusCode: raw.StatusCode,
-		Header:     raw.Header,
-		Body:       nil,
-	}, nil
-}
-
 func (r *RawClient) WithContentType(
 	ctx context.Context,
 	request *upload.WithContentTypeRequest,

@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "223a937e",
+            "example_identifier": "dab60b6f",
             "id": {
                 "method": "POST",
                 "path": "/foo/bar",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "223a937e",
+            "example_identifier": "dab60b6f",
             "id": {
                 "method": "POST",
                 "path": "/foo/baz",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "d9970e69",
+            "example_identifier": "bb5ed0ec",
             "id": {
                 "method": "POST",
                 "path": "/http-methods",
@@ -157,7 +157,7 @@
             }
         },
         {
-            "example_identifier": "6ef2f5b0",
+            "example_identifier": "cd2a85b",
             "id": {
                 "method": "PUT",
                 "path": "/http-methods/{id}",
@@ -170,7 +170,7 @@
             }
         },
         {
-            "example_identifier": "c172f9b8",
+            "example_identifier": "29f14718",
             "id": {
                 "method": "PATCH",
                 "path": "/http-methods/{id}",
@@ -196,7 +196,7 @@
             }
         },
         {
-            "example_identifier": "d2cd67c3",
+            "example_identifier": "a69fd89f",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-with-optional-field",
@@ -235,7 +235,7 @@
             }
         },
         {
-            "example_identifier": "406e217",
+            "example_identifier": "45543f",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-nested-with-optional-field",
@@ -248,7 +248,7 @@
             }
         },
         {
-            "example_identifier": "f47a7ce8",
+            "example_identifier": "a61a451c",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-nested-with-required-field/{string}",
@@ -261,7 +261,7 @@
             }
         },
         {
-            "example_identifier": "69040cf1",
+            "example_identifier": "25673284",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-nested-with-required-field-list",
@@ -573,7 +573,7 @@
             }
         },
         {
-            "example_identifier": "fe3f1d03",
+            "example_identifier": "8afb875f",
             "id": {
                 "method": "POST",
                 "path": "/req-bodies/object",
@@ -586,7 +586,7 @@
             }
         },
         {
-            "example_identifier": "17e2c1ef",
+            "example_identifier": "24e4c794",
             "id": {
                 "method": "POST",
                 "path": "/req-bodies/object",
@@ -625,7 +625,7 @@
             }
         },
         {
-            "example_identifier": "aef36167",
+            "example_identifier": "9e112462",
             "id": {
                 "method": "GET",
                 "path": "/no-req-body",

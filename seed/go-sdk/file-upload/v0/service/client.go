@@ -91,24 +91,6 @@ func (c *Client) JustFileWithQueryParams(
 	return nil
 }
 
-func (c *Client) JustFileWithOptionalQueryParams(
-	ctx context.Context,
-	file io.Reader,
-	request *fern.JustFileWithOptionalQueryParamsRequest,
-	opts ...option.RequestOption,
-) error {
-	_, err := c.WithRawResponse.JustFileWithOptionalQueryParams(
-		ctx,
-		file,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 func (c *Client) WithContentType(
 	ctx context.Context,
 	file io.Reader,

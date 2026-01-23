@@ -38,15 +38,11 @@ public class AsyncRawEc2Client {
 
     public CompletableFuture<SeedMultiUrlEnvironmentHttpResponse<Void>> bootInstance(
             BootInstanceRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getEc2URL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getEc2URL())
                 .newBuilder()
                 .addPathSegments("ec2")
-                .addPathSegments("boot");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("boot")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -55,7 +51,7 @@ public class AsyncRawEc2Client {
             throw new SeedMultiUrlEnvironmentException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

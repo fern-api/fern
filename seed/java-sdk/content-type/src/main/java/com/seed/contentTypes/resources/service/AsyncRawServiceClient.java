@@ -43,14 +43,9 @@ public class AsyncRawServiceClient {
 
     public CompletableFuture<SeedContentTypesHttpResponse<Void>> patch(
             PatchProxyRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -60,7 +55,7 @@ public class AsyncRawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
@@ -144,15 +139,11 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedContentTypesHttpResponse<Void>> patchComplex(
             String id, PatchComplexRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("complex")
-                .addPathSegment(id);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegment(id)
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -162,7 +153,7 @@ public class AsyncRawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
@@ -214,15 +205,11 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedContentTypesHttpResponse<Void>> namedPatchWithMixed(
             String id, NamedMixedPatchRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("named-mixed")
-                .addPathSegment(id);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegment(id)
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -232,7 +219,7 @@ public class AsyncRawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
@@ -292,14 +279,10 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedContentTypesHttpResponse<Void>> optionalMergePatchTest(
             OptionalMergePatchRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("optional-merge-patch-test");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("optional-merge-patch-test")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -309,7 +292,7 @@ public class AsyncRawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
@@ -373,15 +356,11 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedContentTypesHttpResponse<Void>> regularPatch(
             String id, RegularPatchRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("regular")
-                .addPathSegment(id);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegment(id)
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -390,7 +369,7 @@ public class AsyncRawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

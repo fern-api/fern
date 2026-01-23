@@ -1,1 +1,0 @@
-export { SeedApiError } from "./SeedApiError";

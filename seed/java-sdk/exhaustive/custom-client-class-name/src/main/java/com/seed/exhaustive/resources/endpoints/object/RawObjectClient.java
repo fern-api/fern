@@ -47,15 +47,11 @@ public class RawObjectClient {
 
     public BestHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-optional-field");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("get-and-return-with-optional-field")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -64,7 +60,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -96,15 +92,11 @@ public class RawObjectClient {
 
     public BestHttpResponse<ObjectWithRequiredField> getAndReturnWithRequiredField(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-required-field");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("get-and-return-with-required-field")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -113,7 +105,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -145,15 +137,11 @@ public class RawObjectClient {
 
     public BestHttpResponse<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
             ObjectWithMapOfMap request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-map-of-map");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("get-and-return-with-map-of-map")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -162,7 +150,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -205,15 +193,11 @@ public class RawObjectClient {
 
     public BestHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-nested-with-optional-field");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("get-and-return-nested-with-optional-field")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -222,7 +206,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -255,16 +239,12 @@ public class RawObjectClient {
 
     public BestHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
             String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
                 .addPathSegments("get-and-return-nested-with-required-field")
-                .addPathSegment(string);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegment(string)
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -273,7 +253,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -306,15 +286,11 @@ public class RawObjectClient {
 
     public BestHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-nested-with-required-field-list");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("get-and-return-nested-with-required-field-list")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -323,7 +299,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

@@ -25,41 +25,6 @@ func (j *JustFileRequest) require(field *big.Int) {
 }
 
 var (
-	justFileWithOptionalQueryParamsRequestFieldMaybeString  = big.NewInt(1 << 0)
-	justFileWithOptionalQueryParamsRequestFieldMaybeInteger = big.NewInt(1 << 1)
-)
-
-type JustFileWithOptionalQueryParamsRequest struct {
-	MaybeString  *string   `json:"-" url:"maybeString,omitempty"`
-	MaybeInteger *int      `json:"-" url:"maybeInteger,omitempty"`
-	File         io.Reader `json:"-" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (j *JustFileWithOptionalQueryParamsRequest) require(field *big.Int) {
-	if j.explicitFields == nil {
-		j.explicitFields = big.NewInt(0)
-	}
-	j.explicitFields.Or(j.explicitFields, field)
-}
-
-// SetMaybeString sets the MaybeString field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (j *JustFileWithOptionalQueryParamsRequest) SetMaybeString(maybeString *string) {
-	j.MaybeString = maybeString
-	j.require(justFileWithOptionalQueryParamsRequestFieldMaybeString)
-}
-
-// SetMaybeInteger sets the MaybeInteger field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (j *JustFileWithOptionalQueryParamsRequest) SetMaybeInteger(maybeInteger *int) {
-	j.MaybeInteger = maybeInteger
-	j.require(justFileWithOptionalQueryParamsRequestFieldMaybeInteger)
-}
-
-var (
 	justFileWithQueryParamsRequestFieldMaybeString           = big.NewInt(1 << 0)
 	justFileWithQueryParamsRequestFieldInteger               = big.NewInt(1 << 1)
 	justFileWithQueryParamsRequestFieldMaybeInteger          = big.NewInt(1 << 2)

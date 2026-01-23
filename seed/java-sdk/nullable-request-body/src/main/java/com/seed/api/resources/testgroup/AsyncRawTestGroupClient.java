@@ -16,7 +16,6 @@ import com.seed.api.errors.UnprocessableEntityError;
 import com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;
 import com.seed.api.types.PlainObject;
 import java.io.IOException;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -34,23 +33,6 @@ public class AsyncRawTestGroupClient {
 
     public AsyncRawTestGroupClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-    }
-
-    /**
-     * Post a nullable request body
-     */
-    public CompletableFuture<SeedApiHttpResponse<Object>> testMethodName(String pathParam, Optional<PlainObject> body) {
-        return testMethodName(
-                pathParam, TestMethodNameTestGroupRequest.builder().body(body).build());
-    }
-
-    /**
-     * Post a nullable request body
-     */
-    public CompletableFuture<SeedApiHttpResponse<Object>> testMethodName(
-            String pathParam, Optional<PlainObject> body, RequestOptions requestOptions) {
-        return testMethodName(
-                pathParam, TestMethodNameTestGroupRequest.builder().body(body).build(), requestOptions);
     }
 
     /**
@@ -80,11 +62,6 @@ public class AsyncRawTestGroupClient {
                     "query_param_integer",
                     request.getQueryParamInteger().get(),
                     false);
-        }
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
         }
         RequestBody body;
         try {

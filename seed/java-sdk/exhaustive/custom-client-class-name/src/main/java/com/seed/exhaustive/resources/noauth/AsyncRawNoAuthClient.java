@@ -44,14 +44,10 @@ public class AsyncRawNoAuthClient {
      * POST request with no auth
      */
     public CompletableFuture<BestHttpResponse<Boolean>> postWithNoAuth(Object request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("no-auth");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("no-auth")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -60,7 +56,7 @@ public class AsyncRawNoAuthClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

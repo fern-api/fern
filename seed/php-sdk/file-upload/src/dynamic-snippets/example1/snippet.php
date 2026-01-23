@@ -4,7 +4,6 @@ namespace Example;
 
 use Seed\SeedClient;
 use Seed\Service\Requests\OptionalArgsRequest;
-use Seed\Utils\File;
 
 $client = new SeedClient(
     options: [
@@ -12,7 +11,5 @@ $client = new SeedClient(
     ],
 );
 $client->service->optionalArgs(
-    new OptionalArgsRequest([
-        'imageFile' => File::createFromString("example_image_file", "example_image_file"),
-    ]),
+    new OptionalArgsRequest([]),
 );

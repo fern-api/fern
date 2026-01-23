@@ -49,12 +49,4 @@ public class SeedOauthClientCredentialsReferenceClient {
             String clientId, String clientSecret) {
         return SeedOauthClientCredentialsReferenceClientBuilder.withCredentials(clientId, clientSecret);
     }
-
-    /**
-     * Creates a new client builder.
-     * @return A builder for configuring and creating the client
-     */
-    public static SeedOauthClientCredentialsReferenceClientBuilder._Builder builder() {
-        return SeedOauthClientCredentialsReferenceClientBuilder.builder();
-    }
 }

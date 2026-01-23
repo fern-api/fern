@@ -52,14 +52,10 @@ public class AsyncRawOptionalClient {
 
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> sendOptionalBody(
             Optional<Map<String, Object>> request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("send-optional-body");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("send-optional-body")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -71,7 +67,7 @@ public class AsyncRawOptionalClient {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -127,14 +123,10 @@ public class AsyncRawOptionalClient {
 
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> sendOptionalTypedBody(
             Optional<SendOptionalBodyRequest> request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("send-optional-typed-body");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("send-optional-typed-body")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -146,7 +138,7 @@ public class AsyncRawOptionalClient {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -220,17 +212,13 @@ public class AsyncRawOptionalClient {
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>>
             sendOptionalNullableWithAllOptionalProperties(
                     String actionId, String id, Optional<DeployParams> request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("deploy")
                 .addPathSegment(actionId)
                 .addPathSegments("versions")
-                .addPathSegment(id);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegment(id)
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -242,7 +230,7 @@ public class AsyncRawOptionalClient {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

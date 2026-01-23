@@ -34,15 +34,11 @@ public class RawS3Client {
 
     public SeedMultiUrlEnvironmentHttpResponse<String> getPresignedUrl(
             GetPresignedUrlRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getS3URL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getS3URL())
                 .newBuilder()
                 .addPathSegments("s3")
-                .addPathSegments("presigned-url");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegments("presigned-url")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -51,7 +47,7 @@ public class RawS3Client {
             throw new SeedMultiUrlEnvironmentException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

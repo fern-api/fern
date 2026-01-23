@@ -39,17 +39,13 @@ public class AsyncRawServiceClient {
 
     public CompletableFuture<SeedMixedCaseHttpResponse<Resource>> getResource(
             String resourceId, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("resource")
-                .addPathSegment(resourceId);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
+                .addPathSegment(resourceId)
+                .build();
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -97,11 +93,6 @@ public class AsyncRawServiceClient {
                 .addPathSegments("resource");
         QueryStringMapper.addQueryParameter(httpUrl, "page_limit", request.getPageLimit(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "beforeDate", request.getBeforeDate(), false);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
