@@ -1,7 +1,7 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 
@@ -31,7 +31,8 @@ export async function generateAPIWorkspaces({
     inspect,
     lfsOverride,
     fernignorePath,
-    dynamicIrOnly
+    dynamicIrOnly,
+    outputDir
 }: {
     project: Project;
     cliContext: CliContext;
@@ -48,6 +49,7 @@ export async function generateAPIWorkspaces({
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
+    outputDir: string | undefined;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -113,7 +115,9 @@ export async function generateAPIWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const absolutePathToPreview = preview
-                    ? join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
+                    ? outputDir != null
+                        ? AbsoluteFilePath.of(resolve(cwd(), outputDir))
+                        : join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
                     : undefined;
 
                 if (absolutePathToPreview != null) {
