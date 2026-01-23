@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, text } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -111,8 +111,8 @@ export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
     }
 
     private convertToCSharpFriendlyJsonString(jsonObject: unknown): string {
-        // Convert object to JSON string with indentation
-        const jsonString = JSON.stringify(jsonObject, null, 2);
+        // Convert object to JSON string with indentation, normalizing dates for consistency
+        const jsonString = JSON.stringify(jsonObject, text.normalizeDates, 2);
 
         // Format it as a multi-line C# string
         return `"""
