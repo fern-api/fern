@@ -36,7 +36,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.23"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

@@ -104,7 +104,7 @@
     "@fern-fern/ir-v7-model": "0.0.2",
     "@fern-fern/ir-v8-model": "0.0.1",
     "@fern-fern/ir-v9-model": "0.0.1",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.23"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

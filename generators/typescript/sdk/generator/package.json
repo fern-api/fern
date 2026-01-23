@@ -56,7 +56,7 @@
     "@fern-typescript/type-reference-example-generator": "workspace:*",
     "@fern-typescript/type-schema-generator": "workspace:*",
     "@fern-typescript/websocket-type-schema-generator": "workspace:*",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "ts-morph": "^27.0.2",
     "ts-poet": "^6.7.0"
   },

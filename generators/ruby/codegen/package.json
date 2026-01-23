@@ -34,7 +34,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^39",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "url-join": "^5.0.0",
     "zod": "^3.22.3"
   },

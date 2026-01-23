@@ -49,7 +49,7 @@
     "dedent": "^1.5.1",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "prettier": "^3.4.2",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"

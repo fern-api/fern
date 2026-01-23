@@ -34,7 +34,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/v3-importer-commons": "workspace:*",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "openapi-types": "^12.1.3",
     "zod": "^3.22.3"
   },

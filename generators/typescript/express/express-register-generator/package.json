@@ -35,7 +35,7 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "ts-morph": "^27.0.2"
   },
   "devDependencies": {
