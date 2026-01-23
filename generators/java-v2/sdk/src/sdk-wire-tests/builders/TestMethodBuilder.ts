@@ -182,9 +182,7 @@ export class TestMethodBuilder {
                             expectedRequestJson
                         );
                         writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
-                        writer.writeLine(
-                            `String expectedRequestBody = TestResources.loadResource("${resourcePath}");`
-                        );
+                        writer.writeLine(`String expectedRequestBody = TestResources.loadResource("${resourcePath}");`);
                     } else {
                         this.jsonValidator.formatMultilineJson(writer, "expectedRequestBody", expectedRequestJson);
                     }

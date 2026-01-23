@@ -19,7 +19,9 @@ export class JsonValidator {
     public shouldUseResourceFile(jsonData: unknown): boolean {
         const json = JSON.stringify(jsonData, null, 2);
         const lines = json.split("\n").length;
-        return lines > JsonValidator.INLINE_JSON_THRESHOLD_LINES || json.length > JsonValidator.INLINE_JSON_THRESHOLD_BYTES;
+        return (
+            lines > JsonValidator.INLINE_JSON_THRESHOLD_LINES || json.length > JsonValidator.INLINE_JSON_THRESHOLD_BYTES
+        );
     }
 
     /**
