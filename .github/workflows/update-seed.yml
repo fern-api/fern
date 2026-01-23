@@ -60,26 +60,22 @@ jobs:
       selected-language: ${{ steps.set-language-filter.outputs.selected-language }}
       commit-on-failure: ${{ steps.set-commit-on-failure.outputs.commit-on-failure }}
     steps:
-      # Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
+      # TEST BRANCH: Force PR creation path for testing ACTIONS_PAT token fix
+      # Original logic: Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
       - name: Set update options
         id: set-update-options
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
+          # For workflow_dispatch, check if skip-scripts checkbox is checked
+          # For push events, default to false
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.skip-scripts }}" == "true" ]]; then
             echo "skip-scripts=true" >> $GITHUB_OUTPUT
-            echo "update-by-push=true" >> $GITHUB_OUTPUT
-            echo "update-by-pr=false" >> $GITHUB_OUTPUT
           else
-            # For workflow_dispatch, check if skip-scripts checkbox is checked
-            # For push events, default to false
-            if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.skip-scripts }}" == "true" ]]; then
-              echo "skip-scripts=true" >> $GITHUB_OUTPUT
-            else
-              echo "skip-scripts=false" >> $GITHUB_OUTPUT
-            fi
-            echo "update-by-push=false" >> $GITHUB_OUTPUT
-            echo "update-by-pr=true" >> $GITHUB_OUTPUT
+            echo "skip-scripts=false" >> $GITHUB_OUTPUT
           fi
+          # Force PR creation path for testing
+          echo "update-by-push=false" >> $GITHUB_OUTPUT
+          echo "update-by-pr=true" >> $GITHUB_OUTPUT
 
       - name: Set language filter
         id: set-language-filter
@@ -1250,14 +1246,13 @@ jobs:
           fetch: false
           message: "Automated update of seed files"
 
-  # Verify that the branch is the default branch (running for PR to main)
+  # TEST BRANCH: Removed github.ref == 'refs/heads/main' check to allow testing from non-main branches
   # Always run this job to create PRs for generators that succeeded, even if some seed runs fail.
   # Each matrix job will only create a PR if its corresponding seed-update job produced patches.
   commit-seed-changes-by-pr:
     if: >-
       ${{
         always() && !cancelled() &&
-        github.ref == 'refs/heads/main' &&
         needs.setup.outputs.update-by-pr == 'true'
       }}
     needs:
