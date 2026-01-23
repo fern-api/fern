@@ -1,10 +1,11 @@
 import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 
 export class Context {
     private logLevel: LogLevel;
     private ttyAwareLogger: TtyAwareLogger;
-    public readonly cwd: string;
+    public readonly cwd: AbsoluteFilePath;
     public readonly stdout: Logger;
     public readonly stderr: Logger;
 
@@ -16,10 +17,10 @@ export class Context {
     }: {
         stdout: NodeJS.WriteStream;
         stderr: NodeJS.WriteStream;
-        cwd?: string;
+        cwd?: AbsoluteFilePath;
         logLevel?: LogLevel;
     }) {
-        this.cwd = cwd ?? process.cwd();
+        this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
