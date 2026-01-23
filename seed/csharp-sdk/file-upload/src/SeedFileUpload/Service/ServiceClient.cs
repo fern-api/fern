@@ -252,6 +252,47 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
+    public async Task JustFileWithOptionalQueryParamsAsync(
+        JustFileWithOptionalQueryParamsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.MaybeString != null)
+        {
+            _query["maybeString"] = request.MaybeString;
+        }
+        if (request.MaybeInteger != null)
+        {
+            _query["maybeInteger"] = request.MaybeInteger.Value.ToString();
+        }
+        var multipartFormRequest_ = new MultipartFormRequest
+        {
+            BaseUrl = _client.Options.BaseUrl,
+            Method = HttpMethod.Post,
+            Path = "/just-file-with-optional-query-params",
+            Query = _query,
+            Options = options,
+        };
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
+        var response = await _client
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedFileUploadApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     public async Task WithContentTypeAsync(
         WithContentTypeRequest request,
         RequestOptions? options = null,
