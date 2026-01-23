@@ -4,7 +4,6 @@ import { cp, mkdir, rm, stat, writeFile } from "fs/promises";
 import path from "path";
 import { getGithubConfig, getPackageOutputConfig, loadCustomConfig, writeGeneratorsYml } from "./configuration";
 import {
-    DEFINITION_DIRECTORY_NAME,
     DIFF_COMMAND,
     DIFF_RECURSIVE_FLAG,
     ERROR_DIFF_COMMAND_FAILED,
@@ -38,8 +37,7 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<Test
     await mkdir(workingDirectory, { recursive: true });
 
     const fernDirectory = path.join(workingDirectory, FERN_DIRECTORY_NAME);
-    const definitionDirectory = path.join(fernDirectory, DEFINITION_DIRECTORY_NAME);
-    await mkdir(definitionDirectory, { recursive: true });
+    await mkdir(fernDirectory, { recursive: true });
 
     // Write fern.config.json
     logger.debug(`Writing fern.config.json`);
@@ -48,17 +46,16 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<Test
         JSON.stringify({ organization: "fern", version: "*" }, null, 2)
     );
 
-    // Copy fixture api definition
+    // Copy entire fixture directory (includes definition/, proto/, openapi/, etc.)
     const fixtureSource = path.join(
         fernRepoDirectory,
         TEST_DEFINITIONS_RELATIVE_PATH,
         FERN_DIRECTORY_NAME,
         "apis",
-        fixture,
-        DEFINITION_DIRECTORY_NAME
+        fixture
     );
-    logger.debug(`Copying fixture definition from ${fixtureSource}`);
-    await cp(fixtureSource, definitionDirectory, { recursive: true });
+    logger.debug(`Copying fixture from ${fixtureSource}`);
+    await cp(fixtureSource, fernDirectory, { recursive: true });
 
     // Get generator versions from pre-fetched maps
     const generatorName = GeneratorNameFromNickname[generator];
