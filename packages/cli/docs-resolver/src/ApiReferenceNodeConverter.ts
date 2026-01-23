@@ -111,13 +111,17 @@ export class ApiReferenceNodeConverter {
             this.#idgen
         ).orUndefined();
 
-        // When flattened and no explicit overview, inherit the first child's overview page (e.g., tag description).
-        // This mirrors the section inheritance logic in DocsDefinitionResolver.toSectionNode.
+        // When flattened and no explicit overview, inherit the first apiPackage child's overview page (e.g., tag description).
+        // We search through all children to find an apiPackage with an overviewPageId, rather than assuming
+        // the first child is an apiPackage (which may not be true when endpoints are explicitly listed in the layout).
         let overviewPageId = this.#overviewPageId;
-        if (overviewPageId == null && this.apiSection.flattened && this.#children.length > 0) {
-            const firstChild = this.#children[0];
-            if (firstChild?.type === "apiPackage" && firstChild.overviewPageId != null) {
-                overviewPageId = firstChild.overviewPageId;
+        if (overviewPageId == null && this.apiSection.flattened) {
+            const apiPackageWithOverview = this.#children.find(
+                (child): child is FernNavigation.V1.ApiPackageNode =>
+                    child.type === "apiPackage" && child.overviewPageId != null
+            );
+            if (apiPackageWithOverview != null) {
+                overviewPageId = apiPackageWithOverview.overviewPageId;
             }
         }
 

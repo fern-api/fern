@@ -1522,11 +1522,16 @@ The generated documentation will replace this placeholder page with complete API
         );
 
         // If the section has no overview page and contains a flattened API reference with an overview page,
-        // inherit the API reference's overview page for the section (e.g., tag description page)
-        if (pageId == null && children.length > 0) {
-            const firstChild = children[0];
-            if (firstChild?.type === "apiReference" && firstChild.hideTitle && firstChild.overviewPageId != null) {
-                pageId = firstChild.overviewPageId;
+        // inherit the API reference's overview page for the section (e.g., tag description page).
+        // We search through all children to find a flattened API reference, rather than assuming
+        // the first child is an API reference (which may not be true for all section configurations).
+        if (pageId == null) {
+            const flattenedApiRef = children.find(
+                (child): child is FernNavigation.V1.ApiReferenceNode =>
+                    child.type === "apiReference" && child.hideTitle === true && child.overviewPageId != null
+            );
+            if (flattenedApiRef != null) {
+                pageId = flattenedApiRef.overviewPageId;
             }
         }
 
