@@ -36,6 +36,11 @@ public class RawPackageClient {
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
         QueryStringMapper.addQueryParameter(httpUrl, "for", request.getFor(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
