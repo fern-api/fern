@@ -74,9 +74,6 @@ export class ApiReferenceNodeConverter {
         if (this.#overviewPageId == null && this.apiSection.tagDescriptionPages && this.openApiTags) {
             const tagKey = camelCase(this.apiSection.title);
             const tagInfo = this.openApiTags[tagKey];
-            this.taskContext.logger.debug(
-                `[tag-description-pages] Looking up API section "${this.apiSection.title}" (key: "${tagKey}") for overview. Found: ${tagInfo != null}`
-            );
             if (tagInfo?.description) {
                 const relativeFilePath = `tag-${tagKey}.md`;
                 const virtualAbsolutePath = AbsoluteFilePath.of(`/${relativeFilePath}`);
@@ -186,9 +183,6 @@ export class ApiReferenceNodeConverter {
 
         // Check if this subpackage corresponds to a tag with description
         const tagInfo = this.openApiTags[subpackageName];
-        this.taskContext.logger.debug(
-            `[tag-description-pages] Looking up subpackage "${subpackageName}" in openApiTags. Found: ${tagInfo != null}. Available keys: ${Object.keys(this.openApiTags).join(", ")}`
-        );
         if (!tagInfo || !tagInfo.description) {
             return undefined;
         }

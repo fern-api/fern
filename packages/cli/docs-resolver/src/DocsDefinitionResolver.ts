@@ -1227,11 +1227,6 @@ export class DocsDefinitionResolver {
                                 { id: String(tag.id), description: tag.description }
                             ])
                     );
-                    this.taskContext.logger.debug(
-                        `[tag-description-pages] Extracted ${Object.keys(openApiTags).length} tags with descriptions: ${Object.keys(openApiTags).join(", ")}`
-                    );
-                } else {
-                    this.taskContext.logger.debug("[tag-description-pages] No tags found in OpenAPI IR");
                 }
             } catch (error) {
                 this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
@@ -1532,9 +1527,6 @@ The generated documentation will replace this placeholder page with complete API
             const firstChild = children[0];
             if (firstChild?.type === "apiReference" && firstChild.hideTitle && firstChild.overviewPageId != null) {
                 pageId = firstChild.overviewPageId;
-                this.taskContext.logger.debug(
-                    `[tag-description-pages] Section "${item.title}" inheriting overview page from flattened API reference: ${pageId}`
-                );
             }
         }
 
