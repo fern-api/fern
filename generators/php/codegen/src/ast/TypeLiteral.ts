@@ -117,7 +117,11 @@ export class TypeLiteral extends AstNode {
             }
             case "file": {
                 writer.writeNode(
-                    buildFileFromString({ writer, value: this.internalType.value, namespace: this.internalType.namespace })
+                    buildFileFromString({
+                        writer,
+                        value: this.internalType.value,
+                        namespace: this.internalType.namespace
+                    })
                 );
                 break;
             }
