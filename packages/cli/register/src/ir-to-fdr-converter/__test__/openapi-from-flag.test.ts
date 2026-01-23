@@ -3002,8 +3002,6 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrWithoutOverride).toMatchFileSnapshot(
             "__snapshots__/multi-api-folder-name-fdr-no-override.snap"
         );
-        await expect(fdrWithOverride).toMatchFileSnapshot(
-            "__snapshots__/multi-api-folder-name-fdr-with-override.snap"
-        );
+        await expect(fdrWithOverride).toMatchFileSnapshot("__snapshots__/multi-api-folder-name-fdr-with-override.snap");
     });
 });
