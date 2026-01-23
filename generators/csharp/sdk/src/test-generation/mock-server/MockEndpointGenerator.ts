@@ -165,19 +165,132 @@ export class MockEndpointGenerator extends WithGeneration {
 
     /**
      * Filters out read-only properties from an example request body.
-     * Uses the example's type information to properly traverse nested types.
+     * Uses the jsonExample directly to preserve any modifications made by other code
+     * (e.g., OAuth credential placeholders set by deepSetProperty).
+     * Only filters out read-only properties when necessary.
      */
     private filterReadOnlyPropertiesFromExample(exampleRequest: ExampleRequestBody): unknown {
         if (exampleRequest.type === "inlinedRequestBody") {
             return this.filterInlinedRequestBody(exampleRequest);
         } else {
             // exampleRequest.type === "reference"
-            return this.filterExampleTypeReference(exampleRequest);
+            // For reference request bodies, use the jsonExample directly to preserve
+            // any modifications made by other code (e.g., deepSetProperty for OAuth credentials).
+            // We still need to filter out read-only properties if the referenced type has any.
+            return this.filterReferenceRequestBody(exampleRequest);
+        }
+    }
+
+    /**
+     * Filters read-only properties from a reference request body.
+     * For types with read-only properties (directly or in nested types), uses recursive filtering.
+     * For types without read-only properties, returns jsonExample directly to preserve any modifications.
+     */
+    private filterReferenceRequestBody(exampleRequest: ExampleRequestBody.Reference): unknown {
+        // Check if this type or any nested types have read-only properties
+        // If not, return the jsonExample directly to preserve any modifications (e.g., OAuth credentials)
+        if (!this.typeHasReadOnlyProperties(exampleRequest.shape)) {
+            return exampleRequest.jsonExample;
+        }
+
+        // Otherwise, use recursive filtering to remove read-only properties
+        return this.filterExampleTypeReference(exampleRequest);
+    }
+
+    /**
+     * Checks if a type or any of its nested types have read-only properties.
+     */
+    private typeHasReadOnlyProperties(shape: ExampleTypeReference["shape"]): boolean {
+        switch (shape.type) {
+            case "primitive":
+            case "unknown":
+                return false;
+
+            case "container":
+                return this.containerHasReadOnlyProperties(shape.container);
+
+            case "named":
+                return this.namedTypeHasReadOnlyProperties(shape);
+        }
+    }
+
+    /**
+     * Checks if a container type has read-only properties in its nested types.
+     */
+    private containerHasReadOnlyProperties(
+        container:
+            | { type: "list"; list: ExampleTypeReference[] }
+            | { type: "set"; set: ExampleTypeReference[] }
+            | { type: "optional"; optional: ExampleTypeReference | undefined }
+            | { type: "nullable"; nullable: ExampleTypeReference | undefined }
+            | { type: "map"; map: Array<{ key: ExampleTypeReference; value: ExampleTypeReference }> }
+            | { type: "literal"; literal: unknown }
+    ): boolean {
+        switch (container.type) {
+            case "list":
+                return container.list.some((item) => this.typeHasReadOnlyProperties(item.shape));
+
+            case "set":
+                return container.set.some((item) => this.typeHasReadOnlyProperties(item.shape));
+
+            case "optional":
+                return container.optional != null && this.typeHasReadOnlyProperties(container.optional.shape);
+
+            case "nullable":
+                return container.nullable != null && this.typeHasReadOnlyProperties(container.nullable.shape);
+
+            case "map":
+                return container.map.some((entry) => this.typeHasReadOnlyProperties(entry.value.shape));
+
+            case "literal":
+                return false;
+        }
+    }
+
+    /**
+     * Checks if a named type has read-only properties.
+     */
+    private namedTypeHasReadOnlyProperties(namedShape: {
+        type: "named";
+        typeName: { typeId: TypeId };
+        shape:
+            | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
+            | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
+            | { type: "enum"; value: { wireValue: string } }
+            | { type: "alias"; value: ExampleTypeReference }
+            | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
+    }): boolean {
+        const typeId = namedShape.typeName.typeId;
+        const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
+        const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
+
+        // If this type has read-only properties, return true
+        if (readOnlyNames.size > 0) {
+            return true;
+        }
+
+        // Check nested types
+        const innerShape = namedShape.shape;
+        switch (innerShape.type) {
+            case "object":
+                return innerShape.properties.some((prop) => this.typeHasReadOnlyProperties(prop.value.shape));
+
+            case "alias":
+                return this.typeHasReadOnlyProperties(innerShape.value.shape);
+
+            case "enum":
+                return false;
+
+            case "union":
+            case "undiscriminatedUnion":
+                // For unions, we'd need to check all variants, but for simplicity, assume no read-only properties
+                return false;
         }
     }
 
     /**
      * Filters read-only properties from an inlined request body.
+     * Recursively filters read-only properties from nested objects.
      */
     private filterInlinedRequestBody(exampleRequest: ExampleRequestBody.InlinedRequestBody): Record<string, unknown> {
         const result: Record<string, unknown> = {};
@@ -246,6 +359,11 @@ export class MockEndpointGenerator extends WithGeneration {
                 return exampleTypeRef.jsonExample;
 
             case "container":
+                // For literal containers, just return the jsonExample value directly
+                // since the literal value is already the correct wire value
+                if (shape.container.type === "literal") {
+                    return exampleTypeRef.jsonExample;
+                }
                 return this.filterContainerExample(shape.container);
 
             case "named":
