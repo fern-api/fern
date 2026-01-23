@@ -76,9 +76,20 @@ export abstract class BaseType extends AstNode {
     /**
      * Wraps this type in an Optional type if it's not already optional.
      * If this type is already optional, returns it unchanged.
+     * Semantically represents: field can be omitted from JSON.
      */
     public asOptional(): Type {
         return new Optional(this, this.generation);
+    }
+
+    /**
+     * Wraps this type in a Nullable type if it's not already nullable.
+     * If this type is already nullable, returns it unchanged.
+     * Semantically represents: value can be null.
+     * Note: In C#, both optional and nullable use the same ? syntax.
+     */
+    public asNullable(): Type {
+        return new Nullable(this, this.generation);
     }
 
     /**
@@ -214,6 +225,66 @@ export class Optional extends ReferenceType {
         return this;
     }
 
+    public override asNullable(): Type {
+        return this;
+    }
+
+    public override asNonOptional(): Type {
+        return this.value;
+    }
+
+    public override write(writer: Writer): void {
+        this.value.write(writer);
+        if (!this.value.isOptional) {
+            writer.write("?");
+        }
+    }
+}
+
+/**
+ * Represents a nullable type in C#.
+ * This renders as T? where T is the inner type.
+ * Semantically represents: value can be null.
+ */
+export class Nullable extends ReferenceType {
+    public override readonly isOptional = true;
+
+    /**
+     * The underlying non-nullable type.
+     */
+    public readonly value: Type;
+
+    /**
+     * Creates a new nullable type.
+     * @param value - The underlying non-nullable type
+     * @param generation - The generation context for code generation
+     */
+    constructor(value: Type, generation: Generation) {
+        super(generation);
+        this.value = value;
+    }
+
+    public override get isCollection(): boolean {
+        return false;
+    }
+
+    public override get multipartMethodName(): string | null {
+        return this.value.multipartMethodName;
+    }
+
+    public override get multipartMethodNameForCollection(): string | null {
+        return this.value.multipartMethodNameForCollection;
+    }
+
+    public override asOptional(): Type {
+        // If we make a nullable type optional, it's still just nullable
+        return this;
+    }
+
+    public override asNullable(): Type {
+        return this;
+    }
+
     public override asNonOptional(): Type {
         return this.value;
     }
@@ -262,6 +333,10 @@ export class OptionalWrapper extends ReferenceType {
     }
 
     public override asOptional(): Type {
+        return this;
+    }
+
+    public override asNullable(): Type {
         return this;
     }
 

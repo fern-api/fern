@@ -27,7 +27,7 @@ public record Metadata : IJsonOnDeserialized
     public required Status Status { get; set; }
 
     [JsonPropertyName("values")]
-    public Dictionary<string, string>? Values { get; set; }
+    public Dictionary<string, string?>? Values { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

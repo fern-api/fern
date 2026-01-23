@@ -60,7 +60,7 @@ public record ComplexProfile : IJsonOnDeserialized
     public IEnumerable<string>? OptionalNullableArray { get; set; }
 
     [JsonPropertyName("nullableListOfNullables")]
-    public IEnumerable<string>? NullableListOfNullables { get; set; }
+    public IEnumerable<string?>? NullableListOfNullables { get; set; }
 
     [JsonPropertyName("nullableMapOfNullables")]
     public Dictionary<string, Address>? NullableMapOfNullables { get; set; }
