@@ -6,4 +6,5 @@ export { OutputSchema } from "./OutputSchema";
 export { PublishSchema } from "./PublishSchema";
 export { ReadmeSchema } from "./ReadmeSchema";
 export { SdksSchema } from "./SdksSchema";
+export { SdkTargetLanguageSchema } from "./SdkTargetLanguageSchema";
 export { SdkTargetSchema } from "./SdkTargetSchema";

@@ -44,6 +44,8 @@
         },
         "usernameEnvVar": "MY_USERNAME",
         "passwordEnvVar": "MY_PaSSwoOD",
+        "usernameOmit": false,
+        "passwordOmit": false,
         "type": "basic"
       }
     ]

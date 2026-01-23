@@ -20,7 +20,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "Successfully created user",
             "path": "/user",
             "pathParameters": {},
             "queryParameters": {},
@@ -278,6 +278,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [

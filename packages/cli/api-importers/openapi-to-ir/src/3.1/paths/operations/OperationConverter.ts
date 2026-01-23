@@ -199,8 +199,7 @@ export class OperationConverter extends AbstractOperationConverter {
             sdkRequest: undefined,
             errors,
             auth: this.computeEndpointAuth(),
-            security:
-                this.operation.security ?? this.context.spec.security ?? this.getDefaultSecurityFromAuthOverrides(),
+            security: this.computeEndpointSecurity(),
             availability: this.context.getAvailability({
                 node: this.operation,
                 breadcrumbs: this.breadcrumbs
@@ -483,6 +482,21 @@ export class OperationConverter extends AbstractOperationConverter {
         );
     }
 
+    private computeEndpointSecurity(): OpenAPIV3_1.SecurityRequirementObject[] | undefined {
+        // If endpoint explicitly has no auth (empty security array), respect that
+        if (this.operation.security != null && this.operation.security.length === 0) {
+            return [];
+        }
+
+        // When auth overrides are specified, use them instead of OpenAPI security
+        if (this.context.authOverrides?.auth != null) {
+            return this.getDefaultSecurityFromAuthOverrides();
+        }
+
+        // Fall back to OpenAPI security
+        return this.operation.security ?? this.context.spec.security;
+    }
+
     /**
      * Converts security scheme IDs to HTTP headers
      * @param securitySchemeIds - List of security scheme IDs
@@ -508,17 +522,29 @@ export class OperationConverter extends AbstractOperationConverter {
             return undefined;
         }
 
-        // The auth field from generators.yml contains the scheme name (e.g., "bearerAuth")
-        // Convert this to OpenAPI security requirement format
-        const authSchemeName = this.context.authOverrides.auth;
-        if (typeof authSchemeName !== "string") {
-            return undefined;
+        const authConfig = this.context.authOverrides.auth;
+
+        // Handle string auth (single scheme)
+        if (typeof authConfig === "string") {
+            const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
+            securityRequirement[authConfig] = [];
+            return [securityRequirement];
         }
 
-        // Return OpenAPI security requirement format: [{ "schemeName": [] }]
-        const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
-        securityRequirement[authSchemeName] = [];
-        return [securityRequirement];
+        // Handle "any" auth (OR semantics - each scheme in its own array element)
+        if (typeof authConfig === "object" && "any" in authConfig) {
+            const anySchemes = authConfig.any;
+            if (Array.isArray(anySchemes)) {
+                return anySchemes.map((scheme) => {
+                    const schemeName = typeof scheme === "string" ? scheme : scheme.scheme;
+                    const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
+                    securityRequirement[schemeName] = [];
+                    return securityRequirement;
+                });
+            }
+        }
+
+        return undefined;
     }
 
     private authSchemeToHeaders(securitySchemeIds: string[]): FernIr.HttpHeader[] {
@@ -709,6 +735,13 @@ export class OperationConverter extends AbstractOperationConverter {
         );
     }
 
+    /**
+     * Gets the example name from x-fern-examples extension.
+     *
+     * Note: This uses the 'name' field directly without collision
+     * disambiguation. This is intentional because x-fern-examples is a
+     * Fern-specific extension where users explicitly provide unique names.
+     */
     private getExampleName({
         example,
         exampleIndex
