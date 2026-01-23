@@ -1251,14 +1251,14 @@ jobs:
           message: "Automated update of seed files"
 
   # Verify that the branch is the default branch (running for PR to main)
-  # By default, block on failures. If commit-on-failure is true, continue even if some seed runs fail.
+  # Always run this job to create PRs for generators that succeeded, even if some seed runs fail.
+  # Each matrix job will only create a PR if its corresponding seed-update job produced patches.
   commit-seed-changes-by-pr:
     if: >-
       ${{
         always() && !cancelled() &&
         github.ref == 'refs/heads/main' &&
-        needs.setup.outputs.update-by-pr == 'true' &&
-        (needs.setup.outputs.commit-on-failure == 'true' || (!contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')))
+        needs.setup.outputs.update-by-pr == 'true'
       }}
     needs:
       [
