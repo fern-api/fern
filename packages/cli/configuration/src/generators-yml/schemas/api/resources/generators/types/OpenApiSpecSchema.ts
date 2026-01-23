@@ -7,7 +7,7 @@ import * as GeneratorsYml from "../../../index";
 export interface OpenApiSpecSchema {
     openapi: string;
     origin?: string;
-    overrides?: string;
+    overrides?: GeneratorsYml.OverridesSchema;
     overlays?: string;
     namespace?: string;
     settings?: GeneratorsYml.OpenApiSettingsSchema;

@@ -1,4 +1,5 @@
 import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
+import { generatorsYml } from "@fern-api/configuration";
 import { DEFINITION_DIRECTORY, loadDependenciesConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -35,12 +36,15 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         { context }: { context?: TaskContext },
         settings?: OSSWorkspace.Settings
     ): Promise<FernDefinition> {
-        return (await this.toFernWorkspace({ context }, settings)).definition;
+        const defaultedContext = context || this.context;
+        return (await this.toFernWorkspace({ context: defaultedContext }, settings)).definition;
     }
 
     public async toFernWorkspace(
-        { context }: { context?: TaskContext },
-        settings?: OSSWorkspace.Settings
+        { context }: { context: TaskContext },
+        settings?: OSSWorkspace.Settings,
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
+        generatorOverrides?: generatorsYml.OverridesSchema
     ): Promise<FernWorkspace> {
         const key = hash(settings ?? {});
         let workspace = this.fernWorkspaces[key];
