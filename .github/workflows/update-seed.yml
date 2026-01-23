@@ -378,7 +378,7 @@ jobs:
           fi
 
   ruby-model-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -411,7 +411,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   ruby-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -445,7 +445,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   ruby-sdk-v2-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -513,7 +513,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   python-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -683,7 +683,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-model-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -717,7 +717,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-spring-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -751,7 +751,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   typescript-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -785,7 +785,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   typescript-express-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -819,7 +819,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-fiber-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -853,7 +853,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-model-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -887,7 +887,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -921,7 +921,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   csharp-model-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -955,7 +955,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   csharp-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -989,7 +989,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   php-model-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -1023,7 +1023,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   php-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -1057,7 +1057,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   swift-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -1125,7 +1125,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   rust-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
