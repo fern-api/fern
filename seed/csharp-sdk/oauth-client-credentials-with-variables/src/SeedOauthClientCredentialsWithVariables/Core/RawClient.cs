@@ -284,43 +284,73 @@ internal partial class RawClient(ClientOptions clientOptions)
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
 
+        // Use pre-built query string if available (from QueryStringBuilder.Builder)
+        if (!string.IsNullOrEmpty(request.QueryString))
+        {
+            return url
+                + GetQueryStringWithAdditionalParameters(
+                    request.QueryString,
+                    request.Options?.AdditionalQueryParameters
+                );
+        }
+
+        // Fall back to dictionary-based query parameters (legacy)
         var queryParameters = GetQueryParameters(request);
         if (!queryParameters.Any())
             return url;
 
-        url += "?";
-        url = queryParameters.Aggregate(
-            url,
-            (current, queryItem) =>
-            {
-                if (
-                    queryItem.Value
-                    is global::System.Collections.IEnumerable collection
-                        and not string
-                )
-                {
-                    var items = collection
-                        .Cast<object>()
-                        .Select(value =>
-                            $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(value?.ToString() ?? "")}"
-                        )
-                        .ToList();
-                    if (items.Any())
-                    {
-                        current += string.Join("&", items) + "&";
-                    }
-                }
-                else
-                {
-                    current +=
-                        $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(queryItem.Value)}&";
-                }
+        return url + QueryStringBuilder.Build(queryParameters);
+    }
 
-                return current;
-            }
+    private static string GetQueryStringWithAdditionalParameters(
+        string queryString,
+        IEnumerable<KeyValuePair<string, string>>? additionalQueryParameters
+    )
+    {
+        if (additionalQueryParameters is null || !additionalQueryParameters.Any())
+        {
+            return queryString;
+        }
+
+        // Parse existing query string, remove keys that will be overridden, then add additional params
+        var existingParams = ParseQueryString(queryString);
+        var additionalKeys = new HashSet<string>(
+            additionalQueryParameters.Select(p => p.Key).Distinct()
         );
-        url = url[..^1];
-        return url;
+        var filteredParams = existingParams.Where(kv => !additionalKeys.Contains(kv.Key)).ToList();
+        filteredParams.AddRange(additionalQueryParameters);
+        return QueryStringBuilder.Build(filteredParams);
+    }
+
+    private static List<KeyValuePair<string, string>> ParseQueryString(string queryString)
+    {
+        var result = new List<KeyValuePair<string, string>>();
+        if (string.IsNullOrEmpty(queryString))
+            return result;
+
+        // Remove leading '?' if present
+        var query = queryString.StartsWith("?") ? queryString.Substring(1) : queryString;
+        if (string.IsNullOrEmpty(query))
+            return result;
+
+        foreach (var pair in query.Split('&'))
+        {
+            var parts = pair.Split(new[] { '=' }, 2);
+            if (parts.Length == 2)
+            {
+                result.Add(
+                    new KeyValuePair<string, string>(
+                        Uri.UnescapeDataString(parts[0]),
+                        Uri.UnescapeDataString(parts[1])
+                    )
+                );
+            }
+            else if (parts.Length == 1 && !string.IsNullOrEmpty(parts[0]))
+            {
+                result.Add(new KeyValuePair<string, string>(Uri.UnescapeDataString(parts[0]), ""));
+            }
+        }
+        return result;
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
@@ -352,30 +382,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         Dictionary<string, object> inputDict
     )
     {
-        var result = new List<KeyValuePair<string, string>>();
-        foreach (var kvp in inputDict)
-        {
-            switch (kvp.Value)
-            {
-                case null:
-                    result.Add(new KeyValuePair<string, string>(kvp.Key, ""));
-                    break;
-                case string str:
-                    result.Add(new KeyValuePair<string, string>(kvp.Key, str));
-                    break;
-                case IEnumerable<string> strList:
-                {
-                    foreach (var value in strList)
-                    {
-                        result.Add(new KeyValuePair<string, string>(kvp.Key, value));
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        return result;
+        // Use QueryStringConverter.ToExplodedForm to handle nested objects with bracket notation
+        // This matches TypeScript SDK behavior: arrays use repeated keys, objects use bracket notation
+        return QueryStringConverter.ToExplodedForm(inputDict).ToList();
     }
 
     private static async SystemTask MergeHeadersAsync(
