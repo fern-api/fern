@@ -513,7 +513,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   python-sdk-seed-update:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
