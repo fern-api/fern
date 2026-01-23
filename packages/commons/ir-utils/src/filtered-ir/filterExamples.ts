@@ -371,7 +371,8 @@ function filterExampleResponse({
                         ExampleEndpointSuccessResponse.body(
                             exampleTypeReference != null
                                 ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
-                                : undefined
+                                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                                : undefined as any
                         )
                     ),
                 stream: (stream) =>

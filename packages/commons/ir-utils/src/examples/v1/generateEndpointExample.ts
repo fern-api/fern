@@ -77,7 +77,8 @@ export function generateEndpointExample({
         serviceHeaders: [],
         rootPathParameters: [],
         request: undefined,
-        response: ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined)),
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        response: ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined as any)),
         docs: undefined
     };
 
