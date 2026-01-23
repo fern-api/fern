@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.25.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for file upload endpoints. When file parameters are required but no example value is provided, the generator now creates a default file using `File::createFromString()` instead of omitting the field, which caused TypeError when assigning null to non-nullable File properties.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 62
+
 - version: 1.25.2
   changelogEntry:
     - summary: |

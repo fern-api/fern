@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.22.9
+  changelogEntry:
+    - summary: Update IR version to 61 to support Generation Metadata feature and maintain consistency with seed configuration.
+      type: chore
+  createdAt: "2026-01-21"
+  irVersion: 61
+
 - version: 1.22.8
   changelogEntry:
     - summary: Fix internal v1-side failure to pass alwaysSendRequiredProperties when visiting inlined request bodies.

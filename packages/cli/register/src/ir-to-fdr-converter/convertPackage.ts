@@ -184,7 +184,7 @@ function convertService(
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
             authV2: convertEndpointSecurity(irEndpoint.security),
-            multiAuth: convertMultiAuth(irEndpoint.security),
+            multiAuth: convertMultiAuth(irEndpoint.security, ir.auth),
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
             defaultEnvironment:
@@ -425,9 +425,15 @@ function convertEndpointSecurity(
 }
 
 function convertMultiAuth(
-    security: Ir.http.HttpEndpointSecurityItem[] | undefined
+    security: Ir.http.HttpEndpointSecurityItem[] | undefined,
+    apiAuth?: Ir.auth.ApiAuth
 ): FdrCjsSdk.MultipleAuthType[] | undefined {
     if (security == null) {
+        if (apiAuth != null && apiAuth.requirement === "ANY" && apiAuth.schemes.length > 0) {
+            return apiAuth.schemes.map((scheme) => ({
+                schemes: [FdrCjsSdk.AuthSchemeId(scheme.key)]
+            }));
+        }
         return undefined;
     }
 
