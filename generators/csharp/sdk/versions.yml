@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.17.1
+- version: 2.17.2
   changelogEntry:
     - summary: |
         Fix mock server tests to exclude read-only properties from expected request JSON.
@@ -9,7 +9,15 @@
         properties during serialization. This fix filters out read-only properties at all nesting
         levels, including within dictionaries, lists, and nested objects.
       type: fix
-  createdAt: "2026-01-22"
+  createdAt: "2026-01-23"
+  irVersion: 62
+
+- version: 2.17.1
+  changelogEntry:
+    - summary: |
+        Add global::System to Attribute in OptionalAttribute and NullableAttribute.
+      type: fix
+  createdAt: "2026-01-23"
   irVersion: 62
 
 - version: 2.17.0

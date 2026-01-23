@@ -50,7 +50,7 @@ class OffsetItemIteratorTest < Minitest::Test
 
     items = (1..config.total_item_count).to_a
 
-    Seed::Internal::OffsetItemIterator.new(
+    FernWebsocketBearerAuth::Internal::OffsetItemIterator.new(
       initial_page: config.initial_page,
       item_field: :items,
       has_next_field: config.has_next_field,

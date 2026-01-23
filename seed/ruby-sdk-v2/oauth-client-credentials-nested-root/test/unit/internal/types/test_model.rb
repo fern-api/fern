@@ -2,15 +2,15 @@
 
 require "test_helper"
 
-describe Seed::Internal::Types::Model do
+describe FernOauthClientCredentialsNestedRoot::Internal::Types::Model do
   module StringInteger
-    extend Seed::Internal::Types::Union
+    extend FernOauthClientCredentialsNestedRoot::Internal::Types::Union
 
     member String
     member Integer
   end
 
-  class ExampleModel < Seed::Internal::Types::Model
+  class ExampleModel < FernOauthClientCredentialsNestedRoot::Internal::Types::Model
     field :name, String
     field :rating, StringInteger, optional: true
     field :year, Integer, optional: true, nullable: true, api_name: "yearOfRelease"
@@ -24,11 +24,11 @@ describe Seed::Internal::Types::Model do
     field :type, String, default: "example"
   end
 
-  class ExampleChild < Seed::Internal::Types::Model
+  class ExampleChild < FernOauthClientCredentialsNestedRoot::Internal::Types::Model
     field :value, String
   end
 
-  class ExampleParent < Seed::Internal::Types::Model
+  class ExampleParent < FernOauthClientCredentialsNestedRoot::Internal::Types::Model
     field :child, ExampleChild
   end
 
@@ -113,7 +113,7 @@ describe Seed::Internal::Types::Model do
   end
 
   describe "#inspect" do
-    class SensitiveModel < Seed::Internal::Types::Model
+    class SensitiveModel < FernOauthClientCredentialsNestedRoot::Internal::Types::Model
       field :username, String
       field :password, String
       field :client_secret, String

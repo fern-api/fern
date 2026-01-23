@@ -215,7 +215,7 @@ export class EndpointSnippetGenerator {
                 if (endpoint.auth.type === "inferred") {
                     // For inferred auth, provide default test values
                     const defaultInferredAuthValues: FernIr.dynamic.InferredAuthValues = {
-                        type: "inferred"
+                        values: undefined
                     };
                     authArgs.push(
                         ...this.getConstructorInferredAuthArgs({
