@@ -33,10 +33,14 @@ public class RawSeedApiClient {
 
     public SeedApiHttpResponse<PostSubmitResponse> submitFormData(
             PostSubmitRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("submit")
-                .build();
+                .addPathSegments("submit");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         FormBody.Builder body = new FormBody.Builder();
         try {
             body.add("username", String.valueOf(request.getUsername()));
@@ -45,7 +49,7 @@ public class RawSeedApiClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")

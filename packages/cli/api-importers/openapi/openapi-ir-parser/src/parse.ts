@@ -231,15 +231,18 @@ function extractApiNameFromUrl(url: string): string {
         const commonTerms = new Set(["api", "www", "service", "services", "example", "com", "org", "net", "io"]);
 
         for (const part of parts) {
-            const cleanPart = part.split("-")[0]; // Handle cases like "payments-service"
+            // Try the prefix before hyphen (e.g., "payments" from "payments-service")
+            const prefix = part.split("-")[0];
+            // Use prefix if it's meaningful, otherwise use the full part
+            const cleanPart = prefix && prefix.length > 2 ? prefix : part;
             if (cleanPart && !commonTerms.has(cleanPart.toLowerCase()) && cleanPart.length > 2) {
                 return cleanPart.toLowerCase();
             }
         }
 
-        // Fallback: use first part of hostname
-        const firstPart = parts[0]?.split("-")[0];
-        return firstPart ? firstPart.toLowerCase() : "api";
+        // Fallback: use first part of hostname (full, not split)
+        const firstPart = parts[0];
+        return firstPart && firstPart.length > 0 ? firstPart.toLowerCase() : "api";
     } catch {
         // If URL parsing fails, extract from string pattern
         const match = url.match(/https?:\/\/([^./-]+)/);

@@ -37,10 +37,14 @@ public class RawCompletionsClient {
 
     public SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>> stream(
             StreamCompletionRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("stream")
-                .build();
+                .addPathSegments("stream");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -49,7 +53,7 @@ public class RawCompletionsClient {
             throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

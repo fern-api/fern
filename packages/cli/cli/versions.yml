@@ -1,8 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.49.7
+- version: 3.49.9
   changelogEntry:
     - summary: |
         Fix `tag-description-pages` not matching OpenAPI tags with spaces or hyphens. The tag ID lookup now normalizes tag names to camelCase to match how subpackage names are derived from OpenAPI tags.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.8
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI error response example names not using the `summary` field. Error examples now use the OpenAPI `summary` field as the example name (similar to success response examples), enabling proper display names like "Validation Error" instead of generic keys like "validationError". Falls back to the original key if summary is undefined or empty.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.7
+  changelogEntry:
+    - summary: |
+        Fix `group-multi-api-environments` URL name extraction for hyphenated subdomains (e.g., `ip-messaging.twilio.com` now extracts as `ip-messaging` instead of colliding with other URLs).
       type: fix
   createdAt: "2026-01-23"
   irVersion: 63
