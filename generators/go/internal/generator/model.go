@@ -231,20 +231,33 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.WriteSetterMethods(t.typeName, propertyNames, propertyTypes, propertySafeNames)
 
 	// Collect test information for later generation (at file level)
-	if len(propertyNames) > 0 {
-		// Collect needsDereference information from typeFields
-		needsDereference := make([]bool, len(propertyNames))
+	// Use typeFields (which only includes properties with getters) for getter/setter tests
+	if len(typeFields) > 0 {
+		// We need to use typeFields to know which properties have getters,
+		// but use the original propertyTypes for the correct field types (for setters)
+		testPropertyNames := make([]string, len(typeFields))
+		testPropertyTypes := make([]string, len(typeFields))
+		testPropertySafeNames := make([]string, len(typeFields))
+		needsDereference := make([]bool, len(typeFields))
 		for i, typeField := range typeFields {
-			if i < len(needsDereference) {
-				needsDereference[i] = typeField.NeedsDereference
+			testPropertyNames[i] = typeField.Name
+			// Find the matching property type from the original list
+			for j, name := range propertyNames {
+				if name == typeField.Name {
+					testPropertyTypes[i] = propertyTypes[j]
+					testPropertySafeNames[i] = propertySafeNames[j]
+					break
+				}
 			}
+			needsDereference[i] = typeField.NeedsDereference
 		}
 		// Add getter/setter tests
-		t.writer.AddGetterSetterTestData(t.typeName, propertyNames, propertyTypes, propertySafeNames, true, true, needsDereference)
+		t.writer.AddGetterSetterTestData(t.typeName, testPropertyNames, testPropertyTypes, testPropertySafeNames, true, true, needsDereference)
 	}
 
 	// Objects always have UnmarshalJSON and String() methods, add tests for them
-	t.writer.AddJSONMarshalingTest(t.typeName)
+	// Pass true for hasLiterals if the object has any literal fields (they require specific values in JSON)
+	t.writer.AddJSONMarshalingTestData(t.typeName, len(objectProperties.literals) > 0)
 	t.writer.AddStringMethodTest(t.typeName)
 
 	// Objects always have GetExtraProperties method, add tests for it
@@ -354,7 +367,8 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P()
 
 	// Add JSON marshaling and String() tests to separate test file
-	t.writer.AddJSONMarshalingTest(t.typeName)
+	// Pass true for hasLiterals if the object has any literal fields (they require specific values in JSON)
+	t.writer.AddJSONMarshalingTestData(t.typeName, len(objectProperties.literals) > 0)
 	t.writer.AddStringMethodTest(t.typeName)
 
 	return nil
@@ -814,8 +828,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.AddGetterSetterTestData(t.typeName, propertyNames, propertyTypes, propertySafeNames, true, false, needsDereference)
 	}
 
-	// Add JSON marshaling and String() tests if unions have them
-	t.writer.AddJSONMarshalingTest(t.typeName)
+	// Skip JSON marshaling tests for discriminated unions - empty instances cannot be marshaled
+	// as they require a discriminant value to be set
 
 	return nil
 }
