@@ -1,4 +1,4 @@
-import { computeSemanticVersion, mergeGeneratorOverridesWithSpecs } from "@fern-api/api-workspace-commons";
+import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
@@ -64,18 +64,17 @@ export async function runLocalGenerationForWorkspace({
                         ? (rawApi as { specs: unknown }).specs
                         : undefined;
 
-                // Merge generator-level overrides with spec-level overrides
-                // If no apiOverride.specs but generator overrides exist, apply to workspace specs
-                const specsWithGeneratorOverrides = mergeGeneratorOverridesWithSpecs(
-                    generatorInvocation.apiOverride?.specs,
-                    generatorInvocation.overrides,
-                    workspaceSpecs as generatorsYml.ApiConfigurationV2SpecsSchema | undefined
-                );
+                // Pass spec-level and generator-level overrides separately
+                // Use workspace specs as fallback if no apiOverride.specs provided
+                const specOverrides =
+                    generatorInvocation.apiOverride?.specs ??
+                    (workspaceSpecs as generatorsYml.ApiConfigurationV2SpecsSchema | undefined);
 
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
-                    specsWithGeneratorOverrides
+                    specOverrides,
+                    generatorInvocation.overrides
                 );
 
                 const dynamicGeneratorConfig = getDynamicGeneratorConfig({
