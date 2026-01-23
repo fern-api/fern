@@ -1027,7 +1027,7 @@ async function convertNavigationItem({
             openrpc: rawConfig.openrpc,
             title: rawConfig.api,
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-            apiName: rawConfig.apiName ?? undefined,
+            apiName: rawConfig.apiName ?? rawConfig.api,
             audiences:
                 rawConfig.audiences != null
                     ? { type: "select", audiences: parseAudiences(rawConfig.audiences) ?? [] }
