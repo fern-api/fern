@@ -99,6 +99,18 @@ func (s Stream[T]) Recv() (T, error) {
 	return value, nil
 }
 
+// RecvRaw reads a raw message from the stream without JSON unmarshaling,
+// returning io.EOF when all the messages have been read.
+// This is useful when the stream may contain data that requires custom
+// parsing or error handling.
+func (s Stream[T]) RecvRaw() ([]byte, error) {
+	bytes, err := s.reader.ReadFromStream()
+	if err != nil {
+		return nil, err
+	}
+	return bytes, nil
+}
+
 // Close closes the Stream.
 func (s Stream[T]) Close() error {
 	return s.closer.Close()
@@ -280,6 +292,10 @@ func (s *SseStreamReader) ReadFromStream() ([]byte, error) {
 	event, err := s.nextEvent()
 	if err != nil {
 		return nil, err
+	}
+	// Check if the event data is the terminator (e.g. "[DONE]")
+	if s.isTerminated(event.data) {
+		return nil, io.EOF
 	}
 	return event.data, nil
 }
