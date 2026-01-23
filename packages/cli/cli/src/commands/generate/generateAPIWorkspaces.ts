@@ -32,7 +32,7 @@ export async function generateAPIWorkspaces({
     lfsOverride,
     fernignorePath,
     dynamicIrOnly,
-    previewOutputDir
+    outputDir
 }: {
     project: Project;
     cliContext: CliContext;
@@ -49,7 +49,7 @@ export async function generateAPIWorkspaces({
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
-    previewOutputDir: string | undefined;
+    outputDir: string | undefined;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -115,8 +115,8 @@ export async function generateAPIWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const absolutePathToPreview = preview
-                    ? previewOutputDir != null
-                        ? AbsoluteFilePath.of(resolve(cwd(), previewOutputDir))
+                    ? outputDir != null
+                        ? AbsoluteFilePath.of(resolve(cwd(), outputDir))
                         : join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
                     : undefined;
 
