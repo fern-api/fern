@@ -1,0 +1,2 @@
+// service_
+"/vendors/batch"
