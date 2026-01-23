@@ -2915,4 +2915,87 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-ir.snap");
     });
+
+    it("should use apiNameOverride when provided to convertIrToFdrApi", async () => {
+        // Test that apiNameOverride parameter correctly overrides the apiName in FDR output
+        // This is used by DocsDefinitionResolver to use folder name instead of OpenAPI title
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/multi-api-folder-name")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "multi-api-folder-name"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Verify the IR has the OpenAPI title as apiName
+        expect(intermediateRepresentation.apiName.originalName).toBe("Pet Store API");
+
+        // Test 1: Without apiNameOverride, FDR should use the OpenAPI title
+        const fdrWithoutOverride = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Without override, apiName should be the OpenAPI title
+        expect(fdrWithoutOverride.apiName).toBe("Pet Store API");
+
+        // Test 2: With apiNameOverride, FDR should use the override value (folder name)
+        const folderName = "latest"; // Simulating a folder name like "fern/apis/latest/"
+        const fdrWithOverride = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context,
+            apiNameOverride: folderName
+        });
+
+        // With override, apiName should be the folder name
+        expect(fdrWithOverride.apiName).toBe("latest");
+    });
 });
