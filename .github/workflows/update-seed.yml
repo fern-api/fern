@@ -1,5 +1,8 @@
 name: Update Seed
 
+# TEST BRANCH: Simplified workflow to test ACTIONS_PAT PR creation
+# This version skips all seed tests and only tests the PR creation logic
+
 on:
   push:
     branches:
@@ -49,8 +52,48 @@ env:
   DOCKER_BUILDKIT: 1
 
 jobs:
-  setup:
+  # TEST BRANCH: Simple job to test ACTIONS_PAT PR creation
+  test-actions-pat:
     if: github.repository == 'fern-api/fern'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create a test file change
+        run: |
+          echo "Test file created at $(date)" > test-actions-pat-file.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create Pull Request with ACTIONS_PAT
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.ACTIONS_PAT }}
+          commit-message: "test: ACTIONS_PAT PR creation test"
+          title: "test: ACTIONS_PAT PR creation test (DO NOT MERGE)"
+          branch: test-actions-pat-pr
+          body: |
+            This is a test PR to verify ACTIONS_PAT has correct permissions.
+            
+            **DO NOT MERGE** - This PR should be closed after testing.
+            
+            GitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          delete-branch: true
+          add-paths: |
+            test-actions-pat-file.txt
+
+      - name: Log PR Creation Result
+        run: |
+          echo "PR Operation: ${{ steps.cpr.outputs.pull-request-operation }}"
+          echo "PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
+          echo "PR Number: ${{ steps.cpr.outputs.pull-request-number }}"
+
+  # Original setup job - skipped in this test branch
+  setup:
+    if: false  # TEST BRANCH: Skip this job
     runs-on: ubuntu-latest
     timeout-minutes: 2
     outputs:
