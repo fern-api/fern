@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.1
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union type matching in dynamic snippets and wire tests. Previously,
+        when converting example values to undiscriminated union types, the generator would accept
+        the first type that didn't throw an error, even if the conversion resulted in a nop (no-op).
+        This caused empty struct literals to be generated instead of properly initialized union
+        variants. The fix now skips types that result in nop conversions and continues to the next
+        type in the union.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 61
+
 - version: 1.23.0
   changelogEntry:
     - summary: Add RecvRaw method to stream API and improve SSE terminator handling for more robust server-sent event processing
