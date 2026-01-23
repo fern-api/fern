@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_foo</a>() -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/fern_required_nullable/client.rb">get_foo</a>() -> FernRequiredNullable::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ client.get_foo(
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernRequiredNullable::RequestOptions` 
     
 </dd>
 </dl>
@@ -74,7 +74,7 @@ client.get_foo(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">update_foo</a>(id, request) -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/fern_required_nullable/client.rb">update_foo</a>(id, request) -> FernRequiredNullable::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -148,7 +148,7 @@ client.update_foo(
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernRequiredNullable::RequestOptions` 
     
 </dd>
 </dl>

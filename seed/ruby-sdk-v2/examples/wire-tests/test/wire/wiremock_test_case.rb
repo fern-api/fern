@@ -5,7 +5,7 @@ require_relative "wire_helper"
 require "net/http"
 require "json"
 require "uri"
-require "seed"
+require "fern_examples"
 
 # Base test case for WireMock-based wire tests.
 #

@@ -2,9 +2,9 @@
 
 require "test_helper"
 
-describe Seed::Internal::Types::Hash do
+describe FernNoRetries::Internal::Types::Hash do
   module TestHash
-    SymbolStringHash = Seed::Internal::Types::Hash[Symbol, String]
+    SymbolStringHash = FernNoRetries::Internal::Types::Hash[Symbol, String]
   end
 
   describe ".[]" do
@@ -30,19 +30,19 @@ describe Seed::Internal::Types::Hash do
     end
 
     it "raises an error with other values with strictness on" do
-      assert_raises Seed::Internal::Errors::TypeError do
+      assert_raises FernNoRetries::Internal::Errors::TypeError do
         TestHash::SymbolStringHash.coerce(Object.new, strict: true)
       end
     end
 
     it "raises an error with non-coercable key types with strictness on" do
-      assert_raises Seed::Internal::Errors::TypeError do
+      assert_raises FernNoRetries::Internal::Errors::TypeError do
         TestHash::SymbolStringHash.coerce({ Object.new => 1 }, strict: true)
       end
     end
 
     it "raises an error with non-coercable value types with strictness on" do
-      assert_raises Seed::Internal::Errors::TypeError do
+      assert_raises FernNoRetries::Internal::Errors::TypeError do
         TestHash::SymbolStringHash.coerce({ "foobar" => Object.new }, strict: true)
       end
     end

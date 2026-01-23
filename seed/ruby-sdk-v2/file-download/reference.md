@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">simple</a>() -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_file_download/service/client.rb">simple</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.simple();
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernFileDownload::Service::RequestOptions` 
     
 </dd>
 </dl>

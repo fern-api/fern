@@ -1,4 +1,5 @@
 pub mod just_file_request;
+pub mod just_file_with_optional_query_params_request;
 pub mod just_file_with_query_params_request;
 pub mod optional_args_request;
 pub mod post_request;
@@ -15,6 +16,7 @@ pub mod with_form_encoding_request;
 pub mod with_inline_type_request;
 
 pub use just_file_request::JustFileRequest;
+pub use just_file_with_optional_query_params_request::JustFileWithOptionalQueryParamsRequest;
 pub use just_file_with_query_params_request::JustFileWithQueryParamsRequest;
 pub use optional_args_request::OptionalArgsRequest;
 pub use post_request::PostRequest;

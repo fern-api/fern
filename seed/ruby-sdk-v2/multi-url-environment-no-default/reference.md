@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec_2.<a href="/lib/seed/ec_2/client.rb">boot_instance</a>(request) -> </code></summary>
+<details><summary><code>client.ec_2.<a href="/lib/fern_multi_url_environment_no_default/ec_2/client.rb">boot_instance</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.ec_2.boot_instance(size: 'size');
 <dl>
 <dd>
 
-**request_options:** `Seed::Ec2::RequestOptions` 
+**request_options:** `FernMultiUrlEnvironmentNoDefault::Ec2::RequestOptions` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ client.ec_2.boot_instance(size: 'size');
 </details>
 
 ## S3
-<details><summary><code>client.s_3.<a href="/lib/seed/s_3/client.rb">get_presigned_url</a>(request) -> String</code></summary>
+<details><summary><code>client.s_3.<a href="/lib/fern_multi_url_environment_no_default/s_3/client.rb">get_presigned_url</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -85,7 +85,7 @@ client.s_3.get_presigned_url(s_3_key: 's3Key');
 <dl>
 <dd>
 
-**request_options:** `Seed::S3::RequestOptions` 
+**request_options:** `FernMultiUrlEnvironmentNoDefault::S3::RequestOptions` 
     
 </dd>
 </dl>

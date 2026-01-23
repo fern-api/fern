@@ -1266,11 +1266,16 @@ export class DocsDefinitionResolver {
             );
         }
 
+        // Use item.apiName (from api-name in docs.yml) if explicitly set,
+        // otherwise fall back to the workspace's folder name for FDR registration.
+        // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
+        const apiNameForRegistration = item.apiName ?? workspace.workspaceName;
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
-            apiName: item.apiName,
+            apiName: apiNameForRegistration,
             workspace
         });
         const api = convertIrToApiDefinition({

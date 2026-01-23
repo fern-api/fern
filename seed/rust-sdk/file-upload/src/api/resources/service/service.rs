@@ -70,6 +70,25 @@ impl ServiceClient {
             .await
     }
 
+    pub async fn just_file_with_optional_query_params(
+        &self,
+        request: &JustFileWithOptionalQueryParamsRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_multipart_request(
+                Method::POST,
+                "/just-file-with-optional-query-params",
+                request.clone().to_multipart(),
+                QueryBuilder::new()
+                    .string("maybeString", request.maybe_string.clone())
+                    .int("maybeInteger", request.maybe_integer.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     pub async fn with_content_type(
         &self,
         request: &WithContentTypeRequest,

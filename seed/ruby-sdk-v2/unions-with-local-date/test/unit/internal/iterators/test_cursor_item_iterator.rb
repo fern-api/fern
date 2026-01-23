@@ -12,7 +12,7 @@ class CursorItemIteratorTest < Minitest::Test
   def make_iterator(initial_cursor:)
     @times_called = 0
 
-    Seed::Internal::CursorItemIterator.new(initial_cursor:, cursor_field: :next_cursor, item_field: :cards) do |cursor|
+    FernUnionsWithLocalDate::Internal::CursorItemIterator.new(initial_cursor:, cursor_field: :next_cursor, item_field: :cards) do |cursor|
       @times_called += 1
       cursor ||= 0
       next_cursor = cursor + 10

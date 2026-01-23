@@ -1,0 +1,23 @@
+# frozen_string_literal: true
+
+module FernFileDownload
+  class Client
+    # @param base_url [String, nil]
+    #
+    # @return [void]
+    def initialize(base_url: nil)
+      @raw_client = FernFileDownload::Internal::Http::RawClient.new(
+        base_url: base_url,
+        headers: {
+          "User-Agent" => "fern_file-download/0.0.1",
+          "X-Fern-Language" => "Ruby"
+        }
+      )
+    end
+
+    # @return [FernFileDownload::Service::Client]
+    def service
+      @service ||= FernFileDownload::Service::Client.new(client: @raw_client)
+    end
+  end
+end

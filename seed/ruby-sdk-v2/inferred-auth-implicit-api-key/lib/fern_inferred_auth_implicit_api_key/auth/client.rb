@@ -1,0 +1,50 @@
+# frozen_string_literal: true
+
+module FernInferredAuthImplicitApiKey
+  module Auth
+    class Client
+      # @param client [FernInferredAuthImplicitApiKey::Internal::Http::RawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :api_key
+      #
+      # @return [FernInferredAuthImplicitApiKey::Auth::Types::TokenResponse]
+      def get_token(request_options: {}, **params)
+        params = FernInferredAuthImplicitApiKey::Internal::Types::Utils.normalize_keys(params)
+        headers = {}
+        headers["X-Api-Key"] = params[:api_key] if params[:api_key]
+
+        request = FernInferredAuthImplicitApiKey::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "/token",
+          headers: headers,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise FernInferredAuthImplicitApiKey::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          FernInferredAuthImplicitApiKey::Auth::Types::TokenResponse.load(response.body)
+        else
+          error_class = FernInferredAuthImplicitApiKey::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+    end
+  end
+end
