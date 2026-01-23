@@ -319,4 +319,242 @@ public class QueryStringBuilderTests
 
         Assert.That(result, Is.EqualTo(string.Empty));
     }
+
+    [Test]
+    public void Builder_Set_OverridesSingleValue()
+    {
+        var result = new QueryStringBuilder.Builder()
+            .Add("foo", "original")
+            .Set("foo", "override")
+            .Build();
+
+        Assert.That(result, Is.EqualTo("?foo=override"));
+    }
+
+    [Test]
+    public void Builder_Set_OverridesMultipleValues()
+    {
+        var result = new QueryStringBuilder.Builder()
+            .Add("foo", "value1")
+            .Add("foo", "value2")
+            .Set("foo", "override")
+            .Build();
+
+        Assert.That(result, Is.EqualTo("?foo=override"));
+    }
+
+    [Test]
+    public void Builder_Set_WithArray_CreatesMultipleParameters()
+    {
+        var result = new QueryStringBuilder.Builder()
+            .Add("foo", "original")
+            .Set("foo", new[] { "value1", "value2" })
+            .Build();
+
+        Assert.That(result, Is.EqualTo("?foo=value1&foo=value2"));
+    }
+
+    [Test]
+    public void Builder_Set_WithNull_RemovesParameter()
+    {
+        var result = new QueryStringBuilder.Builder()
+            .Add("foo", "original")
+            .Add("bar", "keep")
+            .Set("foo", null)
+            .Build();
+
+        Assert.That(result, Is.EqualTo("?bar=keep"));
+    }
+
+    [Test]
+    public void Builder_MergeAdditional_WithSingleValues()
+    {
+        var additional = new List<KeyValuePair<string, string>>
+        {
+            new("foo", "bar"),
+            new("baz", "qux"),
+        };
+
+        var result = new QueryStringBuilder.Builder()
+            .Add("existing", "value")
+            .MergeAdditional(additional)
+            .Build();
+
+        Assert.That(result, Does.Contain("existing=value"));
+        Assert.That(result, Does.Contain("foo=bar"));
+        Assert.That(result, Does.Contain("baz=qux"));
+    }
+
+    [Test]
+    public void Builder_MergeAdditional_WithDuplicateKeys_CreatesList()
+    {
+        var additional = new List<KeyValuePair<string, string>>
+        {
+            new("foo", "bar1"),
+            new("foo", "bar2"),
+            new("baz", "qux"),
+        };
+
+        var result = new QueryStringBuilder.Builder()
+            .Add("existing", "value")
+            .MergeAdditional(additional)
+            .Build();
+
+        Assert.That(result, Does.Contain("existing=value"));
+        Assert.That(result, Does.Contain("foo=bar1"));
+        Assert.That(result, Does.Contain("foo=bar2"));
+        Assert.That(result, Does.Contain("baz=qux"));
+    }
+
+    [Test]
+    public void Builder_MergeAdditional_OverridesExistingParameters()
+    {
+        var additional = new List<KeyValuePair<string, string>> { new("foo", "override") };
+
+        var result = new QueryStringBuilder.Builder()
+            .Add("foo", "original1")
+            .Add("foo", "original2")
+            .Add("bar", "keep")
+            .MergeAdditional(additional)
+            .Build();
+
+        Assert.That(result, Does.Contain("bar=keep"));
+        Assert.That(result, Does.Contain("foo=override"));
+        Assert.That(result, Does.Not.Contain("original1"));
+        Assert.That(result, Does.Not.Contain("original2"));
+    }
+
+    [Test]
+    public void Builder_MergeAdditional_WithDuplicates_OverridesExisting()
+    {
+        var additional = new List<KeyValuePair<string, string>>
+        {
+            new("foo", "new1"),
+            new("foo", "new2"),
+            new("foo", "new3"),
+        };
+
+        var result = new QueryStringBuilder.Builder()
+            .Add("foo", "original1")
+            .Add("foo", "original2")
+            .Add("bar", "keep")
+            .MergeAdditional(additional)
+            .Build();
+
+        Assert.That(result, Does.Contain("bar=keep"));
+        Assert.That(result, Does.Contain("foo=new1"));
+        Assert.That(result, Does.Contain("foo=new2"));
+        Assert.That(result, Does.Contain("foo=new3"));
+        Assert.That(result, Does.Not.Contain("original1"));
+        Assert.That(result, Does.Not.Contain("original2"));
+    }
+
+    [Test]
+    public void Builder_MergeAdditional_WithNull_NoOp()
+    {
+        var result = new QueryStringBuilder.Builder()
+            .Add("foo", "value")
+            .MergeAdditional(null)
+            .Build();
+
+        Assert.That(result, Is.EqualTo("?foo=value"));
+    }
+
+    [Test]
+    public void Builder_MergeAdditional_WithEmptyList_NoOp()
+    {
+        var additional = new List<KeyValuePair<string, string>>();
+
+        var result = new QueryStringBuilder.Builder()
+            .Add("foo", "value")
+            .MergeAdditional(additional)
+            .Build();
+
+        Assert.That(result, Is.EqualTo("?foo=value"));
+    }
+
+    [Test]
+    public void Builder_MergeAdditional_RealWorldScenario()
+    {
+        // SDK generates foo=foo1&foo=foo2
+        var builder = new QueryStringBuilder.Builder()
+            .Add("foo", "foo1")
+            .Add("foo", "foo2")
+            .Add("bar", "baz");
+
+        // User provides foo=override in AdditionalQueryParameters
+        var additional = new List<KeyValuePair<string, string>> { new("foo", "override") };
+
+        var result = builder.MergeAdditional(additional).Build();
+
+        // Result should be foo=override&bar=baz (user overrides SDK)
+        Assert.That(result, Does.Contain("bar=baz"));
+        Assert.That(result, Does.Contain("foo=override"));
+        Assert.That(result, Does.Not.Contain("foo1"));
+        Assert.That(result, Does.Not.Contain("foo2"));
+    }
+
+    [Test]
+    public void Builder_MergeAdditional_UserProvidesMultipleValues()
+    {
+        // SDK generates no foo parameter
+        var builder = new QueryStringBuilder.Builder().Add("bar", "baz");
+
+        // User provides foo=bar1&foo=bar2 in AdditionalQueryParameters
+        var additional = new List<KeyValuePair<string, string>>
+        {
+            new("foo", "bar1"),
+            new("foo", "bar2"),
+        };
+
+        var result = builder.MergeAdditional(additional).Build();
+
+        // Result should be bar=baz&foo=bar1&foo=bar2
+        Assert.That(result, Does.Contain("bar=baz"));
+        Assert.That(result, Does.Contain("foo=bar1"));
+        Assert.That(result, Does.Contain("foo=bar2"));
+    }
+
+    [Test]
+    public void Builder_Add_WithCollection_CreatesMultipleParameters()
+    {
+        var tags = new[] { "tag1", "tag2", "tag3" };
+        var result = new QueryStringBuilder.Builder().Add("tag", tags).Build();
+
+        Assert.That(result, Does.Contain("tag=tag1"));
+        Assert.That(result, Does.Contain("tag=tag2"));
+        Assert.That(result, Does.Contain("tag=tag3"));
+    }
+
+    [Test]
+    public void Builder_Add_WithList_CreatesMultipleParameters()
+    {
+        var ids = new List<int> { 1, 2, 3 };
+        var result = new QueryStringBuilder.Builder().Add("id", ids).Build();
+
+        Assert.That(result, Does.Contain("id=1"));
+        Assert.That(result, Does.Contain("id=2"));
+        Assert.That(result, Does.Contain("id=3"));
+    }
+
+    [Test]
+    public void Builder_Set_WithCollection_ReplacesAllPreviousValues()
+    {
+        var result = new QueryStringBuilder.Builder()
+            .Add("id", 1)
+            .Add("id", 2)
+            .Set("id", new[] { 10, 20, 30 })
+            .Build();
+
+        Assert.That(result, Does.Contain("id=10"));
+        Assert.That(result, Does.Contain("id=20"));
+        Assert.That(result, Does.Contain("id=30"));
+        // Check that old values are not present (use word boundaries to avoid false positives with id=10)
+        Assert.That(result, Does.Not.Contain("id=1&"));
+        Assert.That(result, Does.Not.Contain("id=2&"));
+        Assert.That(result, Does.Not.Contain("id=1?"));
+        Assert.That(result, Does.Not.Contain("id=2?"));
+        Assert.That(result, Does.Not.EndWith("id=1"));
+        Assert.That(result, Does.Not.EndWith("id=2"));
+    }
 }

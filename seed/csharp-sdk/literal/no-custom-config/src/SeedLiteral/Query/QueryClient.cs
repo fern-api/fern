@@ -18,30 +18,31 @@ public partial class QueryClient : IQueryClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["prompt"] = request.Prompt.ToString();
-        _query["alias_prompt"] = request.AliasPrompt.ToString();
-        _query["query"] = request.Query;
-        _query["stream"] = JsonUtils.Serialize(request.Stream);
-        _query["alias_stream"] = JsonUtils.Serialize(request.AliasStream);
+        var _queryBuilder = new SeedLiteral.Core.QueryStringBuilder.Builder(capacity: 9)
+            .Add("prompt", request.Prompt)
+            .AddDeepObject("alias_prompt", request.AliasPrompt)
+            .Add("query", request.Query)
+            .Add("stream", request.Stream)
+            .AddDeepObject("alias_stream", request.AliasStream);
         if (request.OptionalPrompt != null)
         {
-            _query["optional_prompt"] = request.OptionalPrompt.ToString();
+            _queryBuilder.Add("optional_prompt", request.OptionalPrompt);
         }
         if (request.AliasOptionalPrompt != null)
         {
-            _query["alias_optional_prompt"] = request.AliasOptionalPrompt.ToString();
+            _queryBuilder.AddDeepObject("alias_optional_prompt", request.AliasOptionalPrompt);
         }
         if (request.OptionalStream != null)
         {
-            _query["optional_stream"] = JsonUtils.Serialize(request.OptionalStream.Value);
+            _queryBuilder.Add("optional_stream", request.OptionalStream);
         }
         if (request.AliasOptionalStream != null)
         {
-            _query["alias_optional_stream"] = JsonUtils.Serialize(
-                request.AliasOptionalStream.Value
-            );
+            _queryBuilder.AddDeepObject("alias_optional_stream", request.AliasOptionalStream);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -49,7 +50,7 @@ public partial class QueryClient : IQueryClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "query",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

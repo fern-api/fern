@@ -192,23 +192,26 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 4);
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.Value.ToString();
+            _queryBuilder.Add("limit", request.Limit);
         }
         if (request.Offset != null)
         {
-            _query["offset"] = request.Offset.Value.ToString();
+            _queryBuilder.Add("offset", request.Offset);
         }
         if (request.IncludeDeleted != null)
         {
-            _query["includeDeleted"] = JsonUtils.Serialize(request.IncludeDeleted.Value);
+            _queryBuilder.Add("includeDeleted", request.IncludeDeleted);
         }
         if (request.SortBy != null)
         {
-            _query["sortBy"] = request.SortBy;
+            _queryBuilder.Add("sortBy", request.SortBy);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -216,7 +219,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/users",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -265,20 +268,24 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["query"] = request.Query;
+        var _queryBuilder = new SeedNullableOptional.Core.QueryStringBuilder.Builder(
+            capacity: 4
+        ).Add("query", request.Query);
         if (request.Department != null)
         {
-            _query["department"] = request.Department;
+            _queryBuilder.Add("department", request.Department);
         }
         if (request.Role != null)
         {
-            _query["role"] = request.Role;
+            _queryBuilder.Add("role", request.Role);
         }
         if (request.IsActive != null)
         {
-            _query["isActive"] = JsonUtils.Serialize(request.IsActive.Value);
+            _queryBuilder.Add("isActive", request.IsActive);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -286,7 +293,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/users/search",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -567,19 +574,22 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 3);
         if (request.Role != null)
         {
-            _query["role"] = request.Role.ToString();
+            _queryBuilder.Add("role", request.Role);
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.Value.Stringify();
+            _queryBuilder.Add("status", request.Status);
         }
         if (request.SecondaryRole != null)
         {
-            _query["secondaryRole"] = request.SecondaryRole.Value.ToString();
+            _queryBuilder.Add("secondaryRole", request.SecondaryRole);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -587,7 +597,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/users/filter",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

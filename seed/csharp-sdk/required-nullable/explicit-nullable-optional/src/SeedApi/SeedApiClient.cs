@@ -35,17 +35,25 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["required_baz"] = request.RequiredBaz;
-        _query["required_nullable_baz"] = request.RequiredNullableBaz;
+        var _queryBuilder = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 4).Add(
+            "required_baz",
+            request.RequiredBaz
+        );
         if (request.OptionalBaz != null)
         {
-            _query["optional_baz"] = request.OptionalBaz;
+            _queryBuilder.Add("optional_baz", request.OptionalBaz);
         }
         if (request.OptionalNullableBaz.IsDefined)
         {
-            _query["optional_nullable_baz"] = request.OptionalNullableBaz.Value;
+            _queryBuilder.Add("optional_nullable_baz", request.OptionalNullableBaz);
         }
+        if (request.RequiredNullableBaz != null)
+        {
+            _queryBuilder.Add("required_nullable_baz", request.RequiredNullableBaz);
+        }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -53,7 +61,7 @@ public partial class SeedApiClient : ISeedApiClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "foo",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -103,9 +111,14 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>() { { "X-Idempotency-Key", request.XIdempotencyKey } }
-        );
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add("X-Idempotency-Key", request.XIdempotencyKey)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.Headers)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest

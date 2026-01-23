@@ -54,6 +54,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
         // Use QueryStringBuilder.Builder fluent API for cleaner generated code
         const builderVar = "_queryBuilder";
         const queryStringVar = "_queryString";
+        const requestOptionsVar = this.endpoint.idempotent
+            ? this.names.parameters.idempotentOptions
+            : this.names.parameters.requestOptions;
 
         // Categorize query parameters by their optionality
         const requiredQueryParameters: QueryParameter[] = [];
@@ -76,17 +79,19 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return {
                 code: this.csharp.codeblock((writer) => {
                     writer.write(
-                        `var ${queryStringVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
+                        `var ${builderVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
                     );
                     writer.indent();
                     for (const query of requiredQueryParameters) {
                         writer.writeLine();
                         this.writeQueryParameterBuilderCallChained(writer, query);
                     }
-                    writer.writeLine();
-                    writer.write(".Build()");
                     writer.dedent();
                     writer.writeLine(";");
+                    // Merge additional query parameters from RequestOptions and build the final string
+                    writer.writeLine(
+                        `var ${queryStringVar} = ${builderVar}.MergeAdditional(${requestOptionsVar}?.AdditionalQueryParameters).Build();`
+                    );
                 }),
                 queryStringReference: queryStringVar
             };
@@ -129,9 +134,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     writer.writeLine(";");
                     writer.endControlFlow();
                 }
-
-                // Build the final query string
-                writer.writeTextStatement(`var ${queryStringVar} = ${builderVar}.Build()`);
+                // Merge additional query parameters from RequestOptions and build the final string
+                writer.writeLine(
+                    `var ${queryStringVar} = ${builderVar}.MergeAdditional(${requestOptionsVar}?.AdditionalQueryParameters).Build();`
+                );
             }),
             queryStringReference: queryStringVar
         };
@@ -170,6 +176,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     /**
      * Determines if a type reference represents a complex type (object/named type)
      * that should use AddDeepObject for query string serialization.
+     * Returns false for primitives, collections, and aliases to non-object types.
      */
     private isComplexType(typeReference: TypeReference): boolean {
         return typeReference._visit({
@@ -184,7 +191,24 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // Lists, maps, sets are not deep objects
                 return false;
             },
-            named: () => true,
+            named: (namedType) => {
+                // Check if this named type is actually an object type (not an alias to primitive/collection)
+                const typeDeclaration = this.context.model.dereferenceType(namedType.typeId).typeDeclaration;
+                const shapeType = typeDeclaration.shape.type;
+
+                // Only true objects and unions should use AddDeepObject
+                if (shapeType === "object" || shapeType === "union" || shapeType === "undiscriminatedUnion") {
+                    return true;
+                }
+
+                // For aliases, check the aliased type recursively
+                if (shapeType === "alias") {
+                    return this.isComplexType(typeDeclaration.shape.aliasOf);
+                }
+
+                // Enums and other types are not complex
+                return false;
+            },
             primitive: () => false,
             unknown: () => false,
             _other: () => false
@@ -199,158 +223,64 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
-        // Use experimental explicit nullable/optional handling if enabled
-        if (this.context.generation.settings.enableExplicitNullableOptional) {
-            const requiredHeaders: HttpHeader[] = [];
-            const optionalAndNullableHeaders: HttpHeader[] = [];
-            const optionalOnlyHeaders: HttpHeader[] = [];
-            const nullableOnlyHeaders: HttpHeader[] = [];
+        const requestOptionsVar = this.endpoint.idempotent
+            ? this.names.parameters.idempotentOptions
+            : this.names.parameters.requestOptions;
 
-            for (const header of headers) {
-                const isOptional = this.context.isOptional(header.valueType);
-                const isNullable = this.context.isNullable(header.valueType);
+        return {
+            code: this.csharp.codeblock((writer) => {
+                // Start with HeadersBuilder.Builder instance
+                writer.write(
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                );
+                writer.indent();
 
-                if (isOptional && isNullable) {
-                    // optional + nullable => Optional<T?> - check IsDefined, can be value or null
-                    optionalAndNullableHeaders.push(header);
-                } else if (isOptional) {
-                    // optional only => T? - check != null
-                    optionalOnlyHeaders.push(header);
-                } else if (isNullable) {
-                    // nullable only => T? - always include (can be value or null)
-                    nullableOnlyHeaders.push(header);
-                } else {
-                    // required => T - always include
-                    requiredHeaders.push(header);
-                }
-            }
-
-            return {
-                code: this.csharp.codeblock((writer) => {
-                    writer.write(`var ${this.names.variables.headers} = `);
-                    writer.writeNodeStatement(
-                        this.csharp.instantiateClass({
-                            classReference: this.Types.Headers,
-                            arguments_: [
-                                this.csharp.dictionary({
-                                    keyType: this.Primitive.string,
-                                    valueType: this.Primitive.string,
-                                    values: {
-                                        type: "entries",
-                                        entries: [
-                                            ...requiredHeaders.map((header) => {
-                                                return {
-                                                    key: this.csharp.codeblock(
-                                                        this.csharp.string_({ string: header.name.wireValue })
-                                                    ),
-                                                    value: this.stringify({
-                                                        reference: header.valueType,
-                                                        name: header.name.name
-                                                    })
-                                                };
-                                            }),
-                                            ...nullableOnlyHeaders.map((header) => {
-                                                return {
-                                                    key: this.csharp.codeblock(
-                                                        this.csharp.string_({ string: header.name.wireValue })
-                                                    ),
-                                                    value: this.stringify({
-                                                        reference: header.valueType,
-                                                        name: header.name.name
-                                                    })
-                                                };
-                                            })
-                                        ]
-                                    }
-                                })
-                            ]
+                // Add all headers (required, optional, and nullable) using fluent API
+                // The Add method handles null values automatically by ignoring them
+                for (const header of headers) {
+                    writer.writeLine();
+                    writer.write(`.Add("${header.name.wireValue}", `);
+                    writer.writeNode(
+                        this.stringify({
+                            reference: header.valueType,
+                            name: header.name.name
                         })
                     );
-                    // Optional-only headers - include only if not null
-                    for (const header of optionalOnlyHeaders) {
-                        const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                        writer.controlFlow("if", this.csharp.codeblock(`${headerReference} != null`));
-                        writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
-                        writer.writeNodeStatement(
-                            this.stringify({
-                                reference: header.valueType,
-                                name: header.name.name
-                            })
-                        );
-                        writer.endControlFlow();
-                    }
-                    // Optional + Nullable headers - include if IsDefined (can be value or null)
-                    for (const header of optionalAndNullableHeaders) {
-                        const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                        writer.controlFlow("if", this.csharp.codeblock(`${headerReference}.IsDefined`));
-                        writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
-                        writer.writeNodeStatement(
-                            this.stringify({
-                                reference: header.valueType,
-                                name: header.name.name
-                            })
-                        );
-                        writer.endControlFlow();
-                    }
-                }),
-                headerParameterBagReference: this.names.variables.headers
-            };
-        } else {
-            // Legacy behavior: simple optional check
-            const requiredHeaders: HttpHeader[] = [];
-            const optionalHeaders: HttpHeader[] = [];
-            for (const header of headers) {
-                if (this.context.isOptional(header.valueType)) {
-                    optionalHeaders.push(header);
-                } else {
-                    requiredHeaders.push(header);
+                    writer.write(")");
                 }
-            }
 
-            return {
-                code: this.csharp.codeblock((writer) => {
-                    writer.write(`var ${this.names.variables.headers} = `);
-                    writer.writeNodeStatement(
-                        this.csharp.instantiateClass({
-                            classReference: this.Types.Headers,
-                            arguments_: [
-                                this.csharp.dictionary({
-                                    keyType: this.Primitive.string,
-                                    valueType: this.Primitive.string,
-                                    values: {
-                                        type: "entries",
-                                        entries: requiredHeaders.map((header) => {
-                                            return {
-                                                key: this.csharp.codeblock(
-                                                    this.csharp.string_({ string: header.name.wireValue })
-                                                ),
-                                                value: this.stringify({
-                                                    reference: header.valueType,
-                                                    name: header.name.name
-                                                })
-                                            };
-                                        })
-                                    }
-                                })
-                            ]
-                        })
+                // Add client-level headers (from root client constructor - includes lazy auth headers)
+                writer.writeLine();
+                writer.write(".Add(_client.Options.Headers)");
+
+                // Add client-level additional headers
+                writer.writeLine();
+                writer.write(".Add(_client.Options.AdditionalHeaders)");
+
+                // For idempotent requests, add idempotency headers (as Dictionary<string, string>)
+                if (this.endpoint.idempotent) {
+                    writer.writeLine();
+                    writer.write(
+                        `.Add(((${this.Types.IdempotentRequestOptionsInterface})${requestOptionsVar})?.GetIdempotencyHeaders())`
                     );
-                    for (const header of optionalHeaders) {
-                        const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                        writer.controlFlow("if", this.csharp.codeblock(`${headerReference} != null`));
-                        writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
-                        writer.writeNodeStatement(
-                            this.stringify({
-                                reference: header.valueType,
-                                name: header.name.name
-                            })
-                        );
-                        writer.endControlFlow();
-                    }
-                }),
-                headerParameterBagReference: this.names.variables.headers
-            };
-        }
+                }
+
+                // Add request options additional headers (highest priority)
+                writer.writeLine();
+                writer.write(`.Add(${requestOptionsVar}?.AdditionalHeaders)`);
+
+                // Build the final Headers instance asynchronously
+                writer.writeLine();
+                writer.write(".BuildAsync()");
+
+                // Add ConfigureAwait at the very end
+                writer.writeLine();
+                writer.write(".ConfigureAwait(false);");
+
+                writer.dedent();
+            }),
+            headerParameterBagReference: this.names.variables.headers
+        };
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {

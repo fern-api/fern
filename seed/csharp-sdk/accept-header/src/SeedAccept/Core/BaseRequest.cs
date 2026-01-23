@@ -1,6 +1,6 @@
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
+using global::System.Net.Http;
+using global::System.Net.Http.Headers;
+using global::System.Text;
 
 namespace SeedAccept.Core;
 
@@ -14,14 +14,13 @@ internal abstract record BaseRequest
 
     internal string? ContentType { get; init; }
 
-    internal Dictionary<string, object> Query { get; init; } = new();
-
     /// <summary>
-    /// Pre-built query string (without leading '?'). When set, this takes precedence over Query dictionary.
+    /// The query string for this request (including the leading '?' if non-empty).
     /// </summary>
     internal string? QueryString { get; init; }
 
-    internal Headers Headers { get; init; } = new();
+    internal Dictionary<string, string> Headers { get; init; } =
+        new(StringComparer.OrdinalIgnoreCase);
 
     internal IRequestOptions? Options { get; init; }
 

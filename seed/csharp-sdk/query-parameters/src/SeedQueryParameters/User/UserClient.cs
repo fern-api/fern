@@ -42,7 +42,9 @@ public partial class UserClient : IUserClient
         {
             _queryBuilder.AddDeepObject("optionalUser", request.OptionalUser);
         }
-        var _queryString = _queryBuilder.Build();
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest

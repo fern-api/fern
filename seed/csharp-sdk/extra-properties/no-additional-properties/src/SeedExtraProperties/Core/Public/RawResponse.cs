@@ -1,4 +1,4 @@
-using System.Net;
+using global::System.Net;
 
 namespace SeedExtraProperties;
 

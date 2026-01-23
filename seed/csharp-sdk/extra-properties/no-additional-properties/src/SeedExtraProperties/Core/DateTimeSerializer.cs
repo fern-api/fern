@@ -1,6 +1,6 @@
-using System.Globalization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Globalization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 
 namespace SeedExtraProperties.Core;
 

@@ -36,6 +36,7 @@ export const AsIsFiles = {
     MultipartFormRequest: "MultipartFormRequest.Template.cs",
     NdJsonContent: "NdJsonContent.Template.cs",
     NdJsonRequest: "NdJsonRequest.Template.cs",
+    HeadersBuilder: "HeadersBuilder.Template.cs",
     QueryStringBuilder: "QueryStringBuilder.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
     RawClient: "RawClient.Template.cs",
@@ -77,6 +78,7 @@ export const AsIsFiles = {
         StringEnumSerializer: "StringEnumSerializer.Template.cs"
     },
     Test: {
+        HeadersBuilderTests: "test/HeadersBuilderTests.Template.cs",
         QueryStringBuilderTests: "test/QueryStringBuilderTests.Template.cs",
         QueryStringConverterTests: "test/QueryStringConverterTests.Template.cs",
         TemplateTestClientCs: "test/TemplateTestClient.cs",
@@ -84,8 +86,6 @@ export const AsIsFiles = {
         TestCustomProps: "test/Test.Custom.props.Template",
         WithRawResponseTests: "test/WithRawResponseTests.Template.cs",
         RawClientTests: {
-            AdditionalHeadersTests: "test/RawClientTests/AdditionalHeadersTests.Template.cs",
-            AdditionalParametersTests: "test/RawClientTests/AdditionalParametersTests.Template.cs",
             MultipartFormTests: "test/RawClientTests/MultipartFormTests.Template.cs",
             RetriesTests: "test/RawClientTests/RetriesTests.Template.cs",
             QueryParameterTests: "test/RawClientTests/QueryParameterTests.Template.cs",

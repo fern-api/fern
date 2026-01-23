@@ -18,20 +18,23 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["page"] = request.Page.ToString();
-        _query["per_page"] = request.PerPage.ToString();
-        _query["sort"] = request.Sort;
-        _query["order"] = request.Order;
-        _query["include_totals"] = JsonUtils.Serialize(request.IncludeTotals);
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 7)
+            .Add("page", request.Page)
+            .Add("per_page", request.PerPage)
+            .Add("sort", request.Sort)
+            .Add("order", request.Order)
+            .Add("include_totals", request.IncludeTotals);
         if (request.Fields != null)
         {
-            _query["fields"] = request.Fields;
+            _queryBuilder.Add("fields", request.Fields);
         }
         if (request.Search != null)
         {
-            _query["search"] = request.Search;
+            _queryBuilder.Add("search", request.Search);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -39,7 +42,7 @@ public partial class ServiceClient : IServiceClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/resources",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -89,9 +92,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["include_metadata"] = JsonUtils.Serialize(request.IncludeMetadata);
-        _query["format"] = request.Format;
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("include_metadata", request.IncludeMetadata)
+            .Add("format", request.Format);
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -102,7 +108,7 @@ public partial class ServiceClient : IServiceClient
                         "/api/resources/{0}",
                         ValueConvert.ToPathParameterString(resourceId)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -151,9 +157,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["limit"] = request.Limit.ToString();
-        _query["offset"] = request.Offset.ToString();
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("limit", request.Limit)
+            .Add("offset", request.Offset);
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -162,7 +171,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethod.Post,
                     Path = "/api/resources/search",
                     Body = request,
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -211,39 +220,42 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 8);
         if (request.Page != null)
         {
-            _query["page"] = request.Page.Value.ToString();
+            _queryBuilder.Add("page", request.Page);
         }
         if (request.PerPage != null)
         {
-            _query["per_page"] = request.PerPage.Value.ToString();
+            _queryBuilder.Add("per_page", request.PerPage);
         }
         if (request.IncludeTotals != null)
         {
-            _query["include_totals"] = JsonUtils.Serialize(request.IncludeTotals.Value);
+            _queryBuilder.Add("include_totals", request.IncludeTotals);
         }
         if (request.Sort != null)
         {
-            _query["sort"] = request.Sort;
+            _queryBuilder.Add("sort", request.Sort);
         }
         if (request.Connection != null)
         {
-            _query["connection"] = request.Connection;
+            _queryBuilder.Add("connection", request.Connection);
         }
         if (request.Q != null)
         {
-            _query["q"] = request.Q;
+            _queryBuilder.Add("q", request.Q);
         }
         if (request.SearchEngine != null)
         {
-            _query["search_engine"] = request.SearchEngine;
+            _queryBuilder.Add("search_engine", request.SearchEngine);
         }
         if (request.Fields != null)
         {
-            _query["fields"] = request.Fields;
+            _queryBuilder.Add("fields", request.Fields);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -251,7 +263,7 @@ public partial class ServiceClient : IServiceClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/users",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -301,15 +313,18 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2);
         if (request.Fields != null)
         {
-            _query["fields"] = request.Fields;
+            _queryBuilder.Add("fields", request.Fields);
         }
         if (request.IncludeFields != null)
         {
-            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields.Value);
+            _queryBuilder.Add("include_fields", request.IncludeFields);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -320,7 +335,7 @@ public partial class ServiceClient : IServiceClient
                         "/api/users/{0}",
                         ValueConvert.ToPathParameterString(userId)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -485,19 +500,22 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 3);
         if (request.Strategy != null)
         {
-            _query["strategy"] = request.Strategy;
+            _queryBuilder.Add("strategy", request.Strategy);
         }
         if (request.Name != null)
         {
-            _query["name"] = request.Name;
+            _queryBuilder.Add("name", request.Name);
         }
         if (request.Fields != null)
         {
-            _query["fields"] = request.Fields;
+            _queryBuilder.Add("fields", request.Fields);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -505,7 +523,7 @@ public partial class ServiceClient : IServiceClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/connections",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -555,11 +573,14 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 1);
         if (request.Fields != null)
         {
-            _query["fields"] = request.Fields;
+            _queryBuilder.Add("fields", request.Fields);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -570,7 +591,7 @@ public partial class ServiceClient : IServiceClient
                         "/api/connections/{0}",
                         ValueConvert.ToPathParameterString(connectionId)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -619,39 +640,42 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 8);
         if (request.Fields != null)
         {
-            _query["fields"] = request.Fields;
+            _queryBuilder.Add("fields", request.Fields);
         }
         if (request.IncludeFields != null)
         {
-            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields.Value);
+            _queryBuilder.Add("include_fields", request.IncludeFields);
         }
         if (request.Page != null)
         {
-            _query["page"] = request.Page.Value.ToString();
+            _queryBuilder.Add("page", request.Page);
         }
         if (request.PerPage != null)
         {
-            _query["per_page"] = request.PerPage.Value.ToString();
+            _queryBuilder.Add("per_page", request.PerPage);
         }
         if (request.IncludeTotals != null)
         {
-            _query["include_totals"] = JsonUtils.Serialize(request.IncludeTotals.Value);
+            _queryBuilder.Add("include_totals", request.IncludeTotals);
         }
         if (request.IsGlobal != null)
         {
-            _query["is_global"] = JsonUtils.Serialize(request.IsGlobal.Value);
+            _queryBuilder.Add("is_global", request.IsGlobal);
         }
         if (request.IsFirstParty != null)
         {
-            _query["is_first_party"] = JsonUtils.Serialize(request.IsFirstParty.Value);
+            _queryBuilder.Add("is_first_party", request.IsFirstParty);
         }
         if (request.AppType != null)
         {
-            _query["app_type"] = JsonUtils.Serialize(request.AppType);
+            _queryBuilder.Add("app_type", request.AppType);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -659,7 +683,7 @@ public partial class ServiceClient : IServiceClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/clients",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -709,15 +733,18 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2);
         if (request.Fields != null)
         {
-            _query["fields"] = request.Fields;
+            _queryBuilder.Add("fields", request.Fields);
         }
         if (request.IncludeFields != null)
         {
-            _query["include_fields"] = JsonUtils.Serialize(request.IncludeFields.Value);
+            _queryBuilder.Add("include_fields", request.IncludeFields);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -728,7 +755,7 @@ public partial class ServiceClient : IServiceClient
                         "/api/clients/{0}",
                         ValueConvert.ToPathParameterString(clientId)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

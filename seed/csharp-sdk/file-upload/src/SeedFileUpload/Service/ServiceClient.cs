@@ -214,24 +214,27 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["integer"] = request.Integer.ToString();
-        _query["listOfStrings"] = request.ListOfStrings;
-        _query["optionalListOfStrings"] = request.OptionalListOfStrings;
+        var _queryBuilder = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 5)
+            .Add("integer", request.Integer)
+            .Add("listOfStrings", request.ListOfStrings)
+            .Add("optionalListOfStrings", request.OptionalListOfStrings);
         if (request.MaybeString != null)
         {
-            _query["maybeString"] = request.MaybeString;
+            _queryBuilder.Add("maybeString", request.MaybeString);
         }
         if (request.MaybeInteger != null)
         {
-            _query["maybeInteger"] = request.MaybeInteger.Value.ToString();
+            _queryBuilder.Add("maybeInteger", request.MaybeInteger);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/just-file-with-query-params",
-            Query = _query,
+            QueryString = _queryString,
             Options = options,
         };
         multipartFormRequest_.AddFileParameterPart("file", request.File);
@@ -258,21 +261,24 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 2);
         if (request.MaybeString != null)
         {
-            _query["maybeString"] = request.MaybeString;
+            _queryBuilder.Add("maybeString", request.MaybeString);
         }
         if (request.MaybeInteger != null)
         {
-            _query["maybeInteger"] = request.MaybeInteger.Value.ToString();
+            _queryBuilder.Add("maybeInteger", request.MaybeInteger);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/just-file-with-optional-query-params",
-            Query = _query,
+            QueryString = _queryString,
             Options = options,
         };
         multipartFormRequest_.AddFileParameterPart("file", request.File);

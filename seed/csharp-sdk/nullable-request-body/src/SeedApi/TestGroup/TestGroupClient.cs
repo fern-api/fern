@@ -18,15 +18,18 @@ public partial class TestGroupClient : ITestGroupClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 2);
         if (request.QueryParamObject != null)
         {
-            _query["query_param_object"] = JsonUtils.Serialize(request.QueryParamObject);
+            _queryBuilder.AddDeepObject("query_param_object", request.QueryParamObject);
         }
         if (request.QueryParamInteger != null)
         {
-            _query["query_param_integer"] = request.QueryParamInteger.Value.ToString();
+            _queryBuilder.Add("query_param_integer", request.QueryParamInteger);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -38,7 +41,7 @@ public partial class TestGroupClient : ITestGroupClient
                         ValueConvert.ToPathParameterString(request.PathParam)
                     ),
                     Body = request.Body,
-                    Query = _query,
+                    QueryString = _queryString,
                     ContentType = "application/json",
                     Options = options,
                 },

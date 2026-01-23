@@ -18,20 +18,21 @@ public partial class NullableClient : INullableClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["usernames"] = request.Usernames;
-        _query["activated"] = request
-            .Activated.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["tags"] = request.Tags;
+        var _queryBuilder = new SeedNullable.Core.QueryStringBuilder.Builder(capacity: 5)
+            .Add("usernames", request.Usernames)
+            .Add("activated", request.Activated)
+            .Add("tags", request.Tags);
         if (request.Avatar != null)
         {
-            _query["avatar"] = request.Avatar;
+            _queryBuilder.Add("avatar", request.Avatar);
         }
         if (request.Extra != null)
         {
-            _query["extra"] = JsonUtils.Serialize(request.Extra.Value);
+            _queryBuilder.Add("extra", request.Extra);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -39,7 +40,7 @@ public partial class NullableClient : INullableClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

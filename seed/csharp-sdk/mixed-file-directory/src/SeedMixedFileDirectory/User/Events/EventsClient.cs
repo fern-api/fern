@@ -23,11 +23,14 @@ public partial class EventsClient : IEventsClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedMixedFileDirectory.Core.QueryStringBuilder.Builder(capacity: 1);
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.Value.ToString();
+            _queryBuilder.Add("limit", request.Limit);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -35,7 +38,7 @@ public partial class EventsClient : IEventsClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/events/",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

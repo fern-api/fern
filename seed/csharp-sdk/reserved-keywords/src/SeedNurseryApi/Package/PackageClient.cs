@@ -20,8 +20,13 @@ public partial class PackageClient : IPackageClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["for"] = request.For;
+        var _queryBuilder = new SeedNurseryApi.Core.QueryStringBuilder.Builder(capacity: 1).Add(
+            "for",
+            request.For
+        );
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -29,7 +34,7 @@ public partial class PackageClient : IPackageClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

@@ -333,9 +333,11 @@ public partial class ParamsClient : IParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 2)
+                var _queryBuilder = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 2)
                     .Add("query", request.Query)
-                    .Add("number", request.Number)
+                    .Add("number", request.Number);
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
                 var response = await _client
                     .SendRequestAsync(
@@ -383,9 +385,11 @@ public partial class ParamsClient : IParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 2)
+                var _queryBuilder = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 2)
                     .Add("query", request.Query)
-                    .Add("number", request.Number)
+                    .Add("number", request.Number);
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
                 var response = await _client
                     .SendRequestAsync(
@@ -435,8 +439,11 @@ public partial class ParamsClient : IParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1)
-                    .Add("query", request.Query)
+                var _queryBuilder = new SeedExhaustive.Core.QueryStringBuilder.Builder(
+                    capacity: 1
+                ).Add("query", request.Query);
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
                 var response = await _client
                     .SendRequestAsync(
@@ -487,8 +494,11 @@ public partial class ParamsClient : IParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1)
-                    .Add("query", request.Query)
+                var _queryBuilder = new SeedExhaustive.Core.QueryStringBuilder.Builder(
+                    capacity: 1
+                ).Add("query", request.Query);
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
                 var response = await _client
                     .SendRequestAsync(

@@ -8,7 +8,7 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
+    internal Headers Headers { get; init; } = new();
 
     /// <summary>
     /// The Base URL for the API.
@@ -105,14 +105,12 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 #endif
     }
 
-    Headers IIdempotentRequestOptions.GetIdempotencyHeaders()
+    Dictionary<string, string> IIdempotentRequestOptions.GetIdempotencyHeaders()
     {
-        return new Headers(
-            new Dictionary<string, string>()
-            {
-                ["Idempotency-Key"] = IdempotencyKey,
-                ["Idempotency-Expiration"] = IdempotencyExpiration.ToString(),
-            }
-        );
+        return new Dictionary<string, string>()
+        {
+            ["Idempotency-Key"] = IdempotencyKey,
+            ["Idempotency-Expiration"] = IdempotencyExpiration.ToString(),
+        };
     }
 }

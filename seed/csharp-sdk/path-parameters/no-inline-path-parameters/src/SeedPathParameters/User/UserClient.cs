@@ -203,11 +203,14 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
+        var _queryBuilder = new SeedPathParameters.Core.QueryStringBuilder.Builder(capacity: 1);
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.Value.ToString();
+            _queryBuilder.Add("limit", request.Limit);
         }
+        var _queryString = _queryBuilder
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -219,7 +222,7 @@ public partial class UserClient : IUserClient
                         ValueConvert.ToPathParameterString(tenantId),
                         ValueConvert.ToPathParameterString(userId)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

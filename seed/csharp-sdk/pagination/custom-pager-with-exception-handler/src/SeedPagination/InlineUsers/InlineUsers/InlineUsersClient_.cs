@@ -54,13 +54,15 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 }
                 if (request.Order != null)
                 {
-                    _queryBuilder.AddDeepObject("order", request.Order);
+                    _queryBuilder.Add("order", request.Order);
                 }
                 if (request.StartingAfter != null)
                 {
                     _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -144,7 +146,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 {
                     _queryBuilder.Add("cursor", request.Cursor);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -313,13 +317,15 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 }
                 if (request.Order != null)
                 {
-                    _queryBuilder.AddDeepObject("order", request.Order);
+                    _queryBuilder.Add("order", request.Order);
                 }
                 if (request.StartingAfter != null)
                 {
                     _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -409,13 +415,15 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 }
                 if (request.Order != null)
                 {
-                    _queryBuilder.AddDeepObject("order", request.Order);
+                    _queryBuilder.Add("order", request.Order);
                 }
                 if (request.StartingAfter != null)
                 {
                     _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -583,9 +591,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 }
                 if (request.Order != null)
                 {
-                    _queryBuilder.AddDeepObject("order", request.Order);
+                    _queryBuilder.Add("order", request.Order);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -679,9 +689,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 }
                 if (request.Order != null)
                 {
-                    _queryBuilder.AddDeepObject("order", request.Order);
+                    _queryBuilder.Add("order", request.Order);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -765,7 +777,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 {
                     _queryBuilder.Add("cursor", request.Cursor);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -853,7 +867,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 {
                     _queryBuilder.Add("cursor", request.Cursor);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -936,7 +952,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 {
                     _queryBuilder.Add("starting_after", request.StartingAfter);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -1016,7 +1034,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 {
                     _queryBuilder.Add("offset", request.Offset);
                 }
-                var _queryString = _queryBuilder.Build();
+                var _queryString = _queryBuilder
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest

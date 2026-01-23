@@ -352,16 +352,98 @@ internal static class QueryStringBuilder
         }
 
         /// <summary>
-        /// Adds a simple parameter.
+        /// Adds a simple parameter. For collections, adds multiple key-value pairs (one per element).
         /// </summary>
         public Builder Add(string key, object? value)
         {
-            if (value is not null)
+            if (value is null)
             {
-                _params.Add(
-                    new KeyValuePair<string, string>(key, ValueConvert.ToQueryStringValue(value))
-                );
+                return this;
             }
+
+            // Handle string separately since it implements IEnumerable<char>
+            if (value is string stringValue)
+            {
+                _params.Add(new KeyValuePair<string, string>(key, stringValue));
+                return this;
+            }
+
+            // Handle collections (arrays, lists, etc.) - add each element as a separate key-value pair
+            if (
+                value
+                is global::System.Collections.IEnumerable enumerable
+                    and not global::System.Collections.IDictionary
+            )
+            {
+                foreach (var item in enumerable)
+                {
+                    if (item is not null)
+                    {
+                        _params.Add(
+                            new KeyValuePair<string, string>(
+                                key,
+                                ValueConvert.ToQueryStringValue(item)
+                            )
+                        );
+                    }
+                }
+                return this;
+            }
+
+            // Handle scalar values
+            _params.Add(
+                new KeyValuePair<string, string>(key, ValueConvert.ToQueryStringValue(value))
+            );
+            return this;
+        }
+
+        /// <summary>
+        /// Sets a parameter, removing any existing parameters with the same key before adding the new value.
+        /// For collections, removes all existing parameters with the key, then adds multiple key-value pairs (one per element).
+        /// This allows overriding parameters set earlier in the builder.
+        /// </summary>
+        public Builder Set(string key, object? value)
+        {
+            // Remove all existing parameters with this key
+            _params.RemoveAll(kv => kv.Key == key);
+
+            // Add the new value(s)
+            return Add(key, value);
+        }
+
+        /// <summary>
+        /// Merges additional query parameters with override semantics.
+        /// Groups parameters by key and calls Set() once per unique key.
+        /// This ensures that parameters with the same key are properly merged:
+        /// - If a key appears once, it's added as a single value
+        /// - If a key appears multiple times, all values are added as an array
+        /// - All parameters override any existing parameters with the same key
+        /// </summary>
+        public Builder MergeAdditional(
+            global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<
+                string,
+                string
+            >>? additionalParameters
+        )
+        {
+            if (additionalParameters is null)
+            {
+                return this;
+            }
+
+            // Group by key to handle multiple values for the same key correctly
+            var grouped = additionalParameters
+                .GroupBy(kv => kv.Key)
+                .Select(g => new global::System.Collections.Generic.KeyValuePair<string, object>(
+                    g.Key,
+                    g.Count() == 1 ? (object)g.First().Value : g.Select(kv => kv.Value).ToArray()
+                ));
+
+            foreach (var param in grouped)
+            {
+                Set(param.Key, param.Value);
+            }
+
             return this;
         }
 
