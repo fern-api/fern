@@ -389,6 +389,7 @@
                         }
                     },
                     "url": "https://localhost",
+                    "audiences": null,
                     "docs": null
                 }
             ]

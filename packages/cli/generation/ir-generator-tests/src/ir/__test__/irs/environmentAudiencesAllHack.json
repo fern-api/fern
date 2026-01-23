@@ -3876,6 +3876,7 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "audiences": null,
                     "docs": null
                 },
                 {
@@ -3900,6 +3901,7 @@
                         }
                     },
                     "url": "https://www.staging.yoursite.com",
+                    "audiences": null,
                     "docs": null
                 }
             ]

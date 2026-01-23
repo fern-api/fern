@@ -1075,6 +1075,7 @@
                         }
                     },
                     "url": "https://api.example.com",
+                    "audiences": null,
                     "docs": null
                 },
                 {
@@ -1099,6 +1100,7 @@
                         }
                     },
                     "url": "https://staging-api.example.com",
+                    "audiences": null,
                     "docs": null
                 }
             ]

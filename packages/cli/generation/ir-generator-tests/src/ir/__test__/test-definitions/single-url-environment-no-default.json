@@ -297,6 +297,7 @@
                         }
                     },
                     "url": "https://production.com/api",
+                    "audiences": null,
                     "docs": null
                 },
                 {
@@ -321,6 +322,7 @@
                         }
                     },
                     "url": "https://staging.com/api",
+                    "audiences": null,
                     "docs": null
                 }
             ]
