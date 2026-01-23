@@ -6367,9 +6367,6 @@ importers:
 
   packages/cli/generation/remote-generation/remote-workspace-runner:
     dependencies:
-      '@fern-api/api-workspace-commons':
-        specifier: workspace:*
-        version: link:../../../workspace/commons
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../../../auth
