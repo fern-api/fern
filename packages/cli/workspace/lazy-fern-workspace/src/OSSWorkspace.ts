@@ -405,12 +405,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public async toFernWorkspace(
         { context }: { context: TaskContext },
         settings?: OSSWorkspace.Settings,
-        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
-        generatorOverrides?: generatorsYml.OverridesSchema
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<FernWorkspace> {
-        // If specs override or generator overrides are provided, create a temporary workspace with the override specs
-        if (specsOverride != null || generatorOverrides != null) {
-            return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings, generatorOverrides);
+        // If specs override is provided, create a temporary workspace with the override specs
+        if (specsOverride != null) {
+            return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
         }
 
         const definition = await this.getDefinition({ context }, settings);
@@ -427,93 +426,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
-    private applyGeneratorOverridesToCurrentSpecs(
-        generatorOverrides: generatorsYml.OverridesSchema
-    ): (OpenAPISpec | ProtobufSpec)[] {
-        return this.specs.map((spec) => {
-            if (spec.type !== "openapi") {
-                return spec; // Only apply to OpenAPI specs
-            }
-
-            // Convert generator overrides to absolute paths
-            const generatorOverridePaths: AbsoluteFilePath[] = [];
-            if (Array.isArray(generatorOverrides)) {
-                generatorOverridePaths.push(
-                    ...generatorOverrides.map((override) => join(this.absoluteFilePath, RelativeFilePath.of(override)))
-                );
-            } else {
-                generatorOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(generatorOverrides)));
-            }
-
-            // Combine existing overrides with generator overrides
-            const existingOverrides = spec.absoluteFilepathToOverrides;
-            let combinedOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
-
-            if (existingOverrides == null) {
-                // No existing overrides, just use generator overrides
-                combinedOverrides =
-                    generatorOverridePaths.length === 1 ? generatorOverridePaths[0] : generatorOverridePaths;
-            } else {
-                // Combine existing overrides with generator overrides (spec first, then generator)
-                const allOverrides: AbsoluteFilePath[] = [];
-                if (Array.isArray(existingOverrides)) {
-                    allOverrides.push(...existingOverrides);
-                } else {
-                    allOverrides.push(existingOverrides);
-                }
-                allOverrides.push(...generatorOverridePaths);
-
-                combinedOverrides = allOverrides.length === 1 ? allOverrides[0] : allOverrides;
-            }
-
-            return {
-                ...spec,
-                absoluteFilepathToOverrides: combinedOverrides
-            };
-        });
-    }
-
     private async createWorkspaceWithSpecsOverride(
         { context }: { context: TaskContext },
-        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined,
-        settings?: OSSWorkspace.Settings,
-        generatorOverrides?: generatorsYml.OverridesSchema
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema,
+        settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
-        // If no specs override provided but generator overrides exist,
-        // apply generator overrides to current specs
-        if (specsOverride == null && generatorOverrides != null) {
-            const overrideSpecs = this.applyGeneratorOverridesToCurrentSpecs(generatorOverrides);
-            const overrideAllSpecs = this.allSpecs; // Use current allSpecs
-
-            const tempWorkspace = new OSSWorkspace({
-                allSpecs: overrideAllSpecs,
-                specs: overrideSpecs.filter((spec) => spec.type === "openapi" || spec.type === "protobuf") as (
-                    | OpenAPISpec
-                    | ProtobufSpec
-                )[],
-                generatorsConfiguration: this.generatorsConfiguration,
-                workspaceName: this.workspaceName,
-                cliVersion: this.cliVersion,
-                absoluteFilePath: this.absoluteFilePath,
-                changelog: this.changelog
-            });
-
-            const definition = await tempWorkspace.getDefinition({ context }, settings);
-            return new FernWorkspace({
-                absoluteFilePath: this.absoluteFilePath,
-                workspaceName: this.workspaceName,
-                generatorsConfiguration: this.generatorsConfiguration,
-                dependenciesConfiguration: {
-                    dependencies: {}
-                },
-                definition,
-                cliVersion: this.cliVersion,
-                sources: tempWorkspace.sources
-            });
-        }
-
         // Convert specsOverride to Spec[] format directly
-        const overrideSpecs = await this.convertSpecsOverrideToSpecs(specsOverride!, generatorOverrides);
+        const overrideSpecs = await this.convertSpecsOverrideToSpecs(specsOverride);
         const overrideAllSpecs = overrideSpecs.filter((spec) => spec.type !== "protobuf" || !spec.fromOpenAPI);
 
         // Create a new temporary workspace with the override specs
@@ -547,8 +466,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     }
 
     private async convertSpecsOverrideToSpecs(
-        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema,
-        generatorOverrides?: generatorsYml.OverridesSchema
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<Spec[]> {
         // Handle conjure schema case
         if (!Array.isArray(specsOverride)) {
@@ -561,7 +479,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
                 const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
                 // Handle both single override path and array of override paths
-                // Apply spec-level overrides first, then generator overrides
                 let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
                 const specOverridePaths: AbsoluteFilePath[] = [];
 
@@ -575,19 +492,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         );
                     } else {
                         specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides)));
-                    }
-                }
-
-                // Add generator-level overrides
-                if (generatorOverrides != null) {
-                    if (Array.isArray(generatorOverrides)) {
-                        specOverridePaths.push(
-                            ...generatorOverrides.map((override) =>
-                                join(this.absoluteFilePath, RelativeFilePath.of(override))
-                            )
-                        );
-                    } else {
-                        specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(generatorOverrides)));
                     }
                 }
 

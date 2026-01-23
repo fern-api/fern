@@ -73,8 +73,7 @@ export async function runLocalGenerationForWorkspace({
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
-                    specOverrides,
-                    generatorInvocation.overrides
+                    specOverrides
                 );
 
                 const dynamicGeneratorConfig = getDynamicGeneratorConfig({

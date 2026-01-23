@@ -21,12 +21,6 @@ export interface GeneratorInvocationSchema {
     "smart-casing"?: boolean;
     /** Override API import settings (this is applied across all specs) */
     api?: GeneratorsYml.GeneratorApiSettingsSchema;
-    /**
-     * Additional override file(s) to apply for this generator.
-     * These overrides are applied after the top-level spec overrides.
-     * Can be a single path or an array of paths applied sequentially.
-     */
-    overrides?: GeneratorsYml.OverridesSchema;
     /** Temporary way to unblock example serialization. */
     "disable-examples"?: boolean;
     /** Deprecated, use `metadata` on the output block instead. */

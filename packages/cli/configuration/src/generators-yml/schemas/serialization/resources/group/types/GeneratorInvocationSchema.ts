@@ -10,7 +10,6 @@ import { GithubConfigurationSchema } from "./GithubConfigurationSchema";
 import { GeneratorPublishMetadataSchema } from "./GeneratorPublishMetadataSchema";
 import { GeneratorSnippetsSchema } from "./GeneratorSnippetsSchema";
 import { GeneratorApiSettingsSchema } from "./GeneratorApiSettingsSchema";
-import { OverridesSchema } from "../../generators/types/OverridesSchema";
 
 export const GeneratorInvocationSchema: core.serialization.ObjectSchema<
     serializers.GeneratorInvocationSchema.Raw,
@@ -27,7 +26,6 @@ export const GeneratorInvocationSchema: core.serialization.ObjectSchema<
     "ir-version": core.serialization.string().optional(),
     "smart-casing": core.serialization.boolean().optional(),
     api: GeneratorApiSettingsSchema.optional(),
-    overrides: OverridesSchema.optional(),
     "disable-examples": core.serialization.boolean().optional(),
     "publish-metadata": GeneratorPublishMetadataSchema.optional(),
     autorelease: core.serialization.boolean().optional(),
@@ -46,7 +44,6 @@ export declare namespace GeneratorInvocationSchema {
         "ir-version"?: string | null;
         "smart-casing"?: boolean | null;
         api?: GeneratorApiSettingsSchema.Raw | null;
-        overrides?: OverridesSchema.Raw | null;
         "disable-examples"?: boolean | null;
         "publish-metadata"?: GeneratorPublishMetadataSchema.Raw | null;
         autorelease?: boolean | null;

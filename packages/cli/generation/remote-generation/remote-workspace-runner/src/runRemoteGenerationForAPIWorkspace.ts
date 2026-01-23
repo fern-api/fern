@@ -71,12 +71,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     generatorInvocation.apiOverride?.specs ??
                     (workspaceSpecs as generatorsYml.ApiConfigurationV2SpecsSchema | undefined);
 
-                const fernWorkspace = await workspace.toFernWorkspace(
-                    { context },
-                    settings,
-                    specOverrides,
-                    generatorInvocation.overrides
-                );
+                const fernWorkspace = await workspace.toFernWorkspace({ context }, settings, specOverrides);
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,

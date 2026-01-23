@@ -603,7 +603,6 @@ async function convertGenerator({
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined,
-        overrides: generator.overrides,
         apiOverride:
             generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
                 ? {
