@@ -171,7 +171,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         mediaTypeObject
     }: {
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
-    }): Record<string, unknown> | undefined {
+    }): Record<string, OpenAPIV3_1.ExampleObject> | undefined {
         const examples = this.context.getNamedExamplesFromMediaTypeObject({
             mediaTypeObject,
             breadcrumbs: this.breadcrumbs,
@@ -183,7 +183,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         }
 
         const usedExampleNames = new Set<string>();
-        const result: Record<string, unknown> = {};
+        const result: Record<string, OpenAPIV3_1.ExampleObject> = {};
 
         for (const [key, example] of examples) {
             const resolvedExample = this.context.resolveExampleWithValue(example);
@@ -195,7 +195,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             usedExampleNames.add(exampleName);
 
             if (resolvedExample != null) {
-                result[exampleName] = resolvedExample;
+                result[exampleName] = resolvedExample as OpenAPIV3_1.ExampleObject;
             }
         }
 
