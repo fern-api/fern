@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_user</a>(request) -> Seed::Types::User</code></summary>
+<details><summary><code>client.<a href="/lib/fern_property_access/client.rb">create_user</a>(request) -> FernPropertyAccess::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ client.create_user(
 <dl>
 <dd>
 
-**request:** `Seed::Types::User` 
+**request:** `FernPropertyAccess::Types::User` 
     
 </dd>
 </dl>
@@ -46,7 +46,7 @@ client.create_user(
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernPropertyAccess::RequestOptions` 
     
 </dd>
 </dl>

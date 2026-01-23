@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_usernames_custom</a>() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/lib/fern_pagination_custom/users/client.rb">list_usernames_custom</a>() -> FernPaginationCustom::Types::UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ the next page of results.
 <dl>
 <dd>
 
-**request_options:** `Seed::Users::RequestOptions` 
+**request_options:** `FernPaginationCustom::Users::RequestOptions` 
     
 </dd>
 </dl>

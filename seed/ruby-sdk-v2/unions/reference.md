@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.<a href="/lib/seed/bigunion/client.rb">get</a>(id) -> Seed::Bigunion::Types::BigUnion</code></summary>
+<details><summary><code>client.bigunion.<a href="/lib/fern_unions/bigunion/client.rb">get</a>(id) -> FernUnions::Bigunion::Types::BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.bigunion.get(id: 'id');
 <dl>
 <dd>
 
-**request_options:** `Seed::Bigunion::RequestOptions` 
+**request_options:** `FernUnions::Bigunion::RequestOptions` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.bigunion.get(id: 'id');
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="/lib/seed/bigunion/client.rb">update</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.bigunion.<a href="/lib/fern_unions/bigunion/client.rb">update</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -76,7 +76,7 @@ client.bigunion.update();
 <dl>
 <dd>
 
-**request:** `Seed::Bigunion::Types::BigUnion` 
+**request:** `FernUnions::Bigunion::Types::BigUnion` 
     
 </dd>
 </dl>
@@ -84,7 +84,7 @@ client.bigunion.update();
 <dl>
 <dd>
 
-**request_options:** `Seed::Bigunion::RequestOptions` 
+**request_options:** `FernUnions::Bigunion::RequestOptions` 
     
 </dd>
 </dl>
@@ -96,7 +96,7 @@ client.bigunion.update();
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="/lib/seed/bigunion/client.rb">update_many</a>(request) -> Internal::Types::Hash[String, Internal::Types::Boolean]</code></summary>
+<details><summary><code>client.bigunion.<a href="/lib/fern_unions/bigunion/client.rb">update_many</a>(request) -> Internal::Types::Hash[String, Internal::Types::Boolean]</code></summary>
 <dl>
 <dd>
 
@@ -124,7 +124,7 @@ client.bigunion.update_many(request: []);
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Bigunion::Types::BigUnion]` 
+**request:** `Internal::Types::Array[FernUnions::Bigunion::Types::BigUnion]` 
     
 </dd>
 </dl>
@@ -132,7 +132,7 @@ client.bigunion.update_many(request: []);
 <dl>
 <dd>
 
-**request_options:** `Seed::Bigunion::RequestOptions` 
+**request_options:** `FernUnions::Bigunion::RequestOptions` 
     
 </dd>
 </dl>
@@ -145,7 +145,7 @@ client.bigunion.update_many(request: []);
 </details>
 
 ## Union
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get</a>(id) -> Seed::Union::Types::Shape</code></summary>
+<details><summary><code>client.union.<a href="/lib/fern_unions/union/client.rb">get</a>(id) -> FernUnions::Union::Types::Shape</code></summary>
 <dl>
 <dd>
 
@@ -181,7 +181,7 @@ client.bigunion.get(id: 'id');
 <dl>
 <dd>
 
-**request_options:** `Seed::Union::RequestOptions` 
+**request_options:** `FernUnions::Union::RequestOptions` 
     
 </dd>
 </dl>
@@ -193,7 +193,7 @@ client.bigunion.get(id: 'id');
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">update</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.<a href="/lib/fern_unions/union/client.rb">update</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -221,7 +221,7 @@ client.union.update();
 <dl>
 <dd>
 
-**request:** `Seed::Union::Types::Shape` 
+**request:** `FernUnions::Union::Types::Shape` 
     
 </dd>
 </dl>
@@ -229,7 +229,7 @@ client.union.update();
 <dl>
 <dd>
 
-**request_options:** `Seed::Union::RequestOptions` 
+**request_options:** `FernUnions::Union::RequestOptions` 
     
 </dd>
 </dl>

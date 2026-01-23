@@ -280,7 +280,7 @@ export class UserClient {
             bytes,
             user,
             userList: toJson(userList),
-            optionalDeadline,
+            optionalDeadline: optionalDeadline != null ? optionalDeadline : undefined,
             keyValue: toJson(keyValue),
             optionalString,
             nestedUser,

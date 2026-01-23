@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">search</a>() -> Seed::Types::SearchResponse</code></summary>
+<details><summary><code>client.<a href="/lib/fern_query_parameters_openapi/client.rb">search</a>() -> FernQueryParametersOpenapi::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ client.search(
 <dl>
 <dd>
 
-**user:** `Seed::Types::User` 
+**user:** `FernQueryParametersOpenapi::Types::User` 
     
 </dd>
 </dl>
@@ -109,7 +109,7 @@ client.search(
 <dl>
 <dd>
 
-**user_list:** `Seed::Types::User` 
+**user_list:** `FernQueryParametersOpenapi::Types::User` 
     
 </dd>
 </dl>
@@ -141,7 +141,7 @@ client.search(
 <dl>
 <dd>
 
-**nested_user:** `Seed::Types::NestedUser` 
+**nested_user:** `FernQueryParametersOpenapi::Types::NestedUser` 
     
 </dd>
 </dl>
@@ -149,7 +149,7 @@ client.search(
 <dl>
 <dd>
 
-**optional_user:** `Seed::Types::User` 
+**optional_user:** `FernQueryParametersOpenapi::Types::User` 
     
 </dd>
 </dl>
@@ -157,7 +157,7 @@ client.search(
 <dl>
 <dd>
 
-**exclude_user:** `Seed::Types::User` 
+**exclude_user:** `FernQueryParametersOpenapi::Types::User` 
     
 </dd>
 </dl>
@@ -173,7 +173,7 @@ client.search(
 <dl>
 <dd>
 
-**neighbor:** `Seed::Types::SearchRequestNeighbor` 
+**neighbor:** `FernQueryParametersOpenapi::Types::SearchRequestNeighbor` 
     
 </dd>
 </dl>
@@ -181,7 +181,7 @@ client.search(
 <dl>
 <dd>
 
-**neighbor_required:** `Seed::Types::SearchRequestNeighborRequired` 
+**neighbor_required:** `FernQueryParametersOpenapi::Types::SearchRequestNeighborRequired` 
     
 </dd>
 </dl>
@@ -189,7 +189,7 @@ client.search(
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernQueryParametersOpenapi::RequestOptions` 
     
 </dd>
 </dl>

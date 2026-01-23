@@ -1,0 +1,8 @@
+api:
+  specs:
+    - openapi: ../api-one.yml
+    - openapi: ../api-two.yml
+    - openapi: ../api-three.yml
+    - openapi: ../api-four.yml
+  settings:
+    group-multi-api-environments: true

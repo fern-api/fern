@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { randomUUID } from "crypto";
 import { mkdir, rm, writeFile } from "fs/promises";
@@ -5,15 +6,15 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { SdkConfigConverter } from "../sdk/config/SdkConfigConverter";
 import type { Target } from "../sdk/config/Target";
+import { SdkConfigConverter } from "../sdk/converter/SdkConfigConverter";
 
 describe("SdkConfigConverter", () => {
-    let testDir: string;
+    let testDir: AbsoluteFilePath;
     let converter: SdkConfigConverter;
 
     beforeEach(async () => {
-        testDir = join(tmpdir(), `fern-sdk-config-test-${randomUUID()}`);
+        testDir = AbsoluteFilePath.of(join(tmpdir(), `fern-sdk-config-test-${randomUUID()}`));
         await mkdir(testDir, { recursive: true });
         converter = new SdkConfigConverter({ logger: NOOP_LOGGER });
     });
