@@ -5,13 +5,15 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import asdict
-from typing import Any, Callable, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
 import pydantic
 import typing_extensions
 from .datetime_utils import serialize_datetime
-from .http_sse._models import ServerSentEvent
 from .serialization import convert_and_respect_annotation_metadata
+
+if TYPE_CHECKING:
+    from .http_sse._models import ServerSentEvent
 from pydantic.datetime_parse import parse_date as parse_date
 from pydantic.datetime_parse import parse_datetime as parse_datetime
 from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined]
@@ -103,7 +105,7 @@ def _is_string_type(type_: Type[Any]) -> bool:
     return False
 
 
-def parse_sse_obj(sse: ServerSentEvent, type_: Type[T]) -> T:
+def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
     """
     Parse a ServerSentEvent into the appropriate type.
 
@@ -123,6 +125,9 @@ def parse_sse_obj(sse: ServerSentEvent, type_: Type[T]) -> T:
 
     Returns:
         The parsed object of type T
+
+    Note:
+        This function is only available in SDK contexts where http_sse module exists.
     """
     sse_event = asdict(sse)
     discriminator, variants = _get_discriminator_and_variants(type_)

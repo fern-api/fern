@@ -5,13 +5,30 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import asdict
-from typing import Any, Callable, ClassVar, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    List,
+    Mapping,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import pydantic
 import typing_extensions
-from .http_sse._models import ServerSentEvent
 
 _logger = logging.getLogger(__name__)
+
+if TYPE_CHECKING:
+    from .http_sse._models import ServerSentEvent
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -118,7 +135,7 @@ def _is_string_type(type_: Type[Any]) -> bool:
     return False
 
 
-def parse_sse_obj(sse: ServerSentEvent, type_: Type[T]) -> T:
+def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
     """
     Parse a ServerSentEvent into the appropriate type.
 
@@ -150,6 +167,9 @@ def parse_sse_obj(sse: ServerSentEvent, type_: Type[T]) -> T:
 
     Returns:
         The parsed object of type T
+
+    Note:
+        This function is only available in SDK contexts where http_sse module exists.
     """
     sse_event = asdict(sse)
     discriminator, variants = _get_discriminator_and_variants(type_)
