@@ -824,9 +824,21 @@ export class ApiReferenceNodeConverter {
             const subpackageChildren = this.#convertApiDefinitionPackageId(subpackageId, slug, parentAvailability);
             const tagDescriptionPageId = this.createTagDescriptionPageId(subpackage);
 
-            // Add subpackage if it has children OR if it has a tag description page (even with no children).
-            // This ensures tag description pages are shown even when all endpoints are explicitly listed in the layout.
-            if (subpackageChildren.length > 0 || tagDescriptionPageId != null) {
+            // Check if any endpoints from this subpackage were visited (explicitly listed in the layout).
+            // This determines if the subpackage is relevant to the current API section.
+            const subpackageHolder = this.#holder.subpackages.get(APIV1Read.SubpackageId(subpackageId));
+            const hasVisitedEndpoints = subpackageHolder
+                ? Array.from(subpackageHolder.endpoints.values()).some((endpoint) => {
+                      const endpointId = this.#holder.getEndpointId(endpoint);
+                      return endpointId != null && this.#visitedEndpoints.has(endpointId);
+                  })
+                : false;
+
+            // Add subpackage if:
+            // 1. It has children (unvisited endpoints/subpackages), OR
+            // 2. It has a tag description page AND some of its endpoints were visited (relevant to this API section)
+            // This prevents adding tag description pages for subpackages that are not relevant to the current API section.
+            if (subpackageChildren.length > 0 || (tagDescriptionPageId != null && hasVisitedEndpoints)) {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
                     type: "apiPackage",
