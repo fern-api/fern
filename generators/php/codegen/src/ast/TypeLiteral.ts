@@ -45,6 +45,7 @@ interface DateTime {
 interface File {
     type: "file";
     value: string;
+    namespace?: string;
 }
 
 interface Float {
@@ -115,7 +116,9 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "file": {
-                writer.writeNode(buildFileFromString({ writer, value: this.internalType.value }));
+                writer.writeNode(
+                    buildFileFromString({ writer, value: this.internalType.value, namespace: this.internalType.namespace })
+                );
                 break;
             }
             case "float": {
@@ -257,8 +260,8 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "class", reference, fields });
     }
 
-    public static file(value: string): TypeLiteral {
-        return new this({ type: "file", value });
+    public static file(value: string, namespace?: string): TypeLiteral {
+        return new this({ type: "file", value, namespace });
     }
 
     public static float(value: number): TypeLiteral {
@@ -386,14 +389,23 @@ function buildDateTimeFromString({ writer, value }: { writer: Writer; value: str
         arguments_: [new CodeBlock(`'${value}'`)]
     });
 }
-function buildFileFromString({ writer, value }: { writer: Writer; value: string }): MethodInvocation {
+function buildFileFromString({
+    writer,
+    value,
+    namespace
+}: {
+    writer: Writer;
+    value: string;
+    namespace?: string;
+}): MethodInvocation {
     return new MethodInvocation({
         on: new ClassReference({
             name: "File",
-            namespace: `${writer.rootNamespace}\\Utils`
+            namespace: namespace != null ? `${namespace}\\Utils` : `${writer.rootNamespace}\\Utils`
         }),
         method: "createFromString",
-        arguments_: [new CodeBlock(`"${value}"`)]
+        arguments_: [new CodeBlock(`"${value}"`), new CodeBlock(`"${value}"`)],
+        static_: true
     });
 }
 

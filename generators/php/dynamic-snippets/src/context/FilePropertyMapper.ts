@@ -66,7 +66,7 @@ export class FilePropertyMapper {
         if (fileValue == null) {
             fileValue = `example_${property.wireValue ?? "file"}`;
         }
-        return php.TypeLiteral.file(fileValue);
+        return php.TypeLiteral.file(fileValue, this.context.rootNamespace);
     }
 
     private getArrayFileProperty({
@@ -79,9 +79,11 @@ export class FilePropertyMapper {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
             const fallback = `example_${property.wireValue ?? "files"}`;
-            return php.TypeLiteral.list({ values: [php.TypeLiteral.file(fallback)] });
+            return php.TypeLiteral.list({ values: [php.TypeLiteral.file(fallback, this.context.rootNamespace)] });
         }
-        return php.TypeLiteral.list({ values: fileValues.map((value) => php.TypeLiteral.file(value)) });
+        return php.TypeLiteral.list({
+            values: fileValues.map((value) => php.TypeLiteral.file(value, this.context.rootNamespace))
+        });
     }
 
     private getBodyProperty({
