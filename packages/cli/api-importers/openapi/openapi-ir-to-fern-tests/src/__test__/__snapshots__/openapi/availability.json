@@ -35,6 +35,32 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "aStableEndpoint": {
+              "auth": undefined,
+              "availability": "generally-available",
+              "display-name": "A stable endpoint",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "not_deprecated_setting": true,
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/stable-endpoint",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
             "anAlphaEndpoint": {
               "auth": undefined,
               "availability": undefined,
@@ -522,6 +548,21 @@
         type: NotDeprecatedSettings
         status-code: 200
       availability: pre-release
+      examples:
+        - response:
+            body:
+              not_deprecated_setting: true
+    aStableEndpoint:
+      path: /stable-endpoint
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: A stable endpoint
+      response:
+        docs: OK
+        type: NotDeprecatedSettings
+        status-code: 200
+      availability: generally-available
       examples:
         - response:
             body:

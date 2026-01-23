@@ -11,7 +11,7 @@ export interface BasicSecuritySchemeNames {
 
 export function getFernAvailability(operationObject: OpenAPIV3.OperationObject): undefined | Availability {
     const availability = getExtension<string>(operationObject, FernOpenAPIExtension.AVAILABILITY);
-    if (availability === "ga" || availability === "generally-available") {
+    if (availability === "ga" || availability === "generally-available" || availability === "stable") {
         return Availability.GenerallyAvailable;
     } else if (availability === "beta" || availability === "pre-release" || availability === "preview") {
         return Availability.Beta;

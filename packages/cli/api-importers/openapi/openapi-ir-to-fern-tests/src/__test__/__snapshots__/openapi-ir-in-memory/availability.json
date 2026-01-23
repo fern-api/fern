@@ -286,6 +286,24 @@
           },
           "x-fern-availability": "preview"
         }
+      },
+      "/stable-endpoint": {
+        "get": {
+          "summary": "A stable endpoint",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NotDeprecatedSettings"
+                  }
+                }
+              }
+            }
+          },
+          "x-fern-availability": "stable"
+        }
       }
     },
     "components": {
