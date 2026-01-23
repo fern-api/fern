@@ -394,40 +394,47 @@
       "displayName": undefined,
       "name": "EventRequest",
       "shape": {
-        "type": "undiscriminatedUnion",
+        "discriminant": "type",
+        "type": "discriminatedUnion",
         "variants": [
           {
+            "additionalProperties": {
+              "extends": [
+                "UserEvent",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
             "availability": undefined,
             "description": undefined,
+            "discriminantValue": "user",
             "displayName": "user",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "UserEvent",
-            },
-            "typeName": "UserEvent",
           },
           {
+            "additionalProperties": {
+              "extends": [
+                "SystemEvent",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
             "availability": undefined,
             "description": undefined,
+            "discriminantValue": "system",
             "displayName": "system",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "SystemEvent",
-            },
-            "typeName": "SystemEvent",
           },
           {
+            "additionalProperties": {
+              "extends": [
+                "ErrorEvent",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
             "availability": undefined,
             "description": undefined,
+            "discriminantValue": "error",
             "displayName": "error",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "ErrorEvent",
-            },
-            "typeName": "ErrorEvent",
           },
         ],
       },

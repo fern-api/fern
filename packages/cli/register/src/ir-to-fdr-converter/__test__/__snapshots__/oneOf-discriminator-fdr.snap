@@ -370,29 +370,34 @@
       "displayName": undefined,
       "name": "OneOfExampleRequestBadRequestError",
       "shape": {
-        "type": "undiscriminatedUnion",
+        "discriminant": "errorType",
+        "type": "discriminatedUnion",
         "variants": [
           {
+            "additionalProperties": {
+              "extends": [
+                "ValidationError",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
             "availability": undefined,
             "description": undefined,
+            "discriminantValue": "validation",
             "displayName": "validation",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "ValidationError",
-            },
-            "typeName": "ValidationError",
           },
           {
+            "additionalProperties": {
+              "extends": [
+                "InvalidTypeError",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
             "availability": undefined,
             "description": undefined,
+            "discriminantValue": "invalidType",
             "displayName": "invalidType",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "InvalidTypeError",
-            },
-            "typeName": "InvalidTypeError",
           },
         ],
       },
@@ -467,29 +472,34 @@
       "displayName": undefined,
       "name": "oneOf Examples_oneOfExample_Request",
       "shape": {
-        "type": "undiscriminatedUnion",
+        "discriminant": "type",
+        "type": "discriminatedUnion",
         "variants": [
           {
+            "additionalProperties": {
+              "extends": [
+                "OneOfDiscriminatedA",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
             "availability": undefined,
             "description": undefined,
+            "discriminantValue": "variantA",
             "displayName": "variantA",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "OneOfDiscriminatedA",
-            },
-            "typeName": "OneOfDiscriminatedA",
           },
           {
+            "additionalProperties": {
+              "extends": [
+                "OneOfDiscriminatedB",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
             "availability": undefined,
             "description": undefined,
+            "discriminantValue": "variantB",
             "displayName": "variantB",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "OneOfDiscriminatedB",
-            },
-            "typeName": "OneOfDiscriminatedB",
           },
         ],
       },

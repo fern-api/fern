@@ -1276,19 +1276,66 @@
       },
       "shape": {
         "_visit": [Function],
-        "members": [
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "errorType",
+              "unsafeName": "errorType",
+            },
+            "originalName": "errorType",
+            "pascalCase": {
+              "safeName": "ErrorType",
+              "unsafeName": "ErrorType",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ERROR_TYPE",
+              "unsafeName": "ERROR_TYPE",
+            },
+            "snakeCase": {
+              "safeName": "error_type",
+              "unsafeName": "error_type",
+            },
+          },
+          "wireValue": "errorType",
+        },
+        "extends": [],
+        "type": "union",
+        "types": [
           {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "validation",
+                  "unsafeName": "validation",
+                },
+                "originalName": "validation",
+                "pascalCase": {
+                  "safeName": "Validation",
+                  "unsafeName": "Validation",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "VALIDATION",
+                  "unsafeName": "VALIDATION",
+                },
+                "snakeCase": {
+                  "safeName": "validation",
+                  "unsafeName": "validation",
+                },
+              },
+              "wireValue": "validation",
+            },
+            "displayName": "validation",
             "docs": undefined,
-            "type": {
+            "shape": {
               "_visit": [Function],
-              "default": undefined,
               "displayName": "validation",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
-              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "validationError",
@@ -1308,22 +1355,44 @@
                   "unsafeName": "validation_error",
                 },
               },
-              "type": "named",
+              "propertiesType": "samePropertiesAsObject",
               "typeId": "ValidationError",
             },
           },
           {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "invalidType",
+                  "unsafeName": "invalidType",
+                },
+                "originalName": "invalidType",
+                "pascalCase": {
+                  "safeName": "InvalidType",
+                  "unsafeName": "InvalidType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "INVALID_TYPE",
+                  "unsafeName": "INVALID_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "invalid_type",
+                  "unsafeName": "invalid_type",
+                },
+              },
+              "wireValue": "invalidType",
+            },
+            "displayName": "invalidType",
             "docs": undefined,
-            "type": {
+            "shape": {
               "_visit": [Function],
-              "default": undefined,
               "displayName": "invalidType",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
-              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "invalidTypeError",
@@ -1343,12 +1412,11 @@
                   "unsafeName": "invalid_type_error",
                 },
               },
-              "type": "named",
+              "propertiesType": "samePropertiesAsObject",
               "typeId": "InvalidTypeError",
             },
           },
         ],
-        "type": "undiscriminatedUnion",
       },
       "source": undefined,
       "userProvidedExamples": [],
@@ -1613,19 +1681,66 @@
       },
       "shape": {
         "_visit": [Function],
-        "members": [
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "type_",
+              "unsafeName": "type",
+            },
+            "originalName": "type",
+            "pascalCase": {
+              "safeName": "Type",
+              "unsafeName": "Type",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPE",
+              "unsafeName": "TYPE",
+            },
+            "snakeCase": {
+              "safeName": "type_",
+              "unsafeName": "type",
+            },
+          },
+          "wireValue": "type",
+        },
+        "extends": [],
+        "type": "union",
+        "types": [
           {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "variantA",
+                  "unsafeName": "variantA",
+                },
+                "originalName": "variantA",
+                "pascalCase": {
+                  "safeName": "VariantA",
+                  "unsafeName": "VariantA",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "VARIANT_A",
+                  "unsafeName": "VARIANT_A",
+                },
+                "snakeCase": {
+                  "safeName": "variant_a",
+                  "unsafeName": "variant_a",
+                },
+              },
+              "wireValue": "variantA",
+            },
+            "displayName": "variantA",
             "docs": undefined,
-            "type": {
+            "shape": {
               "_visit": [Function],
-              "default": undefined,
               "displayName": "variantA",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
-              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "oneOfDiscriminatedA",
@@ -1645,22 +1760,44 @@
                   "unsafeName": "one_of_discriminated_a",
                 },
               },
-              "type": "named",
+              "propertiesType": "samePropertiesAsObject",
               "typeId": "OneOfDiscriminatedA",
             },
           },
           {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "variantB",
+                  "unsafeName": "variantB",
+                },
+                "originalName": "variantB",
+                "pascalCase": {
+                  "safeName": "VariantB",
+                  "unsafeName": "VariantB",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "VARIANT_B",
+                  "unsafeName": "VARIANT_B",
+                },
+                "snakeCase": {
+                  "safeName": "variant_b",
+                  "unsafeName": "variant_b",
+                },
+              },
+              "wireValue": "variantB",
+            },
+            "displayName": "variantB",
             "docs": undefined,
-            "type": {
+            "shape": {
               "_visit": [Function],
-              "default": undefined,
               "displayName": "variantB",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
-              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "oneOfDiscriminatedB",
@@ -1680,12 +1817,11 @@
                   "unsafeName": "one_of_discriminated_b",
                 },
               },
-              "type": "named",
+              "propertiesType": "samePropertiesAsObject",
               "typeId": "OneOfDiscriminatedB",
             },
           },
         ],
-        "type": "undiscriminatedUnion",
       },
       "source": undefined,
       "userProvidedExamples": [],
