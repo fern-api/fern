@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">upload</a>(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_bytes_upload/service/client.rb">upload</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.upload();
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernBytesUpload::Service::RequestOptions` 
     
 </dd>
 </dl>

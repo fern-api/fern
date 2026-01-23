@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>client.package.<a href="/lib/seed/package/client.rb">test</a>() -> </code></summary>
+<details><summary><code>client.package.<a href="/lib/fern_reserved_keywords/package/client.rb">test</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.package.test(for_: 'for');
 <dl>
 <dd>
 
-**request_options:** `Seed::Package::RequestOptions` 
+**request_options:** `FernReservedKeywords::Package::RequestOptions` 
     
 </dd>
 </dl>

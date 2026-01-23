@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">upload_json_document</a>(request) -> Seed::Types::UploadDocumentResponse</code></summary>
+<details><summary><code>client.<a href="/lib/fern_multiple_request_bodies/client.rb">upload_json_document</a>(request) -> FernMultipleRequestBodies::Types::UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ client.upload_json_document();
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernMultipleRequestBodies::RequestOptions` 
     
 </dd>
 </dl>

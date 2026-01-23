@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/fern_oauth_client_credentials_reference/auth/client.rb">get_token</a>(request) -> FernOauthClientCredentialsReference::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**request:** `Seed::Auth::Types::GetTokenRequest` 
+**request:** `FernOauthClientCredentialsReference::Auth::Types::GetTokenRequest` 
     
 </dd>
 </dl>
@@ -39,7 +39,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**request_options:** `Seed::Auth::RequestOptions` 
+**request_options:** `FernOauthClientCredentialsReference::Auth::RequestOptions` 
     
 </dd>
 </dl>
@@ -52,7 +52,7 @@ client.auth.get_token(
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">get_something</a>() -> </code></summary>
+<details><summary><code>client.simple.<a href="/lib/fern_oauth_client_credentials_reference/simple/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.simple.get_something();
 <dl>
 <dd>
 
-**request_options:** `Seed::Simple::RequestOptions` 
+**request_options:** `FernOauthClientCredentialsReference::Simple::RequestOptions` 
     
 </dd>
 </dl>

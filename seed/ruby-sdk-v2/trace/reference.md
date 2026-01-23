@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.v_2.<a href="/lib/seed/v_2/client.rb">test</a>() -> </code></summary>
+<details><summary><code>client.v_2.<a href="/lib/fern_trace/v_2/client.rb">test</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.v_2.test();
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::RequestOptions` 
+**request_options:** `FernTrace::V2::RequestOptions` 
     
 </dd>
 </dl>
@@ -41,7 +41,7 @@ client.v_2.test();
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">update_test_submission_status</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/fern_trace/admin/client.rb">update_test_submission_status</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.admin.update_test_submission_status(
 <dl>
 <dd>
 
-**request:** `Seed::Submission::Types::TestSubmissionStatus` 
+**request:** `FernTrace::Submission::Types::TestSubmissionStatus` 
     
 </dd>
 </dl>
@@ -88,7 +88,7 @@ client.admin.update_test_submission_status(
 <dl>
 <dd>
 
-**request_options:** `Seed::Admin::RequestOptions` 
+**request_options:** `FernTrace::Admin::RequestOptions` 
     
 </dd>
 </dl>
@@ -100,7 +100,7 @@ client.admin.update_test_submission_status(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">send_test_submission_update</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/fern_trace/admin/client.rb">send_test_submission_update</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -140,7 +140,7 @@ client.admin.send_test_submission_update(
 <dl>
 <dd>
 
-**request:** `Seed::Submission::Types::TestSubmissionUpdate` 
+**request:** `FernTrace::Submission::Types::TestSubmissionUpdate` 
     
 </dd>
 </dl>
@@ -148,7 +148,7 @@ client.admin.send_test_submission_update(
 <dl>
 <dd>
 
-**request_options:** `Seed::Admin::RequestOptions` 
+**request_options:** `FernTrace::Admin::RequestOptions` 
     
 </dd>
 </dl>
@@ -160,7 +160,7 @@ client.admin.send_test_submission_update(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">update_workspace_submission_status</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/fern_trace/admin/client.rb">update_workspace_submission_status</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -199,7 +199,7 @@ client.admin.update_workspace_submission_status(
 <dl>
 <dd>
 
-**request:** `Seed::Submission::Types::WorkspaceSubmissionStatus` 
+**request:** `FernTrace::Submission::Types::WorkspaceSubmissionStatus` 
     
 </dd>
 </dl>
@@ -207,7 +207,7 @@ client.admin.update_workspace_submission_status(
 <dl>
 <dd>
 
-**request_options:** `Seed::Admin::RequestOptions` 
+**request_options:** `FernTrace::Admin::RequestOptions` 
     
 </dd>
 </dl>
@@ -219,7 +219,7 @@ client.admin.update_workspace_submission_status(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">send_workspace_submission_update</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/fern_trace/admin/client.rb">send_workspace_submission_update</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -259,7 +259,7 @@ client.admin.send_workspace_submission_update(
 <dl>
 <dd>
 
-**request:** `Seed::Submission::Types::WorkspaceSubmissionUpdate` 
+**request:** `FernTrace::Submission::Types::WorkspaceSubmissionUpdate` 
     
 </dd>
 </dl>
@@ -267,7 +267,7 @@ client.admin.send_workspace_submission_update(
 <dl>
 <dd>
 
-**request_options:** `Seed::Admin::RequestOptions` 
+**request_options:** `FernTrace::Admin::RequestOptions` 
     
 </dd>
 </dl>
@@ -279,7 +279,7 @@ client.admin.send_workspace_submission_update(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case</a>(submission_id, test_case_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/fern_trace/admin/client.rb">store_traced_test_case</a>(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -387,7 +387,7 @@ client.admin.store_traced_test_case(
 <dl>
 <dd>
 
-**result:** `Seed::Submission::Types::TestCaseResultWithStdout` 
+**result:** `FernTrace::Submission::Types::TestCaseResultWithStdout` 
     
 </dd>
 </dl>
@@ -395,7 +395,7 @@ client.admin.store_traced_test_case(
 <dl>
 <dd>
 
-**trace_responses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
+**trace_responses:** `Internal::Types::Array[FernTrace::Submission::Types::TraceResponse]` 
     
 </dd>
 </dl>
@@ -403,7 +403,7 @@ client.admin.store_traced_test_case(
 <dl>
 <dd>
 
-**request_options:** `Seed::Admin::RequestOptions` 
+**request_options:** `FernTrace::Admin::RequestOptions` 
     
 </dd>
 </dl>
@@ -415,7 +415,7 @@ client.admin.store_traced_test_case(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case_v_2</a>(submission_id, test_case_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/fern_trace/admin/client.rb">store_traced_test_case_v_2</a>(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -521,7 +521,7 @@ client.admin.store_traced_test_case_v_2(
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Submission::Types::TraceResponseV2]` 
+**request:** `Internal::Types::Array[FernTrace::Submission::Types::TraceResponseV2]` 
     
 </dd>
 </dl>
@@ -529,7 +529,7 @@ client.admin.store_traced_test_case_v_2(
 <dl>
 <dd>
 
-**request_options:** `Seed::Admin::RequestOptions` 
+**request_options:** `FernTrace::Admin::RequestOptions` 
     
 </dd>
 </dl>
@@ -541,7 +541,7 @@ client.admin.store_traced_test_case_v_2(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/fern_trace/admin/client.rb">store_traced_workspace</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -638,7 +638,7 @@ client.admin.store_traced_workspace(
 <dl>
 <dd>
 
-**workspace_run_details:** `Seed::Submission::Types::WorkspaceRunDetails` 
+**workspace_run_details:** `FernTrace::Submission::Types::WorkspaceRunDetails` 
     
 </dd>
 </dl>
@@ -646,7 +646,7 @@ client.admin.store_traced_workspace(
 <dl>
 <dd>
 
-**trace_responses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
+**trace_responses:** `Internal::Types::Array[FernTrace::Submission::Types::TraceResponse]` 
     
 </dd>
 </dl>
@@ -654,7 +654,7 @@ client.admin.store_traced_workspace(
 <dl>
 <dd>
 
-**request_options:** `Seed::Admin::RequestOptions` 
+**request_options:** `FernTrace::Admin::RequestOptions` 
     
 </dd>
 </dl>
@@ -666,7 +666,7 @@ client.admin.store_traced_workspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace_v_2</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/fern_trace/admin/client.rb">store_traced_workspace_v_2</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -763,7 +763,7 @@ client.admin.store_traced_workspace_v_2(
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Submission::Types::TraceResponseV2]` 
+**request:** `Internal::Types::Array[FernTrace::Submission::Types::TraceResponseV2]` 
     
 </dd>
 </dl>
@@ -771,7 +771,7 @@ client.admin.store_traced_workspace_v_2(
 <dl>
 <dd>
 
-**request_options:** `Seed::Admin::RequestOptions` 
+**request_options:** `FernTrace::Admin::RequestOptions` 
     
 </dd>
 </dl>
@@ -784,7 +784,7 @@ client.admin.store_traced_workspace_v_2(
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="/lib/seed/homepage/client.rb">get_homepage_problems</a>() -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.homepage.<a href="/lib/fern_trace/homepage/client.rb">get_homepage_problems</a>() -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -812,7 +812,7 @@ client.homepage.get_homepage_problems();
 <dl>
 <dd>
 
-**request_options:** `Seed::Homepage::RequestOptions` 
+**request_options:** `FernTrace::Homepage::RequestOptions` 
     
 </dd>
 </dl>
@@ -824,7 +824,7 @@ client.homepage.get_homepage_problems();
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="/lib/seed/homepage/client.rb">set_homepage_problems</a>(request) -> </code></summary>
+<details><summary><code>client.homepage.<a href="/lib/fern_trace/homepage/client.rb">set_homepage_problems</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -860,7 +860,7 @@ client.homepage.set_homepage_problems(request: ['string', 'string']);
 <dl>
 <dd>
 
-**request_options:** `Seed::Homepage::RequestOptions` 
+**request_options:** `FernTrace::Homepage::RequestOptions` 
     
 </dd>
 </dl>
@@ -873,7 +873,7 @@ client.homepage.set_homepage_problems(request: ['string', 'string']);
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="/lib/seed/migration/client.rb">get_attempted_migrations</a>() -> Internal::Types::Array[Seed::Migration::Types::Migration]</code></summary>
+<details><summary><code>client.migration.<a href="/lib/fern_trace/migration/client.rb">get_attempted_migrations</a>() -> Internal::Types::Array[FernTrace::Migration::Types::Migration]</code></summary>
 <dl>
 <dd>
 
@@ -909,7 +909,7 @@ client.migration.get_attempted_migrations(admin_key_header: 'admin-key-header');
 <dl>
 <dd>
 
-**request_options:** `Seed::Migration::RequestOptions` 
+**request_options:** `FernTrace::Migration::RequestOptions` 
     
 </dd>
 </dl>
@@ -922,7 +922,7 @@ client.migration.get_attempted_migrations(admin_key_header: 'admin-key-header');
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">create_playlist</a>(service_param, request) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/fern_trace/playlist/client.rb">create_playlist</a>(service_param, request) -> FernTrace::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -994,7 +994,7 @@ client.playlist.create_playlist(
 <dl>
 <dd>
 
-**request:** `Seed::Playlist::Types::PlaylistCreateRequest` 
+**request:** `FernTrace::Playlist::Types::PlaylistCreateRequest` 
     
 </dd>
 </dl>
@@ -1002,7 +1002,7 @@ client.playlist.create_playlist(
 <dl>
 <dd>
 
-**request_options:** `Seed::Playlist::RequestOptions` 
+**request_options:** `FernTrace::Playlist::RequestOptions` 
     
 </dd>
 </dl>
@@ -1014,7 +1014,7 @@ client.playlist.create_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">get_playlists</a>(service_param) -> Internal::Types::Array[Seed::Playlist::Types::Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/fern_trace/playlist/client.rb">get_playlists</a>(service_param) -> Internal::Types::Array[FernTrace::Playlist::Types::Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1112,7 +1112,7 @@ description
 <dl>
 <dd>
 
-**request_options:** `Seed::Playlist::RequestOptions` 
+**request_options:** `FernTrace::Playlist::RequestOptions` 
     
 </dd>
 </dl>
@@ -1124,7 +1124,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">get_playlist</a>(service_param, playlist_id) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/fern_trace/playlist/client.rb">get_playlist</a>(service_param, playlist_id) -> FernTrace::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1185,7 +1185,7 @@ client.playlist.get_playlist(
 <dl>
 <dd>
 
-**request_options:** `Seed::Playlist::RequestOptions` 
+**request_options:** `FernTrace::Playlist::RequestOptions` 
     
 </dd>
 </dl>
@@ -1197,7 +1197,7 @@ client.playlist.get_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">update_playlist</a>(service_param, playlist_id, request) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/fern_trace/playlist/client.rb">update_playlist</a>(service_param, playlist_id, request) -> FernTrace::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1262,7 +1262,7 @@ client.playlist.update_playlist(
 <dl>
 <dd>
 
-**request:** `Seed::Playlist::Types::UpdatePlaylistRequest` 
+**request:** `FernTrace::Playlist::Types::UpdatePlaylistRequest` 
     
 </dd>
 </dl>
@@ -1270,7 +1270,7 @@ client.playlist.update_playlist(
 <dl>
 <dd>
 
-**request_options:** `Seed::Playlist::RequestOptions` 
+**request_options:** `FernTrace::Playlist::RequestOptions` 
     
 </dd>
 </dl>
@@ -1282,7 +1282,7 @@ client.playlist.update_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">delete_playlist</a>(service_param, playlist_id) -> </code></summary>
+<details><summary><code>client.playlist.<a href="/lib/fern_trace/playlist/client.rb">delete_playlist</a>(service_param, playlist_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1343,7 +1343,7 @@ client.playlist.delete_playlist(
 <dl>
 <dd>
 
-**request_options:** `Seed::Playlist::RequestOptions` 
+**request_options:** `FernTrace::Playlist::RequestOptions` 
     
 </dd>
 </dl>
@@ -1356,7 +1356,7 @@ client.playlist.delete_playlist(
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">create_problem</a>(request) -> Seed::Problem::Types::CreateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/lib/fern_trace/problem/client.rb">create_problem</a>(request) -> FernTrace::Problem::Types::CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1440,7 +1440,7 @@ client.problem.create_problem(
 <dl>
 <dd>
 
-**request:** `Seed::Problem::Types::CreateProblemRequest` 
+**request:** `FernTrace::Problem::Types::CreateProblemRequest` 
     
 </dd>
 </dl>
@@ -1448,7 +1448,7 @@ client.problem.create_problem(
 <dl>
 <dd>
 
-**request_options:** `Seed::Problem::RequestOptions` 
+**request_options:** `FernTrace::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -1460,7 +1460,7 @@ client.problem.create_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">update_problem</a>(problem_id, request) -> Seed::Problem::Types::UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/lib/fern_trace/problem/client.rb">update_problem</a>(problem_id, request) -> FernTrace::Problem::Types::UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1553,7 +1553,7 @@ client.problem.update_problem(
 <dl>
 <dd>
 
-**request:** `Seed::Problem::Types::CreateProblemRequest` 
+**request:** `FernTrace::Problem::Types::CreateProblemRequest` 
     
 </dd>
 </dl>
@@ -1561,7 +1561,7 @@ client.problem.update_problem(
 <dl>
 <dd>
 
-**request_options:** `Seed::Problem::RequestOptions` 
+**request_options:** `FernTrace::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -1573,7 +1573,7 @@ client.problem.update_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">delete_problem</a>(problem_id) -> </code></summary>
+<details><summary><code>client.problem.<a href="/lib/fern_trace/problem/client.rb">delete_problem</a>(problem_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1623,7 +1623,7 @@ client.problem.delete_problem(problem_id: 'problemId');
 <dl>
 <dd>
 
-**request_options:** `Seed::Problem::RequestOptions` 
+**request_options:** `FernTrace::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -1635,7 +1635,7 @@ client.problem.delete_problem(problem_id: 'problemId');
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">get_default_starter_files</a>(request) -> Seed::Problem::Types::GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.<a href="/lib/fern_trace/problem/client.rb">get_default_starter_files</a>(request) -> FernTrace::Problem::Types::GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1687,7 +1687,7 @@ client.problem.get_default_starter_files(
 <dl>
 <dd>
 
-**input_params:** `Internal::Types::Array[Seed::Problem::Types::VariableTypeAndName]` 
+**input_params:** `Internal::Types::Array[FernTrace::Problem::Types::VariableTypeAndName]` 
     
 </dd>
 </dl>
@@ -1695,7 +1695,7 @@ client.problem.get_default_starter_files(
 <dl>
 <dd>
 
-**output_type:** `Seed::Commons::Types::VariableType` 
+**output_type:** `FernTrace::Commons::Types::VariableType` 
     
 </dd>
 </dl>
@@ -1718,7 +1718,7 @@ The method name cannot include the following characters:
 <dl>
 <dd>
 
-**request_options:** `Seed::Problem::RequestOptions` 
+**request_options:** `FernTrace::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -1731,7 +1731,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">create_execution_session</a>(language) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/lib/fern_trace/submission/client.rb">create_execution_session</a>(language) -> FernTrace::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1773,7 +1773,7 @@ client.submission.create_execution_session(language: 'JAVA');
 <dl>
 <dd>
 
-**language:** `Seed::Commons::Types::Language` 
+**language:** `FernTrace::Commons::Types::Language` 
     
 </dd>
 </dl>
@@ -1781,7 +1781,7 @@ client.submission.create_execution_session(language: 'JAVA');
 <dl>
 <dd>
 
-**request_options:** `Seed::Submission::RequestOptions` 
+**request_options:** `FernTrace::Submission::RequestOptions` 
     
 </dd>
 </dl>
@@ -1793,7 +1793,7 @@ client.submission.create_execution_session(language: 'JAVA');
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">get_execution_session</a>(session_id) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/lib/fern_trace/submission/client.rb">get_execution_session</a>(session_id) -> FernTrace::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1843,7 +1843,7 @@ client.submission.get_execution_session(session_id: 'sessionId');
 <dl>
 <dd>
 
-**request_options:** `Seed::Submission::RequestOptions` 
+**request_options:** `FernTrace::Submission::RequestOptions` 
     
 </dd>
 </dl>
@@ -1855,7 +1855,7 @@ client.submission.get_execution_session(session_id: 'sessionId');
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">stop_execution_session</a>(session_id) -> </code></summary>
+<details><summary><code>client.submission.<a href="/lib/fern_trace/submission/client.rb">stop_execution_session</a>(session_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1905,7 +1905,7 @@ client.submission.stop_execution_session(session_id: 'sessionId');
 <dl>
 <dd>
 
-**request_options:** `Seed::Submission::RequestOptions` 
+**request_options:** `FernTrace::Submission::RequestOptions` 
     
 </dd>
 </dl>
@@ -1917,7 +1917,7 @@ client.submission.stop_execution_session(session_id: 'sessionId');
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">get_execution_sessions_state</a>() -> Seed::Submission::Types::GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.<a href="/lib/fern_trace/submission/client.rb">get_execution_sessions_state</a>() -> FernTrace::Submission::Types::GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1945,7 +1945,7 @@ client.submission.get_execution_sessions_state();
 <dl>
 <dd>
 
-**request_options:** `Seed::Submission::RequestOptions` 
+**request_options:** `FernTrace::Submission::RequestOptions` 
     
 </dd>
 </dl>
@@ -1958,7 +1958,7 @@ client.submission.get_execution_sessions_state();
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="/lib/seed/sysprop/client.rb">set_num_warm_instances</a>(language, num_warm_instances) -> </code></summary>
+<details><summary><code>client.sysprop.<a href="/lib/fern_trace/sysprop/client.rb">set_num_warm_instances</a>(language, num_warm_instances) -> </code></summary>
 <dl>
 <dd>
 
@@ -1989,7 +1989,7 @@ client.sysprop.set_num_warm_instances(
 <dl>
 <dd>
 
-**language:** `Seed::Commons::Types::Language` 
+**language:** `FernTrace::Commons::Types::Language` 
     
 </dd>
 </dl>
@@ -2005,7 +2005,7 @@ client.sysprop.set_num_warm_instances(
 <dl>
 <dd>
 
-**request_options:** `Seed::Sysprop::RequestOptions` 
+**request_options:** `FernTrace::Sysprop::RequestOptions` 
     
 </dd>
 </dl>
@@ -2017,7 +2017,7 @@ client.sysprop.set_num_warm_instances(
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="/lib/seed/sysprop/client.rb">get_num_warm_instances</a>() -> Internal::Types::Hash[Seed::Commons::Types::Language, Integer]</code></summary>
+<details><summary><code>client.sysprop.<a href="/lib/fern_trace/sysprop/client.rb">get_num_warm_instances</a>() -> Internal::Types::Hash[FernTrace::Commons::Types::Language, Integer]</code></summary>
 <dl>
 <dd>
 
@@ -2045,7 +2045,7 @@ client.sysprop.get_num_warm_instances();
 <dl>
 <dd>
 
-**request_options:** `Seed::Sysprop::RequestOptions` 
+**request_options:** `FernTrace::Sysprop::RequestOptions` 
     
 </dd>
 </dl>
@@ -2058,7 +2058,7 @@ client.sysprop.get_num_warm_instances();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v_2.problem.<a href="/lib/seed/v_2/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.problem.<a href="/lib/fern_trace/v_2/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[FernTrace::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2100,7 +2100,7 @@ client.v_2.problem.get_lightweight_problems();
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::Problem::RequestOptions` 
+**request_options:** `FernTrace::V2::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2112,7 +2112,7 @@ client.v_2.problem.get_lightweight_problems();
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="/lib/seed/v_2/problem/client.rb">get_problems</a>() -> Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.problem.<a href="/lib/fern_trace/v_2/problem/client.rb">get_problems</a>() -> Internal::Types::Array[FernTrace::V2::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2154,7 +2154,7 @@ client.v_2.problem.get_problems();
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::Problem::RequestOptions` 
+**request_options:** `FernTrace::V2::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2166,7 +2166,7 @@ client.v_2.problem.get_problems();
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="/lib/seed/v_2/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.problem.<a href="/lib/fern_trace/v_2/problem/client.rb">get_latest_problem</a>(problem_id) -> FernTrace::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2216,7 +2216,7 @@ client.v_2.problem.get_latest_problem(problem_id: 'problemId');
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::Problem::RequestOptions` 
+**request_options:** `FernTrace::V2::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2228,7 +2228,7 @@ client.v_2.problem.get_latest_problem(problem_id: 'problemId');
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="/lib/seed/v_2/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.problem.<a href="/lib/fern_trace/v_2/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> FernTrace::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2289,7 +2289,7 @@ client.v_2.problem.get_problem_version(
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::Problem::RequestOptions` 
+**request_options:** `FernTrace::V2::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2302,7 +2302,7 @@ client.v_2.problem.get_problem_version(
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v_2.v_3.problem.<a href="/lib/seed/v_2/v_3/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.<a href="/lib/fern_trace/v_2/v_3/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[FernTrace::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2344,7 +2344,7 @@ client.v_2.problem.get_lightweight_problems();
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::V3::Problem::RequestOptions` 
+**request_options:** `FernTrace::V2::V3::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2356,7 +2356,7 @@ client.v_2.problem.get_lightweight_problems();
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="/lib/seed/v_2/v_3/problem/client.rb">get_problems</a>() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.<a href="/lib/fern_trace/v_2/v_3/problem/client.rb">get_problems</a>() -> Internal::Types::Array[FernTrace::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2398,7 +2398,7 @@ client.v_2.problem.get_problems();
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::V3::Problem::RequestOptions` 
+**request_options:** `FernTrace::V2::V3::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2410,7 +2410,7 @@ client.v_2.problem.get_problems();
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="/lib/seed/v_2/v_3/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.v_3.problem.<a href="/lib/fern_trace/v_2/v_3/problem/client.rb">get_latest_problem</a>(problem_id) -> FernTrace::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2460,7 +2460,7 @@ client.v_2.problem.get_latest_problem(problem_id: 'problemId');
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::V3::Problem::RequestOptions` 
+**request_options:** `FernTrace::V2::V3::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2472,7 +2472,7 @@ client.v_2.problem.get_latest_problem(problem_id: 'problemId');
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="/lib/seed/v_2/v_3/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.v_3.problem.<a href="/lib/fern_trace/v_2/v_3/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> FernTrace::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2533,7 +2533,7 @@ client.v_2.problem.get_problem_version(
 <dl>
 <dd>
 
-**request_options:** `Seed::V2::V3::Problem::RequestOptions` 
+**request_options:** `FernTrace::V2::V3::Problem::RequestOptions` 
     
 </dd>
 </dl>
