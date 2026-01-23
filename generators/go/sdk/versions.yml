@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.22.10
+  changelogEntry:
+    - summary: |
+        Fix wiremock test generation to properly distinguish between endpoints with the same URL path
+        and method but different names (e.g., v1/chat and v2/chat streaming vs non-streaming variants).
+        The wiremock mapping key now includes the endpoint name to prevent collisions.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 61
+
 - version: 1.22.9
   changelogEntry:
     - summary: Update IR version to 61 to support Generation Metadata feature and maintain consistency with seed configuration.
