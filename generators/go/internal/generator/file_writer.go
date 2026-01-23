@@ -369,6 +369,12 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.coordinator,
 	)
 
+	// Remove SDK-specific imports that may not exist in all fixtures
+	// These packages (core, option, internal) are only needed for SDK runtime code, not tests
+	delete(testWriter.scope.Imports.Values, path.Join(f.baseImportPath, "core"))
+	delete(testWriter.scope.Imports.Values, path.Join(f.baseImportPath, "option"))
+	delete(testWriter.scope.Imports.Values, path.Join(f.baseImportPath, "internal"))
+
 	// Add test-specific imports
 	testWriter.scope.AddImport("github.com/stretchr/testify/assert")
 	testWriter.scope.AddImport("github.com/stretchr/testify/require")
@@ -727,18 +733,22 @@ func (f *fileWriter) WriteEnumTests(typeName string, enumValues []string) {
 
 	// Test NewEnumFromString with each valid value in separate sub-tests
 	for _, value := range enumValues {
-		escapedValue := strings.ReplaceAll(value, `"`, `\"`)
 		// Create a clean test name by sanitizing the value
-		sanitizedValue := strings.ReplaceAll(strings.ReplaceAll(value, " ", "_"), "-", "_")
+		sanitizedValue := value
+		for _, char := range []string{" ", "-", "$", ".", "/", "\\", ":", ";", ",", "'", "\""} {
+			sanitizedValue = strings.ReplaceAll(sanitizedValue, char, "_")
+		}
 		// Handle empty string case with a descriptive name
 		if sanitizedValue == "" {
 			sanitizedValue = "empty_string"
 		}
+		// Use correct escaping - %q handles all special characters properly
+		quotedValue := fmt.Sprintf("%q", value)
 		f.P("\tt.Run(\"NewFromString_", sanitizedValue, "\", func(t *testing.T) {")
 		f.P("\t\tt.Parallel()")
-		f.P("\t\tval, err := New", typeName, "FromString(\"", escapedValue, "\")")
+		f.P("\t\tval, err := New", typeName, "FromString(", quotedValue, ")")
 		f.P("\t\tassert.NoError(t, err, \"valid enum value should not return error\")")
-		f.P("\t\tassert.Equal(t, ", typeName, "(\"", escapedValue, "\"), val, \"enum value should match expected wire value\")")
+		f.P("\t\tassert.Equal(t, ", typeName, "(", quotedValue, "), val, \"enum value should match expected wire value\")")
 		f.P("\t})")
 		f.P()
 	}
@@ -753,9 +763,9 @@ func (f *fileWriter) WriteEnumTests(typeName string, enumValues []string) {
 	// Test Ptr method
 	if len(enumValues) > 0 {
 		// Use the first enum value for the Ptr test
-		escapedValue := strings.ReplaceAll(enumValues[0], `"`, `\"`)
+		quotedValue := fmt.Sprintf("%q", enumValues[0])
 		f.P("\tt.Run(\"Ptr\", func(t *testing.T) {")
-		f.P("\t\tval, err := New", typeName, "FromString(\"", escapedValue, "\")")
+		f.P("\t\tval, err := New", typeName, "FromString(", quotedValue, ")")
 		f.P("\t\tassert.NoError(t, err)")
 		f.P("\t\tptr := val.Ptr()")
 		f.P("\t\tassert.NotNil(t, ptr)")

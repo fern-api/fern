@@ -3071,12 +3071,6 @@ func (f *fileWriter) WriteRequestType(
 	var propertyTypes []string
 	var propertySafeNames []string
 
-	// For test generation: collect only JSON-serializable properties
-	// (excludes headers and path parameters which have json:"-" tags)
-	var testPropertyNames []string
-	var testPropertyTypes []string
-	var testPropertySafeNames []string
-
 	// Collect from headers (exclude literals as they don't need setters)
 	for _, header := range append(serviceHeaders, endpoint.Headers...) {
 		if header.ValueType.Container == nil || header.ValueType.Container.Literal == nil {
@@ -3102,19 +3096,13 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from query parameters (always include these, exclude literals)
 	for _, queryParam := range endpoint.QueryParameters {
 		if queryParam.ValueType.Container == nil || queryParam.ValueType.Container.Literal == nil {
-			propName := goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName)
-			safeName := queryParam.Name.Name.CamelCase.SafeName
+			propertyNames = append(propertyNames, goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName))
+			propertySafeNames = append(propertySafeNames, queryParam.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			if queryParam.AllowMultiple {
 				goType = fmt.Sprintf("[]%s", goType)
 			}
-			propertyNames = append(propertyNames, propName)
-			propertySafeNames = append(propertySafeNames, safeName)
 			propertyTypes = append(propertyTypes, goType)
-			// Query parameters may have JSON tags, include for test generation
-			testPropertyNames = append(testPropertyNames, propName)
-			testPropertySafeNames = append(testPropertySafeNames, safeName)
-			testPropertyTypes = append(testPropertyTypes, goType)
 		}
 	}
 
@@ -3122,16 +3110,9 @@ func (f *fileWriter) WriteRequestType(
 	if endpoint.RequestBody != nil && endpoint.RequestBody.InlinedRequestBody != nil {
 		for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
-				propName := goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)
-				safeName := property.Name.Name.CamelCase.SafeName
-				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
-				propertyNames = append(propertyNames, propName)
-				propertySafeNames = append(propertySafeNames, safeName)
-				propertyTypes = append(propertyTypes, goType)
-				// Body properties are always JSON-serializable
-				testPropertyNames = append(testPropertyNames, propName)
-				testPropertySafeNames = append(testPropertySafeNames, safeName)
-				testPropertyTypes = append(testPropertyTypes, goType)
+				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
+				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
+				propertyTypes = append(propertyTypes, typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false))
 			}
 		}
 	}
