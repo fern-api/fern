@@ -147,7 +147,18 @@ def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
     discriminator, variants = _get_discriminator_and_variants(type_)
 
     if discriminator is None or variants is None:
-        # Not a discriminated union - just parse normally
+        # Not a discriminated union - parse the data field as JSON
+        data_value = sse_event.get("data")
+        if isinstance(data_value, str) and data_value:
+            try:
+                parsed_data = json.loads(data_value)
+                return parse_obj_as(type_, parsed_data)
+            except json.JSONDecodeError as e:
+                _logger.warning(
+                    "Failed to parse SSE data field as JSON: %s, data: %s",
+                    e,
+                    data_value[:100] if len(data_value) > 100 else data_value,
+                )
         return parse_obj_as(type_, sse_event)
 
     data_value = sse_event.get("data")
