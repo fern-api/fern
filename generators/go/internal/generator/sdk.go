@@ -3112,7 +3112,8 @@ func (f *fileWriter) WriteRequestType(
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
 				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
-				propertyTypes = append(propertyTypes, typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false))
+				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				propertyTypes = append(propertyTypes, goType)
 			}
 		}
 	}
