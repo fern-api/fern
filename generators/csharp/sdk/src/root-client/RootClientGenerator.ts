@@ -517,7 +517,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     }
                     case "bearer":
                         if (scheme.tokenEnvVar == null || includeEnvVarArguments) {
-                            addArgumentIfNotSeen(scheme.token.camelCase.safeName, `"${scheme.token.screamingSnakeCase.safeName}"`);
+                            addArgumentIfNotSeen(
+                                scheme.token.camelCase.safeName,
+                                `"${scheme.token.screamingSnakeCase.safeName}"`
+                            );
                         }
                         break;
                     case "oauth": {
