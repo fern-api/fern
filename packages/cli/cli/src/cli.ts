@@ -751,7 +751,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
                 dynamicIrOnly: argv["dynamic-ir-only"],
-                previewOutputDir: argv["preview-output-dir"]
+                outputDir: argv.output
             });
         }
     );
