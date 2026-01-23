@@ -23,6 +23,7 @@ types:
       id: EnvironmentId
       name: commons.Name
       url: EnvironmentUrl
+      audiences: optional<list<string>>
   MultipleBaseUrlsEnvironments:
     properties:
       baseUrls: list<EnvironmentBaseUrlWithId>
@@ -33,6 +34,7 @@ types:
       id: EnvironmentId
       name: commons.Name
       urls: map<EnvironmentBaseUrlId, EnvironmentUrl>
+      audiences: optional<list<string>>
   EnvironmentBaseUrlWithId:
     properties:
       id: EnvironmentBaseUrlId

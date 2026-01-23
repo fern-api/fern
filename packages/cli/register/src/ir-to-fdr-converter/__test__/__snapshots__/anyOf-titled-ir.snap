@@ -60,6 +60,7 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
           "docs": undefined,
           "id": "https://api.example.com/v1",
           "name": {

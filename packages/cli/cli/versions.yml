@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.50.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-audiences` on OpenAPI servers. Server audiences are now extracted and passed to FDR, enabling environment filtering based on instance audiences. This allows different API servers to appear in different documentation instances.
+      type: feat
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.49.6
   changelogEntry:
     - summary: |

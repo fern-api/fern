@@ -74,7 +74,11 @@ function convertSingleBaseUrlEnvironments({
                             typeof singleBaseUrlEnvironment === "string"
                                 ? singleBaseUrlEnvironment
                                 : singleBaseUrlEnvironment.url
-                        )
+                        ),
+                        audiences:
+                            typeof singleBaseUrlEnvironment === "string"
+                                ? undefined
+                                : singleBaseUrlEnvironment.audiences
                     }),
                     multipleBaseUrls: () => {
                         throw new Error(`Environment ${environmentName} has multiple base URLs`);
@@ -105,7 +109,8 @@ function convertMultipleBaseUrlEnvironments({
                         docs: multipleBaseUrlsEnvironment.docs,
                         id: environmentName,
                         name: casingsGenerator.generateName(environmentName),
-                        urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url))
+                        urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url)),
+                        audiences: multipleBaseUrlsEnvironment.audiences
                     }),
                     singleBaseUrl: () => {
                         throw new Error(`Environment ${environmentName} does not have multiple base URLs`);

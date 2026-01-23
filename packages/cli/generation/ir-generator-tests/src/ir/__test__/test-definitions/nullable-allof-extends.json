@@ -1813,6 +1813,7 @@
                         }
                     },
                     "url": "https://api.example.com",
+                    "audiences": null,
                     "docs": null
                 }
             ]

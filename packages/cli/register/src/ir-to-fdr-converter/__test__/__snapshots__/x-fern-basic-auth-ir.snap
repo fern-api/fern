@@ -109,6 +109,7 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
           "docs": undefined,
           "id": "https://api.plantstore.example.com/v1",
           "name": {
