@@ -16,6 +16,7 @@ types:
       set: optional<set<string>>
       map: optional<map<integer, string>>
       bigint: optional<bigint>
+      datetimeinstring: optional<string>
 
   ObjectWithRequiredField:
     properties:

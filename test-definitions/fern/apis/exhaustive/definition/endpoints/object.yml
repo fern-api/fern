@@ -26,6 +26,13 @@ service:
       #         long: 9223372036854775807
       #         double: 3.14
       #         bool: true
+      examples:
+        - name: WithDatetimeInString
+          request:
+            datetimeinstring: "2024-01-15T09:30:00Z"
+          response:
+            body:
+              datetimeinstring: "2024-01-15T09:30:00Z"
 
     getAndReturnWithRequiredField:
       path: /get-and-return-with-required-field
