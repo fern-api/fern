@@ -67,11 +67,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create Pull Request with ACTIONS_PAT
+      - name: Create Pull Request with FERN_SUPPORT_GH_ACTIONS_PAT
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.ACTIONS_PAT }}
+          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "test: ACTIONS_PAT PR creation test"
           title: "test: ACTIONS_PAT PR creation test (DO NOT MERGE)"
           branch: test-actions-pat-pr
