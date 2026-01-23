@@ -5,6 +5,8 @@ import type { PublishConfig } from "./PublishConfig";
 export interface Target {
     /** Target name from fern.yml (e.g., "node", "python") */
     name: string;
+    /** The API this target is generating for (default: 'api') */
+    api: string;
     /** Resolved Docker image reference (e.g., "fernapi/fern-typescript-node-sdk") */
     image: string;
     /** Target language */

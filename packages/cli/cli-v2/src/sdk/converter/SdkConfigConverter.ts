@@ -2,23 +2,24 @@ import { schemas } from "@fern-api/config";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
+import { DEFAULT_API_NAME } from "../../api/converter/ApiDefinitionConverter";
 import { FernYmlSchemaLoader } from "../../config/fern-yml/FernYmlSchemaLoader";
-import type { DockerImageReference } from "./DockerImageReference";
-import type { GenerationConfig } from "./GenerationConfig";
-import type { GitOutputConfig } from "./GitOutputConfig";
+import type { DockerImageReference } from "../config/DockerImageReference";
+import type { GitOutputConfig } from "../config/GitOutputConfig";
+import { LANGUAGES, type Language } from "../config/Language";
+import type { NpmPublishConfig } from "../config/NpmPublishConfig";
+import type { OutputConfig } from "../config/OutputConfig";
+import type { PublishConfig } from "../config/PublishConfig";
+import type { SdkConfig } from "../config/SdkConfig";
+import type { Target } from "../config/Target";
 import { getDockerImageReference } from "./getDockerImageReference";
-import { LANGUAGES, type Language } from "./Language";
-import type { NpmPublishConfig } from "./NpmPublishConfig";
-import type { OutputConfig } from "./OutputConfig";
-import type { PublishConfig } from "./PublishConfig";
-import type { Target } from "./Target";
 
 export namespace SdkConfigConverter {
     export type Result = Success | Failure;
 
     export interface Success {
         success: true;
-        config: GenerationConfig;
+        config: SdkConfig;
     }
 
     export interface Failure {
@@ -62,7 +63,7 @@ export class SdkConfigConverter {
                 issues: []
             };
         }
-        const config: GenerationConfig = {
+        const config: SdkConfig = {
             org: fernYml.data.org,
             defaultGroup: sdks.defaultGroup,
             targets: this.convertTargets({
@@ -126,6 +127,7 @@ export class SdkConfigConverter {
             lang,
             image: resolvedDockerImage.image,
             version: target.version ?? resolvedDockerImage.tag,
+            api: this.resolveApi({ api: target.api }),
             config: target.config != null ? this.convertConfig(target.config) : undefined,
             output: this.convertOutput({ output: target.output, sourced: sourced.output }),
             publish:
@@ -134,6 +136,10 @@ export class SdkConfigConverter {
                     : undefined,
             groups: target.group ?? []
         };
+    }
+
+    private resolveApi({ api }: { api: string | undefined }): string {
+        return api ?? DEFAULT_API_NAME;
     }
 
     private resolveDockerImage({
