@@ -290,9 +290,24 @@ export class MockEndpointGenerator extends WithGeneration {
 
     /**
      * Filters read-only properties from an inlined request body.
-     * Recursively filters read-only properties from nested objects.
+     * For types with read-only properties (directly or in nested types), uses recursive filtering.
+     * For types without read-only properties, returns jsonExample directly to preserve any modifications.
      */
     private filterInlinedRequestBody(exampleRequest: ExampleRequestBody.InlinedRequestBody): Record<string, unknown> {
+        // Check if any properties are read-only or have nested read-only properties
+        const hasReadOnlyProperties = exampleRequest.properties.some(
+            (prop) =>
+                this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration) ||
+                this.typeHasReadOnlyProperties(prop.value.shape)
+        );
+
+        // If no read-only properties, return the jsonExample directly to preserve any modifications
+        // (e.g., OAuth credential placeholders set by deepSetProperty)
+        if (!hasReadOnlyProperties) {
+            return (exampleRequest.jsonExample as Record<string, unknown>) ?? {};
+        }
+
+        // Otherwise, use recursive filtering to remove read-only properties
         const result: Record<string, unknown> = {};
 
         for (const prop of exampleRequest.properties) {
