@@ -9,6 +9,84 @@
           "auth": false,
           "base-path": "",
           "endpoints": {
+            "aPreviewEndpoint": {
+              "auth": undefined,
+              "availability": "pre-release",
+              "display-name": "A preview endpoint",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "not_deprecated_setting": true,
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/preview-endpoint",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "aStableEndpoint": {
+              "auth": undefined,
+              "availability": "generally-available",
+              "display-name": "A stable endpoint",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "not_deprecated_setting": true,
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/stable-endpoint",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "anAlphaEndpoint": {
+              "auth": undefined,
+              "availability": undefined,
+              "display-name": "An alpha endpoint",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "not_deprecated_setting": true,
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/alpha-endpoint",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
             "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam": {
               "auth": undefined,
               "docs": undefined,
@@ -443,6 +521,50 @@
       examples:
         - request: {}
           response:
+            body:
+              not_deprecated_setting: true
+    anAlphaEndpoint:
+      path: /alpha-endpoint
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: An alpha endpoint
+      response:
+        docs: OK
+        type: NotDeprecatedSettings
+        status-code: 200
+      examples:
+        - response:
+            body:
+              not_deprecated_setting: true
+    aPreviewEndpoint:
+      path: /preview-endpoint
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: A preview endpoint
+      response:
+        docs: OK
+        type: NotDeprecatedSettings
+        status-code: 200
+      availability: pre-release
+      examples:
+        - response:
+            body:
+              not_deprecated_setting: true
+    aStableEndpoint:
+      path: /stable-endpoint
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: A stable endpoint
+      response:
+        docs: OK
+        type: NotDeprecatedSettings
+        status-code: 200
+      availability: generally-available
+      examples:
+        - response:
             body:
               not_deprecated_setting: true
   source:

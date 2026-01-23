@@ -11,12 +11,14 @@ export interface BasicSecuritySchemeNames {
 
 export function getFernAvailability(operationObject: OpenAPIV3.OperationObject): undefined | Availability {
     const availability = getExtension<string>(operationObject, FernOpenAPIExtension.AVAILABILITY);
-    if (availability === "ga" || availability === "generally-available") {
+    if (availability === "ga" || availability === "generally-available" || availability === "stable") {
         return Availability.GenerallyAvailable;
-    } else if (availability === "beta" || availability === "pre-release") {
+    } else if (availability === "beta" || availability === "pre-release" || availability === "preview") {
         return Availability.Beta;
     } else if (availability === "deprecated") {
         return Availability.Deprecated;
+    } else if (availability === "alpha" || availability === "in-development") {
+        return Availability.InDevelopment;
     }
     if (operationObject.deprecated) {
         return Availability.Deprecated;
