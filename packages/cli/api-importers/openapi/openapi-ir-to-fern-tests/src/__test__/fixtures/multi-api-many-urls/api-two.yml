@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: API Two
+  version: 1.0.0
+servers:
+  - url: https://two.example.com
+paths:
+  /two:
+    get:
+      operationId: getTwo
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string

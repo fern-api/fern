@@ -235,6 +235,8 @@ sdks:
     python:
       output:
         path: ./sdks/python
+      group:
+        - production
 `
             );
 
@@ -377,6 +379,69 @@ apis:
             if (!result.success) {
                 expect(result.issues.length).toBeGreaterThan(0);
                 expect(result.issues[0]?.message).toContain("Cannot define both 'api' and 'apis'");
+            }
+        });
+
+        it("fails when defaultGroup is not referenced by any target", async () => {
+            await mkdir(join(testDir, "apis"), { recursive: true });
+            await writeFile(join(testDir, "apis/openapi.yml"), "openapi: 3.0.0");
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - openapi: apis/openapi.yml
+sdks:
+  defaultGroup: production
+  targets:
+    python:
+      output:
+        path: ./sdks/python
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createLoader().load({ fernYml });
+
+            expect(result.success).toBe(false);
+            if (!result.success) {
+                expect(result.issues.length).toBeGreaterThan(0);
+                expect(result.issues[0]?.message).toContain(
+                    "Default group 'production' is not referenced by any target"
+                );
+            }
+        });
+
+        it("succeeds when defaultGroup is referenced by a target", async () => {
+            await mkdir(join(testDir, "apis"), { recursive: true });
+            await writeFile(join(testDir, "apis/openapi.yml"), "openapi: 3.0.0");
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - openapi: apis/openapi.yml
+sdks:
+  defaultGroup: production
+  targets:
+    python:
+      output:
+        path: ./sdks/python
+      group:
+        - production
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createLoader().load({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                expect(result.workspace.sdks?.defaultGroup).toBe("production");
             }
         });
     });
