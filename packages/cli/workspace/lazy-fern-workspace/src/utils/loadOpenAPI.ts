@@ -177,12 +177,16 @@ export async function loadOpenAPI({
         }
     }
 
-    // If AI examples were added (result !== parsed) but no override files were processed,
-    // we still need to parse to resolve any refs. If override files were processed,
-    // refs were already resolved after each override.
-    if (result !== parsed && overridesFilepaths.length === 0) {
+    // Need final resolution if:
+    // 1. Changes were made AND no overrides (original AI examples case), OR
+    // 2. Overlays were applied (they can add/modify references that need resolution)
+    const needsFinalResolution =
+        (result !== parsed && overridesFilepaths.length === 0) || absolutePathToOpenAPIOverlays != null;
+
+    if (needsFinalResolution) {
         return await parseOpenAPI({
             absolutePathToOpenAPI,
+            absolutePathToOpenAPIOverlays, // Include overlay path for ref resolver
             parsed: result
         });
     }
