@@ -152,6 +152,28 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotDeprecatedSettings"
       x-fern-availability: "beta"
+  /alpha-endpoint:
+    get:
+      summary: An alpha endpoint
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+      x-fern-availability: "alpha"
+  /preview-endpoint:
+    get:
+      summary: A preview endpoint
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+      x-fern-availability: "preview"
 components:
   schemas:
     DeprecatedParam:

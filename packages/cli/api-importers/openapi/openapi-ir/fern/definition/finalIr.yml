@@ -185,6 +185,7 @@ types:
       - GenerallyAvailable
       - Beta
       - Deprecated
+      - InDevelopment
 
   Endpoint:
     extends:
