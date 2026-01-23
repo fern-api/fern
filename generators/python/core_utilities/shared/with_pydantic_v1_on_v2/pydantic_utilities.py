@@ -4,7 +4,7 @@ import inspect
 import json
 import logging
 from collections import defaultdict
-from dataclasses import asdict
+from dataclasses import asdict, is_dataclass
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
 import pydantic
@@ -129,7 +129,16 @@ def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
     Note:
         This function is only available in SDK contexts where http_sse module exists.
     """
-    sse_event = asdict(sse)
+    # Convert SSE to dict - handle both dataclass instances and dict-like objects
+    if is_dataclass(sse) and not isinstance(sse, type):
+        sse_event = asdict(sse)
+    elif hasattr(sse, "__dict__"):
+        sse_event = dict(sse.__dict__)
+    elif isinstance(sse, dict):
+        sse_event = dict(sse)
+    else:
+        # Fallback: try to convert to dict via common attributes
+        sse_event = {"event": getattr(sse, "event", ""), "data": getattr(sse, "data", ""), "id": getattr(sse, "id", "")}
     discriminator, variants = _get_discriminator_and_variants(type_)
 
     if discriminator is None or variants is None:
