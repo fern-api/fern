@@ -1,5 +1,5 @@
-import type { DockerImageReference } from "./DockerImageReference";
-import { Language } from "./Language";
+import type { DockerImageReference } from "../config/DockerImageReference";
+import { Language } from "../config/Language";
 
 /**
  * Mapping of SDK languages to their Docker image names.
