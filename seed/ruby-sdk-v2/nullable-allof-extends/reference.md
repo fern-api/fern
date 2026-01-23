@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_test</a>() -> Seed::Types::RootObject</code></summary>
+<details><summary><code>client.<a href="/lib/fern_nullable_allof_extends/client.rb">get_test</a>() -> FernNullableAllofExtends::Types::RootObject</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ client.get_test();
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernNullableAllofExtends::RequestOptions` 
     
 </dd>
 </dl>
@@ -53,7 +53,7 @@ client.get_test();
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_test</a>(request) -> Seed::Types::RootObject</code></summary>
+<details><summary><code>client.<a href="/lib/fern_nullable_allof_extends/client.rb">create_test</a>(request) -> FernNullableAllofExtends::Types::RootObject</code></summary>
 <dl>
 <dd>
 
@@ -95,7 +95,7 @@ client.create_test();
 <dl>
 <dd>
 
-**request:** `Seed::Types::RootObject` 
+**request:** `FernNullableAllofExtends::Types::RootObject` 
     
 </dd>
 </dl>
@@ -103,7 +103,7 @@ client.create_test();
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernNullableAllofExtends::RequestOptions` 
     
 </dd>
 </dl>
