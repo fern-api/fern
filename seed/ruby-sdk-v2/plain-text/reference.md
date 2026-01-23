@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_text</a>() -> String</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_plain_text/service/client.rb">get_text</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.get_text();
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernPlainText::Service::RequestOptions` 
     
 </dd>
 </dl>
