@@ -62,7 +62,7 @@ def _get_field_annotation_v1(model: Type[Any], field_name: str) -> Optional[Type
     fields = getattr(model, "__fields__", {})
     field_info = fields.get(field_name)
     if field_info:
-        return field_info.outer_type_
+        return cast(Optional[Type[Any]], field_info.outer_type_)
     return None
 
 
