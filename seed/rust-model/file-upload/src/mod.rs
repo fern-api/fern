@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 8 types for API operations
+//! - **Request/Response Types**: 9 types for API operations
 //! - **Model Types**: 7 types for data representation
 
 pub mod service_id;
@@ -18,6 +18,7 @@ pub mod service_my_inline_type;
 pub mod post_request;
 pub mod just_file_request;
 pub mod just_file_with_query_params_request;
+pub mod just_file_with_optional_query_params_request;
 pub mod with_content_type_request;
 pub mod with_form_encoding_request;
 pub mod with_form_encoded_containers_request;
@@ -34,6 +35,7 @@ pub use service_my_inline_type::MyInlineType;
 pub use post_request::PostRequest;
 pub use just_file_request::JustFileRequest;
 pub use just_file_with_query_params_request::JustFileWithQueryParamsRequest;
+pub use just_file_with_optional_query_params_request::JustFileWithOptionalQueryParamsRequest;
 pub use with_content_type_request::WithContentTypeRequest;
 pub use with_form_encoding_request::WithFormEncodingRequest;
 pub use with_form_encoded_containers_request::WithFormEncodedContainersRequest;

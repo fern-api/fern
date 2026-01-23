@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>() -> </code></summary>
+<details><summary><code>client.<a href="/lib/fern_license/client.rb">get</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ client.get();
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernLicense::RequestOptions` 
     
 </dd>
 </dl>

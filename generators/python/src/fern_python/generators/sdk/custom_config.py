@@ -127,6 +127,10 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     custom_pager_name: Optional[str] = None
 
+    # List of paths to exclude from mypy type checking.
+    # Useful when .fernignore preserves directories with code that doesn't work with the generated SDK.
+    mypy_exclude: Optional[List[str]] = None
+
     class Config:
         extra = pydantic.Extra.forbid
 
