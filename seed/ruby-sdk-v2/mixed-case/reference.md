@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_resource</a>(resource_id) -> Seed::Service::Types::Resource</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_mixed_case/service/client.rb">get_resource</a>(resource_id) -> FernMixedCase::Service::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.service.get_resource(resource_id: 'rsc-xyz');
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernMixedCase::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.service.get_resource(resource_id: 'rsc-xyz');
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_resources</a>() -> Internal::Types::Array[Seed::Service::Types::Resource]</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_mixed_case/service/client.rb">list_resources</a>() -> Internal::Types::Array[FernMixedCase::Service::Types::Resource]</code></summary>
 <dl>
 <dd>
 
@@ -95,7 +95,7 @@ client.service.list_resources(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernMixedCase::Service::RequestOptions` 
     
 </dd>
 </dl>

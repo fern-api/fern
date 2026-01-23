@@ -12,6 +12,11 @@ import (
 type JustFileRequest struct {
 }
 
+type JustFileWithOptionalQueryParamsRequest struct {
+	MaybeString  *string `query:"maybeString"`
+	MaybeInteger *int    `query:"maybeInteger"`
+}
+
 type JustFileWithQueryParamsRequest struct {
 	MaybeString           *string   `query:"maybeString"`
 	Integer               int       `query:"integer"`

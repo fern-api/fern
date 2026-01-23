@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.test_group.<a href="/lib/seed/test_group/client.rb">test_method_name</a>(path_param, request) -> Object</code></summary>
+<details><summary><code>client.test_group.<a href="/lib/fern_nullable_request_body/test_group/client.rb">test_method_name</a>(path_param, request) -> Object</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.test_group.test_method_name(
 <dl>
 <dd>
 
-**query_param_object:** `Seed::Types::PlainObject` 
+**query_param_object:** `FernNullableRequestBody::Types::PlainObject` 
     
 </dd>
 </dl>
@@ -69,7 +69,7 @@ client.test_group.test_method_name(
 <dl>
 <dd>
 
-**request:** `Seed::Types::PlainObject` 
+**request:** `FernNullableRequestBody::Types::PlainObject` 
     
 </dd>
 </dl>
@@ -77,7 +77,7 @@ client.test_group.test_method_name(
 <dl>
 <dd>
 
-**request_options:** `Seed::TestGroup::RequestOptions` 
+**request_options:** `FernNullableRequestBody::TestGroup::RequestOptions` 
     
 </dd>
 </dl>
