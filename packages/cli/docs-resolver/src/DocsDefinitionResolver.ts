@@ -1502,7 +1502,7 @@ The generated documentation will replace this placeholder page with complete API
         parentAvailability?: docsYml.RawSchemas.Availability;
     }): Promise<FernNavigation.V1.SectionNode> {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
-        const pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
+        let pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
         const id = this.#idgen.get(pageId ?? `${prefix}/section`);
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
@@ -1514,6 +1514,30 @@ The generated documentation will replace this placeholder page with complete API
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
         const hiddenSection = hideChildren || item.hidden;
+        const children = await Promise.all(
+            item.contents.map((child) =>
+                this.toNavigationChild({
+                    prefix: id,
+                    item: child,
+                    parentSlug: slug,
+                    hideChildren: hiddenSection,
+                    parentAvailability: item.availability ?? parentAvailability
+                })
+            )
+        );
+
+        // If the section has no overview page and contains a flattened API reference with an overview page,
+        // inherit the API reference's overview page for the section (e.g., tag description page)
+        if (pageId == null && children.length > 0) {
+            const firstChild = children[0];
+            if (firstChild?.type === "apiReference" && firstChild.hideTitle && firstChild.overviewPageId != null) {
+                pageId = firstChild.overviewPageId;
+                this.taskContext.logger.debug(
+                    `[tag-description-pages] Section "${item.title}" inheriting overview page from flattened API reference: ${pageId}`
+                );
+            }
+        }
+
         return {
             id,
             type: "section",
@@ -1528,17 +1552,7 @@ The generated documentation will replace this placeholder page with complete API
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: await Promise.all(
-                item.contents.map((child) =>
-                    this.toNavigationChild({
-                        prefix: id,
-                        item: child,
-                        parentSlug: slug,
-                        hideChildren: hiddenSection,
-                        parentAvailability: item.availability ?? parentAvailability
-                    })
-                )
-            ),
+            children,
             authed: undefined,
             pointsTo: undefined,
             noindex,
