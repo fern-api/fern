@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.6
+  changelogEntry:
+    - summary: |
+        Add support for OAS 3.2's `itemSchema` standard for SSE endpoints. When `text/event-stream` content type uses `itemSchema` instead of `schema`, it is now automatically treated as an SSE streaming endpoint with `x-fern-streaming: format: sse`.
+      type: feat
+  createdAt: "2026-01-23"
+  irVersion: 63
+
 - version: 3.49.5
   changelogEntry:
     - summary: |
