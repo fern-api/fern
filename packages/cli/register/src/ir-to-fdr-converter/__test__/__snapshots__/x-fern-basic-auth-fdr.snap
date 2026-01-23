@@ -2,7 +2,6 @@
   "apiName": "Plant Store API",
   "auth": {
     "description": "Basic authentication with custom field names",
-    "passwordAlwaysEmpty": undefined,
     "passwordAlwaysEmpty": false,
     "passwordName": "api_token",
     "type": "basicAuth",
@@ -11,7 +10,6 @@
   "authSchemes": {
     "basicAuth": {
       "description": "Basic authentication with custom field names",
-      "passwordAlwaysEmpty": undefined,
       "passwordAlwaysEmpty": false,
       "passwordName": "api_token",
       "type": "basicAuth",
@@ -346,7 +344,6 @@
       },
     ],
     "graphqlOperations": [],
-    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [

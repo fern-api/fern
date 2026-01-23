@@ -17,7 +17,6 @@
   "rootPackage": {
     "endpoints": [],
     "graphqlOperations": [],
-    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_users",
@@ -324,7 +323,6 @@
         },
       ],
       "graphqlOperations": [],
-      "graphqlOperations": undefined,
       "name": "users",
       "pointsTo": undefined,
       "subpackageId": "subpackage_users",

@@ -2,7 +2,6 @@
   "apiName": "HTTP Auth Capital Scheme Test API",
   "auth": {
     "description": "Basic HTTP Authentication",
-    "passwordAlwaysEmpty": undefined,
     "passwordAlwaysEmpty": false,
     "passwordName": "password",
     "type": "basicAuth",
@@ -11,7 +10,6 @@
   "authSchemes": {
     "basicHttpAuthentication": {
       "description": "Basic HTTP Authentication",
-      "passwordAlwaysEmpty": undefined,
       "passwordAlwaysEmpty": false,
       "passwordName": "password",
       "type": "basicAuth",
@@ -241,7 +239,6 @@
       },
     ],
     "graphqlOperations": [],
-    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [],
