@@ -483,7 +483,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   pydantic-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -551,7 +551,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   fastapi-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -585,7 +585,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   openapi-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -619,7 +619,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   postman-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -1095,7 +1095,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   rust-model-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
