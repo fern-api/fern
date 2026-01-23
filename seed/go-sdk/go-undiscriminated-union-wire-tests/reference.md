@@ -29,8 +29,16 @@ Rerank documents based on relevance to a query
 ```go
 request := &fern.RerankRequest{
         Documents: []*fern.DocumentItem{
-            &fern.DocumentItem{},
-            &fern.DocumentItem{},
+            &fern.DocumentItem{
+                DocumentObject: &fern.DocumentObject{
+                    Text: "Carson City is the capital city of the American state of Nevada.",
+                },
+            },
+            &fern.DocumentItem{
+                DocumentObject: &fern.DocumentObject{
+                    Text: "Washington, D.C. is the capital of the United States.",
+                },
+            },
         },
         Query: "What is the capital of the United States?",
     }
