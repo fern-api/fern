@@ -4,6 +4,7 @@ import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { SnippetExtractor } from "../extractors/SnippetExtractor";
 import { WireTestExample } from "../extractors/TestDataExtractor";
+import { TestResourceWriter } from "../resources/TestResourceWriter";
 import { HeaderValidator } from "../validators/HeaderValidator";
 import { JsonValidator } from "../validators/JsonValidator";
 import { PaginationValidator } from "../validators/PaginationValidator";
@@ -18,6 +19,8 @@ export class TestMethodBuilder {
     private readonly paginationValidator: PaginationValidator;
     private readonly snippetExtractor: SnippetExtractor;
     private readonly testClassBuilder: TestClassBuilder;
+    private resourceWriter: TestResourceWriter | undefined;
+    private currentTestClassName: string | undefined;
 
     constructor(private readonly context: SdkGeneratorContext) {
         this.headerValidator = new HeaderValidator();
@@ -25,6 +28,20 @@ export class TestMethodBuilder {
         this.paginationValidator = new PaginationValidator(context);
         this.snippetExtractor = new SnippetExtractor(context);
         this.testClassBuilder = new TestClassBuilder(context);
+    }
+
+    /**
+     * Sets the resource writer for storing large JSON payloads.
+     */
+    public setResourceWriter(resourceWriter: TestResourceWriter): void {
+        this.resourceWriter = resourceWriter;
+    }
+
+    /**
+     * Sets the current test class name for resource file naming.
+     */
+    public setCurrentTestClassName(className: string): void {
+        this.currentTestClassName = className;
     }
 
     /**
@@ -71,10 +88,33 @@ export class TestMethodBuilder {
                 ? JSON.stringify(expectedResponseJson)
                 : this.generateMockResponseForEndpoint(endpoint);
 
+            // Pre-register response resource file if needed - used for both mock setup and validation
+            // to avoid creating duplicate files with identical content
+            let responseResourcePath: string | undefined;
+            if (
+                this.resourceWriter &&
+                this.currentTestClassName &&
+                expectedResponseJson &&
+                this.jsonValidator.shouldUseResourceFile(expectedResponseJson)
+            ) {
+                responseResourcePath = this.resourceWriter.registerResource(
+                    this.currentTestClassName,
+                    testMethodName,
+                    "response",
+                    expectedResponseJson
+                );
+            }
+
             writer.writeLine("server.enqueue(new MockResponse()");
             writer.indent();
             writer.writeLine(`.setResponseCode(${responseStatusCode})`);
-            writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
+
+            if (responseResourcePath) {
+                writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                writer.writeLine(`.setBody(TestResources.loadResource("${responseResourcePath}")));`);
+            } else {
+                writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
+            }
             writer.dedent();
 
             const hasResponseBody = endpoint.response?.body != null;
@@ -129,8 +169,25 @@ export class TestMethodBuilder {
                         'Assertions.assertEquals(expectedRequestBody, actualRequestBody, "Form-urlencoded request body does not match expected");'
                     );
                 } else {
-                    // Standard JSON validation
-                    this.jsonValidator.formatMultilineJson(writer, "expectedRequestBody", expectedRequestJson);
+                    // Use resource file for large request payloads to avoid stack overflow
+                    if (
+                        this.resourceWriter &&
+                        this.currentTestClassName &&
+                        this.jsonValidator.shouldUseResourceFile(expectedRequestJson)
+                    ) {
+                        const resourcePath = this.resourceWriter.registerResource(
+                            this.currentTestClassName,
+                            testMethodName,
+                            "request",
+                            expectedRequestJson
+                        );
+                        writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                        writer.writeLine(
+                            `String expectedRequestBody = TestResources.loadResource("${resourcePath}");`
+                        );
+                    } else {
+                        this.jsonValidator.formatMultilineJson(writer, "expectedRequestBody", expectedRequestJson);
+                    }
 
                     writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
                     writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
@@ -158,7 +215,15 @@ export class TestMethodBuilder {
                 } else {
                     writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
 
-                    this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", expectedResponseJson);
+                    // Use the same resource file that was registered for mock setup, or inline for small payloads
+                    if (responseResourcePath) {
+                        writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                        writer.writeLine(
+                            `String expectedResponseBody = TestResources.loadResource("${responseResourcePath}");`
+                        );
+                    } else {
+                        this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", expectedResponseJson);
+                    }
 
                     writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
                     writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
