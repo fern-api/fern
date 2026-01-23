@@ -68,6 +68,26 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
+/**
+ * Context provided to the pythonDocsSectionHandler callback for creating placeholder pages.
+ */
+export interface PythonDocsSectionContext {
+    /** Add a page to the docs definition */
+    addPage: (pageId: string, markdown: string) => void;
+    /** Generate a unique node ID */
+    generateId: (key: string) => FernNavigation.V1.NodeId;
+}
+
+/**
+ * Handler for pythonDocsSection navigation items.
+ * Return a PageNode to show a placeholder, or null to skip the section.
+ */
+export type PythonDocsSectionHandler = (
+    item: docsYml.DocsNavigationItem.PythonDocsSection,
+    parentSlug: FernNavigation.V1.SlugGenerator,
+    context: PythonDocsSectionContext
+) => FernNavigation.V1.PageNode | null;
+
 export interface DocsDefinitionResolverArgs {
     domain: string;
     docsWorkspace: DocsWorkspace;
@@ -80,11 +100,11 @@ export interface DocsDefinitionResolverArgs {
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
     /**
-     * When true, creates placeholder pages for Python library docs sections.
-     * When false (default), skips creating placeholder pages since FDR will
-     * add the generated library docs during finishDocsRegister.
+     * Handler for pythonDocsSection navigation items.
+     * If provided, called to create placeholder pages during local dev.
+     * If not provided, pythonDocsSection items are skipped (FDR adds generated docs during publish).
      */
-    isDevMode?: boolean;
+    pythonDocsSectionHandler?: PythonDocsSectionHandler;
 }
 
 export class DocsDefinitionResolver {
@@ -97,7 +117,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
-    private isDevMode: boolean;
+    private pythonDocsSectionHandler?: PythonDocsSectionHandler;
 
     constructor({
         domain,
@@ -109,7 +129,7 @@ export class DocsDefinitionResolver {
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
         targetAudiences,
-        isDevMode = false
+        pythonDocsSectionHandler
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -120,7 +140,7 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
-        this.isDevMode = isDevMode;
+        this.pythonDocsSectionHandler = pythonDocsSectionHandler;
     }
 
     #idgen = NodeIdGenerator.init();
@@ -1146,9 +1166,8 @@ export class DocsDefinitionResolver {
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug),
             // Library sections are handled by FDR during registration
-            // In dev mode, return placeholder page; in production mode, skip (FDR adds generated docs)
-            pythonDocsSection: async (value) =>
-                this.isDevMode ? this.toPythonDocsSectionPlaceholder(value, parentSlug) : null
+            // If handler provided (dev mode), create placeholder; otherwise skip (FDR adds generated docs)
+            pythonDocsSection: async (value) => this.handlePythonDocsSection(value, parentSlug)
         });
     }
 
@@ -1174,9 +1193,8 @@ export class DocsDefinitionResolver {
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
             // Library sections are handled by FDR during registration
-            // In dev mode, return placeholder page; in production mode, skip (FDR adds generated docs)
-            pythonDocsSection: async (value) =>
-                this.isDevMode ? this.toPythonDocsSectionPlaceholder(value, parentSlug) : null
+            // If handler provided (dev mode), create placeholder; otherwise skip (FDR adds generated docs)
+            pythonDocsSection: async (value) => this.handlePythonDocsSection(value, parentSlug)
         });
     }
 
@@ -1372,85 +1390,22 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Python docs sections are handled by FDR during finishDocsRegister.
-     * The CLI starts the generation job, polls for completion, and passes the jobId to FDR.
-     * FDR then merges the generated Python docs into the navigation.
-     *
-     * In dev mode (fern docs dev), this placeholder returns a visible page with helpful content
-     * explaining that Python library docs are only generated during `fern generate --docs`.
-     *
-     * In production mode, FDR replaces/augments this with the actual generated documentation.
+     * Handles pythonDocsSection navigation items by delegating to the handler if provided.
+     * If no handler is provided, returns null (skips the section - FDR adds generated docs during publish).
      */
-    private toPythonDocsSectionPlaceholder(
+    private handlePythonDocsSection(
         item: docsYml.DocsNavigationItem.PythonDocsSection,
         parentSlug: FernNavigation.V1.SlugGenerator
-    ): FernNavigation.V1.PageNode {
-        const title = item.title ?? "Python Reference";
-        const urlSlug = item.slug ?? "python-docs";
-        const slug = parentSlug.apply({ urlSlug });
-
-        // Create a synthetic page ID for the placeholder
-        const syntheticPageId = `__python-docs-placeholder-${urlSlug}__.mdx`;
-        const pageId = FernNavigation.PageId(syntheticPageId);
-
-        // Add placeholder markdown content to parsedDocsConfig.pages
-        const placeholderMarkdown = `---
-title: ${title}
----
-
-<Warning>
-Python library documentation is not yet supported with \`fern docs dev\`. This feature will be added in a future release. To view the generated documentation, run \`fern generate --docs --preview\`.
-</Warning>
-
-## About Python Library Docs
-
-When you publish your documentation using \`fern generate --docs\`, Fern will:
-
-1. Clone and analyze your Python repository from: \`${item.githubUrl}\`
-2. Parse the Python source code to extract docstrings and type information
-3. Generate comprehensive API reference documentation
-4. Integrate the generated docs into your documentation site
-
-## How to Generate
-
-To generate the full Python library documentation, run:
-
-\`\`\`bash
-fern generate --docs
-\`\`\`
-
-Or to preview without publishing:
-
-\`\`\`bash
-fern generate --docs --preview
-\`\`\`
-
-The generated documentation will replace this placeholder page with complete API reference content including:
-
-- Module and package documentation
-- Class and function references
-- Type annotations and signatures
-- Docstring content
-`;
-
-        this.parsedDocsConfig.pages[RelativeFilePath.of(syntheticPageId)] = placeholderMarkdown;
-
-        const id = this.#idgen.get(pageId);
-        return {
-            id,
-            type: "page",
-            slug: slug.get(),
-            title,
-            icon: undefined,
-            hidden: false,
-            viewers: undefined,
-            orphaned: undefined,
-            pageId,
-            authed: undefined,
-            noindex: true, // Don't index placeholder pages
-            featureFlags: undefined,
-            availability: undefined
-        };
+    ): FernNavigation.V1.PageNode | null {
+        if (this.pythonDocsSectionHandler == null) {
+            return null;
+        }
+        return this.pythonDocsSectionHandler(item, parentSlug, {
+            addPage: (pageId, markdown) => {
+                this.parsedDocsConfig.pages[RelativeFilePath.of(pageId)] = markdown;
+            },
+            generateId: (key) => this.#idgen.get(key)
+        });
     }
 
     private async toPageNode({
@@ -1892,4 +1847,79 @@ function convertAvailability(
         default:
             assertNever(availability);
     }
+}
+
+/**
+ * Creates a placeholder page for Python docs sections during local development.
+ * This handler can be passed to DocsDefinitionResolver.pythonDocsSectionHandler
+ * to show a helpful placeholder page when running `fern docs dev`.
+ */
+export function createPythonDocsSectionPlaceholder(
+    item: docsYml.DocsNavigationItem.PythonDocsSection,
+    parentSlug: FernNavigation.V1.SlugGenerator,
+    context: PythonDocsSectionContext
+): FernNavigation.V1.PageNode {
+    const title = item.title ?? "Python Reference";
+    const urlSlug = item.slug ?? "python-docs";
+    const slug = parentSlug.apply({ urlSlug });
+
+    const syntheticPageId = `__python-docs-placeholder-${urlSlug}__.mdx`;
+    const pageId = FernNavigation.PageId(syntheticPageId);
+
+    const placeholderMarkdown = `---
+title: ${title}
+---
+
+<Warning>
+Python library documentation is not yet supported with \`fern docs dev\`. This feature will be added in a future release. To view the generated documentation, run \`fern generate --docs --preview\`.
+</Warning>
+
+## About Python Library Docs
+
+When you publish your documentation using \`fern generate --docs\`, Fern will:
+
+1. Clone and analyze your Python repository from: \`${item.githubUrl}\`
+2. Parse the Python source code to extract docstrings and type information
+3. Generate comprehensive API reference documentation
+4. Integrate the generated docs into your documentation site
+
+## How to Generate
+
+To generate the full Python library documentation, run:
+
+\`\`\`bash
+fern generate --docs
+\`\`\`
+
+Or to preview without publishing:
+
+\`\`\`bash
+fern generate --docs --preview
+\`\`\`
+
+The generated documentation will replace this placeholder page with complete API reference content including:
+
+- Module and package documentation
+- Class and function references
+- Type annotations and signatures
+- Docstring content
+`;
+
+    context.addPage(syntheticPageId, placeholderMarkdown);
+
+    return {
+        id: context.generateId(pageId),
+        type: "page",
+        slug: slug.get(),
+        title,
+        icon: undefined,
+        hidden: false,
+        viewers: undefined,
+        orphaned: undefined,
+        pageId,
+        authed: undefined,
+        noindex: true,
+        featureFlags: undefined,
+        availability: undefined
+    };
 }
