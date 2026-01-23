@@ -3,8 +3,7 @@
   changelogEntry:
     - summary: |
         Fix Java SDK generation failure when an environment name is a Java reserved keyword
-        (e.g., "default"). The `visitMultipleBaseUrls` method now uses `getScreamingSnakeCase().getSafeName()`
-        for environment constant names, matching the pattern used in `visitSingleBaseUrl`.
+        (e.g., "default") for multi-environment APIs.
       type: fix
   createdAt: "2026-01-23"
   irVersion: 63
