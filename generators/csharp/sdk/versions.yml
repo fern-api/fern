@@ -2,6 +2,18 @@
 - version: 2.19.1
   changelogEntry:
     - summary: |
+        Fix nullable element types in collections to correctly preserve nullable markers.
+
+        Previously, nullable types nested inside collections would incorrectly strip the inner nullable marker:
+        - `nullable<list<nullable<string>>>` incorrectly generated `IEnumerable<string>?`
+        - `nullable<map<string, nullable<Address>>>` incorrectly generated `Dictionary<string, Address>?`
+
+        Now generates correctly:
+        - `nullable<list<nullable<string>>>` generates `IEnumerable<string?>?`
+        - `nullable<map<string, nullable<Address>>>` generates `Dictionary<string, Address?>?`
+        - `optional<map<string, nullable<string>>>` generates `Dictionary<string, string?>?`
+      type: fix
+    - summary: |
         Fixes certain missing references to Core utilities in interface files for the Optional wrapper.
       type: fix
   createdAt: "2026-01-28"
