@@ -59,12 +59,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.convertAsUndiscriminatedUnion();
         }
 
-        if (
-            this.schema.discriminator != null &&
-            !this.unionVariantsContainLiteral({
-                discriminantProperty: this.schema.discriminator.propertyName
-            })
-        ) {
+        // If a discriminator is present, always convert as discriminated union
+        // This properly handles OpenAPI oneOf with discriminator where the discriminant
+        // property is defined in each variant schema
+        if (this.schema.discriminator != null) {
             return this.convertAsDiscriminatedUnion();
         }
 
