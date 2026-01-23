@@ -1,5 +1,6 @@
 export type { InlineTypeRequest } from "./InlineTypeRequest.js";
 export type { JustFileRequest } from "./JustFileRequest.js";
+export type { JustFileWithOptionalQueryParamsRequest } from "./JustFileWithOptionalQueryParamsRequest.js";
 export type { JustFileWithQueryParamsRequest } from "./JustFileWithQueryParamsRequest.js";
 export type { MyOtherRequest } from "./MyOtherRequest.js";
 export type { MyRequest } from "./MyRequest.js";
