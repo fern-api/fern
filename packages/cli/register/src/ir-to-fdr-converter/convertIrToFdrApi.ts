@@ -11,7 +11,8 @@ export function convertIrToFdrApi({
     playgroundConfig,
     graphqlOperations = {},
     graphqlTypes = {},
-    context
+    context,
+    apiNameOverride
 }: {
     ir: IntermediateRepresentation;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
@@ -19,6 +20,7 @@ export function convertIrToFdrApi({
     graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>;
     graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
     context: TaskContext;
+    apiNameOverride?: string;
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
     // Log GraphQL operations and types received in convertIrToFdrApi
     const operationCount = Object.keys(graphqlOperations).length;
@@ -38,7 +40,7 @@ export function convertIrToFdrApi({
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations),
-        apiName: ir.apiName.originalName,
+        apiName: apiNameOverride ?? ir.apiName.originalName,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
         snippetsConfiguration: snippetsConfig,

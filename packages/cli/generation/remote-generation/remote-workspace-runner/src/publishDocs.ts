@@ -288,13 +288,16 @@ export async function publishDocs({
                 context.logger.debug(`GraphQL type IDs in publishDocs: ${JSON.stringify(Object.keys(graphqlTypes))}`);
             }
 
+            // Use apiName from docs.yml (folder name) as the API identifier for FDR
+            // This ensures users can reference APIs by their folder name in docs components
             let apiDefinition = convertIrToFdrApi({
                 ir,
                 snippetsConfig,
                 playgroundConfig,
                 graphqlOperations,
                 graphqlTypes,
-                context
+                context,
+                apiNameOverride: apiName
             });
 
             const aiEnhancerConfig = getAIEnhancerConfig(
@@ -372,7 +375,7 @@ export async function publishDocs({
 
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
+                apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName.originalName),
                 definition: apiDefinition,
                 definitionV2: undefined,
                 dynamicIRs: dynamicIRsByLanguage
