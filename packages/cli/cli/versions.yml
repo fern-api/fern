@@ -7,6 +7,17 @@
   createdAt: "2026-01-23"
   irVersion: 63
 
+- version: 3.49.6
+  changelogEntry:
+    - summary: |
+        Fix `group-multi-api-environments` to properly accumulate all URLs when merging many OpenAPI specs. Previously only the first two URLs were preserved.
+      type: fix
+    - summary: |
+        Fix `group-multi-api-environments` setting to be inherited from global `api.settings`.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
 - version: 3.49.5
   changelogEntry:
     - summary: |
