@@ -71,18 +71,45 @@ export class WrappedEndpointRequest extends EndpointRequest {
             }
         }
 
+        // If all parameters are required, generate a single fluent chain
+        if (optionalQueryParameters.length === 0) {
+            return {
+                code: this.csharp.codeblock((writer) => {
+                    writer.write(
+                        `var ${queryStringVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
+                    );
+                    writer.indent();
+                    for (const query of requiredQueryParameters) {
+                        writer.writeLine();
+                        this.writeQueryParameterBuilderCallChained(writer, query);
+                    }
+                    writer.writeLine();
+                    writer.write(".Build()");
+                    writer.dedent();
+                    writer.writeLine(";");
+                }),
+                queryStringReference: queryStringVar
+            };
+        }
+
+        // If there are optional parameters, we need a builder variable to conditionally add them
         return {
             code: this.csharp.codeblock((writer) => {
                 // Start building the query string with QueryStringBuilder.Builder
-                writer.writeLine(
-                    `var ${builderVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length});`
+                writer.write(
+                    `var ${builderVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
                 );
 
-                // Add required parameters
-                for (const query of requiredQueryParameters) {
-                    this.writeQueryParameterBuilderCall(writer, query, builderVar);
-                    writer.writeLine(";");
+                // Chain required parameters fluently
+                if (requiredQueryParameters.length > 0) {
+                    writer.indent();
+                    for (const query of requiredQueryParameters) {
+                        writer.writeLine();
+                        this.writeQueryParameterBuilderCallChained(writer, query);
+                    }
+                    writer.dedent();
                 }
+                writer.writeLine(";");
 
                 // Add optional parameters with null checks
                 for (const query of optionalQueryParameters) {
@@ -122,6 +149,21 @@ export class WrappedEndpointRequest extends EndpointRequest {
             writer.write(`${builderVar}.AddDeepObject("${query.name.wireValue}", ${queryParameterReference})`);
         } else {
             writer.write(`${builderVar}.Add("${query.name.wireValue}", ${queryParameterReference})`);
+        }
+    }
+
+    /**
+     * Writes a chained fluent builder method call for a query parameter (without builder variable prefix).
+     * Used when chaining calls directly on the builder instantiation.
+     */
+    private writeQueryParameterBuilderCallChained(writer: Writer, query: QueryParameter): void {
+        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+        const isComplexType = this.isComplexType(query.valueType);
+
+        if (isComplexType) {
+            writer.write(`.AddDeepObject("${query.name.wireValue}", ${queryParameterReference})`);
+        } else {
+            writer.write(`.Add("${query.name.wireValue}", ${queryParameterReference})`);
         }
     }
 

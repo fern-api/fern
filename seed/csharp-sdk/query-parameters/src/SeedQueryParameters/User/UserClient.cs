@@ -18,18 +18,18 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedQueryParameters.Core.QueryStringBuilder.Builder(capacity: 14);
-        _queryBuilder.Add("limit", request.Limit);
-        _queryBuilder.Add("id", request.Id);
-        _queryBuilder.Add("date", request.Date);
-        _queryBuilder.Add("deadline", request.Deadline);
-        _queryBuilder.Add("bytes", request.Bytes);
-        _queryBuilder.AddDeepObject("user", request.User);
-        _queryBuilder.Add("userList", request.UserList);
-        _queryBuilder.Add("keyValue", request.KeyValue);
-        _queryBuilder.AddDeepObject("nestedUser", request.NestedUser);
-        _queryBuilder.AddDeepObject("excludeUser", request.ExcludeUser);
-        _queryBuilder.Add("filter", request.Filter);
+        var _queryBuilder = new SeedQueryParameters.Core.QueryStringBuilder.Builder(capacity: 14)
+            .Add("limit", request.Limit)
+            .Add("id", request.Id)
+            .Add("date", request.Date)
+            .Add("deadline", request.Deadline)
+            .Add("bytes", request.Bytes)
+            .AddDeepObject("user", request.User)
+            .Add("userList", request.UserList)
+            .Add("keyValue", request.KeyValue)
+            .AddDeepObject("nestedUser", request.NestedUser)
+            .AddDeepObject("excludeUser", request.ExcludeUser)
+            .Add("filter", request.Filter);
         if (request.OptionalDeadline != null)
         {
             _queryBuilder.Add("optionalDeadline", request.OptionalDeadline);
