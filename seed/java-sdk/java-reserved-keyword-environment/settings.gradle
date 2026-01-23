@@ -1,0 +1,3 @@
+rootProject.name = 'java-reserved-keyword-environment'
+
+include 'sample-app'
