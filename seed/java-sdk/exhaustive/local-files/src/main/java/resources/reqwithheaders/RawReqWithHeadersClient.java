@@ -39,40 +39,43 @@ public class RawReqWithHeadersClient {
 
   public SeedExhaustiveHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request,
       RequestOptions requestOptions) {
-    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+    HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("test-headers")
-      .addPathSegments("custom-header")
-      .build();
-    RequestBody body;
-    try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
-    }
-    catch(Exception e) {
-      throw new RuntimeException(e);
-    }
-    Request.Builder _requestBuilder = new Request.Builder()
-      .url(httpUrl)
-      .method("POST", body)
-      .headers(Headers.of(clientOptions.headers(requestOptions)))
-      .addHeader("Content-Type", "application/json");
-    _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());
-    _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getXTestEndpointHeader());
-    Request okhttpRequest = _requestBuilder.build();
-    OkHttpClient client = clientOptions.httpClient();
-    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-      client = clientOptions.httpClientWithTimeout(requestOptions);
-    }
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        return new SeedExhaustiveHttpResponse<>(null, response);
+      .addPathSegments("custom-header");if (requestOptions != null) {
+        requestOptions.getQueryParameters().forEach((key, value) -> {
+          httpUrl.addQueryParameter(key, value);
+        } );
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
+      RequestBody body;
+      try {
+        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+      }
+      catch(Exception e) {
+        throw new RuntimeException(e);
+      }
+      Request.Builder _requestBuilder = new Request.Builder()
+        .url(httpUrl.build())
+        .method("POST", body)
+        .headers(Headers.of(clientOptions.headers(requestOptions)))
+        .addHeader("Content-Type", "application/json");
+      _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());
+      _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getXTestEndpointHeader());
+      Request okhttpRequest = _requestBuilder.build();
+      OkHttpClient client = clientOptions.httpClient();
+      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+        client = clientOptions.httpClientWithTimeout(requestOptions);
+      }
+      try (Response response = client.newCall(okhttpRequest).execute()) {
+        ResponseBody responseBody = response.body();
+        if (response.isSuccessful()) {
+          return new SeedExhaustiveHttpResponse<>(null, response);
+        }
+        String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+        Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+      }
+      catch (IOException e) {
+        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+      }
     }
   }
-}

@@ -83,7 +83,8 @@ This SDK supports two authentication methods:
 If you already have a valid access token, you can use it directly:
 
 ```java
-SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withToken("your-access-token")
+SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.builder()
+    .token("your-access-token")
     .url("https://api.example.com")
     .build();
 ```
@@ -93,7 +94,8 @@ SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsRef
 The SDK can automatically handle token acquisition and refresh:
 
 ```java
-SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials("client-id", "client-secret")
+SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.builder()
+    .credentials("client-id", "client-secret")
     .url("https://api.example.com")
     .build();
 ```
