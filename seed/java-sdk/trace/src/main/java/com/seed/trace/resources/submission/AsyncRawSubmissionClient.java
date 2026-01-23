@@ -47,14 +47,18 @@ public class AsyncRawSubmissionClient {
      */
     public CompletableFuture<SeedTraceHttpResponse<ExecutionSessionResponse>> createExecutionSession(
             Language language, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("create-session")
-                .addPathSegment(language.toString())
-                .build();
+                .addPathSegment(language.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -105,13 +109,17 @@ public class AsyncRawSubmissionClient {
      */
     public CompletableFuture<SeedTraceHttpResponse<Optional<ExecutionSessionResponse>>> getExecutionSession(
             String sessionId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
-                .addPathSegment(sessionId)
-                .build();
+                .addPathSegment(sessionId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -162,14 +170,18 @@ public class AsyncRawSubmissionClient {
      */
     public CompletableFuture<SeedTraceHttpResponse<Void>> stopExecutionSession(
             String sessionId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("stop")
-                .addPathSegment(sessionId)
-                .build();
+                .addPathSegment(sessionId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
@@ -210,13 +222,17 @@ public class AsyncRawSubmissionClient {
 
     public CompletableFuture<SeedTraceHttpResponse<GetExecutionSessionStateResponse>> getExecutionSessionsState(
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
-                .addPathSegments("execution-sessions-state")
-                .build();
+                .addPathSegments("execution-sessions-state");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")

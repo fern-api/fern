@@ -44,13 +44,17 @@ public class AsyncRawProblemClient {
      */
     public CompletableFuture<SeedTraceHttpResponse<List<LightweightProblemInfoV2>>> getLightweightProblems(
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("problems-v2")
-                .addPathSegments("lightweight-problem-info")
-                .build();
+                .addPathSegments("lightweight-problem-info");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -100,13 +104,17 @@ public class AsyncRawProblemClient {
      * Returns latest versions of all problems
      */
     public CompletableFuture<SeedTraceHttpResponse<List<ProblemInfoV2>>> getProblems(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("problems-v2")
-                .addPathSegments("problem-info")
-                .build();
+                .addPathSegments("problem-info");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -157,14 +165,18 @@ public class AsyncRawProblemClient {
      */
     public CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> getLatestProblem(
             String problemId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("problems-v2")
                 .addPathSegments("problem-info")
-                .addPathSegment(problemId)
-                .build();
+                .addPathSegment(problemId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -215,16 +227,20 @@ public class AsyncRawProblemClient {
      */
     public CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> getProblemVersion(
             String problemId, int problemVersion, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("problems-v2")
                 .addPathSegments("problem-info")
                 .addPathSegment(problemId)
                 .addPathSegments("version")
-                .addPathSegment(Integer.toString(problemVersion))
-                .build();
+                .addPathSegment(Integer.toString(problemVersion));
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
