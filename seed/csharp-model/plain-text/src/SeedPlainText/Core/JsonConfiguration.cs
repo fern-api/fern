@@ -14,11 +14,15 @@ internal static partial class JsonOptions
     {
         var options = new JsonSerializerOptions
         {
-            Converters = { new DateTimeSerializer(),
+            Converters =
+            {
+                new DateTimeSerializer(),
 #if USE_PORTABLE_DATE_ONLY
                 new DateOnlyConverter(),
 #endif
-                new OneOfSerializer() },
+                new OneOfSerializer(),
+                new OptionalJsonConverterFactory(),
+            },
 #if DEBUG
             WriteIndented = true,
 #endif
@@ -27,80 +31,147 @@ internal static partial class JsonOptions
             {
                 Modifiers =
                 {
-                    static typeInfo =>
-                    {
-                        if (typeInfo.Kind != JsonTypeInfoKind.Object)
-                            return;
-
-                        foreach (var propertyInfo in typeInfo.Properties)
-                        {
-                            var jsonAccessAttribute = propertyInfo
-                                .AttributeProvider?.GetCustomAttributes(
-                                    typeof(JsonAccessAttribute),
-                                    true
-                                )
-                                .OfType<JsonAccessAttribute>()
-                                .FirstOrDefault();
-
-                            if (jsonAccessAttribute != null)
-                            {
-                                propertyInfo.IsRequired = false;
-                                switch (jsonAccessAttribute.AccessType)
-                                {
-                                    case JsonAccessType.ReadOnly:
-                                        propertyInfo.ShouldSerialize = (_, _) => false;
-                                        break;
-                                    case JsonAccessType.WriteOnly:
-                                        propertyInfo.Set = null;
-                                        break;
-                                    default:
-                                        throw new ArgumentOutOfRangeException();
-                                }
-                            }
-
-                            var jsonIgnoreAttribute = propertyInfo
-                                .AttributeProvider?.GetCustomAttributes(
-                                    typeof(JsonIgnoreAttribute),
-                                    true
-                                )
-                                .OfType<JsonIgnoreAttribute>()
-                                .FirstOrDefault();
-
-                            if (jsonIgnoreAttribute is not null)
-                            {
-                                propertyInfo.IsRequired = false;
-                            }
-                        }
-
-                        if (
-                            typeInfo.Kind == JsonTypeInfoKind.Object
-                            && typeInfo.Properties.All(prop => !prop.IsExtensionData)
-                        )
-                        {
-                            var extensionProp = typeInfo
-                                .Type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-                                .FirstOrDefault(prop =>
-                                    prop.GetCustomAttribute<JsonExtensionDataAttribute>() != null
-                                );
-
-                            if (extensionProp is not null)
-                            {
-                                var jsonPropertyInfo = typeInfo.CreateJsonPropertyInfo(
-                                    extensionProp.FieldType,
-                                    extensionProp.Name
-                                );
-                                jsonPropertyInfo.Get = extensionProp.GetValue;
-                                jsonPropertyInfo.Set = extensionProp.SetValue;
-                                jsonPropertyInfo.IsExtensionData = true;
-                                typeInfo.Properties.Add(jsonPropertyInfo);
-                            }
-                        }
-                    },
+                    NullableOptionalModifier,
+                    JsonAccessAndIgnoreModifier,
+                    HandleExtensionDataFields,
                 },
             },
         };
         ConfigureJsonSerializerOptions(options);
         JsonSerializerOptions = options;
+    }
+
+    private static void NullableOptionalModifier(JsonTypeInfo typeInfo)
+    {
+        if (typeInfo.Kind != JsonTypeInfoKind.Object)
+            return;
+
+        foreach (var property in typeInfo.Properties)
+        {
+            var propertyInfo = property.AttributeProvider as global::System.Reflection.PropertyInfo;
+
+            if (propertyInfo == null)
+                continue;
+
+            // Check for ReadOnly JsonAccessAttribute - it overrides Optional/Nullable behavior
+            var jsonAccessAttribute = propertyInfo.GetCustomAttribute<JsonAccessAttribute>();
+            if (jsonAccessAttribute?.AccessType == JsonAccessType.ReadOnly)
+            {
+                // ReadOnly means "never serialize", which completely overrides Optional/Nullable.
+                // Skip Optional/Nullable processing since JsonAccessAndIgnoreModifier
+                // will set ShouldSerialize = false anyway.
+                continue;
+            }
+            // Note: WriteOnly doesn't conflict with Optional/Nullable since it only
+            // affects deserialization (Set), not serialization (ShouldSerialize)
+
+            var isOptionalType =
+                property.PropertyType.IsGenericType
+                && property.PropertyType.GetGenericTypeDefinition() == typeof(Optional<>);
+
+            var hasOptionalAttribute = propertyInfo.GetCustomAttribute<OptionalAttribute>() != null;
+            var hasNullableAttribute = propertyInfo.GetCustomAttribute<NullableAttribute>() != null;
+
+            if (isOptionalType && hasOptionalAttribute)
+            {
+                var originalGetter = property.Get;
+                if (originalGetter != null)
+                {
+                    var capturedIsNullable = hasNullableAttribute;
+
+                    property.ShouldSerialize = (obj, value) =>
+                    {
+                        var optionalValue = originalGetter(obj);
+                        if (optionalValue is not IOptional optional)
+                            return false;
+
+                        if (!optional.IsDefined)
+                            return false;
+
+                        if (!capturedIsNullable)
+                        {
+                            var innerValue = optional.GetBoxedValue();
+                            if (innerValue == null)
+                                return false;
+                        }
+
+                        return true;
+                    };
+                }
+            }
+            else if (hasNullableAttribute)
+            {
+                // Force serialization of nullable properties even when null
+                property.ShouldSerialize = (obj, value) => true;
+            }
+        }
+    }
+
+    private static void JsonAccessAndIgnoreModifier(JsonTypeInfo typeInfo)
+    {
+        if (typeInfo.Kind != JsonTypeInfoKind.Object)
+            return;
+
+        foreach (var propertyInfo in typeInfo.Properties)
+        {
+            var jsonAccessAttribute = propertyInfo
+                .AttributeProvider?.GetCustomAttributes(typeof(JsonAccessAttribute), true)
+                .OfType<JsonAccessAttribute>()
+                .FirstOrDefault();
+
+            if (jsonAccessAttribute != null)
+            {
+                propertyInfo.IsRequired = false;
+                switch (jsonAccessAttribute.AccessType)
+                {
+                    case JsonAccessType.ReadOnly:
+                        propertyInfo.ShouldSerialize = (_, _) => false;
+                        break;
+                    case JsonAccessType.WriteOnly:
+                        propertyInfo.Set = null;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            var jsonIgnoreAttribute = propertyInfo
+                .AttributeProvider?.GetCustomAttributes(typeof(JsonIgnoreAttribute), true)
+                .OfType<JsonIgnoreAttribute>()
+                .FirstOrDefault();
+
+            if (jsonIgnoreAttribute is not null)
+            {
+                propertyInfo.IsRequired = false;
+            }
+        }
+    }
+
+    private static void HandleExtensionDataFields(JsonTypeInfo typeInfo)
+    {
+        if (
+            typeInfo.Kind == JsonTypeInfoKind.Object
+            && typeInfo.Properties.All(prop => !prop.IsExtensionData)
+        )
+        {
+            var extensionProp = typeInfo
+                .Type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
+                .FirstOrDefault(prop =>
+                    prop.GetCustomAttribute<JsonExtensionDataAttribute>() != null
+                );
+
+            if (extensionProp is not null)
+            {
+                var jsonPropertyInfo = typeInfo.CreateJsonPropertyInfo(
+                    extensionProp.FieldType,
+                    extensionProp.Name
+                );
+                jsonPropertyInfo.Get = extensionProp.GetValue;
+                jsonPropertyInfo.Set = extensionProp.SetValue;
+                jsonPropertyInfo.IsExtensionData = true;
+                typeInfo.Properties.Add(jsonPropertyInfo);
+            }
+        }
     }
 
     static partial void ConfigureJsonSerializerOptions(JsonSerializerOptions defaultOptions);
