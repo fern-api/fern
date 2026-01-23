@@ -90,8 +90,16 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 if (mediaTypeObject == null) {
                     continue;
                 }
+
+                // Handle text/event-stream with itemSchema (non-standard OpenAPI extension)
+                // When itemSchema is present, use it as the schema for SSE streaming
+                const effectiveMediaTypeObject = this.getEffectiveMediaTypeObject({
+                    contentType,
+                    mediaTypeObject
+                });
+
                 const convertedSchema = this.parseMediaTypeObject({
-                    mediaTypeObject,
+                    mediaTypeObject: effectiveMediaTypeObject,
                     schemaId,
                     contentType: this.streamingExtension.format
                 });
@@ -99,7 +107,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     continue;
                 }
                 return this.convertStreamingResponse({
-                    mediaTypeObject,
+                    mediaTypeObject: effectiveMediaTypeObject,
                     convertedSchema
                 });
             }
@@ -413,6 +421,38 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
 
     private shouldReturnTextResponse(contentType: string): boolean {
         return MediaType.parse(contentType)?.isText() ?? false;
+    }
+
+    /**
+     * Returns an effective media type object that handles the non-standard itemSchema property.
+     * When text/event-stream content type has itemSchema instead of schema, we use itemSchema as the schema.
+     * This is a non-standard OpenAPI extension used by some tools to indicate SSE streaming.
+     */
+    private getEffectiveMediaTypeObject({
+        contentType,
+        mediaTypeObject
+    }: {
+        contentType: string;
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
+    }): OpenAPIV3_1.MediaTypeObject {
+        if (!contentType.includes("text/event-stream")) {
+            return mediaTypeObject;
+        }
+
+        // Check if itemSchema is present (non-standard OpenAPI extension)
+        const mediaTypeWithItemSchema = mediaTypeObject as OpenAPIV3_1.MediaTypeObject & {
+            itemSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        };
+
+        if (mediaTypeWithItemSchema.itemSchema != null && mediaTypeObject.schema == null) {
+            // Use itemSchema as the schema for SSE streaming
+            return {
+                ...mediaTypeObject,
+                schema: mediaTypeWithItemSchema.itemSchema
+            };
+        }
+
+        return mediaTypeObject;
     }
 
     public convertResponseHeaders(): HttpHeader[] {
