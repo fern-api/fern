@@ -352,16 +352,48 @@ internal static class QueryStringBuilder
         }
 
         /// <summary>
-        /// Adds a simple parameter.
+        /// Adds a simple parameter. For collections, adds multiple key-value pairs (one per element).
         /// </summary>
         public Builder Add(string key, object? value)
         {
-            if (value is not null)
+            if (value is null)
             {
-                _params.Add(
-                    new KeyValuePair<string, string>(key, ValueConvert.ToQueryStringValue(value))
-                );
+                return this;
             }
+
+            // Handle string separately since it implements IEnumerable<char>
+            if (value is string stringValue)
+            {
+                _params.Add(new KeyValuePair<string, string>(key, stringValue));
+                return this;
+            }
+
+            // Handle collections (arrays, lists, etc.) - add each element as a separate key-value pair
+            if (
+                value
+                is global::System.Collections.IEnumerable enumerable
+                    and not global::System.Collections.IDictionary
+            )
+            {
+                foreach (var item in enumerable)
+                {
+                    if (item is not null)
+                    {
+                        _params.Add(
+                            new KeyValuePair<string, string>(
+                                key,
+                                ValueConvert.ToQueryStringValue(item)
+                            )
+                        );
+                    }
+                }
+                return this;
+            }
+
+            // Handle scalar values
+            _params.Add(
+                new KeyValuePair<string, string>(key, ValueConvert.ToQueryStringValue(value))
+            );
             return this;
         }
 
