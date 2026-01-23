@@ -14,5 +14,5 @@ namespace SeedPlainText.Core;
 /// - Without [Nullable]: Optional<T>.Of(null) → omit from JSON (runtime edge case)
 /// - With [Nullable]: Optional<T?>.Of(null) → write null to JSON
 /// </remarks>
-[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-public class NullableAttribute : Attribute { }
+[global::System.AttributeUsage(global::System.AttributeTargets.Property, AllowMultiple = false)]
+public class NullableAttribute : global::System.Attribute { }
