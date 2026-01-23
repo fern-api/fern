@@ -8,12 +8,12 @@ paths:
       operationId: authorize
       summary: Authorize (main spec)
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthResponse'
+                $ref: "#/components/schemas/AuthResponse"
   /contacts/{id}:
     get:
       operationId: getContact
@@ -24,25 +24,25 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Contact'
+                $ref: "#/components/schemas/Contact"
   /payments:
     get:
       operationId: listPayments
       summary: List payments (main spec only)
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Payment'
+                  $ref: "#/components/schemas/Payment"
     post:
       operationId: createPayment
       summary: Create payment (main spec)
@@ -51,14 +51,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PaymentRequest'
+              $ref: "#/components/schemas/PaymentRequest"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Payment'
+                $ref: "#/components/schemas/Payment"
 components:
   schemas:
     AuthResponse:

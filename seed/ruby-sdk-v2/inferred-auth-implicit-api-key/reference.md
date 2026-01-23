@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>() -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/fern_inferred_auth_implicit_api_key/auth/client.rb">get_token</a>() -> FernInferredAuthImplicitApiKey::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.auth.get_token(api_key: 'api_key');
 <dl>
 <dd>
 
-**request_options:** `Seed::Auth::RequestOptions` 
+**request_options:** `FernInferredAuthImplicitApiKey::Auth::RequestOptions` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ client.auth.get_token(api_key: 'api_key');
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.nested_no_auth.api.<a href="/lib/seed/nested_no_auth/api/client.rb">get_something</a>() -> </code></summary>
+<details><summary><code>client.nested_no_auth.api.<a href="/lib/fern_inferred_auth_implicit_api_key/nested_no_auth/api/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -77,7 +77,7 @@ client.nested_no_auth.api.get_something();
 <dl>
 <dd>
 
-**request_options:** `Seed::NestedNoAuth::Api::RequestOptions` 
+**request_options:** `FernInferredAuthImplicitApiKey::NestedNoAuth::Api::RequestOptions` 
     
 </dd>
 </dl>
@@ -90,7 +90,7 @@ client.nested_no_auth.api.get_something();
 </details>
 
 ## Nested Api
-<details><summary><code>client.nested.api.<a href="/lib/seed/nested/api/client.rb">get_something</a>() -> </code></summary>
+<details><summary><code>client.nested.api.<a href="/lib/fern_inferred_auth_implicit_api_key/nested/api/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ client.nested.api.get_something();
 <dl>
 <dd>
 
-**request_options:** `Seed::Nested::Api::RequestOptions` 
+**request_options:** `FernInferredAuthImplicitApiKey::Nested::Api::RequestOptions` 
     
 </dd>
 </dl>
@@ -131,7 +131,7 @@ client.nested.api.get_something();
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">get_something</a>() -> </code></summary>
+<details><summary><code>client.simple.<a href="/lib/fern_inferred_auth_implicit_api_key/simple/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -159,7 +159,7 @@ client.simple.get_something();
 <dl>
 <dd>
 
-**request_options:** `Seed::Simple::RequestOptions` 
+**request_options:** `FernInferredAuthImplicitApiKey::Simple::RequestOptions` 
     
 </dd>
 </dl>
