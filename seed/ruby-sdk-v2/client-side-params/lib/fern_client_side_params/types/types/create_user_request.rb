@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+module FernClientSideParams
+  module Types
+    module Types
+      class CreateUserRequest < Internal::Types::Model
+        field :email, -> { String }, optional: false, nullable: false
+        field :email_verified, -> { Internal::Types::Boolean }, optional: true, nullable: false
+        field :username, -> { String }, optional: true, nullable: false
+        field :password, -> { String }, optional: true, nullable: false
+        field :phone_number, -> { String }, optional: true, nullable: false
+        field :phone_verified, -> { Internal::Types::Boolean }, optional: true, nullable: false
+        field :user_metadata, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
+        field :app_metadata, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
+        field :connection, -> { String }, optional: false, nullable: false
+      end
+    end
+  end
+end
