@@ -288,15 +288,33 @@ export class MockEndpointGenerator extends WithGeneration {
                 const mapResult: Record<string, unknown> = {};
                 for (const entry of container.map) {
                     const key = entry.key.jsonExample;
-                    if (typeof key === "string") {
-                        mapResult[key] = this.filterExampleTypeReference(entry.value);
+                    // JSON object keys are always strings, but the example might have numeric keys
+                    if (typeof key === "string" || typeof key === "number") {
+                        mapResult[String(key)] = this.filterExampleTypeReference(entry.value);
                     }
                 }
                 return mapResult;
             }
 
             case "literal":
-                return container.literal;
+                return this.extractLiteralValue(container.literal);
+        }
+    }
+
+    /**
+     * Extracts the actual value from an ExamplePrimitive literal.
+     * Literals in the IR are represented as discriminated unions like { type: "boolean", boolean: false }.
+     */
+    private extractLiteralValue(literal: unknown): unknown {
+        const lit = literal as { type: string; [key: string]: unknown };
+        switch (lit.type) {
+            case "boolean":
+                return lit.boolean;
+            case "string":
+                return (lit.string as { original: string })?.original ?? lit.string;
+            default:
+                // For other types, try to extract the value by type name
+                return lit[lit.type] ?? literal;
         }
     }
 
