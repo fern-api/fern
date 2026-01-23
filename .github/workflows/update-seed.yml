@@ -51,7 +51,7 @@ env:
 jobs:
   setup:
     if: github.repository == 'fern-api/fern'
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 2
     outputs:
       skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
@@ -113,7 +113,7 @@ jobs:
 
   changes:
     if: github.repository == 'fern-api/fern'
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
       matrix:
@@ -254,7 +254,7 @@ jobs:
           echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
@@ -1198,7 +1198,7 @@ jobs:
         rust-model-seed-update,
         rust-sdk-seed-update
       ]
-    runs-on: Seed
+    runs-on: ubuntu-latest
 
     timeout-minutes: 10
     steps:
@@ -1288,7 +1288,7 @@ jobs:
         rust-model-seed-update,
         rust-sdk-seed-update
       ]
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       matrix:
