@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.50.0
+  changelogEntry:
+    - summary: |
+        Add `--output` option to `fern generate` command. This allows users to specify a custom output directory for preview generation when using the `--preview` flag for SDK generation, instead of the default `.preview` directory.
+      type: feat
+  createdAt: "2026-01-23"
+  irVersion: 63
+
 - version: 3.49.8
   changelogEntry:
     - summary: |
