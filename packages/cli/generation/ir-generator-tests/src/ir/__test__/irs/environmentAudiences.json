@@ -5033,6 +5033,9 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "audiences": [
+                        "external"
+                    ],
                     "docs": null
                 },
                 {
@@ -5057,6 +5060,10 @@
                         }
                     },
                     "url": "https://www.staging.yoursite.com",
+                    "audiences": [
+                        "internal",
+                        "development"
+                    ],
                     "docs": "This staging environment is helpful for testing!"
                 }
             ]

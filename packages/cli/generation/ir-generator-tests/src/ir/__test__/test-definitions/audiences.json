@@ -4545,6 +4545,9 @@
                         }
                     },
                     "url": "https://api.example.a.com",
+                    "audiences": [
+                        "public"
+                    ],
                     "docs": null
                 },
                 {
@@ -4569,6 +4572,9 @@
                         }
                     },
                     "url": "https://api.example.b.com",
+                    "audiences": [
+                        "private"
+                    ],
                     "docs": null
                 }
             ]

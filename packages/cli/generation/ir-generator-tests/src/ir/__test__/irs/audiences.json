@@ -1268,6 +1268,9 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "audiences": [
+                        "external"
+                    ],
                     "docs": null
                 }
             ]
