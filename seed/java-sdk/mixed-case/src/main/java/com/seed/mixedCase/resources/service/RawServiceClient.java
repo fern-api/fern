@@ -34,13 +34,17 @@ public class RawServiceClient {
     }
 
     public SeedMixedCaseHttpResponse<Resource> getResource(String resourceId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("resource")
-                .addPathSegment(resourceId)
-                .build();
+                .addPathSegment(resourceId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -75,6 +79,11 @@ public class RawServiceClient {
                 .addPathSegments("resource");
         QueryStringMapper.addQueryParameter(httpUrl, "page_limit", request.getPageLimit(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "beforeDate", request.getBeforeDate(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

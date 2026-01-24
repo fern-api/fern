@@ -56,6 +56,11 @@ public class AsyncRawUsersClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

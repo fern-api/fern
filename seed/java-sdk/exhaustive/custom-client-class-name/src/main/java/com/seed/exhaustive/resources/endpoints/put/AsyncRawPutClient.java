@@ -36,12 +36,16 @@ public class AsyncRawPutClient {
     }
 
     public CompletableFuture<BestHttpResponse<PutResponse>> add(PutRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(request.getId())
-                .build();
+                .addPathSegment(request.getId());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");

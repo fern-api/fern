@@ -47,89 +47,95 @@ public class RawContentTypeClient {
 
   public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType(ObjectWithOptionalField request,
       RequestOptions requestOptions) {
-    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+    HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("foo")
-      .addPathSegments("bar")
-      .build();
-    RequestBody body;
-    try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json"));
-    }
-    catch(JsonProcessingException e) {
-      throw new SeedExhaustiveException("Failed to serialize request", e);
-    }
-    Request okhttpRequest = new Request.Builder()
-      .url(httpUrl)
-      .method("POST", body)
-      .headers(Headers.of(clientOptions.headers(requestOptions)))
-      .addHeader("Content-Type", "application/json-patch+json")
-      .build();
-    OkHttpClient client = clientOptions.httpClient();
-    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-      client = clientOptions.httpClientWithTimeout(requestOptions);
-    }
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        return new SeedExhaustiveHttpResponse<>(null, response);
+      .addPathSegments("bar");if (requestOptions != null) {
+        requestOptions.getQueryParameters().forEach((key, value) -> {
+          httpUrl.addQueryParameter(key, value);
+        } );
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
-  }
-
-  public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType() {
-    return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
-  }
-
-  public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
-      RequestOptions requestOptions) {
-    return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build(),requestOptions);
-  }
-
-  public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
-      ObjectWithOptionalField request) {
-    return postJsonPatchContentWithCharsetType(request,null);
-  }
-
-  public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
-      ObjectWithOptionalField request, RequestOptions requestOptions) {
-    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("foo")
-      .addPathSegments("baz")
-      .build();
-    RequestBody body;
-    try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json; charset=utf-8"));
-    }
-    catch(JsonProcessingException e) {
-      throw new SeedExhaustiveException("Failed to serialize request", e);
-    }
-    Request okhttpRequest = new Request.Builder()
-      .url(httpUrl)
-      .method("POST", body)
-      .headers(Headers.of(clientOptions.headers(requestOptions)))
-      .addHeader("Content-Type", "application/json-patch+json; charset=utf-8")
-      .build();
-    OkHttpClient client = clientOptions.httpClient();
-    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-      client = clientOptions.httpClientWithTimeout(requestOptions);
-    }
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        return new SeedExhaustiveHttpResponse<>(null, response);
+      RequestBody body;
+      try {
+        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json"));
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+      catch(JsonProcessingException e) {
+        throw new SeedExhaustiveException("Failed to serialize request", e);
+      }
+      Request okhttpRequest = new Request.Builder()
+        .url(httpUrl.build())
+        .method("POST", body)
+        .headers(Headers.of(clientOptions.headers(requestOptions)))
+        .addHeader("Content-Type", "application/json-patch+json")
+        .build();
+      OkHttpClient client = clientOptions.httpClient();
+      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+        client = clientOptions.httpClientWithTimeout(requestOptions);
+      }
+      try (Response response = client.newCall(okhttpRequest).execute()) {
+        ResponseBody responseBody = response.body();
+        if (response.isSuccessful()) {
+          return new SeedExhaustiveHttpResponse<>(null, response);
+        }
+        String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+        Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+      }
+      catch (IOException e) {
+        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+      }
     }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
+
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType() {
+      return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
     }
-  }
-}
+
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
+        RequestOptions requestOptions) {
+      return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build(),requestOptions);
+    }
+
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
+        ObjectWithOptionalField request) {
+      return postJsonPatchContentWithCharsetType(request,null);
+    }
+
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
+        ObjectWithOptionalField request, RequestOptions requestOptions) {
+      HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+        .addPathSegments("foo")
+        .addPathSegments("baz");if (requestOptions != null) {
+          requestOptions.getQueryParameters().forEach((key, value) -> {
+            httpUrl.addQueryParameter(key, value);
+          } );
+        }
+        RequestBody body;
+        try {
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json; charset=utf-8"));
+        }
+        catch(JsonProcessingException e) {
+          throw new SeedExhaustiveException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+          .url(httpUrl.build())
+          .method("POST", body)
+          .headers(Headers.of(clientOptions.headers(requestOptions)))
+          .addHeader("Content-Type", "application/json-patch+json; charset=utf-8")
+          .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+          client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+          ResponseBody responseBody = response.body();
+          if (response.isSuccessful()) {
+            return new SeedExhaustiveHttpResponse<>(null, response);
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        }
+        catch (IOException e) {
+          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        }
+      }
+    }
