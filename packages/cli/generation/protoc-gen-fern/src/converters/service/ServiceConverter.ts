@@ -1,5 +1,6 @@
 import { ServiceDescriptorProto } from "@bufbuild/protobuf/wkt";
 
+import { ProtobufService } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
@@ -30,6 +31,15 @@ export class ServiceConverter extends AbstractConverter<ProtofileConverterContex
     }
 
     public convert(): ServiceConverter.Output | undefined {
+        const protobufService: ProtobufService = {
+            file: {
+                filepath: this.context.spec.name,
+                packageName: this.context.spec.package || undefined,
+                options: undefined
+            },
+            name: this.context.casingsGenerator.generateName(this.service.name)
+        };
+
         const rpcServiceMethods: MethodConverter.Output[] = [];
         for (const [index, rpcMethod] of this.service.method.entries()) {
             const methodConverter = new MethodConverter({
@@ -37,7 +47,8 @@ export class ServiceConverter extends AbstractConverter<ProtofileConverterContex
                 breadcrumbs: this.breadcrumbs,
                 operation: rpcMethod,
                 serviceName: this.service.name,
-                sourceCodeInfoPath: [...this.sourceCodeInfoPath, PATH_FIELD_NUMBERS.SERVICE.METHOD, index]
+                sourceCodeInfoPath: [...this.sourceCodeInfoPath, PATH_FIELD_NUMBERS.SERVICE.METHOD, index],
+                protobufService
             });
             const convertedMethod = methodConverter.convert();
             if (convertedMethod != null) {

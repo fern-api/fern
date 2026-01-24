@@ -8,7 +8,9 @@ import {
     HttpResponse,
     HttpResponseBody,
     JsonResponse,
-    ProtobufMethodType
+    ProtobufMethodType,
+    ProtobufService,
+    Transport
 } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 import { ExampleConverter } from "../message/ExampleConverter";
@@ -19,6 +21,7 @@ export declare namespace MethodConverter {
         operation: MethodDescriptorProto;
         serviceName: string;
         sourceCodeInfoPath: number[];
+        protobufService: ProtobufService;
     }
 
     export interface Output {
@@ -43,11 +46,13 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
     private readonly operation: MethodDescriptorProto;
     private readonly serviceName: string;
     private readonly sourceCodeInfoPath: number[];
-    constructor({ context, breadcrumbs, operation, serviceName, sourceCodeInfoPath }: MethodConverter.Args) {
+    private readonly protobufService: ProtobufService;
+    constructor({ context, breadcrumbs, operation, serviceName, sourceCodeInfoPath, protobufService }: MethodConverter.Args) {
         super({ context, breadcrumbs });
         this.operation = operation;
         this.serviceName = serviceName;
         this.sourceCodeInfoPath = sourceCodeInfoPath;
+        this.protobufService = protobufService;
     }
 
     public convert(): MethodConverter.Output | undefined {
@@ -100,7 +105,9 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 },
                 allPathParameters: [],
                 pagination: undefined,
-                transport: undefined,
+                transport: Transport.grpc({
+                    service: this.protobufService
+                }),
                 source: HttpEndpointSource.proto({
                     methodType: this.getGrpcMethodType()
                 }),
