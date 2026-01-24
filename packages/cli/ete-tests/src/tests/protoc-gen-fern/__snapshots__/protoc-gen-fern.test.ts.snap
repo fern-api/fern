@@ -81753,7 +81753,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/entitymanager/v1/entity_manager_grpcapi.pub.proto",
+                "packageName": "anduril.entitymanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "EntityManagerAPI",
+                "camelCase": {
+                  "unsafeName": "entityManagerApi",
+                  "safeName": "entityManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "entity_manager_api",
+                  "safeName": "entity_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENTITY_MANAGER_API",
+                  "safeName": "ENTITY_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "EntityManagerApi",
+                  "safeName": "EntityManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "UNARY"
@@ -82942,7 +82970,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/entitymanager/v1/entity_manager_grpcapi.pub.proto",
+                "packageName": "anduril.entitymanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "EntityManagerAPI",
+                "camelCase": {
+                  "unsafeName": "entityManagerApi",
+                  "safeName": "entityManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "entity_manager_api",
+                  "safeName": "entity_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENTITY_MANAGER_API",
+                  "safeName": "ENTITY_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "EntityManagerApi",
+                  "safeName": "EntityManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "CLIENT_STREAM"
@@ -84133,7 +84189,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/entitymanager/v1/entity_manager_grpcapi.pub.proto",
+                "packageName": "anduril.entitymanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "EntityManagerAPI",
+                "camelCase": {
+                  "unsafeName": "entityManagerApi",
+                  "safeName": "entityManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "entity_manager_api",
+                  "safeName": "entity_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENTITY_MANAGER_API",
+                  "safeName": "ENTITY_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "EntityManagerApi",
+                  "safeName": "EntityManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "UNARY"
@@ -85337,7 +85421,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/entitymanager/v1/entity_manager_grpcapi.pub.proto",
+                "packageName": "anduril.entitymanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "EntityManagerAPI",
+                "camelCase": {
+                  "unsafeName": "entityManagerApi",
+                  "safeName": "entityManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "entity_manager_api",
+                  "safeName": "entity_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENTITY_MANAGER_API",
+                  "safeName": "ENTITY_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "EntityManagerApi",
+                  "safeName": "EntityManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "UNARY"
@@ -85514,7 +85626,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/entitymanager/v1/entity_manager_grpcapi.pub.proto",
+                "packageName": "anduril.entitymanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "EntityManagerAPI",
+                "camelCase": {
+                  "unsafeName": "entityManagerApi",
+                  "safeName": "entityManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "entity_manager_api",
+                  "safeName": "entity_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENTITY_MANAGER_API",
+                  "safeName": "ENTITY_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "EntityManagerApi",
+                  "safeName": "EntityManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "UNARY"
@@ -86741,7 +86881,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/entitymanager/v1/entity_manager_grpcapi.pub.proto",
+                "packageName": "anduril.entitymanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "EntityManagerAPI",
+                "camelCase": {
+                  "unsafeName": "entityManagerApi",
+                  "safeName": "entityManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "entity_manager_api",
+                  "safeName": "entity_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENTITY_MANAGER_API",
+                  "safeName": "ENTITY_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "EntityManagerApi",
+                  "safeName": "EntityManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "SERVER_STREAM"
@@ -89123,7 +89291,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/taskmanager/v1/task_manager_grpcapi.pub.proto",
+                "packageName": "anduril.taskmanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "TaskManagerAPI",
+                "camelCase": {
+                  "unsafeName": "taskManagerApi",
+                  "safeName": "taskManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "task_manager_api",
+                  "safeName": "task_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TASK_MANAGER_API",
+                  "safeName": "TASK_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "TaskManagerApi",
+                  "safeName": "TaskManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "UNARY"
@@ -90365,7 +90561,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/taskmanager/v1/task_manager_grpcapi.pub.proto",
+                "packageName": "anduril.taskmanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "TaskManagerAPI",
+                "camelCase": {
+                  "unsafeName": "taskManagerApi",
+                  "safeName": "taskManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "task_manager_api",
+                  "safeName": "task_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TASK_MANAGER_API",
+                  "safeName": "TASK_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "TaskManagerApi",
+                  "safeName": "TaskManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "UNARY"
@@ -91610,7 +91834,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/taskmanager/v1/task_manager_grpcapi.pub.proto",
+                "packageName": "anduril.taskmanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "TaskManagerAPI",
+                "camelCase": {
+                  "unsafeName": "taskManagerApi",
+                  "safeName": "taskManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "task_manager_api",
+                  "safeName": "task_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TASK_MANAGER_API",
+                  "safeName": "TASK_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "TaskManagerApi",
+                  "safeName": "TaskManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "UNARY"
@@ -92904,7 +93156,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/taskmanager/v1/task_manager_grpcapi.pub.proto",
+                "packageName": "anduril.taskmanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "TaskManagerAPI",
+                "camelCase": {
+                  "unsafeName": "taskManagerApi",
+                  "safeName": "taskManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "task_manager_api",
+                  "safeName": "task_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TASK_MANAGER_API",
+                  "safeName": "TASK_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "TaskManagerApi",
+                  "safeName": "TaskManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "UNARY"
@@ -94098,7 +94378,35 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           },
           "allPathParameters": [],
           "pagination": null,
-          "transport": null,
+          "transport": {
+            "type": "grpc",
+            "service": {
+              "file": {
+                "filepath": "anduril/taskmanager/v1/task_manager_grpcapi.pub.proto",
+                "packageName": "anduril.taskmanager.v1",
+                "options": null
+              },
+              "name": {
+                "originalName": "TaskManagerAPI",
+                "camelCase": {
+                  "unsafeName": "taskManagerApi",
+                  "safeName": "taskManagerApi"
+                },
+                "snakeCase": {
+                  "unsafeName": "task_manager_api",
+                  "safeName": "task_manager_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TASK_MANAGER_API",
+                  "safeName": "TASK_MANAGER_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "TaskManagerApi",
+                  "safeName": "TaskManagerApi"
+                }
+              }
+            }
+          },
           "source": {
             "type": "proto",
             "methodType": "SERVER_STREAM"
