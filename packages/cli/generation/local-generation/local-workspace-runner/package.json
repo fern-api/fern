@@ -48,6 +48,7 @@
     "@fern-api/github": "workspace:*",
     "@fern-api/go-dynamic-snippets": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/java-dynamic-snippets": "workspace:*",
