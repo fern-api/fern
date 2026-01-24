@@ -26,7 +26,9 @@
     "fern:local": "./dist/cli.cjs",
     "fern:prod": "./dist/cli.cjs"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
@@ -80,8 +82,8 @@
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-api/migrations-base": "workspace:*",
     "@fern-api/login": "workspace:*",
+    "@fern-api/migrations-base": "workspace:*",
     "@fern-api/mock": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
     "@fern-api/openapi-ir-parser": "workspace:*",
@@ -112,6 +114,7 @@
     "@types/tar": "^6.1.11",
     "@types/url-join": "4.0.1",
     "@types/validate-npm-package-name": "^4.0.0",
+    "@types/ws": "^8.5.10",
     "@types/yargs": "^17.0.28",
     "axios": "^1.12.0",
     "boxen": "^7.1.1",
@@ -134,6 +137,7 @@
     "url-join": "^5.0.0",
     "validate-npm-package-name": "^5.0.1",
     "vitest": "^4.0.8",
+    "ws": "^8.17.1",
     "yaml": "^2.4.5",
     "yargs": "^17.4.1"
   }

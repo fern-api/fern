@@ -4658,6 +4658,9 @@ importers:
       '@types/validate-npm-package-name':
         specifier: ^4.0.0
         version: 4.0.2
+      '@types/ws':
+        specifier: ^8.5.10
+        version: 8.18.1
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.35
@@ -4724,6 +4727,9 @@ importers:
       vitest:
         specifier: ^4.0.8
         version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
+      ws:
+        specifier: ^8.17.1
+        version: 8.19.0
       yaml:
         specifier: 2.3.3
         version: 2.3.3
