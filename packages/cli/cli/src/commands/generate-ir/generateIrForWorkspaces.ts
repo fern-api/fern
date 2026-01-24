@@ -86,7 +86,12 @@ async function getIntermediateRepresentation({
     directFromOpenapi: boolean;
 }): Promise<unknown> {
     let intermediateRepresentation;
-    if (directFromOpenapi && workspace instanceof OSSWorkspace) {
+    // Check if the workspace is an OSSWorkspace with protobuf specs
+    // If so, use getIntermediateRepresentation() which handles protobuf IR generation
+    const hasProtobufSpecs =
+        workspace instanceof OSSWorkspace && workspace.allSpecs.some((spec) => spec.type === "protobuf");
+
+    if ((directFromOpenapi || hasProtobufSpecs) && workspace instanceof OSSWorkspace) {
         intermediateRepresentation = await workspace.getIntermediateRepresentation({
             context,
             audiences,
