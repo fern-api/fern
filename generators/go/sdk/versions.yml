@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic import ordering in generated Go files. Imports are now sorted
+        alphabetically by alias, preventing unnecessary churn in automated seed updates.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 61
+
+- version: 1.23.0
+  changelogEntry:
+    - summary: Add RecvRaw method to stream API and improve SSE terminator handling for more robust server-sent event processing
+      type: feat
+  createdAt: "2026-01-23"
+  irVersion: 61
+
 - version: 1.22.9
   changelogEntry:
     - summary: Update IR version to 61 to support Generation Metadata feature and maintain consistency with seed configuration.

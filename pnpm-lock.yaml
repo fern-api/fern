@@ -4966,9 +4966,6 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
-      '@fern-api/source':
-        specifier: workspace:*
-        version: link:../source
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
