@@ -1,5 +1,5 @@
 import type { Logger } from "@fern-api/logger";
-import { readdir, readFile, stat, writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import {
@@ -42,89 +42,23 @@ export async function writeGeneratorsYml(
         }
     };
 
-    // Check if this is a protobuf fixture by looking for a proto directory
-    const hasProto = await stat(path.join(fernDirectory, "proto"))
-        .then(() => true)
-        .catch(() => false);
+    // Read the existing generators.yml from the fixture to preserve the api section
+    const existingGeneratorsYmlPath = path.join(fernDirectory, "generators.yml");
+    try {
+        const existingContent = await readFile(existingGeneratorsYmlPath, "utf-8");
+        const existingConfig = yaml.load(existingContent) as Record<string, unknown>;
 
-    if (hasProto) {
-        // Find the target proto file (look for .proto files in the proto directory)
-        const protoTarget = await findProtoTarget(fernDirectory);
-
-        // Check if there's an openapi directory
-        const hasOpenapi = await stat(path.join(fernDirectory, "openapi"))
-            .then(() => true)
-            .catch(() => false);
-
-        // Check if there's an overrides file
-        const hasOverrides = await stat(path.join(fernDirectory, "overrides.yml"))
-            .then(() => true)
-            .catch(() => false);
-
-        // Build the API specs configuration
-        const specs: unknown[] = [];
-
-        if (hasOpenapi) {
-            // Find the openapi file
-            const openapiFiles = await readdir(path.join(fernDirectory, "openapi"));
-            const openapiFile = openapiFiles.find((f) => f.endsWith(".yml") || f.endsWith(".yaml"));
-            if (openapiFile) {
-                specs.push({ openapi: `openapi/${openapiFile}` });
-            }
+        // Preserve the api section from the fixture's generators.yml
+        if (existingConfig?.api) {
+            structuredContent.api = existingConfig.api;
         }
-
-        // Add proto spec
-        const protoSpec: Record<string, unknown> = {
-            proto: {
-                root: "proto",
-                target: protoTarget,
-                "local-generation": true
-            }
-        };
-
-        if (hasOverrides) {
-            (protoSpec.proto as Record<string, unknown>).overrides = "overrides.yml";
-        }
-
-        specs.push(protoSpec);
-
-        structuredContent.api = { specs };
+    } catch {
+        // No existing generators.yml or failed to read - that's fine, just use the groups
     }
 
     const schemaComment = "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json";
     const content = schemaComment + "\n" + yaml.dump(structuredContent, { lineWidth: -1 });
-    await writeFile(path.join(fernDirectory, "generators.yml"), content);
-}
-
-async function findProtoTarget(fernDirectory: string): Promise<string> {
-    // Recursively find the first .proto file that's not in a google/ directory
-    const protoDir = path.join(fernDirectory, "proto");
-
-    async function findProtoFile(dir: string, relativePath: string): Promise<string | undefined> {
-        const entries = await readdir(dir, { withFileTypes: true });
-
-        for (const entry of entries) {
-            const entryPath = path.join(dir, entry.name);
-            const entryRelativePath = relativePath ? `${relativePath}/${entry.name}` : entry.name;
-
-            if (entry.isDirectory()) {
-                // Skip google directory (contains standard protobuf definitions)
-                if (entry.name === "google") {
-                    continue;
-                }
-                const found = await findProtoFile(entryPath, entryRelativePath);
-                if (found) {
-                    return found;
-                }
-            } else if (entry.isFile() && entry.name.endsWith(".proto")) {
-                return `proto/${entryRelativePath}`;
-            }
-        }
-        return undefined;
-    }
-
-    const target = await findProtoFile(protoDir, "");
-    return target ?? "proto/service.proto";
+    await writeFile(existingGeneratorsYmlPath, content);
 }
 
 export async function loadCustomConfig(
