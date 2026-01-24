@@ -6237,6 +6237,9 @@ importers:
       '@fern-api/java-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/java-v2/dynamic-snippets
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../../../workspace/lazy-fern-workspace
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../../commons/logging-execa
