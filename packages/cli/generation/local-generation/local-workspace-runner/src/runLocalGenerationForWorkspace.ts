@@ -8,6 +8,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -72,29 +73,48 @@ export async function runLocalGenerationForWorkspace({
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
                 version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
-                const intermediateRepresentation = generateIntermediateRepresentation({
-                    workspace: fernWorkspace,
-                    audiences: generatorGroup.audiences,
-                    generationLanguage: generatorInvocation.language,
-                    keywords: generatorInvocation.keywords,
-                    smartCasing: generatorInvocation.smartCasing,
-                    exampleGeneration: {
-                        includeOptionalRequestPropertyExamples: false,
-                        disabled: generatorInvocation.disableExamples
-                    },
-                    readme: generatorInvocation.readme,
-                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
-                    packageName,
-                    context,
-                    sourceResolver: new SourceResolverImpl(context, fernWorkspace),
-                    dynamicGeneratorConfig,
-                    generationMetadata: {
-                        cliVersion: workspace.cliVersion,
-                        generatorName: generatorInvocation.name,
-                        generatorVersion: generatorInvocation.version,
-                        generatorConfig: generatorInvocation.config
-                    }
-                });
+                // Check if the workspace is an OSSWorkspace with protobuf specs
+                // If so, use getIntermediateRepresentation() which handles protobuf IR generation
+                const hasProtobufSpecs =
+                    workspace instanceof OSSWorkspace && workspace.allSpecs.some((spec) => spec.type === "protobuf");
+
+                let intermediateRepresentation;
+                if (hasProtobufSpecs && workspace instanceof OSSWorkspace) {
+                    // Use OSSWorkspace.getIntermediateRepresentation() for workspaces with protobuf specs
+                    // This properly generates and merges IR from both OpenAPI and protobuf sources
+                    intermediateRepresentation = await workspace.getIntermediateRepresentation({
+                        context,
+                        audiences: generatorGroup.audiences,
+                        enableUniqueErrorsPerEndpoint: true,
+                        generateV1Examples: false,
+                        logWarnings: false
+                    });
+                } else {
+                    // Use the standard FernWorkspace IR generation for non-protobuf workspaces
+                    intermediateRepresentation = generateIntermediateRepresentation({
+                        workspace: fernWorkspace,
+                        audiences: generatorGroup.audiences,
+                        generationLanguage: generatorInvocation.language,
+                        keywords: generatorInvocation.keywords,
+                        smartCasing: generatorInvocation.smartCasing,
+                        exampleGeneration: {
+                            includeOptionalRequestPropertyExamples: false,
+                            disabled: generatorInvocation.disableExamples
+                        },
+                        readme: generatorInvocation.readme,
+                        version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                        packageName,
+                        context,
+                        sourceResolver: new SourceResolverImpl(context, fernWorkspace),
+                        dynamicGeneratorConfig,
+                        generationMetadata: {
+                            cliVersion: workspace.cliVersion,
+                            generatorName: generatorInvocation.name,
+                            generatorVersion: generatorInvocation.version,
+                            generatorConfig: generatorInvocation.config
+                        }
+                    });
+                }
 
                 const venus = createVenusService({ token: token?.value });
 
