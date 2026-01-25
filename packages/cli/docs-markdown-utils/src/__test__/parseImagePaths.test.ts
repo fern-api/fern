@@ -998,6 +998,71 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
     });
 });
 
+describe("icon attribute handling", () => {
+    it("should parse icon attribute with relative path in Card component", () => {
+        const page = '<Card icon="./play.svg" title="Test Card">Content</Card>';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/play.svg"]);
+        expect(result.markdown).toContain('icon="/Volume/git/fern/my/docs/folder/play.svg"');
+    });
+
+    it("should parse icon attribute with parent relative path", () => {
+        const page = '<Card icon="../icons/play.svg" title="Test Card">Content</Card>';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/icons/play.svg"]);
+        expect(result.markdown).toContain('icon="/Volume/git/fern/my/docs/icons/play.svg"');
+    });
+
+    it("should parse icon attribute with absolute path", () => {
+        const page = '<Card icon="/icons/play.svg" title="Test Card">Content</Card>';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/icons/play.svg"]);
+        expect(result.markdown).toContain('icon="/Volume/git/fern/icons/play.svg"');
+    });
+
+    it("should parse icon attribute with JSX expression", () => {
+        const page = '<Card icon={"./play.svg"} title="Test Card">Content</Card>';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/play.svg"]);
+        expect(result.markdown).toContain('icon={"/Volume/git/fern/my/docs/folder/play.svg"}');
+    });
+
+    it("should not parse icon attribute with Font Awesome icon name", () => {
+        const page = '<Card icon="home" title="Test Card">Content</Card>';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown).toContain('icon="home"');
+    });
+
+    it("should not parse icon attribute with external URL", () => {
+        const page = '<Card icon="https://example.com/icon.svg" title="Test Card">Content</Card>';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown).toContain('icon="https://example.com/icon.svg"');
+    });
+
+    it("should replace icon path with file ID in replaceImagePathsAndUrls", () => {
+        const page = '<Card icon="/Volume/git/fern/my/docs/folder/play.svg" title="Test Card">Content</Card>';
+        const fileIdsMap = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/play.svg"), "icon-file-id-123"]
+        ]);
+        const replaced = replaceImagePathsAndUrls(page, fileIdsMap, {}, PATHS, CONTEXT);
+        expect(replaced).toContain('icon="file:icon-file-id-123"');
+    });
+
+    it("should handle full flow: parse icon path and replace with file ID", () => {
+        const page = '<Card icon="./play.svg" title="Test Card">Content</Card>';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        expect(parseResult.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/play.svg"]);
+
+        const fileIdsMap = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/play.svg"), "icon-file-id-456"]
+        ]);
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, fileIdsMap, {}, PATHS, CONTEXT);
+        expect(replaced).toContain('icon="file:icon-file-id-456"');
+    });
+});
+
 describe("consistency between AST and streaming parsers", () => {
     const originalEnv = process.env.FERN_DOCS_LARGE_FILE_BYTES;
 
@@ -1063,5 +1128,34 @@ describe("consistency between AST and streaming parsers", () => {
 
         expect(streamingResult.filepaths.sort()).toEqual(astResult.filepaths.sort());
         expect(streamingResult.markdown.trim()).toEqual(astResult.markdown.trim());
+    });
+
+    it("should produce same results for icon attributes with both parsers", () => {
+        const page = '<Card icon="./play.svg" title="Test Card">Content</Card>';
+
+        process.env.FERN_DOCS_LARGE_FILE_BYTES = "10000000";
+        const astResult = parseImagePaths(page, PATHS, CONTEXT);
+
+        process.env.FERN_DOCS_LARGE_FILE_BYTES = "10";
+        const streamingResult = parseImagePaths(page, PATHS, CONTEXT);
+
+        expect(streamingResult.filepaths.sort()).toEqual(astResult.filepaths.sort());
+        expect(streamingResult.markdown.trim()).toEqual(astResult.markdown.trim());
+    });
+
+    it("should produce same results for icon replacement with both parsers", () => {
+        const page = '<Card icon="/Volume/git/fern/my/docs/folder/play.svg" title="Test Card">Content</Card>';
+        const fileIdsMap = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/play.svg"), "icon-file-id-789"]
+        ]);
+
+        process.env.FERN_DOCS_LARGE_FILE_BYTES = "10000000";
+        const astResult = replaceImagePathsAndUrls(page, fileIdsMap, {}, PATHS, CONTEXT);
+
+        process.env.FERN_DOCS_LARGE_FILE_BYTES = "10";
+        const streamingResult = replaceImagePathsAndUrls(page, fileIdsMap, {}, PATHS, CONTEXT);
+
+        expect(streamingResult.trim()).toEqual(astResult.trim());
+        expect(streamingResult).toContain('icon="file:icon-file-id-789"');
     });
 });

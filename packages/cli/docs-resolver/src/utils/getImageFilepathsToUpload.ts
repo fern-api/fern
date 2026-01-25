@@ -2,6 +2,10 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import path from "path";
 
+function isAbsoluteFilePath(iconPath: string | AbsoluteFilePath): iconPath is AbsoluteFilePath {
+    return typeof iconPath === "string" && path.isAbsolute(iconPath);
+}
+
 async function addIconToFilepaths({
     iconPath,
     filepaths
@@ -13,8 +17,8 @@ async function addIconToFilepaths({
         return;
     }
 
-    if (typeof iconPath === "string" && path.isAbsolute(iconPath)) {
-        filepaths.add(iconPath as AbsoluteFilePath);
+    if (isAbsoluteFilePath(iconPath)) {
+        filepaths.add(iconPath);
     }
 }
 
