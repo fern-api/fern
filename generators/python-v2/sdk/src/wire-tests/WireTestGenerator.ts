@@ -236,6 +236,9 @@ export class WireTestGenerator {
         );
 
         const pythonFile = this.buildTestFile(serviceName, endpointTestCases);
+        if (pythonFile === null) {
+            return null;
+        }
 
         return new WriteablePythonFile({
             filename: `test_${serviceName}`,
@@ -257,7 +260,7 @@ export class WireTestGenerator {
             exampleIndex: number;
             isErrorResponse: boolean;
         }>
-    ): python.PythonFile {
+    ): python.PythonFile | null {
         const statements: python.AstNode[] = [];
 
         // Add raw imports that the AST doesn't support (simple "import X" statements)
@@ -269,6 +272,7 @@ export class WireTestGenerator {
         statements.push(this.createImportRegistration());
 
         // Add test functions for each endpoint
+        let testFunctionCount = 0;
         for (const { endpoint, example, service, exampleIndex, isErrorResponse } of testCases) {
             const testFunction = this.generateEndpointTestFunction(
                 serviceName,
@@ -280,7 +284,12 @@ export class WireTestGenerator {
             );
             if (testFunction) {
                 statements.push(testFunction);
+                testFunctionCount++;
             }
+        }
+
+        if (testFunctionCount === 0) {
+            return null;
         }
 
         const pathSegments = `tests/wire/test_${serviceName}`.split("/");
