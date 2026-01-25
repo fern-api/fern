@@ -97,8 +97,12 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None:
             # Check wire_tests.enabled first (preferred), fall back to enable_wire_tests (deprecated)
             wire_tests_config = generator_config.custom_config.get("wire_tests")
+            wire_tests_enabled = None
             if wire_tests_config is not None and isinstance(wire_tests_config, dict):
-                enable_wire_tests = wire_tests_config.get("enabled", False)
+                wire_tests_enabled = wire_tests_config.get("enabled")
+            # Use wire_tests.enabled if explicitly set, otherwise fall back to enable_wire_tests
+            if wire_tests_enabled is not None:
+                enable_wire_tests = wire_tests_enabled
             elif "enable_wire_tests" in generator_config.custom_config:
                 enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
 
