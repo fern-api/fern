@@ -346,7 +346,7 @@ export class WireTestGenerator {
                 servicePath.length > 0
                     ? `${servicePath}.${endpoint.name.snakeCase.safeName}`
                     : endpoint.name.snakeCase.safeName;
-            const excluded = this.context.customConfig.wire_test_exclusions ?? [];
+            const excluded = this.context.customConfig.wire_tests?.exclusions ?? [];
             if (
                 excluded.includes(selector) ||
                 excluded.some((pattern) => pattern.endsWith(".*") && selector.startsWith(pattern.slice(0, -2) + "."))
