@@ -384,7 +384,68 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "filter",
+              "value": {
+                "properties": {
+                  "name": {
+                    "value": {
+                      "value": "John",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "age": {
+                    "value": {
+                      "value": 30,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  },
+                  "location": {
+                    "properties": {
+                      "city": {
+                        "value": {
+                          "value": "New York",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "country": {
+                        "value": {
+                          "value": "USA",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "coordinates": {
+                        "properties": {
+                          "latitude": {
+                            "value": {
+                              "value": 40.7128,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "longitude": {
+                            "value": {
+                              "value": -74.006,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {

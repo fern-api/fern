@@ -12,6 +12,15 @@ paths:
           required: false
           schema:
             type: object
+            example:
+              name: "John"
+              age: 30
+              location:
+                city: "New York"
+                country: "USA"
+                coordinates:
+                  latitude: 40.7128
+                  longitude: -74.006
             properties:
               name:
                 type: string
@@ -48,6 +57,7 @@ paths:
           in: query
           required: false
           schema:
+            example: 100
             oneOf:
               - type: integer
               - type: string
@@ -57,6 +67,7 @@ paths:
           required: false
           schema:
             type: array
+            example: ["tag1", "tag2", "tag3"]
             items:
               type: string
       responses:
