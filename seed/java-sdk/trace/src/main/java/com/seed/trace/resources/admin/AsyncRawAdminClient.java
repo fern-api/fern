@@ -47,12 +47,16 @@ public class AsyncRawAdminClient {
 
     public CompletableFuture<SeedTraceHttpResponse<Void>> updateTestSubmissionStatus(
             UUID submissionId, TestSubmissionStatus request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-submission-status")
-                .addPathSegment(submissionId.toString())
-                .build();
+                .addPathSegment(submissionId.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -61,7 +65,7 @@ public class AsyncRawAdminClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -104,12 +108,16 @@ public class AsyncRawAdminClient {
 
     public CompletableFuture<SeedTraceHttpResponse<Void>> sendTestSubmissionUpdate(
             UUID submissionId, TestSubmissionUpdate request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-submission-status-v2")
-                .addPathSegment(submissionId.toString())
-                .build();
+                .addPathSegment(submissionId.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -118,7 +126,7 @@ public class AsyncRawAdminClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -161,12 +169,16 @@ public class AsyncRawAdminClient {
 
     public CompletableFuture<SeedTraceHttpResponse<Void>> updateWorkspaceSubmissionStatus(
             UUID submissionId, WorkspaceSubmissionStatus request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-submission-status")
-                .addPathSegment(submissionId.toString())
-                .build();
+                .addPathSegment(submissionId.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -175,7 +187,7 @@ public class AsyncRawAdminClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -218,12 +230,16 @@ public class AsyncRawAdminClient {
 
     public CompletableFuture<SeedTraceHttpResponse<Void>> sendWorkspaceSubmissionUpdate(
             UUID submissionId, WorkspaceSubmissionUpdate request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-submission-status-v2")
-                .addPathSegment(submissionId.toString())
-                .build();
+                .addPathSegment(submissionId.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -232,7 +248,7 @@ public class AsyncRawAdminClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -275,14 +291,18 @@ public class AsyncRawAdminClient {
 
     public CompletableFuture<SeedTraceHttpResponse<Void>> storeTracedTestCase(
             UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-trace/submission")
                 .addPathSegment(submissionId.toString())
                 .addPathSegments("testCase")
-                .addPathSegment(testCaseId)
-                .build();
+                .addPathSegment(testCaseId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -291,7 +311,7 @@ public class AsyncRawAdminClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -334,14 +354,18 @@ public class AsyncRawAdminClient {
 
     public CompletableFuture<SeedTraceHttpResponse<Void>> storeTracedTestCaseV2(
             UUID submissionId, String testCaseId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-trace-v2/submission")
                 .addPathSegment(submissionId.toString())
                 .addPathSegments("testCase")
-                .addPathSegment(testCaseId)
-                .build();
+                .addPathSegment(testCaseId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -350,7 +374,7 @@ public class AsyncRawAdminClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -393,12 +417,16 @@ public class AsyncRawAdminClient {
 
     public CompletableFuture<SeedTraceHttpResponse<Void>> storeTracedWorkspace(
             UUID submissionId, StoreTracedWorkspaceRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-trace/submission")
-                .addPathSegment(submissionId.toString())
-                .build();
+                .addPathSegment(submissionId.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -407,7 +435,7 @@ public class AsyncRawAdminClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -450,12 +478,16 @@ public class AsyncRawAdminClient {
 
     public CompletableFuture<SeedTraceHttpResponse<Void>> storeTracedWorkspaceV2(
             UUID submissionId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-trace-v2/submission")
-                .addPathSegment(submissionId.toString())
-                .build();
+                .addPathSegment(submissionId.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -464,7 +496,7 @@ public class AsyncRawAdminClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

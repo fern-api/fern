@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.3
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation failure when an environment name is a Java reserved keyword
+        (e.g., "default") for multi-environment APIs.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.34.2
+  changelogEntry:
+    - summary: |
+        Change wire tests to use resource files for JSON strings above a certain length
+        to prevent undue stress to :spotlessJava and cut down on code duplication.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
 - version: 3.34.1
   changelogEntry:
     - summary: |
