@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.51.0
+  changelogEntry:
+    - summary: |
+        Add intelligent SSE parsing for discriminated unions via `parse_sse_obj()`. This function
+        handles both data-level discrimination (discriminator inside JSON data payload) and
+        event-level discrimination (discriminator at SSE envelope level). For event-level unions,
+        it correctly parses the data field based on what the matching variant expects (string vs.
+        complex object), enabling proper handling of streaming responses with mixed data types.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 4.50.0
   changelogEntry:
     - summary: |
