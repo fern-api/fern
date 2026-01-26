@@ -131,8 +131,8 @@ interface Uuid {
     value: string;
 }
 
-const POINTER_HELPER_TYPES = new Set<string>(["bool", "date", "dateTime", "float64", "int", "int64", "string", "uuid"]);
-const ADDRESSABLE_TYPES = new Set<string>(["any", "bytes", "map", "slice"]);
+const POINTER_HELPER_TYPES = new Set<string>(["bool", "bytes", "date", "dateTime", "float64", "int", "int64", "string", "uuid"]);
+const ADDRESSABLE_TYPES = new Set<string>(["any", "map", "slice"]);
 
 export class TypeInstantiation extends AstNode {
     private constructor(public readonly internalType: InternalTypeInstantiation) {
@@ -161,8 +161,10 @@ export class TypeInstantiation extends AstNode {
                 writer.write(this.internalType.value.toString());
                 break;
             case "int":
-            case "int64":
                 writer.write(this.internalType.value.toString());
+                break;
+            case "int64":
+                writer.write(`int64(${this.internalType.value.toString()})`);
                 break;
             case "map":
                 this.writeMap({ writer, map: this.internalType });
@@ -558,6 +560,8 @@ function getPointerHelperFuncName({ type }: { type: TypeInstantiation }): string
     switch (type.internalType.type) {
         case "bool":
             return "Bool";
+        case "bytes":
+            return "Bytes";
         case "date":
         case "dateTime":
             return "Time";

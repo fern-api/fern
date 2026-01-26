@@ -73,13 +73,11 @@ func TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.PostWithObjectBody{
-		String:  "string",
-		Integer: 1,
+		FieldString: "string",
+		Integer:     1,
 		NestedObject: &types.ObjectWithOptionalField{
 			FieldString: fern.String(
 				"string",
@@ -88,7 +86,7 @@ func TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock(
 				1,
 			),
 			Long: fern.Int64(
-				1000000,
+				int64(1000000),
 			),
 			Double: fern.Float64(
 				1.1,
@@ -111,7 +109,9 @@ func TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
 			),
-			Base64: []byte("SGVsbG8gd29ybGQh"),
+			Base64: fern.Bytes(
+				[]byte("SGVsbG8gd29ybGQh"),
+			),
 			List: []string{
 				"list",
 				"list",

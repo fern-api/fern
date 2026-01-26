@@ -70,9 +70,7 @@ func TestNoAuthPostWithNoAuthWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := map[string]any{
 		"key": "value",

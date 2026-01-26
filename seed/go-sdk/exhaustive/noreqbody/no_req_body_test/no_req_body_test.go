@@ -70,9 +70,7 @@ func TestNoReqBodyGetWithNoRequestBodyWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.NoReqBody.GetWithNoRequestBody(
 		context.TODO(),
@@ -94,9 +92,7 @@ func TestNoReqBodyPostWithNoRequestBodyWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.NoReqBody.PostWithNoRequestBody(
 		context.TODO(),

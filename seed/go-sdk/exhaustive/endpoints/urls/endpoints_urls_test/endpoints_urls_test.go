@@ -70,9 +70,7 @@ func TestEndpointsUrlsWithMixedCaseWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Endpoints.Urls.WithMixedCase(
 		context.TODO(),
@@ -94,9 +92,7 @@ func TestEndpointsUrlsNoEndingSlashWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Endpoints.Urls.NoEndingSlash(
 		context.TODO(),
@@ -118,9 +114,7 @@ func TestEndpointsUrlsWithEndingSlashWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Endpoints.Urls.WithEndingSlash(
 		context.TODO(),
@@ -142,9 +136,7 @@ func TestEndpointsUrlsWithUnderscoresWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Endpoints.Urls.WithUnderscores(
 		context.TODO(),

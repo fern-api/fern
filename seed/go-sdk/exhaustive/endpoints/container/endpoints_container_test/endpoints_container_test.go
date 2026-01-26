@@ -71,9 +71,7 @@ func TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := []string{
 		"string",
@@ -100,9 +98,7 @@ func TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
@@ -133,9 +129,7 @@ func TestEndpointsContainerGetAndReturnSetOfPrimitivesWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := []string{
 		"string",
@@ -161,9 +155,7 @@ func TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
@@ -191,9 +183,7 @@ func TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := map[string]string{
 		"string": "string",
@@ -219,9 +209,7 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := map[string]*types.ObjectWithRequiredField{
 		"string": &types.ObjectWithRequiredField{
@@ -249,9 +237,7 @@ func TestEndpointsContainerGetAndReturnOptionalWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &types.ObjectWithRequiredField{
 		FieldString: "string",

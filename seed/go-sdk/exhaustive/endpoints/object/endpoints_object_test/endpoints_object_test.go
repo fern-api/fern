@@ -73,9 +73,7 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &types.ObjectWithOptionalField{
 		FieldString: fern.String(
@@ -85,7 +83,7 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 			1,
 		),
 		Long: fern.Int64(
-			1000000,
+			int64(1000000),
 		),
 		Double: fern.Float64(
 			1.1,
@@ -108,7 +106,9 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
 		),
-		Base64: []byte("SGVsbG8gd29ybGQh"),
+		Base64: fern.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
 		List: []string{
 			"list",
 			"list",
@@ -144,9 +144,7 @@ func TestEndpointsObjectGetAndReturnWithRequiredFieldWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &types.ObjectWithRequiredField{
 		FieldString: "string",
@@ -172,9 +170,7 @@ func TestEndpointsObjectGetAndReturnWithMapOfMapWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &types.ObjectWithMapOfMap{
 		Map: map[string]map[string]string{
@@ -204,9 +200,7 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &types.NestedObjectWithOptionalField{
 		FieldString: fern.String(
@@ -220,7 +214,7 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 				1,
 			),
 			Long: fern.Int64(
-				1000000,
+				int64(1000000),
 			),
 			Double: fern.Float64(
 				1.1,
@@ -243,7 +237,9 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
 			),
-			Base64: []byte("SGVsbG8gd29ybGQh"),
+			Base64: fern.Bytes(
+				[]byte("SGVsbG8gd29ybGQh"),
+			),
 			List: []string{
 				"list",
 				"list",
@@ -280,9 +276,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &types.NestedObjectWithRequiredField{
 		FieldString: "string",
@@ -294,7 +288,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 				1,
 			),
 			Long: fern.Int64(
-				1000000,
+				int64(1000000),
 			),
 			Double: fern.Float64(
 				1.1,
@@ -317,7 +311,9 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
 			),
-			Base64: []byte("SGVsbG8gd29ybGQh"),
+			Base64: fern.Bytes(
+				[]byte("SGVsbG8gd29ybGQh"),
+			),
 			List: []string{
 				"list",
 				"list",
@@ -355,9 +351,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := []*types.NestedObjectWithRequiredField{
 		&types.NestedObjectWithRequiredField{
@@ -370,7 +364,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 					1,
 				),
 				Long: fern.Int64(
-					1000000,
+					int64(1000000),
 				),
 				Double: fern.Float64(
 					1.1,
@@ -393,7 +387,9 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
 				),
-				Base64: []byte("SGVsbG8gd29ybGQh"),
+				Base64: fern.Bytes(
+					[]byte("SGVsbG8gd29ybGQh"),
+				),
 				List: []string{
 					"list",
 					"list",
@@ -419,7 +415,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 					1,
 				),
 				Long: fern.Int64(
-					1000000,
+					int64(1000000),
 				),
 				Double: fern.Float64(
 					1.1,
@@ -442,7 +438,9 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
 				),
-				Base64: []byte("SGVsbG8gd29ybGQh"),
+				Base64: fern.Bytes(
+					[]byte("SGVsbG8gd29ybGQh"),
+				),
 				List: []string{
 					"list",
 					"list",
