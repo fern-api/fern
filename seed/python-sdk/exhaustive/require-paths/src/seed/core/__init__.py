@@ -25,7 +25,6 @@ if typing.TYPE_CHECKING:
     from .query_encoder import encode_query
     from .remove_none_from_dict import remove_none_from_dict
     from .request_options import RequestOptions
-    from .sentry_integration import capture_exception, initialize_sentry, set_user_context
     from .serialization import FieldMetadata, convert_and_respect_annotation_metadata
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiError": ".api_error",
@@ -42,16 +41,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SyncClientWrapper": ".client_wrapper",
     "UniversalBaseModel": ".pydantic_utilities",
     "UniversalRootModel": ".pydantic_utilities",
-    "capture_exception": ".sentry_integration",
     "convert_and_respect_annotation_metadata": ".serialization",
     "convert_file_dict_to_httpx_tuples": ".file",
     "encode_query": ".query_encoder",
-    "initialize_sentry": ".sentry_integration",
     "jsonable_encoder": ".jsonable_encoder",
     "parse_obj_as": ".pydantic_utilities",
     "remove_none_from_dict": ".remove_none_from_dict",
     "serialize_datetime": ".datetime_utils",
-    "set_user_context": ".sentry_integration",
     "universal_field_validator": ".pydantic_utilities",
     "universal_root_validator": ".pydantic_utilities",
     "update_forward_refs": ".pydantic_utilities",
@@ -95,16 +91,13 @@ __all__ = [
     "SyncClientWrapper",
     "UniversalBaseModel",
     "UniversalRootModel",
-    "capture_exception",
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
     "encode_query",
-    "initialize_sentry",
     "jsonable_encoder",
     "parse_obj_as",
     "remove_none_from_dict",
     "serialize_datetime",
-    "set_user_context",
     "universal_field_validator",
     "universal_root_validator",
     "update_forward_refs",

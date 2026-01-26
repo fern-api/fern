@@ -6,7 +6,6 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.sentry_integration import initialize_sentry
 
 if typing.TYPE_CHECKING:
     from .endpoints.client import AsyncEndpointsClient, EndpointsClient
@@ -58,7 +57,6 @@ class SeedExhaustive:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        initialize_sentry()
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
@@ -162,7 +160,6 @@ class AsyncSeedExhaustive:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        initialize_sentry()
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )

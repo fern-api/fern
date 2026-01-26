@@ -61,3 +61,10 @@ __all__ = [
     "req_with_headers",
     "types",
 ]
+# Load user-defined files if present (e.g., for Sentry integration)
+# Files are loaded from seed/ if they exist
+for _path in ["custom_integration", "sentry_integration"]:
+    try:
+        import_module(f".{_path}", "seed")
+    except ImportError:
+        pass

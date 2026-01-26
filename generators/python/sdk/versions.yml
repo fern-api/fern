@@ -4,10 +4,10 @@
 - version: 4.52.0
   changelogEntry:
     - summary: |
-        Add `sentry-integration` config option to auto-generate Sentry error tracking integration.
-        When configured with a DSN, the SDK generates a `sentry_integration.py` file in core/ and
-        automatically calls `initialize_sentry()` at the start of the client constructor. The
-        integration includes helper functions for capturing exceptions and setting user context.
+        Add `require-paths` config option to auto-load user-defined files when the SDK is imported.
+        This enables custom integrations (e.g., Sentry, logging) without modifying generated code.
+        Files specified in the array (e.g., `["sentry_integration", "custom_logging"]`) are imported
+        from the package root if they exist, using try/except to gracefully handle missing files.
       type: feat
   createdAt: "2026-01-26"
   irVersion: 62

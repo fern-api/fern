@@ -62,7 +62,6 @@ class SdkGeneratorContext(ABC):
             has_paginated_endpoints=_has_paginated_endpoints,
             project_module_path=project_module_path,
             custom_config=custom_config,
-            organization=generator_config.organization,
         )
         self.custom_config = custom_config
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)

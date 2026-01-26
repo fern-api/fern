@@ -814,11 +814,6 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
-            # Initialize Sentry if configured
-            if self._context.core_utilities.has_sentry_integration():
-                writer.write_reference(self._context.core_utilities.get_initialize_sentry())
-                writer.write_line("()")
-
             timeout_local_variable = "_defaulted_timeout"
             writer.write(f"{timeout_local_variable} = ")
             writer.write_node(

@@ -261,9 +261,10 @@ fixtures:
         package_path: matryoshka/doll/structure
       outputFolder: package-path
     - customConfig:
-        sentry-integration:
-          dsn: "https://example@sentry.io/123456"
-      outputFolder: sentry-integration
+        require-paths:
+          - custom_integration
+          - sentry_integration
+      outputFolder: require-paths
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

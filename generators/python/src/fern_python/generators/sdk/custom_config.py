@@ -55,15 +55,6 @@ class WireTestsConfig(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
-class SentryIntegrationConfig(pydantic.BaseModel):
-    """Configuration for Sentry integration."""
-
-    dsn: str
-
-    class Config:
-        extra = pydantic.Extra.forbid
-
-
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -156,9 +147,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Useful when .fernignore preserves directories with code that doesn't work with the generated SDK.
     mypy_exclude: Optional[List[str]] = None
 
-    # Sentry integration configuration
-    # When provided, generates a sentry_integration.py file in core/ and initializes Sentry in the client
-    sentry_integration: Optional[SentryIntegrationConfig] = None
+    # Paths to files that will be auto-loaded when the SDK is imported
+    # (e.g., ["custom_integration", "sentry_integration"] will import <package>/custom_integration.py
+    # and <package>/sentry_integration.py if they exist)
+    require_paths: Optional[List[str]] = None
 
     class Config:
         extra = pydantic.Extra.forbid
@@ -169,8 +161,8 @@ class SDKCustomConfig(pydantic.BaseModel):
             obj = obj.copy()
             if "custom-pager-name" in obj and "custom_pager_name" not in obj:
                 obj["custom_pager_name"] = obj.pop("custom-pager-name")
-            if "sentry-integration" in obj and "sentry_integration" not in obj:
-                obj["sentry_integration"] = obj.pop("sentry-integration")
+            if "require-paths" in obj and "require_paths" not in obj:
+                obj["require_paths"] = obj.pop("require-paths")
 
         obj = super().parse_obj(obj)
 
