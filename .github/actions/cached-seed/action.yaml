@@ -32,9 +32,21 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
-        # Build core-utils first to avoid race conditions in parallel compilation
-        # This ensures the dependency output files are fully written before dependent packages start
-        pnpm turbo run compile --filter @fern-api/core-utils
+        # Build foundational packages first to avoid race conditions in parallel compilation.
+        # These packages are dependencies of many other packages in the monorepo.
+        # Building them sequentially ensures their output files are fully written
+        # before dependent packages start compiling.
+        # 
+        # Dependency order:
+        # 1. core-utils, path-utils (leaf packages with no workspace dependencies)
+        # 2. fs-utils (depends on core-utils, path-utils)
+        # 3. logger (depends on core-utils)
+        pnpm turbo run compile \
+          --filter @fern-api/core-utils \
+          --filter @fern-api/path-utils \
+          --filter @fern-api/fs-utils \
+          --filter @fern-api/logger \
+          --concurrency 1
 
     - uses: bufbuild/buf-setup-action@v1.34.0
       with:
