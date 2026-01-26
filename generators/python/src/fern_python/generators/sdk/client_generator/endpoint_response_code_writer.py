@@ -142,9 +142,9 @@ class EndpointResponseCodeWriter:
                             AST.TryStatement(
                                 body=[
                                     AST.YieldStatement(
-                                        self._context.core_utilities.get_construct(
+                                        self._context.core_utilities.get_construct_sse(
                                             self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
+                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
                                         ),
                                     ),
                                 ],

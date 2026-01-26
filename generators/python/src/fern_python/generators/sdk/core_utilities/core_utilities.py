@@ -789,6 +789,45 @@ class CoreUtilities:
             ),
         )
 
+    def get_parse_sse_obj(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_sse_obj"
+            ),
+        )
+
+    def get_construct_sse(self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression) -> AST.Expression:
+        """Generate a parse_sse_obj call for SSE handling."""
+        return self._parse_sse_obj(type_of_obj, sse_obj)
+
+    def _parse_sse_obj(self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression) -> AST.Expression:
+        def write_value_being_casted(writer: NodeWriter) -> None:
+            writer.write_reference(self.get_parse_sse_obj())
+            writer.write("(")
+            writer.write_newline_if_last_line_not()
+            with writer.indent():
+                writer.write("sse =")
+                sse_obj.write(writer=writer)
+                writer.write(", ")
+                writer.write_newline_if_last_line_not()
+
+                writer.write("type_ =")
+                AST.Expression(type_of_obj).write(writer=writer)
+                writer.write(" # type: ignore")
+                writer.write_newline_if_last_line_not()
+            writer.write(")")
+
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_node(
+                AST.TypeHint.invoke_cast(
+                    type_casted_to=type_of_obj,
+                    value_being_casted=AST.Expression(AST.CodeWriter(write_value_being_casted)),
+                )
+            )
+
+        return AST.Expression(AST.CodeWriter(write))
+
     def get_is_pydantic_v2(self) -> AST.Expression:
         return AST.Expression(
             AST.Reference(
