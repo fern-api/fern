@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Path Parameter Key Conflict Test API
+  version: 1.0.0
+  description: Tests that path parameters named 'key' don't conflict with lambda variables in generated Java code
+paths:
+  /items/{key}:
+    get:
+      operationId: getItem
+      summary: Get an item by key
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The key of the item to retrieve
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    post:
+      operationId: updateItem
+      summary: Update an item by key
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The key of the item to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemUpdate'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    delete:
+      operationId: deleteItem
+      summary: Delete an item by key
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The key of the item to delete
+      responses:
+        '204':
+          description: Item deleted successfully
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      required:
+        - key
+        - value
+    ItemUpdate:
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
