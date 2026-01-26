@@ -116,6 +116,10 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  exhaustive:
+    - customConfig:
+        enableWireTests: true
+      outputFolder: .
   server-sent-event-examples:
     - customConfig:
         enableWireTests: true
