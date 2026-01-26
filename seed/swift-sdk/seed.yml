@@ -72,6 +72,10 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  exhaustive:
+    - customConfig:
+        enableWireTests: true
+      outputFolder: .
   nullable:
     - customConfig: null
       outputFolder: no-custom-config
@@ -118,7 +122,6 @@ allowedFailures:
   - errors
   - examples:no-custom-config
   - examples:readme-config
-  - exhaustive
   - extra-properties
   - file-upload-openapi
   - idempotency-headers
