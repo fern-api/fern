@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.50.2
+- version: 3.51.0
   changelogEntry:
     - summary: |
         Merge OpenAPI examples with x-fern-examples instead of overriding. When both OpenAPI examples (defined in requestBody/responses) and x-fern-examples are present, they are now combined. OpenAPI request and response examples are matched by index (1st request with 1st response). x-fern-examples take precedence for same-named examples.
