@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.50.1
+  changelogEntry:
+    - summary: |
+        Fix duplicate imports in __init__.py when using additional_init_exports. When the same
+        symbol was exported from both the regular types module and additional_init_exports, the
+        generator would produce duplicate imports causing F811 "Redefinition of unused" ruff errors.
+        The generator now deduplicates exports, with additional_init_exports taking precedence.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 4.50.0
   changelogEntry:
     - summary: |
