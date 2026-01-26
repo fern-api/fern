@@ -736,9 +736,7 @@ class WebsocketConnectMethodGenerator:
                     writer.write_line(
                         f'{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get("additional_query_parameters", {{}}) or {{}}'
                     )
-                    writer.write_line(
-                        f"if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None"
-                    )
+                    writer.write_line(f"if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None")
                     writer.write_line("else {}")
                 writer.write_line("),")
             writer.write("}")
