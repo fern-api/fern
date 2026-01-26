@@ -351,7 +351,14 @@ export class EndpointSnippetGenerator {
         this.context.errors.scope(Scope.Headers);
         const headerFields: swift.FunctionArgument[] = [];
         if (request.headers != null) {
-            headerFields.push(...this.getEndpointMethodHeaders({ namedParameters: request.headers, snippet }));
+            // Filter out service-level headers - they are handled at the client constructor level
+            const serviceHeaderNames = new Set(
+                (this.context.ir.headers ?? []).map((h) => h.name.wireValue)
+            );
+            const endpointLevelHeaders = request.headers.filter(
+                (h) => !serviceHeaderNames.has(h.name.wireValue)
+            );
+            headerFields.push(...this.getEndpointMethodHeaders({ namedParameters: endpointLevelHeaders, snippet }));
         }
         this.context.errors.unscope();
         args.push(...headerFields);

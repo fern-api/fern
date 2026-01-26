@@ -6135,7 +6135,38 @@
                     }
                 ],
                 "queryParameters": [],
-                "headers": [],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-File-API-Version",
+                                "camelCase": {
+                                    "unsafeName": "xFileAPIVersion",
+                                    "safeName": "xFileAPIVersion"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_file_api_version",
+                                    "safeName": "x_file_api_version"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_FILE_API_VERSION",
+                                    "safeName": "X_FILE_API_VERSION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XFileAPIVersion",
+                                    "safeName": "XFileAPIVersion"
+                                }
+                            },
+                            "wireValue": "X-File-API-Version"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
                 "body": null,
                 "metadata": {
                     "includePathParameters": false,

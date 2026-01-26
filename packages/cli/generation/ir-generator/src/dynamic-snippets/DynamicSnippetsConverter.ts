@@ -199,10 +199,8 @@ export class DynamicSnippetsConverter {
                     wrapper: endpoint.sdkRequest.shape,
                     pathParameters,
                     queryParameters: this.convertQueryParameters({ queryParameters: endpoint.queryParameters }),
-                    // Only include endpoint-level headers, not service-level headers.
-                    // Service-level headers are handled at the client constructor level.
                     headers: this.convertWireValueParameters({
-                        wireValueParameters: endpoint.headers
+                        wireValueParameters: [...endpoint.serviceHeaders, ...endpoint.headers]
                     }),
                     body: endpoint.requestBody
                 });
