@@ -7,13 +7,30 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import asdict
-from typing import Any, Callable, ClassVar, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    List,
+    Mapping,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import pydantic
 import typing_extensions
-from .http_sse._models import ServerSentEvent
 
 _logger = logging.getLogger(__name__)
+
+if TYPE_CHECKING:
+    from .http_sse._models import ServerSentEvent
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -77,12 +94,12 @@ def _get_field_annotation(model: Type[Any], field_name: str) -> Optional[Type[An
         fields = getattr(model, "model_fields", {})
         field_info = fields.get(field_name)
         if field_info:
-            return field_info.annotation
+            return cast(Optional[Type[Any]], field_info.annotation)
     else:
         fields = getattr(model, "__fields__", {})
         field_info = fields.get(field_name)
         if field_info:
-            return field_info.outer_type_
+            return cast(Optional[Type[Any]], field_info.outer_type_)
     return None
 
 
@@ -120,7 +137,7 @@ def _is_string_type(type_: Type[Any]) -> bool:
     return False
 
 
-def parse_sse_obj(sse: ServerSentEvent, type_: Type[T]) -> T:
+def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
     """
     Parse a ServerSentEvent into the appropriate type.
 
@@ -152,12 +169,26 @@ def parse_sse_obj(sse: ServerSentEvent, type_: Type[T]) -> T:
 
     Returns:
         The parsed object of type T
+
+    Note:
+        This function is only available in SDK contexts where http_sse module exists.
     """
     sse_event = asdict(sse)
     discriminator, variants = _get_discriminator_and_variants(type_)
 
     if discriminator is None or variants is None:
-        # Not a discriminated union - just parse normally
+        # Not a discriminated union - parse the data field as JSON
+        data_value = sse_event.get("data")
+        if isinstance(data_value, str) and data_value:
+            try:
+                parsed_data = json.loads(data_value)
+                return parse_obj_as(type_, parsed_data)
+            except json.JSONDecodeError as e:
+                _logger.warning(
+                    "Failed to parse SSE data field as JSON: %s, data: %s",
+                    e,
+                    data_value[:100] if len(data_value) > 100 else data_value,
+                )
         return parse_obj_as(type_, sse_event)
 
     data_value = sse_event.get("data")
