@@ -236,6 +236,9 @@ export class WireTestGenerator {
         );
 
         const pythonFile = this.buildTestFile(serviceName, endpointTestCases);
+        if (pythonFile === null) {
+            return null;
+        }
 
         return new WriteablePythonFile({
             filename: `test_${serviceName}`,
@@ -257,7 +260,7 @@ export class WireTestGenerator {
             exampleIndex: number;
             isErrorResponse: boolean;
         }>
-    ): python.PythonFile {
+    ): python.PythonFile | null {
         const statements: python.AstNode[] = [];
 
         // Add raw imports that the AST doesn't support (simple "import X" statements)
@@ -269,6 +272,7 @@ export class WireTestGenerator {
         statements.push(this.createImportRegistration());
 
         // Add test functions for each endpoint
+        let testFunctionCount = 0;
         for (const { endpoint, example, service, exampleIndex, isErrorResponse } of testCases) {
             const testFunction = this.generateEndpointTestFunction(
                 serviceName,
@@ -280,7 +284,12 @@ export class WireTestGenerator {
             );
             if (testFunction) {
                 statements.push(testFunction);
+                testFunctionCount++;
             }
+        }
+
+        if (testFunctionCount === 0) {
+            return null;
         }
 
         const pathSegments = `tests/wire/test_${serviceName}`.split("/");
@@ -337,6 +346,22 @@ export class WireTestGenerator {
             // Create client using the get_client helper from conftest.py
             // This ensures all required auth parameters are supplied with fake values
             statements.push(python.codeBlock(`client = get_client(test_id)`));
+
+            // Exclusions use definition-level identifiers in the form "<service_path>.<endpoint_name>"
+            // or "<service_path>.*" to exclude an entire service.
+            const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const servicePath = servicePathParts.join(".");
+            const selector =
+                servicePath.length > 0
+                    ? `${servicePath}.${endpoint.name.snakeCase.safeName}`
+                    : endpoint.name.snakeCase.safeName;
+            const excluded = this.context.customConfig.wire_tests?.exclusions ?? [];
+            if (
+                excluded.includes(selector) ||
+                excluded.some((pattern) => pattern.endsWith(".*") && selector.startsWith(pattern.slice(0, -2) + "."))
+            ) {
+                return null;
+            }
 
             // Generate the API call AST directly
             const apiCallAst = this.generateApiCallAst(endpoint, example);
