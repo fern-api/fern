@@ -667,4 +667,79 @@ class RawClientTest extends TestCase
         $this->assertGreaterThanOrEqual(60000, $delay);
         $this->assertLessThanOrEqual(72000, $delay);
     }
+
+    /**
+     * @throws ClientExceptionInterface
+     */
+    public function testDeepObjectQueryParameters(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+            [],
+            ['filter' => ['name' => 'john', 'age' => 30]]
+        );
+
+        $this->rawClient->sendRequest($request);
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals(
+            'https://api.example.com/test?filter%5Bname%5D=john&filter%5Bage%5D=30',
+            (string)$lastRequest->getUri()
+        );
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     */
+    public function testDeeplyNestedObjectQueryParameters(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+            [],
+            ['filter' => ['user' => ['name' => 'john', 'role' => 'admin'], 'status' => 'active']]
+        );
+
+        $this->rawClient->sendRequest($request);
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals(
+            'https://api.example.com/test?filter%5Buser%5D%5Bname%5D=john&filter%5Buser%5D%5Brole%5D=admin&filter%5Bstatus%5D=active',
+            (string)$lastRequest->getUri()
+        );
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     */
+    public function testArrayOfObjectsQueryParameters(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+            [],
+            ['objects' => [['key' => 'hello', 'value' => 'world'], ['key' => 'foo', 'value' => 'bar']]]
+        );
+
+        $this->rawClient->sendRequest($request);
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals(
+            'https://api.example.com/test?objects%5Bkey%5D=hello&objects%5Bvalue%5D=world&objects%5Bkey%5D=foo&objects%5Bvalue%5D=bar',
+            (string)$lastRequest->getUri()
+        );
+    }
 }
