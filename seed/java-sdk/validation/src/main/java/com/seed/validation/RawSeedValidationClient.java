@@ -36,10 +36,14 @@ public class RawSeedValidationClient {
     }
 
     public SeedValidationHttpResponse<Type> create(CreateRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("create")
-                .build();
+                .addPathSegments("create");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -48,7 +52,7 @@ public class RawSeedValidationClient {
             throw new SeedValidationException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -84,6 +88,11 @@ public class RawSeedValidationClient {
         QueryStringMapper.addQueryParameter(httpUrl, "decimal", request.getDecimal(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "even", request.getEven(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "name", request.getName(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

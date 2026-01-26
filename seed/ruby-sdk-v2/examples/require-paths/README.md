@@ -38,18 +38,18 @@ client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
 This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
 ### Environments
 ```ruby
-require "seed"
+require "fern_examples"
 
-seed = Seed::Client.new(
-    base_url: Seed::Environment::PRODUCTION
+fern_examples = FernExamples::Client.new(
+    base_url: FernExamples::Environment::PRODUCTION
 )
 ```
 
 ### Custom URL
 ```ruby
-require "seed"
+require "fern_examples"
 
-client = Seed::Client.new(
+client = FernExamples::Client.new(
     base_url: "https://example.com"
 )
 ```
@@ -59,23 +59,23 @@ client = Seed::Client.new(
 Failed API calls will raise errors that can be rescued from granularly.
 
 ```ruby
-require "seed"
+require "fern_examples"
 
-client = Seed::Client.new(
+client = FernExamples::Client.new(
     base_url: "https://example.com"
 )
 
 begin
     result = client.echo
-rescue Seed::Errors::TimeoutError
+rescue FernExamples::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
-rescue Seed::Errors::ServiceUnavailableError
+rescue FernExamples::Errors::ServiceUnavailableError
     puts "API returned status 503, is probably overloaded, try again later"
-rescue Seed::Errors::ServerError
+rescue FernExamples::Errors::ServerError
     puts "API returned some other 5xx status, this is probably a bug"
-rescue Seed::Errors::ResponseError => e
+rescue FernExamples::Errors::ResponseError => e
     puts "API returned an unexpected status other than 5xx: #{e.code} #{e.message}"
-rescue Seed::Errors::ApiError => e
+rescue FernExamples::Errors::ApiError => e
     puts "Some other error occurred when calling the API: #{e.message}"
 end
 ```
@@ -96,9 +96,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` option to configure this behavior.
 
 ```ruby
-require "seed"
+require "fern_examples"
 
-client = Seed::Client.new(
+client = FernExamples::Client.new(
     base_url: "https://example.com",
     max_retries: 3  # Configure max retries (default is 2)
 )
@@ -109,7 +109,7 @@ client = Seed::Client.new(
 The SDK defaults to a 60 second timeout. Use the `timeout` option to configure this behavior.
 
 ```ruby
-require "seed"
+require "fern_examples"
 
 response = client.echo(
     ...,
@@ -122,7 +122,7 @@ response = client.echo(
 If you would like to send additional headers as part of the request, use the `additional_headers` request option.
 
 ```ruby
-require "seed"
+require "fern_examples"
 
 response = client.echo(
     ...,
@@ -139,7 +139,7 @@ response = client.echo(
 If you would like to send additional query parameters as part of the request, use the `additional_query_parameters` request option.
 
 ```ruby
-require "seed"
+require "fern_examples"
 
 response = client.echo(
     ...,

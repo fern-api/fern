@@ -219,6 +219,54 @@ class RawServiceClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def just_file_with_optional_query_params(
+        self,
+        *,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "just-file-with-optional-query-params",
+            method="POST",
+            params={
+                "maybeString": maybe_string,
+                "maybeInteger": maybe_integer,
+            },
+            data={},
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def with_content_type(
         self,
         *,
@@ -724,6 +772,54 @@ class AsyncRawServiceClient:
                 "maybeInteger": maybe_integer,
                 "listOfStrings": list_of_strings,
                 "optionalListOfStrings": optional_list_of_strings,
+            },
+            data={},
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def just_file_with_optional_query_params(
+        self,
+        *,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "just-file-with-optional-query-params",
+            method="POST",
+            params={
+                "maybeString": maybe_string,
+                "maybeInteger": maybe_integer,
             },
             data={},
             files={
