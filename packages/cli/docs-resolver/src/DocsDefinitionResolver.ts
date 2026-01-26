@@ -68,6 +68,26 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
+/**
+ * Context provided to the pythonDocsSectionHandler callback for creating placeholder pages.
+ */
+export interface PythonDocsSectionContext {
+    /** Add a page to the docs definition */
+    addPage: (pageId: string, markdown: string) => void;
+    /** Generate a unique node ID */
+    generateId: (key: string) => FernNavigation.V1.NodeId;
+}
+
+/**
+ * Handler for pythonDocsSection navigation items.
+ * Return a PageNode to show a placeholder, or null to skip the section.
+ */
+export type PythonDocsSectionHandler = (
+    item: docsYml.DocsNavigationItem.PythonDocsSection,
+    parentSlug: FernNavigation.V1.SlugGenerator,
+    context: PythonDocsSectionContext
+) => FernNavigation.V1.PageNode | null;
+
 export interface DocsDefinitionResolverArgs {
     domain: string;
     docsWorkspace: DocsWorkspace;
@@ -79,6 +99,12 @@ export interface DocsDefinitionResolverArgs {
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
+    /**
+     * Handler for pythonDocsSection navigation items.
+     * If provided, called to create placeholder pages during local dev.
+     * If not provided, pythonDocsSection items are skipped (FDR adds generated docs during publish).
+     */
+    pythonDocsSectionHandler?: PythonDocsSectionHandler;
 }
 
 export class DocsDefinitionResolver {
@@ -91,6 +117,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
+    private pythonDocsSectionHandler?: PythonDocsSectionHandler;
 
     constructor({
         domain,
@@ -101,7 +128,8 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
-        targetAudiences
+        targetAudiences,
+        pythonDocsSectionHandler
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -112,6 +140,7 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
+        this.pythonDocsSectionHandler = pythonDocsSectionHandler;
     }
 
     #idgen = NodeIdGenerator.init();
@@ -1032,9 +1061,10 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
 
-        const children = await Promise.all(
+        const childrenWithNulls = await Promise.all(
             items.map((item) => this.toNavigationChild({ prefix: id, item, parentSlug }))
         );
+        const children = childrenWithNulls.filter((child): child is FernNavigation.V1.NavigationChild => child != null);
 
         const grouped: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
@@ -1100,7 +1130,10 @@ export class DocsDefinitionResolver {
             urlSlug: item.slug ?? kebabCase(item.title),
             skipUrlSlug: item.skipUrlSlug
         });
-        const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, variantSlug)));
+        const childrenWithNulls = await Promise.all(
+            item.layout.map((item) => this.toVariantChild(item, id, variantSlug))
+        );
+        const children = childrenWithNulls.filter((child): child is FernNavigation.V1.VariantChild => child != null);
         return {
             type: "variant",
             id,
@@ -1125,15 +1158,16 @@ export class DocsDefinitionResolver {
         item: docsYml.DocsNavigationItem,
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator
-    ): Promise<FernNavigation.V1.VariantChild> {
-        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild>>({
+    ): Promise<FernNavigation.V1.VariantChild | null> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild | null>>({
             page: async (value) => this.toPageNode({ item: value, parentSlug }),
             apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
             section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug),
-            // Library sections are handled by FDR during registration, returning placeholder
-            pythonDocsSection: async (value) => this.toPythonDocsSectionPlaceholder(value, parentSlug)
+            // Library sections are handled by FDR during registration
+            // If handler provided (dev mode), create placeholder; otherwise skip (FDR adds generated docs)
+            pythonDocsSection: async (value) => this.handlePythonDocsSection(value, parentSlug)
         });
     }
 
@@ -1149,8 +1183,8 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator;
         hideChildren?: boolean;
         parentAvailability?: docsYml.RawSchemas.Availability;
-    }): Promise<FernNavigation.V1.NavigationChild> {
-        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild>>({
+    }): Promise<FernNavigation.V1.NavigationChild | null> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild | null>>({
             page: async (value) => this.toPageNode({ item: value, parentSlug, hideChildren, parentAvailability }),
             apiSection: async (value) =>
                 this.toApiSectionNode({ item: value, parentSlug, hideChildren, parentAvailability }),
@@ -1158,8 +1192,9 @@ export class DocsDefinitionResolver {
                 this.toSectionNode({ prefix, item: value, parentSlug, hideChildren, parentAvailability }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
-            // Library sections are handled by FDR during registration, returning placeholder
-            pythonDocsSection: async (value) => this.toPythonDocsSectionPlaceholder(value, parentSlug)
+            // Library sections are handled by FDR during registration
+            // If handler provided (dev mode), create placeholder; otherwise skip (FDR adds generated docs)
+            pythonDocsSection: async (value) => this.handlePythonDocsSection(value, parentSlug)
         });
     }
 
@@ -1177,21 +1212,15 @@ export class DocsDefinitionResolver {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
         let ir: IntermediateRepresentation | undefined = undefined;
-        const workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
-            { context: this.taskContext },
-            {
-                enableUniqueErrorsPerEndpoint: true,
-                detectGlobalHeaders: false,
-                objectQueryParameters: true,
-                preserveSchemaIds: true
-            }
-        );
+        let workspace: FernWorkspace | undefined = undefined;
+        let openapiWorkspace: OSSWorkspace | undefined = undefined;
+        let openapiError: unknown = undefined;
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser) {
             try {
-                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
@@ -1200,7 +1229,7 @@ export class DocsDefinitionResolver {
                     logWarnings: false
                 });
             } catch (error) {
-                // noop
+                openapiError = error;
             }
         }
 
@@ -1208,8 +1237,8 @@ export class DocsDefinitionResolver {
         let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
         if (item.tagDescriptionPages && useV3Parser) {
             try {
-                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
-                const openApiIr = await openapiWorkspace.getOpenAPIIr({
+                const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
+                const openApiIr = await workspaceForTags.getOpenAPIIr({
                     context: this.taskContext,
                     loadAiExamples: true
                 });
@@ -1234,6 +1263,18 @@ export class DocsDefinitionResolver {
         }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
+            if (this.apiWorkspaces.length === 0 && openapiError != null) {
+                throw openapiError;
+            }
+            workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                { context: this.taskContext },
+                {
+                    enableUniqueErrorsPerEndpoint: true,
+                    detectGlobalHeaders: false,
+                    objectQueryParameters: true,
+                    preserveSchemaIds: true
+                }
+            );
             ir = generateIntermediateRepresentation({
                 workspace,
                 audiences: item.audiences,
@@ -1269,7 +1310,7 @@ export class DocsDefinitionResolver {
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
         // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
-        const apiNameForRegistration = item.apiName ?? workspace.workspaceName;
+        const apiNameForRegistration = item.apiName ?? workspace?.workspaceName ?? openapiWorkspace?.workspaceName;
 
         const apiDefinitionId = await this.registerApi({
             ir,
@@ -1368,85 +1409,22 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Python docs sections are handled by FDR during finishDocsRegister.
-     * The CLI starts the generation job, polls for completion, and passes the jobId to FDR.
-     * FDR then merges the generated Python docs into the navigation.
-     *
-     * In dev mode (fern docs dev), this placeholder returns a visible page with helpful content
-     * explaining that Python library docs are only generated during `fern generate --docs`.
-     *
-     * In production mode, FDR replaces/augments this with the actual generated documentation.
+     * Handles pythonDocsSection navigation items by delegating to the handler if provided.
+     * If no handler is provided, returns null (skips the section - FDR adds generated docs during publish).
      */
-    private toPythonDocsSectionPlaceholder(
+    private handlePythonDocsSection(
         item: docsYml.DocsNavigationItem.PythonDocsSection,
         parentSlug: FernNavigation.V1.SlugGenerator
-    ): FernNavigation.V1.PageNode {
-        const title = item.title ?? "Python Reference";
-        const urlSlug = item.slug ?? "python-docs";
-        const slug = parentSlug.apply({ urlSlug });
-
-        // Create a synthetic page ID for the placeholder
-        const syntheticPageId = `__python-docs-placeholder-${urlSlug}__.mdx`;
-        const pageId = FernNavigation.PageId(syntheticPageId);
-
-        // Add placeholder markdown content to parsedDocsConfig.pages
-        const placeholderMarkdown = `---
-title: ${title}
----
-
-<Warning>
-Python library documentation is not yet supported with \`fern docs dev\`. This feature will be added in a future release. To view the generated documentation, run \`fern generate --docs --preview\`.
-</Warning>
-
-## About Python Library Docs
-
-When you publish your documentation using \`fern generate --docs\`, Fern will:
-
-1. Clone and analyze your Python repository from: \`${item.githubUrl}\`
-2. Parse the Python source code to extract docstrings and type information
-3. Generate comprehensive API reference documentation
-4. Integrate the generated docs into your documentation site
-
-## How to Generate
-
-To generate the full Python library documentation, run:
-
-\`\`\`bash
-fern generate --docs
-\`\`\`
-
-Or to preview without publishing:
-
-\`\`\`bash
-fern generate --docs --preview
-\`\`\`
-
-The generated documentation will replace this placeholder page with complete API reference content including:
-
-- Module and package documentation
-- Class and function references
-- Type annotations and signatures
-- Docstring content
-`;
-
-        this.parsedDocsConfig.pages[RelativeFilePath.of(syntheticPageId)] = placeholderMarkdown;
-
-        const id = this.#idgen.get(pageId);
-        return {
-            id,
-            type: "page",
-            slug: slug.get(),
-            title,
-            icon: undefined,
-            hidden: false,
-            viewers: undefined,
-            orphaned: undefined,
-            pageId,
-            authed: undefined,
-            noindex: true, // Don't index placeholder pages
-            featureFlags: undefined,
-            availability: undefined
-        };
+    ): FernNavigation.V1.PageNode | null {
+        if (this.pythonDocsSectionHandler == null) {
+            return null;
+        }
+        return this.pythonDocsSectionHandler(item, parentSlug, {
+            addPage: (pageId, markdown) => {
+                this.parsedDocsConfig.pages[RelativeFilePath.of(pageId)] = markdown;
+            },
+            generateId: (key) => this.#idgen.get(key)
+        });
     }
 
     private async toPageNode({
@@ -1521,12 +1499,15 @@ The generated documentation will replace this placeholder page with complete API
             )
         );
 
+        // Filter out null children first
+        const filteredChildren = children.filter((child): child is FernNavigation.V1.NavigationChild => child != null);
+
         // If the section has no overview page and contains a flattened API reference with an overview page,
         // inherit the API reference's overview page for the section (e.g., tag description page).
         // We search through all children to find a flattened API reference, rather than assuming
         // the first child is an API reference (which may not be true for all section configurations).
         if (pageId == null) {
-            const flattenedApiRef = children.find(
+            const flattenedApiRef = filteredChildren.find(
                 (child): child is FernNavigation.V1.ApiReferenceNode =>
                     child.type === "apiReference" && child.hideTitle === true && child.overviewPageId != null
             );
@@ -1549,7 +1530,7 @@ The generated documentation will replace this placeholder page with complete API
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children,
+            children: filteredChildren,
             authed: undefined,
             pointsTo: undefined,
             noindex,
@@ -1902,4 +1883,79 @@ function convertAvailability(
         default:
             assertNever(availability);
     }
+}
+
+/**
+ * Creates a placeholder page for Python docs sections during local development.
+ * This handler can be passed to DocsDefinitionResolver.pythonDocsSectionHandler
+ * to show a helpful placeholder page when running `fern docs dev`.
+ */
+export function createPythonDocsSectionPlaceholder(
+    item: docsYml.DocsNavigationItem.PythonDocsSection,
+    parentSlug: FernNavigation.V1.SlugGenerator,
+    context: PythonDocsSectionContext
+): FernNavigation.V1.PageNode {
+    const title = item.title ?? "Python Reference";
+    const urlSlug = item.slug ?? "python-docs";
+    const slug = parentSlug.apply({ urlSlug });
+
+    const syntheticPageId = `__python-docs-placeholder-${urlSlug}__.mdx`;
+    const pageId = FernNavigation.PageId(syntheticPageId);
+
+    const placeholderMarkdown = `---
+title: ${title}
+---
+
+<Warning>
+Python library documentation is not yet supported with \`fern docs dev\`. This feature will be added in a future release. To view the generated documentation, run \`fern generate --docs --preview\`.
+</Warning>
+
+## About Python Library Docs
+
+When you publish your documentation using \`fern generate --docs\`, Fern will:
+
+1. Clone and analyze your Python repository from: \`${item.githubUrl}\`
+2. Parse the Python source code to extract docstrings and type information
+3. Generate comprehensive API reference documentation
+4. Integrate the generated docs into your documentation site
+
+## How to Generate
+
+To generate the full Python library documentation, run:
+
+\`\`\`bash
+fern generate --docs
+\`\`\`
+
+Or to preview without publishing:
+
+\`\`\`bash
+fern generate --docs --preview
+\`\`\`
+
+The generated documentation will replace this placeholder page with complete API reference content including:
+
+- Module and package documentation
+- Class and function references
+- Type annotations and signatures
+- Docstring content
+`;
+
+    context.addPage(syntheticPageId, placeholderMarkdown);
+
+    return {
+        id: context.generateId(pageId),
+        type: "page",
+        slug: slug.get(),
+        title,
+        icon: undefined,
+        hidden: false,
+        viewers: undefined,
+        orphaned: undefined,
+        pageId,
+        authed: undefined,
+        noindex: true,
+        featureFlags: undefined,
+        availability: undefined
+    };
 }
