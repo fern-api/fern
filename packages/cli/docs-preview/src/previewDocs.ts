@@ -1,5 +1,9 @@
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
+import {
+    createPythonDocsSectionPlaceholder,
+    DocsDefinitionResolver,
+    filterOssWorkspaces
+} from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -272,7 +276,8 @@ export async function getPreviewDocsDefinition({
                 };
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
-        targetAudiences: undefined
+        targetAudiences: undefined,
+        pythonDocsSectionHandler: createPythonDocsSectionPlaceholder
     });
 
     const writeDocsDefinition = await resolver.resolve();
