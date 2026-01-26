@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ApiClient, WebhooksClient};
-pub use types::*;
+pub use resources::{WebhooksClient, ApiClient};
+pub use types::{*};
+

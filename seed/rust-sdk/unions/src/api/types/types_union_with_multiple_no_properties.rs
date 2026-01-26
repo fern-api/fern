@@ -3,12 +3,15 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithMultipleNoProperties {
-    Foo {
-        #[serde(flatten)]
-        data: Foo,
-    },
+        #[serde(rename = "foo")]
+        Foo {
+            #[serde(flatten)]
+            data: Foo,
+        },
 
-    Empty1,
+        #[serde(rename = "empty1")]
+        Empty1,
 
-    Empty2,
+        #[serde(rename = "empty2")]
+        Empty2,
 }

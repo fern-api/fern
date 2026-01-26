@@ -1,6 +1,6 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions, QueryBuilder};
+use reqwest::{Method};
+use crate::api::{*};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
@@ -9,26 +9,20 @@ pub struct ServiceClient {
 impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?
+})
     }
 
-    pub async fn get_direct_thread(
-        &self,
-        request: &GetDirectThreadQueryRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<Response, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::GET,
-                "",
-                None,
-                QueryBuilder::new()
-                    .string_array("ids", request.ids.clone())
-                    .string_array("tags", request.tags.clone())
-                    .build(),
-                options,
-            )
-            .await
+    pub async fn get_direct_thread(&self, request: &GetDirectThreadQueryRequest, options: Option<RequestOptions>) -> Result<Response, ApiError> {
+        self.http_client.execute_request(
+            Method::GET,
+            "",
+            None,
+            QueryBuilder::new().string_array("ids", request.ids.clone()).string_array("tags", request.tags.clone())
+            .build(),
+            options,
+        ).await
     }
+
 }
+

@@ -11,10 +11,10 @@ pub struct FileClient {
 }
 impl FileClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
-        Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-            notification: NotificationClient::new(config.clone())?,
-            service: ServiceClient2::new(config.clone())?,
-        })
-    }
+    Ok(Self {
+        http_client: HttpClient::new(config.clone())?,
+        notification: NotificationClient::new(config.clone())?,
+        service: ServiceClient2::new(config.clone())?
+    })
+}
 }
