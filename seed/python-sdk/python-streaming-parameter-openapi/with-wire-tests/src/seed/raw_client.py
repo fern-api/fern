@@ -9,7 +9,7 @@ from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.http_response import AsyncHttpResponse, HttpResponse
 from .core.http_sse._api import EventSource
-from .core.pydantic_utilities import parse_obj_as
+from .core.pydantic_utilities import parse_obj_as, parse_sse_obj
 from .core.request_options import RequestOptions
 from .types.chat_response import ChatResponse
 from .types.chat_stream_event import ChatStreamEvent
@@ -66,9 +66,9 @@ class RawSeedApi:
                                 try:
                                     yield typing.cast(
                                         ChatStreamEvent,
-                                        parse_obj_as(
+                                        parse_sse_obj(
+                                            sse=_sse,
                                             type_=ChatStreamEvent,  # type: ignore
-                                            object_=_sse.json(),
                                         ),
                                     )
                                 except JSONDecodeError as e:
@@ -188,9 +188,9 @@ class AsyncRawSeedApi:
                                 try:
                                     yield typing.cast(
                                         ChatStreamEvent,
-                                        parse_obj_as(
+                                        parse_sse_obj(
+                                            sse=_sse,
                                             type_=ChatStreamEvent,  # type: ignore
-                                            object_=_sse.json(),
                                         ),
                                     )
                                 except JSONDecodeError as e:
