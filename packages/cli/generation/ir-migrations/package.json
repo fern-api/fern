@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -101,6 +103,7 @@
     "@fern-fern/ir-v60-sdk": "0.0.7",
     "@fern-fern/ir-v61-sdk": "0.0.2",
     "@fern-fern/ir-v62-sdk": "0.0.2",
+    "@fern-fern/ir-v63-sdk": "0.0.1",
     "@fern-fern/ir-v7-model": "0.0.2",
     "@fern-fern/ir-v8-model": "0.0.1",
     "@fern-fern/ir-v9-model": "0.0.1",

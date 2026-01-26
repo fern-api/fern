@@ -4,4 +4,8 @@
 
 import * as FernDefinition from "../../../index";
 
-export type ValidationSchema = FernDefinition.StringValidationSchema | FernDefinition.NumberValidationSchema;
+export type ValidationSchema =
+    | FernDefinition.StringValidationSchema
+    | FernDefinition.NumberValidationSchema
+    | FernDefinition.ContainerValidationSchema
+    | FernDefinition.MapValidationSchema;

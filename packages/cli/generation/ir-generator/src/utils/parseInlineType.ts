@@ -1,4 +1,9 @@
-import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
+import {
+    ContainerValidationRules,
+    MapValidationRules,
+    RawSchemas,
+    recursivelyVisitRawTypeReference
+} from "@fern-api/fern-definition-schema";
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext";
@@ -21,9 +26,31 @@ export function parseInlineType({ type, file, _default, validation }: parseInlin
         visitor: {
             primitive: TypeReference.primitive,
             unknown: TypeReference.unknown,
-            map: ({ keyType, valueType }) => TypeReference.container(ContainerType.map({ keyType, valueType })),
-            list: (valueType) => TypeReference.container(ContainerType.list(valueType)),
-            set: (valueType) => TypeReference.container(ContainerType.set(valueType)),
+            map: ({ keyType, valueType }, validation?: MapValidationRules) =>
+                TypeReference.container(
+                    ContainerType.map({
+                        keyType,
+                        valueType,
+                        minProperties: validation?.minProperties,
+                        maxProperties: validation?.maxProperties
+                    })
+                ),
+            list: (valueType, validation?: ContainerValidationRules) =>
+                TypeReference.container(
+                    ContainerType.list({
+                        list: valueType,
+                        minItems: validation?.minItems,
+                        maxItems: validation?.maxItems
+                    })
+                ),
+            set: (valueType, validation?: ContainerValidationRules) =>
+                TypeReference.container(
+                    ContainerType.set({
+                        set: valueType,
+                        minItems: validation?.minItems,
+                        maxItems: validation?.maxItems
+                    })
+                ),
             optional: (valueType) => TypeReference.container(ContainerType.optional(valueType)),
             nullable: (valueType) => TypeReference.container(ContainerType.nullable(valueType)),
             literal: (literal) => TypeReference.container(ContainerType.literal(literal)),

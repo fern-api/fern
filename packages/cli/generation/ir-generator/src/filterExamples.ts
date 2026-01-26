@@ -363,14 +363,20 @@ function filterExampleResponse({
     return response._visit<ExampleResponse>({
         ok: (ok) =>
             ok._visit<ExampleResponse>({
-                body: (exampleTypeReference) =>
-                    ExampleResponse.ok(
+                body: (exampleTypeReference) => {
+                    const filteredExample =
+                        exampleTypeReference != null
+                            ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
+                            : undefined;
+                    return ExampleResponse.ok(
                         ExampleEndpointSuccessResponse.body(
-                            exampleTypeReference != null
-                                ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
-                                : undefined
+                            filteredExample ?? {
+                                shape: ExampleTypeReferenceShape.unknown(),
+                                jsonExample: undefined
+                            }
                         )
-                    ),
+                    );
+                },
                 stream: (stream) =>
                     ExampleResponse.ok(
                         ExampleEndpointSuccessResponse.stream(

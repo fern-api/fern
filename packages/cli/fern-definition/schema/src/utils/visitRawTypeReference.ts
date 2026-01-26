@@ -2,6 +2,16 @@ import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-
 import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
+export interface ContainerValidationRules {
+    minItems?: number;
+    maxItems?: number;
+}
+
+export interface MapValidationRules {
+    minProperties?: number;
+    maxProperties?: number;
+}
+
 export const FernContainerRegex = {
     MAP: /^map<\s*([^,]*)\s*,\s*(.*)\s*>$/,
     LIST: /^list<\s*(.*)\s*>$/,
@@ -13,9 +23,9 @@ export const FernContainerRegex = {
 
 export interface RawTypeReferenceVisitor<R> {
     primitive: (primitive: PrimitiveType) => R;
-    map: (args: { keyType: string; valueType: string }) => R;
-    list: (valueType: string) => R;
-    set: (valueType: string) => R;
+    map: (args: { keyType: string; valueType: string }, validation?: MapValidationRules) => R;
+    list: (valueType: string, validation?: ContainerValidationRules) => R;
+    set: (valueType: string, validation?: ContainerValidationRules) => R;
     optional: (valueType: string) => R;
     nullable: (valueType: string) => R;
     literal: (literal: Literal) => R;
@@ -165,20 +175,23 @@ export function visitRawTypeReference<R>({
 
     const mapMatch = type.match(FernContainerRegex.MAP);
     if (mapMatch?.[1] != null && mapMatch[2] != null) {
-        return visitor.map({
-            keyType: mapMatch[1],
-            valueType: mapMatch[2]
-        });
+        return visitor.map(
+            {
+                keyType: mapMatch[1],
+                valueType: mapMatch[2]
+            },
+            getMapValidationRules(validation)
+        );
     }
 
     const listMatch = type.match(FernContainerRegex.LIST);
     if (listMatch?.[1] != null) {
-        return visitor.list(listMatch[1]);
+        return visitor.list(listMatch[1], getContainerValidationRules(validation));
     }
 
     const setMatch = type.match(FernContainerRegex.SET);
     if (setMatch?.[1] != null) {
-        return visitor.set(setMatch[1]);
+        return visitor.set(setMatch[1], getContainerValidationRules(validation));
     }
 
     const optionalMatch = type.match(FernContainerRegex.OPTIONAL);
@@ -208,4 +221,34 @@ export function visitRawTypeReference<R>({
     }
 
     return visitor.named(type);
+}
+
+function getContainerValidationRules(
+    validation: ValidationSchema | undefined
+): ContainerValidationRules | undefined {
+    if (validation == null || typeof validation !== "object") {
+        return undefined;
+    }
+    const maybeValidation = validation as Partial<ContainerValidationRules>;
+    if (maybeValidation.minItems != null || maybeValidation.maxItems != null) {
+        return {
+            minItems: maybeValidation.minItems,
+            maxItems: maybeValidation.maxItems
+        };
+    }
+    return undefined;
+}
+
+function getMapValidationRules(validation: ValidationSchema | undefined): MapValidationRules | undefined {
+    if (validation == null || typeof validation !== "object") {
+        return undefined;
+    }
+    const maybeValidation = validation as Partial<MapValidationRules>;
+    if (maybeValidation.minProperties != null || maybeValidation.maxProperties != null) {
+        return {
+            minProperties: maybeValidation.minProperties,
+            maxProperties: maybeValidation.maxProperties
+        };
+    }
+    return undefined;
 }

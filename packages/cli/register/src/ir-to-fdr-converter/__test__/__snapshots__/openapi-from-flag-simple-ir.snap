@@ -1721,6 +1721,8 @@
                       },
                       "type": "primitive",
                     },
+                    "maxProperties": undefined,
+                    "minProperties": undefined,
                     "type": "map",
                     "valueType": {
                       "_visit": [Function],
@@ -1944,6 +1946,8 @@
                       },
                       "type": "primitive",
                     },
+                    "maxProperties": undefined,
+                    "minProperties": undefined,
                     "type": "map",
                     "valueType": {
                       "_visit": [Function],
@@ -2661,6 +2665,8 @@
                       },
                       "type": "primitive",
                     },
+                    "maxProperties": undefined,
+                    "minProperties": undefined,
                     "type": "map",
                     "valueType": {
                       "_visit": [Function],
