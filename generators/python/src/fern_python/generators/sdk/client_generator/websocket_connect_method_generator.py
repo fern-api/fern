@@ -5,7 +5,7 @@ from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
-from fern_python.external_dependencies import Contextlib, Websockets
+from fern_python.external_dependencies import Contextlib, UrlLibParse, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
@@ -271,6 +271,7 @@ class WebsocketConnectMethodGenerator:
             writer.write_line(f'{self.WS_URL_VARIABLE} = {url_prefix} + "{websocket.path.head}"')
 
             # Build query params using encode_query(jsonable_encoder(remove_none_from_dict({...})))
+            # encode_query returns List[Tuple[str, Any]], so we use urllib.parse.urlencode to convert to string
             query_params_dict_expr = self._build_query_params_dict(channel=websocket)
             writer.write("_encoded_query_params = ")
             writer.write_node(
@@ -283,16 +284,17 @@ class WebsocketConnectMethodGenerator:
             writer.write_line()
 
             # Only append query string if there are params
+            def write_url_with_query_params(writer: AST.NodeWriter) -> None:
+                writer.write(f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + ")
+                writer.write('"?" + ')
+                writer.write_node(UrlLibParse.urlencode(AST.Expression("_encoded_query_params")))
+
             writer.write_node(
                 AST.ConditionalTree(
                     [
                         AST.IfConditionLeaf(
                             condition=AST.Expression("_encoded_query_params"),
-                            code=[
-                                AST.Expression(
-                                    f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f" + "'?{_encoded_query_params}'"
-                                )
-                            ],
+                            code=[AST.Expression(AST.CodeWriter(write_url_with_query_params))],
                         )
                     ],
                     else_code=None,
