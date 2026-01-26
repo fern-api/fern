@@ -131,7 +131,17 @@ interface Uuid {
     value: string;
 }
 
-const POINTER_HELPER_TYPES = new Set<string>(["bool", "bytes", "date", "dateTime", "float64", "int", "int64", "string", "uuid"]);
+const POINTER_HELPER_TYPES = new Set<string>([
+    "bool",
+    "bytes",
+    "date",
+    "dateTime",
+    "float64",
+    "int",
+    "int64",
+    "string",
+    "uuid"
+]);
 const ADDRESSABLE_TYPES = new Set<string>(["any", "map", "slice"]);
 
 export class TypeInstantiation extends AstNode {
