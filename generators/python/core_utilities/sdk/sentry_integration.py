@@ -1,0 +1,109 @@
+import atexit
+import logging
+import os
+from typing import Optional
+
+import sentry_sdk
+from sentry_sdk.integrations.logging import LoggingIntegration
+
+_sentry_initialized = False
+
+SENTRY_DSN = "SENTRY_DSN_PLACEHOLDER"
+ORGANIZATION_NAME = "ORGANIZATION_NAME_PLACEHOLDER"
+
+
+def initialize_sentry(
+    dsn: Optional[str] = None,
+    environment: Optional[str] = None,
+    release: Optional[str] = None,
+) -> None:
+    """
+    Initialize Sentry for error tracking and monitoring.
+
+    This function initializes the Sentry SDK with the provided or default DSN.
+    It can be called multiple times safely - subsequent calls will be ignored
+    if Sentry has already been initialized.
+
+    Parameters
+    ----------
+    dsn : Optional[str]
+        The Sentry DSN to use. If not provided, uses the default DSN configured
+        for this SDK or the SENTRY_DSN environment variable.
+    environment : Optional[str]
+        The environment name (e.g., 'production', 'staging'). If not provided,
+        uses the SENTRY_ENVIRONMENT environment variable or defaults to 'production'.
+    release : Optional[str]
+        The release version. If not provided, uses the SENTRY_RELEASE environment variable.
+    """
+    global _sentry_initialized
+
+    if _sentry_initialized:
+        return
+
+    # Determine the DSN to use
+    effective_dsn = dsn or os.environ.get("SENTRY_DSN") or SENTRY_DSN
+    if not effective_dsn or effective_dsn == "SENTRY_DSN_PLACEHOLDER":
+        return
+
+    # Determine environment
+    effective_environment = environment or os.environ.get("SENTRY_ENVIRONMENT", "production")
+
+    # Determine release
+    effective_release = release or os.environ.get("SENTRY_RELEASE")
+
+    # Configure logging integration
+    logging_integration = LoggingIntegration(
+        level=logging.INFO,
+        event_level=logging.ERROR,
+    )
+
+    sentry_sdk.init(
+        dsn=effective_dsn,
+        environment=effective_environment,
+        release=effective_release,
+        integrations=[logging_integration],
+        traces_sample_rate=0.1,
+        send_default_pii=False,
+    )
+
+    # Set the organization context
+    sentry_sdk.set_tag("sdk.organization", ORGANIZATION_NAME)
+    sentry_sdk.set_tag("sdk.name", f"{ORGANIZATION_NAME}-python-sdk")
+
+    _sentry_initialized = True
+
+    # Register cleanup on exit
+    atexit.register(_cleanup_sentry)
+
+
+def _cleanup_sentry() -> None:
+    """Flush any pending Sentry events on exit."""
+    sentry_sdk.flush(timeout=2.0)
+
+
+def capture_exception(error: BaseException) -> None:
+    """
+    Capture an exception and send it to Sentry.
+
+    Parameters
+    ----------
+    error : BaseException
+        The exception to capture.
+    """
+    if _sentry_initialized:
+        sentry_sdk.capture_exception(error)
+
+
+def set_user_context(user_id: Optional[str] = None, email: Optional[str] = None) -> None:
+    """
+    Set user context for Sentry events.
+
+    Parameters
+    ----------
+    user_id : Optional[str]
+        The user's unique identifier.
+    email : Optional[str]
+        The user's email address.
+    """
+    if _sentry_initialized:
+        sentry_sdk.set_user({"id": user_id, "email": email})

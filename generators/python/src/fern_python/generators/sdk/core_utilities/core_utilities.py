@@ -28,6 +28,7 @@ class CoreUtilities:
         has_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
+        organization: str,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -43,6 +44,8 @@ class CoreUtilities:
         self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
+        self._sentry_integration = custom_config.sentry_integration
+        self._organization = organization
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -268,6 +271,26 @@ class CoreUtilities:
 
         # Copy the entire http_sse folder
         self._copy_http_sse_folder_to_project(project=project)
+
+        # Copy sentry integration file if configured
+        if self._sentry_integration is not None:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="sentry_integration.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="sentry_integration"),
+                ),
+                exports={"initialize_sentry", "capture_exception", "set_user_context"}
+                if not self._exclude_types_from_init_exports
+                else set(),
+                string_replacements={
+                    "SENTRY_DSN_PLACEHOLDER": self._sentry_integration.dsn,
+                    "ORGANIZATION_NAME_PLACEHOLDER": self._organization,
+                },
+            )
+            # Add sentry-sdk dependency
+            project.add_dependency(AST.Dependency(name="sentry-sdk", version="^2.0.0"))
 
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         if self._version == PydanticVersionCompatibility.V1:
@@ -882,3 +905,17 @@ class CoreUtilities:
     def _sanitize_pager_name(self, name: str) -> str:
         """Sanitize the pager name to be a valid Python identifier in PascalCase."""
         return pascal_case(name)
+
+    def has_sentry_integration(self) -> bool:
+        """Check if Sentry integration is configured."""
+        return self._sentry_integration is not None
+
+    def get_initialize_sentry(self) -> AST.Reference:
+        """Get a reference to the initialize_sentry function."""
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "sentry_integration"),
+                named_import="initialize_sentry",
+            ),
+        )

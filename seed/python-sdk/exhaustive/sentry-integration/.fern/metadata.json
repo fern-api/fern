@@ -1,0 +1,11 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "sentry-integration": {
+      "dsn": "https://example@sentry.io/123456"
+    }
+  },
+  "sdkVersion": "0.0.1"
+}

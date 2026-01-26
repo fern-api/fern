@@ -2,7 +2,7 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
-import fern_python.generators.sdk.names as names
+import fern.ir.resources as ir_types
 from ..environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -11,6 +11,9 @@ from ..environment_generators import (
 from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient, RootClient
+from typing_extensions import Unpack
+
+import fern_python.generators.sdk.names as names
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -19,9 +22,6 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
-from typing_extensions import Unpack
-
-import fern.ir.resources as ir_types
 
 
 @dataclass
@@ -814,6 +814,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
+            # Initialize Sentry if configured
+            if self._context.core_utilities.has_sentry_integration():
+                writer.write_reference(self._context.core_utilities.get_initialize_sentry())
+                writer.write_line("()")
+
             timeout_local_variable = "_defaulted_timeout"
             writer.write(f"{timeout_local_variable} = ")
             writer.write_node(
