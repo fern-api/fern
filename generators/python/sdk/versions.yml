@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.49.1
+  changelogEntry:
+    - summary: |
+        Improve wire test generation for inferred auth. When inferred auth is enabled, the generated
+        conftest.py now bypasses automatic token fetching by default, preventing the InferredAuthTokenProvider
+        from making its own /authorize calls during tests. The get_client function accepts a skip_auto_auth
+        parameter (default True) that replaces the auth_headers callback with a static bearer token.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 4.49.0
   changelogEntry:
     - summary: |
