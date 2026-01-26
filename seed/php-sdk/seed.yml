@@ -146,7 +146,7 @@ fixtures:
             analyze: echo skip
             hello: echo hello
 scripts:
-  - image: fernapi/php-seed
+  - image: composer:2.7.9
     commands:
       build:
         # Retry composer install up to 3 times to handle intermittent network failures
@@ -167,6 +167,9 @@ allowedFailures:
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
   - examples:no-custom-config
   - examples:readme-config
+  # Wire tests require Docker-in-Docker support (fernapi/php-seed image)
+  # TODO: Remove after php-seed image is built and seed.yml is updated to use it
+  - exhaustive:wire-tests
   - trace
   - circular-references
   - circular-references-advanced
