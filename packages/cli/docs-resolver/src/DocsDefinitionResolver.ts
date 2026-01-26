@@ -1493,12 +1493,15 @@ export class DocsDefinitionResolver {
             )
         );
 
+        // Filter out null children first
+        const filteredChildren = children.filter((child): child is FernNavigation.V1.NavigationChild => child != null);
+
         // If the section has no overview page and contains a flattened API reference with an overview page,
         // inherit the API reference's overview page for the section (e.g., tag description page).
         // We search through all children to find a flattened API reference, rather than assuming
         // the first child is an API reference (which may not be true for all section configurations).
         if (pageId == null) {
-            const flattenedApiRef = children.find(
+            const flattenedApiRef = filteredChildren.find(
                 (child): child is FernNavigation.V1.ApiReferenceNode =>
                     child.type === "apiReference" && child.hideTitle === true && child.overviewPageId != null
             );
@@ -1521,7 +1524,7 @@ export class DocsDefinitionResolver {
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: children.filter((child): child is FernNavigation.V1.NavigationChild => child != null),
+            children: filteredChildren,
             authed: undefined,
             pointsTo: undefined,
             noindex,
