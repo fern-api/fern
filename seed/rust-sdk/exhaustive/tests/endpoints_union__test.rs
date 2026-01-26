@@ -1,12 +1,10 @@
-use base64::Engine;
-use num_bigint::BigInt;
 use seed_exhaustive::prelude::*;
 
 mod wire_test_utils;
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
-async fn test_endpoints_union__get_and_return_union_with_wiremock() {
+async fn test_endpoints_union_get_and_return_union_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
 
