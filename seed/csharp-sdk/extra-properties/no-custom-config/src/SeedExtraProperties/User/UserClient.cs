@@ -75,6 +75,11 @@ public partial class UserClient : IUserClient
     ///         Name = "Alice",
     ///         Type = "CreateUserRequest",
     ///         Version = "v1",
+    ///         AdditionalProperties = new AdditionalProperties
+    ///         {
+    ///             ["age"] = 30,
+    ///             ["location"] = "Wonderland",
+    ///         },
     ///     }
     /// );
     /// </code></example>

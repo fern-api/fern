@@ -90,6 +90,7 @@ export const AsIsFiles = {
             IdempotentHeadersTests: "test/RawClientTests/IdempotentHeadersTests.Template.cs"
         },
         Utils: {
+            AdditionalPropertiesComparer: "test/Utils/AdditionalPropertiesComparer.Template.cs",
             JsonElementComparer: "test/Utils/JsonElementComparer.Template.cs",
             NUnitExtensions: "test/Utils/NUnitExtensions.Template.cs",
             OneOfComparer: "test/Utils/OneOfComparer.Template.cs",
