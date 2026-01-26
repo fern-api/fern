@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.18.0
+  changelogEntry:
+    - summary: |
+        Add support for deep object query parameters. Nested objects are now encoded using bracket
+        notation (e.g., filter[name]=john&filter[age]=30). Arrays are serialized in exploded format
+        (e.g., tags=a&tags=b), and arrays of objects are flattened with the array key as prefix.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 0.17.0
   changelogEntry:
     - summary: |
