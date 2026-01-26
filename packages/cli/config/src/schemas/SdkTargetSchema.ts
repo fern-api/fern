@@ -4,6 +4,7 @@ import { PublishSchema } from "./PublishSchema";
 import { SdkTargetLanguageSchema } from "./SdkTargetLanguageSchema";
 
 export const SdkTargetSchema = z.object({
+    api: z.string().optional(),
     lang: SdkTargetLanguageSchema.optional(),
     version: z.string().optional(),
     config: z.record(z.string(), z.unknown()).optional(),

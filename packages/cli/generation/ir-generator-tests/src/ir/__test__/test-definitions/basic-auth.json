@@ -48,6 +48,7 @@
                     }
                 },
                 "usernameEnvVar": null,
+                "usernameOmit": null,
                 "password": {
                     "originalName": "password",
                     "camelCase": {
@@ -68,6 +69,7 @@
                     }
                 },
                 "passwordEnvVar": null,
+                "passwordOmit": null,
                 "key": "basic",
                 "docs": null
             }

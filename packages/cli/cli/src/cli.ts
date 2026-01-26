@@ -641,6 +641,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Only upload dynamic IR for specified version, skip SDK generation (remote generation only)",
                     default: false
+                })
+                .option("output", {
+                    type: "string",
+                    description: "Custom output directory (currently only supported with --preview for SDK generation)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -672,6 +676,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     "The --dynamic-ir-only flag can only be used for API generation, not docs generation."
                 );
             }
+            if (argv.output != null && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --output flag currently only works with --preview.");
+            }
+            if (argv.output != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
+            }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -691,7 +701,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
-                    dynamicIrOnly: argv["dynamic-ir-only"]
+                    dynamicIrOnly: argv["dynamic-ir-only"],
+                    outputDir: argv.output
                 });
             }
             if (argv.docs != null) {
@@ -739,7 +750,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
-                dynamicIrOnly: argv["dynamic-ir-only"]
+                dynamicIrOnly: argv["dynamic-ir-only"],
+                outputDir: argv.output
             });
         }
     );

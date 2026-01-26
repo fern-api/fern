@@ -10498,6 +10498,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 },
                 "usernameEnvVar": null,
+                "usernameOmit": null,
                 "password": {
                     "originalName": "clientSecret",
                     "camelCase": {
@@ -10518,6 +10519,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 },
                 "passwordEnvVar": null,
+                "passwordOmit": null,
                 "key": "MyBasicAuth",
                 "docs": null
             }

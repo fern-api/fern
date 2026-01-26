@@ -24,7 +24,8 @@ it.skip("finds subpackage by exact match", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getSubpackageByLocator("test")).toEqual({
         id: FdrAPI.api.v1.SubpackageId("test"),
@@ -50,7 +51,8 @@ it.skip("finds subpackage from yaml/yml files", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
 
     expect(apiDefinitionHolder.getSubpackageByLocator("test.yaml")).toEqual({
@@ -102,7 +104,8 @@ it.skip("finds endpoint by id and by path/method", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getEndpointByLocator("getUser", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getEndpointByLocator("GET /users/:id", undefined)).toBeDefined();
@@ -138,7 +141,8 @@ it.skip("finds websocket by id and by path", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getWebSocketByLocator("userStream", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getWebSocketByLocator("STREAM /users/stream", undefined)).toBeDefined();
@@ -170,7 +174,8 @@ it.skip("finds webhook by id and by path/method", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getWebhookByLocator("userCreated", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getWebhookByLocator("POST /webhooks/user-created", undefined)).toBeDefined();

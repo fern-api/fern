@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
-import { kebabCase } from "lodash-es";
+import { camelCase, kebabCase } from "lodash-es";
 import { Target } from "../../configuration/src/docs-yml/schemas";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
@@ -1214,10 +1214,18 @@ export class DocsDefinitionResolver {
                     loadAiExamples: true
                 });
                 if (openApiIr.tags.tagsById) {
+                    // Tag keys must be normalized to camelCase because subpackage names are derived
+                    // from OpenAPI tags using camelCase conversion. The lookup in
+                    // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
+                    // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
+                    // tags are converted to camelCase when generating file/subpackage names.
                     openApiTags = Object.fromEntries(
                         Object.entries(openApiIr.tags.tagsById)
                             .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
-                            .map(([tagId, tag]) => [tagId, { id: String(tag.id), description: tag.description }])
+                            .map(([tagId, tag]) => [
+                                camelCase(tagId),
+                                { id: String(tag.id), description: tag.description }
+                            ])
                     );
                 }
             } catch (error) {
@@ -1258,11 +1266,16 @@ export class DocsDefinitionResolver {
             );
         }
 
+        // Use item.apiName (from api-name in docs.yml) if explicitly set,
+        // otherwise fall back to the workspace's folder name for FDR registration.
+        // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
+        const apiNameForRegistration = item.apiName ?? workspace.workspaceName;
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
-            apiName: item.apiName,
+            apiName: apiNameForRegistration,
             workspace
         });
         const api = convertIrToApiDefinition({
@@ -1484,7 +1497,7 @@ The generated documentation will replace this placeholder page with complete API
         parentAvailability?: docsYml.RawSchemas.Availability;
     }): Promise<FernNavigation.V1.SectionNode> {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
-        const pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
+        let pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
         const id = this.#idgen.get(pageId ?? `${prefix}/section`);
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
@@ -1496,6 +1509,32 @@ The generated documentation will replace this placeholder page with complete API
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
         const hiddenSection = hideChildren || item.hidden;
+        const children = await Promise.all(
+            item.contents.map((child) =>
+                this.toNavigationChild({
+                    prefix: id,
+                    item: child,
+                    parentSlug: slug,
+                    hideChildren: hiddenSection,
+                    parentAvailability: item.availability ?? parentAvailability
+                })
+            )
+        );
+
+        // If the section has no overview page and contains a flattened API reference with an overview page,
+        // inherit the API reference's overview page for the section (e.g., tag description page).
+        // We search through all children to find a flattened API reference, rather than assuming
+        // the first child is an API reference (which may not be true for all section configurations).
+        if (pageId == null) {
+            const flattenedApiRef = children.find(
+                (child): child is FernNavigation.V1.ApiReferenceNode =>
+                    child.type === "apiReference" && child.hideTitle === true && child.overviewPageId != null
+            );
+            if (flattenedApiRef != null) {
+                pageId = flattenedApiRef.overviewPageId;
+            }
+        }
+
         return {
             id,
             type: "section",
@@ -1510,17 +1549,7 @@ The generated documentation will replace this placeholder page with complete API
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: await Promise.all(
-                item.contents.map((child) =>
-                    this.toNavigationChild({
-                        prefix: id,
-                        item: child,
-                        parentSlug: slug,
-                        hideChildren: hiddenSection,
-                        parentAvailability: item.availability ?? parentAvailability
-                    })
-                )
-            ),
+            children,
             authed: undefined,
             pointsTo: undefined,
             noindex,

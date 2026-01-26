@@ -11,7 +11,6 @@ public class CreateTaskTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "id": "id",
               "name": "name",
               "email": "email",
               "password": "password"

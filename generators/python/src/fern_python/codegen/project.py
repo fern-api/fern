@@ -55,6 +55,7 @@ class Project:
         recursion_limit: Optional[int] = None,
         enable_wire_tests: bool = False,
         generator_exec_wrapper: Optional[GeneratorExecWrapper] = None,
+        mypy_exclude: Optional[List[str]] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
 
@@ -96,6 +97,7 @@ class Project:
         self._exclude_types_from_init_exports = exclude_types_from_init_exports
         self._enable_wire_tests = enable_wire_tests
         self._generator_exec_wrapper = generator_exec_wrapper
+        self._mypy_exclude = mypy_exclude
 
     def get_module_path_for_imports(self) -> str:
         """
@@ -249,6 +251,7 @@ class Project:
                 extras=self._extras,
                 enable_wire_tests=self._enable_wire_tests,
                 user_defined_toml=self._user_defined_toml,
+                mypy_exclude=self._mypy_exclude,
             )
             py_project_toml.write()
 
