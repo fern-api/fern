@@ -225,23 +225,24 @@ register_shutdown_function(function () use ($dockerComposeFile) {
     }
 
     /**
-     * Generates a phpunit.wire.xml file specifically for wire tests
-     * that uses the bootstrap file.
+     * Generates a phpunit.xml file that uses the wire bootstrap.
+     * This overrides the default phpunit.xml so that `composer test` works correctly.
      */
     private generateWireTestPhpunitXml(): void {
         const phpunitContent = this.buildWireTestPhpunitXmlContent();
-        this.context.project.addRawFiles(new File("phpunit.wire.xml", RelativeFilePath.of(""), phpunitContent));
-        this.context.logger.debug("Generated phpunit.wire.xml for wire tests");
+        this.context.project.addRawFiles(new File("phpunit.xml", RelativeFilePath.of(""), phpunitContent));
+        this.context.logger.debug("Generated phpunit.xml with wire test bootstrap");
     }
 
     /**
-     * Builds the content for the phpunit.wire.xml file
+     * Builds the content for the phpunit.xml file with wire test bootstrap.
+     * This runs all tests (including wire tests) with WireMock started.
      */
     private buildWireTestPhpunitXmlContent(): string {
         return `<phpunit bootstrap="tests/Wire/bootstrap.php">
     <testsuites>
-        <testsuite name="Wire Test Suite">
-            <directory suffix="Test.php">tests/Wire</directory>
+        <testsuite name="Test Suite">
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
