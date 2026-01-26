@@ -58,8 +58,8 @@ public class RawPlaylistClient {
                     httpUrl, "optionalDatetime", request.getOptionalDatetime().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -127,8 +127,8 @@ public class RawPlaylistClient {
         }
         QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), true);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -175,8 +175,8 @@ public class RawPlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -241,8 +241,8 @@ public class RawPlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -301,8 +301,8 @@ public class RawPlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()

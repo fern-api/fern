@@ -3,13 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum WeirdNumber {
-    Integer(i64),
+        Integer(i64),
 
-    Nullable1(Option<f64>),
+        Nullable1(Option<f64>),
 
-    Optional2(Option<Option<String>>),
+        Optional2(Option<Option<String>>),
 
-    Double(f64),
+        Double(f64),
 }
 
 impl WeirdNumber {
@@ -29,59 +29,61 @@ impl WeirdNumber {
         matches!(self, Self::Double(_))
     }
 
+
     pub fn as_integer(&self) -> Option<&i64> {
         match self {
-            Self::Integer(value) => Some(value),
-            _ => None,
-        }
+                    Self::Integer(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_integer(self) -> Option<i64> {
         match self {
-            Self::Integer(value) => Some(value),
-            _ => None,
-        }
+                    Self::Integer(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_nullable1(&self) -> Option<&Option<f64>> {
         match self {
-            Self::Nullable1(value) => Some(value),
-            _ => None,
-        }
+                    Self::Nullable1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_nullable1(self) -> Option<Option<f64>> {
         match self {
-            Self::Nullable1(value) => Some(value),
-            _ => None,
-        }
+                    Self::Nullable1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_optional2(&self) -> Option<&Option<Option<String>>> {
         match self {
-            Self::Optional2(value) => Some(value),
-            _ => None,
-        }
+                    Self::Optional2(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_optional2(self) -> Option<Option<Option<String>>> {
         match self {
-            Self::Optional2(value) => Some(value),
-            _ => None,
-        }
+                    Self::Optional2(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_double(&self) -> Option<&f64> {
         match self {
-            Self::Double(value) => Some(value),
-            _ => None,
-        }
+                    Self::Double(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_double(self) -> Option<f64> {
         match self {
-            Self::Double(value) => Some(value),
-            _ => None,
-        }
+                    Self::Double(value) => Some(value),
+                    _ => None,
+                }
     }
+
 }

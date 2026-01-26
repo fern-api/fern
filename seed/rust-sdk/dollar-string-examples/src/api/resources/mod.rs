@@ -2,7 +2,7 @@
 //!
 //! This module provides the client implementations for all available services.
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub struct DollarStringExamplesClient {
     pub config: ClientConfig,
@@ -12,6 +12,9 @@ impl DollarStringExamplesClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
+            
         })
     }
+
 }
+

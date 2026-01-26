@@ -3,13 +3,15 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum SubmissionTypeState {
-    Test {
-        #[serde(flatten)]
-        data: TestSubmissionState,
-    },
+        #[serde(rename = "test")]
+        Test {
+            #[serde(flatten)]
+            data: TestSubmissionState,
+        },
 
-    Workspace {
-        #[serde(flatten)]
-        data: WorkspaceSubmissionState,
-    },
+        #[serde(rename = "workspace")]
+        Workspace {
+            #[serde(flatten)]
+            data: WorkspaceSubmissionState,
+        },
 }

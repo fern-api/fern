@@ -3,12 +3,14 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum Metadata2 {
+        #[serde(rename = "html")]
         Html {
             value: String,
             extra: HashMap<String, String>,
             tags: HashSet<String>,
         },
 
+        #[serde(rename = "markdown")]
         Markdown {
             value: String,
             extra: HashMap<String, String>,

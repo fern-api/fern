@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{HttpHeadClient, UserClient};
-pub use types::*;
+pub use resources::{UserClient, HttpHeadClient};
+pub use types::{*};
+
