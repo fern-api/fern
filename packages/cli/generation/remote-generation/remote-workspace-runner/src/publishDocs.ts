@@ -1192,14 +1192,35 @@ async function extractPythonDocsSectionFromConfig(
     absolutePathToFernFolder: AbsoluteFilePath
 ): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> {
     // Helper to check if an item is a Python docs config
-    // Note: The config is deserialized, so the key is "pythonDocs" (camelCase)
-    const isPythonDocsConfig = (item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration => {
-        return (
-            item != null &&
-            typeof item === "object" &&
-            "pythonDocs" in item &&
-            typeof (item as Record<string, unknown>).pythonDocs === "string"
-        );
+    // The config may have "pythonDocs" (camelCase, deserialized) or "python-docs" (kebab-case, raw YAML)
+    const isPythonDocsConfig = (item: unknown): boolean => {
+        if (item == null || typeof item !== "object") {
+            return false;
+        }
+        const obj = item as Record<string, unknown>;
+        // Check for deserialized format (pythonDocs) or raw YAML format (python-docs)
+        return typeof obj.pythonDocs === "string" || typeof obj["python-docs"] === "string";
+    };
+
+    // Helper to normalize python-docs config to the expected format
+    const normalizePythonDocsConfig = (item: unknown): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
+        if (item == null || typeof item !== "object") {
+            return undefined;
+        }
+        const obj = item as Record<string, unknown>;
+        // If it has pythonDocs (deserialized format), return as-is
+        if (typeof obj.pythonDocs === "string") {
+            return item as docsYml.RawSchemas.PythonDocsConfiguration;
+        }
+        // If it has python-docs (raw YAML format), convert to deserialized format
+        if (typeof obj["python-docs"] === "string") {
+            return {
+                pythonDocs: obj["python-docs"],
+                title: typeof obj.title === "string" ? obj.title : undefined,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined
+            } as docsYml.RawSchemas.PythonDocsConfiguration;
+        }
+        return undefined;
     };
 
     // Helper to recursively search navigation items
@@ -1211,7 +1232,7 @@ async function extractPythonDocsSectionFromConfig(
         }
         for (const item of items) {
             if (isPythonDocsConfig(item)) {
-                return item;
+                return normalizePythonDocsConfig(item);
             }
             // Check in section contents
             if (item != null && typeof item === "object" && "section" in item) {
