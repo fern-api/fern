@@ -1,4 +1,5 @@
 using global::System.Reflection;
+using global::System.Text.Encodings.Web;
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
@@ -9,6 +10,7 @@ namespace SeedStreaming.Core;
 internal static partial class JsonOptions
 {
     internal static readonly JsonSerializerOptions JsonSerializerOptions;
+    internal static readonly JsonSerializerOptions JsonSerializerOptionsRelaxedEscaping;
 
     static JsonOptions()
     {
@@ -39,6 +41,12 @@ internal static partial class JsonOptions
         };
         ConfigureJsonSerializerOptions(options);
         JsonSerializerOptions = options;
+
+        var relaxedOptions = new JsonSerializerOptions(options)
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        };
+        JsonSerializerOptionsRelaxedEscaping = relaxedOptions;
     }
 
     private static void NullableOptionalModifier(JsonTypeInfo typeInfo)
@@ -184,8 +192,20 @@ internal static class JsonUtils
     internal static string Serialize<T>(T obj) =>
         JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
 
+    internal static string Serialize(object obj, global::System.Type type) =>
+        JsonSerializer.Serialize(obj, type, JsonOptions.JsonSerializerOptions);
+
+    internal static string SerializeRelaxedEscaping<T>(T obj) =>
+        JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptionsRelaxedEscaping);
+
+    internal static string SerializeRelaxedEscaping(object obj, global::System.Type type) =>
+        JsonSerializer.Serialize(obj, type, JsonOptions.JsonSerializerOptionsRelaxedEscaping);
+
     internal static JsonElement SerializeToElement<T>(T obj) =>
         JsonSerializer.SerializeToElement(obj, JsonOptions.JsonSerializerOptions);
+
+    internal static JsonElement SerializeToElement(object obj, global::System.Type type) =>
+        JsonSerializer.SerializeToElement(obj, type, JsonOptions.JsonSerializerOptions);
 
     internal static JsonDocument SerializeToDocument<T>(T obj) =>
         JsonSerializer.SerializeToDocument(obj, JsonOptions.JsonSerializerOptions);

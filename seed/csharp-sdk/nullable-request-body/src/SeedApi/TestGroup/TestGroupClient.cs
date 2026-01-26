@@ -18,16 +18,9 @@ public partial class TestGroupClient : ITestGroupClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 2);
-        if (request.QueryParamObject != null)
-        {
-            _queryBuilder.AddDeepObject("query_param_object", request.QueryParamObject);
-        }
-        if (request.QueryParamInteger != null)
-        {
-            _queryBuilder.Add("query_param_integer", request.QueryParamInteger);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 2)
+            .AddDeepObject("query_param_object", request.QueryParamObject)
+            .Add("query_param_integer", request.QueryParamInteger)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

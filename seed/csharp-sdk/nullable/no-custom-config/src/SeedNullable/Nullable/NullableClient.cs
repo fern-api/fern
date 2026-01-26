@@ -18,19 +18,12 @@ public partial class NullableClient : INullableClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedNullable.Core.QueryStringBuilder.Builder(capacity: 5)
+        var _queryString = new SeedNullable.Core.QueryStringBuilder.Builder(capacity: 5)
             .Add("usernames", request.Usernames)
+            .Add("avatar", request.Avatar)
             .Add("activated", request.Activated)
-            .Add("tags", request.Tags);
-        if (request.Avatar != null)
-        {
-            _queryBuilder.Add("avatar", request.Avatar);
-        }
-        if (request.Extra != null)
-        {
-            _queryBuilder.Add("extra", request.Extra);
-        }
-        var _queryString = _queryBuilder
+            .Add("tags", request.Tags)
+            .Add("extra", request.Extra)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

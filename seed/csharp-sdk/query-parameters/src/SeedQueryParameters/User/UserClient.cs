@@ -18,7 +18,7 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedQueryParameters.Core.QueryStringBuilder.Builder(capacity: 14)
+        var _queryString = new SeedQueryParameters.Core.QueryStringBuilder.Builder(capacity: 14)
             .Add("limit", request.Limit)
             .Add("id", request.Id)
             .Add("date", request.Date)
@@ -26,23 +26,13 @@ public partial class UserClient : IUserClient
             .Add("bytes", request.Bytes)
             .AddDeepObject("user", request.User)
             .Add("userList", request.UserList)
+            .Add("optionalDeadline", request.OptionalDeadline)
             .Add("keyValue", request.KeyValue)
+            .Add("optionalString", request.OptionalString)
             .AddDeepObject("nestedUser", request.NestedUser)
+            .AddDeepObject("optionalUser", request.OptionalUser)
             .AddDeepObject("excludeUser", request.ExcludeUser)
-            .Add("filter", request.Filter);
-        if (request.OptionalDeadline != null)
-        {
-            _queryBuilder.Add("optionalDeadline", request.OptionalDeadline);
-        }
-        if (request.OptionalString != null)
-        {
-            _queryBuilder.Add("optionalString", request.OptionalString);
-        }
-        if (request.OptionalUser != null)
-        {
-            _queryBuilder.AddDeepObject("optionalUser", request.OptionalUser);
-        }
-        var _queryString = _queryBuilder
+            .Add("filter", request.Filter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

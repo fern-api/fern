@@ -18,14 +18,10 @@ public partial class FooClient : IFooClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedCrossPackageTypeNames.Core.QueryStringBuilder.Builder(
+        var _queryString = new SeedCrossPackageTypeNames.Core.QueryStringBuilder.Builder(
             capacity: 1
-        );
-        if (request.OptionalString != null)
-        {
-            _queryBuilder.Add("optionalString", request.OptionalString);
-        }
-        var _queryString = _queryBuilder
+        )
+            .Add("optionalString", request.OptionalString)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

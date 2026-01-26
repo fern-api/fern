@@ -20,11 +20,8 @@ public partial class PackageClient : IPackageClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedNurseryApi.Core.QueryStringBuilder.Builder(capacity: 1).Add(
-            "for",
-            request.For
-        );
-        var _queryString = _queryBuilder
+        var _queryString = new SeedNurseryApi.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("for", request.For)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

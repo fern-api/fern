@@ -129,15 +129,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedExamples.Core.QueryStringBuilder.Builder(capacity: 2).Add(
-            "tag",
-            request.Tag
-        );
-        if (request.Shallow != null)
-        {
-            _queryBuilder.Add("shallow", request.Shallow);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedExamples.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("shallow", request.Shallow)
+            .Add("tag", request.Tag)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()

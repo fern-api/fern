@@ -35,7 +35,7 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 16)
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 16)
             .Add("limit", request.Limit)
             .Add("id", request.Id)
             .Add("date", request.Date)
@@ -43,34 +43,15 @@ public partial class SeedApiClient : ISeedApiClient
             .Add("bytes", request.Bytes)
             .AddDeepObject("user", request.User)
             .AddDeepObject("userList", request.UserList)
+            .Add("optionalDeadline", request.OptionalDeadline)
+            .Add("keyValue", request.KeyValue)
+            .Add("optionalString", request.OptionalString)
+            .AddDeepObject("nestedUser", request.NestedUser)
+            .AddDeepObject("optionalUser", request.OptionalUser)
             .AddDeepObject("excludeUser", request.ExcludeUser)
             .Add("filter", request.Filter)
-            .AddDeepObject("neighborRequired", request.NeighborRequired);
-        if (request.OptionalDeadline != null)
-        {
-            _queryBuilder.Add("optionalDeadline", request.OptionalDeadline);
-        }
-        if (request.KeyValue != null)
-        {
-            _queryBuilder.Add("keyValue", request.KeyValue);
-        }
-        if (request.OptionalString != null)
-        {
-            _queryBuilder.Add("optionalString", request.OptionalString);
-        }
-        if (request.NestedUser != null)
-        {
-            _queryBuilder.AddDeepObject("nestedUser", request.NestedUser);
-        }
-        if (request.OptionalUser != null)
-        {
-            _queryBuilder.AddDeepObject("optionalUser", request.OptionalUser);
-        }
-        if (request.Neighbor != null)
-        {
-            _queryBuilder.AddDeepObject("neighbor", request.Neighbor);
-        }
-        var _queryString = _queryBuilder
+            .AddDeepObject("neighbor", request.Neighbor)
+            .AddDeepObject("neighborRequired", request.NeighborRequired)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

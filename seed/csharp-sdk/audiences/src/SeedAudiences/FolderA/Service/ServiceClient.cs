@@ -19,10 +19,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedAudiences.Core.QueryStringBuilder.Builder(capacity: 2)
+        var _queryString = new SeedAudiences.Core.QueryStringBuilder.Builder(capacity: 2)
             .Add("ids", request.Ids)
-            .Add("tags", request.Tags);
-        var _queryString = _queryBuilder
+            .Add("tags", request.Tags)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

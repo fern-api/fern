@@ -22,12 +22,8 @@ public partial class UsersClient : IUsersClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
-        if (request.StartingAfter != null)
-        {
-            _queryBuilder.Add("starting_after", request.StartingAfter);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var httpRequest = await _client.CreateHttpRequestAsync(

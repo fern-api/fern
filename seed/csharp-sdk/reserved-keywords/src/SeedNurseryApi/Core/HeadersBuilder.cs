@@ -52,6 +52,31 @@ internal static class HeadersBuilder
         }
 
         /// <summary>
+        /// Adds a header with the specified key and object value.
+        /// The value will be converted to string using ValueConvert for consistent serialization.
+        /// If a header with the same key already exists, it will be overwritten.
+        /// Null values are ignored.
+        /// </summary>
+        /// <param name="key">The header name.</param>
+        /// <param name="value">The header value. Null values are ignored.</param>
+        /// <returns>This builder instance for method chaining.</returns>
+        public Builder Add(string key, object? value)
+        {
+            if (value is null)
+            {
+                return this;
+            }
+
+            // Use ValueConvert for consistent serialization across headers, query params, and path params
+            var stringValue = ValueConvert.ToString(value);
+            if (stringValue is not null)
+            {
+                _headers[key] = new HeaderValue(stringValue);
+            }
+            return this;
+        }
+
+        /// <summary>
         /// Adds multiple headers from a Headers dictionary.
         /// HeaderValue instances are stored and will be resolved when BuildAsync() is called.
         /// Overwrites any existing headers with the same key.

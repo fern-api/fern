@@ -18,29 +18,16 @@ public partial class QueryClient : IQueryClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedLiteral.Core.QueryStringBuilder.Builder(capacity: 9)
+        var _queryString = new SeedLiteral.Core.QueryStringBuilder.Builder(capacity: 9)
             .Add("prompt", request.Prompt)
+            .Add("optional_prompt", request.OptionalPrompt)
             .Add("alias_prompt", request.AliasPrompt)
+            .Add("alias_optional_prompt", request.AliasOptionalPrompt)
             .Add("query", request.Query)
             .Add("stream", request.Stream)
-            .Add("alias_stream", request.AliasStream);
-        if (request.OptionalPrompt != null)
-        {
-            _queryBuilder.Add("optional_prompt", request.OptionalPrompt);
-        }
-        if (request.AliasOptionalPrompt != null)
-        {
-            _queryBuilder.Add("alias_optional_prompt", request.AliasOptionalPrompt);
-        }
-        if (request.OptionalStream != null)
-        {
-            _queryBuilder.Add("optional_stream", request.OptionalStream);
-        }
-        if (request.AliasOptionalStream != null)
-        {
-            _queryBuilder.Add("alias_optional_stream", request.AliasOptionalStream);
-        }
-        var _queryString = _queryBuilder
+            .Add("optional_stream", request.OptionalStream)
+            .Add("alias_stream", request.AliasStream)
+            .Add("alias_optional_stream", request.AliasOptionalStream)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

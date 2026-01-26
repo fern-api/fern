@@ -18,21 +18,14 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 7)
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 7)
             .Add("page", request.Page)
             .Add("per_page", request.PerPage)
             .Add("sort", request.Sort)
             .Add("order", request.Order)
-            .Add("include_totals", request.IncludeTotals);
-        if (request.Fields != null)
-        {
-            _queryBuilder.Add("fields", request.Fields);
-        }
-        if (request.Search != null)
-        {
-            _queryBuilder.Add("search", request.Search);
-        }
-        var _queryString = _queryBuilder
+            .Add("include_totals", request.IncludeTotals)
+            .Add("fields", request.Fields)
+            .Add("search", request.Search)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -92,10 +85,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2)
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2)
             .Add("include_metadata", request.IncludeMetadata)
-            .Add("format", request.Format);
-        var _queryString = _queryBuilder
+            .Add("format", request.Format)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -157,10 +149,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2)
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2)
             .Add("limit", request.Limit)
-            .Add("offset", request.Offset);
-        var _queryString = _queryBuilder
+            .Add("offset", request.Offset)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -220,40 +211,15 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 8);
-        if (request.Page != null)
-        {
-            _queryBuilder.Add("page", request.Page);
-        }
-        if (request.PerPage != null)
-        {
-            _queryBuilder.Add("per_page", request.PerPage);
-        }
-        if (request.IncludeTotals != null)
-        {
-            _queryBuilder.Add("include_totals", request.IncludeTotals);
-        }
-        if (request.Sort != null)
-        {
-            _queryBuilder.Add("sort", request.Sort);
-        }
-        if (request.Connection != null)
-        {
-            _queryBuilder.Add("connection", request.Connection);
-        }
-        if (request.Q != null)
-        {
-            _queryBuilder.Add("q", request.Q);
-        }
-        if (request.SearchEngine != null)
-        {
-            _queryBuilder.Add("search_engine", request.SearchEngine);
-        }
-        if (request.Fields != null)
-        {
-            _queryBuilder.Add("fields", request.Fields);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 8)
+            .Add("page", request.Page)
+            .Add("per_page", request.PerPage)
+            .Add("include_totals", request.IncludeTotals)
+            .Add("sort", request.Sort)
+            .Add("connection", request.Connection)
+            .Add("q", request.Q)
+            .Add("search_engine", request.SearchEngine)
+            .Add("fields", request.Fields)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -313,16 +279,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2);
-        if (request.Fields != null)
-        {
-            _queryBuilder.Add("fields", request.Fields);
-        }
-        if (request.IncludeFields != null)
-        {
-            _queryBuilder.Add("include_fields", request.IncludeFields);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("fields", request.Fields)
+            .Add("include_fields", request.IncludeFields)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -500,20 +459,10 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 3);
-        if (request.Strategy != null)
-        {
-            _queryBuilder.Add("strategy", request.Strategy);
-        }
-        if (request.Name != null)
-        {
-            _queryBuilder.Add("name", request.Name);
-        }
-        if (request.Fields != null)
-        {
-            _queryBuilder.Add("fields", request.Fields);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 3)
+            .Add("strategy", request.Strategy)
+            .Add("name", request.Name)
+            .Add("fields", request.Fields)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -573,12 +522,8 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 1);
-        if (request.Fields != null)
-        {
-            _queryBuilder.Add("fields", request.Fields);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("fields", request.Fields)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -640,40 +585,15 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 8);
-        if (request.Fields != null)
-        {
-            _queryBuilder.Add("fields", request.Fields);
-        }
-        if (request.IncludeFields != null)
-        {
-            _queryBuilder.Add("include_fields", request.IncludeFields);
-        }
-        if (request.Page != null)
-        {
-            _queryBuilder.Add("page", request.Page);
-        }
-        if (request.PerPage != null)
-        {
-            _queryBuilder.Add("per_page", request.PerPage);
-        }
-        if (request.IncludeTotals != null)
-        {
-            _queryBuilder.Add("include_totals", request.IncludeTotals);
-        }
-        if (request.IsGlobal != null)
-        {
-            _queryBuilder.Add("is_global", request.IsGlobal);
-        }
-        if (request.IsFirstParty != null)
-        {
-            _queryBuilder.Add("is_first_party", request.IsFirstParty);
-        }
-        if (request.AppType != null)
-        {
-            _queryBuilder.Add("app_type", request.AppType);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 8)
+            .Add("fields", request.Fields)
+            .Add("include_fields", request.IncludeFields)
+            .Add("page", request.Page)
+            .Add("per_page", request.PerPage)
+            .Add("include_totals", request.IncludeTotals)
+            .Add("is_global", request.IsGlobal)
+            .Add("is_first_party", request.IsFirstParty)
+            .Add("app_type", request.AppType)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -733,16 +653,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2);
-        if (request.Fields != null)
-        {
-            _queryBuilder.Add("fields", request.Fields);
-        }
-        if (request.IncludeFields != null)
-        {
-            _queryBuilder.Add("include_fields", request.IncludeFields);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedClientSideParams.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("fields", request.Fields)
+            .Add("include_fields", request.IncludeFields)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

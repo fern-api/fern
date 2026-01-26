@@ -140,12 +140,8 @@ public partial class OrganizationsClient : IOrganizationsClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPathParameters.Core.QueryStringBuilder.Builder(capacity: 1);
-        if (request.Limit != null)
-        {
-            _queryBuilder.Add("limit", request.Limit);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPathParameters.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("limit", request.Limit)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

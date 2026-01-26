@@ -19,10 +19,8 @@ public partial class MetadataClient : IMetadataClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedMixedFileDirectory.Core.QueryStringBuilder.Builder(
-            capacity: 1
-        ).Add("id", request.Id);
-        var _queryString = _queryBuilder
+        var _queryString = new SeedMixedFileDirectory.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("id", request.Id)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

@@ -22,18 +22,11 @@ public partial class QueryParamClient : IQueryParamClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
+        var _queryString = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
             .Add("operand", request.Operand)
-            .AddDeepObject("operandOrColor", request.OperandOrColor);
-        if (request.MaybeOperand != null)
-        {
-            _queryBuilder.Add("maybeOperand", request.MaybeOperand);
-        }
-        if (request.MaybeOperandOrColor != null)
-        {
-            _queryBuilder.AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor);
-        }
-        var _queryString = _queryBuilder
+            .Add("maybeOperand", request.MaybeOperand)
+            .AddDeepObject("operandOrColor", request.OperandOrColor)
+            .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -80,12 +73,11 @@ public partial class QueryParamClient : IQueryParamClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
+        var _queryString = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
             .Add("operand", request.Operand)
             .Add("maybeOperand", request.MaybeOperand)
             .AddDeepObject("operandOrColor", request.OperandOrColor)
-            .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor);
-        var _queryString = _queryBuilder
+            .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

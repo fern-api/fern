@@ -91,11 +91,10 @@ public partial class SeedValidationClient : ISeedValidationClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedValidation.Core.QueryStringBuilder.Builder(capacity: 3)
+        var _queryString = new SeedValidation.Core.QueryStringBuilder.Builder(capacity: 3)
             .Add("decimal", request.Decimal)
             .Add("even", request.Even)
-            .Add("name", request.Name);
-        var _queryString = _queryBuilder
+            .Add("name", request.Name)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

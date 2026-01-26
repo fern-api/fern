@@ -192,24 +192,11 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 4);
-        if (request.Limit != null)
-        {
-            _queryBuilder.Add("limit", request.Limit);
-        }
-        if (request.Offset != null)
-        {
-            _queryBuilder.Add("offset", request.Offset);
-        }
-        if (request.IncludeDeleted != null)
-        {
-            _queryBuilder.Add("includeDeleted", request.IncludeDeleted);
-        }
-        if (request.SortBy != null)
-        {
-            _queryBuilder.Add("sortBy", request.SortBy);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 4)
+            .Add("limit", request.Limit)
+            .Add("offset", request.Offset)
+            .Add("includeDeleted", request.IncludeDeleted)
+            .Add("sortBy", request.SortBy)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -268,22 +255,11 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedNullableOptional.Core.QueryStringBuilder.Builder(
-            capacity: 4
-        ).Add("query", request.Query);
-        if (request.Department != null)
-        {
-            _queryBuilder.Add("department", request.Department);
-        }
-        if (request.Role != null)
-        {
-            _queryBuilder.Add("role", request.Role);
-        }
-        if (request.IsActive != null)
-        {
-            _queryBuilder.Add("isActive", request.IsActive);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 4)
+            .Add("query", request.Query)
+            .Add("department", request.Department)
+            .Add("role", request.Role)
+            .Add("isActive", request.IsActive)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -574,20 +550,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 3);
-        if (request.Role != null)
-        {
-            _queryBuilder.Add("role", request.Role);
-        }
-        if (request.Status != null)
-        {
-            _queryBuilder.Add("status", request.Status);
-        }
-        if (request.SecondaryRole != null)
-        {
-            _queryBuilder.Add("secondaryRole", request.SecondaryRole);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 3)
+            .Add("role", request.Role)
+            .Add("status", request.Status)
+            .Add("secondaryRole", request.SecondaryRole)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

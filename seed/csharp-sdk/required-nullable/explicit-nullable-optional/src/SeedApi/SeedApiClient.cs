@@ -35,23 +35,11 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 4).Add(
-            "required_baz",
-            request.RequiredBaz
-        );
-        if (request.OptionalBaz != null)
-        {
-            _queryBuilder.Add("optional_baz", request.OptionalBaz);
-        }
-        if (request.OptionalNullableBaz.IsDefined)
-        {
-            _queryBuilder.Add("optional_nullable_baz", request.OptionalNullableBaz);
-        }
-        if (request.RequiredNullableBaz != null)
-        {
-            _queryBuilder.Add("required_nullable_baz", request.RequiredNullableBaz);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 4)
+            .Add("optional_baz", request.OptionalBaz)
+            .Add("optional_nullable_baz", request.OptionalNullableBaz)
+            .Add("required_baz", request.RequiredBaz)
+            .Add("required_nullable_baz", request.RequiredNullableBaz)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

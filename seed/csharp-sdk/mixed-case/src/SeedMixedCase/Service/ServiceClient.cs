@@ -76,10 +76,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedMixedCase.Core.QueryStringBuilder.Builder(capacity: 2)
+        var _queryString = new SeedMixedCase.Core.QueryStringBuilder.Builder(capacity: 2)
             .Add("page_limit", request.PageLimit)
-            .Add("beforeDate", request.BeforeDate);
-        var _queryString = _queryBuilder
+            .Add("beforeDate", request.BeforeDate)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

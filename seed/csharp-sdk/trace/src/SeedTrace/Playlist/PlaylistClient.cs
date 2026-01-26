@@ -19,15 +19,9 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 2).Add(
-            "datetime",
-            request.Datetime
-        );
-        if (request.OptionalDatetime != null)
-        {
-            _queryBuilder.Add("optionalDatetime", request.OptionalDatetime);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("datetime", request.Datetime)
+            .Add("optionalDatetime", request.OptionalDatetime)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -91,16 +85,12 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 5)
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 5)
+            .Add("limit", request.Limit)
             .Add("otherField", request.OtherField)
             .Add("multiLineDocs", request.MultiLineDocs)
             .Add("optionalMultipleField", request.OptionalMultipleField)
-            .Add("multipleField", request.MultipleField);
-        if (request.Limit != null)
-        {
-            _queryBuilder.Add("limit", request.Limit);
-        }
-        var _queryString = _queryBuilder
+            .Add("multipleField", request.MultipleField)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

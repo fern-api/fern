@@ -214,19 +214,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 5)
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 5)
+            .Add("maybeString", request.MaybeString)
             .Add("integer", request.Integer)
+            .Add("maybeInteger", request.MaybeInteger)
             .Add("listOfStrings", request.ListOfStrings)
-            .Add("optionalListOfStrings", request.OptionalListOfStrings);
-        if (request.MaybeString != null)
-        {
-            _queryBuilder.Add("maybeString", request.MaybeString);
-        }
-        if (request.MaybeInteger != null)
-        {
-            _queryBuilder.Add("maybeInteger", request.MaybeInteger);
-        }
-        var _queryString = _queryBuilder
+            .Add("optionalListOfStrings", request.OptionalListOfStrings)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var multipartFormRequest_ = new MultipartFormRequest
@@ -261,16 +254,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 2);
-        if (request.MaybeString != null)
-        {
-            _queryBuilder.Add("maybeString", request.MaybeString);
-        }
-        if (request.MaybeInteger != null)
-        {
-            _queryBuilder.Add("maybeInteger", request.MaybeInteger);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("maybeString", request.MaybeString)
+            .Add("maybeInteger", request.MaybeInteger)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var multipartFormRequest_ = new MultipartFormRequest

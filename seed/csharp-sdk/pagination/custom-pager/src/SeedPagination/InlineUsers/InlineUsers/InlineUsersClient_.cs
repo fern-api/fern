@@ -32,24 +32,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4);
-        if (request.Page != null)
-        {
-            _queryBuilder.Add("page", request.Page);
-        }
-        if (request.PerPage != null)
-        {
-            _queryBuilder.Add("per_page", request.PerPage);
-        }
-        if (request.Order != null)
-        {
-            _queryBuilder.Add("order", request.Order);
-        }
-        if (request.StartingAfter != null)
-        {
-            _queryBuilder.Add("starting_after", request.StartingAfter);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4)
+            .Add("page", request.Page)
+            .Add("per_page", request.PerPage)
+            .Add("order", request.Order)
+            .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -123,12 +110,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
-        if (request.Cursor != null)
-        {
-            _queryBuilder.Add("cursor", request.Cursor);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("cursor", request.Cursor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -273,24 +256,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4);
-        if (request.Page != null)
-        {
-            _queryBuilder.Add("page", request.Page);
-        }
-        if (request.PerPage != null)
-        {
-            _queryBuilder.Add("per_page", request.PerPage);
-        }
-        if (request.Order != null)
-        {
-            _queryBuilder.Add("order", request.Order);
-        }
-        if (request.StartingAfter != null)
-        {
-            _queryBuilder.Add("starting_after", request.StartingAfter);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4)
+            .Add("page", request.Page)
+            .Add("per_page", request.PerPage)
+            .Add("order", request.Order)
+            .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -364,24 +334,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4);
-        if (request.Page != null)
-        {
-            _queryBuilder.Add("page", request.Page);
-        }
-        if (request.PerPage != null)
-        {
-            _queryBuilder.Add("per_page", request.PerPage);
-        }
-        if (request.Order != null)
-        {
-            _queryBuilder.Add("order", request.Order);
-        }
-        if (request.StartingAfter != null)
-        {
-            _queryBuilder.Add("starting_after", request.StartingAfter);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4)
+            .Add("page", request.Page)
+            .Add("per_page", request.PerPage)
+            .Add("order", request.Order)
+            .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -526,20 +483,10 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3);
-        if (request.Page != null)
-        {
-            _queryBuilder.Add("page", request.Page);
-        }
-        if (request.Limit != null)
-        {
-            _queryBuilder.Add("limit", request.Limit);
-        }
-        if (request.Order != null)
-        {
-            _queryBuilder.Add("order", request.Order);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3)
+            .Add("page", request.Page)
+            .Add("limit", request.Limit)
+            .Add("order", request.Order)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -617,20 +564,10 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3);
-        if (request.Page != null)
-        {
-            _queryBuilder.Add("page", request.Page);
-        }
-        if (request.Limit != null)
-        {
-            _queryBuilder.Add("limit", request.Limit);
-        }
-        if (request.Order != null)
-        {
-            _queryBuilder.Add("order", request.Order);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3)
+            .Add("page", request.Page)
+            .Add("limit", request.Limit)
+            .Add("order", request.Order)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -704,12 +641,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
-        if (request.Cursor != null)
-        {
-            _queryBuilder.Add("cursor", request.Cursor);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("cursor", request.Cursor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -785,12 +718,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
-        if (request.Cursor != null)
-        {
-            _queryBuilder.Add("cursor", request.Cursor);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("cursor", request.Cursor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -862,12 +791,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
-        if (request.StartingAfter != null)
-        {
-            _queryBuilder.Add("starting_after", request.StartingAfter);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -937,12 +862,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
-        var _queryBuilder = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1);
-        if (request.Offset != null)
-        {
-            _queryBuilder.Add("offset", request.Offset);
-        }
-        var _queryString = _queryBuilder
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("offset", request.Offset)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
