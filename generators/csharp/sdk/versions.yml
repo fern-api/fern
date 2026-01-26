@@ -2,15 +2,7 @@
 - version: 2.18.0
   changelogEntry:
     - summary: |
-        Add high-performance `QueryStringBuilder` class for building query strings with proper URL encoding.
-
-        The new `QueryStringBuilder` class provides:
-        * Cross-platform optimizations using span-based APIs on .NET 6+ with StringBuilder fallback for older targets
-        * A fluent `Builder` API for constructing query strings with support for simple parameters and deep object notation
-        * Methods: `Add(key, value)`, `AddDeepObject(prefix, value)`, `AddExploded(prefix, value)`, and `Build()`
-
-        Also adds prefix parameter overloads to `QueryStringConverter.ToDeepObject()` and `QueryStringConverter.ToExplodedForm()` 
-        for building query strings with prefixed keys (e.g., `session_settings[key]=value`).
+        Add `QueryStringBuilder` class for building query strings with proper URL encoding.
 
         Example usage:
         ```csharp
@@ -22,6 +14,8 @@
         // Result: ?access_token=abc123&config_id=cfg-456&session_settings%5BSystemPrompt%5D=Hello
         ```
       type: feat
+    - summary: Improve header merging logic for better reliability and maintainability.
+      type: chore
   createdAt: "2026-01-22"
   irVersion: 62
 

@@ -14,7 +14,7 @@
       type: feat
   createdAt: "2026-01-26"
   irVersion: 63
-    
+
 - version: 3.50.3
   changelogEntry:
     - summary: |
