@@ -46,6 +46,7 @@ import {
 
 import { FileUploadUtility } from "./FileUploadUtility";
 import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass";
+import { QueryParamsUtility } from "./QueryParamsUtility";
 import { RequestOptions } from "./RequestOptionsClass";
 import { isTypeOptional } from "./TypeUtilities";
 
@@ -71,6 +72,7 @@ export class EndpointGenerator {
 
     private streamProcessingBlock: Parameter | undefined;
     private fileUploadUtility: FileUploadUtility;
+    private queryParamsUtility: QueryParamsUtility;
 
     public example: ExampleEndpointCall | undefined;
 
@@ -81,7 +83,8 @@ export class EndpointGenerator {
         crf: ClassReferenceFactory,
         eg: ExampleGenerator,
         generatedClasses: Map<TypeId, Class_>,
-        fileUploadUtility: FileUploadUtility
+        fileUploadUtility: FileUploadUtility,
+        queryParamsUtility: QueryParamsUtility
     ) {
         this.endpoint = endpoint;
         this.example = endpoint.examples[0];
@@ -292,6 +295,7 @@ export class EndpointGenerator {
             : undefined;
 
         this.fileUploadUtility = fileUploadUtility;
+        this.queryParamsUtility = queryParamsUtility;
     }
 
     private referenceIsLiteral(typeReference: TypeReference): boolean {
@@ -378,18 +382,26 @@ export class EndpointGenerator {
             this.queryParametersAsProperties.map((qp) => [`"${qp.wireValue}"`, qp.toVariable(VariableType.LOCAL)])
         );
 
+        const queryHash = new HashInstance({
+            contents: new Map<string, string | AstNode>([
+                ...Array.from(literalQueryParams.entries()),
+                ...Array.from(inputQueryParams.entries())
+            ]),
+            additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
+            shouldCompact: true,
+            stringifyValues: false
+        });
+
+        const flattenedQueryParams = new FunctionInvocation({
+            onObject: this.queryParamsUtility.classReference,
+            baseFunction: this.queryParamsUtility.flattenQueryParams,
+            arguments_: [new Argument({ value: queryHash, isNamed: false })]
+        });
+
         return this.queryParametersAsProperties.length > 0
             ? new Expression({
                   leftSide: `${this.blockArg}.params`,
-                  rightSide: new HashInstance({
-                      contents: new Map<string, string | AstNode>([
-                          ...Array.from(literalQueryParams.entries()),
-                          ...Array.from(inputQueryParams.entries())
-                      ]),
-                      additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
-                      shouldCompact: true,
-                      stringifyValues: false
-                  }),
+                  rightSide: flattenedQueryParams,
                   isAssignment: true
               })
             : new ConditionalStatement({
@@ -415,10 +427,21 @@ export class EndpointGenerator {
                       expressions: [
                           new Expression({
                               leftSide: `${this.blockArg}.params`,
-                              rightSide: new HashInstance({
-                                  additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
-                                  shouldCompact: true,
-                                  stringifyValues: false
+                              rightSide: new FunctionInvocation({
+                                  onObject: this.queryParamsUtility.classReference,
+                                  baseFunction: this.queryParamsUtility.flattenQueryParams,
+                                  arguments_: [
+                                      new Argument({
+                                          value: new HashInstance({
+                                              additionalHashes: [
+                                                  { value: additionalQueryProperty, defaultValue: "{}" }
+                                              ],
+                                              shouldCompact: true,
+                                              stringifyValues: false
+                                          }),
+                                          isNamed: false
+                                      })
+                                  ]
                               }),
                               isAssignment: true
                           })

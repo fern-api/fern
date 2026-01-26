@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 0.8.4
+  createdAt: "2026-01-26"
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for deep object query parameters. Nested objects are now
+        encoded using bracket notation (e.g., filter[name]=john&filter[age]=30).
+  irVersion: 39
+
 - version: 0.8.3
   createdAt: "2025-11-19"
   changelogEntry:
