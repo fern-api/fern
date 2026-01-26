@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.50.4
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI external JSON references not being resolved. AsyncAPI specs with `$ref` pointing to external YAML files (e.g., `$ref: "./schemas/file.yml#/Schema"`) are now properly resolved using the same bundling mechanism as OpenAPI specs.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
 - version: 3.50.3
   changelogEntry:
     - summary: |
