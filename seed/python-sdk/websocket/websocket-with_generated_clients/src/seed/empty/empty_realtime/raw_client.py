@@ -7,6 +7,9 @@ import websockets.exceptions
 import websockets.sync.client as websockets_sync_client
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.query_encoder import encode_query
+from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from .socket_client import AsyncEmptyRealtimeSocketClient, EmptyRealtimeSocketClient
 
@@ -35,6 +38,21 @@ class RawEmptyRealtimeClient:
         EmptyRealtimeSocketClient
         """
         ws_url = self._client_wrapper.get_base_url() + "/empty/realtime/"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + f"?{_encoded_query_params}"
         headers = self._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
@@ -75,6 +93,21 @@ class AsyncRawEmptyRealtimeClient:
         AsyncEmptyRealtimeSocketClient
         """
         ws_url = self._client_wrapper.get_base_url() + "/empty/realtime/"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + f"?{_encoded_query_params}"
         headers = self._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])

@@ -3,11 +3,13 @@
 import typing
 from contextlib import asynccontextmanager, contextmanager
 
-import httpx
 import websockets.exceptions
 import websockets.sync.client as websockets_sync_client
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
+from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawRealtimeClient, RawRealtimeClient
 from .socket_client import AsyncRealtimeSocketClient, RealtimeSocketClient
@@ -62,14 +64,24 @@ class RealtimeClient:
         RealtimeSocketClient
         """
         ws_url = self._raw_client._client_wrapper.get_base_url() + "/realtime/"
-        query_params = httpx.QueryParams()
-        if model is not None:
-            query_params = query_params.add("model", model)
-        if temperature is not None:
-            query_params = query_params.add("temperature", temperature)
-        if language_code is not None:
-            query_params = query_params.add("language-code", language_code)
-        ws_url = ws_url + f"?{query_params}"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "model": model,
+                        "temperature": temperature,
+                        "language-code": language_code,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + f"?{_encoded_query_params}"
         headers = self._raw_client._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
@@ -135,14 +147,24 @@ class AsyncRealtimeClient:
         AsyncRealtimeSocketClient
         """
         ws_url = self._raw_client._client_wrapper.get_base_url() + "/realtime/"
-        query_params = httpx.QueryParams()
-        if model is not None:
-            query_params = query_params.add("model", model)
-        if temperature is not None:
-            query_params = query_params.add("temperature", temperature)
-        if language_code is not None:
-            query_params = query_params.add("language-code", language_code)
-        ws_url = ws_url + f"?{query_params}"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "model": model,
+                        "temperature": temperature,
+                        "language-code": language_code,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + f"?{_encoded_query_params}"
         headers = self._raw_client._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
