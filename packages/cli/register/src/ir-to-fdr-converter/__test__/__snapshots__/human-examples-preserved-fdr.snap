@@ -48,7 +48,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": "products_createProduct_example",
+              "name": undefined,
               "path": "/products",
               "pathParameters": {},
               "queryParameters": {},

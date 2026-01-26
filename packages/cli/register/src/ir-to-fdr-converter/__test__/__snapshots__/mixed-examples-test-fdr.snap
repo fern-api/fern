@@ -20,23 +20,12 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "Successfully created user",
-            "path": "/user",
+            "name": undefined,
+            "path": "",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "email": "user@example.com",
-              "name": "John Doe",
-              "role": "user",
-            },
-            "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "email": "user@example.com",
-                "name": "John Doe",
-                "role": "user",
-              },
-            },
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
             "responseBody": {
               "email": "alice@example.com",
               "id": "user-42",

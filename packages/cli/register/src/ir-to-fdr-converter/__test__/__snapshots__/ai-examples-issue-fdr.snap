@@ -20,21 +20,12 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": "Successfully created plant",
-            "path": "/plant",
+            "name": undefined,
+            "path": "",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "name": "Fiddle Leaf Fig",
-              "status": "available",
-            },
-            "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "name": "Fiddle Leaf Fig",
-                "status": "available",
-              },
-            },
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
             "responseBody": {
               "category": "Indoor",
               "id": "550e8400-e29b-41d4-a716-446655440002",
