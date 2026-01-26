@@ -8,6 +8,7 @@ private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
     _ = try await client.service.getMetadata(
+        xAPIVersion: "0.0.1",
         shallow: false,
         tag: [
             "development",
@@ -158,6 +159,7 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([.string("set")]),
         map: [
             1: "map"
         ]
