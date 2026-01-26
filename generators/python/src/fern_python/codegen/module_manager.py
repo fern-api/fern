@@ -2,7 +2,7 @@ import os
 from collections import defaultdict
 from dataclasses import dataclass
 from functools import cmp_to_key
-from typing import DefaultDict, List, Optional, Sequence, Set, Tuple
+from typing import DefaultDict, Dict, List, Optional, Sequence, Set, Tuple
 
 import pydantic
 from . import AST
@@ -170,12 +170,20 @@ class ModuleManager:
             )
 
             sorted_exports = self._build_sorted_exports(module_info)
+            # Build a mapping of export name to module, with later entries taking precedence.
+            # This ensures that additional_init_exports (which are registered later) override
+            # regular exports when the same symbol is exported from multiple modules.
             all_exports = {
                 export: module_exports_line.exported_from
                 for module_exports_line in sorted_exports
                 for export in module_exports_line.exports
             }
             sorted_export_module_mapping = sorted(all_exports.items())
+
+            # Deduplicate sorted_exports to avoid duplicate imports (F811 errors).
+            # Filter each ModuleExportsLine to only include exports that are mapped to that module
+            # in all_exports. This ensures each symbol is only imported once.
+            deduplicated_exports = self._deduplicate_exports(sorted_exports, all_exports)
 
             # Write preamble for root module (empty tuple)
             recursion_limit_to_write = self._recursion_limit if len(module) == 0 else None
@@ -191,7 +199,7 @@ class ModuleManager:
                 # We only import the modules if we're in a type-checking context.
                 writer.write_line("if typing.TYPE_CHECKING:")
                 with writer.indent():
-                    self._write_imports(writer, sorted_exports)
+                    self._write_imports(writer, deduplicated_exports)
 
                 _write_dynamic_exports_dict(writer, sorted_export_module_mapping)
                 _write_attr_function(writer)
@@ -201,7 +209,7 @@ class ModuleManager:
                 if recursion_limit_to_write is not None:
                     writer.write_line("import sys")
                     _write_recursion_limit(writer, recursion_limit_to_write)
-                self._write_imports(writer, sorted_exports)
+                self._write_imports(writer, deduplicated_exports)
 
             if len(sorted_export_module_mapping) > 0:
                 writer.write_line(
@@ -217,6 +225,38 @@ class ModuleManager:
                 writer.write_line(
                     f"from {module_exports_line.exported_from} import {', '.join(module_exports_line.exports)}"
                 )
+
+    def _deduplicate_exports(
+        self, sorted_exports: List[ModuleExportsLine], all_exports: Dict[str, str]
+    ) -> List[ModuleExportsLine]:
+        """
+        Deduplicate exports to avoid duplicate imports (F811 errors).
+
+        When the same symbol is exported from multiple modules (e.g., from both
+        the regular types module and from additional_init_exports), we only want
+        to import it once. This method filters each ModuleExportsLine to only
+        include exports that are mapped to that module in all_exports.
+
+        Args:
+            sorted_exports: List of ModuleExportsLine objects with potential duplicates
+            all_exports: Mapping of export name to module (deduplicated, last entry wins)
+
+        Returns:
+            List of ModuleExportsLine objects with duplicates removed
+        """
+        deduplicated: List[ModuleExportsLine] = []
+        for module_exports_line in sorted_exports:
+            # Filter exports to only include those that are mapped to this module
+            filtered_exports = [
+                export
+                for export in module_exports_line.exports
+                if all_exports.get(export) == module_exports_line.exported_from
+            ]
+            if filtered_exports:
+                deduplicated.append(
+                    ModuleExportsLine(exported_from=module_exports_line.exported_from, exports=filtered_exports)
+                )
+        return deduplicated
 
     def _build_sorted_exports(self, module_info: ModuleInfo) -> List[ModuleExportsLine]:
         modules = [
