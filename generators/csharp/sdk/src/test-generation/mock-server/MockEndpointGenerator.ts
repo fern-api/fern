@@ -44,7 +44,10 @@ export class MockEndpointGenerator extends WithGeneration {
                 responseSupported =
                     jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
 
-                if (example.request != null) {
+                const requestContentType = getContentTypeFromRequestBody(endpoint);
+                // For form-urlencoded requests, we don't need the requestJson variable
+                // since we use FormUrlEncodedMatcher directly with key=value pairs
+                if (example.request != null && requestContentType !== "application/x-www-form-urlencoded") {
                     // Filter out read-only properties from the request JSON
                     // Read-only properties are not serialized by the SDK, so they should not be
                     // included in the mock server's expected request body
@@ -95,7 +98,6 @@ export class MockEndpointGenerator extends WithGeneration {
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
-                const requestContentType = getContentTypeFromRequestBody(endpoint);
                 if (requestContentType) {
                     writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
                 }
@@ -104,7 +106,12 @@ export class MockEndpointGenerator extends WithGeneration {
                     `.Using${endpoint.method.charAt(0).toUpperCase()}${endpoint.method.slice(1).toLowerCase()}()`
                 );
                 if (example.request != null) {
-                    if (typeof example.request.jsonExample !== "object") {
+                    if (requestContentType === "application/x-www-form-urlencoded") {
+                        // For form-urlencoded requests, use FormUrlEncodedMatcher
+                        const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request);
+                        const formPairs = this.convertToFormUrlEncodedPairs(filteredRequestJson);
+                        writer.write(`.WithBody(new WireMock.Matchers.FormUrlEncodedMatcher([${formPairs}]))`);
+                    } else if (typeof example.request.jsonExample !== "object") {
                         // Not entirely sure why we can't use BodyAsJson here, but it causes test failure
                         writer.write(`.WithBody(requestJson${suffix})`);
                     } else {
@@ -577,5 +584,22 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         return readOnlyNames;
+    }
+
+    /**
+     * Converts a JSON object to form-urlencoded key=value pairs for use with FormUrlEncodedMatcher.
+     * Returns a string like: "key1=value1", "key2=value2"
+     */
+    private convertToFormUrlEncodedPairs(json: unknown): string {
+        if (typeof json !== "object" || json === null) {
+            return "";
+        }
+        const pairs: string[] = [];
+        for (const [key, value] of Object.entries(json)) {
+            if (value !== undefined && value !== null) {
+                pairs.push(`"${key}=${String(value)}"`);
+            }
+        }
+        return pairs.join(", ");
     }
 }
