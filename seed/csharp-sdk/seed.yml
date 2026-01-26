@@ -179,7 +179,7 @@ fixtures:
         include-exception-handler: true
       outputFolder: include-exception-handler
     - customConfig:
-        enableWireTests: true
+        generate-mock-server-tests: true
       outputFolder: with-wire-tests
   optional:
     - customConfig: null
