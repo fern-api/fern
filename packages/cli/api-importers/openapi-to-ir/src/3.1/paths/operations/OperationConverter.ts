@@ -627,16 +627,126 @@ export class OperationConverter extends AbstractOperationConverter {
         );
         const allExamples = hasFernCodeSamples ? fernExamples : [...fernExamples, ...redoclyCodeSamples];
 
-        if (allExamples.length === 0) {
+        const openApiExamples = this.extractOpenAPIExamples();
+        const mergedExamples = [...allExamples, ...openApiExamples];
+
+        if (mergedExamples.length === 0) {
             return { examples: {}, streamExamples: {} };
         }
         if (this.streamingExtension?.type === "streamCondition") {
-            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples });
+            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples: mergedExamples });
         }
         return {
-            examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples }),
+            examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: mergedExamples }),
             streamExamples: {}
         };
+    }
+
+    private extractOpenAPIExamples(): RawSchemas.ExampleEndpointCallArraySchema {
+        const requestExamples = this.getRequestBodyExamples();
+        const responseExamples = this.getResponseBodyExamples();
+
+        if (requestExamples.length === 0 && responseExamples.length === 0) {
+            return [];
+        }
+
+        const maxLength = Math.max(requestExamples.length, responseExamples.length);
+        const examples: RawSchemas.ExampleEndpointCallArraySchema = [];
+
+        for (let i = 0; i < maxLength; i++) {
+            const requestExample = requestExamples[i];
+            const responseExample = responseExamples[i];
+
+            if (requestExample == null && responseExample == null) {
+                continue;
+            }
+
+            const example: RawSchemas.ExampleEndpointCallSchema = {};
+
+            if (requestExample != null) {
+                example.name = requestExample.name;
+                example.request = requestExample.value;
+            }
+
+            if (responseExample != null) {
+                if (example.name == null) {
+                    example.name = responseExample.name;
+                }
+                example.response = { body: responseExample.value };
+            }
+
+            examples.push(example);
+        }
+
+        return examples;
+    }
+
+    private getRequestBodyExamples(): Array<{ name: string; value: unknown }> {
+        if (this.operation.requestBody == null) {
+            return [];
+        }
+
+        const resolvedRequestBody = this.context.resolveMaybeReference<OpenAPIV3_1.RequestBodyObject>({
+            schemaOrReference: this.operation.requestBody,
+            breadcrumbs: [...this.breadcrumbs, "requestBody"]
+        });
+
+        if (resolvedRequestBody == null) {
+            return [];
+        }
+
+        const jsonContent = resolvedRequestBody.content?.["application/json"];
+        if (jsonContent == null) {
+            return [];
+        }
+
+        const namedExamples = this.context.getNamedExamplesFromMediaTypeObject({
+            mediaTypeObject: jsonContent,
+            breadcrumbs: [...this.breadcrumbs, "requestBody", "content", "application/json"],
+            defaultExampleName: "request_example"
+        });
+
+        return namedExamples.map(([name, example]) => {
+            const resolvedExample = this.context.resolveExampleWithValue(example);
+            return { name, value: resolvedExample };
+        });
+    }
+
+    private getResponseBodyExamples(): Array<{ name: string; value: unknown }> {
+        const responses = this.operation.responses;
+        if (responses == null) {
+            return [];
+        }
+
+        const successResponse = responses["200"] ?? responses["201"] ?? responses["2XX"];
+        if (successResponse == null) {
+            return [];
+        }
+
+        const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+            schemaOrReference: successResponse,
+            breadcrumbs: [...this.breadcrumbs, "responses", "200"]
+        });
+
+        if (resolvedResponse == null) {
+            return [];
+        }
+
+        const jsonContent = resolvedResponse.content?.["application/json"];
+        if (jsonContent == null) {
+            return [];
+        }
+
+        const namedExamples = this.context.getNamedExamplesFromMediaTypeObject({
+            mediaTypeObject: jsonContent,
+            breadcrumbs: [...this.breadcrumbs, "responses", "200", "content", "application/json"],
+            defaultExampleName: "response_example"
+        });
+
+        return namedExamples.map(([name, example]) => {
+            const resolvedExample = this.context.resolveExampleWithValue(example);
+            return { name, value: resolvedExample };
+        });
     }
 
     private convertStreamConditionExamples({
