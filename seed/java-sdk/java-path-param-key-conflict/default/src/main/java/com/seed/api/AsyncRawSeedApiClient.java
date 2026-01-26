@@ -11,9 +11,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.requests.DeleteItemRequest;
-import com.seed.api.requests.GetItemRequest;
-import com.seed.api.requests.ItemUpdate;
+import com.seed.api.requests.ItemData;
 import com.seed.api.types.Item;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -35,77 +33,16 @@ public class AsyncRawSeedApiClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedApiHttpResponse<Item>> getItem(String key) {
-        return getItem(key, GetItemRequest.builder().build());
+    public CompletableFuture<SeedApiHttpResponse<Item>> createItem(String key, String value, ItemData request) {
+        return createItem(key, value, request, null);
     }
 
-    public CompletableFuture<SeedApiHttpResponse<Item>> getItem(String key, RequestOptions requestOptions) {
-        return getItem(key, GetItemRequest.builder().build(), requestOptions);
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Item>> getItem(String key, GetItemRequest request) {
-        return getItem(key, request, null);
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Item>> getItem(
-            String key, GetItemRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedApiHttpResponse<Item>> createItem(
+            String key, String value, ItemData request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("items")
-                .addPathSegment(key);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                httpUrl.addQueryParameter(_key, _value);
-            });
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<SeedApiHttpResponse<Item>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    if (response.isSuccessful()) {
-                        future.complete(new SeedApiHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Item.class), response));
-                        return;
-                    }
-                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new SeedApiApiException(
-                            "Error with status code " + response.code(), response.code(), errorBody, response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Item>> updateItem(String key, ItemUpdate request) {
-        return updateItem(key, request, null);
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Item>> updateItem(
-            String key, ItemUpdate request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("items")
-                .addPathSegment(key);
+                .addPathSegment(key)
+                .addPathSegment(value);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -140,65 +77,6 @@ public class AsyncRawSeedApiClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Item.class), response));
                         return;
                     }
-                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new SeedApiApiException(
-                            "Error with status code " + response.code(), response.code(), errorBody, response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Void>> deleteItem(String key) {
-        return deleteItem(key, DeleteItemRequest.builder().build());
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Void>> deleteItem(String key, RequestOptions requestOptions) {
-        return deleteItem(key, DeleteItemRequest.builder().build(), requestOptions);
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Void>> deleteItem(String key, DeleteItemRequest request) {
-        return deleteItem(key, request, null);
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Void>> deleteItem(
-            String key, DeleteItemRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("items")
-                .addPathSegment(key);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                httpUrl.addQueryParameter(_key, _value);
-            });
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("DELETE", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<SeedApiHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(new SeedApiHttpResponse<>(null, response));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));

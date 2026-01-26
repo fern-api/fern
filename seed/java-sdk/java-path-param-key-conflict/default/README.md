@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.requests.ItemUpdate;
+import com.seed.api.requests.ItemData;
 
 public class Example {
     public static void main(String[] args) {
@@ -64,11 +64,12 @@ public class Example {
             .builder()
             .build();
 
-        client.updateItem(
+        client.createItem(
             "key",
-            ItemUpdate
+            "value",
+            ItemData
                 .builder()
-                .value("value")
+                .data("data")
                 .build()
         );
     }
@@ -96,7 +97,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.updateItem(...);
+    client.createItem(...);
 } catch (SeedApiApiException e){
     // Do something with the API exception...
 }
@@ -160,7 +161,7 @@ SeedApiClient client = SeedApiClient
     .build();
 
 // Request level
-client.updateItem(
+client.createItem(
     ...,
     RequestOptions
         .builder()
@@ -186,7 +187,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.updateItem(
+client.createItem(
     ...,
     RequestOptions
         .builder()
@@ -202,7 +203,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-UpdateItemHttpResponse response = client.withRawResponse().updateItem(...);
+CreateItemHttpResponse response = client.withRawResponse().createItem(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

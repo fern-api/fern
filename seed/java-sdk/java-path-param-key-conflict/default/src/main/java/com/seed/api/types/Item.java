@@ -19,26 +19,26 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Item.Builder.class)
 public final class Item {
-    private final String key;
+    private final String id;
 
-    private final String value;
+    private final String data;
 
     private final Map<String, Object> additionalProperties;
 
-    private Item(String key, String value, Map<String, Object> additionalProperties) {
-        this.key = key;
-        this.value = value;
+    private Item(String id, String data, Map<String, Object> additionalProperties) {
+        this.id = id;
+        this.data = data;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("key")
-    public String getKey() {
-        return key;
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
-    @JsonProperty("value")
-    public String getValue() {
-        return value;
+    @JsonProperty("data")
+    public String getData() {
+        return data;
     }
 
     @java.lang.Override
@@ -53,12 +53,12 @@ public final class Item {
     }
 
     private boolean equalTo(Item other) {
-        return key.equals(other.key) && value.equals(other.value);
+        return id.equals(other.id) && data.equals(other.data);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.key, this.value);
+        return Objects.hash(this.id, this.data);
     }
 
     @java.lang.Override
@@ -66,18 +66,18 @@ public final class Item {
         return ObjectMappers.stringify(this);
     }
 
-    public static KeyStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface KeyStage {
-        ValueStage key(@NotNull String key);
+    public interface IdStage {
+        DataStage id(@NotNull String id);
 
         Builder from(Item other);
     }
 
-    public interface ValueStage {
-        _FinalStage value(@NotNull String value);
+    public interface DataStage {
+        _FinalStage data(@NotNull String data);
     }
 
     public interface _FinalStage {
@@ -85,10 +85,10 @@ public final class Item {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements KeyStage, ValueStage, _FinalStage {
-        private String key;
+    public static final class Builder implements IdStage, DataStage, _FinalStage {
+        private String id;
 
-        private String value;
+        private String data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -97,28 +97,28 @@ public final class Item {
 
         @java.lang.Override
         public Builder from(Item other) {
-            key(other.getKey());
-            value(other.getValue());
+            id(other.getId());
+            data(other.getData());
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("key")
-        public ValueStage key(@NotNull String key) {
-            this.key = Objects.requireNonNull(key, "key must not be null");
+        @JsonSetter("id")
+        public DataStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("value")
-        public _FinalStage value(@NotNull String value) {
-            this.value = Objects.requireNonNull(value, "value must not be null");
+        @JsonSetter("data")
+        public _FinalStage data(@NotNull String data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 
         @java.lang.Override
         public Item build() {
-            return new Item(key, value, additionalProperties);
+            return new Item(id, data, additionalProperties);
         }
     }
 }

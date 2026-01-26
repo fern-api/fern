@@ -17,26 +17,26 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = ItemUpdate.Builder.class)
-public final class ItemUpdate {
-    private final String value;
+@JsonDeserialize(builder = ItemData.Builder.class)
+public final class ItemData {
+    private final String data;
 
     private final Map<String, Object> additionalProperties;
 
-    private ItemUpdate(String value, Map<String, Object> additionalProperties) {
-        this.value = value;
+    private ItemData(String data, Map<String, Object> additionalProperties) {
+        this.data = data;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("value")
-    public String getValue() {
-        return value;
+    @JsonProperty("data")
+    public String getData() {
+        return data;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ItemUpdate && equalTo((ItemUpdate) other);
+        return other instanceof ItemData && equalTo((ItemData) other);
     }
 
     @JsonAnyGetter
@@ -44,13 +44,13 @@ public final class ItemUpdate {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ItemUpdate other) {
-        return value.equals(other.value);
+    private boolean equalTo(ItemData other) {
+        return data.equals(other.data);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.value);
+        return Objects.hash(this.data);
     }
 
     @java.lang.Override
@@ -58,23 +58,23 @@ public final class ItemUpdate {
         return ObjectMappers.stringify(this);
     }
 
-    public static ValueStage builder() {
+    public static DataStage builder() {
         return new Builder();
     }
 
-    public interface ValueStage {
-        _FinalStage value(@NotNull String value);
+    public interface DataStage {
+        _FinalStage data(@NotNull String data);
 
-        Builder from(ItemUpdate other);
+        Builder from(ItemData other);
     }
 
     public interface _FinalStage {
-        ItemUpdate build();
+        ItemData build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ValueStage, _FinalStage {
-        private String value;
+    public static final class Builder implements DataStage, _FinalStage {
+        private String data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -82,21 +82,21 @@ public final class ItemUpdate {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(ItemUpdate other) {
-            value(other.getValue());
+        public Builder from(ItemData other) {
+            data(other.getData());
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("value")
-        public _FinalStage value(@NotNull String value) {
-            this.value = Objects.requireNonNull(value, "value must not be null");
+        @JsonSetter("data")
+        public _FinalStage data(@NotNull String data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 
         @java.lang.Override
-        public ItemUpdate build() {
-            return new ItemUpdate(value, additionalProperties);
+        public ItemData build() {
+            return new ItemData(data, additionalProperties);
         }
     }
 }

@@ -1,13 +1,13 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.requests.GetItemRequest;
+import com.seed.api.requests.ItemData;
 
 public class Example0 {
     public static void main(String[] args) {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.getItem("key", GetItemRequest.builder().build());
+        client.createItem("key", "value", ItemData.builder().data("data").build());
     }
 }

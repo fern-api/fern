@@ -5,9 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.requests.DeleteItemRequest;
-import com.seed.api.requests.GetItemRequest;
-import com.seed.api.requests.ItemUpdate;
+import com.seed.api.requests.ItemData;
 import com.seed.api.types.Item;
 
 public class SeedApiClient {
@@ -27,44 +25,12 @@ public class SeedApiClient {
         return this.rawClient;
     }
 
-    public Item getItem(String key) {
-        return this.rawClient.getItem(key).body();
+    public Item createItem(String key, String value, ItemData request) {
+        return this.rawClient.createItem(key, value, request).body();
     }
 
-    public Item getItem(String key, RequestOptions requestOptions) {
-        return this.rawClient.getItem(key, requestOptions).body();
-    }
-
-    public Item getItem(String key, GetItemRequest request) {
-        return this.rawClient.getItem(key, request).body();
-    }
-
-    public Item getItem(String key, GetItemRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getItem(key, request, requestOptions).body();
-    }
-
-    public Item updateItem(String key, ItemUpdate request) {
-        return this.rawClient.updateItem(key, request).body();
-    }
-
-    public Item updateItem(String key, ItemUpdate request, RequestOptions requestOptions) {
-        return this.rawClient.updateItem(key, request, requestOptions).body();
-    }
-
-    public void deleteItem(String key) {
-        this.rawClient.deleteItem(key).body();
-    }
-
-    public void deleteItem(String key, RequestOptions requestOptions) {
-        this.rawClient.deleteItem(key, requestOptions).body();
-    }
-
-    public void deleteItem(String key, DeleteItemRequest request) {
-        this.rawClient.deleteItem(key, request).body();
-    }
-
-    public void deleteItem(String key, DeleteItemRequest request, RequestOptions requestOptions) {
-        this.rawClient.deleteItem(key, request, requestOptions).body();
+    public Item createItem(String key, String value, ItemData request, RequestOptions requestOptions) {
+        return this.rawClient.createItem(key, value, request, requestOptions).body();
     }
 
     public static SeedApiClientBuilder builder() {

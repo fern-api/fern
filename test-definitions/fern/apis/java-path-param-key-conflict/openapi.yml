@@ -2,42 +2,31 @@ openapi: 3.0.3
 info:
   title: Path Parameter Key Conflict Test API
   version: 1.0.0
-  description: Tests that path parameters named 'key' don't conflict with lambda variables in generated Java code
+  description: Tests that path parameters named 'key' and 'value' don't conflict with lambda variables in generated Java code
 paths:
-  /items/{key}:
-    get:
-      operationId: getItem
-      summary: Get an item by key
-      parameters:
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The key of the item to retrieve
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Item'
+  /{key}/{value}:
     post:
-      operationId: updateItem
-      summary: Update an item by key
+      operationId: createItem
+      summary: Create an item with key and value path parameters
       parameters:
         - name: key
           in: path
           required: true
           schema:
             type: string
-          description: The key of the item to update
+          description: The key path parameter
+        - name: value
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The value path parameter
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemUpdate'
+              $ref: '#/components/schemas/ItemData'
       responses:
         '200':
           description: Successful response
@@ -45,35 +34,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
-    delete:
-      operationId: deleteItem
-      summary: Delete an item by key
-      parameters:
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The key of the item to delete
-      responses:
-        '204':
-          description: Item deleted successfully
 components:
   schemas:
     Item:
       type: object
       properties:
-        key:
+        id:
           type: string
-        value:
+        data:
           type: string
       required:
-        - key
-        - value
-    ItemUpdate:
+        - id
+        - data
+    ItemData:
       type: object
       properties:
-        value:
+        data:
           type: string
       required:
-        - value
+        - data

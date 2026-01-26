@@ -11,9 +11,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.requests.DeleteItemRequest;
-import com.seed.api.requests.GetItemRequest;
-import com.seed.api.requests.ItemUpdate;
+import com.seed.api.requests.ItemData;
 import com.seed.api.types.Item;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -31,62 +29,16 @@ public class RawSeedApiClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedApiHttpResponse<Item> getItem(String key) {
-        return getItem(key, GetItemRequest.builder().build());
+    public SeedApiHttpResponse<Item> createItem(String key, String value, ItemData request) {
+        return createItem(key, value, request, null);
     }
 
-    public SeedApiHttpResponse<Item> getItem(String key, RequestOptions requestOptions) {
-        return getItem(key, GetItemRequest.builder().build(), requestOptions);
-    }
-
-    public SeedApiHttpResponse<Item> getItem(String key, GetItemRequest request) {
-        return getItem(key, request, null);
-    }
-
-    public SeedApiHttpResponse<Item> getItem(String key, GetItemRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<Item> createItem(
+            String key, String value, ItemData request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("items")
-                .addPathSegment(key);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                httpUrl.addQueryParameter(_key, _value);
-            });
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new SeedApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Item.class), response);
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedApiApiException(
-                    "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new SeedApiException("Network error executing HTTP request", e);
-        }
-    }
-
-    public SeedApiHttpResponse<Item> updateItem(String key, ItemUpdate request) {
-        return updateItem(key, request, null);
-    }
-
-    public SeedApiHttpResponse<Item> updateItem(String key, ItemUpdate request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("items")
-                .addPathSegment(key);
+                .addPathSegment(key)
+                .addPathSegment(value);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -117,51 +69,6 @@ public class RawSeedApiClient {
                 return new SeedApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Item.class), response);
             }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedApiApiException(
-                    "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new SeedApiException("Network error executing HTTP request", e);
-        }
-    }
-
-    public SeedApiHttpResponse<Void> deleteItem(String key) {
-        return deleteItem(key, DeleteItemRequest.builder().build());
-    }
-
-    public SeedApiHttpResponse<Void> deleteItem(String key, RequestOptions requestOptions) {
-        return deleteItem(key, DeleteItemRequest.builder().build(), requestOptions);
-    }
-
-    public SeedApiHttpResponse<Void> deleteItem(String key, DeleteItemRequest request) {
-        return deleteItem(key, request, null);
-    }
-
-    public SeedApiHttpResponse<Void> deleteItem(String key, DeleteItemRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("items")
-                .addPathSegment(key);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                httpUrl.addQueryParameter(_key, _value);
-            });
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("DELETE", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return new SeedApiHttpResponse<>(null, response);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
