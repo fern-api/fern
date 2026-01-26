@@ -3,58 +3,69 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum CodeExecutionUpdate {
-    BuildingExecutor {
-        #[serde(flatten)]
-        data: BuildingExecutorResponse,
-    },
+        #[serde(rename = "buildingExecutor")]
+        BuildingExecutor {
+            #[serde(flatten)]
+            data: BuildingExecutorResponse,
+        },
 
-    Running {
-        #[serde(flatten)]
-        data: RunningResponse,
-    },
+        #[serde(rename = "running")]
+        Running {
+            #[serde(flatten)]
+            data: RunningResponse,
+        },
 
-    Errored {
-        #[serde(flatten)]
-        data: ErroredResponse,
-    },
+        #[serde(rename = "errored")]
+        Errored {
+            #[serde(flatten)]
+            data: ErroredResponse,
+        },
 
-    Stopped {
-        #[serde(flatten)]
-        data: StoppedResponse,
-    },
+        #[serde(rename = "stopped")]
+        Stopped {
+            #[serde(flatten)]
+            data: StoppedResponse,
+        },
 
-    Graded {
-        #[serde(flatten)]
-        data: GradedResponse,
-    },
+        #[serde(rename = "graded")]
+        Graded {
+            #[serde(flatten)]
+            data: GradedResponse,
+        },
 
-    GradedV2 {
-        #[serde(flatten)]
-        data: GradedResponseV2,
-    },
+        #[serde(rename = "gradedV2")]
+        GradedV2 {
+            #[serde(flatten)]
+            data: GradedResponseV2,
+        },
 
-    WorkspaceRan {
-        #[serde(flatten)]
-        data: WorkspaceRanResponse,
-    },
+        #[serde(rename = "workspaceRan")]
+        WorkspaceRan {
+            #[serde(flatten)]
+            data: WorkspaceRanResponse,
+        },
 
-    Recording {
-        #[serde(flatten)]
-        data: RecordingResponseNotification,
-    },
+        #[serde(rename = "recording")]
+        Recording {
+            #[serde(flatten)]
+            data: RecordingResponseNotification,
+        },
 
-    Recorded {
-        #[serde(flatten)]
-        data: RecordedResponseNotification,
-    },
+        #[serde(rename = "recorded")]
+        Recorded {
+            #[serde(flatten)]
+            data: RecordedResponseNotification,
+        },
 
-    InvalidRequest {
-        #[serde(flatten)]
-        data: InvalidRequestResponse,
-    },
+        #[serde(rename = "invalidRequest")]
+        InvalidRequest {
+            #[serde(flatten)]
+            data: InvalidRequestResponse,
+        },
 
-    Finished {
-        #[serde(flatten)]
-        data: FinishedResponse,
-    },
+        #[serde(rename = "finished")]
+        Finished {
+            #[serde(flatten)]
+            data: FinishedResponse,
+        },
 }

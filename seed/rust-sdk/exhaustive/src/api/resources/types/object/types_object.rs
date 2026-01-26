@@ -1,4 +1,4 @@
-use crate::{ApiError, ClientConfig, HttpClient};
+use crate::{ClientConfig, ApiError, HttpClient};
 
 pub struct ObjectClient2 {
     pub http_client: HttpClient,
@@ -7,7 +7,9 @@ pub struct ObjectClient2 {
 impl ObjectClient2 {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?
+})
     }
+
 }
+

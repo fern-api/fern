@@ -3,23 +3,28 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum WorkspaceSubmissionStatus {
-    Stopped,
+        #[serde(rename = "stopped")]
+        Stopped,
 
-    Errored {
-        value: ErrorInfo,
-    },
+        #[serde(rename = "errored")]
+        Errored {
+            value: ErrorInfo,
+        },
 
-    Running {
-        value: RunningSubmissionState,
-    },
+        #[serde(rename = "running")]
+        Running {
+            value: RunningSubmissionState,
+        },
 
-    Ran {
-        #[serde(flatten)]
-        data: WorkspaceRunDetails,
-    },
+        #[serde(rename = "ran")]
+        Ran {
+            #[serde(flatten)]
+            data: WorkspaceRunDetails,
+        },
 
-    Traced {
-        #[serde(flatten)]
-        data: WorkspaceRunDetails,
-    },
+        #[serde(rename = "traced")]
+        Traced {
+            #[serde(flatten)]
+            data: WorkspaceRunDetails,
+        },
 }

@@ -4,6 +4,8 @@ pub use crate::prelude::*;
 pub struct UploadFileRequest {
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::base64_bytes::option")]
     pub file: Option<Vec<u8>>,
 }
 impl UploadFileRequest {
