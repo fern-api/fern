@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
-- version: 4.50.0
+- version: 4.51.0
   changelogEntry:
     - summary: |
         Add intelligent SSE parsing for discriminated unions via `parse_sse_obj()`. This function
@@ -10,7 +10,15 @@
         it correctly parses the data field based on what the matching variant expects (string vs.
         complex object), enabling proper handling of streaming responses with mixed data types.
       type: feat
-  createdAt: "2026-01-23"
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 4.50.0
+  changelogEntry:
+    - summary: |
+        Add `wire_tests` config group with `enabled` and `exclusions` options. The `exclusions` option allows excluding specific endpoints/services from wire test generation using definition-level selectors. The existing `enable_wire_tests` option is now deprecated in favor of `wire_tests.enabled`.
+      type: feat
+  createdAt: "2026-01-25"
   irVersion: 62
 
 - version: 4.49.0
