@@ -12,9 +12,7 @@
       "subpackage_plantUpdates",
       "subpackage_plantOrders",
     ],
-    "types": [
-      "SpeakV1Encoding",
-    ],
+    "types": [],
     "webhooks": [],
     "websockets": [],
   },
@@ -356,82 +354,6 @@
           },
         ],
         "type": "object",
-      },
-    },
-    "SpeakV1Encoding": {
-      "availability": undefined,
-      "description": undefined,
-      "displayName": undefined,
-      "name": "SpeakV1Encoding",
-      "shape": {
-        "extends": [],
-        "extraProperties": undefined,
-        "properties": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "encoding",
-            "propertyAccess": undefined,
-            "valueType": {
-              "defaultValue": undefined,
-              "itemType": {
-                "default": undefined,
-                "type": "id",
-                "value": "SpeakV1EncodingEncoding",
-              },
-              "type": "optional",
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "data",
-            "propertyAccess": undefined,
-            "valueType": {
-              "defaultValue": undefined,
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "default": undefined,
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "regex": undefined,
-                  "type": "string",
-                },
-              },
-              "type": "optional",
-            },
-          },
-        ],
-        "type": "object",
-      },
-    },
-    "SpeakV1EncodingEncoding": {
-      "availability": undefined,
-      "description": undefined,
-      "displayName": undefined,
-      "name": "SpeakV1EncodingEncoding",
-      "shape": {
-        "default": undefined,
-        "type": "enum",
-        "values": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "value": "utf-8",
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "value": "utf-16",
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "value": "ascii",
-          },
-        ],
       },
     },
   },
