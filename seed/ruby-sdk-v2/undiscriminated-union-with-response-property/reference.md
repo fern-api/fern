@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_union</a>() -> Seed::Types::UnionResponse</code></summary>
+<details><summary><code>client.<a href="/lib/fern_undiscriminated_union_with_response_property/client.rb">get_union</a>() -> FernUndiscriminatedUnionWithResponseProperty::Types::UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ client.get_union();
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernUndiscriminatedUnionWithResponseProperty::RequestOptions` 
     
 </dd>
 </dl>
@@ -39,7 +39,7 @@ client.get_union();
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">list_unions</a>() -> Seed::Types::UnionListResponse</code></summary>
+<details><summary><code>client.<a href="/lib/fern_undiscriminated_union_with_response_property/client.rb">list_unions</a>() -> FernUndiscriminatedUnionWithResponseProperty::Types::UnionListResponse</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ client.list_unions();
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernUndiscriminatedUnionWithResponseProperty::RequestOptions` 
     
 </dd>
 </dl>

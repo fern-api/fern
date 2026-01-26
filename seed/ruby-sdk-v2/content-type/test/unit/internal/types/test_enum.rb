@@ -2,10 +2,10 @@
 
 require "test_helper"
 
-describe Seed::Internal::Types::Enum do
+describe FernContentType::Internal::Types::Enum do
   module EnumTest
     module ExampleEnum
-      extend Seed::Internal::Types::Enum
+      extend FernContentType::Internal::Types::Enum
 
       FOO = :foo
       BAR = :bar
@@ -34,7 +34,7 @@ describe Seed::Internal::Types::Enum do
     end
 
     it "raises an error if value is not a member with strictness on" do
-      assert_raises Seed::Internal::Errors::TypeError do
+      assert_raises FernContentType::Internal::Errors::TypeError do
         EnumTest::ExampleEnum.coerce(1, strict: true)
       end
     end

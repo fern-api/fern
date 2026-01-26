@@ -43,6 +43,18 @@ class CustomReadmeSection(pydantic.BaseModel):
     content: str
 
 
+class WireTestsConfig(pydantic.BaseModel):
+    """Configuration for wire test generation."""
+
+    enabled: bool = False
+    # Exclude specific endpoints/services from wire tests using definition-level
+    # identifiers in the form "<service_path>.<endpoint_name>" or "<service_path>.*".
+    exclusions: Optional[List[str]] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -70,6 +82,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.
     inline_request_params: bool = True
+
+    # Wire test configuration
+    wire_tests: Optional[WireTestsConfig] = None
 
     # If true, treats path parameters as named parameters in endpoint functions
     inline_path_params: bool = False
@@ -123,9 +138,14 @@ class SDKCustomConfig(pydantic.BaseModel):
     # the recursion limit is at least this value.
     recursion_limit: Optional[int] = pydantic.Field(None, gt=1000)
 
+    # deprecated, use wire_tests.enabled instead
     enable_wire_tests: bool = False
 
     custom_pager_name: Optional[str] = None
+
+    # List of paths to exclude from mypy type checking.
+    # Useful when .fernignore preserves directories with code that doesn't work with the generated SDK.
+    mypy_exclude: Optional[List[str]] = None
 
     class Config:
         extra = pydantic.Extra.forbid

@@ -1,4 +1,119 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev --broken-links` failing with "Failed to load API Definition" error for valid API configurations. The broken links validator now properly handles OpenAPI-only workspaces.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.51.0
+  changelogEntry:
+    - summary: |
+        Add support for OAS 3.2's `itemSchema` standard for SSE endpoints. When `text/event-stream` content type uses `itemSchema` instead of `schema`, it is now automatically treated as an SSE streaming endpoint with `x-fern-streaming: format: sse`.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 63
+    
+- version: 3.50.3
+  changelogEntry:
+    - summary: |
+        Fix Python library docs placeholder page appearing on published sites. The placeholder page is now only created during `fern docs dev` (local development), not during `fern generate --docs` (publishing).
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.2
+  changelogEntry:
+    - summary: |
+        Fix `python-docs` configuration not being detected when placed inside product or version files. Previously, `python-docs` only worked when placed in the top-level `docs.yml` navigation. Now it correctly searches through product files and version files referenced via `config.products` and `config.versions`.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.1
+  changelogEntry:
+    - summary: |
+        Fix `tag-description-pages` not matching OpenAPI tags with spaces or hyphens. The tag ID lookup now normalizes tag names to camelCase to match how subpackage names are derived from OpenAPI tags.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.50.0
+  changelogEntry:
+    - summary: |
+        Add `--output` option to `fern generate` command. This allows users to specify a custom output directory for preview generation when using the `--preview` flag for SDK generation, instead of the default `.preview` directory.
+      type: feat
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.8
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI error response example names not using the `summary` field. Error examples now use the OpenAPI `summary` field as the example name (similar to success response examples), enabling proper display names like "Validation Error" instead of generic keys like "validationError". Falls back to the original key if summary is undefined or empty.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.7
+  changelogEntry:
+    - summary: |
+        Fix `group-multi-api-environments` URL name extraction for hyphenated subdomains (e.g., `ip-messaging.twilio.com` now extracts as `ip-messaging` instead of colliding with other URLs).
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.6
+  changelogEntry:
+    - summary: |
+        Fix `group-multi-api-environments` to properly accumulate all URLs when merging many OpenAPI specs. Previously only the first two URLs were preserved.
+      type: fix
+    - summary: |
+        Fix `group-multi-api-environments` setting to be inherited from global `api.settings`.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.5
+  changelogEntry:
+    - summary: |
+        Fix docs API registration to use folder name when api-name is not set. When registering APIs with FDR for docs, the folder name (workspace name) is now used as the API identifier when `api-name` is not explicitly set in docs.yml. This enables users to reference APIs by folder name in docs components like `<Schema api="latest" />`.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.4
+  changelogEntry:
+    - summary: |
+        Fix ANY auth conversion to FDR multiAuth format. When the IR has `AuthSchemesRequirement.ANY`, the converter now properly represents this as multiple auth options (OR semantics) with each scheme in its own array element, rather than all schemes grouped together (AND semantics).
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
+- version: 3.49.3
+  changelogEntry:
+    - summary: |
+        Fix per-generator API overrides incorrectly falling back to workspace name for namespace. The `namespace` field in per-generator specs configuration now correctly uses the provided value (or `undefined` if not set) instead of falling back to the workspace folder name.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
+- version: 3.49.2
+  changelogEntry:
+    - summary: |
+        Add support for `omit` field in basic auth configuration. This allows omitting the username or password from the SDK when defining basic authentication, useful for APIs that only require one of the two credentials.
+      type: feat
+  createdAt: "2026-01-22"
+  irVersion: 63
+
+- version: 3.48.3
+  changelogEntry:
+    - summary: |
+        Upgrade FDR and fix webhook example names not appearing in API reference docs. The `name` field is now included in webhook example FDR conversion, enabling the frontend to display user-specified example names instead of generic "Example 1", "Example 2" labels.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.48.2
   changelogEntry:
     - summary: |

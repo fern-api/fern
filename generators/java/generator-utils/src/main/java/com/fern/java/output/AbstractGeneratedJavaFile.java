@@ -42,9 +42,12 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
 
         Path filepath;
         if (testFile().isPresent() && testFile().get()) {
-            // Test files always use src/test/java structure
-            filepath =
-                    directory.resolve("src/test/java").resolve(packagePath).resolve(javaFile().typeSpec.name + ".java");
+            // For test files, check output directory mode
+            Path baseDir = directory;
+            if (outputDirectoryMode == OutputDirectory.PROJECT_ROOT) {
+                baseDir = directory.resolve("src/test/java");
+            }
+            filepath = baseDir.resolve(packagePath).resolve(javaFile().typeSpec.name + ".java");
         } else {
             // For production files, check output directory mode
             Path baseDir = directory;

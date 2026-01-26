@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="/lib/seed/imdb/client.rb">create_movie</a>(request) -> String</code></summary>
+<details><summary><code>client.imdb.<a href="/lib/fern_imdb/imdb/client.rb">create_movie</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -45,7 +45,7 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-**request:** `Seed::Imdb::Types::CreateMovieRequest` 
+**request:** `FernImdb::Imdb::Types::CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -53,7 +53,7 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-**request_options:** `Seed::Imdb::RequestOptions` 
+**request_options:** `FernImdb::Imdb::RequestOptions` 
     
 </dd>
 </dl>
@@ -65,7 +65,7 @@ client.imdb.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/lib/seed/imdb/client.rb">get_movie</a>(movie_id) -> Seed::Imdb::Types::Movie</code></summary>
+<details><summary><code>client.imdb.<a href="/lib/fern_imdb/imdb/client.rb">get_movie</a>(movie_id) -> FernImdb::Imdb::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ client.imdb.get_movie(movie_id: 'movieId');
 <dl>
 <dd>
 
-**request_options:** `Seed::Imdb::RequestOptions` 
+**request_options:** `FernImdb::Imdb::RequestOptions` 
     
 </dd>
 </dl>

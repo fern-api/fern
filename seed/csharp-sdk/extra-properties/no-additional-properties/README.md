@@ -46,6 +46,11 @@ await client.User.CreateUserAsync(
         Name = "Alice",
         Type = "CreateUserRequest",
         Version = "v1",
+        AdditionalProperties = new AdditionalProperties
+        {
+            ["age"] = 30,
+            ["location"] = "Wonderland",
+        },
     }
 );
 ```
