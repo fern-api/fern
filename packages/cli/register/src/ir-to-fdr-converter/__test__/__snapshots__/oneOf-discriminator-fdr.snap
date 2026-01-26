@@ -217,23 +217,6 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "errorType",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
             "key": "message",
             "propertyAccess": undefined,
             "valueType": {
@@ -281,23 +264,6 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "type",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
             "key": "variantAField",
             "propertyAccess": undefined,
             "valueType": {
@@ -325,23 +291,6 @@
         "extends": [],
         "extraProperties": undefined,
         "properties": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "type",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
           {
             "availability": undefined,
             "description": undefined,
@@ -411,23 +360,6 @@
         "extends": [],
         "extraProperties": undefined,
         "properties": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "errorType",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
           {
             "availability": undefined,
             "description": undefined,

@@ -82,32 +82,79 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return true;
     }
 
+    /**
+     * Filters out the discriminant property from a schema's properties.
+     * This is needed when the discriminant is redeclared in variant schemas.
+     */
+    private filterDiscriminantFromSchema(
+        schema: OpenAPIV3_1.SchemaObject,
+        discriminantProperty: string
+    ): OpenAPIV3_1.SchemaObject {
+        if (schema.properties == null || !(discriminantProperty in schema.properties)) {
+            return schema;
+        }
+
+        const { [discriminantProperty]: _, ...filteredProperties } = schema.properties;
+        const filteredRequired = schema.required?.filter((prop) => prop !== discriminantProperty);
+
+        return {
+            ...schema,
+            properties: filteredProperties,
+            required: filteredRequired
+        };
+    }
+
     private convertAsDiscriminatedUnion(): OneOfSchemaConverter.Output | undefined {
         if (this.schema.discriminator == null) {
             return undefined;
         }
 
+        const discriminantProperty = this.schema.discriminator.propertyName;
         const unionTypes: SingleUnionType[] = [];
         let referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
         for (const [discriminant, reference] of Object.entries(this.schema.discriminator.mapping ?? {})) {
+            const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference });
+            const breadcrumbs = [...this.breadcrumbs, "discriminator", "mapping", discriminant];
+
+            // Resolve the reference to check if it contains the discriminant property
+            const resolvedSchema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                reference: { $ref: reference },
+                breadcrumbs
+            });
+
+            let schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = { $ref: reference };
+
+            // If the variant schema contains the discriminant property, filter it out
+            // and convert as an inlined schema with the original type ID
+            if (
+                resolvedSchema.resolved &&
+                resolvedSchema.value.properties != null &&
+                discriminantProperty in resolvedSchema.value.properties
+            ) {
+                // Create a filtered schema without the discriminant property
+                const filteredSchema = this.filterDiscriminantFromSchema(resolvedSchema.value, discriminantProperty);
+                schemaOrReference = filteredSchema;
+            }
+
             const singleUnionTypeSchemaConverter = new SchemaOrReferenceConverter({
                 context: this.context,
-                schemaOrReference: { $ref: reference },
-                breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
+                schemaOrReference,
+                schemaIdOverride: typeId ?? undefined,
+                breadcrumbs
             });
-            const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference });
+
             if (typeId != null) {
                 referencedTypes.add(typeId);
             }
             const convertedSchema = singleUnionTypeSchemaConverter.convert();
             if (convertedSchema?.type != null && typeId != null) {
-                for (const typeId of Object.keys(convertedSchema?.inlinedTypes ?? {})) {
-                    referencedTypes.add(typeId);
+                for (const inlinedTypeId of Object.keys(convertedSchema?.inlinedTypes ?? {})) {
+                    referencedTypes.add(inlinedTypeId);
                 }
-                for (const typeId of convertedSchema.schema?.typeDeclaration.referencedTypes ?? []) {
-                    referencedTypes.add(typeId);
+                for (const refTypeId of convertedSchema.schema?.typeDeclaration.referencedTypes ?? []) {
+                    referencedTypes.add(refTypeId);
                 }
                 const nameAndWireValue = this.context.casingsGenerator.generateNameAndWireValue({
                     name: discriminant,

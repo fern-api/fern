@@ -439,6 +439,38 @@
         ],
       },
     },
+    "EventRequestDiscriminatorMappingErrorSeverity": {
+      "availability": undefined,
+      "description": "Severity level of the error",
+      "displayName": undefined,
+      "name": "EventRequestDiscriminatorMappingErrorSeverity",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "low",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "medium",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "high",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "critical",
+          },
+        ],
+      },
+    },
     "EventResponse": {
       "availability": undefined,
       "description": "Response after creating an event",
