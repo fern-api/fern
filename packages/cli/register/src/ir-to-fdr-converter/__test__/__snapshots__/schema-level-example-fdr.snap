@@ -1,0 +1,613 @@
+{
+  "apiName": "Swagger Plant Store - OpenAPI 3.1",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "graphqlOperations": undefined,
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_plant",
+    ],
+    "types": [
+      "Plant",
+      "PlantResponse",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_plant": {
+      "description": undefined,
+      "displayName": "plant",
+      "endpoints": [
+        {
+          "auth": false,
+          "authV2": undefined,
+          "availability": undefined,
+          "defaultEnvironment": "Demo server",
+          "description": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.plantstore.dev/v3",
+              "id": "Demo server",
+            },
+          ],
+          "errors": undefined,
+          "errorsV2": [
+            {
+              "availability": undefined,
+              "description": "Invalid input",
+              "examples": [],
+              "headers": undefined,
+              "isWildcard": undefined,
+              "name": "MethodNotAllowedError",
+              "statusCode": 405,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown",
+                },
+              },
+            },
+          ],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": "Add a Succulent",
+              "path": "/plant",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "category": "Succulent",
+                "name": "Echeveria",
+                "status": "available",
+                "tags": [
+                  "drought-resistant",
+                  "compact",
+                ],
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "category": "Succulent",
+                  "name": "Echeveria",
+                  "status": "available",
+                  "tags": [
+                    "drought-resistant",
+                    "compact",
+                  ],
+                },
+              },
+              "responseBody": {
+                "id": 12345,
+                "name": "Snake Plant",
+                "status": "available",
+                "tags": [
+                  "low-maintenance",
+                  "air-purifying",
+                ],
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": 12345,
+                  "name": "Snake Plant",
+                  "status": "available",
+                  "tags": [
+                    "low-maintenance",
+                    "air-purifying",
+                  ],
+                },
+              },
+              "responseStatusCode": 200,
+            },
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": "Add a Flowering Plant",
+              "path": "/plant",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "category": "Flowering",
+                "name": "Orchid",
+                "status": "pending",
+                "tags": [
+                  "exotic",
+                  "fragrant",
+                  "decorative",
+                ],
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "category": "Flowering",
+                  "name": "Orchid",
+                  "status": "pending",
+                  "tags": [
+                    "exotic",
+                    "fragrant",
+                    "decorative",
+                  ],
+                },
+              },
+              "responseBody": {
+                "id": 12345,
+                "name": "Snake Plant",
+                "status": "available",
+                "tags": [
+                  "low-maintenance",
+                  "air-purifying",
+                ],
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": 12345,
+                  "name": "Snake Plant",
+                  "status": "available",
+                  "tags": [
+                    "low-maintenance",
+                    "air-purifying",
+                  ],
+                },
+              },
+              "responseStatusCode": 200,
+            },
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": "Add an Outdoor Plant",
+              "path": "/plant",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "category": "Outdoor",
+                "name": "Rose Bush",
+                "status": "sold",
+                "tags": [
+                  "flowering",
+                  "perennial",
+                  "thorny",
+                ],
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "category": "Outdoor",
+                  "name": "Rose Bush",
+                  "status": "sold",
+                  "tags": [
+                    "flowering",
+                    "perennial",
+                    "thorny",
+                  ],
+                },
+              },
+              "responseBody": {
+                "id": 12345,
+                "name": "Snake Plant",
+                "status": "available",
+                "tags": [
+                  "low-maintenance",
+                  "air-purifying",
+                ],
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": 12345,
+                  "name": "Snake Plant",
+                  "status": "available",
+                  "tags": [
+                    "low-maintenance",
+                    "air-purifying",
+                  ],
+                },
+              },
+              "responseStatusCode": 200,
+            },
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/plant",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "category": "Indoor",
+                "name": "Fern",
+                "status": "available",
+                "tags": [
+                  "green",
+                  "leafy",
+                ],
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "category": "Indoor",
+                  "name": "Fern",
+                  "status": "available",
+                  "tags": [
+                    "green",
+                    "leafy",
+                  ],
+                },
+              },
+              "responseBody": {
+                "id": 12345,
+                "name": "Snake Plant",
+                "status": "available",
+                "tags": [
+                  "low-maintenance",
+                  "air-purifying",
+                ],
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": 12345,
+                  "name": "Snake Plant",
+                  "status": "available",
+                  "tags": [
+                    "low-maintenance",
+                    "air-purifying",
+                  ],
+                },
+              },
+              "responseStatusCode": 200,
+            },
+          ],
+          "headers": [],
+          "id": "addPlant",
+          "includeInApiExplorer": undefined,
+          "method": "POST",
+          "multiAuth": undefined,
+          "name": "Add a new plant to the store",
+          "originalEndpointId": "endpoint_plant.addPlant",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/plant",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": {
+            "description": "Details of the plant to add",
+            "type": {
+              "contentType": "application/json",
+              "description": "Details of the plant to add",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Plant",
+                },
+              },
+              "type": "json",
+            },
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "description": "Details of the plant to add",
+                "type": {
+                  "contentType": "application/json",
+                  "description": "Details of the plant to add",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "Plant",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+          },
+          "response": {
+            "description": "Plant successfully added",
+            "isWildcard": undefined,
+            "statusCode": 200,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "PlantResponse",
+              },
+            },
+          },
+          "responseHeaders": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "Plant successfully added",
+                "isWildcard": undefined,
+                "statusCode": 200,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "PlantResponse",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+      ],
+      "graphqlOperations": undefined,
+      "name": "plant",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_plant",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "Plant": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Plant",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "category",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "tags",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "maxItems": undefined,
+                "minItems": undefined,
+                "type": "list",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "status",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "PlantStatus",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "PlantResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "PlantResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "integer",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "status",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "tags",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "maxItems": undefined,
+                "minItems": undefined,
+                "type": "list",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "PlantStatus": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "PlantStatus",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "available",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "pending",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "sold",
+          },
+        ],
+      },
+    },
+  },
+}

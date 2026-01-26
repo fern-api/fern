@@ -578,6 +578,10 @@ export class DynamicTypeInstantiationMapper {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 const typeInstantiation = this.convert({ typeReference, value });
+                // Skip types that result in nop() - this means the value didn't match the type
+                if (go.TypeInstantiation.isNop(typeInstantiation)) {
+                    continue;
+                }
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 continue;
