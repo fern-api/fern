@@ -80,13 +80,14 @@ export interface PythonDocsSectionContext {
 
 /**
  * Handler for pythonDocsSection navigation items.
- * Return a PageNode to show a placeholder, or null to skip the section.
+ * Return a SectionNode to create a placeholder that FDR will replace with generated docs,
+ * or null to skip the section (FDR will append generated docs to sidebar roots).
  */
 export type PythonDocsSectionHandler = (
     item: docsYml.DocsNavigationItem.PythonDocsSection,
     parentSlug: FernNavigation.V1.SlugGenerator,
     context: PythonDocsSectionContext
-) => FernNavigation.V1.PageNode | null;
+) => FernNavigation.V1.SectionNode | null;
 
 export interface DocsDefinitionResolverArgs {
     domain: string;
@@ -1415,7 +1416,7 @@ export class DocsDefinitionResolver {
     private handlePythonDocsSection(
         item: docsYml.DocsNavigationItem.PythonDocsSection,
         parentSlug: FernNavigation.V1.SlugGenerator
-    ): FernNavigation.V1.PageNode | null {
+    ): FernNavigation.V1.SectionNode | null {
         if (this.pythonDocsSectionHandler == null) {
             return null;
         }
@@ -1886,7 +1887,7 @@ function convertAvailability(
 }
 
 /**
- * Creates a placeholder page for Python docs sections during local development.
+ * Creates a placeholder section for Python docs during local development.
  * This handler can be passed to DocsDefinitionResolver.pythonDocsSectionHandler
  * to show a helpful placeholder page when running `fern docs dev`.
  */
@@ -1894,7 +1895,7 @@ export function createPythonDocsSectionPlaceholder(
     item: docsYml.DocsNavigationItem.PythonDocsSection,
     parentSlug: FernNavigation.V1.SlugGenerator,
     context: PythonDocsSectionContext
-): FernNavigation.V1.PageNode {
+): FernNavigation.V1.SectionNode {
     const title = item.title ?? "Python Reference";
     const urlSlug = item.slug ?? "python-docs";
     const slug = parentSlug.apply({ urlSlug });
@@ -1944,16 +1945,19 @@ The generated documentation will replace this placeholder page with complete API
     context.addPage(syntheticPageId, placeholderMarkdown);
 
     return {
-        id: context.generateId(pageId),
-        type: "page",
+        id: context.generateId(`__libdocs_placeholder_${urlSlug}__`),
+        type: "section",
+        overviewPageId: pageId,
         slug: slug.get(),
         title,
         icon: undefined,
+        collapsed: undefined,
         hidden: false,
         viewers: undefined,
         orphaned: undefined,
-        pageId,
+        children: [],
         authed: undefined,
+        pointsTo: undefined,
         noindex: true,
         featureFlags: undefined,
         availability: undefined
