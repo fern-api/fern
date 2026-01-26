@@ -25,6 +25,9 @@ service:
       examples:
         - request:
             - "string"
+          response:
+            body:
+              - "string"
 
     getAndReturnSetOfObjects:
       path: /set-of-objects
@@ -34,6 +37,9 @@ service:
       examples:
         - request:
             - string: "string"
+          response:
+            body:
+              - string: "string"
 
     getAndReturnMapPrimToPrim:
       path: /map-prim-to-prim
