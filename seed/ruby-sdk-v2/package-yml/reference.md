@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">echo</a>(id, request) -> String</code></summary>
+<details><summary><code>client.<a href="/lib/fern_package_yml/client.rb">echo</a>(id, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ client.echo(
 <dl>
 <dd>
 
-**request:** `Seed::Types::EchoRequest` 
+**request:** `FernPackageYml::Types::EchoRequest` 
     
 </dd>
 </dl>
@@ -46,7 +46,7 @@ client.echo(
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernPackageYml::RequestOptions` 
     
 </dd>
 </dl>
@@ -59,7 +59,7 @@ client.echo(
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">nop</a>(id, nested_id) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_package_yml/service/client.rb">nop</a>(id, nested_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -103,7 +103,7 @@ client.service.nop(nested_id: 'id-219xca8');
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernPackageYml::Service::RequestOptions` 
     
 </dd>
 </dl>

@@ -2,7 +2,7 @@ services:
   wiremock:
     image: wiremock/wiremock:3.9.1
     ports:
-      - "8080:8080"
+      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]

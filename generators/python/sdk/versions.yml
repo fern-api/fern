@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.50.0
+  changelogEntry:
+    - summary: |
+        Add `wire_tests` config group with `enabled` and `exclusions` options. The `exclusions` option allows excluding specific endpoints/services from wire test generation using definition-level selectors. The existing `enable_wire_tests` option is now deprecated in favor of `wire_tests.enabled`.
+      type: feat
+  createdAt: "2026-01-25"
+  irVersion: 62
+
 - version: 4.49.0
   changelogEntry:
     - summary: |

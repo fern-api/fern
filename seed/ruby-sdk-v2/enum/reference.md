@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_</a>() -> </code></summary>
+<details><summary><code>client.headers.<a href="/lib/fern_enum/headers/client.rb">send_</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -32,7 +32,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**maybe_operand:** `Seed::Types::Operand` 
+**maybe_operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -56,7 +56,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -64,7 +64,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**request_options:** `Seed::Headers::RequestOptions` 
+**request_options:** `FernEnum::Headers::RequestOptions` 
     
 </dd>
 </dl>
@@ -77,7 +77,7 @@ client.headers.send_(
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.inlined_request.<a href="/lib/seed/inlined_request/client.rb">send_</a>(request) -> </code></summary>
+<details><summary><code>client.inlined_request.<a href="/lib/fern_enum/inlined_request/client.rb">send_</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -108,7 +108,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -116,7 +116,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**maybe_operand:** `Seed::Types::Operand` 
+**maybe_operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -124,7 +124,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -132,7 +132,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -140,7 +140,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**request_options:** `Seed::InlinedRequest::RequestOptions` 
+**request_options:** `FernEnum::InlinedRequest::RequestOptions` 
     
 </dd>
 </dl>
@@ -154,7 +154,7 @@ client.inlined_request.send_(
 
 ## MultipartForm
 ## PathParam
-<details><summary><code>client.path_param.<a href="/lib/seed/path_param/client.rb">send_</a>(operand, operand_or_color) -> </code></summary>
+<details><summary><code>client.path_param.<a href="/lib/fern_enum/path_param/client.rb">send_</a>(operand, operand_or_color) -> </code></summary>
 <dl>
 <dd>
 
@@ -185,7 +185,7 @@ client.path_param.send_(
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -193,7 +193,7 @@ client.path_param.send_(
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -201,7 +201,7 @@ client.path_param.send_(
 <dl>
 <dd>
 
-**request_options:** `Seed::PathParam::RequestOptions` 
+**request_options:** `FernEnum::PathParam::RequestOptions` 
     
 </dd>
 </dl>
@@ -214,7 +214,7 @@ client.path_param.send_(
 </details>
 
 ## QueryParam
-<details><summary><code>client.query_param.<a href="/lib/seed/query_param/client.rb">send_</a>() -> </code></summary>
+<details><summary><code>client.query_param.<a href="/lib/fern_enum/query_param/client.rb">send_</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -245,7 +245,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -253,7 +253,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**maybe_operand:** `Seed::Types::Operand` 
+**maybe_operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -261,7 +261,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -269,7 +269,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -277,7 +277,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**request_options:** `Seed::QueryParam::RequestOptions` 
+**request_options:** `FernEnum::QueryParam::RequestOptions` 
     
 </dd>
 </dl>
@@ -289,7 +289,7 @@ client.query_param.send_(
 </dl>
 </details>
 
-<details><summary><code>client.query_param.<a href="/lib/seed/query_param/client.rb">send_list</a>() -> </code></summary>
+<details><summary><code>client.query_param.<a href="/lib/fern_enum/query_param/client.rb">send_list</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -317,7 +317,7 @@ client.query_param.send_list();
 <dl>
 <dd>
 
-**operand:** `Seed::Types::Operand` 
+**operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -325,7 +325,7 @@ client.query_param.send_list();
 <dl>
 <dd>
 
-**maybe_operand:** `Seed::Types::Operand` 
+**maybe_operand:** `FernEnum::Types::Operand` 
     
 </dd>
 </dl>
@@ -333,7 +333,7 @@ client.query_param.send_list();
 <dl>
 <dd>
 
-**operand_or_color:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -341,7 +341,7 @@ client.query_param.send_list();
 <dl>
 <dd>
 
-**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `FernEnum::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -349,7 +349,7 @@ client.query_param.send_list();
 <dl>
 <dd>
 
-**request_options:** `Seed::QueryParam::RequestOptions` 
+**request_options:** `FernEnum::QueryParam::RequestOptions` 
     
 </dd>
 </dl>

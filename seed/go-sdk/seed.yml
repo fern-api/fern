@@ -259,6 +259,13 @@ fixtures:
   go-optional-literal-alias:
     - outputFolder: .
       customConfig: null
+  go-undiscriminated-union-wire-tests:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        packageName: fern
+        module:
+          path: github.com/go-undiscriminated-union-wire-tests/fern
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:

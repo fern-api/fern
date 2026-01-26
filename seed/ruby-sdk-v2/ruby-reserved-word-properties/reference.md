@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get</a>() -> Seed::Service::Types::Foo</code></summary>
+<details><summary><code>client.service.<a href="/lib/fern_ruby_reserved_word_properties/service/client.rb">get</a>() -> FernRubyReservedWordProperties::Service::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.get();
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernRubyReservedWordProperties::Service::RequestOptions` 
     
 </dd>
 </dl>
