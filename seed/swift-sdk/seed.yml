@@ -118,7 +118,6 @@ allowedFailures:
   - errors
   - examples:no-custom-config
   - examples:readme-config
-  - exhaustive
   - extra-properties
   - file-upload-openapi
   - idempotency-headers

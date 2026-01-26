@@ -23,6 +23,7 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([.string("set")]),
             map: [
                 1: "map"
             ]

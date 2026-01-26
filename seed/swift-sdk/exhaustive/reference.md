@@ -143,7 +143,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives()
+    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: .array([.string("string")]))
 }
 
 try await main()
@@ -200,7 +200,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfObjects()
+    _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: .array([.object(["string": .string("string")])]))
 }
 
 try await main()
@@ -451,6 +451,7 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([.string("set")]),
         map: [
             1: "map"
         ]
@@ -525,6 +526,7 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([.string("set")]),
         map: [
             1: "map"
         ]
@@ -846,6 +848,7 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([.string("set")]),
             map: [
                 1: "map"
             ]
@@ -987,6 +990,7 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([.string("set")]),
         map: [
             1: "map"
         ]
@@ -1185,6 +1189,7 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([.string("set")]),
             map: [
                 1: "map"
             ]
@@ -1264,6 +1269,7 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([.string("set")]),
                 map: [
                     1: "map"
                 ]
@@ -1351,6 +1357,7 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([.string("set")]),
                 map: [
                     1: "map"
                 ]
@@ -1372,6 +1379,7 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([.string("set")]),
                 map: [
                     1: "map"
                 ]
@@ -2933,6 +2941,7 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([.string("set")]),
             map: [
                 1: "map"
             ]
@@ -3168,7 +3177,10 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.reqWithHeaders.getWithCustomHeader(request: .init(body: "string"))
+    _ = try await client.reqWithHeaders.getWithCustomHeader(
+        xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        request: "string"
+    )
 }
 
 try await main()

@@ -7,7 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.reqWithHeaders.getWithCustomHeader(request: .init(body: "string"))
+    _ = try await client.reqWithHeaders.getWithCustomHeader(
+        xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        request: "string"
+    )
 }
 
 try await main()

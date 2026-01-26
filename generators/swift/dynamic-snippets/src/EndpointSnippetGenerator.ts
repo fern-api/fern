@@ -348,6 +348,17 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
         args.push(...pathParameterFields);
 
+        this.context.errors.scope(Scope.Headers);
+        const headerFields: swift.FunctionArgument[] = [];
+        if (request.headers != null) {
+            // Filter out service-level headers - they are handled at the client constructor level
+            const serviceHeaderNames = new Set((this.context.ir.headers ?? []).map((h) => h.name.wireValue));
+            const endpointLevelHeaders = request.headers.filter((h) => !serviceHeaderNames.has(h.name.wireValue));
+            headerFields.push(...this.getEndpointMethodHeaders({ namedParameters: endpointLevelHeaders, snippet }));
+        }
+        this.context.errors.unscope();
+        args.push(...headerFields);
+
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameterFields: swift.FunctionArgument[] = [];
         if (request.queryParameters != null) {
@@ -363,16 +374,30 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (request.body != null) {
-            args.push(
-                swift.functionArgument({
-                    label: "request",
-                    value: this.getInlinedRequestArg({
-                        request,
-                        snippet,
-                        filePropertyInfo
+            // For referenced body types, pass the body value directly without wrapping in .init()
+            // For other body types (properties, fileUpload), wrap in .init()
+            if (request.body.type === "referenced") {
+                args.push(
+                    swift.functionArgument({
+                        label: "request",
+                        value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                            body: request.body.bodyType,
+                            value: snippet.requestBody
+                        })
                     })
-                })
-            );
+                );
+            } else {
+                args.push(
+                    swift.functionArgument({
+                        label: "request",
+                        value: this.getInlinedRequestArg({
+                            request,
+                            snippet,
+                            filePropertyInfo
+                        })
+                    })
+                );
+            }
         }
 
         return args;
@@ -415,6 +440,31 @@ export class EndpointSnippetGenerator {
             .getExampleObjectProperties({
                 parameters: namedParameters,
                 snippetObject: snippet.queryParameters ?? {}
+            })
+            .map((parameter) => {
+                return swift.functionArgument({
+                    label: parameter.name.name.camelCase.unsafeName,
+                    value: this.context.dynamicTypeLiteralMapper.convert({
+                        fromSymbol: moduleSymbol,
+                        typeReference: parameter.typeReference,
+                        value: parameter.value
+                    })
+                });
+            });
+    }
+
+    private getEndpointMethodHeaders({
+        namedParameters,
+        snippet
+    }: {
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): swift.FunctionArgument[] {
+        const moduleSymbol = this.context.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        return this.context
+            .getExampleObjectProperties({
+                parameters: namedParameters,
+                snippetObject: snippet.headers ?? {}
             })
             .map((parameter) => {
                 return swift.functionArgument({

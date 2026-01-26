@@ -21,7 +21,7 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .dog(
+        let expectedResponse = Animal.dog(
             .init(
                 name: "name",
                 likesToWoof: true

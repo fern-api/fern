@@ -95,7 +95,9 @@ export class WireTestFunctionGenerator {
                                             swift.functionArgument({
                                                 value: swift.Expression.memberAccess({
                                                     target: swift.Expression.stringLiteral(
-                                                        `""\n${typeof exampleTypeRef.jsonExample === "string" ? exampleTypeRef.jsonExample : JSON.stringify(exampleTypeRef.jsonExample, null, 2)}\n""`
+                                                        // For String responses, the Swift SDK directly converts raw data to string (no JSON decoding)
+                                                        // For other types (Date, UUID, etc.), the SDK uses JSON decoding, so we need valid JSON
+                                                        `""\n${this.formatResponseBody(exampleTypeRef)}\n""`
                                                     ),
                                                     memberName: "utf8"
                                                 })
@@ -225,7 +227,23 @@ export class WireTestFunctionGenerator {
                             multiline: true
                         });
                     },
-                    set: () => swift.Expression.arrayLiteral({}),
+                    set: (setContainer) => {
+                        // Sets are converted to JSONValue in Swift
+                        return swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "array",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.arrayLiteral({
+                                        elements: setContainer.set.map((element) =>
+                                            this.generateJSONValueExampleResponse(element)
+                                        ),
+                                        multiline: setContainer.set.length > 1 ? true : undefined
+                                    })
+                                })
+                            ]
+                        });
+                    },
                     nullable: (nullableContainer) => {
                         if (this.sdkGeneratorContext.customConfig.nullableAsOptional) {
                             const exampleTypeRef =
@@ -328,7 +346,11 @@ export class WireTestFunctionGenerator {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
-                        return swift.Expression.enumCaseShorthand(exampleEnumType.value.name.camelCase.unsafeName);
+                        // Use full type name to provide context for Swift type inference
+                        return swift.Expression.memberAccess({
+                            target: swift.Expression.reference(symbol.name),
+                            memberName: exampleEnumType.value.name.camelCase.unsafeName
+                        });
                     },
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
@@ -353,9 +375,11 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     union: (exampleUnionType) => {
+                        // Use full type name to provide context for Swift type inference
                         return exampleUnionType.singleUnionType.shape._visit({
                             noProperties: () =>
-                                swift.Expression.contextualMethodCall({
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference(symbol.name),
                                     methodName:
                                         exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
                                             .unsafeName,
@@ -369,7 +393,8 @@ export class WireTestFunctionGenerator {
                                     ]
                                 }),
                             samePropertiesAsObject: (exampleObjectTypeWithId) =>
-                                swift.Expression.contextualMethodCall({
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference(symbol.name),
                                     methodName:
                                         exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
                                             .unsafeName,
@@ -404,7 +429,8 @@ export class WireTestFunctionGenerator {
                                 }),
                             singleProperty: (exampleTypeRef) => this.generateExampleResponse(exampleTypeRef, fromScope),
                             _other: () =>
-                                swift.Expression.contextualMethodCall({
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference(symbol.name),
                                     methodName:
                                         exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
                                             .unsafeName,
@@ -520,6 +546,307 @@ export class WireTestFunctionGenerator {
         });
     }
 
+    private generateJSONValueExampleResponse(exampleTypeRef: ExampleTypeReference): swift.Expression {
+        // Convert an ExampleTypeReference to a JSONValue expression
+        return exampleTypeRef.shape._visit({
+            container: (exampleContainer) =>
+                exampleContainer._visit({
+                    literal: (literalContainer) => {
+                        return literalContainer.literal._visit({
+                            string: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "string",
+                                    arguments_: [
+                                        swift.functionArgument({ value: swift.Expression.stringLiteral(val.original) })
+                                    ]
+                                }),
+                            boolean: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "bool",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.boolLiteral(val) })]
+                                }),
+                            integer: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "number",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(val) })]
+                                }),
+                            uint: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "number",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(val) })]
+                                }),
+                            uint64: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "number",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(val) })]
+                                }),
+                            long: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "number",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(val) })]
+                                }),
+                            float: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "number",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(val) })]
+                                }),
+                            double: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "number",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(val) })]
+                                }),
+                            bigInteger: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "string",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(val) })]
+                                }),
+                            date: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "string",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(val) })]
+                                }),
+                            datetime: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "string",
+                                    arguments_: [
+                                        swift.functionArgument({
+                                            value: swift.Expression.stringLiteral(val.raw ?? val.datetime.toISOString())
+                                        })
+                                    ]
+                                }),
+                            base64: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "string",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(val) })]
+                                }),
+                            uuid: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "string",
+                                    arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(val) })]
+                                }),
+                            _other: () => swift.Expression.nop()
+                        });
+                    },
+                    map: (mapContainer) => {
+                        return swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "object",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.dictionaryLiteral({
+                                        entries: mapContainer.map.map((kvPair) => [
+                                            this.generateJSONValueExampleResponse(kvPair.key),
+                                            this.generateJSONValueExampleResponse(kvPair.value)
+                                        ]),
+                                        multiline: true
+                                    })
+                                })
+                            ],
+                            multiline: true
+                        });
+                    },
+                    set: (setContainer) => {
+                        return swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "array",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.arrayLiteral({
+                                        elements: setContainer.set.map((element) =>
+                                            this.generateJSONValueExampleResponse(element)
+                                        ),
+                                        multiline: setContainer.set.length > 1 ? true : undefined
+                                    })
+                                })
+                            ]
+                        });
+                    },
+                    nullable: (nullableContainer) => {
+                        if (nullableContainer.nullable == null) {
+                            return swift.Expression.enumCaseShorthand("null");
+                        }
+                        return this.generateJSONValueExampleResponse(nullableContainer.nullable);
+                    },
+                    optional: (optionalContainer) => {
+                        if (optionalContainer.optional == null) {
+                            return swift.Expression.enumCaseShorthand("null");
+                        }
+                        return this.generateJSONValueExampleResponse(optionalContainer.optional);
+                    },
+                    list: (listContainer) => {
+                        return swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "array",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.arrayLiteral({
+                                        elements: listContainer.list.map((element) =>
+                                            this.generateJSONValueExampleResponse(element)
+                                        ),
+                                        multiline: true
+                                    })
+                                })
+                            ]
+                        });
+                    },
+                    _other: () => swift.Expression.nop()
+                }),
+            primitive: (examplePrimitive) =>
+                examplePrimitive._visit({
+                    string: (escapedString) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "string",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.stringLiteral(escapedString.original)
+                                })
+                            ]
+                        }),
+                    boolean: (bool) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "bool",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.boolLiteral(bool) })]
+                        }),
+                    integer: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "number",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(value) })]
+                        }),
+                    uint: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "number",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(value) })]
+                        }),
+                    uint64: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "number",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(value) })]
+                        }),
+                    long: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "number",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(value) })]
+                        }),
+                    float: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "number",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(value) })]
+                        }),
+                    double: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "number",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(value) })]
+                        }),
+                    bigInteger: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "string",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(value) })]
+                        }),
+                    date: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "string",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(value) })]
+                        }),
+                    datetime: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "string",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.stringLiteral(value.raw ?? value.datetime.toISOString())
+                                })
+                            ]
+                        }),
+                    base64: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "string",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(value) })]
+                        }),
+                    uuid: (value) =>
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "string",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(value) })]
+                        }),
+                    _other: () => swift.Expression.nop()
+                }),
+            named: (exampleNamedType) => {
+                return exampleNamedType.shape._visit({
+                    alias: (exampleAliasType) => {
+                        return this.generateJSONValueExampleResponse(exampleAliasType.value);
+                    },
+                    enum: (exampleEnumType) => {
+                        return swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "string",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.stringLiteral(exampleEnumType.value.wireValue)
+                                })
+                            ]
+                        });
+                    },
+                    object: (exampleObjectType) => {
+                        return swift.Expression.methodCall({
+                            target: swift.Expression.reference("JSONValue"),
+                            methodName: "object",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.dictionaryLiteral({
+                                        entries: exampleObjectType.properties
+                                            .filter((property) => property.value.jsonExample !== undefined)
+                                            .map((property) => [
+                                                swift.Expression.stringLiteral(property.name.wireValue),
+                                                this.generateJSONValueExampleResponse(property.value)
+                                            ]),
+                                        multiline: true
+                                    })
+                                })
+                            ],
+                            multiline: true
+                        });
+                    },
+                    union: () => {
+                        // For unions, fall back to using the JSON example directly
+                        return this.generateUnknownExampleResponse(exampleNamedType.typeName);
+                    },
+                    undiscriminatedUnion: (exampleUnionType) => {
+                        return this.generateJSONValueExampleResponse(exampleUnionType.singleUnionType);
+                    },
+                    _other: () => swift.Expression.nop()
+                });
+            },
+            unknown: (val) => {
+                return this.generateUnknownExampleResponse(val);
+            },
+            _other: () => swift.Expression.nop()
+        });
+    }
+
     private generateUnknownExampleResponse(val: unknown): swift.Expression {
         if (val === null) {
             return swift.Expression.memberAccess({
@@ -581,5 +908,75 @@ export class WireTestFunctionGenerator {
             });
         }
         throw new Error(`Unknown value: ${JSON.stringify(val)}`);
+    }
+
+    /**
+     * Formats the response body for the mock HTTP stub.
+     *
+     * The Swift SDK handles different response types differently:
+     * - For String responses: It directly converts raw data to string (no JSON decoding)
+     * - For Data responses: It returns the raw data directly
+     * - For other types (Date, UUID, CalendarDate, etc.): It uses JSON decoding
+     *
+     * So we need to:
+     * - For primitive string types: Return the raw string value
+     * - For other types: Return JSON-encoded value
+     */
+    private formatResponseBody(exampleTypeRef: ExampleTypeReference): string {
+        // Check if this is a primitive string type (or an alias to a primitive string)
+        if (this.isStringResponseType(exampleTypeRef)) {
+            // For string responses, return the raw string value (no JSON encoding)
+            return typeof exampleTypeRef.jsonExample === "string"
+                ? exampleTypeRef.jsonExample
+                : JSON.stringify(exampleTypeRef.jsonExample, null, 2);
+        }
+        // For all other types, use JSON encoding
+        return JSON.stringify(exampleTypeRef.jsonExample, null, 2);
+    }
+
+    /**
+     * Checks if the response type is a primitive string type.
+     * This includes:
+     * - Direct primitive string types
+     * - Aliases to primitive string types
+     * - Base64 types (which are strings in Swift)
+     */
+    private isStringResponseType(exampleTypeRef: ExampleTypeReference): boolean {
+        return exampleTypeRef.shape._visit({
+            primitive: (primitive) => {
+                return primitive._visit({
+                    string: () => true,
+                    base64: () => true,
+                    // All other primitives need JSON encoding
+                    integer: () => false,
+                    uint: () => false,
+                    uint64: () => false,
+                    long: () => false,
+                    float: () => false,
+                    double: () => false,
+                    boolean: () => false,
+                    date: () => false,
+                    datetime: () => false,
+                    uuid: () => false,
+                    bigInteger: () => false,
+                    _other: () => false
+                });
+            },
+            named: (namedType) => {
+                // Check if this is an alias to a string type
+                return namedType.shape._visit({
+                    alias: (aliasType) => this.isStringResponseType(aliasType.value),
+                    // All other named types need JSON encoding
+                    enum: () => false,
+                    object: () => false,
+                    union: () => false,
+                    undiscriminatedUnion: () => false,
+                    _other: () => false
+                });
+            },
+            container: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
     }
 }
