@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream</a>(request) -> Seed::Completions::Types::StreamedCompletion</code></summary>
+<details><summary><code>client.completions.<a href="/lib/fern_server_sent_event_examples/completions/client.rb">stream</a>(request) -> FernServerSentEventExamples::Completions::Types::StreamedCompletion</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.completions.stream(query: 'foo');
 <dl>
 <dd>
 
-**request_options:** `Seed::Completions::RequestOptions` 
+**request_options:** `FernServerSentEventExamples::Completions::RequestOptions` 
     
 </dd>
 </dl>

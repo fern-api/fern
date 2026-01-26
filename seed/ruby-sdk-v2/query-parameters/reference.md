@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_username</a>() -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/fern_query_parameters/user/client.rb">get_username</a>() -> FernQueryParameters::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**user:** `Seed::User::Types::User` 
+**user:** `FernQueryParameters::User::Types::User` 
     
 </dd>
 </dl>
@@ -109,7 +109,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**user_list:** `Internal::Types::Array[Seed::User::Types::User]` 
+**user_list:** `Internal::Types::Array[FernQueryParameters::User::Types::User]` 
     
 </dd>
 </dl>
@@ -141,7 +141,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**nested_user:** `Seed::User::Types::NestedUser` 
+**nested_user:** `FernQueryParameters::User::Types::NestedUser` 
     
 </dd>
 </dl>
@@ -149,7 +149,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**optional_user:** `Seed::User::Types::User` 
+**optional_user:** `FernQueryParameters::User::Types::User` 
     
 </dd>
 </dl>
@@ -157,7 +157,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**exclude_user:** `Seed::User::Types::User` 
+**exclude_user:** `FernQueryParameters::User::Types::User` 
     
 </dd>
 </dl>
@@ -173,7 +173,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**request_options:** `Seed::User::RequestOptions` 
+**request_options:** `FernQueryParameters::User::RequestOptions` 
     
 </dd>
 </dl>

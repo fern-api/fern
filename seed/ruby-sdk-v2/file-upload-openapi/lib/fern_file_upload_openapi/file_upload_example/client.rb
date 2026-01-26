@@ -1,0 +1,58 @@
+# frozen_string_literal: true
+
+module FernFileUploadOpenapi
+  module FileUploadExample
+    class Client
+      # @param client [FernFileUploadOpenapi::Internal::Http::RawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # Upload a file to the database
+      #
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [String]
+      def upload_file(request_options: {}, **params)
+        params = FernFileUploadOpenapi::Internal::Types::Utils.normalize_keys(params)
+        body = Internal::Multipart::FormData.new
+
+        if params[:name]
+          body.add(
+            name: "name",
+            value: params[:name]
+          )
+        end
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+
+        request = FernFileUploadOpenapi::Internal::Multipart::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "upload-file",
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise FernFileUploadOpenapi::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          FernFileUploadOpenapi::Types::FileId.load(response.body)
+        else
+          error_class = FernFileUploadOpenapi::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+    end
+  end
+end

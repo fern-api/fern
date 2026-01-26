@@ -25,6 +25,69 @@
   createdAt: "2026-01-22"
   irVersion: 62
 
+- version: 2.17.5
+  changelogEntry:
+    - summary: |
+        Fix test equality comparison for nested OneOf values in collections.
+
+        Previously, when comparing objects containing `List<OneOf<...>>` properties (such as
+        `RelatedResources` in FHIR-style models), the test framework would incorrectly report
+        differences even when the values were identical. This was because the nested OneOf
+        comparer didn't recursively handle OneOf values within collections.
+
+        The fix adds a custom `EqualityAdapter` that registers itself with the inner
+        `NUnitEqualityComparer`, enabling proper recursive comparison of nested OneOf values.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.4
+  changelogEntry:
+    - summary: |
+        Fix extra properties support for inlined request bodies and improve test equality comparisons.
+
+        This fix addresses three issues with the `extra-properties: true` feature:
+        * Inlined request bodies now properly support `AdditionalProperties` for serialization/deserialization
+        * Test snippets now include extra properties from examples for both object types and wrapped requests
+        * Added `AdditionalPropertiesComparer` to handle type mismatches between JsonElement and native C# types in test assertions
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.3
+  changelogEntry:
+    - summary: |
+        Fix mock server tests to use FormUrlEncodedMatcher for form-urlencoded requests.
+
+        Previously, mock server tests used `WithBodyAsJson` for form-urlencoded requests, which
+        caused test failures because the SDK sends the request body as `key=value&key2=value2`
+        format, not JSON. This fix uses WireMock's `FormUrlEncodedMatcher` to properly match
+        form-urlencoded request bodies.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.2
+  changelogEntry:
+    - summary: |
+        Fix mock server tests to exclude read-only properties from expected request JSON.
+
+        Previously, mock server tests included read-only properties (marked with `access: read-only`)
+        in the expected request JSON, causing test failures because the SDK correctly excludes these
+        properties during serialization. This fix filters out read-only properties at all nesting
+        levels, including within dictionaries, lists, and nested objects.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 62
+
+- version: 2.17.1
+  changelogEntry:
+    - summary: |
+        Add global::System to Attribute in OptionalAttribute and NullableAttribute.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 62
+
 - version: 2.17.0
   changelogEntry:
     - summary: |

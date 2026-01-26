@@ -1,0 +1,260 @@
+{
+  "apiName": "",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "graphqlOperations": undefined,
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_plantUpdates",
+      "subpackage_plantOrders",
+    ],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_plantOrders": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "graphqlOperations": undefined,
+      "name": "plantOrders",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_plantOrders",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": "production",
+          "description": "Receive order status notifications",
+          "environments": [
+            {
+              "baseUrl": "wss://events.plantstore.dev",
+              "id": "production",
+            },
+          ],
+          "examples": [
+            {
+              "description": undefined,
+              "headers": {},
+              "messages": [
+                {
+                  "body": {
+                    "orderId": undefined,
+                    "status": undefined,
+                    "timestamp": undefined,
+                  },
+                  "type": "subscribe",
+                },
+              ],
+              "name": undefined,
+              "path": "/plant/orders",
+              "pathParameters": {},
+              "queryParameters": {},
+            },
+          ],
+          "headers": [],
+          "id": "plantOrders",
+          "messages": [
+            {
+              "availability": undefined,
+              "body": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "PlantOrdersSubscribe",
+                },
+              },
+              "description": undefined,
+              "displayName": "subscribe",
+              "origin": "server",
+              "type": "subscribe",
+            },
+          ],
+          "name": "Plant Orders",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/plant/orders",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+        },
+      ],
+    },
+    "subpackage_plantUpdates": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "graphqlOperations": undefined,
+      "name": "plantUpdates",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_plantUpdates",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": "production",
+          "description": "Receive real-time plant inventory updates",
+          "environments": [
+            {
+              "baseUrl": "wss://events.plantstore.dev",
+              "id": "production",
+            },
+          ],
+          "examples": [
+            {
+              "description": undefined,
+              "headers": {},
+              "messages": [],
+              "name": undefined,
+              "path": "/plant/updates",
+              "pathParameters": {},
+              "queryParameters": {},
+            },
+          ],
+          "headers": [],
+          "id": "plantUpdates",
+          "messages": [],
+          "name": "Plant Updates",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/plant/updates",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+        },
+      ],
+    },
+  },
+  "types": {
+    "ChannelsPlantOrdersSubscribeStatus": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ChannelsPlantOrdersSubscribeStatus",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "placed",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "processing",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "shipped",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "delivered",
+          },
+        ],
+      },
+    },
+    "PlantOrdersSubscribe": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "PlantOrdersSubscribe",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "orderId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "integer",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "status",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ChannelsPlantOrdersSubscribeStatus",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "timestamp",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "type": "datetime",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

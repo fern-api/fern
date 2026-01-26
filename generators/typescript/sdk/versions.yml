@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.44.2
+  changelogEntry:
+    - summary: |
+        Fix README pagination section being included even when the SDK has no autopaginated endpoints.
+        The pagination section is now only included in the README when there is at least one endpoint
+        with pagination defined.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.44.1
+  changelogEntry:
+    - summary: |
+        Fix optional query parameters with date/datetime types throwing serialization errors when
+        undefined. Previously, optional query parameters that were named types aliasing Date (like
+        `before?: Before` where `Before = Date`) would call `jsonOrThrow` unconditionally, causing
+        "Expected Date object. Received undefined" errors when the parameter was omitted. Now the
+        generator adds a null check for optional date/datetime query parameters, matching the
+        behavior already used for object-type query parameters.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
 - version: 3.44.0
   changelogEntry:
     - summary: |

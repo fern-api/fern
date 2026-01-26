@@ -16,6 +16,7 @@ import com.seed.api.errors.UnprocessableEntityError;
 import com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;
 import com.seed.api.types.PlainObject;
 import java.io.IOException;
+import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -29,6 +30,23 @@ public class RawTestGroupClient {
 
     public RawTestGroupClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Post a nullable request body
+     */
+    public SeedApiHttpResponse<Object> testMethodName(String pathParam, Optional<PlainObject> body) {
+        return testMethodName(
+                pathParam, TestMethodNameTestGroupRequest.builder().body(body).build());
+    }
+
+    /**
+     * Post a nullable request body
+     */
+    public SeedApiHttpResponse<Object> testMethodName(
+            String pathParam, Optional<PlainObject> body, RequestOptions requestOptions) {
+        return testMethodName(
+                pathParam, TestMethodNameTestGroupRequest.builder().body(body).build(), requestOptions);
     }
 
     /**
@@ -57,6 +75,11 @@ public class RawTestGroupClient {
                     "query_param_integer",
                     request.getQueryParamInteger().get(),
                     false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         RequestBody body;
         try {

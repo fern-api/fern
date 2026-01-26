@@ -1,0 +1,58 @@
+# frozen_string_literal: true
+
+module FernPaginationCustom
+  module Users
+    class Client
+      # @param client [FernPaginationCustom::Internal::Http::RawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String, nil] :starting_after
+      #
+      # @return [FernPaginationCustom::Types::UsernameCursor]
+      def list_usernames_custom(request_options: {}, **params)
+        params = FernPaginationCustom::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[starting_after]
+        query_params = {}
+        query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
+        params.except(*query_param_names)
+
+        request = FernPaginationCustom::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "/users",
+          query: query_params,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise FernPaginationCustom::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          parsed_response = FernPaginationCustom::Types::UsernameCursor.load(response.body)
+        else
+          error_class = FernPaginationCustom::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+
+        FernPaginationCustom::Internal::FooPager.new(
+          parsed_response,
+          item_field: :data,
+          raw_client: @client
+        )
+      end
+    end
+  end
+end

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user</a>(user_id) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/fern_multi_line_docs/user/client.rb">get_user</a>(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ This ID is unique to each user.
 <dl>
 <dd>
 
-**request_options:** `Seed::User::RequestOptions` 
+**request_options:** `FernMultiLineDocs::User::RequestOptions` 
     
 </dd>
 </dl>
@@ -66,7 +66,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/fern_multi_line_docs/user/client.rb">create_user</a>(request) -> FernMultiLineDocs::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ This property is not required.
 <dl>
 <dd>
 
-**request_options:** `Seed::User::RequestOptions` 
+**request_options:** `FernMultiLineDocs::User::RequestOptions` 
     
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.headers.<a href="/lib/fern_literal/headers/client.rb">send_</a>(request) -> FernLiteral::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**request_options:** `Seed::Headers::RequestOptions` 
+**request_options:** `FernLiteral::Headers::RequestOptions` 
     
 </dd>
 </dl>
@@ -69,7 +69,7 @@ client.headers.send_(
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.<a href="/lib/seed/inlined/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.inlined.<a href="/lib/fern_literal/inlined/client.rb">send_</a>(request) -> FernLiteral::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -166,7 +166,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**object_with_literal:** `Seed::Inlined::Types::ATopLevelLiteral` 
+**object_with_literal:** `FernLiteral::Inlined::Types::ATopLevelLiteral` 
     
 </dd>
 </dl>
@@ -174,7 +174,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**request_options:** `Seed::Inlined::RequestOptions` 
+**request_options:** `FernLiteral::Inlined::RequestOptions` 
     
 </dd>
 </dl>
@@ -187,7 +187,7 @@ client.inlined.send_(
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.path.<a href="/lib/fern_literal/path/client.rb">send_</a>(id) -> FernLiteral::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -223,7 +223,7 @@ client.path.send_(id: '123');
 <dl>
 <dd>
 
-**request_options:** `Seed::Path::RequestOptions` 
+**request_options:** `FernLiteral::Path::RequestOptions` 
     
 </dd>
 </dl>
@@ -236,7 +236,7 @@ client.path.send_(id: '123');
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="/lib/seed/query/client.rb">send_</a>() -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.query.<a href="/lib/fern_literal/query/client.rb">send_</a>() -> FernLiteral::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -346,7 +346,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**request_options:** `Seed::Query::RequestOptions` 
+**request_options:** `FernLiteral::Query::RequestOptions` 
     
 </dd>
 </dl>
@@ -359,7 +359,7 @@ client.query.send_(
 </details>
 
 ## Reference
-<details><summary><code>client.reference.<a href="/lib/seed/reference/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.reference.<a href="/lib/fern_literal/reference/client.rb">send_</a>(request) -> FernLiteral::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -399,7 +399,7 @@ client.reference.send_(
 <dl>
 <dd>
 
-**request:** `Seed::Reference::Types::SendRequest` 
+**request:** `FernLiteral::Reference::Types::SendRequest` 
     
 </dd>
 </dl>
@@ -407,7 +407,7 @@ client.reference.send_(
 <dl>
 <dd>
 
-**request_options:** `Seed::Reference::RequestOptions` 
+**request_options:** `FernLiteral::Reference::RequestOptions` 
     
 </dd>
 </dl>

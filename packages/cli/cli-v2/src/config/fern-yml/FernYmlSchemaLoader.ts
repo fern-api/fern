@@ -1,7 +1,9 @@
-import { FernYml, FernYmlSchema } from "@fern-api/config";
+import { FernYmlSchema } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { YamlConfigLoader } from "@fern-api/yaml-loader";
 import { FileFinder } from "../FileFinder";
+
+const FILENAME = "fern.yml";
 
 export namespace FernYmlSchemaLoader {
     export interface Options {
@@ -12,6 +14,7 @@ export namespace FernYmlSchemaLoader {
     }
 
     export type Result = YamlConfigLoader.Result<FernYmlSchema>;
+    export type Success = YamlConfigLoader.Success<FernYmlSchema>;
 }
 
 export class FernYmlSchemaLoader {
@@ -33,7 +36,7 @@ export class FernYmlSchemaLoader {
      * @throws Error if fern.yml is not found.
      */
     public async load(): Promise<FernYmlSchemaLoader.Result> {
-        const absoluteFilePath = await this.finder.findOrThrow(FernYml.FILENAME);
+        const absoluteFilePath = await this.finder.findOrThrow(FILENAME);
         return await this.loader.load({
             absoluteFilePath,
             schema: FernYmlSchema
