@@ -1,5 +1,5 @@
-import type { DockerImageReference } from "../config/DockerImageReference";
-import { Language } from "../config/Language";
+import type { DockerImageReference } from "../DockerImageReference";
+import { Language } from "../Language";
 
 /**
  * Mapping of SDK languages to their Docker image names.
@@ -13,7 +13,7 @@ const SDK_DOCKER_IMAGES: Record<Language, string> = {
     ruby: "fernapi/fern-ruby-sdk",
     rust: "fernapi/fern-rust-sdk",
     swift: "fernapi/fern-swift-sdk",
-    typescript: "fernapi/fern-typescript-node-sdk"
+    typescript: "fernapi/fern-typescript-sdk"
 };
 
 /**

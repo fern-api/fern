@@ -1,4 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
+import { CliError } from "../errors/CliError";
 import { ValidationError } from "../errors/ValidationError";
 import { Context } from "./Context";
 import type { GlobalArgs } from "./GlobalArgs";
@@ -41,6 +42,12 @@ function handleError(context: Context, error: unknown): void {
         for (const issue of error.issues) {
             context.stderr.info(issue.toString());
         }
+        return;
+    }
+
+    if (error instanceof CliError) {
+        // CliErrors are user-facing errors with codes.
+        context.stderr.error(error.message);
         return;
     }
 

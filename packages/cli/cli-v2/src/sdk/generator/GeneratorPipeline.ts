@@ -1,0 +1,171 @@
+import type { FernToken } from "@fern-api/auth";
+import type { Audiences } from "@fern-api/configuration";
+import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import type { ApiDefinition } from "../../api/config/ApiDefinition";
+import type { Context } from "../../context/Context";
+import { CliError } from "../../errors/CliError";
+import type { Target } from "../config/Target";
+import { LegacyGenerationRunner } from "./LegacyGenerationRunner";
+import { LegacyRemoteGenerationRunner } from "./LegacyRemoteGenerationRunner";
+
+/**
+ * Orchestrates SDK generation for a single target.
+ *
+ * The pipeline delegates to the v1 local-generation infrastructure for actual
+ * code generation, ensuring all of the original logic is reused:
+ *  - IR generation and migration
+ *  - Docker container execution
+ *  - Zip extraction
+ *  - .fernignore handling
+ *  - Auto-versioning
+ *  - Snippet generation
+ */
+export namespace GeneratorPipeline {
+    export interface Config {
+        /** The CLI context */
+        context: Context;
+
+        /** CLI version for workspace metadata */
+        cliVersion: string;
+    }
+    export interface RunArgs {
+        /** The target to generate */
+        target: Target;
+
+        /** The API definition to generate from */
+        apiDefinition: ApiDefinition;
+
+        /** The name of the organization */
+        organization: string;
+
+        /** Execution mode */
+        mode: "container" | "remote";
+
+        /** Whether to keep containers after completion */
+        keepContainer?: boolean;
+
+        /** Whether this is a preview/dry-run */
+        preview?: boolean;
+
+        /** Audiences to filter by */
+        audiences?: Audiences;
+
+        /** Version override (if not using target's version) */
+        version?: string;
+
+        /** Output path override */
+        outputPath?: AbsoluteFilePath;
+
+        /** Fern authentication token (required for remote generation) */
+        token?: FernToken;
+
+        /** Whether to log S3 URLs (for remote generation) */
+        shouldLogS3Url?: boolean;
+
+        /** Path to .fernignore file */
+        fernignorePath?: string;
+    }
+
+    export interface Result {
+        /** Whether generation succeeded */
+        success: boolean;
+
+        /** The target that was generated */
+        target: Target;
+
+        /** Path to generated output (for container mode) */
+        outputPath?: AbsoluteFilePath;
+
+        /** Error message (on failure) */
+        error?: string;
+    }
+}
+
+export class GeneratorPipeline {
+    private readonly context: Context;
+    private readonly cliVersion: string;
+
+    constructor(config: GeneratorPipeline.Config) {
+        this.context = config.context;
+        this.cliVersion = config.cliVersion;
+    }
+
+    /**
+     * Run generation for a single target.
+     */
+    public async run(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
+        try {
+            if (args.mode === "container") {
+                return await this.runLocalGeneration(args);
+            }
+            return await this.runRemoteGeneration(args);
+        } catch (error) {
+            const message = error instanceof globalThis.Error ? error.message : String(error);
+            return {
+                success: false,
+                target: args.target,
+                error: message
+            };
+        }
+    }
+
+    private async runLocalGeneration(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
+        const runner = new LegacyGenerationRunner({
+            context: this.context,
+            cliVersion: this.cliVersion
+        });
+        const result = await runner.run({
+            target: args.target,
+            apiDefinition: args.apiDefinition,
+            organization: args.organization,
+            audiences: args.audiences,
+            version: args.version,
+            keepContainer: args.keepContainer
+        });
+        if (!result.success) {
+            return {
+                success: false,
+                target: args.target,
+                error: result.error ?? "Generation failed"
+            };
+        }
+        return {
+            success: true,
+            target: args.target,
+            outputPath: result.outputPath
+        };
+    }
+
+    private async runRemoteGeneration(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
+        if (args.token == null) {
+            throw CliError.authRequired();
+        }
+        const runner = new LegacyRemoteGenerationRunner({
+            context: this.context,
+            cliVersion: this.cliVersion
+        });
+        const result = await runner.run({
+            target: args.target,
+            apiDefinition: args.apiDefinition,
+            organization: args.organization,
+            token: args.token,
+            audiences: args.audiences,
+            version: args.version,
+            shouldLogS3Url: args.shouldLogS3Url,
+            preview: args.preview,
+            fernignorePath: args.fernignorePath
+        });
+        if (!result.success) {
+            return {
+                success: false,
+                target: args.target,
+                error: result.error ?? "Remote generation failed"
+            };
+        }
+        return {
+            success: true,
+            target: args.target,
+            outputPath: result.outputPath
+        };
+    }
+}

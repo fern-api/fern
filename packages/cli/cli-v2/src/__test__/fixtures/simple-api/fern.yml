@@ -1,0 +1,24 @@
+edition: 2026-01-01
+org: test-org
+
+api:
+  specs:
+    - openapi: openapi.yml
+
+sdks:
+  defaultGroup: local
+  targets:
+    typescript:
+      lang: typescript
+      version: 0.39.3
+      output:
+        path: ./generated/typescript
+      group:
+        - local
+    python:
+      lang: python
+      version: 4.3.10
+      output:
+        path: ./generated/python
+      group:
+        - local
