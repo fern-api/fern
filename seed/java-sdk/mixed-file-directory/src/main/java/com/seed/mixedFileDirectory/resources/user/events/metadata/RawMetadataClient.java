@@ -44,8 +44,8 @@ public class RawMetadataClient {
                 .addPathSegments("users/events/metadata");
         QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
