@@ -131,7 +131,15 @@
             {
               "description": undefined,
               "headers": {},
-              "messages": [],
+              "messages": [
+                {
+                  "body": {
+                    "data": undefined,
+                    "encoding": undefined,
+                  },
+                  "type": "subscribe",
+                },
+              ],
               "name": undefined,
               "path": "/plant/updates",
               "pathParameters": {},
@@ -140,7 +148,23 @@
           ],
           "headers": [],
           "id": "plantUpdates",
-          "messages": [],
+          "messages": [
+            {
+              "availability": undefined,
+              "body": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "PlantUpdatesSubscribe",
+                },
+              },
+              "description": undefined,
+              "displayName": "subscribe",
+              "origin": "server",
+              "type": "subscribe",
+            },
+          ],
           "name": "Plant Updates",
           "path": {
             "parts": [
@@ -185,6 +209,33 @@
             "availability": undefined,
             "description": undefined,
             "value": "delivered",
+          },
+        ],
+      },
+    },
+    "ChannelsPlantUpdatesSubscribeEncoding": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ChannelsPlantUpdatesSubscribeEncoding",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "utf-8",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "utf-16",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "ascii",
           },
         ],
       },
@@ -247,6 +298,55 @@
                 "value": {
                   "default": undefined,
                   "type": "datetime",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "PlantUpdatesSubscribe": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "PlantUpdatesSubscribe",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "encoding",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ChannelsPlantUpdatesSubscribeEncoding",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "data",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
                 },
               },
               "type": "optional",
