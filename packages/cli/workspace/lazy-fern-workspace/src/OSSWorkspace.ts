@@ -355,14 +355,20 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                                               casingsGenerator
                                           );
                             } else {
-                                throw new Error();
+                                throw new Error("Protobuf IR validation failed");
                             }
                         } catch (error) {
-                            context.logger.log("error", "Failed to parse protobuf IR: ");
+                            context.logger.log("error", "Failed to parse protobuf IR: " + String(error));
+                            if (error instanceof Error && error.stack) {
+                                context.logger.log("error", error.stack);
+                            }
                         }
                     }
                 } catch (error) {
-                    context.logger.log("warn", "Failed to parse protobuf IR: " + error);
+                    context.logger.log("warn", "Failed to generate protobuf IR: " + String(error));
+                    if (error instanceof Error && error.stack) {
+                        context.logger.log("warn", error.stack);
+                    }
                 }
             }
         }

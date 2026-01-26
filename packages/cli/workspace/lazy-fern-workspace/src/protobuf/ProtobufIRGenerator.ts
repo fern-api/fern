@@ -208,13 +208,10 @@ export class ProtobufIRGenerator {
             PROTOBUF_MODULE_PACKAGE_JSON
         );
 
+        // Install protobuf plugin dependencies
+        // Note: We no longer need to install fern-api globally since the protoc plugin
+        // script now directly imports from @fern-api/protoc-gen-fern
         await runExeca(undefined, "npm", ["install"], {
-            cwd: protobufGeneratorConfigPath,
-            stdout: "ignore",
-            stderr: "pipe"
-        });
-
-        await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
             cwd: protobufGeneratorConfigPath,
             stdout: "ignore",
             stderr: "pipe"
@@ -227,8 +224,19 @@ export class ProtobufIRGenerator {
         );
 
         // Write and make executable the protoc plugin
+        // Create a wrapper script that invokes 'fern protoc-gen-fern' using the
+        // current Node.js process and CLI entry point
         const shellProxyPath = join(protobufGeneratorConfigPath, RelativeFilePath.of(PROTOBUF_SHELL_PROXY_FILENAME));
-        await writeFile(shellProxyPath, PROTOBUF_SHELL_PROXY);
+
+        // Get the path to the current CLI entry point (process.argv[1])
+        // This is the actual fern CLI script being executed
+        const fernCliPath = process.argv[1];
+
+        const shellProxyContent = `#!/usr/bin/env bash
+# Run 'fern protoc-gen-fern' using the current Node.js and CLI
+exec "${process.execPath}" "${fernCliPath}" protoc-gen-fern
+`;
+        await writeFile(shellProxyPath, shellProxyContent);
         await chmod(shellProxyPath, 0o755);
     }
 
