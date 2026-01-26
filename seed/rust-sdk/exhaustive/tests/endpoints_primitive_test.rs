@@ -1,3 +1,5 @@
+use base64::Engine;
+use num_bigint::BigInt;
 use seed_exhaustive::prelude::*;
 
 mod wire_test_utils;
@@ -235,7 +237,12 @@ async fn test_endpoints_primitive_get_and_return_base_64_with_wiremock() {
     let result = client
         .endpoints
         .primitive
-        .get_and_return_base_64(&"SGVsbG8gd29ybGQh".to_string(), None)
+        .get_and_return_base_64(
+            &base64::engine::general_purpose::STANDARD
+                .decode("SGVsbG8gd29ybGQh")
+                .unwrap(),
+            None,
+        )
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");

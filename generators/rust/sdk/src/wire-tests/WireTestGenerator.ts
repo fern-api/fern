@@ -130,7 +130,13 @@ export class WireTestGenerator {
 
     private generateUseStatements(): UseStatement[] {
         // Note: reqwest::Client is not needed here - it's used in wire_test_utils.rs
-        return [new UseStatement({ path: `${this.context.getCrateName()}::prelude::*`, isPublic: false })];
+        // Import base64 engine for decoding base64 strings to bytes
+        // Import BigInt for parsing big integer strings
+        return [
+            new UseStatement({ path: `${this.context.getCrateName()}::prelude::*`, isPublic: false }),
+            new UseStatement({ path: "base64::Engine", isPublic: false }),
+            new UseStatement({ path: "num_bigint::BigInt", isPublic: false })
+        ];
     }
 
     // =============================================================================

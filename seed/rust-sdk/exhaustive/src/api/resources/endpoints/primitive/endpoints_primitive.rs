@@ -95,7 +95,7 @@ impl PrimitiveClient {
     }
 
     pub async fn get_and_return_base_64(&self, request: &Vec<u8>, options: Option<RequestOptions>) -> Result<Vec<u8>, ApiError> {
-        self.http_client.execute_request(
+        self.http_client.execute_request_base64(
             Method::POST,
             "/primitive/base64",
             Some(serde_json::to_value(request).unwrap_or_default()),

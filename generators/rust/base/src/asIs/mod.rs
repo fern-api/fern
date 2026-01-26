@@ -8,6 +8,8 @@ mod query_parameter_builder;
 mod sse_stream;
 mod utils;
 pub mod flexible_datetime;
+pub mod base64_bytes;
+pub mod bigint_string;
 
 pub use http_client::{ByteStream, HttpClient, OAuthConfig};
 pub use oauth_token_provider::OAuthTokenProvider;
