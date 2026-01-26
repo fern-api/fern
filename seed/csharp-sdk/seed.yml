@@ -178,6 +178,9 @@ fixtures:
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+    - customConfig:
+        enableWireTests: true
+      outputFolder: with-wire-tests
   optional:
     - customConfig: null
       outputFolder: no-custom-config
