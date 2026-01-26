@@ -167,9 +167,8 @@ allowedFailures:
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
   - examples:no-custom-config
   - examples:readme-config
-  # Enums don't support the fromJson method yet.
-  - exhaustive
-  # Wire tests have a bug where tests extend TestCase instead of WireMockTestCase
+  # Wire tests require Docker-in-Docker support (fernapi/php-seed image)
+  # TODO: Remove after php-seed image is built and seed.yml is updated to use it
   - exhaustive:wire-tests
   - trace
   - circular-references

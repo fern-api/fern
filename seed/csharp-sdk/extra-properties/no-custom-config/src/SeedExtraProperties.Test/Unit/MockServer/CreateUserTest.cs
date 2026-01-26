@@ -95,6 +95,11 @@ public class CreateUserTest : BaseMockServerTest
                 Name = "Alice",
                 Type = "CreateUserRequest",
                 Version = "v1",
+                AdditionalProperties = new AdditionalProperties
+                {
+                    ["age"] = 30,
+                    ["location"] = "Wonderland",
+                },
             }
         );
         Assert.That(
