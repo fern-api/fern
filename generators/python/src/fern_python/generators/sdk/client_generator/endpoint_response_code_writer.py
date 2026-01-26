@@ -523,6 +523,17 @@ class EndpointResponseCodeWriter:
             ),
         )
 
+    def _write_no_content_check(self, *, writer: AST.NodeWriter) -> None:
+        """Write check for HTTP 204/205 status codes that have no response body."""
+        writer.write_line(f"if {RESPONSE_VARIABLE}.status_code in (204, 205):")
+        with writer.indent():
+            if self._is_raw_client:
+                writer.write("return ")
+                writer.write_node(self._instantiate_http_response(data=AST.Expression("None")))
+                writer.write_newline_if_last_line_not()
+            else:
+                writer.write_line("return")
+
     def _write_status_code_discriminated_response_handler(self, *, writer: AST.NodeWriter) -> None:
         def handle_endpoint_response(writer: AST.NodeWriter) -> None:
             if self._response is not None and self._response.body is not None:
@@ -564,6 +575,10 @@ class EndpointResponseCodeWriter:
                     else:
                         writer.write_line("return")
                 else:
+                    # Check for 204/205 No Content before any JSON parsing
+                    response_body_union = self._response.body.get_as_union()
+                    if response_body_union.type == "json":
+                        self._write_no_content_check(writer=writer)
                     self._response.body.visit(
                         json=lambda json_response: self._handle_success_json(
                             writer=writer, json_response=json_response, use_response_json=False
@@ -653,6 +668,10 @@ class EndpointResponseCodeWriter:
         strategy: ir_types.ErrorDiscriminationByPropertyStrategy,
     ) -> None:
         if self._response is not None and self._response.body is not None:
+            # For JSON responses, check 204/205 before trying to parse
+            response_body_union = self._response.body.get_as_union()
+            if response_body_union.type == "json":
+                self._write_no_content_check(writer=writer)
             self._try_deserialize_json_response(writer=writer)
 
         writer.write_line(f"if 200 <= {RESPONSE_VARIABLE}.status_code < 300:")
