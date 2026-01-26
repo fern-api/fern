@@ -3,14 +3,8 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
-import {
-    DocsDefinitionResolver,
-    PythonDocsSectionContext,
-    UploadedFile,
-    wrapWithHttps
-} from "@fern-api/docs-resolver";
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
+import { DocsDefinitionResolver, PythonDocsSectionContext, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIrUpload = APIV1Write.DynamicIrUpload;
