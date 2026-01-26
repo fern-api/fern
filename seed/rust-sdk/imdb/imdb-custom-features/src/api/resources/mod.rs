@@ -4,7 +4,7 @@
 //!
 //! - **Imdb**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod imdb;
 pub struct ApiClient {
@@ -16,9 +16,10 @@ impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            imdb: ImdbClient::new(config.clone())?,
+            imdb: ImdbClient::new(config.clone())?
         })
     }
+
 }
 
 pub use imdb::ImdbClient;

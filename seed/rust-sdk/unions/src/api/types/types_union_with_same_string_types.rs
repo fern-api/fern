@@ -3,9 +3,18 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithSameStringTypes {
-    CustomFormat { value: String },
+        #[serde(rename = "customFormat")]
+        CustomFormat {
+            value: String,
+        },
 
-    RegularString { value: String },
+        #[serde(rename = "regularString")]
+        RegularString {
+            value: String,
+        },
 
-    PatternString { value: String },
+        #[serde(rename = "patternString")]
+        PatternString {
+            value: String,
+        },
 }

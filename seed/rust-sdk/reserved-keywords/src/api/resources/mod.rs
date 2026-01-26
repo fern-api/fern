@@ -4,7 +4,7 @@
 //!
 //! - **Package**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod package;
 pub struct NurseryApiClient {
@@ -16,9 +16,10 @@ impl NurseryApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            package: PackageClient::new(config.clone())?,
+            package: PackageClient::new(config.clone())?
         })
     }
+
 }
 
 pub use package::PackageClient;

@@ -3,11 +3,11 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum NestedUnionL2 {
-    Boolean(bool),
+        Boolean(bool),
 
-    Set1(HashSet<String>),
+        Set1(HashSet<String>),
 
-    List2(Vec<String>),
+        List2(Vec<String>),
 }
 
 impl NestedUnionL2 {
@@ -23,45 +23,47 @@ impl NestedUnionL2 {
         matches!(self, Self::List2(_))
     }
 
+
     pub fn as_boolean(&self) -> Option<&bool> {
         match self {
-            Self::Boolean(value) => Some(value),
-            _ => None,
-        }
+                    Self::Boolean(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_boolean(self) -> Option<bool> {
         match self {
-            Self::Boolean(value) => Some(value),
-            _ => None,
-        }
+                    Self::Boolean(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_set1(&self) -> Option<&HashSet<String>> {
         match self {
-            Self::Set1(value) => Some(value),
-            _ => None,
-        }
+                    Self::Set1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_set1(self) -> Option<HashSet<String>> {
         match self {
-            Self::Set1(value) => Some(value),
-            _ => None,
-        }
+                    Self::Set1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_list2(&self) -> Option<&Vec<String>> {
         match self {
-            Self::List2(value) => Some(value),
-            _ => None,
-        }
+                    Self::List2(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_list2(self) -> Option<Vec<String>> {
         match self {
-            Self::List2(value) => Some(value),
-            _ => None,
-        }
+                    Self::List2(value) => Some(value),
+                    _ => None,
+                }
     }
+
 }
