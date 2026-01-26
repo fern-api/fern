@@ -50,7 +50,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             this.endpoint.requestBody?.type === "inlinedRequestBody" && this.endpoint.requestBody.extraProperties;
 
         const interfaces = [];
-        if (this.settings.generateNewAdditionalProperties && hasExtraProperties) {
+        if (hasExtraProperties) {
             interfaces.push(this.System.Text.Json.Serialization.IJsonOnDeserialized);
             interfaces.push(this.System.Text.Json.Serialization.IJsonOnSerializing);
         }
@@ -243,7 +243,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             _other: () => undefined
         });
 
-        if (this.settings.generateNewAdditionalProperties && hasExtraProperties) {
+        if (hasExtraProperties) {
             this.addExtensionDataField(class_);
             const additionalProperties = this.addAdditionalPropertiesProperty(class_);
             this.addOnDeserialized(class_, additionalProperties);

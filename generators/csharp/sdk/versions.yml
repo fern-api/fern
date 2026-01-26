@@ -16,6 +16,12 @@
       type: feat
     - summary: Improve header merging logic for better reliability and maintainability.
       type: chore
+    - summary: |
+        Remove `additional-properties` and `experimental-additional-properties` configuration options.
+        AdditionalProperties support is now always enabled for all generated SDKs, simplifying the generator
+        and ensuring consistent behavior across all generated code. This feature allows handling of extra/unknown
+        properties in JSON responses.
+      type: chore
   createdAt: "2026-01-22"
   irVersion: 62
 

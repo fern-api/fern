@@ -237,9 +237,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasIdempotencyHeaders()) {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
-        if (this.settings.generateNewAdditionalProperties) {
-            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
-        }
+        files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
         if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
@@ -281,9 +279,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.WithRawResponse,
             AsIsFiles.WithRawResponseTask
         ];
-        if (this.settings.generateNewAdditionalProperties) {
-            files.push(AsIsFiles.Json.AdditionalProperties);
-        }
+        files.push(AsIsFiles.Json.AdditionalProperties);
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.GrpcRequestOptions);
         }

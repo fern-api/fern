@@ -173,11 +173,6 @@ export class Generation {
             true,
         /** Mapping of websocket environment configurations. Default: {}. */
         websocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
-        /** When true, generates additional properties support for objects to handle extra fields. Default: true. */
-        generateNewAdditionalProperties: () =>
-            this.customConfig["additional-properties"] ??
-            this.customConfig["experimental-additional-properties"] ??
-            true,
         /** Custom name for the pagination class. Default: "" (auto-generated). */
         customPagerName: () => this.customConfig["custom-pager-name"] ?? "",
         /** Custom name for the environment configuration class. Default: "" (auto-generated). */
