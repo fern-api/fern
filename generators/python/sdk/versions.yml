@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.50.1
+  changelogEntry:
+    - summary: |
+        Fix pydantic-core dependency to only be added for explicit v2 mode. Previously, pydantic-core
+        was unconditionally added as a dependency, which broke compatibility for users wanting to use
+        Pydantic v1. Now pydantic-core is only added when the pydantic version is explicitly set to v2.
+        For "both" mode, pydantic-core is a transitive dependency of pydantic>=2.0 and doesn't need to
+        be explicitly listed.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 4.50.0
   changelogEntry:
     - summary: |

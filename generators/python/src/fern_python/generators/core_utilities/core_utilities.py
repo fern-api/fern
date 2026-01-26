@@ -83,7 +83,12 @@ class CoreUtilities:
             }
             | (set() if is_v1_on_v2 else {"IS_PYDANTIC_V2"}),
         )
-        project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
+        # Only add pydantic-core for explicit v2 mode
+        # For "both" mode, it's a transitive dependency of pydantic>=2.0
+        # For v1 mode, it doesn't exist
+        # For v1_on_v2 mode, we use pydantic.v1 compatibility layer
+        if self._pydantic_compatibility == PydanticVersionCompatibility.V2:
+            project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
         self._copy_file_to_project(
             project=project,

@@ -18,7 +18,11 @@ from .pydantic_utilities import (
     parse_obj_as,
 )
 from .serialization import get_field_to_alias_mapping
-from pydantic_core import PydanticUndefined
+
+if IS_PYDANTIC_V2:
+    from pydantic_core import PydanticUndefined  # type: ignore[import-not-found]
+else:
+    PydanticUndefined = None  # type: ignore[misc, assignment]
 
 
 class UnionMetadata:
@@ -366,7 +370,7 @@ def _get_field_default(field: PydanticField) -> typing.Any:
     except:
         value = field.default
     if IS_PYDANTIC_V2:
-        from pydantic_core import PydanticUndefined
+        from pydantic_core import PydanticUndefined  # type: ignore[import-not-found]
 
         if value == PydanticUndefined:
             return None

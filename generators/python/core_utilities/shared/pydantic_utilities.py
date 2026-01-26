@@ -74,7 +74,7 @@ def parse_obj_as(type_: Type[T], object_: Any) -> T:
 
 def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any]) -> Any:
     if IS_PYDANTIC_V2:
-        from pydantic_core import to_jsonable_python
+        from pydantic_core import to_jsonable_python  # type: ignore[import-not-found]
 
         return to_jsonable_python(obj, fallback=fallback_serializer)
     return fallback_serializer(obj)
@@ -351,7 +351,7 @@ def _get_field_default(field: PydanticField) -> Any:
     except:
         value = field.default
     if IS_PYDANTIC_V2:
-        from pydantic_core import PydanticUndefined
+        from pydantic_core import PydanticUndefined  # type: ignore[import-not-found]
 
         if value == PydanticUndefined:
             return None
