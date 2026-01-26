@@ -183,10 +183,7 @@ pub mod offset {
     pub mod option {
         use super::*;
 
-        pub fn serialize<S>(
-            date: &Option<DateTime<FixedOffset>>,
-            serializer: S,
-        ) -> Result<S::Ok, S::Error>
+        pub fn serialize<S>(date: &Option<DateTime<FixedOffset>>, serializer: S) -> Result<S::Ok, S::Error>
         where
             S: Serializer,
         {
@@ -196,9 +193,7 @@ pub mod offset {
             }
         }
 
-        pub fn deserialize<'de, D>(
-            deserializer: D,
-        ) -> Result<Option<DateTime<FixedOffset>>, D::Error>
+        pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<DateTime<FixedOffset>>, D::Error>
         where
             D: Deserializer<'de>,
         {
