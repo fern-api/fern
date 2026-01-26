@@ -10,16 +10,6 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
     {
-        const string requestJson = """
-            {
-              "client_id": "client_id",
-              "client_secret": "client_secret",
-              "audience": "https://api.example.com",
-              "grant_type": "client_credentials",
-              "scope": "scope"
-            }
-            """;
-
         const string mockResponse = """
             {
               "access_token": "access_token",
@@ -35,7 +25,15 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                     .WithPath("/token")
                     .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(
+                        new WireMock.Matchers.FormUrlEncodedMatcher([
+                            "client_id=client_id",
+                            "client_secret=client_secret",
+                            "audience=https://api.example.com",
+                            "grant_type=client_credentials",
+                            "scope=scope",
+                        ])
+                    )
             )
             .RespondWith(
                 WireMock
@@ -63,16 +61,6 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_2()
     {
-        const string requestJson = """
-            {
-              "client_id": "my_oauth_app_123",
-              "client_secret": "sk_live_abcdef123456789",
-              "audience": "https://api.example.com",
-              "grant_type": "client_credentials",
-              "scope": "read:users"
-            }
-            """;
-
         const string mockResponse = """
             {
               "access_token": "access_token",
@@ -88,7 +76,15 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                     .WithPath("/token")
                     .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(
+                        new WireMock.Matchers.FormUrlEncodedMatcher([
+                            "client_id=my_oauth_app_123",
+                            "client_secret=sk_live_abcdef123456789",
+                            "audience=https://api.example.com",
+                            "grant_type=client_credentials",
+                            "scope=read:users",
+                        ])
+                    )
             )
             .RespondWith(
                 WireMock

@@ -18,7 +18,15 @@ public class UserTest
               "location": "Wonderland"
             }
             """;
-        var expectedObject = new User { Name = "Alice" };
+        var expectedObject = new User
+        {
+            Name = "Alice",
+            AdditionalProperties = new AdditionalProperties
+            {
+                ["age"] = 30,
+                ["location"] = "Wonderland",
+            },
+        };
         var deserializedObject = JsonUtils.Deserialize<User>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
@@ -33,7 +41,15 @@ public class UserTest
               "location": "Wonderland"
             }
             """;
-        var actualObj = new User { Name = "Alice" };
+        var actualObj = new User
+        {
+            Name = "Alice",
+            AdditionalProperties = new AdditionalProperties
+            {
+                ["age"] = 30,
+                ["location"] = "Wonderland",
+            },
+        };
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
