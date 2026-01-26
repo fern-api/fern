@@ -59,6 +59,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "flexible_datetime.rs"
     },
+    OAuthTokenProvider: {
+        relativePathToDir: "src/core",
+        filename: "oauth_token_provider.rs"
+    },
     CoreMod: {
         relativePathToDir: "src/core",
         filename: "mod.rs"
