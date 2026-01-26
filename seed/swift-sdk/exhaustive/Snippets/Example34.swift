@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.primitive.getAndReturnDatetime(request: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))
+    _ = try await client.endpoints.primitive.getAndReturnDouble(request: 1.1)
 }
 
 try await main()

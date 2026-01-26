@@ -2,6 +2,8 @@
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-swift-sdk",
   "generatorVersion": "latest",
-  "generatorConfig": {},
+  "generatorConfig": {
+    "enableWireTests": true
+  },
   "sdkVersion": "0.0.1"
 }

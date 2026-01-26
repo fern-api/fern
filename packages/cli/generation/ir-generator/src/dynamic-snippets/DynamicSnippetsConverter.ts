@@ -199,8 +199,10 @@ export class DynamicSnippetsConverter {
                     wrapper: endpoint.sdkRequest.shape,
                     pathParameters,
                     queryParameters: this.convertQueryParameters({ queryParameters: endpoint.queryParameters }),
+                    // Only include endpoint-level headers, not service-level headers.
+                    // Service-level headers are handled at the client constructor level.
                     headers: this.convertWireValueParameters({
-                        wireValueParameters: [...endpoint.serviceHeaders, ...endpoint.headers]
+                        wireValueParameters: endpoint.headers
                     }),
                     body: endpoint.requestBody
                 });
@@ -953,12 +955,12 @@ export class DynamicSnippetsConverter {
                 baseUrl: undefined,
                 environment: undefined,
                 auth: this.authValues,
+                // Only include endpoint-level headers, not service-level headers.
+                // Service-level headers are handled at the client constructor level.
                 headers: Object.fromEntries(
-                    [...(example.example?.serviceHeaders ?? []), ...(example.example?.endpointHeaders ?? [])].map(
-                        (header) => {
-                            return [header.name.wireValue, header.value.jsonExample];
-                        }
-                    )
+                    (example.example?.endpointHeaders ?? []).map((header) => {
+                        return [header.name.wireValue, header.value.jsonExample];
+                    })
                 ),
                 pathParameters: Object.fromEntries(
                     pathParameterExamples.map((parameter) => {

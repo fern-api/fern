@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.25.5
+  changelogEntry:
+    - summary: |
+        Fix Swift SDK generator to properly handle dynamic snippets and wire tests:
+        - Handle endpoint-level headers in dynamic snippets
+        - Handle referenced body types correctly (pass directly instead of wrapping)
+        - Convert set types to JSONValue expressions in dynamic snippets
+        - Use full type names for enum and union types in wire tests
+        - Handle set types with JSONValue conversion in wire tests
+        - Properly format string vs JSON response types in wire test mock bodies
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 61
+
 - version: 0.25.4
   changelogEntry:
     - summary: |

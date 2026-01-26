@@ -60,7 +60,8 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: typeReference.value, value: value, as });
             case "set":
-                return swift.Expression.nop();
+                // Sets are converted to JSONValue in Swift, so we need to wrap them appropriately
+                return this.convertSet({ fromSymbol, set: typeReference.value, value });
             case "unknown":
                 return this.convertUnknown(value);
             default:
@@ -95,6 +96,279 @@ export class DynamicTypeLiteralMapper {
             }),
             multiline: true
         });
+    }
+
+    private convertSet({
+        fromSymbol,
+        set,
+        value
+    }: {
+        fromSymbol: swift.Symbol;
+        set: FernIr.dynamic.TypeReference;
+        value: unknown;
+    }): swift.Expression {
+        // Sets are converted to JSONValue in Swift, so we need to wrap the array in JSONValue.array()
+        if (!Array.isArray(value)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected array but got: ${typeof value}`
+            });
+            return swift.Expression.nop();
+        }
+        // Convert each element to a JSONValue expression
+        const elements = value.map((v, index) => {
+            this.context.errors.scope({ index });
+            try {
+                return this.convertToJSONValue({ fromSymbol, typeReference: set, value: v });
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
+        // Wrap in .array([...])
+        return swift.Expression.contextualMethodCall({
+            methodName: "array",
+            arguments_: [
+                swift.functionArgument({
+                    value: swift.Expression.arrayLiteral({
+                        elements,
+                        multiline: elements.length > 1 ? true : undefined
+                    })
+                })
+            ]
+        });
+    }
+
+    private convertToJSONValue({
+        fromSymbol,
+        typeReference,
+        value
+    }: {
+        fromSymbol: swift.Symbol;
+        typeReference: FernIr.dynamic.TypeReference;
+        value: unknown;
+    }): swift.Expression {
+        // Convert a value to a JSONValue expression based on its type
+        switch (typeReference.type) {
+            case "primitive":
+                return this.convertPrimitiveToJSONValue({ primitive: typeReference.value, value });
+            case "named": {
+                // For named types (objects), convert to JSONValue using the object's properties
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return swift.Expression.nop();
+                }
+                if (named.type === "object") {
+                    return this.convertObjectToJSONValue({ fromSymbol, object_: named, value });
+                }
+                // For other named types, fall back to converting the value directly
+                return this.convertToJSONValueFromUnknown(value);
+            }
+            case "list":
+                if (!Array.isArray(value)) {
+                    return swift.Expression.nop();
+                }
+                return swift.Expression.contextualMethodCall({
+                    methodName: "array",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.arrayLiteral({
+                                elements: value.map((v) =>
+                                    this.convertToJSONValue({
+                                        fromSymbol,
+                                        typeReference: typeReference.value,
+                                        value: v
+                                    })
+                                ),
+                                multiline: value.length > 1 ? true : undefined
+                            })
+                        })
+                    ]
+                });
+            case "set":
+                if (!Array.isArray(value)) {
+                    return swift.Expression.nop();
+                }
+                return swift.Expression.contextualMethodCall({
+                    methodName: "array",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.arrayLiteral({
+                                elements: value.map((v) =>
+                                    this.convertToJSONValue({
+                                        fromSymbol,
+                                        typeReference: typeReference.value,
+                                        value: v
+                                    })
+                                ),
+                                multiline: value.length > 1 ? true : undefined
+                            })
+                        })
+                    ]
+                });
+            case "map":
+                return this.convertToJSONValueFromUnknown(value);
+            case "optional":
+            case "nullable":
+                if (value == null) {
+                    return swift.Expression.enumCaseShorthand("null");
+                }
+                return this.convertToJSONValue({ fromSymbol, typeReference: typeReference.value, value });
+            default:
+                return this.convertToJSONValueFromUnknown(value);
+        }
+    }
+
+    private convertPrimitiveToJSONValue({
+        primitive,
+        value
+    }: {
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
+        value: unknown;
+    }): swift.Expression {
+        switch (primitive) {
+            case "STRING":
+            case "DATE":
+            case "DATE_TIME":
+            case "UUID":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return swift.Expression.contextualMethodCall({
+                    methodName: "string",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.stringLiteral(String(value))
+                        })
+                    ]
+                });
+            case "INTEGER":
+            case "UINT":
+            case "UINT_64":
+            case "LONG":
+            case "FLOAT":
+            case "DOUBLE":
+                return swift.Expression.contextualMethodCall({
+                    methodName: "number",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.numberLiteral(Number(value))
+                        })
+                    ]
+                });
+            case "BOOLEAN":
+                return swift.Expression.contextualMethodCall({
+                    methodName: "bool",
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.boolLiteral(Boolean(value))
+                        })
+                    ]
+                });
+            default:
+                return this.convertToJSONValueFromUnknown(value);
+        }
+    }
+
+    private convertObjectToJSONValue({
+        fromSymbol,
+        object_,
+        value
+    }: {
+        fromSymbol: swift.Symbol;
+        object_: FernIr.dynamic.ObjectType;
+        value: unknown;
+    }): swift.Expression {
+        if (typeof value !== "object" || value == null) {
+            return swift.Expression.nop();
+        }
+        const record = value as Record<string, unknown>;
+        const entries: [swift.Expression, swift.Expression][] = [];
+        for (const property of object_.properties) {
+            const propertyValue = record[property.name.wireValue];
+            if (propertyValue !== undefined) {
+                entries.push([
+                    swift.Expression.stringLiteral(property.name.wireValue),
+                    this.convertToJSONValue({ fromSymbol, typeReference: property.typeReference, value: propertyValue })
+                ]);
+            }
+        }
+        return swift.Expression.contextualMethodCall({
+            methodName: "object",
+            arguments_: [
+                swift.functionArgument({
+                    value: swift.Expression.dictionaryLiteral({
+                        entries,
+                        multiline: entries.length > 1 ? true : undefined
+                    })
+                })
+            ]
+        });
+    }
+
+    private convertToJSONValueFromUnknown(value: unknown): swift.Expression {
+        if (value === null) {
+            return swift.Expression.enumCaseShorthand("null");
+        }
+        if (typeof value === "string") {
+            return swift.Expression.contextualMethodCall({
+                methodName: "string",
+                arguments_: [
+                    swift.functionArgument({
+                        value: swift.Expression.stringLiteral(value)
+                    })
+                ]
+            });
+        }
+        if (typeof value === "number") {
+            return swift.Expression.contextualMethodCall({
+                methodName: "number",
+                arguments_: [
+                    swift.functionArgument({
+                        value: swift.Expression.numberLiteral(value)
+                    })
+                ]
+            });
+        }
+        if (typeof value === "boolean") {
+            return swift.Expression.contextualMethodCall({
+                methodName: "bool",
+                arguments_: [
+                    swift.functionArgument({
+                        value: swift.Expression.boolLiteral(value)
+                    })
+                ]
+            });
+        }
+        if (Array.isArray(value)) {
+            return swift.Expression.contextualMethodCall({
+                methodName: "array",
+                arguments_: [
+                    swift.functionArgument({
+                        value: swift.Expression.arrayLiteral({
+                            elements: value.map((v) => this.convertToJSONValueFromUnknown(v)),
+                            multiline: value.length > 1 ? true : undefined
+                        })
+                    })
+                ]
+            });
+        }
+        if (typeof value === "object") {
+            const entries: [swift.Expression, swift.Expression][] = Object.entries(value).map(([k, v]) => [
+                swift.Expression.stringLiteral(k),
+                this.convertToJSONValueFromUnknown(v)
+            ]);
+            return swift.Expression.contextualMethodCall({
+                methodName: "object",
+                arguments_: [
+                    swift.functionArgument({
+                        value: swift.Expression.dictionaryLiteral({
+                            entries,
+                            multiline: entries.length > 1 ? true : undefined
+                        })
+                    })
+                ]
+            });
+        }
+        return swift.Expression.nop();
     }
 
     private convertMap({

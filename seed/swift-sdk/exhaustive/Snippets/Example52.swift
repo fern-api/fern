@@ -7,9 +7,9 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithPathAndQuery(
-        param: "param",
-        query: "query"
+    _ = try await client.reqWithHeaders.getWithCustomHeader(
+        xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        request: "string"
     )
 }
 

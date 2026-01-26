@@ -77,7 +77,7 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
-    @Test func getAndReturnSetOfPrimitives1() async throws -> Void {
+    @Test func getAndReturnSetOfPrimitives2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -93,12 +93,15 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = []
-        let response = try await client.endpoints.container.getAndReturnSetOfPrimitives(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let expectedResponse = JSONValue.array([JSONValue.string("string")])
+        let response = try await client.endpoints.container.getAndReturnSetOfPrimitives(
+            request: .array([.string("string")]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
-    @Test func getAndReturnSetOfObjects1() async throws -> Void {
+    @Test func getAndReturnSetOfObjects2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -116,8 +119,15 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = []
-        let response = try await client.endpoints.container.getAndReturnSetOfObjects(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let expectedResponse = JSONValue.array([JSONValue.object(
+            [
+                "string": JSONValue.string("string")
+            ]
+        )])
+        let response = try await client.endpoints.container.getAndReturnSetOfObjects(
+            request: .array([.object(["string": .string("string")])]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 

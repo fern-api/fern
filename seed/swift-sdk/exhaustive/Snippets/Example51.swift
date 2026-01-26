@@ -7,10 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithPathAndQuery(
-        param: "param",
-        query: "query"
-    )
+    _ = try await client.noReqBody.postWithNoRequestBody()
 }
 
 try await main()

@@ -8,7 +8,7 @@ import Exhaustive
         stub.setResponse(
             body: Data(
                 """
-                SUNNY
+                "SUNNY"
                 """.utf8
             )
         )
@@ -17,7 +17,7 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .sunny
+        let expectedResponse = WeatherReport.sunny
         let response = try await client.endpoints.enum.getAndReturnEnum(
             request: .sunny,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
