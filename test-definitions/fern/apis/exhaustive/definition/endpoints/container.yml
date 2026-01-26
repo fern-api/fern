@@ -22,24 +22,12 @@ service:
       method: POST
       request: set<string>
       response: set<string>
-      examples:
-        - request:
-            - "string"
-          response:
-            body:
-              - "string"
 
     getAndReturnSetOfObjects:
       path: /set-of-objects
       method: POST
       request: set<objects.ObjectWithRequiredField>
       response: set<objects.ObjectWithRequiredField>
-      examples:
-        - request:
-            - string: "string"
-          response:
-            body:
-              - string: "string"
 
     getAndReturnMapPrimToPrim:
       path: /map-prim-to-prim
