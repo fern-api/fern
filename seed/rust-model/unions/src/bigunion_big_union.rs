@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum BigUnion {
+        #[serde(rename = "normalSweet")]
         NormalSweet {
             #[serde(flatten)]
             data: NormalSweet,
@@ -17,6 +18,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "thankfulFactor")]
         ThankfulFactor {
             #[serde(flatten)]
             data: ThankfulFactor,
@@ -31,6 +33,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "jumboEnd")]
         JumboEnd {
             #[serde(flatten)]
             data: JumboEnd,
@@ -45,6 +48,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "hastyPain")]
         HastyPain {
             #[serde(flatten)]
             data: HastyPain,
@@ -59,6 +63,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "mistySnow")]
         MistySnow {
             #[serde(flatten)]
             data: MistySnow,
@@ -73,6 +78,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "distinctFailure")]
         DistinctFailure {
             #[serde(flatten)]
             data: DistinctFailure,
@@ -87,6 +93,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "practicalPrinciple")]
         PracticalPrinciple {
             #[serde(flatten)]
             data: PracticalPrinciple,
@@ -101,6 +108,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "limpingStep")]
         LimpingStep {
             #[serde(flatten)]
             data: LimpingStep,
@@ -115,6 +123,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "vibrantExcitement")]
         VibrantExcitement {
             #[serde(flatten)]
             data: VibrantExcitement,
@@ -129,6 +138,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "activeDiamond")]
         ActiveDiamond {
             #[serde(flatten)]
             data: ActiveDiamond,
@@ -143,6 +153,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "popularLimit")]
         PopularLimit {
             #[serde(flatten)]
             data: PopularLimit,
@@ -157,6 +168,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "falseMirror")]
         FalseMirror {
             #[serde(flatten)]
             data: FalseMirror,
@@ -171,6 +183,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "primaryBlock")]
         PrimaryBlock {
             #[serde(flatten)]
             data: PrimaryBlock,
@@ -185,6 +198,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "rotatingRatio")]
         RotatingRatio {
             #[serde(flatten)]
             data: RotatingRatio,
@@ -199,6 +213,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "colorfulCover")]
         ColorfulCover {
             #[serde(flatten)]
             data: ColorfulCover,
@@ -213,6 +228,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "disloyalValue")]
         DisloyalValue {
             #[serde(flatten)]
             data: DisloyalValue,
@@ -227,6 +243,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "gruesomeCoach")]
         GruesomeCoach {
             #[serde(flatten)]
             data: GruesomeCoach,
@@ -241,6 +258,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "totalWork")]
         TotalWork {
             #[serde(flatten)]
             data: TotalWork,
@@ -255,6 +273,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "harmoniousPlay")]
         HarmoniousPlay {
             #[serde(flatten)]
             data: HarmoniousPlay,
@@ -269,6 +288,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "uniqueStress")]
         UniqueStress {
             #[serde(flatten)]
             data: UniqueStress,
@@ -283,6 +303,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "unwillingSmoke")]
         UnwillingSmoke {
             #[serde(flatten)]
             data: UnwillingSmoke,
@@ -297,6 +318,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "frozenSleep")]
         FrozenSleep {
             #[serde(flatten)]
             data: FrozenSleep,
@@ -311,6 +333,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "diligentDeal")]
         DiligentDeal {
             #[serde(flatten)]
             data: DiligentDeal,
@@ -325,6 +348,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "attractiveScript")]
         AttractiveScript {
             #[serde(flatten)]
             data: AttractiveScript,
@@ -339,6 +363,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "hoarseMouse")]
         HoarseMouse {
             #[serde(flatten)]
             data: HoarseMouse,
@@ -353,6 +378,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "circularCard")]
         CircularCard {
             #[serde(flatten)]
             data: CircularCard,
@@ -367,6 +393,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "potableBad")]
         PotableBad {
             #[serde(flatten)]
             data: PotableBad,
@@ -381,6 +408,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "triangularRepair")]
         TriangularRepair {
             #[serde(flatten)]
             data: TriangularRepair,
@@ -395,6 +423,7 @@ pub enum BigUnion {
             archived_at: Option<DateTime<FixedOffset>>,
         },
 
+        #[serde(rename = "gaseousRoad")]
         GaseousRoad {
             #[serde(flatten)]
             data: GaseousRoad,

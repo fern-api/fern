@@ -12,6 +12,7 @@ pub struct Type {
     pub six: DateTime<FixedOffset>,
     pub seven: NaiveDate,
     pub eight: Uuid,
+    #[serde(with = "crate::core::base64_bytes")]
     pub nine: Vec<u8>,
     pub ten: Vec<i64>,
     pub eleven: HashSet<ordered_float::OrderedFloat<f64>>,
@@ -27,6 +28,7 @@ pub struct Type {
     pub twenty: i64,
     pub twentyone: i64,
     pub twentytwo: f64,
+    #[serde(with = "crate::core::bigint_string")]
     pub twentythree: num_bigint::BigInt,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
