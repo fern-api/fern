@@ -20,17 +20,17 @@ public partial class QueryClient : IQueryClient
     {
         var _queryBuilder = new SeedLiteral.Core.QueryStringBuilder.Builder(capacity: 9)
             .Add("prompt", request.Prompt)
-            .AddDeepObject("alias_prompt", request.AliasPrompt)
+            .Add("alias_prompt", request.AliasPrompt)
             .Add("query", request.Query)
             .Add("stream", request.Stream)
-            .AddDeepObject("alias_stream", request.AliasStream);
+            .Add("alias_stream", request.AliasStream);
         if (request.OptionalPrompt != null)
         {
             _queryBuilder.Add("optional_prompt", request.OptionalPrompt);
         }
         if (request.AliasOptionalPrompt != null)
         {
-            _queryBuilder.AddDeepObject("alias_optional_prompt", request.AliasOptionalPrompt);
+            _queryBuilder.Add("alias_optional_prompt", request.AliasOptionalPrompt);
         }
         if (request.OptionalStream != null)
         {
@@ -38,7 +38,7 @@ public partial class QueryClient : IQueryClient
         }
         if (request.AliasOptionalStream != null)
         {
-            _queryBuilder.AddDeepObject("alias_optional_stream", request.AliasOptionalStream);
+            _queryBuilder.Add("alias_optional_stream", request.AliasOptionalStream);
         }
         var _queryString = _queryBuilder
             .MergeAdditional(options?.AdditionalQueryParameters)

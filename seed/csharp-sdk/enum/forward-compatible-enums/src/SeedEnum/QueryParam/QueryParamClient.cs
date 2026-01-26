@@ -23,11 +23,11 @@ public partial class QueryParamClient : IQueryParamClient
     )
     {
         var _queryBuilder = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
-            .AddDeepObject("operand", request.Operand)
+            .Add("operand", request.Operand)
             .AddDeepObject("operandOrColor", request.OperandOrColor);
         if (request.MaybeOperand != null)
         {
-            _queryBuilder.AddDeepObject("maybeOperand", request.MaybeOperand);
+            _queryBuilder.Add("maybeOperand", request.MaybeOperand);
         }
         if (request.MaybeOperandOrColor != null)
         {
@@ -81,8 +81,8 @@ public partial class QueryParamClient : IQueryParamClient
     )
     {
         var _queryBuilder = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
-            .AddDeepObject("operand", request.Operand)
-            .AddDeepObject("maybeOperand", request.MaybeOperand)
+            .Add("operand", request.Operand)
+            .Add("maybeOperand", request.MaybeOperand)
             .AddDeepObject("operandOrColor", request.OperandOrColor)
             .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor);
         var _queryString = _queryBuilder

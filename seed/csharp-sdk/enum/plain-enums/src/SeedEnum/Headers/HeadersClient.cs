@@ -35,7 +35,6 @@ public partial class HeadersClient : IHeadersClient
             .Add("maybeOperandOrColor", JsonUtils.Serialize(request.MaybeOperandOrColor))
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.Headers)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);

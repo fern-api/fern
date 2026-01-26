@@ -144,7 +144,6 @@ public partial class ServiceClient : IServiceClient
             .Add("X-API-Version", request.XApiVersion)
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.Headers)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);

@@ -115,7 +115,6 @@ public partial class SeedApiClient : ISeedApiClient
             .Add("X-Idempotency-Key", request.XIdempotencyKey)
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.Headers)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);

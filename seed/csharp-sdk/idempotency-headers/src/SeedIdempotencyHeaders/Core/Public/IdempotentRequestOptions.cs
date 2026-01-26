@@ -6,11 +6,6 @@ namespace SeedIdempotencyHeaders;
 public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 {
     /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    internal Headers Headers { get; init; } = new();
-
-    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string? BaseUrl { get;

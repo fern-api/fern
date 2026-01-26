@@ -24,7 +24,6 @@ public partial class ServiceClient : IServiceClient
             .Add("X-File-API-Version", request.XFileApiVersion)
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.Headers)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);

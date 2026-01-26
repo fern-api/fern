@@ -22,7 +22,6 @@ public partial class AuthClient : IAuthClient
             .Add("X-Api-Key", request.ApiKey)
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.Headers)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);
