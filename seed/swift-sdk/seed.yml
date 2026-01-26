@@ -72,10 +72,6 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
-  exhaustive:
-    - customConfig:
-        enableWireTests: true
-      outputFolder: .
   nullable:
     - customConfig: null
       outputFolder: no-custom-config
