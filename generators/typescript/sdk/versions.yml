@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.45.0
+  changelogEntry:
+    - summary: |
+        Add support for additional query parameters in WebSocket connections. The `ConnectArgs`
+        interface now includes an optional `queryParams` property that allows users to pass
+        additional query parameters that get merged into the WebSocket URL alongside any
+        channel-defined query parameters.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 63
+
 - version: 3.44.2
   changelogEntry:
     - summary: |
