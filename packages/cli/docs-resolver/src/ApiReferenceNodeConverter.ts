@@ -111,12 +111,30 @@ export class ApiReferenceNodeConverter {
             this.docsWorkspace,
             this.#idgen
         ).orUndefined();
+
+        // When no explicit overview is set, inherit the first apiPackage child's overview page (e.g., tag description).
+        // This works for both flattened and non-flattened cases:
+        // - Flattened: The section will inherit this overview page via DocsDefinitionResolver.toSectionNode()
+        // - Non-flattened: The API Reference itself will show the tag description when clicked
+        // We search through all children to find an apiPackage with an overviewPageId, rather than assuming
+        // the first child is an apiPackage (which may not be true when endpoints are explicitly listed in the layout).
+        let overviewPageId = this.#overviewPageId;
+        if (overviewPageId == null) {
+            const apiPackageWithOverview = this.#children.find(
+                (child): child is FernNavigation.V1.ApiPackageNode =>
+                    child.type === "apiPackage" && child.overviewPageId != null
+            );
+            if (apiPackageWithOverview != null) {
+                overviewPageId = apiPackageWithOverview.overviewPageId;
+            }
+        }
+
         return {
             id: this.#idgen.get(this.apiDefinitionId),
             type: "apiReference",
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
-            overviewPageId: this.#overviewPageId,
+            overviewPageId,
             paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
             icon: this.resolveIconFileId(this.apiSection.icon),
@@ -170,8 +188,17 @@ export class ApiReferenceNodeConverter {
         const virtualAbsolutePath = AbsoluteFilePath.of(`/${relativeFilePath}`);
         const pageId = FernNavigation.V1.PageId(relativeFilePath);
 
+        // Escape special characters in the description to prevent MDX parsing errors:
+        // - Curly braces {} are interpreted as JSX expressions
+        // - Angle brackets <> are interpreted as HTML/JSX tags
+        const escapedDescription = tagInfo.description
+            .replace(/\{/g, "\\{")
+            .replace(/\}/g, "\\}")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
         // Store the tag description content
-        const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${tagInfo.description}`;
+        const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${escapedDescription}`;
         this.#tagDescriptionContent.set(virtualAbsolutePath, markdownContent);
 
         // Add to markdown files collections for processing
@@ -839,7 +866,23 @@ export class ApiReferenceNodeConverter {
 
             const slug = isSubpackage(subpackage) ? parentSlug.apply(subpackage) : parentSlug;
             const subpackageChildren = this.#convertApiDefinitionPackageId(subpackageId, slug, parentAvailability);
-            if (subpackageChildren.length > 0) {
+            const tagDescriptionPageId = this.createTagDescriptionPageId(subpackage);
+
+            // Check if any endpoints from this subpackage were visited (explicitly listed in the layout).
+            // This determines if the subpackage is relevant to the current API section.
+            const subpackageHolder = this.#holder.subpackages.get(APIV1Read.SubpackageId(subpackageId));
+            const hasVisitedEndpoints = subpackageHolder
+                ? Array.from(subpackageHolder.endpoints.values()).some((endpoint) => {
+                      const endpointId = this.#holder.getEndpointId(endpoint);
+                      return endpointId != null && this.#visitedEndpoints.has(endpointId);
+                  })
+                : false;
+
+            // Add subpackage if:
+            // 1. It has children (unvisited endpoints/subpackages), OR
+            // 2. It has a tag description page AND some of its endpoints were visited (relevant to this API section)
+            // This prevents adding tag description pages for subpackages that are not relevant to the current API section.
+            if (subpackageChildren.length > 0 || (tagDescriptionPageId != null && hasVisitedEndpoints)) {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
                     type: "apiPackage",
@@ -850,7 +893,7 @@ export class ApiReferenceNodeConverter {
                     slug: slug.get(),
                     icon: undefined,
                     hidden: this.hideChildren,
-                    overviewPageId: this.createTagDescriptionPageId(subpackage),
+                    overviewPageId: tagDescriptionPageId,
                     availability: parentAvailability,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,

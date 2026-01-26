@@ -800,7 +800,8 @@ export class EndpointSnippetGenerator {
     }: {
         filePropertyInfo: FilePropertyInfo;
     }): go.StructField[] {
-        if (this.context.customConfig?.inlineFileProperties) {
+        const inlineFileProperties = this.context.customConfig?.inlineFileProperties ?? true;
+        if (inlineFileProperties) {
             return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
         }
         return filePropertyInfo.bodyPropertyFields;
