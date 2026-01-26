@@ -81,7 +81,8 @@ export class MockEndpointGenerator extends WithGeneration {
                 writer.newLine();
 
                 writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
-                writer.write(`.WithPath("${example.url || "/"}")`);
+                const mockServerPath = this.buildUrlFromFullPath(endpoint, example);
+                writer.write(`.WithPath("${mockServerPath}")`);
 
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
@@ -577,5 +578,34 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         return readOnlyNames;
+    }
+
+    /**
+     * Builds the URL path from the endpoint's fullPath and the example's path parameters.
+     * This ensures the mock server test uses the same path format as the generated client code,
+     * preserving any double slashes that may exist in the path structure.
+     */
+    private buildUrlFromFullPath(endpoint: HttpEndpoint, example: ExampleEndpointCall): string {
+        const allPathParameters = [
+            ...example.rootPathParameters,
+            ...example.servicePathParameters,
+            ...example.endpointPathParameters
+        ];
+
+        let url = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            const pathParam = allPathParameters.find((p) => p.name.originalName === part.pathParameter);
+            if (pathParam != null) {
+                url += encodeURIComponent(`${pathParam.value.jsonExample}`);
+            }
+            url += part.tail;
+        }
+
+        // Ensure the URL starts with a slash for consistency
+        if (!url.startsWith("/")) {
+            url = `/${url}`;
+        }
+
+        return url;
     }
 }

@@ -298,7 +298,6 @@ allowedFailures:
   - oauth-client-credentials-with-variables
   - oauth-client-credentials:include-exception-handler
   - oauth-client-credentials:no-custom-config
-  - package-yml
   - simple-fhir
   - trace
   - undiscriminated-unions

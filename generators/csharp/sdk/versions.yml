@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.17.3
+  changelogEntry:
+    - summary: |
+        Fix mock server test path generation to match the actual client request paths.
+
+        Previously, mock server tests used the normalized `example.url` from the IR which removes
+        double slashes, but the generated client code constructs paths from `endpoint.fullPath`
+        which preserves the original path structure. This caused test failures when API paths
+        contained consecutive slashes (e.g., `/{id}//{nestedId}`). The fix now constructs the
+        mock server path using the same `endpoint.fullPath` structure as the client code.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 2.17.2
   changelogEntry:
     - summary: |
