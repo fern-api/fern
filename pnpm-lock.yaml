@@ -4714,6 +4714,9 @@ importers:
       get-port:
         specifier: ^7.1.0
         version: 7.1.0
+      graphql:
+        specifier: ^16.8.1
+        version: 16.12.0
       immer:
         specifier: ^10.1.1
         version: 10.1.3
