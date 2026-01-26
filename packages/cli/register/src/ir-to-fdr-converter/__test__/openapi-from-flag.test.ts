@@ -2998,4 +2998,70 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // With override, apiName should be the folder name
         expect(fdrWithOverride.apiName).toBe("latest");
     });
+
+    it("should handle AsyncAPI with JSON references to external files", async () => {
+        // Test AsyncAPI spec with $ref to external YAML files
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/asyncapi-json-refs")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "asyncapi-json-refs"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for AsyncAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that the AsyncAPI spec was parsed correctly
+        expect(intermediateRepresentation).toBeDefined();
+        expect(intermediateRepresentation.apiName).toBeDefined();
+
+        // Validate that the external $ref was resolved
+        expect(intermediateRepresentation.types).toBeDefined();
+
+        // Validate FDR structure
+        expect(fdrApiDefinition).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/asyncapi-json-refs-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/asyncapi-json-refs-ir.snap");
+    });
 });
