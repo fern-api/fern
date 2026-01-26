@@ -7,9 +7,9 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithPathAndQuery(
+    _ = try await client.endpoints.params.modifyWithPath(
         param: "param",
-        query: "query"
+        request: "string"
     )
 }
 

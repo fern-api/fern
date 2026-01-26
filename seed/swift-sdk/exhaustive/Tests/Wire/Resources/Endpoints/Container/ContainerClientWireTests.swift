@@ -101,61 +101,7 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
-    @Test func getAndReturnSetOfPrimitives2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  "string"
-                ]
-                """.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = JSONValue.array([JSONValue.string("string")])
-        let response = try await client.endpoints.container.getAndReturnSetOfPrimitives(
-            request: .array([.string("string")]),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
     @Test func getAndReturnSetOfObjects1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "string": "string"
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = JSONValue.array([JSONValue.object(
-            [
-                "string": JSONValue.string("string")
-            ]
-        )])
-        let response = try await client.endpoints.container.getAndReturnSetOfObjects(
-            request: .array([.object(["string": .string("string")])]),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getAndReturnSetOfObjects2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(

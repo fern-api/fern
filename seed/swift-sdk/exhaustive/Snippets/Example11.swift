@@ -7,7 +7,9 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.enum.getAndReturnEnum(request: .sunny)
+    _ = try await client.endpoints.httpMethods.testPost(request: ObjectWithRequiredField(
+        string: "string"
+    ))
 }
 
 try await main()

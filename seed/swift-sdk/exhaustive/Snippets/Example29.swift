@@ -7,10 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.modifyWithPath(
-        param: "param",
-        request: "string"
-    )
+    _ = try await client.endpoints.primitive.getAndReturnString(request: "string")
 }
 
 try await main()

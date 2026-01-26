@@ -7,12 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.httpMethods.testPut(
-        id: "id",
-        request: ObjectWithRequiredField(
-            string: "string"
-        )
-    )
+    _ = try await client.endpoints.httpMethods.testDelete(id: "id")
 }
 
 try await main()
