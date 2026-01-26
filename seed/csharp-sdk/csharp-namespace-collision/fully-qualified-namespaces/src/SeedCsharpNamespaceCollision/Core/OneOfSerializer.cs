@@ -49,7 +49,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         var casts = type.GetRuntimeMethods()
             .Where(m => m.IsSpecialName && m.Name == "op_Implicit")
             .ToArray();
-        while (type != null)
+        while (type is not null)
         {
             if (
                 type.IsGenericType

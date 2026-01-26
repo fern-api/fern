@@ -57,7 +57,8 @@ export class BaseOptionsGenerator extends WithGeneration {
     ) {
         const headersReference = this.Types.Headers;
         classOrInterface.addField({
-            // Classes implementing internal interface field cannot have an access modifier
+            // Don't use explicit interface implementation so Headers is accessible via options?.Headers
+            // Must be internal since Headers type is internal
             origin: classOrInterface.explicit("Headers"),
             access: !interfaceReference ? ast.Access.Internal : undefined,
             get: true,
@@ -156,11 +157,7 @@ export class BaseOptionsGenerator extends WithGeneration {
 
         this.createBaseUrlField(classOrInterface);
         this.getHttpClientField(classOrInterface, optionArgs);
-        this.getHttpHeadersField(classOrInterface, {
-            optional: false,
-            includeInitializer: true,
-            interfaceReference: this.Types.RequestOptionsInterface
-        });
+        // Headers property removed - we use HeadersBuilder at endpoint level and AdditionalHeaders for user-facing API
         this.getAdditionalHeadersField(classOrInterface, {
             summary:
                 "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
@@ -184,11 +181,7 @@ export class BaseOptionsGenerator extends WithGeneration {
 
         this.createBaseUrlField(iface);
         this.getHttpClientField(iface, optionArgs);
-        this.getHttpHeadersField(iface, {
-            optional: false,
-            includeInitializer: false,
-            interfaceReference: undefined
-        });
+        // Don't add Headers to interface - it's internal and only used by implementation class
         this.getAdditionalHeadersField(iface, {
             summary:
                 "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",

@@ -169,6 +169,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.EncodingCache,
                 AsIsFiles.FormUrlEncoder,
                 AsIsFiles.Headers,
+                AsIsFiles.HeadersBuilder,
                 AsIsFiles.HeaderValue,
                 AsIsFiles.HttpMethodExtensions,
                 AsIsFiles.IIsRetryableContent,
@@ -176,6 +177,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.MultipartFormRequest,
                 // AsIsFiles.NdJsonContent,
                 // AsIsFiles.NdJsonRequest,
+                AsIsFiles.QueryStringBuilder,
                 AsIsFiles.QueryStringConverter,
                 AsIsFiles.RawClient,
                 AsIsFiles.RawResponse,
@@ -224,10 +226,10 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
+            AsIsFiles.Test.HeadersBuilderTests,
+            AsIsFiles.Test.QueryStringBuilderTests,
             AsIsFiles.Test.QueryStringConverterTests,
             AsIsFiles.Test.WithRawResponseTests,
-            AsIsFiles.Test.RawClientTests.AdditionalHeadersTests,
-            AsIsFiles.Test.RawClientTests.AdditionalParametersTests,
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests
@@ -235,9 +237,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasIdempotencyHeaders()) {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
-        if (this.settings.generateNewAdditionalProperties) {
-            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
-        }
+        files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
         if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
@@ -279,9 +279,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.WithRawResponse,
             AsIsFiles.WithRawResponseTask
         ];
-        if (this.settings.generateNewAdditionalProperties) {
-            files.push(AsIsFiles.Json.AdditionalProperties);
-        }
+        files.push(AsIsFiles.Json.AdditionalProperties);
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.GrpcRequestOptions);
         }

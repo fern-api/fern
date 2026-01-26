@@ -1,6 +1,6 @@
-using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Reflection;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using OneOf;
 
 namespace SeedPackageYml.Core;
@@ -51,7 +51,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         var casts = type.GetRuntimeMethods()
             .Where(m => m.IsSpecialName && m.Name == "op_Implicit")
             .ToArray();
-        while (type != null)
+        while (type is not null)
         {
             if (
                 type.IsGenericType
