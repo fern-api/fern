@@ -71,16 +71,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 operation,
                 context: this.context
             });
-            let streamingExtension = streamingExtensionConverter.convert();
-
-            // If no streaming extension is specified, check if the response has text/event-stream with itemSchema
-            // This is a non-standard OpenAPI extension that indicates SSE streaming
-            if (streamingExtension == null) {
-                const hasItemSchemaStreaming = this.hasTextEventStreamWithItemSchema(operation);
-                if (hasItemSchemaStreaming) {
-                    streamingExtension = { type: "stream", format: "sse" };
-                }
-            }
+            const streamingExtension = streamingExtensionConverter.convert();
 
             const convertedEndpoint = this.tryParseAsHttpEndpoint({
                 operationBreadcrumbs,
@@ -174,41 +165,5 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             streamingExtension
         });
         return operationConverter.convert();
-    }
-
-    /**
-     * Checks if the operation has a response with text/event-stream content type
-     * that uses itemSchema instead of schema. This is a non-standard OpenAPI extension
-     * that indicates SSE streaming.
-     */
-    private hasTextEventStreamWithItemSchema(operation: OpenAPIV3_1.OperationObject): boolean {
-        if (operation.responses == null) {
-            return false;
-        }
-
-        for (const response of Object.values(operation.responses)) {
-            const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
-                schemaOrReference: response,
-                breadcrumbs: this.breadcrumbs
-            });
-
-            if (resolvedResponse?.content == null) {
-                continue;
-            }
-
-            for (const [contentType, mediaTypeObject] of Object.entries(resolvedResponse.content)) {
-                if (contentType.includes("text/event-stream")) {
-                    // Check if itemSchema is present (non-standard OpenAPI extension)
-                    const mediaTypeWithItemSchema = mediaTypeObject as OpenAPIV3_1.MediaTypeObject & {
-                        itemSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-                    };
-                    if (mediaTypeWithItemSchema.itemSchema != null) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 }
