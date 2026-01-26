@@ -34,7 +34,7 @@ on:
         type: boolean
         default: false
 
-# Cancel previous workflowson previous push
+# Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
