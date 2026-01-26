@@ -626,9 +626,7 @@ function buildUrl({
             );
         }
     }
-    // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
-    url = url.replaceAll("//", "/");
-    // for backwards compatibility we always make sure that the url stats with a slash
+    // for backwards compatibility we always make sure that the url starts with a slash
     if (!url.startsWith("/")) {
         url = `/${url}`;
     }

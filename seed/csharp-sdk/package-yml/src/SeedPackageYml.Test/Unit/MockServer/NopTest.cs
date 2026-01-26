@@ -22,7 +22,7 @@ public class NopTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/id-a2ijs82/id-219xca8")
+                    .WithPath("/id-a2ijs82//id-219xca8")
                     .UsingGet()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
