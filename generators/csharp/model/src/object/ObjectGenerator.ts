@@ -2,6 +2,7 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleObjectType,
     NameAndWireValue,
@@ -178,11 +179,50 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             // are completely excluded from object initializers
             return { name: propertyName, assignment };
         });
+
+        if (
+            this.objectDeclaration.extraProperties &&
+            exampleObject.extraProperties != null &&
+            exampleObject.extraProperties.length > 0
+        ) {
+            const extraPropertiesSnippet = this.generateExtraPropertiesSnippet({
+                extraProperties: exampleObject.extraProperties,
+                parseDatetimes
+            });
+            args.push({
+                name: "AdditionalProperties",
+                assignment: extraPropertiesSnippet
+            });
+        }
+
         const instantiateClass = this.csharp.instantiateClass({
             classReference: this.classReference,
             arguments_: args
         });
         return this.csharp.codeblock((writer) => writer.writeNode(instantiateClass));
+    }
+
+    private generateExtraPropertiesSnippet({
+        extraProperties,
+        parseDatetimes
+    }: {
+        extraProperties: { name: NameAndWireValue; value: FernIr.ExampleTypeReference }[];
+        parseDatetimes: boolean;
+    }): ast.CodeBlock {
+        return this.csharp.codeblock((writer) => {
+            writer.writeLine("new AdditionalProperties");
+            writer.pushScope();
+            for (const extraProperty of extraProperties) {
+                const valueSnippet = this.exampleGenerator.getSnippetForTypeReference({
+                    exampleTypeReference: extraProperty.value,
+                    parseDatetimes
+                });
+                writer.write(`["${extraProperty.name.wireValue}"] = `);
+                writer.writeNode(valueSnippet);
+                writer.writeLine(",");
+            }
+            writer.popScope();
+        });
     }
 
     private addProtobufMappers({ class_, properties }: { class_: ast.Class; properties: ObjectProperty[] }): void {

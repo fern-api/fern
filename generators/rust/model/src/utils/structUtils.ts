@@ -5,6 +5,8 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
     extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
+    isBase64Type,
+    isBigIntType,
     isCollectionType,
     isDateTimeOnlyType,
     isDateTimeType,
@@ -247,6 +249,26 @@ export function generateFieldAttributes(
                 attributes.push(Attribute.serde.with(`${modulePath}::option`));
             } else {
                 attributes.push(Attribute.serde.with(modulePath));
+            }
+        }
+
+        // Add base64 serde attribute for Vec<u8> fields that need base64 encoding/decoding
+        if (isBase64Type(typeRef)) {
+            if (isOptional) {
+                attributes.push(Attribute.serde.default());
+                attributes.push(Attribute.serde.with("crate::core::base64_bytes::option"));
+            } else {
+                attributes.push(Attribute.serde.with("crate::core::base64_bytes"));
+            }
+        }
+
+        // Add bigint_string serde attribute for BigInt fields that need string encoding/decoding
+        if (isBigIntType(typeRef)) {
+            if (isOptional) {
+                attributes.push(Attribute.serde.default());
+                attributes.push(Attribute.serde.with("crate::core::bigint_string::option"));
+            } else {
+                attributes.push(Attribute.serde.with("crate::core::bigint_string"));
             }
         }
     }
