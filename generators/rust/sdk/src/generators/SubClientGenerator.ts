@@ -662,9 +662,13 @@ export class SubClientGenerator {
                     bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
                     date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
                     dateTime: () => {
-                        // Direct DateTime<Utc> parameter
+                        // Direct DateTime parameter - use FixedOffset or Utc based on config
                         requiredTypes.add("DateTime");
-                        requiredTypes.add("Utc");
+                        if (this.context.getDateTimeType() === "utc") {
+                            requiredTypes.add("Utc");
+                        } else {
+                            requiredTypes.add("FixedOffset");
+                        }
                     },
                     base64: () => {
                         // String is built-in

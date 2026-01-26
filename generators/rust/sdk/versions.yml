@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.17.1
+  changelogEntry:
+    - summary: |
+        Fix compilation errors when generating SDKs without streaming endpoints by conditionally
+        including sse_stream.rs only when streaming endpoints exist. Also fix missing FixedOffset
+        import for DateTime types when dateTimeType is set to "offset" (the default).
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 0.17.0
   changelogEntry:
     - summary: |

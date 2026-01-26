@@ -356,8 +356,10 @@ impl HttpClient {
         }
 
         // Parse the token response
-        let token_response: OAuthTokenResponse =
-            response.json().await.map_err(ApiError::Network)?;
+        let token_response: OAuthTokenResponse = response
+            .json()
+            .await
+            .map_err(ApiError::Network)?;
 
         let expires_in = token_response.expires_in.unwrap_or(3600) as u64;
         Ok((token_response.access_token, expires_in))
@@ -433,6 +435,7 @@ impl HttpClient {
         let text = response.text().await.map_err(ApiError::Network)?;
         serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
+
 
     /// Execute a request and return a streaming response (for large file downloads)
     ///
@@ -613,7 +616,9 @@ impl HttpClient {
         );
         req.headers_mut().insert(
             "Cache-Control",
-            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
+            "no-store"
+                .parse()
+                .map_err(|_| ApiError::InvalidHeader)?,
         );
 
         // Execute with retries
