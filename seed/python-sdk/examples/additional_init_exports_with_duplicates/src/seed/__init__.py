@@ -7,8 +7,6 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        Actor,
-        Actress,
         BasicType,
         BigEntity,
         CastMember,
@@ -29,7 +27,6 @@ if typing.TYPE_CHECKING:
         Migration,
         MigrationStatus,
         Moment,
-        Movie,
         MovieId,
         Node,
         NotFoundError,
