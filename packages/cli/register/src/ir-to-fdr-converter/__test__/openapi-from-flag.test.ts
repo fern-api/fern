@@ -3058,10 +3058,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         if (fdrApiDefinition.rootPackage.endpoints && fdrApiDefinition.rootPackage.endpoints.length > 0) {
             addPlantEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
         } else {
-            const subpackageKeys = Object.keys(fdrApiDefinition.subpackages || {});
-            for (const key of subpackageKeys) {
-                const subpackage = fdrApiDefinition.subpackages?.[key];
-                if (subpackage?.endpoints && subpackage.endpoints.length > 0) {
+            for (const subpackage of Object.values(fdrApiDefinition.subpackages)) {
+                if (subpackage.endpoints && subpackage.endpoints.length > 0) {
                     addPlantEndpoint = subpackage.endpoints[0];
                     break;
                 }
@@ -3135,10 +3133,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         if (fdrApiDefinition.rootPackage.endpoints && fdrApiDefinition.rootPackage.endpoints.length > 0) {
             addPlantEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
         } else {
-            const subpackageKeys = Object.keys(fdrApiDefinition.subpackages || {});
-            for (const key of subpackageKeys) {
-                const subpackage = fdrApiDefinition.subpackages?.[key];
-                if (subpackage?.endpoints && subpackage.endpoints.length > 0) {
+            for (const subpackage of Object.values(fdrApiDefinition.subpackages)) {
+                if (subpackage.endpoints && subpackage.endpoints.length > 0) {
                     addPlantEndpoint = subpackage.endpoints[0];
                     break;
                 }
