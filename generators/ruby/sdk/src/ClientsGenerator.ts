@@ -40,6 +40,7 @@ import {
 import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
+import { QueryParamsUtility } from "./utils/QueryParamsUtility";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
 import { AccessToken } from "./utils/oauth/AccessToken";
 import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
@@ -262,6 +263,18 @@ export class ClientsGenerator {
             );
         }
 
+        const queryParamsUtilityClass = new QueryParamsUtility(this.clientName);
+        const queryParamsUtilityModule = Module_.wrapInModules({
+            locationGenerator: this.locationGenerator,
+            child: queryParamsUtilityClass
+        });
+        clientFiles.push(
+            new GeneratedRubyFile({
+                rootNode: queryParamsUtilityModule,
+                fullPath: "core/query_params_utils"
+            })
+        );
+
         const subpackageClassReferences = new Map<SubpackageId, ClientClassPair>();
         const locationGenerator = this.locationGenerator;
         // 1. Generate service files, these are the classes that query the endpoints
@@ -304,6 +317,7 @@ export class ClientsGenerator {
                 generatedClasses,
                 flattenedProperties,
                 fileUtilityClass,
+                queryParamsUtilityClass,
                 locationGenerator,
                 subpackagePaths.get(packageId) ?? [],
                 artifactRegistry
@@ -495,6 +509,7 @@ export class ClientsGenerator {
                 this.generatedClasses,
                 this.flattenedProperties,
                 fileUtilityClass,
+                queryParamsUtilityClass,
                 typeExporterLocation,
                 headersGenerator,
                 retriesProperty,

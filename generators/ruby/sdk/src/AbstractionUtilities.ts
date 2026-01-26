@@ -48,6 +48,7 @@ import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
+import { QueryParamsUtility } from "./utils/QueryParamsUtility";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
 import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
 import { RequestOptions } from "./utils/RequestOptionsClass";
@@ -76,6 +77,7 @@ export function generateEndpoints(
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
+    queryParamsUtility: QueryParamsUtility,
     packagePath: string[],
     packageClassReference: ClassReference | undefined,
     artifactRegistry: ArtifactRegistry | undefined
@@ -107,7 +109,8 @@ export function generateEndpoints(
                 crf,
                 eg,
                 generatedClasses,
-                fileUploadUtility
+                fileUploadUtility,
+                queryParamsUtility
             );
 
             const shouldOverwriteUrl = endpoint.baseUrl !== undefined;
@@ -194,6 +197,7 @@ export function generateRootPackage(
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
+    queryParamsUtility: QueryParamsUtility,
     typeExporterLocation: string,
     headersGenerator: HeadersGenerator,
     retriesProperty: Property,
@@ -331,6 +335,7 @@ export function generateRootPackage(
                   generatedClasses,
                   flattenedProperties,
                   fileUploadUtility,
+                  queryParamsUtility,
                   [],
                   classReference,
                   artifactRegistry
@@ -415,6 +420,7 @@ export function generateRootPackage(
                   generatedClasses,
                   flattenedProperties,
                   fileUploadUtility,
+                  queryParamsUtility,
                   [],
                   undefined,
                   undefined
@@ -568,6 +574,7 @@ export function generateService(
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
+    queryParamsUtility: QueryParamsUtility,
     locationGenerator: LocationGenerator,
     packagePath: string[],
     artifactRegistry: ArtifactRegistry
@@ -609,6 +616,7 @@ export function generateService(
             generatedClasses,
             flattenedProperties,
             fileUploadUtility,
+            queryParamsUtility,
             packagePath,
             syncClientClassReference,
             artifactRegistry
@@ -638,6 +646,7 @@ export function generateService(
             generatedClasses,
             flattenedProperties,
             fileUploadUtility,
+            queryParamsUtility,
             packagePath,
             undefined,
             undefined
