@@ -131,7 +131,7 @@ fixtures:
         generateSubpackageExports: true
     - outputFolder: with-wire-tests
       customConfig:
-        enableWireTests: true
+        generateWireTests: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
