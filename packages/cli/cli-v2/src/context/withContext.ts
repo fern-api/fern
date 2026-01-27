@@ -1,4 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
+import { CliError } from "../errors/CliError";
 import { ValidationError } from "../errors/ValidationError";
 import { Context } from "./Context";
 import type { GlobalArgs } from "./GlobalArgs";
@@ -16,9 +17,11 @@ export function withContext<T extends GlobalArgs>(
         const context = createContext(args);
         try {
             await handler(context, args);
+            context.finish();
             process.exit(0);
         } catch (error) {
             handleError(context, error);
+            context.finish();
             process.exit(1);
         }
     };
@@ -40,6 +43,13 @@ function handleError(context: Context, error: unknown): void {
     if (error instanceof ValidationError) {
         for (const issue of error.issues) {
             context.stderr.info(issue.toString());
+        }
+        return;
+    }
+
+    if (error instanceof CliError) {
+        if (error.message.length > 0) {
+            context.stderr.error(error.message);
         }
         return;
     }

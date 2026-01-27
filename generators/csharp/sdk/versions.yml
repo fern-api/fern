@@ -1,4 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.18.0
+  changelogEntry:
+    - summary: |
+        Add `QueryStringBuilder` class for building query strings with proper URL encoding.
+
+        Example usage:
+        ```csharp
+        var queryString = new QueryStringBuilder.Builder()
+            .Add("access_token", "abc123")
+            .Add("config_id", "cfg-456")
+            .AddDeepObject("session_settings", new { SystemPrompt = "Hello" })
+            .Build();
+        // Result: ?access_token=abc123&config_id=cfg-456&session_settings%5BSystemPrompt%5D=Hello
+        ```
+      type: feat
+    - summary: Improve header merging logic for better reliability and maintainability.
+      type: chore
+    - summary: |
+        Remove `additional-properties` and `experimental-additional-properties` configuration options.
+        AdditionalProperties support is now always enabled for all generated SDKs, simplifying the generator
+        and ensuring consistent behavior across all generated code. This feature allows handling of extra/unknown
+        properties in JSON responses.
+      type: chore
+  createdAt: "2026-01-22"
+  irVersion: 62
+
 - version: 2.17.5
   changelogEntry:
     - summary: |

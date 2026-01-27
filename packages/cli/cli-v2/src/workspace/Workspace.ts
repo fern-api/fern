@@ -10,5 +10,7 @@ import type { SdkConfig } from "../sdk/config/SdkConfig";
  */
 export interface Workspace {
     apis: Record<string, ApiDefinition>;
+    cliVersion: string;
+    org: string;
     sdks?: SdkConfig;
 }

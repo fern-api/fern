@@ -383,6 +383,24 @@ class CoreUtilities:
             ),
         )
 
+    def get_inferred_auth_token_provider(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "inferred_auth_token_provider"),
+                named_import="InferredAuthTokenProvider",
+            ),
+        )
+
+    def get_async_inferred_auth_token_provider(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "inferred_auth_token_provider"),
+                named_import="AsyncInferredAuthTokenProvider",
+            ),
+        )
+
     def instantiate_api_error(
         self,
         *,

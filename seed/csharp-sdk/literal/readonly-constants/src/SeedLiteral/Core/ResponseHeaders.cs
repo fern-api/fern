@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Net.Http.Headers;
+using global::System.Collections;
+using global::System.Net.Http.Headers;
 
 namespace SeedLiteral.Core;
 
@@ -40,7 +40,7 @@ public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
     /// </summary>
     public bool TryGetValue(string name, out string? value)
     {
-        if (TryGetValues(name, out var values) && values != null)
+        if (TryGetValues(name, out var values) && values is not null)
         {
             value = values.FirstOrDefault();
             return true;
@@ -82,7 +82,7 @@ public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
     /// </summary>
     public IEnumerator<HttpHeader> GetEnumerator()
     {
-        if (_headers != null)
+        if (_headers is not null)
         {
             foreach (var header in _headers)
             {
@@ -90,7 +90,7 @@ public readonly struct ResponseHeaders : IEnumerable<HttpHeader>
             }
         }
 
-        if (_contentHeaders != null)
+        if (_contentHeaders is not null)
         {
             foreach (var header in _contentHeaders)
             {

@@ -1,4 +1,4 @@
-using System.Net.Http;
+using global::System.Net.Http;
 
 namespace SeedBasicAuth.Core;
 

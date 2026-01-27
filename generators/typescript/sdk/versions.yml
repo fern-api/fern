@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.45.1
+  changelogEntry:
+    - summary: Remove check if body is `null` or `undefined`. If `null`, it is valid JSON `null`, and if `undefined`, it handles correctly to not have a body.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
 - version: 3.45.0
   changelogEntry:
     - summary: |

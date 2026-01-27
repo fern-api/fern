@@ -261,27 +261,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             return undefined;
         }
 
-        let serializeExpression = this.getSerializedRequestBodyWithoutNullCheck(
-            this.requestBody,
-            referenceToRequestBody,
-            context
-        );
-
-        if (this.isRequestBodyNullable(this.requestBody, context)) {
-            serializeExpression = ts.factory.createConditionalExpression(
-                ts.factory.createBinaryExpression(
-                    referenceToRequestBody,
-                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    ts.factory.createNull()
-                ),
-                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                serializeExpression,
-                ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                ts.factory.createIdentifier("undefined")
-            );
-        }
-
-        return serializeExpression;
+        return this.getSerializedRequestBodyWithoutNullCheck(this.requestBody, referenceToRequestBody, context);
     }
 
     private getSerializedRequestBodyWithoutNullCheck(
@@ -362,24 +342,6 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             }
         }
         return result;
-    }
-
-    private isRequestBodyNullable(
-        requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference,
-        context: SdkContext
-    ): boolean {
-        switch (requestBody.type) {
-            case "inlinedRequestBody":
-                return false;
-            case "reference": {
-                return (
-                    context.type.isOptional(requestBody.requestBodyType) ||
-                    context.type.isNullable(requestBody.requestBodyType)
-                );
-            }
-            default:
-                assertNever(requestBody);
-        }
     }
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {

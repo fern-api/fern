@@ -19,7 +19,7 @@ export declare namespace GenerationRunner {
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         generatorGroup: generatorsYml.GeneratorGroup;
         context: TaskContext;
-        irVersionOverride: string;
+        irVersionOverride: string | undefined;
         outputVersionOverride: string | undefined;
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         skipUnstableDynamicSnippetTests?: boolean;
@@ -119,7 +119,7 @@ export class GenerationRunner {
         context: TaskContext;
         workspace: FernWorkspace;
         organization: string;
-        irVersionOverride: string;
+        irVersionOverride: string | undefined;
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;

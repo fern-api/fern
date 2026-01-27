@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 
 namespace SeedOauthClientCredentials.Core;
 
@@ -67,7 +67,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
         JsonSerializerOptions options
     )
     {
-        if (value == null)
+        if (value is null)
         {
             writer.WriteNullValue();
             return;
