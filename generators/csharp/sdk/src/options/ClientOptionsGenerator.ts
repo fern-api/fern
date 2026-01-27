@@ -32,6 +32,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
         this.createBaseUrlField(class_);
         this.baseOptionsGenerator.getHttpClientField(class_, optionArgs);
 
+        // Headers property is used for lazy auth header evaluation in root client
         this.baseOptionsGenerator.getHttpHeadersField(class_, {
             optional: false,
             includeInitializer: true,
@@ -183,7 +184,6 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
     private getCloneMethod(cls: ast.Class): void {
         // TODO: add the GRPC options here eventually
         // TODO: iterate over all public fields and generate the clone logic
-        // for Headers, we should add a `.Clone` method on it and call that
 
         cls.addMethod({
             access: ast.Access.Internal,
@@ -202,6 +202,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
                     `(new Dictionary<string, `,
                     this.Types.HeaderValue,
                     `>(Headers)),
+    AdditionalHeaders = AdditionalHeaders,
     ${this.settings.includeExceptionHandler ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
                 );

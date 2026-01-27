@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using NUnit.Framework.Constraints;
 
 namespace NUnit.Framework;
@@ -120,7 +120,7 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
     private bool IsLikelyDateTimeString(string? str)
     {
         // Simple heuristic to identify likely ISO date time strings
-        return str != null
+        return str is not null
             && (str.Contains("T") && (str.EndsWith("Z") || str.Contains("+") || str.Contains("-")));
     }
 

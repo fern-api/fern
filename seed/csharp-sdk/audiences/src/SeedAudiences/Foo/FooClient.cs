@@ -18,11 +18,10 @@ public partial class FooClient : IFooClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.OptionalString != null)
-        {
-            _query["optionalString"] = request.OptionalString;
-        }
+        var _queryString = new SeedAudiences.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("optionalString", request.OptionalString)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -31,7 +30,7 @@ public partial class FooClient : IFooClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

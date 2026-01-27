@@ -6403,6 +6403,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../../ir-sdk
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../../../workspace/lazy-fern-workspace
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../logger

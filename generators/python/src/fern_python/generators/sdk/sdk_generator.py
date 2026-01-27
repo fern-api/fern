@@ -606,25 +606,29 @@ class SdkGenerator(AbstractGenerator):
         ).generate(source_file=client_source_file)
         project.write_source_file(source_file=client_source_file, filepath=client_filepath)
 
-        raw_client_filepath = context.get_raw_client_filepath_for_subpackage_service(subpackage_id)
-        raw_client_source_file = context.source_file_factory.create(
-            project=project, filepath=raw_client_filepath, generator_exec_wrapper=generator_exec_wrapper
-        )
-        RawClientGenerator(
-            context=context,
-            package=subpackage,
-            subpackage_id=subpackage_id,
-            class_name=context.get_raw_client_class_name_for_subpackage_service(subpackage_id),
-            async_class_name=context.get_async_raw_client_class_name_for_subpackage_service(subpackage_id),
-            generated_root_client=generated_root_client,
-            snippet_registry=snippet_registry,
-            snippet_writer=snippet_writer,
-            endpoint_metadata_collector=endpoint_metadata_collector,
-            websocket=websocket,
-            imports_manager=raw_client_source_file.get_imports_manager(),
-            reference_resolver=raw_client_source_file.get_reference_resolver(),
-        ).generate(source_file=raw_client_source_file)
-        project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
+        # Only generate raw client if this subpackage has direct endpoints or websocket
+        has_direct_endpoints = subpackage.service is not None
+        has_websocket = websocket is not None and context.custom_config.should_generate_websocket_clients
+        if has_direct_endpoints or has_websocket:
+            raw_client_filepath = context.get_raw_client_filepath_for_subpackage_service(subpackage_id)
+            raw_client_source_file = context.source_file_factory.create(
+                project=project, filepath=raw_client_filepath, generator_exec_wrapper=generator_exec_wrapper
+            )
+            RawClientGenerator(
+                context=context,
+                package=subpackage,
+                subpackage_id=subpackage_id,
+                class_name=context.get_raw_client_class_name_for_subpackage_service(subpackage_id),
+                async_class_name=context.get_async_raw_client_class_name_for_subpackage_service(subpackage_id),
+                generated_root_client=generated_root_client,
+                snippet_registry=snippet_registry,
+                snippet_writer=snippet_writer,
+                endpoint_metadata_collector=endpoint_metadata_collector,
+                websocket=websocket,
+                imports_manager=raw_client_source_file.get_imports_manager(),
+                reference_resolver=raw_client_source_file.get_reference_resolver(),
+            ).generate(source_file=raw_client_source_file)
+            project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
 
     def _generate_error(
         self,

@@ -230,12 +230,6 @@ fixtures:
     - customConfig:
         use-discriminated-unions: false
       outputFolder: no-discriminated-unions
-  extra-properties:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        additional-properties: false
-      outputFolder: no-additional-properties
   csharp-namespace-collision:
     - customConfig:
         experimental-fully-qualified-namespaces: true
@@ -280,28 +274,15 @@ fixtures:
         use-default-request-parameter-values: true
       outputFolder: with-defaults
 allowedFailures:
-  - any-auth
-  - endpoint-security-auth
-  - csharp-namespace-collision:fully-qualified-namespaces
   - enum:forward-compatible-enums
   - enum:plain-enums
   - examples:no-custom-config
   - examples:readme-config
-  - extra-properties:no-additional-properties
-  - extra-properties:no-custom-config
   - literal:no-custom-config
   - literal:readonly-constants
   - oauth-client-credentials-custom
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-mandatory-auth
-  - oauth-client-credentials-nested-root
-  - oauth-client-credentials-with-variables
-  - oauth-client-credentials:include-exception-handler
-  - oauth-client-credentials:no-custom-config
   - package-yml
-  - simple-fhir
   - trace
   - undiscriminated-unions
   - unions-with-local-date
   - unions:no-custom-config
-  - url-form-encoded

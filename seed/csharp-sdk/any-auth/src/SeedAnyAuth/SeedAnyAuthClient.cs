@@ -7,8 +7,6 @@ public partial class SeedAnyAuthClient : ISeedAnyAuthClient
     private readonly RawClient _client;
 
     public SeedAnyAuthClient(
-        string clientId,
-        string clientSecret,
         string? token = null,
         string? apiKey = null,
         string? clientId = null,

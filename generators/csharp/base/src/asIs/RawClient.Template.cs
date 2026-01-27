@@ -33,15 +33,6 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// </summary>
     internal readonly ClientOptions Options = clientOptions;
 
-    [Obsolete("Use SendRequestAsync instead.")]
-    internal global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> MakeRequestAsync(
-        global::<%= namespace%>.BaseRequest request,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return SendRequestAsync(request, cancellationToken);
-    }
-
     internal async global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> SendRequestAsync(
         global::<%= namespace%>.BaseRequest request,
         CancellationToken cancellationToken = default
@@ -251,20 +242,8 @@ internal partial class RawClient(ClientOptions clientOptions)
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
         httpRequest.Content = request.CreateContent();
-        var mergedHeaders = new Dictionary<string, List<string>>();
-        await MergeHeadersAsync(mergedHeaders, Options.Headers).ConfigureAwait(false);
-        MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
-        await MergeHeadersAsync(mergedHeaders, request.Headers).ConfigureAwait(false);
-        await MergeHeadersAsync(mergedHeaders, request.Options?.Headers).ConfigureAwait(false);
-        <% if (idempotencyHeaders) { %>
-        if (request.Options is IIdempotentRequestOptions idempotentRequest)
-        {
-            await MergeHeadersAsync(mergedHeaders, idempotentRequest.GetIdempotencyHeaders()).ConfigureAwait(false);
-        }
-        <% } %>
+        SetHeaders(httpRequest, request.Headers);
 
-        MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);
-        SetHeaders(httpRequest, mergedHeaders);
         return httpRequest;
     }
 
@@ -275,164 +254,33 @@ internal partial class RawClient(ClientOptions clientOptions)
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
 
-        var queryParameters = GetQueryParameters(request);
-        if (!queryParameters.Any())
-            return url;
+        // Append query string if present
+        if (!string.IsNullOrEmpty(request.QueryString))
+        {
+            return url + request.QueryString;
+        }
 
-        url += "?";
-        url = queryParameters.Aggregate(
-            url,
-            (current, queryItem) =>
-            {
-                if (
-                    queryItem.Value
-                    is global::System.Collections.IEnumerable collection
-                        and not string
-                )
-                {
-                  
-                    var items = collection
-                        .Cast<object>()
-                        .Select(value => $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(value?.ToString() ?? "")}")
-                        .ToList();
-                    if (items.Any())
-                    {
-                        current += string.Join("&", items) + "&";
-                    }
-                }
-                else
-                {
-                    current += $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(queryItem.Value)}&";
-                }
-
-                return current;
-            }
-        );
-        url = url[..^1];
         return url;
-    }
-
-    private static List<KeyValuePair<string, string>> GetQueryParameters(global::<%= namespace%>.BaseRequest request)
-    {
-        var result = TransformToKeyValuePairs(request.Query);
-        if (
-            request.Options?.AdditionalQueryParameters is null
-            || !request.Options.AdditionalQueryParameters.Any()
-        )
-        {
-            return result;
-        }
-
-        var additionalKeys = request
-            .Options.AdditionalQueryParameters.Select(p => p.Key)
-            .Distinct();
-        foreach (var key in additionalKeys)
-        {
-            result.RemoveAll(kv => kv.Key == key);
-        }
-
-        result.AddRange(request.Options.AdditionalQueryParameters);
-        return result;
-    }
-
-    private static List<KeyValuePair<string, string>> TransformToKeyValuePairs(
-        Dictionary<string, object> inputDict
-    )
-    {
-        var result = new List<KeyValuePair<string, string>>();
-        foreach (var kvp in inputDict)
-        {
-            switch (kvp.Value)
-            {
-                case null:
-                    result.Add(new KeyValuePair<string, string>(kvp.Key, ""));
-                    break;
-                case string str:
-                    result.Add(new KeyValuePair<string, string>(kvp.Key, str));
-                    break;
-                case IEnumerable<string> strList:
-                {
-                    foreach (var value in strList)
-                    {
-                        result.Add(new KeyValuePair<string, string>(kvp.Key, value));
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    private static async SystemTask MergeHeadersAsync(
-        Dictionary<string, List<string>> mergedHeaders,
-        Headers? headers
-    )
-    {
-        if (headers is null)
-        {
-            return;
-        }
-
-        foreach (var header in headers)
-        {
-            var value = await header.Value.ResolveAsync().ConfigureAwait(false);
-            if (value is not null)
-            {
-                mergedHeaders[header.Key] = [value];
-            }
-        }
-    }
-
-    private static void MergeAdditionalHeaders(
-        Dictionary<string, List<string>> mergedHeaders,
-        IEnumerable<KeyValuePair<string, string?>>? headers
-    )
-    {
-        if (headers is null)
-        {
-            return;
-        }
-
-        var usedKeys = new HashSet<string>();
-        foreach (var header in headers)
-        {
-            if (header.Value is null)
-            {
-                mergedHeaders.Remove(header.Key);
-                usedKeys.Remove(header.Key);
-                continue;
-            }
-
-            if (usedKeys.Contains(header.Key))
-            {
-                mergedHeaders[header.Key].Add(header.Value);
-            }
-            else
-            {
-                mergedHeaders[header.Key] = [header.Value];
-                usedKeys.Add(header.Key);
-            }
-        }
     }
 
     private void SetHeaders(
         HttpRequestMessage httpRequest,
-        Dictionary<string, List<string>> mergedHeaders
+        Dictionary<string, string>? headers
     )
     {
-        foreach (var kv in mergedHeaders)
+        if (headers is null)
         {
-            foreach (var header in kv.Value)
-            {
-                if (header is null)
-                {
-                    continue;
-                }
+            return;
+        }
 
-                httpRequest.Headers.TryAddWithoutValidation(kv.Key, header);
+        foreach (var kv in headers)
+        {
+            if (kv.Value is null)
+            {
+                continue;
             }
+
+            httpRequest.Headers.TryAddWithoutValidation(kv.Key, kv.Value);
         }
     }
 
@@ -468,28 +316,4 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         return (encoding, charset, mediaType);
     }
-
-    /// <inheritdoc />
-    [Obsolete("Use global::<%= namespace%>.ApiResponse instead.")]
-    internal record ApiResponse : global::<%= namespace%>.ApiResponse;
-
-    /// <inheritdoc />
-    [Obsolete("Use global::<%= namespace%>.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : global::<%= namespace%>.BaseRequest;
-
-    /// <inheritdoc />
-    [Obsolete("Use global::<%= namespace%>.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : global::<%= namespace%>.EmptyRequest;
-
-    /// <inheritdoc />
-    [Obsolete("Use global::<%= namespace%>.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : global::<%= namespace%>.JsonRequest;
-
-    /// <inheritdoc />
-    [Obsolete("Use global::<%= namespace%>.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : global::<%= namespace%>.MultipartFormRequest;
-
-    /// <inheritdoc />
-    [Obsolete("Use global::<%= namespace%>.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : global::<%= namespace%>.StreamRequest;
 }
