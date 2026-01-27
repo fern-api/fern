@@ -5,7 +5,7 @@ export { AbstractSpecConverter } from "./AbstractSpecConverter";
 export * from "./converters";
 export * as Converters from "./converters";
 export { SchemaOrReferenceConverter } from "./converters/schema";
-export { type APIError, ErrorCollector } from "./ErrorCollector";
+export { type APIError, APIErrorLevel, ErrorCollector } from "./ErrorCollector";
 export {
     type AiExampleOverride,
     type EndpointExampleValidationResult,
