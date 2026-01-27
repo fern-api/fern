@@ -5,6 +5,15 @@ module FernRequestParameters
     module Http
       # @api private
       class RawClient
+        # Default HTTP status codes that trigger a retry
+        RETRYABLE_STATUSES = [408, 429, 500, 502, 503, 504, 521, 522, 524].freeze
+        # Initial delay between retries in seconds
+        INITIAL_RETRY_DELAY = 0.5
+        # Maximum delay between retries in seconds
+        MAX_RETRY_DELAY = 60.0
+        # Jitter factor for randomizing retry delays (20%)
+        JITTER_FACTOR = 0.2
+
         # @return [String] The base URL for requests
         attr_reader :base_url
 
@@ -27,21 +36,88 @@ module FernRequestParameters
         # @return [HTTP::Response] The HTTP response.
         def send(request)
           url = build_url(request)
+          attempt = 0
+          response = nil
 
-          http_request = build_http_request(
-            url:,
-            method: request.method,
-            headers: request.encode_headers,
-            body: request.encode_body
-          )
+          loop do
+            http_request = build_http_request(
+              url:,
+              method: request.method,
+              headers: request.encode_headers,
+              body: request.encode_body
+            )
 
-          conn = connect(url)
-          conn.open_timeout = @timeout
-          conn.read_timeout = @timeout
-          conn.write_timeout = @timeout
-          conn.continue_timeout = @timeout
+            conn = connect(url)
+            conn.open_timeout = @timeout
+            conn.read_timeout = @timeout
+            conn.write_timeout = @timeout
+            conn.continue_timeout = @timeout
 
-          conn.request(http_request)
+            response = conn.request(http_request)
+
+            break unless should_retry?(response, attempt)
+
+            delay = retry_delay(response, attempt)
+            sleep(delay)
+            attempt += 1
+          end
+
+          response
+        end
+
+        # Determines if a request should be retried based on the response status code.
+        # @param response [Net::HTTPResponse] The HTTP response.
+        # @param attempt [Integer] The current retry attempt (0-indexed).
+        # @return [Boolean] Whether the request should be retried.
+        def should_retry?(response, attempt)
+          return false if attempt >= @max_retries
+
+          status = response.code.to_i
+          RETRYABLE_STATUSES.include?(status)
+        end
+
+        # Calculates the delay before the next retry attempt using exponential backoff with jitter.
+        # Respects Retry-After header if present.
+        # @param response [Net::HTTPResponse] The HTTP response.
+        # @param attempt [Integer] The current retry attempt (0-indexed).
+        # @return [Float] The delay in seconds before the next retry.
+        def retry_delay(response, attempt)
+          # Check for Retry-After header (can be seconds or HTTP date)
+          retry_after = response["Retry-After"]
+          if retry_after
+            delay = parse_retry_after(retry_after)
+            return [delay, MAX_RETRY_DELAY].min if delay&.positive?
+          end
+
+          # Exponential backoff with jitter: base_delay * 2^attempt
+          base_delay = INITIAL_RETRY_DELAY * (2**attempt)
+          add_jitter([base_delay, MAX_RETRY_DELAY].min)
+        end
+
+        # Parses the Retry-After header value.
+        # @param value [String] The Retry-After header value (seconds or HTTP date).
+        # @return [Float, nil] The delay in seconds, or nil if parsing fails.
+        def parse_retry_after(value)
+          # Try parsing as integer (seconds)
+          seconds = Integer(value, exception: false)
+          return seconds.to_f if seconds
+
+          # Try parsing as HTTP date
+          begin
+            retry_time = Time.httpdate(value)
+            delay = retry_time - Time.now
+            delay.positive? ? delay : nil
+          rescue ArgumentError
+            nil
+          end
+        end
+
+        # Adds random jitter to a delay value.
+        # @param delay [Float] The base delay in seconds.
+        # @return [Float] The delay with jitter applied.
+        def add_jitter(delay)
+          jitter = delay * JITTER_FACTOR * (rand - 0.5) * 2
+          [delay + jitter, 0].max
         end
 
         # @param request [FernRequestParameters::Internal::Http::BaseRequest] The HTTP request.
@@ -104,7 +180,9 @@ module FernRequestParameters
 
           http = Net::HTTP.new(url.host, port)
           http.use_ssl = is_https
-          http.max_retries = @max_retries
+          # NOTE: We handle retries at the application level with HTTP status code awareness,
+          # so we set max_retries to 0 to disable Net::HTTP's built-in network-level retries.
+          http.max_retries = 0
           http
         end
 
