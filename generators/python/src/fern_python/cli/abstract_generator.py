@@ -115,11 +115,8 @@ class AbstractGenerator(ABC):
             mypy_exclude = generator_config.custom_config.get("mypy_exclude")
 
         require_paths = None
-        if generator_config.custom_config is not None:
-            # Support both hyphenated and underscored versions
-            require_paths = generator_config.custom_config.get(
-                "require_paths", generator_config.custom_config.get("require-paths")
-            )
+        if generator_config.custom_config is not None and "require_paths" in generator_config.custom_config:
+            require_paths = generator_config.custom_config.get("require_paths")
 
         with Project(
             filepath=generator_config.output.path,

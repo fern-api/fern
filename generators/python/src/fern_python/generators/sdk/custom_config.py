@@ -161,8 +161,6 @@ class SDKCustomConfig(pydantic.BaseModel):
             obj = obj.copy()
             if "custom-pager-name" in obj and "custom_pager_name" not in obj:
                 obj["custom_pager_name"] = obj.pop("custom-pager-name")
-            if "require-paths" in obj and "require_paths" not in obj:
-                obj["require_paths"] = obj.pop("require-paths")
 
         obj = super().parse_obj(obj)
 
