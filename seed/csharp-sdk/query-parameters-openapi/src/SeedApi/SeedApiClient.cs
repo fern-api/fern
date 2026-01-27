@@ -35,47 +35,25 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["limit"] = request.Limit.ToString();
-        _query["id"] = request.Id;
-        _query["date"] = request.Date.ToString(Constants.DateFormat);
-        _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
-        _query["bytes"] = request.Bytes;
-        _query["user"] = JsonUtils.Serialize(request.User);
-        _query["userList"] = request
-            .UserList.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["excludeUser"] = request
-            .ExcludeUser.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["filter"] = request.Filter;
-        _query["neighborRequired"] = JsonUtils.Serialize(request.NeighborRequired);
-        if (request.OptionalDeadline != null)
-        {
-            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
-                Constants.DateTimeFormat
-            );
-        }
-        if (request.KeyValue != null)
-        {
-            _query["keyValue"] = JsonUtils.Serialize(request.KeyValue);
-        }
-        if (request.OptionalString != null)
-        {
-            _query["optionalString"] = request.OptionalString;
-        }
-        if (request.NestedUser != null)
-        {
-            _query["nestedUser"] = JsonUtils.Serialize(request.NestedUser);
-        }
-        if (request.OptionalUser != null)
-        {
-            _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
-        }
-        if (request.Neighbor != null)
-        {
-            _query["neighbor"] = JsonUtils.Serialize(request.Neighbor);
-        }
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 16)
+            .Add("limit", request.Limit)
+            .Add("id", request.Id)
+            .Add("date", request.Date)
+            .Add("deadline", request.Deadline)
+            .Add("bytes", request.Bytes)
+            .AddDeepObject("user", request.User)
+            .AddDeepObject("userList", request.UserList)
+            .Add("optionalDeadline", request.OptionalDeadline)
+            .Add("keyValue", request.KeyValue)
+            .Add("optionalString", request.OptionalString)
+            .AddDeepObject("nestedUser", request.NestedUser)
+            .AddDeepObject("optionalUser", request.OptionalUser)
+            .AddDeepObject("excludeUser", request.ExcludeUser)
+            .Add("filter", request.Filter)
+            .AddDeepObject("neighbor", request.Neighbor)
+            .AddDeepObject("neighborRequired", request.NeighborRequired)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -83,7 +61,7 @@ public partial class SeedApiClient : ISeedApiClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "user/getUsername",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

@@ -26,14 +26,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ItemData'
+              $ref: "#/components/schemas/ItemData"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: "#/components/schemas/Item"
 components:
   schemas:
     Item:

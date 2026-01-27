@@ -504,13 +504,10 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body:
-                request != null
-                    ? serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
-                          unrecognizedObjectKeys: "strip",
-                          omitUndefined: true,
-                      })
-                    : undefined,
+            body: serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

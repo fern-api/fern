@@ -1,6 +1,6 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::api::{*};
 
 pub struct OrganizationClient {
     pub http_client: HttpClient,
@@ -9,8 +9,8 @@ pub struct OrganizationClient {
 impl OrganizationClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?
+})
     }
 
     /// Create a new organization.
@@ -22,19 +22,15 @@ impl OrganizationClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn create(
-        &self,
-        request: &CreateOrganizationRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<Organization, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::POST,
-                "/organizations/",
-                Some(serde_json::to_value(request).unwrap_or_default()),
-                None,
-                options,
-            )
-            .await
+    pub async fn create(&self, request: &CreateOrganizationRequest, options: Option<RequestOptions>) -> Result<Organization, ApiError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/organizations/",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
     }
+
 }
+

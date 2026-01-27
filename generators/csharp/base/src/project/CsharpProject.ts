@@ -579,7 +579,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
                     testNamespace: this.namespaces.test,
-                    additionalProperties: this.settings.generateNewAdditionalProperties,
+                    additionalProperties: true,
                     context: this.context,
                     namespaces: this.namespaces
                 }
@@ -598,7 +598,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
-                    additionalProperties: this.settings.generateNewAdditionalProperties,
+                    additionalProperties: true,
                     context: this.context,
                     namespaces: this.namespaces
                 }
@@ -626,7 +626,7 @@ dotnet_diagnostic.IDE0005.severity = error
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.namespaces.core,
-                        additionalProperties: this.settings.generateNewAdditionalProperties,
+                        additionalProperties: true,
                         context: this.context,
                         namespaces: this.namespaces
                     }
@@ -641,7 +641,7 @@ dotnet_diagnostic.IDE0005.severity = error
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.namespaces.core,
-                        additionalProperties: this.settings.generateNewAdditionalProperties,
+                        additionalProperties: true,
                         context: this.context,
                         namespaces: this.namespaces
                     }
@@ -662,7 +662,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace: this.namespaces.testUtils,
                     testNamespace: this.namespaces.test,
-                    additionalProperties: this.settings.generateNewAdditionalProperties,
+                    additionalProperties: true,
                     context: this.context,
                     namespaces: this.namespaces
                 }

@@ -6,7 +6,7 @@
 //! - **Types**
 //! - **Union**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod bigunion;
 pub mod types;
@@ -24,9 +24,10 @@ impl UnionsClient {
             config: config.clone(),
             bigunion: BigunionClient::new(config.clone())?,
             types: TypesClient::new(config.clone())?,
-            union_: UnionClient::new(config.clone())?,
+            union_: UnionClient::new(config.clone())?
         })
     }
+
 }
 
 pub use bigunion::BigunionClient;

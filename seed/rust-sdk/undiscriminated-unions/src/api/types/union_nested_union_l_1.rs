@@ -3,13 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum NestedUnionL1 {
-    Integer(i64),
+        Integer(i64),
 
-    Set1(HashSet<String>),
+        Set1(HashSet<String>),
 
-    List2(Vec<String>),
+        List2(Vec<String>),
 
-    NestedUnionL2(NestedUnionL2),
+        NestedUnionL2(NestedUnionL2),
 }
 
 impl NestedUnionL1 {
@@ -29,59 +29,61 @@ impl NestedUnionL1 {
         matches!(self, Self::NestedUnionL2(_))
     }
 
+
     pub fn as_integer(&self) -> Option<&i64> {
         match self {
-            Self::Integer(value) => Some(value),
-            _ => None,
-        }
+                    Self::Integer(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_integer(self) -> Option<i64> {
         match self {
-            Self::Integer(value) => Some(value),
-            _ => None,
-        }
+                    Self::Integer(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_set1(&self) -> Option<&HashSet<String>> {
         match self {
-            Self::Set1(value) => Some(value),
-            _ => None,
-        }
+                    Self::Set1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_set1(self) -> Option<HashSet<String>> {
         match self {
-            Self::Set1(value) => Some(value),
-            _ => None,
-        }
+                    Self::Set1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_list2(&self) -> Option<&Vec<String>> {
         match self {
-            Self::List2(value) => Some(value),
-            _ => None,
-        }
+                    Self::List2(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_list2(self) -> Option<Vec<String>> {
         match self {
-            Self::List2(value) => Some(value),
-            _ => None,
-        }
+                    Self::List2(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_nestedunionl2(&self) -> Option<&NestedUnionL2> {
         match self {
-            Self::NestedUnionL2(value) => Some(value),
-            _ => None,
-        }
+                    Self::NestedUnionL2(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_nestedunionl2(self) -> Option<NestedUnionL2> {
         match self {
-            Self::NestedUnionL2(value) => Some(value),
-            _ => None,
-        }
+                    Self::NestedUnionL2(value) => Some(value),
+                    _ => None,
+                }
     }
+
 }

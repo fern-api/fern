@@ -84,6 +84,9 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
         this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
 
+        // Add base64 for encoding/decoding base64 fields in JSON
+        this.dependencyManager.add("base64", "0.22");
+
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
 
         const extraDeps = this.customConfig.extraDependencies ?? {};

@@ -4,7 +4,7 @@
 //!
 //! - **Retries**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod retries;
 pub struct NoRetriesClient {
@@ -16,9 +16,10 @@ impl NoRetriesClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            retries: RetriesClient::new(config.clone())?,
+            retries: RetriesClient::new(config.clone())?
         })
     }
+
 }
 
 pub use retries::RetriesClient;

@@ -51,8 +51,8 @@ public class RawParamsClient {
                 .addPathSegments("path")
                 .addPathSegment(param);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -112,8 +112,8 @@ public class RawParamsClient {
                 .addPathSegments("path")
                 .addPathSegment(param);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -158,8 +158,8 @@ public class RawParamsClient {
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -203,8 +203,8 @@ public class RawParamsClient {
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -249,8 +249,8 @@ public class RawParamsClient {
                 .addPathSegment(param);
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -295,8 +295,8 @@ public class RawParamsClient {
                 .addPathSegment(param);
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -340,8 +340,8 @@ public class RawParamsClient {
                 .addPathSegments("path")
                 .addPathSegment(param);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -395,8 +395,8 @@ public class RawParamsClient {
                 .addPathSegments("path")
                 .addPathSegment(param);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;

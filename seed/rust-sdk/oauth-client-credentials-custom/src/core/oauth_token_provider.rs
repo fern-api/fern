@@ -255,8 +255,7 @@ mod tests {
 
     #[test]
     fn test_new_provider() {
-        let provider =
-            OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
+        let provider = OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
         assert_eq!(provider.client_id(), "client_id");
         assert_eq!(provider.client_secret(), "client_secret");
         assert!(provider.get_token().is_none());
@@ -265,8 +264,7 @@ mod tests {
 
     #[test]
     fn test_set_and_get_token() {
-        let provider =
-            OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
+        let provider = OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
 
         provider.set_token("test_token".to_string(), 3600);
 
@@ -278,8 +276,7 @@ mod tests {
 
     #[test]
     fn test_expired_token() {
-        let provider =
-            OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
+        let provider = OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
 
         // Set token with 0 expiry (will be expired immediately due to buffer)
         provider.set_token("test_token".to_string(), 1);
@@ -291,11 +288,11 @@ mod tests {
 
     #[test]
     fn test_get_or_fetch() {
-        let provider =
-            OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
+        let provider = OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
 
-        let result: Result<String, &str> =
-            provider.get_or_fetch(|| Ok(("fetched_token".to_string(), 3600)));
+        let result: Result<String, &str> = provider.get_or_fetch(|| {
+            Ok(("fetched_token".to_string(), 3600))
+        });
 
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), "fetched_token");
@@ -311,8 +308,7 @@ mod tests {
 
     #[test]
     fn test_reset() {
-        let provider =
-            OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
+        let provider = OAuthTokenProvider::new("client_id".to_string(), "client_secret".to_string());
 
         provider.set_token("test_token".to_string(), 3600);
         assert!(provider.get_token().is_some());

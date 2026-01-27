@@ -3,12 +3,14 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum TestCaseImplementationReference {
-    TemplateId {
-        value: TestCaseTemplateId,
-    },
+        #[serde(rename = "templateId")]
+        TemplateId {
+            value: TestCaseTemplateId,
+        },
 
-    Implementation {
-        #[serde(flatten)]
-        data: TestCaseImplementation,
-    },
+        #[serde(rename = "implementation")]
+        Implementation {
+            #[serde(flatten)]
+            data: TestCaseImplementation,
+        },
 }

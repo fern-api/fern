@@ -4,7 +4,7 @@
 //!
 //! - **Service**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod service;
 pub struct HeaderTokenEnvironmentVariableClient {
@@ -16,9 +16,10 @@ impl HeaderTokenEnvironmentVariableClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            service: ServiceClient::new(config.clone())?,
+            service: ServiceClient::new(config.clone())?
         })
     }
+
 }
 
 pub use service::ServiceClient;
