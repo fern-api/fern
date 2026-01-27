@@ -55,7 +55,7 @@
     "@fern-api/source": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.605",
+    "@fern-fern/fiddle-sdk": "0.0.775",
     "@types/node": "18.15.3",
     "@types/yargs": "^17.0.28",
     "chalk": "5.4.1",

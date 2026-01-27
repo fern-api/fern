@@ -185,14 +185,26 @@ export async function runLocalGenerationForWorkspace({
                             timeoutMs: 30000 // 30 seconds timeout for credential/network issues
                         });
 
-                        // For push mode, checkout the target branch while the working tree is clean.
+                        // For push mode and pull-request mode with a target branch,
+                        // checkout the target branch while the working tree is clean.
                         // This prevents non-fast-forward errors that occur when trying to checkout
                         // after files have been generated (dirty working tree).
                         const mode = selfhostedGithubConfig.mode ?? "push";
-                        if (mode === "push" && selfhostedGithubConfig.branch != null) {
+                        if ((mode === "push" || mode === "pull-request") && selfhostedGithubConfig.branch != null) {
                             interactiveTaskContext.logger.debug(
                                 `Checking out branch ${selfhostedGithubConfig.branch} before generation`
                             );
+                            // For pull-request mode, the branch must exist on remote
+                            // (to match remote generation behavior)
+                            if (mode === "pull-request") {
+                                const branchExists = await repo.remoteBranchExists(selfhostedGithubConfig.branch);
+                                if (!branchExists) {
+                                    const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
+                                    interactiveTaskContext.failAndThrow(
+                                        `Branch ${selfhostedGithubConfig.branch} does not exist in repository ${parsedRepo.owner}/${parsedRepo.repo}`
+                                    );
+                                }
+                            }
                             await repo.checkoutRemoteBranch(selfhostedGithubConfig.branch);
                         }
                     } catch (error) {

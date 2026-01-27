@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Add support for `branch` property in pull-request GitHub mode. When specified, the PR will target this branch instead of the repository's default branch.
+      type: feat
+  createdAt: "2026-01-27"
+  irVersion: 63
+
 - version: 3.51.2
   changelogEntry:
     - summary: |
