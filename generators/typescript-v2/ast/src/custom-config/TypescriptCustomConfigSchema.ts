@@ -43,6 +43,36 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     enableForwardCompatibleEnums: z.optional(z.boolean()),
     parameterNaming: z.optional(z.enum(["originalName", "wireValue", "camelCase", "snakeCase", "default"])),
     generateSubpackageExports: z.optional(z.boolean()),
+    customSubpathExports: z.optional(
+        z.record(
+            z.string(), // subpath like "./aws"
+            z.union([
+                z.string(), // simple string export path
+                z.object({
+                    types: z.optional(z.string()),
+                    import: z.optional(
+                        z.union([
+                            z.string(),
+                            z.object({
+                                types: z.optional(z.string()),
+                                default: z.optional(z.string())
+                            })
+                        ])
+                    ),
+                    require: z.optional(
+                        z.union([
+                            z.string(),
+                            z.object({
+                                types: z.optional(z.string()),
+                                default: z.optional(z.string())
+                            })
+                        ])
+                    ),
+                    default: z.optional(z.string())
+                })
+            ])
+        )
+    ),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),

@@ -269,6 +269,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                             }
                         };
                     }, {}),
+                    ...this.getCustomSubpathExports(),
                     "./package.json": "./package.json"
                 },
                 files: [
@@ -357,5 +358,12 @@ export class SimpleTypescriptProject extends TypescriptProject {
         return {
             ...this.getCommonDevDependencies()
         };
+    }
+
+    private getCustomSubpathExports(): Record<string, unknown> {
+        if (this.customSubpathExports == null) {
+            return {};
+        }
+        return this.customSubpathExports;
     }
 }

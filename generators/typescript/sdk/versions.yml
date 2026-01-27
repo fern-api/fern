@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.46.0
+  changelogEntry:
+    - summary: |
+        Add support for `customSubpathExports` configuration option. This allows SDK maintainers to define
+        custom subpath exports in the generated `package.json`, enabling modular packages where optional
+        features can be imported via subpaths (e.g., `import { BedrockClient } from 'cohere-ai/aws'`).
+        Custom exports are merged with the standard exports, appearing after the main "." export and
+        before the "./package.json" export.
+      type: feat
+  createdAt: "2026-01-27"
+  irVersion: 63
+
 - version: 3.45.1
   changelogEntry:
     - summary: Remove check if body is `null` or `undefined`. If `null`, it is valid JSON `null`, and if `undefined`, it handles correctly to not have a body.

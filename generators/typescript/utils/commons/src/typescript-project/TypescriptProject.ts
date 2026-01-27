@@ -33,6 +33,16 @@ export declare namespace TypescriptProject {
         linter: "biome" | "oxlint" | "none";
         generateSubpackageExports?: boolean;
         subpackageExportPaths?: Array<{ key: string; relPath: string }>;
+        customSubpathExports?: Record<
+            string,
+            | string
+            | {
+                  types?: string;
+                  import?: string | { types?: string; default?: string };
+                  require?: string | { types?: string; default?: string };
+                  default?: string;
+              }
+        >;
     }
 }
 
@@ -111,6 +121,16 @@ export abstract class TypescriptProject {
     private readonly linter: "biome" | "oxlint" | "none";
     protected readonly generateSubpackageExports: boolean;
     protected readonly subpackageExportPaths: Array<{ key: string; relPath: string }>;
+    protected readonly customSubpathExports?: Record<
+        string,
+        | string
+        | {
+              types?: string;
+              import?: string | { types?: string; default?: string };
+              require?: string | { types?: string; default?: string };
+              default?: string;
+          }
+    >;
 
     private readonly runScripts: boolean;
 
@@ -134,7 +154,8 @@ export abstract class TypescriptProject {
         formatter,
         linter,
         generateSubpackageExports,
-        subpackageExportPaths
+        subpackageExportPaths,
+        customSubpathExports
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
         this.runScripts = runScripts;
@@ -156,6 +177,7 @@ export abstract class TypescriptProject {
         this.linter = linter;
         this.generateSubpackageExports = generateSubpackageExports ?? false;
         this.subpackageExportPaths = subpackageExportPaths ?? [];
+        this.customSubpathExports = customSubpathExports;
     }
 
     protected async addCommonFilesToVolume(): Promise<void> {
