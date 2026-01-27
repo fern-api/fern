@@ -393,8 +393,11 @@ export class WireTestGenerator {
             }
 
             // Verify request count using test ID for filtering
-            // When inferred auth is present, expect 2 requests (1 for auth token, 1 for API call)
-            const expectedRequestCount = this.hasInferredAuth() ? 2 : 1;
+            // When testing the inferred auth token endpoint, expect 2 requests:
+            // 1. The automatic token fetch request
+            // 2. The actual API call being tested
+            // For all other endpoints, expect 1 request (the auth token fetch goes to a different endpoint)
+            const expectedRequestCount = this.isInferredAuthTokenEndpoint(endpoint) ? 2 : 1;
             statements.push(
                 python.codeBlock(
                     `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, ${expectedRequestCount})`
@@ -424,6 +427,27 @@ export class WireTestGenerator {
             return false;
         }
         return this.context.ir.auth.schemes.some((scheme) => scheme.type === "inferred");
+    }
+
+    /**
+     * Checks if an endpoint is the inferred auth token endpoint.
+     * When testing the auth token endpoint with inferred auth, expect 2 requests:
+     * 1. The automatic token fetch request
+     * 2. The actual API call being tested
+     */
+    private isInferredAuthTokenEndpoint(endpoint: HttpEndpoint): boolean {
+        if (!this.context.ir.auth?.schemes) {
+            return false;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                const tokenEndpointId = scheme.tokenEndpoint.endpoint.endpointId;
+                if (endpoint.id === tokenEndpointId) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
