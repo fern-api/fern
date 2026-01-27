@@ -1,5 +1,5 @@
-import { XmlDocWriter } from "../ast/core/XmlDocWriter";
 import { Writer } from "../ast/core/Writer";
+import { XmlDocWriter } from "../ast/core/XmlDocWriter";
 
 /**
  * Simple mock writer that captures written content.
@@ -45,9 +45,7 @@ function escapeXmlDocContent(text: string): string {
 describe("XmlDocWriter.escapeXmlDocContent", () => {
     describe("preserves valid XML doc tags", () => {
         it("should preserve anchor tags with href", () => {
-            const result = escapeXmlDocContent(
-                'For more information, read <a href="https://example.com">docs</a>'
-            );
+            const result = escapeXmlDocContent('For more information, read <a href="https://example.com">docs</a>');
             expect(result).toBe('For more information, read <a href="https://example.com">docs</a>');
         });
 
@@ -102,18 +100,26 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
         });
 
         it("should preserve permission tags", () => {
-            const result = escapeXmlDocContent('<permission cref="System.Security.Permissions.FileIOPermission">Requires read access</permission>');
-            expect(result).toBe('<permission cref="System.Security.Permissions.FileIOPermission">Requires read access</permission>');
+            const result = escapeXmlDocContent(
+                '<permission cref="System.Security.Permissions.FileIOPermission">Requires read access</permission>'
+            );
+            expect(result).toBe(
+                '<permission cref="System.Security.Permissions.FileIOPermission">Requires read access</permission>'
+            );
         });
 
         it("should preserve listheader tags", () => {
-            const result = escapeXmlDocContent('<list type="table"><listheader><term>Name</term><description>Value</description></listheader></list>');
-            expect(result).toBe('<list type="table"><listheader><term>Name</term><description>Value</description></listheader></list>');
+            const result = escapeXmlDocContent(
+                '<list type="table"><listheader><term>Name</term><description>Value</description></listheader></list>'
+            );
+            expect(result).toBe(
+                '<list type="table"><listheader><term>Name</term><description>Value</description></listheader></list>'
+            );
         });
 
         it("should preserve underline tags", () => {
-            const result = escapeXmlDocContent('This is <u>underlined</u> text');
-            expect(result).toBe('This is <u>underlined</u> text');
+            const result = escapeXmlDocContent("This is <u>underlined</u> text");
+            expect(result).toBe("This is <u>underlined</u> text");
         });
 
         it("should preserve tags case-insensitively", () => {
@@ -151,25 +157,17 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
 
     describe("handles mixed content", () => {
         it("should handle comparison within sentence with link", () => {
-            const result = escapeXmlDocContent(
-                'When x < y, see <a href="https://example.com">docs</a>'
-            );
+            const result = escapeXmlDocContent('When x < y, see <a href="https://example.com">docs</a>');
             expect(result).toBe('When x &lt; y, see <a href="https://example.com">docs</a>');
         });
 
         it("should handle multiple valid tags with escaped content", () => {
-            const result = escapeXmlDocContent(
-                "Use <code>a < b</code> to check if a < b in the <em>comparison</em>"
-            );
-            expect(result).toBe(
-                "Use <code>a &lt; b</code> to check if a &lt; b in the <em>comparison</em>"
-            );
+            const result = escapeXmlDocContent("Use <code>a < b</code> to check if a < b in the <em>comparison</em>");
+            expect(result).toBe("Use <code>a &lt; b</code> to check if a &lt; b in the <em>comparison</em>");
         });
 
         it("should preserve complex link with comparison text", () => {
-            const result = escapeXmlDocContent(
-                'For values where n > 5, see <a href="/docs">documentation</a>'
-            );
+            const result = escapeXmlDocContent('For values where n > 5, see <a href="/docs">documentation</a>');
             expect(result).toBe('For values where n &gt; 5, see <a href="/docs">documentation</a>');
         });
     });
@@ -219,9 +217,7 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
         });
 
         it("should handle mixed entities and tags", () => {
-            const result = escapeXmlDocContent(
-                '<a href="https://example.com">Link</a> &copy; 2024'
-            );
+            const result = escapeXmlDocContent('<a href="https://example.com">Link</a> &copy; 2024');
             expect(result).toBe('<a href="https://example.com">Link</a> \u00A9 2024');
         });
     });
@@ -243,12 +239,8 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
         });
 
         it("should handle tags with multiple attributes", () => {
-            const result = escapeXmlDocContent(
-                '<a href="https://example.com" target="_blank" rel="noopener">Link</a>'
-            );
-            expect(result).toBe(
-                '<a href="https://example.com" target="_blank" rel="noopener">Link</a>'
-            );
+            const result = escapeXmlDocContent('<a href="https://example.com" target="_blank" rel="noopener">Link</a>');
+            expect(result).toBe('<a href="https://example.com" target="_blank" rel="noopener">Link</a>');
         });
 
         it("should handle real-world auth0 example", () => {
