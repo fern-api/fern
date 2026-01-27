@@ -13,6 +13,8 @@ export declare namespace RealtimeClient {
         model?: string;
         temperature?: number;
         "language-code"?: string;
+        /** Additional query parameters to send with the websocket connect request. */
+        queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
@@ -35,6 +37,7 @@ export class RealtimeClient {
             model,
             temperature,
             "language-code": languageCode,
+            queryParams,
             headers,
             debug,
             reconnectAttempts,
@@ -52,7 +55,7 @@ export class RealtimeClient {
                 `/realtime/${core.url.encodePathParam(sessionId)}`,
             ),
             protocols: [],
-            queryParameters: _queryParams,
+            queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
             options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
         });

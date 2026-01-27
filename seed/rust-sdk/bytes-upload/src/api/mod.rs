@@ -9,4 +9,5 @@
 
 pub mod resources;
 
-pub use resources::{BytesUploadClient, ServiceClient};
+pub use resources::{ServiceClient, BytesUploadClient};
+

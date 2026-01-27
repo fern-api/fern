@@ -662,9 +662,13 @@ export class SubClientGenerator {
                     bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
                     date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
                     dateTime: () => {
-                        // Direct DateTime<Utc> parameter
+                        // Direct DateTime parameter - use FixedOffset or Utc based on config
                         requiredTypes.add("DateTime");
-                        requiredTypes.add("Utc");
+                        if (this.context.getDateTimeType() === "utc") {
+                            requiredTypes.add("Utc");
+                        } else {
+                            requiredTypes.add("FixedOffset");
+                        }
                     },
                     base64: () => {
                         // String is built-in
@@ -847,6 +851,9 @@ export class SubClientGenerator {
                 // JSON streaming needs explicit type parameter for inference
                 const innerType = this.getInnerResponseType(endpoint);
                 typeParameter = `::<${innerType}>`;
+            } else if (this.isBase64PrimitiveResponse(endpoint)) {
+                // Base64 primitive responses need special handling to decode the JSON string
+                executeMethod = "execute_request_base64";
             }
         }
 
@@ -1532,6 +1539,50 @@ export class SubClientGenerator {
             fileDownload: () => true,
             text: () => false,
             bytes: () => true,
+            streaming: () => false,
+            streamParameter: () => false,
+            _other: () => false
+        });
+    }
+
+    private isBase64PrimitiveResponse(endpoint: HttpEndpoint): boolean {
+        if (!endpoint.response?.body) {
+            return false;
+        }
+
+        return endpoint.response.body._visit({
+            json: (jsonResponse) => {
+                if (!jsonResponse.responseBodyType) {
+                    return false;
+                }
+                return TypeReference._visit(jsonResponse.responseBodyType, {
+                    primitive: (primitive) => {
+                        return PrimitiveTypeV1._visit(primitive.v1, {
+                            string: () => false,
+                            boolean: () => false,
+                            integer: () => false,
+                            uint: () => false,
+                            uint64: () => false,
+                            long: () => false,
+                            float: () => false,
+                            double: () => false,
+                            bigInteger: () => false,
+                            date: () => false,
+                            dateTime: () => false,
+                            base64: () => true,
+                            uuid: () => false,
+                            _other: () => false
+                        });
+                    },
+                    named: () => false,
+                    container: () => false,
+                    unknown: () => false,
+                    _other: () => false
+                });
+            },
+            fileDownload: () => false,
+            text: () => false,
+            bytes: () => false,
             streaming: () => false,
             streamParameter: () => false,
             _other: () => false

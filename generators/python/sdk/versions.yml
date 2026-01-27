@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.52.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 4.51.1
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections to merge `additional_query_parameters` from `request_options`
+        into the connection URL. Query params now use the same encoding pattern as HTTP endpoints.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
 
 - version: 4.51.0
   changelogEntry:

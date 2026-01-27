@@ -3,7 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum TestCaseImplementationDescriptionBoard2 {
-    Html { value: String },
+        #[serde(rename = "html")]
+        Html {
+            value: String,
+        },
 
-    ParamId { value: ParameterId2 },
+        #[serde(rename = "paramId")]
+        ParamId {
+            value: ParameterId2,
+        },
 }
