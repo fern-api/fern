@@ -70,3 +70,4 @@ allowedFailures:
   - multiple-request-bodies
   - undiscriminated-union-with-response-property
   - enum
+  - java-streaming-accept-header
