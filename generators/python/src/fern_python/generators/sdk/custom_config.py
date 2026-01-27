@@ -150,7 +150,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Paths to files that will be auto-loaded when the SDK is imported
     # (e.g., ["custom_integration", "sentry_integration"] will import <package>/custom_integration.py
     # and <package>/sentry_integration.py if they exist)
-    require_paths: Optional[List[str]] = None
+    import_paths: Optional[List[str]] = None
 
     class Config:
         extra = pydantic.Extra.forbid

@@ -3,7 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "require-paths": [
+    "import_paths": [
       "custom_integration",
       "sentry_integration"
     ]

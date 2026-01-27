@@ -98,12 +98,12 @@ def _write_recursion_limit(writer: AST.Writer, recursion_limit: int) -> None:
         writer.write_line(f"sys.setrecursionlimit({recursion_limit})")
 
 
-def _write_require_paths_hook(writer: AST.Writer, require_paths: List[str], package_name: str) -> None:
-    """Write the require_paths hook to auto-load user-defined files if they exist."""
+def _write_import_paths_hook(writer: AST.Writer, import_paths: List[str], package_name: str) -> None:
+    """Write the import_paths hook to auto-load user-defined files if they exist."""
     writer.write_newline_if_last_line_not()
     writer.write_line("# Load user-defined files if present (e.g., for Sentry integration)")
     writer.write_line(f"# Files are loaded from {package_name}/ if they exist")
-    paths_str = ", ".join(f'"{path}"' for path in require_paths)
+    paths_str = ", ".join(f'"{path}"' for path in import_paths)
     writer.write_line(f"for _path in [{paths_str}]:")
     with writer.indent():
         writer.write_line("try:")
@@ -127,14 +127,14 @@ class ModuleManager:
         sorted_modules: Optional[Sequence[str]] = None,
         lazy_imports: bool,
         recursion_limit: Optional[int] = None,
-        require_paths: Optional[List[str]] = None,
+        import_paths: Optional[List[str]] = None,
         package_name: Optional[str] = None,
     ) -> None:
         self._module_infos = defaultdict(create_empty_module_info)
         self._sorted_modules = sorted_modules or []
         self._lazy_imports = lazy_imports
         self._recursion_limit = recursion_limit
-        self._require_paths = require_paths
+        self._import_paths = import_paths
         self._package_name = package_name
 
     def register_additional_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
@@ -228,13 +228,13 @@ class ModuleManager:
                     "__all__ = [" + ", ".join(f'"{export}"' for export, _ in sorted_export_module_mapping) + "]"
                 )
 
-            # Write require_paths hook at the end of the root __init__.py
+            # Write import_paths hook at the end of the root __init__.py
             is_root_module = len(module) == 0
-            if is_root_module and self._require_paths and self._package_name:
+            if is_root_module and self._import_paths and self._package_name:
                 # Ensure import_module is available (it may already be imported for lazy imports)
                 if not self._lazy_imports:
                     writer.write_line("from importlib import import_module")
-                _write_require_paths_hook(writer, self._require_paths, self._package_name)
+                _write_import_paths_hook(writer, self._import_paths, self._package_name)
 
             writer.write_to_file(
                 os.path.join(filepath if module_info.from_src else base_filepath, *module, "__init__.py")

@@ -43,7 +43,7 @@ class CoreUtilities:
         self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
-        self._require_paths = custom_config.require_paths
+        self._import_paths = custom_config.import_paths
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -902,6 +902,6 @@ class CoreUtilities:
         """Sanitize the pager name to be a valid Python identifier in PascalCase."""
         return pascal_case(name)
 
-    def get_require_paths(self) -> Optional[list[str]]:
-        """Get the list of require paths for auto-loading user-defined files."""
-        return self._require_paths
+    def get_import_paths(self) -> Optional[list[str]]:
+        """Get the list of import paths for auto-loading user-defined files."""
+        return self._import_paths

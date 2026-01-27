@@ -261,10 +261,10 @@ fixtures:
         package_path: matryoshka/doll/structure
       outputFolder: package-path
     - customConfig:
-        require-paths:
+        import_paths:
           - custom_integration
           - sentry_integration
-      outputFolder: require-paths
+      outputFolder: import-paths
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
