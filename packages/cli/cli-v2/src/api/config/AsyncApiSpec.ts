@@ -9,8 +9,14 @@ export interface AsyncApiSpec {
     /** Path to the AsyncAPI specification file */
     asyncapi: AbsoluteFilePath;
 
+    /** URL origin for fetching remote specs */
+    origin?: string;
+
     /** Path to the overrides file */
     overrides?: AbsoluteFilePath;
+
+    /** Namespace for the spec */
+    namespace?: string;
 
     /** AsyncAPI-specific settings */
     settings?: schemas.AsyncApiSettingsSchema;
