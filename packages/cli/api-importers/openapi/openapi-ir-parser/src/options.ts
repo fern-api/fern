@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
 
 export interface ParseOpenAPIOptions {
     /* Whether or not to disable OpenAPI example generation */
@@ -62,6 +62,11 @@ export interface ParseOpenAPIOptions {
      * If false, convert strings with format date to dates.
      */
     typeDatesAsStrings: boolean;
+
+    /**
+     * Experimental configuration from docs.yml, including the examples-v2 flag
+     */
+    experimental?: docsYml.RawSchemas.ExperimentalConfig;
 
     /**
      * If true, preserve the oneOf structure when there is only one schema in the oneOf array.

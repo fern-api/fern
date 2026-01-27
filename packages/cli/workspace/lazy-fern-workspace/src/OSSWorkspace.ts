@@ -9,7 +9,7 @@ import {
     Spec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
-import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { Audiences, docsYml, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
@@ -139,11 +139,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         {
             context,
             relativePathToDependency,
-            loadAiExamples = false
+            loadAiExamples = false,
+            experimental
         }: {
             context: TaskContext;
             relativePathToDependency?: RelativeFilePath;
             loadAiExamples?: boolean;
+            experimental?: docsYml.RawSchemas.ExperimentalConfig;
         },
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
@@ -157,7 +159,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             }),
             options: {
                 ...settings,
-                ...this.parseOptions
+                ...this.parseOptions,
+                experimental
             }
         });
     }
@@ -171,13 +174,15 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         audiences,
         enableUniqueErrorsPerEndpoint,
         generateV1Examples,
-        logWarnings
+        logWarnings,
+        experimental
     }: {
         context: TaskContext;
         audiences: Audiences;
         enableUniqueErrorsPerEndpoint: boolean;
         generateV1Examples: boolean;
         logWarnings: boolean;
+        experimental?: docsYml.RawSchemas.ExperimentalConfig;
     }): Promise<IntermediateRepresentation> {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
@@ -234,7 +239,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         enableUniqueErrorsPerEndpoint,
                         generateV1Examples,
                         settings: getOpenAPISettings({ options: document.settings }),
-                        documentBaseDir: dirname(absoluteFilepathToSpec)
+                        documentBaseDir: dirname(absoluteFilepathToSpec),
+                        experimental
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
                     result = await converter.convert();

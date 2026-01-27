@@ -3815,6 +3815,16 @@
               "type": "null"
             }
           ]
+        },
+        "examples-v2": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

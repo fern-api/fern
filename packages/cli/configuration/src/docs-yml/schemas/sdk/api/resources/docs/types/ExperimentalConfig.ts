@@ -38,4 +38,17 @@ export interface ExperimentalConfig {
     aiExampleStyleInstructions?: string;
     /** Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation. */
     excludeApis?: boolean;
+    /**
+     * Experimental enhanced example extraction system for OpenAPI specifications. When enabled, the system provides:
+     *
+     * - **Schema-level example support**: Properly extracts examples from `schema.example` and `schema.examples` (previously ignored)
+     * - **Intelligent prioritization**: Clear hierarchy from x-fern-examples → media-examples → schema-examples → auto-generated
+     * - **Better naming**: Meaningful example names like "Schema Example" instead of undefined values
+     * - **openapi-sampler integration**: High-quality auto-generated examples using mature schema-to-example generation
+     * - **Request/Response optimization**: Minimal examples for requests (required fields only), comprehensive examples for responses (all fields)
+     * - **Bounded generation**: Unlimited user-specified examples, maximum 3 auto-generated examples to prevent bloat
+     *
+     * This addresses the core issue where schema-level examples were completely ignored, leading to incomplete API documentation.
+     */
+    examplesV2?: boolean;
 }

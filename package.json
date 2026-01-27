@@ -99,6 +99,7 @@
     "@blueprintjs/stylelint-plugin": "^4.1.14",
     "@fern-api/configs": "workspace:*",
     "@nx/js": "^21.3.8",
+    "@types/openapi-sampler": "^1.0.3",
     "cross-env": "^7.0.3",
     "cspell": "^8.17.2",
     "depcheck": "^1.4.7",
@@ -153,6 +154,7 @@
     "url-join": "^4.0.1"
   },
   "dependencies": {
-    "js-yaml": "^4.1.1"
+    "js-yaml": "^4.1.1",
+    "openapi-sampler": "^1.6.2"
   }
 }

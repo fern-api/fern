@@ -1,6 +1,6 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
-import { generatorsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -40,6 +40,7 @@ export declare namespace Spec {
         enableUniqueErrorsPerEndpoint: boolean;
         generateV1Examples: boolean;
         documentBaseDir?: string;
+        experimental?: docsYml.RawSchemas.ExperimentalConfig;
     }
 }
 
@@ -63,6 +64,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly enableUniqueErrorsPerEndpoint: boolean;
     public readonly generateV1Examples: boolean;
     public readonly documentBaseDir?: string;
+    public readonly experimental?: docsYml.RawSchemas.ExperimentalConfig;
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -84,6 +86,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         this.enableUniqueErrorsPerEndpoint = args.enableUniqueErrorsPerEndpoint;
         this.generateV1Examples = args.generateV1Examples;
         this.documentBaseDir = args.documentBaseDir;
+        this.experimental = args.experimental;
     }
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];

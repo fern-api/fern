@@ -1226,7 +1226,8 @@ export class DocsDefinitionResolver {
                     audiences: item.audiences,
                     enableUniqueErrorsPerEndpoint: true,
                     generateV1Examples: false,
-                    logWarnings: false
+                    logWarnings: false,
+                    experimental: this.parsedDocsConfig.experimental
                 });
             } catch (error) {
                 openapiError = error;
@@ -1240,7 +1241,8 @@ export class DocsDefinitionResolver {
                 const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
                 const openApiIr = await workspaceForTags.getOpenAPIIr({
                     context: this.taskContext,
-                    loadAiExamples: true
+                    loadAiExamples: true,
+                    experimental: this.parsedDocsConfig.experimental
                 });
                 if (openApiIr.tags.tagsById) {
                     // Tag keys must be normalized to camelCase because subpackage names are derived

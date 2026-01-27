@@ -33,7 +33,10 @@ describe("openapi-ir", async () => {
             }
 
             if (workspace.workspace instanceof OSSWorkspace) {
-                const openApiIr = await (workspace.workspace as OSSWorkspace).getOpenAPIIr({ context });
+                const openApiIr = await (workspace.workspace as OSSWorkspace).getOpenAPIIr({
+                    context,
+                    experimental: undefined
+                });
                 await expect(JSON.stringify(openApiIr, undefined, 2)).toMatchFileSnapshot(
                     `./__snapshots__/openapi-ir/${fixture.name}.json`
                 );

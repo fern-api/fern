@@ -80,9 +80,13 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
 
     public getOpenAPIIr(
         {
-            context
+            context,
+            relativePathToDependency,
+            experimental
         }: {
             context: TaskContext;
+            relativePathToDependency?: any;
+            experimental?: any;
         },
         options?: OpenAPIWorkspace.Settings
     ): OpenApiIntermediateRepresentation {
@@ -92,7 +96,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             documents: [document],
             options: {
                 ...options,
-                ...this.parseOptions
+                ...this.parseOptions,
+                experimental
             }
         });
     }

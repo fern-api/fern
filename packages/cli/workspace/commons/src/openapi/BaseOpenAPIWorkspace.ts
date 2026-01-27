@@ -84,7 +84,10 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         },
         settings?: BaseOpenAPIWorkspace.Settings
     ): Promise<FernDefinition> {
-        const openApiIr = await this.getOpenAPIIr({ context, relativePathToDependency }, settings);
+        const openApiIr = await this.getOpenAPIIr(
+            { context, relativePathToDependency, experimental: undefined },
+            settings
+        );
         return this.converter.convert({
             context,
             ir: openApiIr,
@@ -114,10 +117,12 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public abstract getOpenAPIIr(
         {
             context,
-            relativePathToDependency
+            relativePathToDependency,
+            experimental
         }: {
             context: TaskContext;
             relativePathToDependency?: RelativeFilePath;
+            experimental?: any; // Use any for now to avoid circular dependency
         },
         settings?: BaseOpenAPIWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation>;
@@ -167,7 +172,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         },
         settings?: BaseOpenAPIWorkspace.Settings
     ): FernDefinition {
-        const openApiIr = this.getOpenAPIIr({ context, relativePathToDependency }, settings);
+        const openApiIr = this.getOpenAPIIr({ context, relativePathToDependency, experimental: undefined }, settings);
         return this.converter.convert({
             context,
             ir: openApiIr,
@@ -196,10 +201,12 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public abstract getOpenAPIIr(
         {
             context,
-            relativePathToDependency
+            relativePathToDependency,
+            experimental
         }: {
             context: TaskContext;
             relativePathToDependency?: RelativeFilePath;
+            experimental?: any; // Use any for now to avoid circular dependency
         },
         settings?: BaseOpenAPIWorkspace.Settings
     ): OpenApiIntermediateRepresentation;
