@@ -55,9 +55,7 @@ class AuthClient:
         from seed import SeedOauthClientCredentialsEnvironmentVariables
 
         client = SeedOauthClientCredentialsEnvironmentVariables(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.auth.get_token_with_client_credentials(
             client_id="client_id",
@@ -102,9 +100,7 @@ class AuthClient:
         from seed import SeedOauthClientCredentialsEnvironmentVariables
 
         client = SeedOauthClientCredentialsEnvironmentVariables(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.auth.refresh_token(
             client_id="client_id",
@@ -169,9 +165,7 @@ class AsyncAuthClient:
         from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables
 
         client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 
@@ -224,9 +218,7 @@ class AsyncAuthClient:
         from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables
 
         client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 

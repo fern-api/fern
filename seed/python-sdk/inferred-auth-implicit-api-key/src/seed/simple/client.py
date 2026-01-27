@@ -39,6 +39,7 @@ class SimpleClient:
 
         client = SeedInferredAuthImplicitApiKey(
             base_url="https://yourhost.com/path/to/api",
+            api_key="YOUR_API_KEY",
         )
         client.simple.get_something()
         """
@@ -80,6 +81,7 @@ class AsyncSimpleClient:
 
         client = AsyncSeedInferredAuthImplicitApiKey(
             base_url="https://yourhost.com/path/to/api",
+            api_key="YOUR_API_KEY",
         )
 
 

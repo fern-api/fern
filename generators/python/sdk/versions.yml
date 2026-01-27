@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.52.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication. Fixes for wire test generation with inferred auth.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 4.51.3
   changelogEntry:
     - summary: |
