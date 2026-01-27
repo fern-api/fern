@@ -6,11 +6,11 @@ import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { isAsyncApiSpec } from "../api/config/AsyncApiSpec";
 import { isConjureSpec } from "../api/config/ConjureSpec";
+import { ApiDefinitionConverter, DEFAULT_API_NAME } from "../api/config/converter/ApiDefinitionConverter";
 import { isFernSpec } from "../api/config/FernSpec";
 import { isOpenApiSpec } from "../api/config/OpenApiSpec";
 import { isOpenRpcSpec } from "../api/config/OpenRpcSpec";
 import { isProtobufSpec } from "../api/config/ProtobufSpec";
-import { ApiDefinitionConverter, DEFAULT_API_NAME } from "../api/converter/ApiDefinitionConverter";
 import { loadFernYml } from "../config/fern-yml/loadFernYml";
 
 describe("ApiDefinitionConverter", () => {

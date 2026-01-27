@@ -2,16 +2,16 @@ import { schemas } from "@fern-api/config";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
-import { DEFAULT_API_NAME } from "../../api/converter/ApiDefinitionConverter";
-import { FernYmlSchemaLoader } from "../../config/fern-yml/FernYmlSchemaLoader";
-import type { DockerImageReference } from "../config/DockerImageReference";
-import type { GitOutputConfig } from "../config/GitOutputConfig";
-import { LANGUAGES, type Language } from "../config/Language";
-import type { NpmPublishConfig } from "../config/NpmPublishConfig";
-import type { OutputConfig } from "../config/OutputConfig";
-import type { PublishConfig } from "../config/PublishConfig";
-import type { SdkConfig } from "../config/SdkConfig";
-import type { Target } from "../config/Target";
+import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter";
+import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader";
+import type { DockerImageReference } from "../DockerImageReference";
+import type { GitOutputConfig } from "../GitOutputConfig";
+import { LANGUAGES, type Language } from "../Language";
+import type { NpmPublishConfig } from "../NpmPublishConfig";
+import type { OutputConfig } from "../OutputConfig";
+import type { PublishConfig } from "../PublishConfig";
+import type { SdkConfig } from "../SdkConfig";
+import type { Target } from "../Target";
 import { getDockerImageReference } from "./getDockerImageReference";
 
 export namespace SdkConfigConverter {
@@ -188,7 +188,9 @@ export class SdkConfigConverter {
         sourced: Sourced<schemas.GitOutputSchema>;
     }): GitOutputConfig {
         return {
-            repository: git.repository
+            repository: git.repository,
+            mode: git.mode ?? "pr",
+            branch: git.branch
         };
     }
 

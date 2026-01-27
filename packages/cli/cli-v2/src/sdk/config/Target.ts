@@ -7,7 +7,7 @@ export interface Target {
     name: string;
     /** The API this target is generating for (default: 'api') */
     api: string;
-    /** Resolved Docker image reference (e.g., "fernapi/fern-typescript-node-sdk") */
+    /** Resolved Docker image reference (e.g., "fernapi/fern-typescript-sdk") */
     image: string;
     /** Target language */
     lang: Language;
