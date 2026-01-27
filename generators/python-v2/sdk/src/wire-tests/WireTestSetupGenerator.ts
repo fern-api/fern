@@ -103,30 +103,9 @@ export class WireTestSetupGenerator {
     }
 
     /**
-     * Checks if the IR has an inferred auth scheme.
-     */
-    private hasInferredAuth(): boolean {
-        if (!this.ir.auth || !this.ir.auth.schemes) {
-            return false;
-        }
-        return this.ir.auth.schemes.some((scheme) => scheme.type === "inferred");
-    }
-
-    /**
      * Builds the content for the conftest.py file
      */
     private buildConftestContent(): string {
-        // Use different conftest content when inferred auth is present
-        if (this.hasInferredAuth()) {
-            return this.buildInferredAuthConftestContent();
-        }
-        return this.buildStandardConftestContent();
-    }
-
-    /**
-     * Builds the standard conftest.py content (without inferred auth)
-     */
-    private buildStandardConftestContent(): string {
         const clientClassName = this.getClientClassName();
         const clientImport = this.getClientImport();
         const clientConstructorParams = this.buildClientConstructorParams();
@@ -190,97 +169,6 @@ ${clientConstructorParams}
         httpx_client=httpx.Client(headers=test_headers),
 ${clientConstructorParams}
     )
-
-
-def verify_request_count(
-    test_id: str,
-    method: str,
-    url_path: str,
-    query_params: Optional[Dict[str, str]],
-    expected: int,
-) -> None:
-    """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety"""
-    wiremock_admin_url = f"{_get_wiremock_base_url()}/__admin"
-    request_body: Dict[str, Any] = {
-        "method": method,
-        "urlPath": url_path,
-        "headers": {"X-Test-Id": {"equalTo": test_id}},
-    }
-    if query_params:
-        query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
-        request_body["queryParameters"] = query_parameters
-    response = requests.post(f"{wiremock_admin_url}/requests/find", json=request_body)
-    assert response.status_code == 200, "Failed to query WireMock requests"
-    result = response.json()
-    requests_found = len(result.get("requests", []))
-    assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
-`;
-    }
-
-    /**
-     * Builds the conftest.py content for inferred auth.
-     * This version bypasses automatic token fetching so only explicit API calls are made.
-     */
-    private buildInferredAuthConftestContent(): string {
-        const clientClassName = this.getClientClassName();
-        const clientImport = this.getClientImport();
-        const clientConstructorParams = this.buildInferredAuthClientConstructorParams();
-        const environmentSetup = this.buildEnvironmentSetup();
-
-        return `"""
-Pytest configuration for wire tests.
-
-This module provides helpers for creating a configured client that talks to
-WireMock and for verifying requests in WireMock.
-
-The WireMock container lifecycle itself is managed by a top-level pytest
-plugin (wiremock_pytest_plugin.py) so that the container is started exactly
-once per test run, even when using pytest-xdist.
-"""
-
-import os
-from typing import Any, Dict, Optional
-
-import httpx
-import requests
-
-${clientImport}
-${environmentSetup.imports}
-
-
-def _get_wiremock_base_url() -> str:
-    """Returns the WireMock base URL using the dynamically assigned port."""
-    port = os.environ.get("WIREMOCK_PORT", "8080")
-    return f"http://localhost:{port}"
-
-
-def get_client(test_id: str, skip_auto_auth: bool = True) -> ${clientClassName}:
-    """
-    Creates a configured client instance for wire tests.
-
-    Args:
-        test_id: Unique identifier for the test, used for request tracking.
-        skip_auto_auth: If True, bypasses automatic token fetching so only
-                        explicit API calls are made. Defaults to True.
-
-    Returns:
-        A configured client instance with all required auth parameters.
-    """
-    test_headers = {"X-Test-Id": test_id}
-    base_url = _get_wiremock_base_url()
-
-    client = ${clientClassName}(
-        ${environmentSetup.paramDynamic},
-        httpx_client=httpx.Client(headers=test_headers),
-${clientConstructorParams}
-    )
-
-    # Bypass automatic auth by replacing the auth_headers callback with a static one.
-    # This prevents the InferredAuthTokenProvider from making its own /authorize calls.
-    if skip_auto_auth:
-        client._client_wrapper._auth_headers = lambda: {"Authorization": "Bearer test_token"}
-
-    return client
 
 
 def verify_request_count(
@@ -600,30 +488,6 @@ def pytest_unconfigure(config: pytest.Config) -> None:
             for (const header of this.ir.headers) {
                 const paramName = header.name.name.snakeCase.safeName;
                 // Only add if not already added by auth schemes
-                if (!params.some((p) => p.startsWith(`        ${paramName}=`))) {
-                    params.push(`        ${paramName}="test_${paramName}",`);
-                }
-            }
-        }
-
-        return params.join("\n");
-    }
-
-    /**
-     * Builds the client constructor parameters for inferred auth.
-     * Uses api_key instead of _token_getter_override since the auth is bypassed post-construction.
-     */
-    private buildInferredAuthClientConstructorParams(): string {
-        const params: string[] = [];
-
-        // For inferred auth, we use api_key as a simple credential
-        params.push(`        api_key="test_api_key",`);
-
-        // Process global headers that might require values
-        if (this.ir.headers) {
-            for (const header of this.ir.headers) {
-                const paramName = header.name.name.snakeCase.safeName;
-                // Only add if not already added
                 if (!params.some((p) => p.startsWith(`        ${paramName}=`))) {
                     params.push(`        ${paramName}="test_${paramName}",`);
                 }
