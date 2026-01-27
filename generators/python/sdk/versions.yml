@@ -1,18 +1,9 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.52.1
-  changelogEntry:
-    - summary: |
-        Fix wire test generation for inferred auth to use api_key parameter instead of
-        _token_getter_override, and expect 2 requests (1 for auth token, 1 for API call).
-      type: fix
-  createdAt: "2026-01-27"
-  irVersion: 62
-
 - version: 4.52.0
   changelogEntry:
     - summary: |
-        Add support for inferred authentication
+        Add support for inferred authentication. Fixes for wire test generation with inferred auth.
       type: feat
   createdAt: "2026-01-26"
   irVersion: 62
