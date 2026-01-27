@@ -54,8 +54,14 @@ export async function runRemoteGenerationForGenerator({
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
-    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
-    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, interactiveTaskContext.logger);
+    const fdrOrigin =
+        process.env.OVERRIDE_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const airGapCheckUrl = `${fdrOrigin}/health`;
+    interactiveTaskContext.logger.debug(`Checking air-gapped mode against FDR: ${airGapCheckUrl}`);
+    const isAirGapped = await detectAirGappedMode(airGapCheckUrl, interactiveTaskContext.logger);
+    interactiveTaskContext.logger.debug(
+        `Air-gap detection result for FDR (${airGapCheckUrl}): ${isAirGapped ? "air-gapped" : "connected"}`
+    );
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 

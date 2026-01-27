@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Fix air-gap detection to use `OVERRIDE_FDR_ORIGIN` when set. In self-hosted environments, the air-gap detection now correctly checks the local FDR server (e.g., `http://localhost:8080/health`) instead of the external registry. Also improved debug logging for all air-gap checks to show the URL being tested and the result.
+      type: fix
+  createdAt: "2026-01-27"
+  irVersion: 63
+
 - version: 3.51.2
   changelogEntry:
     - summary: |

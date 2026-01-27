@@ -62,25 +62,31 @@ export class LambdaExampleEnhancer {
             return this.venusAirGappedResult;
         }
 
-        this.context.logger.debug(`Checking Venus connectivity at ${this.venusOrigin}/health`);
+        const venusHealthUrl = `${this.venusOrigin}/health`;
+        this.context.logger.debug(`Checking air-gapped mode against Venus: ${venusHealthUrl}`);
 
         try {
-            await fetch(`${this.venusOrigin}/health`, {
+            await fetch(venusHealthUrl, {
                 method: "GET",
                 signal: AbortSignal.timeout(5000) // 5 second timeout
             });
             this.venusAirGappedResult = false;
-            this.context.logger.debug("Venus connectivity check succeeded");
+            this.context.logger.debug(`Air-gap detection result for Venus (${venusHealthUrl}): connected`);
             return false;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
             if (isNetworkError(errorMessage)) {
                 this.venusAirGappedResult = true;
-                this.context.logger.debug(`Venus connectivity check failed - air-gapped mode: ${errorMessage}`);
+                this.context.logger.debug(
+                    `Air-gap detection result for Venus (${venusHealthUrl}): air-gapped (${errorMessage})`
+                );
                 return true;
             }
             // Non-network error - assume not air-gapped
             this.venusAirGappedResult = false;
+            this.context.logger.debug(
+                `Air-gap detection result for Venus (${venusHealthUrl}): connected (non-network error)`
+            );
             return false;
         }
     }

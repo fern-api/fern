@@ -79,8 +79,14 @@ export async function publishDocs({
     excludeApis?: boolean;
     targetAudiences?: string[];
 }): Promise<void> {
-    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
-    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
+    const fdrOrigin =
+        process.env.OVERRIDE_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const airGapCheckUrl = `${fdrOrigin}/health`;
+    context.logger.debug(`Checking air-gapped mode against FDR: ${airGapCheckUrl}`);
+    const isAirGapped = await detectAirGappedMode(airGapCheckUrl, context.logger);
+    context.logger.debug(
+        `Air-gap detection result for FDR (${airGapCheckUrl}): ${isAirGapped ? "air-gapped" : "connected"}`
+    );
     if (isAirGapped) {
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
     }

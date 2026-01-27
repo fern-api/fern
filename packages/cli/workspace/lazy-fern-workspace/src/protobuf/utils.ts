@@ -46,7 +46,7 @@ export async function detectAirGappedMode(url: string, logger: Logger, timeoutMs
 }
 
 async function performAirGapDetection(url: string, logger: Logger, timeoutMs: number): Promise<boolean> {
-    logger.debug(`Detecting air-gapped mode by checking connectivity to ${url}`);
+    logger.debug(`Checking air-gapped mode: ${url} (timeout: ${timeoutMs}ms)`);
 
     try {
         await fetch(url, {
@@ -55,16 +55,17 @@ async function performAirGapDetection(url: string, logger: Logger, timeoutMs: nu
         });
 
         airGapDetectionResult = false;
-        logger.debug("Network check succeeded - not in air-gapped mode");
+        logger.debug(`Air-gap detection result (${url}): connected`);
         return false;
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         if (isNetworkError(errorMessage)) {
             airGapDetectionResult = true;
-            logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage}`);
+            logger.debug(`Air-gap detection result (${url}): air-gapped (${errorMessage})`);
             return true;
         }
         airGapDetectionResult = false;
+        logger.debug(`Air-gap detection result (${url}): connected (non-network error: ${errorMessage})`);
         return false;
     }
 }
