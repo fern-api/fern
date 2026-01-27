@@ -524,12 +524,13 @@ class EndpointResponseCodeWriter:
         )
 
     def _write_no_content_check(self, *, writer: AST.NodeWriter) -> None:
-        """Write check for HTTP 204/205 status codes that have no response body."""
-        writer.write_line(f"if {RESPONSE_VARIABLE}.status_code in (204, 205):")
+        """Write check for empty response bodies using text length instead of status codes."""
+        writer.write_line(f"if not {RESPONSE_VARIABLE}.text.strip():")
         with writer.indent():
             if self._is_raw_client:
                 writer.write("return ")
                 writer.write_node(self._instantiate_http_response(data=AST.Expression("None")))
+                writer.write("  # type: ignore")
                 writer.write_newline_if_last_line_not()
             else:
                 writer.write_line("return")
