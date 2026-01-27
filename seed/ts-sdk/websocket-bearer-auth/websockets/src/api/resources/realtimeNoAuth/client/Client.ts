@@ -11,14 +11,14 @@ export declare namespace RealtimeNoAuthClient {
     export interface ConnectArgs {
         session_id: string;
         model?: string;
+        /** Additional query parameters to send with the websocket connect request. */
+        queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
         debug?: boolean;
         /** Number of reconnect attempts. Defaults to 30. */
         reconnectAttempts?: number;
-        /** Additional query parameters to send with the websocket connect request. */
-        queryParams?: Record<string, unknown>;
     }
 }
 
@@ -30,7 +30,7 @@ export class RealtimeNoAuthClient {
     }
 
     public async connect(args: RealtimeNoAuthClient.ConnectArgs): Promise<RealtimeNoAuthSocket> {
-        const { session_id: sessionId, model, headers, debug, reconnectAttempts, queryParams } = args;
+        const { session_id: sessionId, model, queryParams, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, unknown> = {
             model,
         };
