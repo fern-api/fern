@@ -7,6 +7,7 @@ import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -52,6 +53,9 @@ export async function runRemoteGenerationForGenerator({
     dynamicIrOnly: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
+
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, interactiveTaskContext.logger);
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
@@ -101,19 +105,24 @@ export async function runRemoteGenerationForGenerator({
     });
 
     const venus = createVenusService({ token: token.value });
-    const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+    if (!isAirGapped) {
+        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
 
-    if (orgResponse.ok) {
-        if (orgResponse.body.isWhitelabled) {
-            if (ir.readmeConfig == null) {
-                ir.readmeConfig = emptyReadmeConfig;
+        if (orgResponse.ok) {
+            if (orgResponse.body.isWhitelabled) {
+                if (ir.readmeConfig == null) {
+                    ir.readmeConfig = emptyReadmeConfig;
+                }
+                ir.readmeConfig.whiteLabel = true;
             }
-            ir.readmeConfig.whiteLabel = true;
+            ir.selfHosted = orgResponse.body.selfHostedSdKs;
         }
-        ir.selfHosted = orgResponse.body.selfHostedSdKs;
     }
 
     const sources = workspace.getSources();
+    let fdrApiDefinitionId: FdrAPI.ApiDefinitionId | undefined;
+    let sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload> | undefined;
+
     const apiDefinition = convertIrToFdrApi({
         ir,
         snippetsConfig: {
@@ -136,8 +145,6 @@ export async function runRemoteGenerationForGenerator({
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });
 
-    let fdrApiDefinitionId;
-    let sourceUploads;
     if (response.ok) {
         fdrApiDefinitionId = response.body.apiDefinitionId;
         sourceUploads = response.body.sources;
@@ -150,8 +157,6 @@ export async function runRemoteGenerationForGenerator({
                 `Failed to register API definition: ${JSON.stringify(response.error.content)}`
             );
         }
-        // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
-        // files are required for successful code generation.
         interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
     }
 

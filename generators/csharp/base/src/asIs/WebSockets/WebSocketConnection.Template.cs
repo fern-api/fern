@@ -1,7 +1,7 @@
 // ReSharper disable All
 #pragma warning disable
-using System.Net.WebSockets;
-using System.Text;
+using global::System.Net.WebSockets;
+using global::System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.IO;
@@ -18,7 +18,7 @@ internal partial class WebSocketConnection
     private readonly Func<
         Uri,
         CancellationToken,
-        Task<System.Net.WebSockets.WebSocket>
+        global::System.Threading.Tasks.Task<System.Net.WebSockets.WebSocket>
     > _connectionFactory;
 
     private static readonly RecyclableMemoryStreamManager _memoryStreamManager =
@@ -66,7 +66,7 @@ internal partial class WebSocketConnection
     public WebSocketConnection(
         Uri url,
         ILogger<WebSocketConnection> logger,
-        Func<Uri, CancellationToken, Task<WebSocket>> connectionFactory
+        Func<Uri, CancellationToken, global::System.Threading.Tasks.Task<WebSocket>> connectionFactory
     )
     {
         _logger = logger ?? NullLogger<WebSocketConnection>.Instance;
@@ -89,22 +89,22 @@ internal partial class WebSocketConnection
 
     public Uri Url { get; set; }
 
-    public Func<Stream, Task>? TextMessageReceived { get; set; }
-    public Func<Stream, Task>? BinaryMessageReceived { get; set; }
-    public Func<DisconnectionInfo, Task>? DisconnectionHappened { get; set; }
-    public Func<Exception, Task>? ExceptionOccurred { get; set; }
+    public Func<Stream, global::System.Threading.Tasks.Task>? TextMessageReceived { get; set; }
+    public Func<Stream, global::System.Threading.Tasks.Task>? BinaryMessageReceived { get; set; }
+    public Func<DisconnectionInfo, global::System.Threading.Tasks.Task>? DisconnectionHappened { get; set; }
+    public Func<Exception, global::System.Threading.Tasks.Task>? ExceptionOccurred { get; set; }
 
-    private Task OnTextMessageReceived(Stream stream) =>
-        TextMessageReceived == null ? Task.CompletedTask : TextMessageReceived.Invoke(stream);
+    private global::System.Threading.Tasks.Task OnTextMessageReceived(Stream stream) =>
+        TextMessageReceived is null ? global::System.Threading.Tasks.Task.CompletedTask : TextMessageReceived.Invoke(stream);
 
-    private Task OnBinaryMessageReceived(Stream stream) =>
-        BinaryMessageReceived == null ? Task.CompletedTask : BinaryMessageReceived.Invoke(stream);
+    private global::System.Threading.Tasks.Task OnBinaryMessageReceived(Stream stream) =>
+        BinaryMessageReceived is null ? global::System.Threading.Tasks.Task.CompletedTask : BinaryMessageReceived.Invoke(stream);
 
-    private Task OnDisconnectionHappened(DisconnectionInfo info) =>
-        DisconnectionHappened == null ? Task.CompletedTask : DisconnectionHappened.Invoke(info);
+    private global::System.Threading.Tasks.Task OnDisconnectionHappened(DisconnectionInfo info) =>
+        DisconnectionHappened is null ? global::System.Threading.Tasks.Task.CompletedTask : DisconnectionHappened.Invoke(info);
 
-    private Task OnExceptionOccurred(Exception exception) =>
-        ExceptionOccurred == null ? Task.CompletedTask : ExceptionOccurred.Invoke(exception);
+    private global::System.Threading.Tasks.Task OnExceptionOccurred(Exception exception) =>
+        ExceptionOccurred is null ? global::System.Threading.Tasks.Task.CompletedTask : ExceptionOccurred.Invoke(exception);
 
     /// <summary>
     /// Get or set the name of the current websocket client instance.
@@ -179,7 +179,7 @@ internal partial class WebSocketConnection
     /// In case of connection error it doesn't throw an exception.
     /// Only streams a message via 'DisconnectionHappened' and logs it.
     /// </summary>
-    public Task Start()
+    public global::System.Threading.Tasks.Task Start()
     {
         return StartInternal(false);
     }
@@ -189,7 +189,7 @@ internal partial class WebSocketConnection
     /// In case of connection error it throws an exception.
     /// Fail fast approach.
     /// </summary>
-    public Task StartOrFail()
+    public global::System.Threading.Tasks.Task StartOrFail()
     {
         return StartInternal(true);
     }
@@ -199,7 +199,7 @@ internal partial class WebSocketConnection
     /// Method doesn't throw exception, only logs it and mark client as closed.
     /// </summary>
     /// <returns>Returns true if close was initiated successfully</returns>
-    public async Task<bool> Stop(WebSocketCloseStatus status, string statusDescription)
+    public async global::System.Threading.Tasks.Task<bool> Stop(WebSocketCloseStatus status, string statusDescription)
     {
         var result = await StopInternal(_client, status, statusDescription, null, false, false)
             .ConfigureAwait(false);
@@ -212,7 +212,7 @@ internal partial class WebSocketConnection
     /// Method could throw exceptions, but client is marked as closed anyway.
     /// </summary>
     /// <returns>Returns true if close was initiated successfully</returns>
-    public async Task<bool> StopOrFail(WebSocketCloseStatus status, string statusDescription)
+    public async global::System.Threading.Tasks.Task<bool> StopOrFail(WebSocketCloseStatus status, string statusDescription)
     {
         var result = await StopInternal(_client, status, statusDescription, null, true, false)
             .ConfigureAwait(false);
@@ -220,11 +220,11 @@ internal partial class WebSocketConnection
         return result;
     }
 
-    private static Func<Uri, CancellationToken, Task<WebSocket>> GetClientFactory(
+    private static Func<Uri, CancellationToken, global::System.Threading.Tasks.Task<WebSocket>> GetClientFactory(
         Func<ClientWebSocket> clientFactory
     )
     {
-        if (clientFactory == null)
+        if (clientFactory is null)
             return null;
 
         return (
@@ -237,7 +237,7 @@ internal partial class WebSocketConnection
         );
     }
 
-    private async Task StartInternal(bool failFast)
+    private async global::System.Threading.Tasks.Task StartInternal(bool failFast)
     {
         if (_disposing)
         {
@@ -259,7 +259,7 @@ internal partial class WebSocketConnection
         await StartClient(Url, _cancellation.Token).ConfigureAwait(false);
     }
 
-    private async Task<bool> StopInternal(
+    private async global::System.Threading.Tasks.Task<bool> StopInternal(
         WebSocket client,
         WebSocketCloseStatus status,
         string statusDescription,
@@ -275,7 +275,7 @@ internal partial class WebSocketConnection
             );
         }
 
-        if (client == null)
+        if (client is null)
         {
             IsStarted = false;
             IsRunning = false;
@@ -314,7 +314,7 @@ internal partial class WebSocketConnection
         return result;
     }
 
-    private async Task StartClient(Uri uri, CancellationToken token)
+    private async global::System.Threading.Tasks.Task StartClient(Uri uri, CancellationToken token)
     {
         _client = await _connectionFactory(uri, token).ConfigureAwait(false);
         _ = Listen(_client, token);
@@ -329,7 +329,7 @@ internal partial class WebSocketConnection
 
     internal Exception ListenException { get; set; }
 
-    private async Task Listen(WebSocket client, CancellationToken token)
+    private async global::System.Threading.Tasks.Task Listen(WebSocket client, CancellationToken token)
     {
         try
         {
@@ -410,10 +410,10 @@ internal partial class WebSocketConnection
 
     private ClientWebSocket GetSpecificOrThrow(WebSocket client)
     {
-        if (client == null)
+        if (client is null)
             return null;
         var specific = client as ClientWebSocket;
-        if (specific == null)
+        if (specific is null)
             throw new WebsocketException(
                 "Cannot cast 'WebSocket' client to 'ClientWebSocket', "
                     + "provide correct type via factory or don't use this property at all."

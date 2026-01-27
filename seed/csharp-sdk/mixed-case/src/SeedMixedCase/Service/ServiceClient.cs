@@ -76,9 +76,11 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["page_limit"] = request.PageLimit.ToString();
-        _query["beforeDate"] = request.BeforeDate.ToString(Constants.DateFormat);
+        var _queryString = new SeedMixedCase.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("page_limit", request.PageLimit)
+            .Add("beforeDate", request.BeforeDate)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -86,7 +88,7 @@ public partial class ServiceClient : IServiceClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/resource",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
