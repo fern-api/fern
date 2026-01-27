@@ -5,5 +5,6 @@ import { convertToOsPath } from "./osPathConverter";
 
 export function resolve(first: AbsoluteFilePath, ...rest: string[]): AbsoluteFilePath;
 export function resolve(...paths: string[]): string {
-    return path.resolve(...paths.map(convertToOsPath));
+    // Normalize both inputs and output to use forward slashes for cross-platform consistency
+    return convertToOsPath(path.resolve(...paths.map(convertToOsPath)));
 }
