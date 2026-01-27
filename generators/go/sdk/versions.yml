@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.4
+  changelogEntry:
+    - summary: |
+        Fix multipart file uploads to support in-memory readers (bytes.Reader, strings.Reader, etc.)
+        by ensuring the filename attribute is always present in the Content-Disposition header.
+        When no filename is provided, the field name is used as the default filename.
+      type: fix
+  createdAt: "2026-01-27"
+  irVersion: 61
+
 - version: 1.23.3
   changelogEntry:
     - summary: |
