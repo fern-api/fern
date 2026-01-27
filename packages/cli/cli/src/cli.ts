@@ -206,7 +206,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
-    addV2Command(cli, cliContext);
+    addBetaCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1821,9 +1821,9 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "v2",
+        "beta",
         false, // Hidden from --help while in-development.
         (yargs) =>
             yargs.help(false).version(false).strict(false).parserConfiguration({
