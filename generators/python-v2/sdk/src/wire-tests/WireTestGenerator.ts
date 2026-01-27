@@ -393,9 +393,11 @@ export class WireTestGenerator {
             }
 
             // Verify request count using test ID for filtering
+            // When inferred auth is present, expect 2 requests (1 for auth token, 1 for API call)
+            const expectedRequestCount = this.hasInferredAuth() ? 2 : 1;
             statements.push(
                 python.codeBlock(
-                    `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, 1)`
+                    `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, ${expectedRequestCount})`
                 )
             );
 
@@ -411,6 +413,17 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Checks if the IR has any inferred auth schemes.
+     * When inferred auth is present, the client will make an additional request to get a token.
+     */
+    private hasInferredAuth(): boolean {
+        if (!this.context.ir.auth?.schemes) {
+            return false;
+        }
+        return this.context.ir.auth.schemes.some((scheme) => scheme.type === "inferred");
     }
 
     /**
