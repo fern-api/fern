@@ -77,7 +77,7 @@ module <%= gem_namespace %>
         end
 
         # Calculates the delay before the next retry attempt using exponential backoff with jitter.
-        # Respects Retry-After and X-RateLimit-Reset headers if present.
+        # Respects Retry-After header if present.
         # @param response [Net::HTTPResponse] The HTTP response.
         # @param attempt [Integer] The current retry attempt (0-indexed).
         # @return [Float] The delay in seconds before the next retry.
@@ -89,13 +89,6 @@ module <%= gem_namespace %>
             return [delay, MAX_RETRY_DELAY].min if delay&.positive?
           end
 
-          # Check for X-RateLimit-Reset header (Unix timestamp)
-          rate_limit_reset = response["X-RateLimit-Reset"]
-          if rate_limit_reset
-            reset_time = rate_limit_reset.to_i
-            delay = reset_time - Time.now.to_i
-            return add_jitter([delay, MAX_RETRY_DELAY].min) if delay.positive?
-          end
 
           # Exponential backoff with jitter: base_delay * 2^attempt
           base_delay = INITIAL_RETRY_DELAY * (2**attempt)

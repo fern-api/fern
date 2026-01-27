@@ -5,8 +5,8 @@
     - summary: |
         Implement HTTP status code-based retry logic with exponential backoff. The SDK now automatically
         retries requests that fail with retryable HTTP status codes (408, 429, 500, 502, 503, 504, 521,
-        522, 524) using exponential backoff with jitter. The retry logic respects Retry-After and
-        X-RateLimit-Reset headers when present. This addresses the feature gap where the SDK previously
+        522, 524) using exponential backoff with jitter. The retry logic respects Retry-After
+        headers when present. This addresses the feature gap where the SDK previously
         only used Net::HTTP's network-level retries, which don't handle HTTP status codes like 429
         (Too Many Requests). The max_retries parameter now controls application-level retries with
         proper backoff, enabling compliance with rate-limiting requirements like Square App Marketplace.
