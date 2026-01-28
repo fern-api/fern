@@ -427,8 +427,13 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from an example type reference.
-     * Recursively handles containers (optional, list, map, etc.) and named types.
+     * Processes an example type reference for mock server tests.
+     *
+     * This function:
+     * - Filters out read-only properties from objects
+     * - Normalizes datetime primitives to ISO 8601 format with milliseconds (.000Z)
+     *   to match what the SDK serializes for DateTime types
+     * - Recursively handles containers (optional, list, map, etc.) and named types
      */
     private filterExampleTypeReference(exampleTypeRef: ExampleTypeReference): unknown {
         const shape = exampleTypeRef.shape;
