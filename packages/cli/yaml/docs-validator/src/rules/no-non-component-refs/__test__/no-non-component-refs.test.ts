@@ -43,7 +43,7 @@ info:
             expect(yamlContent.includes("asyncapi:")).toBe(true);
         });
 
-        it("should detect AsyncAPI files in JSON format (\"asyncapi\":)", () => {
+        it('should detect AsyncAPI files in JSON format ("asyncapi":)', () => {
             const jsonContent = `{
   "asyncapi": "3.0.0",
   "info": {
