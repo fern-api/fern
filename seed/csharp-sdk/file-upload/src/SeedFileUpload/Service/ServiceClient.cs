@@ -126,6 +126,63 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
+    private async Task<WithRawResponse<string>> WithLiteralAndEnumTypesAsyncCore(
+        LiteralEnumRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var multipartFormRequest_ = new MultipartFormRequest
+        {
+            BaseUrl = _client.Options.BaseUrl,
+            Method = HttpMethod.Post,
+            Path = "/with-literal-enum",
+            Options = options,
+        };
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
+        multipartFormRequest_.AddStringPart("model_type", request.ModelType);
+        multipartFormRequest_.AddJsonPart("open_enum", request.OpenEnum);
+        multipartFormRequest_.AddStringPart("maybe_name", request.MaybeName);
+        var response = await _client
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedFileUploadApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedFileUploadApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     public async Task PostAsync(
         MyRequest request,
         RequestOptions? options = null,
@@ -478,5 +535,16 @@ public partial class ServiceClient : IServiceClient
                 responseBody
             );
         }
+    }
+
+    public WithRawResponseTask<string> WithLiteralAndEnumTypesAsync(
+        LiteralEnumRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            WithLiteralAndEnumTypesAsyncCore(request, options, cancellationToken)
+        );
     }
 }
