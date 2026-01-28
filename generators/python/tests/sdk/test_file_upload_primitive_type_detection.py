@@ -7,7 +7,6 @@ while complex types like objects, lists, and unknown are correctly identified
 as needing JSON serialization.
 """
 
-import pytest
 import fern.ir.resources as ir_types
 
 from fern_python.generators.sdk.client_generator.type_utilities import is_type_primitive_for_multipart

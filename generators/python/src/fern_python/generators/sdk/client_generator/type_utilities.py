@@ -7,8 +7,8 @@ headers, multipart form data, etc.).
 """
 
 from typing import Callable, Set
-import fern.ir.resources as ir_types
 
+import fern.ir.resources as ir_types
 
 # Primitive types that httpx can serialize directly without JSON encoding.
 # These are the types that can be passed as-is to httpx's data= parameter
