@@ -1,8 +1,7 @@
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
-    GeneratorNotificationService,
-    getPackageName
+    GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
@@ -49,9 +48,8 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootFolderName(): string {
-        // Priority: custom config module > package name from publish config > organization name
-        const packageName = getPackageName(this.config);
-        return snakeCase(this.customConfig.module ?? packageName ?? this.config.organization);
+        // Priority: custom config module > organization name
+        return snakeCase(this.customConfig.module ?? this.config.organization);
     }
 
     public getRootPackageName(): string {
@@ -92,10 +90,9 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootModuleName(): string {
-        // Priority: custom config module > package name from publish config > organization name
+        // Priority: custom config module > organization name
         // Use camelCase to convert hyphenated names (e.g., "nullable-optional") to valid Ruby module names
-        const packageName = getPackageName(this.config);
-        return upperFirst(camelCase(this.customConfig.module ?? packageName ?? this.config.organization));
+        return upperFirst(camelCase(this.customConfig.module ?? this.config.organization));
     }
 
     public getRootModule(): ruby.Module_ {
