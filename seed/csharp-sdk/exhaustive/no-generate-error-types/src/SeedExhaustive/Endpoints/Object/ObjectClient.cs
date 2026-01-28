@@ -22,6 +22,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +36,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-with-optional-field",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -80,6 +87,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -88,6 +101,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-with-required-field",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -136,6 +150,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -144,6 +164,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-with-map-of-map",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -194,6 +215,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -202,6 +229,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-nested-with-optional-field",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -255,6 +283,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -266,6 +300,7 @@ public partial class ObjectClient : IObjectClient
                         ValueConvert.ToPathParameterString(string_)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -318,6 +353,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -326,6 +367,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-nested-with-required-field-list",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

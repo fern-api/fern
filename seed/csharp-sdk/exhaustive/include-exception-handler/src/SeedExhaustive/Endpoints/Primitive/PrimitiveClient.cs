@@ -30,6 +30,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -38,6 +44,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/string",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -93,6 +100,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -101,6 +114,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/integer",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -156,6 +170,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -164,6 +184,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/long",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -219,6 +240,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -227,6 +254,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/double",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -282,6 +310,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -290,6 +324,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/boolean",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -345,6 +380,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -353,6 +394,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/datetime",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -408,6 +450,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -416,6 +464,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/date",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -471,6 +520,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -479,6 +534,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/uuid",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -534,6 +590,12 @@ public partial class PrimitiveClient : IPrimitiveClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -542,6 +604,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                             Method = HttpMethod.Post,
                             Path = "/primitive/base64",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

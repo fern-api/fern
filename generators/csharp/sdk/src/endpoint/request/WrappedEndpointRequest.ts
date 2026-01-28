@@ -137,9 +137,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const service =
             this.context.getHttpService(this.serviceId) ?? fail(`Service with id ${this.serviceId} not found`);
         const headers = [...service.headers, ...this.endpoint.headers];
-        if (headers.length === 0) {
-            return undefined;
-        }
 
         const requestOptionsVar = this.endpoint.idempotent
             ? this.names.parameters.idempotentOptions
@@ -153,7 +150,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 );
                 writer.indent();
 
-                // Add all headers (required, optional, and nullable) using fluent API
+                // Add all endpoint-specific headers (required, optional, and nullable) using fluent API
                 // The Add method handles null values and serialization automatically
                 for (const header of headers) {
                     writer.writeLine();
