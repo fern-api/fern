@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.53.2
+  changelogEntry:
+    - summary: |
+        Switch from `poetry install` to `poetry lock` after SDK generation. This performs dependency
+        resolution and saves the lockfile without installing packages, which avoids failures when
+        transitive dependencies require custom build tools.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
 - version: 4.53.1
   changelogEntry:
     - summary: |
