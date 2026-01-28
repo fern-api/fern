@@ -213,7 +213,7 @@ sdks:
                 expect(pythonTarget?.version).toBe("1.0.0");
 
                 const tsTarget = result.workspace.sdks?.targets.find((t) => t.name === "typescript");
-                expect(tsTarget?.image).toBe("fernapi/fern-typescript-node-sdk");
+                expect(tsTarget?.image).toBe("fernapi/fern-typescript-sdk");
                 expect(tsTarget?.version).toBe("2.0.0");
             }
         });

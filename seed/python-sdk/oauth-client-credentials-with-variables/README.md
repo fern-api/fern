@@ -38,10 +38,8 @@ Instantiate and use the client with the following:
 from seed import SeedOauthClientCredentialsWithVariables
 
 client = SeedOauthClientCredentialsWithVariables(
+    base_url="YOUR_BASE_URL",
     root_variable="YOUR_ROOT_VARIABLE",
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.get_token_with_client_credentials(
     client_id="client_id",
@@ -60,10 +58,8 @@ import asyncio
 from seed import AsyncSeedOauthClientCredentialsWithVariables
 
 client = AsyncSeedOauthClientCredentialsWithVariables(
+    base_url="YOUR_BASE_URL",
     root_variable="YOUR_ROOT_VARIABLE",
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
 
 

@@ -4886,6 +4886,15 @@ importers:
 
   packages/cli/cli-v2:
     devDependencies:
+      '@boundaryml/baml':
+        specifier: ^0.211.2
+        version: 0.211.2
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../workspace/commons
+      '@fern-api/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../cli-logger
@@ -4895,24 +4904,54 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/github':
+        specifier: workspace:*
+        version: link:../../commons/github
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../workspace/lazy-fern-workspace
+      '@fern-api/local-workspace-runner':
+        specifier: workspace:*
+        version: link:../generation/local-generation/local-workspace-runner
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../logger
+      '@fern-api/openapi-ir-parser':
+        specifier: workspace:*
+        version: link:../api-importers/openapi/openapi-ir-parser
+      '@fern-api/remote-workspace-runner':
+        specifier: workspace:*
+        version: link:../generation/remote-generation/remote-workspace-runner
       '@fern-api/source':
         specifier: workspace:*
         version: link:../source
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../task-context
       '@fern-api/yaml-loader':
         specifier: workspace:*
         version: link:../yaml/loader
+      '@fern-fern/fiddle-sdk':
+        specifier: ^0.0.605
+        version: 0.0.605
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.35
+      chalk:
+        specifier: 5.4.1
+        version: 5.4.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -4931,6 +4970,12 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
+
+  packages/cli/cli-v2/dist/dev:
+    dependencies:
+      '@boundaryml/baml':
+        specifier: ^0.211.2
+        version: 0.211.2
 
   packages/cli/config:
     devDependencies:
@@ -9578,6 +9623,9 @@ packages:
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
 
+  '@fern-fern/fiddle-sdk@0.0.605':
+    resolution: {integrity: sha512-xQhQTl+vqKoGnRlBG92sdXT6e2tDWED/V7As3rL1uA7/3DuSEpQaaSAGuAkBh+IP1GGn6oEgxmVGL+ncwI4FIw==}
+
   '@fern-fern/fiddle-sdk@0.0.738':
     resolution: {integrity: sha512-GKIhgsyuVjVW4j8FK2wv9xJAGRHh3hHD98MFiLt+E65iM2TjAgVlhnzTsvWTf2cqWNC/sJ83RVo4GY6mhaPCRg==}
 
@@ -11775,6 +11823,10 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
+
+  chalk@5.4.1:
+    resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   chalk@5.6.2:
     resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
@@ -17568,6 +17620,16 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  '@fern-fern/fiddle-sdk@0.0.605':
+    dependencies:
+      form-data: 4.0.5
+      js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.14.1
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
   '@fern-fern/fiddle-sdk@0.0.738':
     dependencies:
       form-data: 4.0.5
@@ -20420,7 +20482,7 @@ snapshots:
 
   chalk-template@1.1.2:
     dependencies:
-      chalk: 5.6.2
+      chalk: 5.4.1
 
   chalk@2.3.0:
     dependencies:
@@ -20432,6 +20494,8 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  chalk@5.4.1: {}
 
   chalk@5.6.2: {}
 
