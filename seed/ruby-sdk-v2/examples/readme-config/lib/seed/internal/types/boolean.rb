@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Internal
     module Types
       module Boolean
-        extend Seed::Internal::Types::Union
+        extend FernExamples::Internal::Types::Union
 
         member TrueClass
         member FalseClass

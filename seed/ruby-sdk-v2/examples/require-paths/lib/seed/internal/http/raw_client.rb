@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Internal
     module Http
       # @api private
@@ -27,12 +27,12 @@ module Seed
           @timeout = timeout
           @default_headers = {
             "X-Fern-Language": "Ruby",
-            "X-Fern-SDK-Name": "seed",
+            "X-Fern-SDK-Name": "fernexamples",
             "X-Fern-SDK-Version": "0.0.1"
           }.merge(headers)
         end
 
-        # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
+        # @param request [FernExamples::Internal::Http::BaseRequest] The HTTP request.
         # @return [HTTP::Response] The HTTP response.
         def send(request)
           url = build_url(request)
@@ -120,7 +120,7 @@ module Seed
           [delay + jitter, 0].max
         end
 
-        # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
+        # @param request [FernExamples::Internal::Http::BaseRequest] The HTTP request.
         # @return [URI::Generic] The URL.
         def build_url(request)
           encoded_query = request.encode_query

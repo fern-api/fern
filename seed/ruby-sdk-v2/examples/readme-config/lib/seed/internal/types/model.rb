@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Internal
     module Types
       # @abstract
@@ -16,7 +16,7 @@ module Seed
           #
           # @return [Hash<Symbol, Field>]
           def fields
-            @fields ||= if self < Seed::Internal::Types::Model
+            @fields ||= if self < FernExamples::Internal::Types::Model
                           superclass.fields.dup
                         else
                           {}

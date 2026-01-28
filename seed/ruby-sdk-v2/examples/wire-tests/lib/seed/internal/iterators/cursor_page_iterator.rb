@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Internal
     class CursorPageIterator
       include Enumerable
@@ -10,7 +10,7 @@ module Seed
       # @param initial_cursor [String] The initial cursor to use when iterating, if any.
       # @param cursor_field [Symbol] The name of the field in API responses to extract the next cursor from.
       # @param block [Proc] A block which is responsible for receiving a cursor to use and returning the given page from the API.
-      # @return [Seed::Internal::CursorPageIterator]
+      # @return [FernExamples::Internal::CursorPageIterator]
       def initialize(initial_cursor:, cursor_field:, &block)
         @need_initial_load = initial_cursor.nil?
         @cursor = initial_cursor

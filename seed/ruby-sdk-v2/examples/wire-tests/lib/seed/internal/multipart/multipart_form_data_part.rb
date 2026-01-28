@@ -2,7 +2,7 @@
 
 require "securerandom"
 
-module Seed
+module FernExamples
   module Internal
     module Multipart
       # @api private

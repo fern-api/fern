@@ -35,7 +35,7 @@ client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernExamples::RequestOptions` 
     
 </dd>
 </dl>
@@ -47,7 +47,7 @@ client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_type</a>(request) -> Seed::Types::Identifier</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_type</a>(request) -> FernExamples::Types::Identifier</code></summary>
 <dl>
 <dd>
 
@@ -75,7 +75,7 @@ client.echo(request: 'primitive');
 <dl>
 <dd>
 
-**request:** `Seed::Types::Type` 
+**request:** `FernExamples::Types::Type` 
     
 </dd>
 </dl>
@@ -83,7 +83,7 @@ client.echo(request: 'primitive');
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `FernExamples::RequestOptions` 
     
 </dd>
 </dl>
@@ -96,7 +96,7 @@ client.echo(request: 'primitive');
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file.notification.service.<a href="/lib/seed/file/notification/service/client.rb">get_exception</a>(notification_id) -> Seed::Types::Types::Exception</code></summary>
+<details><summary><code>client.file.notification.service.<a href="/lib/seed/file/notification/service/client.rb">get_exception</a>(notification_id) -> FernExamples::Types::Types::Exception</code></summary>
 <dl>
 <dd>
 
@@ -132,7 +132,7 @@ client.file.notification.service.get_exception(notification_id: 'notification-hs
 <dl>
 <dd>
 
-**request_options:** `Seed::File::Notification::Service::RequestOptions` 
+**request_options:** `FernExamples::File::Notification::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -145,7 +145,7 @@ client.file.notification.service.get_exception(notification_id: 'notification-hs
 </details>
 
 ## File Service
-<details><summary><code>client.file.service.<a href="/lib/seed/file/service/client.rb">get_file</a>(filename) -> Seed::Types::Types::File</code></summary>
+<details><summary><code>client.file.service.<a href="/lib/seed/file/service/client.rb">get_file</a>(filename) -> FernExamples::Types::Types::File</code></summary>
 <dl>
 <dd>
 
@@ -198,7 +198,7 @@ client.file.service.get_file(
 <dl>
 <dd>
 
-**request_options:** `Seed::File::Service::RequestOptions` 
+**request_options:** `FernExamples::File::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -261,7 +261,7 @@ client.health.service.check(id: 'id-2sdx82h');
 <dl>
 <dd>
 
-**request_options:** `Seed::Health::Service::RequestOptions` 
+**request_options:** `FernExamples::Health::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -315,7 +315,7 @@ client.health.service.ping();
 <dl>
 <dd>
 
-**request_options:** `Seed::Health::Service::RequestOptions` 
+**request_options:** `FernExamples::Health::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -328,7 +328,7 @@ client.health.service.ping();
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(movie_id) -> Seed::Types::Types::Movie</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(movie_id) -> FernExamples::Types::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -364,7 +364,7 @@ client.service.get_movie(movie_id: 'movie-c06a4ad7');
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernExamples::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -414,7 +414,7 @@ client.service.create_movie(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::Movie` 
+**request:** `FernExamples::Types::Types::Movie` 
     
 </dd>
 </dl>
@@ -422,7 +422,7 @@ client.service.create_movie(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernExamples::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -434,7 +434,7 @@ client.service.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_metadata</a>() -> Seed::Types::Types::Metadata</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_metadata</a>() -> FernExamples::Types::Types::Metadata</code></summary>
 <dl>
 <dd>
 
@@ -489,7 +489,7 @@ client.service.get_metadata(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernExamples::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -501,7 +501,7 @@ client.service.get_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_big_entity</a>(request) -> Seed::Types::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_big_entity</a>(request) -> FernExamples::Types::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -674,7 +674,7 @@ client.service.create_big_entity(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::BigEntity` 
+**request:** `FernExamples::Types::Types::BigEntity` 
     
 </dd>
 </dl>
@@ -682,7 +682,7 @@ client.service.create_big_entity(
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernExamples::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -724,7 +724,7 @@ client.service.refresh_token(request: {
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::RefreshTokenRequest` 
+**request:** `FernExamples::Types::Types::RefreshTokenRequest` 
     
 </dd>
 </dl>
@@ -732,7 +732,7 @@ client.service.refresh_token(request: {
 <dl>
 <dd>
 
-**request_options:** `Seed::Service::RequestOptions` 
+**request_options:** `FernExamples::Service::RequestOptions` 
     
 </dd>
 </dl>

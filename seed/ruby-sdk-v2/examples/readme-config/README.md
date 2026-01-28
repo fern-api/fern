@@ -48,9 +48,9 @@ Generator Invocation Custom Content for {{ packageName }}
 Instantiate and use the client with the following:
 
 ```ruby
-require "seed"
+require "fernexamples"
 
-client = Seed::Client.new(token: '<token>');
+client = FernExamples::Client.new(token: '<token>');
 
 client.service.create_big_entity(
   cast_member: {
@@ -207,8 +207,8 @@ This SDK allows you to configure different environments or custom URLs for API r
 ```ruby
 require "seed"
 
-seed = Seed::Client.new(
-    base_url: Seed::Environment::PRODUCTION
+seed = FernExamples::Client.new(
+    base_url: FernExamples::Environment::PRODUCTION
 )
 ```
 
@@ -216,7 +216,7 @@ seed = Seed::Client.new(
 ```ruby
 require "seed"
 
-client = Seed::Client.new(
+client = FernExamples::Client.new(
     base_url: "https://example.com"
 )
 ```
@@ -228,21 +228,21 @@ Failed API calls will raise errors that can be rescued from granularly.
 ```ruby
 require "seed"
 
-client = Seed::Client.new(
+client = FernExamples::Client.new(
     base_url: "https://example.com"
 )
 
 begin
     result = client.service.create_big_entity
-rescue Seed::Errors::TimeoutError
+rescue FernExamples::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
-rescue Seed::Errors::ServiceUnavailableError
+rescue FernExamples::Errors::ServiceUnavailableError
     puts "API returned status 503, is probably overloaded, try again later"
-rescue Seed::Errors::ServerError
+rescue FernExamples::Errors::ServerError
     puts "API returned some other 5xx status, this is probably a bug"
-rescue Seed::Errors::ResponseError => e
+rescue FernExamples::Errors::ResponseError => e
     puts "API returned an unexpected status other than 5xx: #{e.code} #{e.message}"
-rescue Seed::Errors::ApiError => e
+rescue FernExamples::Errors::ApiError => e
     puts "Some other error occurred when calling the API: #{e.message}"
 end
 ```
@@ -265,7 +265,7 @@ Use the `max_retries` option to configure this behavior.
 ```ruby
 require "seed"
 
-client = Seed::Client.new(
+client = FernExamples::Client.new(
     base_url: "https://example.com",
     max_retries: 3  # Configure max retries (default is 2)
 )

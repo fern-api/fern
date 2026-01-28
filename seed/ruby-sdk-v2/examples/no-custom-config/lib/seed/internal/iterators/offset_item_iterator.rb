@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Internal
     class OffsetItemIterator < ItemIterator
       # Instantiates an OffsetItemIterator, an Enumerable class which wraps calls to an offset-based paginated API and yields the individual items from it.
@@ -11,7 +11,7 @@ module Seed
       # @param step [Boolean] If true, treats the page number as a true offset (i.e. increments the page number by the number of items returned from each call rather than just 1)
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
       #
-      # @return [Seed::Internal::OffsetItemIterator]
+      # @return [FernExamples::Internal::OffsetItemIterator]
       def initialize(initial_page:, item_field:, has_next_field:, step:, &)
         super()
         @item_field = item_field
@@ -21,7 +21,7 @@ module Seed
 
       # Returns the OffsetPageIterator that is mediating access to the underlying API.
       #
-      # @return [Seed::Internal::OffsetPageIterator]
+      # @return [FernExamples::Internal::OffsetPageIterator]
       def pages
         @page_iterator
       end
