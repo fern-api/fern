@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.45.2
+  changelogEntry:
+    - summary: |
+        Fix variable alias collision when a path parameter and header have the same camelCase name.
+        Previously, when an endpoint had both a path parameter (e.g., `contact_id`) and a header
+        (e.g., `X-Contact-ID`) that resolve to the same camelCase name (`contactId`), the generated
+        code would use the wrong variable for the URL path. This was caused by the alias lookup map
+        using `safeName` as the key, which could collide. Now the map uses `propertyName` as the key,
+        which is unique for each parameter.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 63
+
 - version: 3.45.1
   changelogEntry:
     - summary: Remove check if body is `null` or `undefined`. If `null`, it is valid JSON `null`, and if `undefined`, it handles correctly to not have a body.

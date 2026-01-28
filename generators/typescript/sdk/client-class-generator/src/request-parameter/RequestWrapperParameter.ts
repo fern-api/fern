@@ -223,7 +223,10 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     private getDefaultVariableNameForNonBodyProperty(
         nonBodyProperty: RequestWrapperNonBodyProperty
     ): DefaultNonBodyKeyName {
-        return nonBodyProperty.safeName as DefaultNonBodyKeyName;
+        // Use propertyName as the key instead of safeName to avoid collisions
+        // when different parameters have the same safeName (e.g., a path parameter
+        // named "contact_id" and a header named "X-Contact-ID" both have safeName "contactId")
+        return nonBodyProperty.propertyName as DefaultNonBodyKeyName;
     }
 
     private getAliasForNonBodyProperty(nonBodyProperty: RequestWrapperNonBodyProperty): string {
