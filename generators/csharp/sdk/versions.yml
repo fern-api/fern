@@ -1,4 +1,45 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.19.0
+  changelogEntry:
+    - summary: |
+        Add support for type-safe undiscriminated unions with the new `use-undiscriminated-unions` configuration option.
+
+        Undiscriminated unions provide a clean, type-safe way to work with values that can be one of several types:
+
+        ```csharp
+        // Creating union values
+        var response = MyUnion.FromString("hello");
+        var response = MyUnion.FromInt(42);
+        var response = MyUnion.FromCustomObject(new CustomObject { ... });
+
+        // Type-safe value access with Is* properties and As* methods
+        if (response.IsString)
+        {
+            string value = response.AsString();
+            Console.WriteLine($"Got string: {value}");
+        }
+        else if (response.IsInt)
+        {
+            int value = response.AsInt();
+            Console.WriteLine($"Got integer: {value}");
+        }
+
+        // Safe extraction with TryAs* pattern (no exceptions)
+        if (response.TryAsCustomObject(out var obj))
+        {
+            Console.WriteLine($"Got object: {obj.Name}");
+        }
+        ```
+
+        This provides better IntelliSense support and compile-time safety compared to working with generic `object` types.
+      type: feat
+    - summary: |
+        Reduce NuGet package dependencies. The OneOf library is no longer required when undiscriminated unions are not used,
+        resulting in smaller package sizes and fewer transitive dependencies.
+      type: chore
+  createdAt: "2026-01-27"
+  irVersion: 62
+
 - version: 2.18.0
   changelogEntry:
     - summary: |

@@ -273,6 +273,12 @@ fixtures:
     - customConfig:
         use-default-request-parameter-values: true
       outputFolder: with-defaults
+  undiscriminated-unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use-undiscriminated-unions: true
+      outputFolder: with-undiscriminated-unions
 allowedFailures:
   - enum:forward-compatible-enums
   - enum:plain-enums
@@ -283,6 +289,5 @@ allowedFailures:
   - oauth-client-credentials-custom
   - package-yml
   - trace
-  - undiscriminated-unions
   - unions-with-local-date
   - unions:no-custom-config
