@@ -22,8 +22,9 @@ module FernCrossPackageTypeNames
       # @return [FernCrossPackageTypeNames::Foo::Types::ImportingType]
       def find(request_options: {}, **params)
         params = FernCrossPackageTypeNames::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[public_property private_property]
-        body_bag = params.slice(*body_prop_names)
+        request_data = FernCrossPackageTypeNames::Foo::Types::FindRequest.new(params).to_h
+        non_body_param_names = ["optionalString"]
+        body = request_data.except(*non_body_param_names)
 
         query_param_names = %i[optional_string]
         query_params = {}
@@ -35,7 +36,7 @@ module FernCrossPackageTypeNames
           method: "POST",
           path: "",
           query: query_params,
-          body: FernCrossPackageTypeNames::Foo::Types::FindRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin

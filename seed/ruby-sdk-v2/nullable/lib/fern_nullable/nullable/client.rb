@@ -65,14 +65,11 @@ module FernNullable
       # @return [FernNullable::Nullable::Types::User]
       def create_user(request_options: {}, **params)
         params = FernNullable::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[username tags metadata avatar]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernNullable::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/users",
-          body: FernNullable::Nullable::Types::CreateUserRequest.new(body_bag).to_h,
+          body: FernNullable::Nullable::Types::CreateUserRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -100,14 +97,11 @@ module FernNullable
       # @return [Boolean]
       def delete_user(request_options: {}, **params)
         params = FernNullable::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[username]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernNullable::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
           path: "/users",
-          body: FernNullable::Nullable::Types::DeleteUserRequest.new(body_bag).to_h,
+          body: FernNullable::Nullable::Types::DeleteUserRequest.new(params).to_h,
           request_options: request_options
         )
         begin

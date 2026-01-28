@@ -21,14 +21,11 @@ module FernStreaming
       # @return [untyped]
       def generate_stream(request_options: {}, **params)
         params = FernStreaming::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[stream num_events]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernStreaming::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "generate-stream",
-          body: FernStreaming::Dummy::Types::GenerateStreamRequest.new(body_bag).to_h,
+          body: FernStreaming::Dummy::Types::GenerateStreamRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -54,14 +51,11 @@ module FernStreaming
       # @return [FernStreaming::Dummy::Types::StreamResponse]
       def generate(request_options: {}, **params)
         params = FernStreaming::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[stream num_events]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernStreaming::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "generate",
-          body: FernStreaming::Dummy::Types::Generateequest.new(body_bag).to_h,
+          body: FernStreaming::Dummy::Types::Generateequest.new(params).to_h,
           request_options: request_options
         )
         begin

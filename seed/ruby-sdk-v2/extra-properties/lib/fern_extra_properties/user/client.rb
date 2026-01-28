@@ -21,14 +21,11 @@ module FernExtraProperties
       # @return [FernExtraProperties::User::Types::User]
       def create_user(request_options: {}, **params)
         params = FernExtraProperties::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[type version name]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernExtraProperties::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/user",
-          body: FernExtraProperties::User::Types::CreateUserRequest.new(body_bag).to_h,
+          body: FernExtraProperties::User::Types::CreateUserRequest.new(params).to_h,
           request_options: request_options
         )
         begin
