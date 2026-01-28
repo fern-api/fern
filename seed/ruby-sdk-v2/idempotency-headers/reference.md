@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.<a href="/lib/fern_idempotency_headers/payment/client.rb">create</a>(request) -> String</code></summary>
+<details><summary><code>client.payment.<a href="/lib/seed/payment/client.rb">create</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.payment.create(
 <dl>
 <dd>
 
-**currency:** `FernIdempotencyHeaders::Payment::Types::Currency` 
+**currency:** `Seed::Payment::Types::Currency` 
     
 </dd>
 </dl>
@@ -47,7 +47,7 @@ client.payment.create(
 <dl>
 <dd>
 
-**request_options:** `FernIdempotencyHeaders::Payment::RequestOptions` 
+**request_options:** `Seed::Payment::RequestOptions` 
     
 </dd>
 </dl>
@@ -59,7 +59,7 @@ client.payment.create(
 </dl>
 </details>
 
-<details><summary><code>client.payment.<a href="/lib/fern_idempotency_headers/payment/client.rb">delete</a>(payment_id) -> </code></summary>
+<details><summary><code>client.payment.<a href="/lib/seed/payment/client.rb">delete</a>(payment_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -95,7 +95,7 @@ client.payment.delete(payment_id: 'paymentId');
 <dl>
 <dd>
 
-**request_options:** `FernIdempotencyHeaders::Payment::RequestOptions` 
+**request_options:** `Seed::Payment::RequestOptions` 
     
 </dd>
 </dl>

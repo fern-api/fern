@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.unknown.<a href="/lib/fern_unknown/unknown/client.rb">post</a>(request) -> Internal::Types::Array[Object]</code></summary>
+<details><summary><code>client.unknown.<a href="/lib/seed/unknown/client.rb">post</a>(request) -> Internal::Types::Array[Object]</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.unknown.post();
 <dl>
 <dd>
 
-**request_options:** `FernUnknown::Unknown::RequestOptions` 
+**request_options:** `Seed::Unknown::RequestOptions` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.unknown.post();
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="/lib/fern_unknown/unknown/client.rb">post_object</a>(request) -> Internal::Types::Array[Object]</code></summary>
+<details><summary><code>client.unknown.<a href="/lib/seed/unknown/client.rb">post_object</a>(request) -> Internal::Types::Array[Object]</code></summary>
 <dl>
 <dd>
 
@@ -76,7 +76,7 @@ client.unknown.post_object();
 <dl>
 <dd>
 
-**request:** `FernUnknown::Unknown::Types::MyObject` 
+**request:** `Seed::Unknown::Types::MyObject` 
     
 </dd>
 </dl>
@@ -84,7 +84,7 @@ client.unknown.post_object();
 <dl>
 <dd>
 
-**request_options:** `FernUnknown::Unknown::RequestOptions` 
+**request_options:** `Seed::Unknown::RequestOptions` 
     
 </dd>
 </dl>

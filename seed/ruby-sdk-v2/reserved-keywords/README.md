@@ -39,9 +39,9 @@ This SDK allows you to configure different custom URLs for API requests. You can
 
 ### Custom URL
 ```ruby
-require "fern_reserved_keywords"
+require "seed"
 
-client = FernReservedKeywords::Client.new(
+client = Seed::Client.new(
     base_url: "https://example.com"
 )
 ```
@@ -51,23 +51,23 @@ client = FernReservedKeywords::Client.new(
 Failed API calls will raise errors that can be rescued from granularly.
 
 ```ruby
-require "fern_reserved_keywords"
+require "seed"
 
-client = FernReservedKeywords::Client.new(
+client = Seed::Client.new(
     base_url: "https://example.com"
 )
 
 begin
     result = client.package.test
-rescue FernReservedKeywords::Errors::TimeoutError
+rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
-rescue FernReservedKeywords::Errors::ServiceUnavailableError
+rescue Seed::Errors::ServiceUnavailableError
     puts "API returned status 503, is probably overloaded, try again later"
-rescue FernReservedKeywords::Errors::ServerError
+rescue Seed::Errors::ServerError
     puts "API returned some other 5xx status, this is probably a bug"
-rescue FernReservedKeywords::Errors::ResponseError => e
+rescue Seed::Errors::ResponseError => e
     puts "API returned an unexpected status other than 5xx: #{e.code} #{e.message}"
-rescue FernReservedKeywords::Errors::ApiError => e
+rescue Seed::Errors::ApiError => e
     puts "Some other error occurred when calling the API: #{e.message}"
 end
 ```
@@ -88,9 +88,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` option to configure this behavior.
 
 ```ruby
-require "fern_reserved_keywords"
+require "seed"
 
-client = FernReservedKeywords::Client.new(
+client = Seed::Client.new(
     base_url: "https://example.com",
     max_retries: 3  # Configure max retries (default is 2)
 )
@@ -101,7 +101,7 @@ client = FernReservedKeywords::Client.new(
 The SDK defaults to a 60 second timeout. Use the `timeout` option to configure this behavior.
 
 ```ruby
-require "fern_reserved_keywords"
+require "seed"
 
 response = client.package.test(
     ...,
@@ -114,7 +114,7 @@ response = client.package.test(
 If you would like to send additional headers as part of the request, use the `additional_headers` request option.
 
 ```ruby
-require "fern_reserved_keywords"
+require "seed"
 
 response = client.package.test(
     ...,
@@ -131,7 +131,7 @@ response = client.package.test(
 If you would like to send additional query parameters as part of the request, use the `additional_query_parameters` request option.
 
 ```ruby
-require "fern_reserved_keywords"
+require "seed"
 
 response = client.package.test(
     ...,

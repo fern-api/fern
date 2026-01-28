@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/fern_http_head/user/client.rb">head</a>() -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">head</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.user.head();
 <dl>
 <dd>
 
-**request_options:** `FernHttpHead::User::RequestOptions` 
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.user.head();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/fern_http_head/user/client.rb">list</a>() -> Internal::Types::Array[FernHttpHead::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">list</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -76,7 +76,7 @@ client.user.list(limit: 1);
 <dl>
 <dd>
 
-**request_options:** `FernHttpHead::User::RequestOptions` 
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>
