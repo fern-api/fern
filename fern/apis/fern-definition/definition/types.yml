@@ -183,6 +183,7 @@ types:
       - commons.WithName
       - commons.WithAvailability
       - commons.WithDisplayName
+      - commons.WithValidation
     properties:
       type: optional<string>
       key: optional<SingleUnionTypeKey>
