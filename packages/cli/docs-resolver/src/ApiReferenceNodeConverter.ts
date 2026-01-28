@@ -908,38 +908,14 @@ export class ApiReferenceNodeConverter {
         });
 
         // Add GraphQL operations if they exist in the rootPackage
-        if (pkg.graphqlOperations != null) {
-            pkg.graphqlOperations.forEach((graphqlOperation) => {
-                const operationId = APIV1Read.GraphQlOperationId(graphqlOperation.id);
-                if (this.#visitedGraphqlOperations.has(operationId)) {
-                    return;
-                }
-                this.#visitedGraphqlOperations.add(operationId);
-
-                const operationSlug = parentSlug.append(graphqlOperation.name ?? graphqlOperation.id);
-                // Map GraphQL operation types to HTTP methods for display purposes
-                const httpMethod = graphqlOperation.operationType === "MUTATION" ? "POST" : "GET";
-
-                const navigationItem: FernNavigation.V1.GraphQlNode = {
-                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operationId}`),
-                    type: "graphql" as const,
-                    operationType: graphqlOperation.operationType,
-                    graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
-                    apiDefinitionId: this.apiDefinitionId,
-                    availability: parentAvailability,
-                    title: graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
-                    slug: operationSlug.get(),
-                    icon: undefined,
-                    hidden: this.hideChildren,
-                    playground: undefined,
-                    authed: undefined,
-                    viewers: undefined,
-                    orphaned: undefined,
-                    featureFlags: undefined
-                };
-
-                additionalChildren.push(navigationItem);
-            });
+        // Group them by operation type (Queries, Mutations, Subscriptions)
+        if (pkg.graphqlOperations != null && pkg.graphqlOperations.length > 0) {
+            const graphqlSections = this.#convertGraphQLOperationsToSections(
+                pkg.graphqlOperations,
+                parentSlug,
+                parentAvailability
+            );
+            additionalChildren.push(...graphqlSections);
         }
 
         additionalChildren = this.mergeEndpointPairs(additionalChildren);
@@ -953,6 +929,91 @@ export class ApiReferenceNodeConverter {
         }
 
         return additionalChildren;
+    }
+
+    #convertGraphQLOperationsToSections(
+        graphqlOperations: APIV1Read.GraphQlOperation[],
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild[] {
+        const operationsByType: Record<string, APIV1Read.GraphQlOperation[]> = {};
+
+        for (const operation of graphqlOperations) {
+            const operationId = APIV1Read.GraphQlOperationId(operation.id);
+            if (this.#visitedGraphqlOperations.has(operationId)) {
+                continue;
+            }
+            this.#visitedGraphqlOperations.add(operationId);
+
+            const operationType = operation.operationType;
+            if (operationsByType[operationType] == null) {
+                operationsByType[operationType] = [];
+            }
+            operationsByType[operationType].push(operation);
+        }
+
+        const sections: FernNavigation.V1.ApiPackageChild[] = [];
+        const operationTypeOrder: APIV1Read.GraphQlOperationType[] = ["QUERY", "MUTATION", "SUBSCRIPTION"];
+        const operationTypeLabels: Record<APIV1Read.GraphQlOperationType, string> = {
+            QUERY: "Queries",
+            MUTATION: "Mutations",
+            SUBSCRIPTION: "Subscriptions"
+        };
+
+        for (const operationType of operationTypeOrder) {
+            const operations = operationsByType[operationType];
+            if (operations == null || operations.length === 0) {
+                continue;
+            }
+
+            const sectionTitle = operationTypeLabels[operationType];
+            const sectionSlug = parentSlug.append(kebabCase(sectionTitle));
+
+            const children: FernNavigation.V1.ApiPackageChild[] = operations.map((operation) => {
+                const operationSlug = sectionSlug.append(operation.name ?? operation.id);
+                return {
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
+                    type: "graphql" as const,
+                    operationType: operation.operationType,
+                    graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: parentAvailability,
+                    title: operation.displayName ?? operation.name ?? operation.id,
+                    slug: operationSlug.get(),
+                    icon: undefined,
+                    hidden: this.hideChildren,
+                    playground: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                };
+            });
+
+            const sectionNode: FernNavigation.V1.ApiPackageNode = {
+                id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
+                type: "apiPackage",
+                children,
+                title: sectionTitle,
+                slug: sectionSlug.get(),
+                icon: undefined,
+                hidden: this.hideChildren,
+                overviewPageId: undefined,
+                availability: parentAvailability,
+                apiDefinitionId: this.apiDefinitionId,
+                pointsTo: undefined,
+                noindex: undefined,
+                playground: undefined,
+                authed: undefined,
+                viewers: undefined,
+                orphaned: undefined,
+                featureFlags: undefined
+            };
+
+            sections.push(sectionNode);
+        }
+
+        return sections;
     }
 
     #convertApiDefinitionPackageId(
