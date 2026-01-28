@@ -61,8 +61,8 @@ public class AsyncRawObjectClient {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("object")
       .addPathSegments("get-and-return-with-optional-field");if (requestOptions != null) {
-        requestOptions.getQueryParameters().forEach((key, value) -> {
-          httpUrl.addQueryParameter(key, value);
+        requestOptions.getQueryParameters().forEach((_key, _value) -> {
+          httpUrl.addQueryParameter(_key, _value);
         } );
       }
       RequestBody body;
@@ -120,8 +120,8 @@ public class AsyncRawObjectClient {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
         .addPathSegments("object")
         .addPathSegments("get-and-return-with-required-field");if (requestOptions != null) {
-          requestOptions.getQueryParameters().forEach((key, value) -> {
-            httpUrl.addQueryParameter(key, value);
+          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+            httpUrl.addQueryParameter(_key, _value);
           } );
         }
         RequestBody body;
@@ -179,8 +179,8 @@ public class AsyncRawObjectClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
           .addPathSegments("object")
           .addPathSegments("get-and-return-with-map-of-map");if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-              httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+              httpUrl.addQueryParameter(_key, _value);
             } );
           }
           RequestBody body;
@@ -248,8 +248,8 @@ public class AsyncRawObjectClient {
           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
             .addPathSegments("object")
             .addPathSegments("get-and-return-nested-with-optional-field");if (requestOptions != null) {
-              requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+              requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
               } );
             }
             RequestBody body;
@@ -308,8 +308,8 @@ public class AsyncRawObjectClient {
               .addPathSegments("object")
               .addPathSegments("get-and-return-nested-with-required-field")
               .addPathSegment(string);if (requestOptions != null) {
-                requestOptions.getQueryParameters().forEach((key, value) -> {
-                  httpUrl.addQueryParameter(key, value);
+                requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                  httpUrl.addQueryParameter(_key, _value);
                 } );
               }
               RequestBody body;
@@ -367,8 +367,8 @@ public class AsyncRawObjectClient {
               HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                 .addPathSegments("object")
                 .addPathSegments("get-and-return-nested-with-required-field-list");if (requestOptions != null) {
-                  requestOptions.getQueryParameters().forEach((key, value) -> {
-                    httpUrl.addQueryParameter(key, value);
+                  requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                    httpUrl.addQueryParameter(_key, _value);
                   } );
                 }
                 RequestBody body;

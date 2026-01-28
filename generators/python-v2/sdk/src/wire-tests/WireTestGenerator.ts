@@ -393,9 +393,14 @@ export class WireTestGenerator {
             }
 
             // Verify request count using test ID for filtering
+            // When testing the inferred auth token endpoint, expect 2 requests:
+            // 1. The automatic token fetch request
+            // 2. The actual API call being tested
+            // For all other endpoints, expect 1 request (the auth token fetch goes to a different endpoint)
+            const expectedRequestCount = this.isInferredAuthTokenEndpoint(endpoint) ? 2 : 1;
             statements.push(
                 python.codeBlock(
-                    `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, 1)`
+                    `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, ${expectedRequestCount})`
                 )
             );
 
@@ -411,6 +416,38 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Checks if the IR has any inferred auth schemes.
+     * When inferred auth is present, the client will make an additional request to get a token.
+     */
+    private hasInferredAuth(): boolean {
+        if (!this.context.ir.auth?.schemes) {
+            return false;
+        }
+        return this.context.ir.auth.schemes.some((scheme) => scheme.type === "inferred");
+    }
+
+    /**
+     * Checks if an endpoint is the inferred auth token endpoint.
+     * When testing the auth token endpoint with inferred auth, expect 2 requests:
+     * 1. The automatic token fetch request
+     * 2. The actual API call being tested
+     */
+    private isInferredAuthTokenEndpoint(endpoint: HttpEndpoint): boolean {
+        if (!this.context.ir.auth?.schemes) {
+            return false;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                const tokenEndpointId = scheme.tokenEndpoint.endpoint.endpointId;
+                if (endpoint.id === tokenEndpointId) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

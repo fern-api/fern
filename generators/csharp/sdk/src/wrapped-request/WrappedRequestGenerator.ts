@@ -6,6 +6,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ContainerType,
     ExampleEndpointCall,
+    ExampleInlinedRequestBodyExtraProperty,
     HttpEndpoint,
     Name,
     SdkRequestWrapper,
@@ -45,11 +46,21 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     protected doGenerate(): CSharpFile {
+        const hasExtraProperties =
+            this.endpoint.requestBody?.type === "inlinedRequestBody" && this.endpoint.requestBody.extraProperties;
+
+        const interfaces = [];
+        if (hasExtraProperties) {
+            interfaces.push(this.System.Text.Json.Serialization.IJsonOnDeserialized);
+            interfaces.push(this.System.Text.Json.Serialization.IJsonOnSerializing);
+        }
+
         const class_ = this.csharp.class_({
             reference: this.classReference,
             partial: false,
             access: ast.Access.Public,
             type: ast.Class.ClassType.Record,
+            interfaceReferences: interfaces,
             annotations: [this.System.Serializable]
         });
 
@@ -232,6 +243,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             _other: () => undefined
         });
 
+        if (hasExtraProperties) {
+            this.addExtensionDataField(class_);
+            const additionalProperties = this.addAdditionalPropertiesProperty(class_);
+            this.addOnDeserialized(class_, additionalProperties);
+            this.addOnSerializing(class_, additionalProperties);
+        }
+
         this.context.getToStringMethod(class_);
 
         if (isProtoRequest) {
@@ -268,6 +286,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         parseDatetimes: boolean;
     }): ast.CodeBlock {
         const orderedFields: { name: Name; value: ast.CodeBlock }[] = [];
+        let extraPropertiesFromExample: ExampleInlinedRequestBodyExtraProperty[] | undefined;
         if (
             this.context.includePathParametersInWrappedRequest({
                 endpoint: this.endpoint,
@@ -340,6 +359,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                         })
                     });
                 }
+
+                if (inlinedRequestBody.extraProperties != null && inlinedRequestBody.extraProperties.length > 0) {
+                    extraPropertiesFromExample = inlinedRequestBody.extraProperties;
+                }
             },
             _other: () => undefined
         });
@@ -349,6 +372,17 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 assignment: value
             };
         });
+
+        if (extraPropertiesFromExample != null && extraPropertiesFromExample.length > 0) {
+            const extraPropertiesSnippet = this.generateExtraPropertiesSnippet({
+                extraProperties: extraPropertiesFromExample,
+                parseDatetimes
+            });
+            args.push({
+                name: "AdditionalProperties",
+                assignment: extraPropertiesSnippet
+            });
+        }
         const instantiateClass = this.csharp.instantiateClass({
             classReference: this.classReference,
             arguments_: args,
@@ -378,5 +412,76 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             return undefined;
         }
         return this.defaultValueExtractor.extractDefault(typeReference);
+    }
+
+    private addExtensionDataField(class_: ast.Class): void {
+        class_.addField({
+            origin: class_.explicit("_extensionData"),
+            annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
+            access: ast.Access.Private,
+            readonly: true,
+            type: this.Collection.idictionary(this.Primitive.string, this.Primitive.object.asOptional(), {
+                dontSimplify: true
+            }),
+            initializer: this.System.Collections.Generic.Dictionary(
+                this.Primitive.string,
+                this.Primitive.object.asOptional()
+            ).new()
+        });
+    }
+
+    private addAdditionalPropertiesProperty(class_: ast.Class): ast.Field {
+        return class_.addField({
+            origin: class_.explicit("AdditionalProperties"),
+            annotations: [this.System.Text.Json.Serialization.JsonIgnore],
+            access: ast.Access.Public,
+            type: this.Types.AdditionalProperties(),
+            get: true,
+            set: true,
+            initializer: this.csharp.codeblock("new()")
+        });
+    }
+
+    private addOnSerializing(class_: ast.Class, additionalProperties: ast.Field): void {
+        class_.addMethod({
+            name: "OnSerializing",
+            interfaceReference: this.System.Text.Json.Serialization.IJsonOnSerializing,
+            parameters: [],
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock(`${additionalProperties.name}.CopyToExtensionData(_extensionData)`)
+        });
+    }
+
+    private addOnDeserialized(class_: ast.Class, additionalProperties: ast.Field): void {
+        class_.addMethod({
+            name: "OnDeserialized",
+            interfaceReference: this.System.Text.Json.Serialization.IJsonOnDeserialized,
+            parameters: [],
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock(`${additionalProperties.name}.CopyFromExtensionData(_extensionData)`)
+        });
+    }
+
+    private generateExtraPropertiesSnippet({
+        extraProperties,
+        parseDatetimes
+    }: {
+        extraProperties: ExampleInlinedRequestBodyExtraProperty[];
+        parseDatetimes: boolean;
+    }): ast.CodeBlock {
+        return this.csharp.codeblock((writer: Writer) => {
+            writer.writeLine("new AdditionalProperties");
+            writer.pushScope();
+            for (const extraProperty of extraProperties) {
+                const valueSnippet = this.exampleGenerator.getSnippetForTypeReference({
+                    exampleTypeReference: extraProperty.value,
+                    parseDatetimes
+                });
+                writer.write(`["${extraProperty.name.wireValue}"] = `);
+                writer.writeNode(valueSnippet);
+                writer.writeLine(",");
+            }
+            writer.popScope();
+        });
     }
 }

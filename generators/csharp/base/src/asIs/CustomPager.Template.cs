@@ -1,11 +1,11 @@
-using System.Runtime.CompilerServices;
+using global::System.Runtime.CompilerServices;
 using global::System.Net.Http;
 
 namespace <%= namespace%>;
 
 internal static class CustomPagerFactory
 {
-    internal static async Task<CustomPager<TItem>> CreateAsync<TItem>(CustomPagerContext context,
+    internal static async global::System.Threading.Tasks.Task<CustomPager<TItem>> CreateAsync<TItem>(CustomPagerContext context,
         CancellationToken cancellationToken = default
     )
     {
@@ -57,9 +57,9 @@ public class CustomPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
         CurrentPage = page;
     }
 
-    public async Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
+    public async global::System.Threading.Tasks.Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
     {
-        if (_nextPageRequest == null)
+        if (_nextPageRequest is null)
         {
             return Page<TItem>.Empty;
         }
@@ -68,9 +68,9 @@ public class CustomPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
             .ConfigureAwait(false);
     }
 
-    public async Task<Page<TItem>> GetPreviousPageAsync(CancellationToken cancellationToken = default)
+    public async global::System.Threading.Tasks.Task<Page<TItem>> GetPreviousPageAsync(CancellationToken cancellationToken = default)
     {
-        if (_previousPageRequest == null)
+        if (_previousPageRequest is null)
         {
             return Page<TItem>.Empty;
         }
@@ -79,7 +79,7 @@ public class CustomPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
             .ConfigureAwait(false);
     }
 
-    private async Task<Page<TItem>> SendRequestAndHandleResponse(
+    private async global::System.Threading.Tasks.Task<Page<TItem>> SendRequestAndHandleResponse(
         HttpRequestMessage request,
         CancellationToken cancellationToken = default)
     {
@@ -99,7 +99,7 @@ public class CustomPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
         return page;
     }
 
-    internal static async Task<(
+    internal static async global::System.Threading.Tasks.Task<(
         HttpRequestMessage? nextPageRequest,
         bool hasNextPage,
         HttpRequestMessage? previousPageRequest,

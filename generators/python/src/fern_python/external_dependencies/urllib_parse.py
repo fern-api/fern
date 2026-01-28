@@ -26,3 +26,12 @@ class UrlLibParse:
                 ],
             ),
         )
+
+    @staticmethod
+    def urlencode(query: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=_export("urlencode"),
+                args=[query],
+            ),
+        )

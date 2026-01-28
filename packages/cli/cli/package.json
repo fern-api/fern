@@ -137,6 +137,8 @@
     "validate-npm-package-name": "^5.0.1",
     "vitest": "^4.0.8",
     "yaml": "^2.4.5",
-    "yargs": "^17.4.1"
+    "yargs": "^17.4.1",
+    "ws": "^8.17.1",
+    "@types/ws": "^8.5.10"
   }
 }

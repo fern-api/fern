@@ -462,7 +462,7 @@ public class OptionalJsonConverter<T> : JsonConverter<Optional<T>>
         var innerValue = value.Value;
 
         // Write null directly if the value is null (don't use JsonSerializer.Serialize for null)
-        if (innerValue == null)
+        if (innerValue is null)
         {
             writer.WriteNullValue();
             return;

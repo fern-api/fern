@@ -9,14 +9,12 @@ from .object.client import AsyncObjectClient, ObjectClient
 from .params.client import AsyncParamsClient, ParamsClient
 from .primitive.client import AsyncPrimitiveClient, PrimitiveClient
 from .put.client import AsyncPutClient, PutClient
-from .raw_client import AsyncRawEndpointsClient, RawEndpointsClient
 from .union.client import AsyncUnionClient, UnionClient
 from .urls.client import AsyncUrlsClient, UrlsClient
 
 
 class EndpointsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self.container = ContainerClient(client_wrapper=self._client_wrapper)
         self.content_type = ContentTypeClient(client_wrapper=self._client_wrapper)
@@ -29,21 +27,9 @@ class EndpointsClient:
         self.union = UnionClient(client_wrapper=self._client_wrapper)
         self.urls = UrlsClient(client_wrapper=self._client_wrapper)
 
-    @property
-    def with_raw_response(self) -> RawEndpointsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawEndpointsClient
-        """
-        return self._raw_client
-
 
 class AsyncEndpointsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self.container = AsyncContainerClient(client_wrapper=self._client_wrapper)
         self.content_type = AsyncContentTypeClient(client_wrapper=self._client_wrapper)
@@ -55,14 +41,3 @@ class AsyncEndpointsClient:
         self.put = AsyncPutClient(client_wrapper=self._client_wrapper)
         self.union = AsyncUnionClient(client_wrapper=self._client_wrapper)
         self.urls = AsyncUrlsClient(client_wrapper=self._client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawEndpointsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawEndpointsClient
-        """
-        return self._raw_client

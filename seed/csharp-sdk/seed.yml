@@ -28,7 +28,7 @@ buildScripts:
 
 publish:
   preBuildCommands:
-    - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk 
+    - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk
   docker:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
@@ -57,16 +57,16 @@ scripts:
         - |
           # Check for .NET 10
           # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
-          # otherwise install .NET 10 
+          # otherwise install .NET 10
           command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
-          
+
           # Find the solution file
           solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
           if [ -z "$solution_file" ]; then
             echo "ERROR: No .slnx file found"
             exit 1
           fi
-          
+
           dotnet build "$solution_file" -c Release
           dotnet build src/*DynamicSnippets/*.csproj -c Release
       test:
@@ -77,7 +77,7 @@ scripts:
             echo "ERROR: No .slnx file found"
             exit 1
           fi
-          
+
           dotnet test "$solution_file" --no-restore --no-build -c Release
 
 fixtures:
@@ -230,12 +230,6 @@ fixtures:
     - customConfig:
         use-discriminated-unions: false
       outputFolder: no-discriminated-unions
-  extra-properties:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        additional-properties: false
-      outputFolder: no-additional-properties
   csharp-namespace-collision:
     - customConfig:
         experimental-fully-qualified-namespaces: true
@@ -245,7 +239,7 @@ fixtures:
     - customConfig:
         client-class-name: System
       outputFolder: system-client
-  websocket: 
+  websocket:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
@@ -278,30 +272,23 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         use-default-request-parameter-values: true
+        experimental-explicit-nullable-optional: true
       outputFolder: with-defaults
+  undiscriminated-unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use-undiscriminated-unions: true
+      outputFolder: with-undiscriminated-unions
 allowedFailures:
-  - any-auth
-  - endpoint-security-auth
-  - csharp-namespace-collision:fully-qualified-namespaces
   - enum:forward-compatible-enums
   - enum:plain-enums
   - examples:no-custom-config
   - examples:readme-config
-  - extra-properties:no-additional-properties
-  - extra-properties:no-custom-config
   - literal:no-custom-config
   - literal:readonly-constants
   - oauth-client-credentials-custom
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-mandatory-auth
-  - oauth-client-credentials-nested-root
-  - oauth-client-credentials-with-variables
-  - oauth-client-credentials:include-exception-handler
-  - oauth-client-credentials:no-custom-config
   - package-yml
-  - simple-fhir
   - trace
-  - undiscriminated-unions
   - unions-with-local-date
   - unions:no-custom-config
-  - url-form-encoded

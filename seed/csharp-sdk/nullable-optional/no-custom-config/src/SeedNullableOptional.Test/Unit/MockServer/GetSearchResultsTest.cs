@@ -83,7 +83,7 @@ public class GetSearchResultsTest : BaseMockServerTest
             new SearchRequest
             {
                 Query = "query",
-                Filters = new Dictionary<string, string>() { { "filters", "filters" } },
+                Filters = new Dictionary<string, string?>() { { "filters", "filters" } },
                 IncludeTypes = new List<string>() { "includeTypes", "includeTypes" },
             }
         );

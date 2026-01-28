@@ -1216,21 +1216,15 @@ export class DocsDefinitionResolver {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
         let ir: IntermediateRepresentation | undefined = undefined;
-        const workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
-            { context: this.taskContext },
-            {
-                enableUniqueErrorsPerEndpoint: true,
-                detectGlobalHeaders: false,
-                objectQueryParameters: true,
-                preserveSchemaIds: true
-            }
-        );
+        let workspace: FernWorkspace | undefined = undefined;
+        let openapiWorkspace: OSSWorkspace | undefined = undefined;
+        let openapiError: unknown = undefined;
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser) {
             try {
-                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
@@ -1239,7 +1233,7 @@ export class DocsDefinitionResolver {
                     logWarnings: false
                 });
             } catch (error) {
-                // noop
+                openapiError = error;
             }
         }
 
@@ -1247,8 +1241,8 @@ export class DocsDefinitionResolver {
         let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
         if (item.tagDescriptionPages && useV3Parser) {
             try {
-                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
-                const openApiIr = await openapiWorkspace.getOpenAPIIr({
+                const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
+                const openApiIr = await workspaceForTags.getOpenAPIIr({
                     context: this.taskContext,
                     loadAiExamples: true
                 });
@@ -1273,6 +1267,18 @@ export class DocsDefinitionResolver {
         }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
+            if (this.apiWorkspaces.length === 0 && openapiError != null) {
+                throw openapiError;
+            }
+            workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                { context: this.taskContext },
+                {
+                    enableUniqueErrorsPerEndpoint: true,
+                    detectGlobalHeaders: false,
+                    objectQueryParameters: true,
+                    preserveSchemaIds: true
+                }
+            );
             ir = generateIntermediateRepresentation({
                 workspace,
                 audiences: item.audiences,
@@ -1328,7 +1334,7 @@ export class DocsDefinitionResolver {
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
         // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
-        const apiNameForRegistration = item.apiName ?? workspace.workspaceName;
+        const apiNameForRegistration = item.apiName ?? workspace?.workspaceName ?? openapiWorkspace?.workspaceName;
 
         const apiDefinitionId = await this.registerApi({
             ir,

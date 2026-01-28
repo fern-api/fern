@@ -49,8 +49,8 @@ public class AsyncRawContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("list-of-primitives");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -113,8 +113,8 @@ public class AsyncRawContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("list-of-objects");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -176,8 +176,8 @@ public class AsyncRawContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("set-of-primitives");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -240,8 +240,8 @@ public class AsyncRawContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("set-of-objects");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -304,8 +304,8 @@ public class AsyncRawContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("map-prim-to-prim");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -368,8 +368,8 @@ public class AsyncRawContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("map-prim-to-object");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -443,8 +443,8 @@ public class AsyncRawContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("opt-objects");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;

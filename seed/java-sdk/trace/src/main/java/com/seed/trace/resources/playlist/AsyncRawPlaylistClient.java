@@ -63,8 +63,8 @@ public class AsyncRawPlaylistClient {
                     httpUrl, "optionalDatetime", request.getOptionalDatetime().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -146,8 +146,8 @@ public class AsyncRawPlaylistClient {
         }
         QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), true);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -208,8 +208,8 @@ public class AsyncRawPlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -288,8 +288,8 @@ public class AsyncRawPlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -361,8 +361,8 @@ public class AsyncRawPlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()

@@ -1,6 +1,6 @@
-using System.ComponentModel;
-using System.Net.WebSockets;
-using System.Runtime.CompilerServices;
+using global::System.ComponentModel;
+using global::System.Net.WebSockets;
+using global::System.Runtime.CompilerServices;
 
 namespace SeedWebsocket.Core.WebSockets;
 
@@ -12,14 +12,14 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     private ConnectionStatus _status = ConnectionStatus.Disconnected;
     private WebSocketConnection? _webSocket;
     private readonly Uri _uri;
-    private readonly Func<Stream, Task> _onTextMessage;
+    private readonly Func<Stream, global::System.Threading.Tasks.Task> _onTextMessage;
 
     /// <summary>
     /// Initializes a new instance of the WebSocketClient class.
     /// </summary>
     /// <param name="uri">The WebSocket URI to connect to.</param>
     /// <param name="onTextMessage">Handler for incoming text messages.</param>
-    public WebSocketClient(Uri uri, Func<Stream, Task> onTextMessage)
+    public WebSocketClient(Uri uri, Func<Stream, global::System.Threading.Tasks.Task> onTextMessage)
     {
         _uri = uri;
         _onTextMessage = onTextMessage;
@@ -58,7 +58,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// <param name="message">The text message to send.</param>
     /// <returns>A task representing the asynchronous send operation.</returns>
     /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
-    public Task SendInstant(string message)
+    public global::System.Threading.Tasks.Task SendInstant(string message)
     {
         EnsureConnected();
         return _webSocket!.SendInstant(message);
@@ -70,7 +70,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// <param name="message">The binary message to send as a Memory&lt;byte&gt;.</param>
     /// <returns>A task representing the asynchronous send operation.</returns>
     /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
-    public Task SendInstant(Memory<byte> message)
+    public global::System.Threading.Tasks.Task SendInstant(Memory<byte> message)
     {
         EnsureConnected();
         return _webSocket!.SendInstant(message);
@@ -82,7 +82,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// <param name="message">The binary message to send as an ArraySegment&lt;byte&gt;.</param>
     /// <returns>A task representing the asynchronous send operation.</returns>
     /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
-    public Task SendInstant(ArraySegment<byte> message)
+    public global::System.Threading.Tasks.Task SendInstant(ArraySegment<byte> message)
     {
         EnsureConnected();
         return _webSocket!.SendInstant(message);
@@ -94,7 +94,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// <param name="message">The binary message to send as a byte array.</param>
     /// <returns>A task representing the asynchronous send operation.</returns>
     /// <exception cref="Exception">Thrown when the connection is not in Connected status.</exception>
-    public Task SendInstant(byte[] message)
+    public global::System.Threading.Tasks.Task SendInstant(byte[] message)
     {
         EnsureConnected();
         return _webSocket!.SendInstant(message);
@@ -106,7 +106,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// <returns>A ValueTask representing the asynchronous dispose operation.</returns>
     public async ValueTask DisposeAsync()
     {
-        if (_webSocket != null)
+        if (_webSocket is not null)
         {
             if (_webSocket.IsRunning)
             {
@@ -126,7 +126,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// </summary>
     public void Dispose()
     {
-        if (_webSocket != null)
+        if (_webSocket is not null)
         {
             if (_webSocket.IsRunning)
             {
@@ -154,9 +154,9 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// Asynchronously closes the WebSocket connection with normal closure status.
     /// </summary>
     /// <returns>A task representing the asynchronous close operation.</returns>
-    public async Task CloseAsync()
+    public async global::System.Threading.Tasks.Task CloseAsync()
     {
-        if (_webSocket != null)
+        if (_webSocket is not null)
         {
             Status = ConnectionStatus.Disconnecting;
             await _webSocket.StopOrFail(WebSocketCloseStatus.NormalClosure, "");
@@ -169,7 +169,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
     /// </summary>
     /// <returns>A task representing the asynchronous connect operation.</returns>
     /// <exception cref="Exception">Thrown when the connection status is not Disconnected or when connection fails.</exception>
-    public async Task ConnectAsync()
+    public async global::System.Threading.Tasks.Task ConnectAsync()
     {
         this.Assert(
             Status == ConnectionStatus.Disconnected,
@@ -187,7 +187,7 @@ internal sealed class WebSocketClient : IAsyncDisposable, IDisposable, INotifyPr
             BinaryMessageReceived = stream =>
             {
                 stream.Dispose();
-                return Task.CompletedTask;
+                return global::System.Threading.Tasks.Task.CompletedTask;
             },
             DisconnectionHappened = async d =>
             {

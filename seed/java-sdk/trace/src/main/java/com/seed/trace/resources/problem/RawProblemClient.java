@@ -49,8 +49,8 @@ public class RawProblemClient {
                 .addPathSegments("problem-crud")
                 .addPathSegments("create");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -104,8 +104,8 @@ public class RawProblemClient {
                 .addPathSegments("update")
                 .addPathSegment(problemId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -158,8 +158,8 @@ public class RawProblemClient {
                 .addPathSegments("delete")
                 .addPathSegment(problemId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -203,8 +203,8 @@ public class RawProblemClient {
                 .addPathSegments("problem-crud")
                 .addPathSegments("default-starter-files");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;

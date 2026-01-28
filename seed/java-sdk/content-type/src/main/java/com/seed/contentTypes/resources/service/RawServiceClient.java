@@ -42,8 +42,8 @@ public class RawServiceClient {
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -129,8 +129,8 @@ public class RawServiceClient {
                 .addPathSegments("complex")
                 .addPathSegment(id);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -184,8 +184,8 @@ public class RawServiceClient {
                 .addPathSegments("named-mixed")
                 .addPathSegment(id);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -246,8 +246,8 @@ public class RawServiceClient {
                 .newBuilder()
                 .addPathSegments("optional-merge-patch-test");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -313,8 +313,8 @@ public class RawServiceClient {
                 .addPathSegments("regular")
                 .addPathSegment(id);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;

@@ -114,6 +114,10 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "mypy_exclude" in generator_config.custom_config:
             mypy_exclude = generator_config.custom_config.get("mypy_exclude")
 
+        import_paths = None
+        if generator_config.custom_config is not None and "import_paths" in generator_config.custom_config:
+            import_paths = generator_config.custom_config.get("import_paths")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -140,6 +144,7 @@ class AbstractGenerator(ABC):
             enable_wire_tests=enable_wire_tests,
             generator_exec_wrapper=generator_exec_wrapper,
             mypy_exclude=mypy_exclude,
+            import_paths=import_paths,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,

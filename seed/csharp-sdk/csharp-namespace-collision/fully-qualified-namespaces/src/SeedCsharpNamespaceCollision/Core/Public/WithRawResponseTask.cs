@@ -37,7 +37,7 @@ public readonly struct WithRawResponseTask<T>
         new(_task.ConfigureAwait(continueOnCapturedContext));
 
     /// <summary>
-    /// Implicitly converts WithRawResponseTask&lt;T&gt; to Task&lt;T&gt; for backward compatibility.
+    /// Implicitly converts WithRawResponseTask&lt;T&gt; to global::System.Threading.Tasks.Task&lt;T&gt; for backward compatibility.
     /// The resulting task will yield just the data when awaited.
     /// </summary>
     public static implicit operator Task<T>(WithRawResponseTask<T> task)

@@ -8,6 +8,7 @@ pub enum StringOrNumber {
             value: String,
         },
 
+        #[serde(rename = "number")]
         Number {
             value: i64,
         },

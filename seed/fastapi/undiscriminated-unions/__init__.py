@@ -22,6 +22,7 @@ from .resources import (
     UnionWithDuplicateTypes,
     UnionWithIdenticalPrimitives,
     UnionWithIdenticalStrings,
+    UnionWithReservedNames,
     union,
 )
 
@@ -45,5 +46,6 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
+    "UnionWithReservedNames",
     "union",
 ]

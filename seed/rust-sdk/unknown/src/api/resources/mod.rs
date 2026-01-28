@@ -4,7 +4,7 @@
 //!
 //! - **Unknown**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod unknown;
 pub struct UnknownAsAnyClient {
@@ -16,9 +16,10 @@ impl UnknownAsAnyClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            unknown: UnknownClient::new(config.clone())?,
+            unknown: UnknownClient::new(config.clone())?
         })
     }
+
 }
 
 pub use unknown::UnknownClient;

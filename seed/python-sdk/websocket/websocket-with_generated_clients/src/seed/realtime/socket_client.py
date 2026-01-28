@@ -31,7 +31,10 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
 
     async def __aiter__(self):
         async for message in self._websocket:
-            yield parse_obj_as(RealtimeSocketClientResponse, json.loads(message))  # type: ignore
+            if isinstance(message, bytes):
+                yield message
+            else:
+                yield parse_obj_as(RealtimeSocketClientResponse, json.loads(message))  # type: ignore
 
     async def start_listening(self):
         """
@@ -46,8 +49,11 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         await self._emit_async(EventType.OPEN, None)
         try:
             async for raw_message in self._websocket:
-                json_data = json.loads(raw_message)
-                parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
+                if isinstance(raw_message, bytes):
+                    parsed = raw_message
+                else:
+                    json_data = json.loads(raw_message)
+                    parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
                 await self._emit_async(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
@@ -80,6 +86,8 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = await self._websocket.recv()
+        if isinstance(data, bytes):
+            return data  # type: ignore
         json_data = json.loads(data)
         return parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
 
@@ -105,7 +113,10 @@ class RealtimeSocketClient(EventEmitterMixin):
 
     def __iter__(self):
         for message in self._websocket:
-            yield parse_obj_as(RealtimeSocketClientResponse, json.loads(message))  # type: ignore
+            if isinstance(message, bytes):
+                yield message
+            else:
+                yield parse_obj_as(RealtimeSocketClientResponse, json.loads(message))  # type: ignore
 
     def start_listening(self):
         """
@@ -120,8 +131,11 @@ class RealtimeSocketClient(EventEmitterMixin):
         self._emit(EventType.OPEN, None)
         try:
             for raw_message in self._websocket:
-                json_data = json.loads(raw_message)
-                parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
+                if isinstance(raw_message, bytes):
+                    parsed = raw_message
+                else:
+                    json_data = json.loads(raw_message)
+                    parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
@@ -154,6 +168,8 @@ class RealtimeSocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = self._websocket.recv()
+        if isinstance(data, bytes):
+            return data  # type: ignore
         json_data = json.loads(data)
         return parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
 

@@ -23,6 +23,8 @@ pub struct ObjectWithOptionalField {
     pub uuid: Option<Uuid>,
     #[serde(rename = "base64")]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::base64_bytes::option")]
     pub base_64: Option<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub list: Option<Vec<String>>,
@@ -31,5 +33,7 @@ pub struct ObjectWithOptionalField {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub map: Option<HashMap<i64, String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::bigint_string::option")]
     pub bigint: Option<num_bigint::BigInt>,
 }

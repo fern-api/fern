@@ -1,5 +1,34 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc83
+  changelogEntry:
+    - summary: |
+        Fix request body serialization bug where path/query/header parameters were incorrectly
+        serialized as nil values in the request body. For endpoints with inlined request bodies
+        that also have path, query, or header parameters, the wrapper type (which includes all
+        endpoint parameters) was being created with only body properties, causing non-body fields
+        to be nil and serialized as null in the JSON body. The fix uses a serialize-then-split
+        pattern: serialize ALL params through the wrapper type first, then remove non-body params
+        from the serialized result. This ensures proper type conversion while keeping non-body
+        params out of the request body.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
+- version: 1.0.0-rc82
+  changelogEntry:
+    - summary: |
+        Implement HTTP status code-based retry logic with exponential backoff. The SDK now automatically
+        retries requests that fail with retryable HTTP status codes (408, 429, 500, 502, 503, 504, 521,
+        522, 524) using exponential backoff with jitter. The retry logic respects Retry-After
+        headers when present. This addresses the feature gap where the SDK previously
+        only used Net::HTTP's network-level retries, which don't handle HTTP status codes like 429
+        (Too Many Requests). The max_retries parameter now controls application-level retries with
+        proper backoff, enabling compliance with rate-limiting requirements like Square App Marketplace.
+      type: feat
+  createdAt: "2026-01-27"
+  irVersion: 61
+
 - version: 1.0.0-rc81
   changelogEntry:
     - summary: |
