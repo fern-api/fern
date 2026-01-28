@@ -1,3 +1,4 @@
+import type { AiConfig } from "../ai/config/AiConfig";
 import type { ApiDefinition } from "../api/config/ApiDefinition";
 import type { SdkConfig } from "../sdk/config/SdkConfig";
 
@@ -9,6 +10,7 @@ import type { SdkConfig } from "../sdk/config/SdkConfig";
  * and/or docs.
  */
 export interface Workspace {
+    ai?: AiConfig;
     apis: Record<string, ApiDefinition>;
     cliVersion: string;
     org: string;

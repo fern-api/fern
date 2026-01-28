@@ -49,8 +49,6 @@ export class LegacyApiSpecAdapter {
         if (isOpenRpcSpec(spec)) {
             return this.adaptOpenRpcSpec(spec);
         }
-
-        // TODO: Handle other spec types (Fern, Conjure) as needed
         throw new Error(`Unsupported spec type: ${JSON.stringify(spec)}`);
     }
 
