@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.4
+  changelogEntry:
+    - summary: |
+        Improve AsyncAPI and OpenAPI v2 detection in `fern check` validation. Instead of brittle string matching, the validation rule now parses the spec file and checks for `asyncapi` or `swagger` keys at the root level. This is more robust and won't be fooled by these strings appearing in descriptions or comments.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 63
+
 - version: 3.51.3
   changelogEntry:
     - summary: |

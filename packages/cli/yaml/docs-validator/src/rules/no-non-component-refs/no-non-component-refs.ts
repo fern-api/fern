@@ -1,5 +1,6 @@
 import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -26,22 +27,29 @@ export const NoNonComponentRefsRule: Rule = {
                                         spec.absoluteFilepath
                                     );
 
-                                    // Skip OpenAPI v2 files - they should be handled by the v2 rule first
-                                    const isOpenApiV2 =
-                                        contents.includes("swagger:") &&
-                                        (contents.includes('swagger: "2.0"') ||
-                                            contents.includes("swagger: '2.0'") ||
-                                            contents.includes("swagger: 2.0"));
+                                    // Parse the spec file to check its type
+                                    let parsedSpec: unknown;
+                                    try {
+                                        parsedSpec = yaml.load(contents);
+                                    } catch (parseError) {
+                                        logger.debug(`Could not parse spec file: ${spec.absoluteFilepath}`);
+                                        continue;
+                                    }
 
-                                    if (isOpenApiV2) {
+                                    if (!parsedSpec || typeof parsedSpec !== "object") {
+                                        continue;
+                                    }
+
+                                    const specObj = parsedSpec as Record<string, unknown>;
+
+                                    // Skip OpenAPI v2 files - they should be handled by the v2 rule first
+                                    if ("swagger" in specObj && specObj.swagger === "2.0") {
                                         continue; // Skip v2 files
                                     }
 
                                     // Skip AsyncAPI files - they have different reference patterns than OpenAPI
-                                    // Check for both YAML format (asyncapi:) and JSON format ("asyncapi":)
-                                    const isAsyncAPI =
-                                        contents.includes("asyncapi:") || contents.includes('"asyncapi":');
-                                    if (isAsyncAPI) {
+                                    // Check for the asyncapi key at the root level of the parsed spec
+                                    if ("asyncapi" in specObj) {
                                         continue; // Skip AsyncAPI files
                                     }
 
