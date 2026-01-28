@@ -210,11 +210,8 @@ service:
         body:
           properties:
             file: file
-            # Literal type - should NOT be JSON serialized
             model_type: optional<ModelType>
-            # Open enum type - should NOT be JSON serialized
             open_enum: optional<OpenEnumType>
-            # Regular string for comparison
             maybe_name: optional<string>
         content-type: multipart/form-data
         name: LiteralEnumRequest
@@ -248,11 +245,8 @@ types:
     properties:
       bar: string
 
-  # Literal type - tests fix for issue where literals were incorrectly JSON-serialized
-  # in multipart form data. This mimics the customer's SpeechToTextModel = Literal["saarika:v2.5"]
   ModelType: literal<"model_v1">
 
-  # Open enum type with multiple values - tests undiscriminated union of primitives
   OpenEnumType:
     enum:
       - OPTION_A
