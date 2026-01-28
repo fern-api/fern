@@ -49,9 +49,9 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootFolderName(): string {
-        // Use custom config module if set, otherwise snake_case the organization name
+        // Use custom config moduleName if set, otherwise snake_case the organization name
         // Note: packageName from publish config is NOT used here - it's only for the gemspec name
-        return this.customConfig.module ?? snakeCase(this.config.organization);
+        return this.customConfig.moduleName ?? snakeCase(this.config.organization);
     }
 
     public getGemName(): string {
@@ -99,9 +99,9 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootModuleName(): string {
-        // Use custom config module if set, otherwise upperFirst the organization name
+        // Use custom config moduleName if set, otherwise upperFirst the organization name
         // Note: packageName from publish config is NOT used here - it's only for the gemspec name
-        return upperFirst(this.customConfig.module ?? this.config.organization);
+        return upperFirst(this.customConfig.moduleName ?? this.config.organization);
     }
 
     public getRootModule(): ruby.Module_ {

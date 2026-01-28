@@ -9,8 +9,13 @@
         issues where gems with special characters in their package name (e.g., "square.rb")
         would have incorrect folder structures (lib/square_rb/ instead of lib/square/) and
         normalized gemspec names. The folder and module naming now correctly uses only the
-        custom config module option or the organization name as fallback.
+        custom config moduleName option or the organization name as fallback.
       type: fix
+    - summary: |
+        Rename custom config field from "module" to "moduleName" for clarity. The moduleName
+        field controls the Ruby module name and folder structure (e.g., moduleName: "Square"
+        produces lib/square/ folder and module Square).
+      type: chore
   createdAt: "2026-01-28"
   irVersion: 61
 
