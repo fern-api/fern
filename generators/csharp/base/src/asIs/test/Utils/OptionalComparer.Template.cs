@@ -1,6 +1,6 @@
 using NUnit.Framework.Constraints;
-using <%= namespaces.root %>.Core;
-using OneOf;
+using <%= namespaces.root %>.Core;<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
+using OneOf;<% } %>
 
 namespace NUnit.Framework;
 
@@ -51,17 +51,17 @@ public static class OptionalComparerExtensions
                 // Use NUnit's property comparer for the inner values
                 var propertiesComparer = new NUnitEqualityComparer();
                 var tolerance = Tolerance.Default;
-                propertiesComparer.CompareProperties = true;
+                propertiesComparer.CompareProperties = true;<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
                 // Add OneOf comparer to handle nested OneOf values (e.g., in Lists within Optional<T>)
                 propertiesComparer.ExternalComparers.Add(
                     new OneOfEqualityAdapter(propertiesComparer)
-                );
+                );<% } %>
                 return propertiesComparer.AreEqual(xValue, yValue, ref tolerance);
             }
         );
 
         return constraint;
-    }
+    }<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
 
     /// <summary>
     /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
@@ -100,5 +100,5 @@ public static class OptionalComparerExtensions
             var tolerance = Tolerance.Default;
             return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
         }
-    }
+    }<% } %>
 }
