@@ -19,7 +19,7 @@ public partial class NoAuthClient : INoAuthClient
     )
     {
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
+            .AddWithoutAuth(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

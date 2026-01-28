@@ -1773,8 +1773,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 );
                 writer.indent();
 
+                // Add client-level headers (from root client constructor)
+                // For endpoints that don't require auth, use AddWithoutAuth to skip the Authorization header
+                // and avoid triggering lazy auth token resolution
                 writer.writeLine();
-                writer.write(".Add(_client.Options.Headers)");
+                if (endpoint.auth) {
+                    writer.write(".Add(_client.Options.Headers)");
+                } else {
+                    writer.write(".AddWithoutAuth(_client.Options.Headers)");
+                }
 
                 writer.writeLine();
                 writer.write(".Add(_client.Options.AdditionalHeaders)");

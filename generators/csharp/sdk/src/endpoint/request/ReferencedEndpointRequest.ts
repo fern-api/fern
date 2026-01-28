@@ -45,9 +45,15 @@ export class ReferencedEndpointRequest extends EndpointRequest {
                 );
                 writer.indent();
 
-                // Add client-level headers (from root client constructor - includes lazy auth headers)
+                // Add client-level headers (from root client constructor)
+                // For endpoints that don't require auth, use AddWithoutAuth to skip the Authorization header
+                // and avoid triggering lazy auth token resolution
                 writer.writeLine();
-                writer.write(".Add(_client.Options.Headers)");
+                if (this.endpoint.auth) {
+                    writer.write(".Add(_client.Options.Headers)");
+                } else {
+                    writer.write(".AddWithoutAuth(_client.Options.Headers)");
+                }
 
                 // Add client-level additional headers
                 writer.writeLine();
