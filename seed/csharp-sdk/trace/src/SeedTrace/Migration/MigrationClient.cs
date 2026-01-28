@@ -20,7 +20,7 @@ public partial class MigrationClient : IMigrationClient
     {
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add("admin-key-header", request.AdminKeyHeader)
-            .Add(_client.Options.Headers)
+            .AddWithoutAuth(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

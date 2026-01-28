@@ -17,6 +17,12 @@ public partial class HomepageClient : IHomepageClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -24,6 +30,7 @@ public partial class HomepageClient : IHomepageClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/homepage-problems",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -88,6 +95,12 @@ public partial class HomepageClient : IHomepageClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -96,6 +109,7 @@ public partial class HomepageClient : IHomepageClient
                     Method = HttpMethod.Post,
                     Path = "/homepage-problems",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

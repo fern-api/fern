@@ -18,6 +18,12 @@ public partial class BigunionClient : IBigunionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -25,6 +31,7 @@ public partial class BigunionClient : IBigunionClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -73,6 +80,12 @@ public partial class BigunionClient : IBigunionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -81,6 +94,7 @@ public partial class BigunionClient : IBigunionClient
                     Method = HttpMethodExtensions.Patch,
                     Path = "",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -129,6 +143,12 @@ public partial class BigunionClient : IBigunionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -137,6 +157,7 @@ public partial class BigunionClient : IBigunionClient
                     Method = HttpMethodExtensions.Patch,
                     Path = "/many",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

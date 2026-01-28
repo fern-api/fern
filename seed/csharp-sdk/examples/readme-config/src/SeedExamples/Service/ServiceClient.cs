@@ -18,6 +18,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -25,6 +31,7 @@ public partial class ServiceClient : IServiceClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/movie/{0}", ValueConvert.ToPathParameterString(movieId)),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -73,6 +80,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -81,6 +94,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethod.Post,
                     Path = "/movie",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -136,7 +150,7 @@ public partial class ServiceClient : IServiceClient
             .Build();
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
             .Add("X-API-Version", request.XApiVersion)
-            .Add(_client.Options.Headers)
+            .AddWithoutAuth(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -198,6 +212,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -206,6 +226,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethod.Post,
                     Path = "/big-entity",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -560,6 +581,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -568,6 +595,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethod.Post,
                     Path = "/refresh-token",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

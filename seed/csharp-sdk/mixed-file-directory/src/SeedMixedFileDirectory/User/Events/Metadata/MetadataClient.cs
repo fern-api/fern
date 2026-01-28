@@ -23,6 +23,12 @@ public partial class MetadataClient : IMetadataClient
             .Add("id", request.Id)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedMixedFileDirectory.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -31,6 +37,7 @@ public partial class MetadataClient : IMetadataClient
                     Method = HttpMethod.Get,
                     Path = "/users/events/metadata/",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

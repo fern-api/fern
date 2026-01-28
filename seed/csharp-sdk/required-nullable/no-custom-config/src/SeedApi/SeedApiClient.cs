@@ -42,6 +42,12 @@ public partial class SeedApiClient : ISeedApiClient
             .Add("required_nullable_baz", request.RequiredNullableBaz)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -50,6 +56,7 @@ public partial class SeedApiClient : ISeedApiClient
                     Method = HttpMethod.Get,
                     Path = "foo",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -101,7 +108,7 @@ public partial class SeedApiClient : ISeedApiClient
     {
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add("X-Idempotency-Key", request.XIdempotencyKey)
-            .Add(_client.Options.Headers)
+            .AddWithoutAuth(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

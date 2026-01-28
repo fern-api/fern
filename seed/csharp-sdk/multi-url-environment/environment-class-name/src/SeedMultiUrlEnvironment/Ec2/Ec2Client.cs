@@ -20,6 +20,12 @@ public partial class Ec2Client : IEc2Client
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedMultiUrlEnvironment.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -28,6 +34,7 @@ public partial class Ec2Client : IEc2Client
                     Method = HttpMethod.Post,
                     Path = "/ec2/boot",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

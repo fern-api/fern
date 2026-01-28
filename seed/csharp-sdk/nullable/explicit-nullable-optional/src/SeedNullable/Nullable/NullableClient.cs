@@ -26,6 +26,12 @@ public partial class NullableClient : INullableClient
             .Add("extra", request.Extra)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedNullable.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -34,6 +40,7 @@ public partial class NullableClient : INullableClient
                     Method = HttpMethod.Get,
                     Path = "/users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -82,6 +89,12 @@ public partial class NullableClient : INullableClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullable.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -90,6 +103,7 @@ public partial class NullableClient : INullableClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -138,6 +152,12 @@ public partial class NullableClient : INullableClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullable.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -146,6 +166,7 @@ public partial class NullableClient : INullableClient
                     Method = HttpMethod.Delete,
                     Path = "/users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

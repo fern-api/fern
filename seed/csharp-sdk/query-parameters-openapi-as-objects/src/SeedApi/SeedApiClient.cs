@@ -54,6 +54,12 @@ public partial class SeedApiClient : ISeedApiClient
             .AddDeepObject("neighborRequired", request.NeighborRequired)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -62,6 +68,7 @@ public partial class SeedApiClient : ISeedApiClient
                     Method = HttpMethod.Get,
                     Path = "user/getUsername",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

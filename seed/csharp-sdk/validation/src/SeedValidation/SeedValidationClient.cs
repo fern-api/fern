@@ -35,6 +35,12 @@ public partial class SeedValidationClient : ISeedValidationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedValidation.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -43,6 +49,7 @@ public partial class SeedValidationClient : ISeedValidationClient
                     Method = HttpMethod.Post,
                     Path = "/create",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -97,6 +104,12 @@ public partial class SeedValidationClient : ISeedValidationClient
             .Add("name", request.Name)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedValidation.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -105,6 +118,7 @@ public partial class SeedValidationClient : ISeedValidationClient
                     Method = HttpMethod.Get,
                     Path = "",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

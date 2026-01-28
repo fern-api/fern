@@ -39,6 +39,12 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -47,6 +53,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -95,6 +102,12 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -103,6 +116,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

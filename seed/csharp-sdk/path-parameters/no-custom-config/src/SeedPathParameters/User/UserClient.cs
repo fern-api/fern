@@ -18,6 +18,12 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -29,6 +35,7 @@ public partial class UserClient : IUserClient
                         ValueConvert.ToPathParameterString(request.TenantId),
                         ValueConvert.ToPathParameterString(request.UserId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -78,6 +85,12 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -89,6 +102,7 @@ public partial class UserClient : IUserClient
                         ValueConvert.ToPathParameterString(tenantId)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -137,6 +151,12 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -149,6 +169,7 @@ public partial class UserClient : IUserClient
                         ValueConvert.ToPathParameterString(request.UserId)
                     ),
                     Body = request.Body,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -201,6 +222,12 @@ public partial class UserClient : IUserClient
             .Add("limit", request.Limit)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -213,6 +240,7 @@ public partial class UserClient : IUserClient
                         ValueConvert.ToPathParameterString(request.UserId)
                     ),
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -261,6 +289,12 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -273,6 +307,7 @@ public partial class UserClient : IUserClient
                         ValueConvert.ToPathParameterString(request.UserId),
                         ValueConvert.ToPathParameterString(request.Version)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -321,6 +356,12 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -334,6 +375,7 @@ public partial class UserClient : IUserClient
                         ValueConvert.ToPathParameterString(request.Version),
                         ValueConvert.ToPathParameterString(request.Thought)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

@@ -33,7 +33,7 @@ public partial class HeadersClient : IHeadersClient
             .Add("maybeOperand", request.MaybeOperand)
             .Add("operandOrColor", request.OperandOrColor)
             .Add("maybeOperandOrColor", request.MaybeOperandOrColor)
-            .Add(_client.Options.Headers)
+            .AddWithoutAuth(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

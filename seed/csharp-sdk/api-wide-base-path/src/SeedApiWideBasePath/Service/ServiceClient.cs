@@ -23,6 +23,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApiWideBasePath.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -36,6 +42,7 @@ public partial class ServiceClient : IServiceClient
                         ValueConvert.ToPathParameterString(endpointParam),
                         ValueConvert.ToPathParameterString(resourceParam)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

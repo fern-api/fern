@@ -36,6 +36,12 @@ public partial class SeedLicenseClient : ISeedLicenseClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedLicense.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -43,6 +49,7 @@ public partial class SeedLicenseClient : ISeedLicenseClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

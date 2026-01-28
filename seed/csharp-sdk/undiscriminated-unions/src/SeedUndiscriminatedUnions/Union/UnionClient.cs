@@ -37,6 +37,12 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -45,6 +51,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -112,6 +119,12 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -119,6 +132,7 @@ public partial class UnionClient : IUnionClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/metadata",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -169,6 +183,12 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -177,6 +197,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Put,
                     Path = "/metadata",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -225,6 +246,12 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -233,6 +260,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/call",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -283,6 +311,12 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -291,6 +325,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/duplicate",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -352,6 +387,12 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -360,6 +401,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/nested",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -408,6 +450,12 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -416,6 +464,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethod.Post,
                     Path = "/camel-case",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

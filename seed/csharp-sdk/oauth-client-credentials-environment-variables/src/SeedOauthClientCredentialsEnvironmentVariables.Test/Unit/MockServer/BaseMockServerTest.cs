@@ -37,13 +37,7 @@ public class BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/token")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/token").UsingPost())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

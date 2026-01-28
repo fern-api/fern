@@ -24,6 +24,12 @@ public partial class FooClient : IFooClient
             .Add("optionalString", request.OptionalString)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedCrossPackageTypeNames.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -33,6 +39,7 @@ public partial class FooClient : IFooClient
                     Path = "",
                     Body = request,
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

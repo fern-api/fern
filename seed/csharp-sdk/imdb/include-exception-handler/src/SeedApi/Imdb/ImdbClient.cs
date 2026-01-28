@@ -29,6 +29,12 @@ public partial class ImdbClient : IImdbClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+                    .AddWithoutAuth(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -37,6 +43,7 @@ public partial class ImdbClient : IImdbClient
                             Method = HttpMethod.Post,
                             Path = "/movies/create-movie",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -92,6 +99,12 @@ public partial class ImdbClient : IImdbClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+                    .AddWithoutAuth(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -102,6 +115,7 @@ public partial class ImdbClient : IImdbClient
                                 "/movies/{0}",
                                 ValueConvert.ToPathParameterString(movieId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

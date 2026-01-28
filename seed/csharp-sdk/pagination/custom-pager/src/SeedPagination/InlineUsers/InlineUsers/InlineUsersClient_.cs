@@ -39,6 +39,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -47,6 +53,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -114,6 +121,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("cursor", request.Cursor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -122,6 +135,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -185,6 +199,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -193,6 +213,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -263,6 +284,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -271,6 +298,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -341,6 +369,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -349,6 +383,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -412,6 +447,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -420,6 +461,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -489,6 +531,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("order", request.Order)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -497,6 +545,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -570,6 +619,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("order", request.Order)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -578,6 +633,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -645,6 +701,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("cursor", request.Cursor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -653,6 +715,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -722,6 +785,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("cursor", request.Cursor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -730,6 +799,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -795,6 +865,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -803,6 +879,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -866,6 +943,12 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .Add("offset", request.Offset)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -874,6 +957,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

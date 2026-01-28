@@ -18,6 +18,12 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -28,6 +34,7 @@ public partial class SubmissionClient : ISubmissionClient
                         "/sessions/create-session/{0}",
                         ValueConvert.ToPathParameterString(language)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -76,6 +83,12 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -86,6 +99,7 @@ public partial class SubmissionClient : ISubmissionClient
                         "/sessions/{0}",
                         ValueConvert.ToPathParameterString(sessionId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -135,6 +149,12 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -142,6 +162,7 @@ public partial class SubmissionClient : ISubmissionClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/sessions/execution-sessions-state",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -232,6 +253,12 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -242,6 +269,7 @@ public partial class SubmissionClient : ISubmissionClient
                         "/sessions/stop/{0}",
                         ValueConvert.ToPathParameterString(sessionId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

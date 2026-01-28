@@ -18,11 +18,18 @@ public partial class FileUploadExampleClient : IFileUploadExampleClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "upload-file",
+            Headers = _headers,
             Options = options,
         };
         multipartFormRequest_.AddStringPart("name", request.Name);

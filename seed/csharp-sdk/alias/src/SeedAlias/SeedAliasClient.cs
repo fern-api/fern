@@ -37,6 +37,12 @@ public partial class SeedAliasClient : ISeedAliasClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedAlias.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -44,6 +50,7 @@ public partial class SeedAliasClient : ISeedAliasClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(typeId)),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

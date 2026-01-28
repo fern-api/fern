@@ -30,6 +30,12 @@ public partial class QueryClient : IQueryClient
             .Add("alias_optional_stream", request.AliasOptionalStream)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedLiteral.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -38,6 +44,7 @@ public partial class QueryClient : IQueryClient
                     Method = HttpMethod.Post,
                     Path = "query",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

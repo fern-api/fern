@@ -18,6 +18,12 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -26,6 +32,7 @@ public partial class ProblemClient : IProblemClient
                     Method = HttpMethod.Post,
                     Path = "/problem-crud/create",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -75,6 +82,12 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -86,6 +99,7 @@ public partial class ProblemClient : IProblemClient
                         ValueConvert.ToPathParameterString(problemId)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -136,6 +150,12 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -144,6 +164,7 @@ public partial class ProblemClient : IProblemClient
                     Method = HttpMethod.Post,
                     Path = "/problem-crud/default-starter-files",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -388,6 +409,12 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -398,6 +425,7 @@ public partial class ProblemClient : IProblemClient
                         "/problem-crud/delete/{0}",
                         ValueConvert.ToPathParameterString(problemId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
