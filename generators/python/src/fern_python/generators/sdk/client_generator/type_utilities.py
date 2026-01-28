@@ -43,23 +43,18 @@ def is_type_primitive_for_multipart(
         """Recursively check if a type is primitive."""
         type_union = tr.get_as_union()
 
-        # Case 1: Primitive types (str, int, bool, etc.)
         if type_union.type == "primitive":
             return type_union.primitive.v_1 in HTTPX_PRIMITIVE_DATA_TYPES
 
-        # Case 2: Container types (Optional, List, Literal, etc.)
         elif type_union.type == "container":
             container = type_union.container.get_as_union()
 
-            # Optional[T] - check the inner type
             if container.type == "optional":
                 return check_type(container.optional)
 
-            # Nullable (T | None) - check the inner type
             elif container.type == "nullable":
                 return check_type(container.nullable)
 
-            # Literal["value"] - string/boolean constants are primitive
             elif container.type == "literal":
                 literal = container.literal.get_as_union()
                 if literal.type == "string":
@@ -68,11 +63,9 @@ def is_type_primitive_for_multipart(
                     return ir_types.PrimitiveTypeV1.BOOLEAN in HTTPX_PRIMITIVE_DATA_TYPES
                 return False
 
-            # List, Set, Map - need JSON serialization
             else:
                 return False
 
-        # Case 3: Named types (references to type definitions)
         elif type_union.type == "named":
             type_declaration = get_type_declaration(type_union.type_id)
             shape = type_declaration.shape.get_as_union()
@@ -81,19 +74,15 @@ def is_type_primitive_for_multipart(
             if shape.type == "alias":
                 return check_type(shape.alias_of)
 
-            # Enum - enums serialize to their string value
             elif shape.type == "enum":
                 return True
 
-            # Undiscriminated union - primitive if ALL members are primitive
             elif shape.type == "undiscriminatedUnion":
                 return all(check_type(member.type) for member in shape.members)
 
-            # Object, discriminated union - need JSON serialization
             else:
                 return False
 
-        # Case 4: Unknown (Any) type - could be complex, must serialize
         elif type_union.type == "unknown":
             return False
 
