@@ -15,8 +15,8 @@
         Fix organization names with digits (e.g., "auth0") being incorrectly transformed to
         "auth_0" in folder names. The snake_case transformation now preserves letter-digit
         sequences, so "auth0" stays "auth0" and "OAuth2" becomes "oauth2" instead of "o_auth_2".
-  createdAt: "2026-01-28"
       type: fix
+  createdAt: "2026-01-28"
   irVersion: 61
 
 - version: 1.0.0-rc83
