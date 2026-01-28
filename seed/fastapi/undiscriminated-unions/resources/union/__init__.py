@@ -22,6 +22,7 @@ from .types import (
     UnionWithDuplicateTypes,
     UnionWithIdenticalPrimitives,
     UnionWithIdenticalStrings,
+    UnionWithReservedNames,
 )
 
 __all__ = [
@@ -44,4 +45,5 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
+    "UnionWithReservedNames",
 ]

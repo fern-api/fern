@@ -334,4 +334,15 @@ components:
       required:
         - method
         - tokenId
+    UnionWithReservedNames:
+      title: UnionWithReservedNames
+      oneOf:
+        - type: string
+          const: type
+        - type: string
+          const: value
+        - type: string
+      description: >-
+        Tests that union members named 'Type' or 'Value' don't collide with
+        internal properties
   securitySchemes: {}

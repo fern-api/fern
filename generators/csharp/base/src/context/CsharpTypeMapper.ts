@@ -195,6 +195,9 @@ export class CsharpTypeMapper extends WithGeneration {
                 }
                 return this.Primitive.object;
             case "undiscriminatedUnion": {
+                if (this.settings.shouldGenerateUndiscriminatedUnions) {
+                    return objectClassReference;
+                }
                 return this.OneOf.OneOf(
                     typeDeclaration.shape.members.map((member) => {
                         return this.convert({ reference: member.type });

@@ -43,7 +43,7 @@ internal static class HeadersBuilder
         {
             if (value is not null)
             {
-                _headers[key] = new HeaderValue(value);
+                _headers[key] = (value);
             }
             return this;
         }
@@ -68,7 +68,7 @@ internal static class HeadersBuilder
             var stringValue = ValueConvert.ToString(value);
             if (stringValue is not null)
             {
-                _headers[key] = new HeaderValue(stringValue);
+                _headers[key] = (stringValue);
             }
             return this;
         }
@@ -114,7 +114,7 @@ internal static class HeadersBuilder
             {
                 if (header.Value is not null)
                 {
-                    _headers[header.Key] = new HeaderValue(header.Value);
+                    _headers[header.Key] = (header.Value);
                 }
             }
 
@@ -136,7 +136,7 @@ internal static class HeadersBuilder
 
             foreach (var header in headers)
             {
-                _headers[header.Key] = new HeaderValue(header.Value);
+                _headers[header.Key] = (header.Value);
             }
 
             return this;

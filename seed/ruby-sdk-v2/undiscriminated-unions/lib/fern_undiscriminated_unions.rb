@@ -53,6 +53,7 @@ require_relative "fern_undiscriminated_unions/union/types/union_with_identical_p
 require_relative "fern_undiscriminated_unions/union/types/tokenize_card"
 require_relative "fern_undiscriminated_unions/union/types/convert_token"
 require_relative "fern_undiscriminated_unions/union/types/payment_method_union"
+require_relative "fern_undiscriminated_unions/union/types/union_with_reserved_names"
 require_relative "fern_undiscriminated_unions/client"
 require_relative "fern_undiscriminated_unions/union/client"
 require_relative "fern_undiscriminated_unions/union/types/payment_request"
