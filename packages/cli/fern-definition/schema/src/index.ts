@@ -45,4 +45,9 @@ export {
     type RawTypeDeclarationVisitor,
     visitRawTypeDeclaration
 } from "./utils/visitRawTypeDeclaration";
-export { FernContainerRegex, visitRawTypeReference } from "./utils/visitRawTypeReference";
+export {
+    FernContainerRegex,
+    type ContainerValidationRules,
+    type MapValidationRules,
+    visitRawTypeReference
+} from "./utils/visitRawTypeReference";

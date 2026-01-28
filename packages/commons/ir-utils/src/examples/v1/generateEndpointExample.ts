@@ -7,6 +7,7 @@ import {
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
+    ExampleTypeReferenceShape,
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
@@ -68,6 +69,7 @@ export function generateEndpointExample({
     skipOptionalRequestProperties,
     generationResponse
 }: generateEndpointExample.Args): ExampleGenerationResult<ExampleEndpointCall> {
+    const placeholderJsonExample = {};
     const result: Omit<ExampleEndpointCall, "id" | "url"> = {
         name: undefined,
         endpointHeaders: [],
@@ -77,7 +79,12 @@ export function generateEndpointExample({
         serviceHeaders: [],
         rootPathParameters: [],
         request: undefined,
-        response: ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined)),
+        response: ExampleResponse.ok(
+            ExampleEndpointSuccessResponse.body({
+                jsonExample: placeholderJsonExample,
+                shape: ExampleTypeReferenceShape.unknown(placeholderJsonExample)
+            })
+        ),
         docs: undefined
     };
 

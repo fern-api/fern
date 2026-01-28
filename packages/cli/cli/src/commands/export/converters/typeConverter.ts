@@ -71,14 +71,12 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                         exampleTypeFromEndpointResponse.type === "body"
                     ) {
                         if (
-                            exampleTypeFromEndpointResponse.value?.shape.type === "named" &&
-                            exampleTypeFromEndpointResponse.value.shape.shape.type === "object"
+                            exampleTypeFromEndpointResponse?.shape.type === "named" &&
+                            exampleTypeFromEndpointResponse.shape.shape.type === "object"
                         ) {
-                            exampleProperty = exampleTypeFromEndpointResponse.value.shape.shape.properties.find(
-                                (example) => {
-                                    return example.name.wireValue === property.name.wireValue;
-                                }
-                            );
+                            exampleProperty = exampleTypeFromEndpointResponse.shape.shape.properties.find((example) => {
+                                return example.name.wireValue === property.name.wireValue;
+                            });
                         }
                     }
                     return {
@@ -415,30 +413,53 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
 function convertContainerType(containerType: ContainerType): OpenApiComponentSchema {
     return ContainerType._visit<OpenApiComponentSchema>(containerType, {
         list: (listType) => {
-            return {
+            const schema: OpenApiComponentSchema = {
                 type: "array",
-                items: convertTypeReference(listType)
+                items: convertTypeReference(listType.list)
             };
+            if (listType.minItems != null) {
+                schema.minItems = listType.minItems;
+            }
+            if (listType.maxItems != null) {
+                schema.maxItems = listType.maxItems;
+            }
+            return schema;
         },
         set: (setType) => {
-            return {
+            const schema: OpenApiComponentSchema = {
                 type: "array",
-                items: convertTypeReference(setType)
+                items: convertTypeReference(setType.set)
             };
+            if (setType.minItems != null) {
+                schema.minItems = setType.minItems;
+            }
+            if (setType.maxItems != null) {
+                schema.maxItems = setType.maxItems;
+            }
+            return schema;
         },
         map: (mapType) => {
+            const baseSchema: OpenApiComponentSchema = {
+                type: "object"
+            };
+            if (mapType.minProperties != null) {
+                baseSchema.minProperties = mapType.minProperties;
+            }
+            if (mapType.maxProperties != null) {
+                baseSchema.maxProperties = mapType.maxProperties;
+            }
             if (
                 mapType.keyType.type === "primitive" &&
                 mapType.keyType.primitive.v1 === "STRING" &&
                 mapType.valueType.type === "unknown"
             ) {
                 return {
-                    type: "object",
+                    ...baseSchema,
                     additionalProperties: true
                 };
             }
             return {
-                type: "object",
+                ...baseSchema,
                 additionalProperties: convertTypeReference(mapType.valueType)
             };
         },

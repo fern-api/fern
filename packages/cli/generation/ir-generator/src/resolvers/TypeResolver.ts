@@ -138,7 +138,7 @@ export class TypeResolverImpl implements TypeResolver {
                     originalTypeReference: TypeReference.primitive(primitive)
                 }),
                 unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
-                map: ({ keyType, valueType }) =>
+                map: ({ keyType, valueType }, validation) =>
                     keyType != null && valueType != null
                         ? {
                               _type: "container",
@@ -150,12 +150,14 @@ export class TypeResolverImpl implements TypeResolver {
                               originalTypeReference: TypeReference.container(
                                   ContainerType.map({
                                       keyType: keyType.originalTypeReference,
-                                      valueType: valueType.originalTypeReference
+                                      valueType: valueType.originalTypeReference,
+                                      minProperties: validation?.minProperties,
+                                      maxProperties: validation?.maxProperties
                                   })
                               )
                           }
                         : undefined,
-                list: (itemType) =>
+                list: (itemType, validation) =>
                     itemType != null
                         ? {
                               _type: "container",
@@ -164,7 +166,11 @@ export class TypeResolverImpl implements TypeResolver {
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
-                                  ContainerType.list(itemType.originalTypeReference)
+                                  ContainerType.list({
+                                      list: itemType.originalTypeReference,
+                                      minItems: validation?.minItems,
+                                      maxItems: validation?.maxItems
+                                  })
                               )
                           }
                         : undefined,
@@ -194,7 +200,7 @@ export class TypeResolverImpl implements TypeResolver {
                               )
                           }
                         : undefined,
-                set: (itemType) =>
+                set: (itemType, validation) =>
                     itemType != null
                         ? {
                               _type: "container",
@@ -203,7 +209,11 @@ export class TypeResolverImpl implements TypeResolver {
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
-                                  ContainerType.set(itemType.originalTypeReference)
+                                  ContainerType.set({
+                                      set: itemType.originalTypeReference,
+                                      minItems: validation?.minItems,
+                                      maxItems: validation?.maxItems
+                                  })
                               )
                           }
                         : undefined,

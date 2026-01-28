@@ -13,9 +13,8 @@ export type ContainerType =
     | FernIr.ContainerType.Literal;
 
 export namespace ContainerType {
-    export interface List extends _Utils {
+    export interface List extends FernIr.ListType, _Utils {
         type: "list";
-        list: FernIr.TypeReference;
     }
 
     export interface Map extends FernIr.MapType, _Utils {
@@ -32,9 +31,8 @@ export namespace ContainerType {
         optional: FernIr.TypeReference;
     }
 
-    export interface Set extends _Utils {
+    export interface Set extends FernIr.SetType, _Utils {
         type: "set";
-        set: FernIr.TypeReference;
     }
 
     export interface Literal extends _Utils {
@@ -47,20 +45,20 @@ export namespace ContainerType {
     }
 
     export interface _Visitor<_Result> {
-        list: (value: FernIr.TypeReference) => _Result;
+        list: (value: FernIr.ListType) => _Result;
         map: (value: FernIr.MapType) => _Result;
         nullable: (value: FernIr.TypeReference) => _Result;
         optional: (value: FernIr.TypeReference) => _Result;
-        set: (value: FernIr.TypeReference) => _Result;
+        set: (value: FernIr.SetType) => _Result;
         literal: (value: FernIr.Literal) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const ContainerType = {
-    list: (value: FernIr.TypeReference): FernIr.ContainerType.List => {
+    list: (value: FernIr.ListType): FernIr.ContainerType.List => {
         return {
-            list: value,
+            ...value,
             type: "list",
             _visit: function <_Result>(
                 this: FernIr.ContainerType.List,
@@ -110,9 +108,9 @@ export const ContainerType = {
         };
     },
 
-    set: (value: FernIr.TypeReference): FernIr.ContainerType.Set => {
+    set: (value: FernIr.SetType): FernIr.ContainerType.Set => {
         return {
-            set: value,
+            ...value,
             type: "set",
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Set,
@@ -139,7 +137,7 @@ export const ContainerType = {
     _visit: <_Result>(value: FernIr.ContainerType, visitor: FernIr.ContainerType._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "list":
-                return visitor.list(value.list);
+                return visitor.list(value);
             case "map":
                 return visitor.map(value);
             case "nullable":
@@ -147,7 +145,7 @@ export const ContainerType = {
             case "optional":
                 return visitor.optional(value.optional);
             case "set":
-                return visitor.set(value.set);
+                return visitor.set(value);
             case "literal":
                 return visitor.literal(value.literal);
             default:
