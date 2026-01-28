@@ -2,27 +2,27 @@
 
 require "test_helper"
 
-describe FernPlainText::Internal::Types::Union do
-  class Rectangle < FernPlainText::Internal::Types::Model
+describe Seed::Internal::Types::Union do
+  class Rectangle < Seed::Internal::Types::Model
     literal :type, "square"
 
     field :area, Float
   end
 
-  class Circle < FernPlainText::Internal::Types::Model
+  class Circle < Seed::Internal::Types::Model
     literal :type, "circle"
 
     field :area, Float
   end
 
-  class Pineapple < FernPlainText::Internal::Types::Model
+  class Pineapple < Seed::Internal::Types::Model
     literal :type, "pineapple"
 
     field :area, Float
   end
 
   module Shape
-    extend FernPlainText::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     discriminant :type
 
@@ -31,7 +31,7 @@ describe FernPlainText::Internal::Types::Union do
   end
 
   module StringOrInteger
-    extend FernPlainText::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     member String
     member Integer

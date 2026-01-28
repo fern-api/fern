@@ -1,8 +1,0 @@
-# frozen_string_literal: true
-
-module FernVersionNoDefault
-  module Errors
-    class TimeoutError < ApiError
-    end
-  end
-end

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/fern_alias/client.rb">get</a>(type_id) -> </code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>(type_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -35,7 +35,7 @@ client.get(type_id: 'typeId');
 <dl>
 <dd>
 
-**request_options:** `FernAlias::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

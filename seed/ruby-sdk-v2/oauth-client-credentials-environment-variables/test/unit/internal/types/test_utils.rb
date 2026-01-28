@@ -2,26 +2,26 @@
 
 require "test_helper"
 
-describe FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils do
-  Utils = FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils
+describe Seed::Internal::Types::Utils do
+  Utils = Seed::Internal::Types::Utils
 
   module TestUtils
-    class M < FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Model
+    class M < Seed::Internal::Types::Model
       field :value, String
     end
 
-    class UnionMemberA < FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Model
+    class UnionMemberA < Seed::Internal::Types::Model
       literal :type, "A"
       field :only_on_a, String
     end
 
-    class UnionMemberB < FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Model
+    class UnionMemberB < Seed::Internal::Types::Model
       literal :type, "B"
       field :only_on_b, String
     end
 
     module U
-      extend FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Union
+      extend Seed::Internal::Types::Union
 
       discriminant :type
 
@@ -29,8 +29,8 @@ describe FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils 
       member -> { UnionMemberB }, key: "B"
     end
 
-    SymbolStringHash = FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Hash[Symbol, String]
-    SymbolModelHash = -> { FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Hash[Symbol, TestUtils::M] }
+    SymbolStringHash = Seed::Internal::Types::Hash[Symbol, String]
+    SymbolModelHash = -> { Seed::Internal::Types::Hash[Symbol, TestUtils::M] }
   end
 
   describe ".coerce" do
@@ -58,7 +58,7 @@ describe FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils 
       end
 
       it "raises an error if value cannot be coerced and strict" do
-        assert_raises FernOauthClientCredentialsEnvironmentVariables::Internal::Errors::TypeError do
+        assert_raises Seed::Internal::Errors::TypeError do
           Utils.coerce(String, Object.new, strict: true)
         end
       end
@@ -77,7 +77,7 @@ describe FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils 
       end
 
       it "raises an error if value cannot be coerced and strict" do
-        assert_raises FernOauthClientCredentialsEnvironmentVariables::Internal::Errors::TypeError do
+        assert_raises Seed::Internal::Errors::TypeError do
           Utils.coerce(Symbol, Object.new, strict: true)
         end
       end
@@ -100,7 +100,7 @@ describe FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils 
       end
 
       it "raises an error if value cannot be coerced and strict" do
-        assert_raises FernOauthClientCredentialsEnvironmentVariables::Internal::Errors::TypeError do
+        assert_raises Seed::Internal::Errors::TypeError do
           Utils.coerce(Integer, Object.new, strict: true)
         end
       end
@@ -122,7 +122,7 @@ describe FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils 
       end
 
       it "raises an error if value cannot be coerced and strict" do
-        assert_raises FernOauthClientCredentialsEnvironmentVariables::Internal::Errors::TypeError do
+        assert_raises Seed::Internal::Errors::TypeError do
           Utils.coerce(Float, Object.new, strict: true)
         end
       end
@@ -150,7 +150,7 @@ describe FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils 
 
     describe "Enum" do
       module ExampleEnum
-        extend FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Enum
+        extend Seed::Internal::Types::Enum
 
         FOO = :FOO
         BAR = :BAR
@@ -168,9 +168,9 @@ describe FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Utils 
     end
 
     describe "Array" do
-      StringArray = FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Array[String]
-      ModelArray = -> { FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Array[TestUtils::M] }
-      UnionArray = -> { FernOauthClientCredentialsEnvironmentVariables::Internal::Types::Array[TestUtils::U] }
+      StringArray = Seed::Internal::Types::Array[String]
+      ModelArray = -> { Seed::Internal::Types::Array[TestUtils::M] }
+      UnionArray = -> { Seed::Internal::Types::Array[TestUtils::U] }
 
       it "coerces an array of literals" do
         assert_equal %w[a b c], Utils.coerce(StringArray, %w[a b c])
