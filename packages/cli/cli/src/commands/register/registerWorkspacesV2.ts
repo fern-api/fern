@@ -29,21 +29,14 @@ export async function registerWorkspacesV2({
                 // Process GraphQL specs in the workspace
                 if (workspace instanceof OSSWorkspace) {
                     const graphqlSpecs = workspace.allSpecs.filter((spec) => spec.type === "graphql");
-                    context.logger.debug(`Found ${graphqlSpecs.length} GraphQL specs in workspace`);
 
                     for (const spec of graphqlSpecs) {
                         try {
-                            context.logger.debug(`Processing GraphQL spec: ${spec.absoluteFilepath}`);
                             const converter = new GraphQLConverter({
                                 context,
                                 filePath: spec.absoluteFilepath
                             });
                             const graphqlResult = await converter.convert();
-                            const operationCount = Object.keys(graphqlResult.graphqlOperations).length;
-                            const typeCount = Object.keys(graphqlResult.types).length;
-                            context.logger.debug(
-                                `GraphQL spec ${spec.absoluteFilepath} converted successfully with ${operationCount} operations and ${typeCount} types`
-                            );
 
                             // Merge the GraphQL operations and types from this spec
                             Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
@@ -59,10 +52,6 @@ export async function registerWorkspacesV2({
                         }
                     }
                 }
-
-                context.logger.debug(
-                    `Total extracted: ${Object.keys(graphqlOperations).length} GraphQL operations, ${Object.keys(graphqlTypes).length} GraphQL types`
-                );
 
                 await registerApi({
                     organization: project.config.organization,

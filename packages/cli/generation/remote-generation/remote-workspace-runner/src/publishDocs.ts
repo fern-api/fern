@@ -280,21 +280,6 @@ export async function publishDocs({
             apiName,
             workspace
         }) => {
-            // Log GraphQL operations and types received in publishDocs registerApi
-            const operationCount = graphqlOperations ? Object.keys(graphqlOperations).length : 0;
-            const typeCount = graphqlTypes ? Object.keys(graphqlTypes).length : 0;
-            context.logger.debug(
-                `publishDocs registerApi received ${operationCount} GraphQL operations and ${typeCount} GraphQL types`
-            );
-            if (operationCount > 0 && graphqlOperations) {
-                context.logger.debug(
-                    `GraphQL operation IDs in publishDocs: ${JSON.stringify(Object.keys(graphqlOperations))}`
-                );
-            }
-            if (typeCount > 0 && graphqlTypes) {
-                context.logger.debug(`GraphQL type IDs in publishDocs: ${JSON.stringify(Object.keys(graphqlTypes))}`);
-            }
-
             // Use apiName from docs.yml (folder name) as the API identifier for FDR
             // This ensures users can reference APIs by their folder name in docs components
             let apiDefinition = convertIrToFdrApi({
@@ -365,20 +350,6 @@ export async function publishDocs({
                     };
                 }
             }
-
-            // Debug: Log the API definition structure right before FDR registration
-            context.logger.debug("About to register API definition with FDR");
-            context.logger.debug(
-                `API definition rootPackage structure: ${JSON.stringify({
-                    endpoints: apiDefinition.rootPackage.endpoints?.length || 0,
-                    subpackages: apiDefinition.rootPackage.subpackages?.length || 0,
-                    types: apiDefinition.rootPackage.types?.length || 0,
-                    webhooks: apiDefinition.rootPackage.webhooks?.length || 0,
-                    websockets: apiDefinition.rootPackage.websockets?.length || 0,
-                    graphqlOperations: apiDefinition.rootPackage.graphqlOperations?.length || 0,
-                    hasGraphqlOperationsField: "graphqlOperations" in apiDefinition.rootPackage
-                })}`
-            );
 
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),

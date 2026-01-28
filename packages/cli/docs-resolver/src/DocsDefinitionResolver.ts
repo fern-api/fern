@@ -1445,42 +1445,28 @@ export class DocsDefinitionResolver {
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
     }> {
-        this.taskContext.logger.debug("Starting GraphQL extraction...");
-        this.taskContext.logger.debug(`Found ${this.ossWorkspaces.length} OSS workspaces`);
-
         const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
         // Find all GraphQL specs across all OSS workspaces
         const allGraphQLSpecs: GraphQLSpec[] = [];
         for (const ossWorkspace of this.ossWorkspaces) {
-            this.taskContext.logger.debug(`Checking OSS workspace with ${ossWorkspace.allSpecs.length} total specs`);
             const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
-            this.taskContext.logger.debug(`Found ${graphqlSpecs.length} GraphQL specs in this workspace`);
             allGraphQLSpecs.push(...graphqlSpecs);
         }
 
-        this.taskContext.logger.debug(`Total GraphQL specs found across all workspaces: ${allGraphQLSpecs.length}`);
-
         if (allGraphQLSpecs.length === 0) {
-            this.taskContext.logger.debug("No GraphQL specs found, returning empty operations and types");
             return { operations: {}, types: {} };
         }
 
         // Process each GraphQL spec
         for (const spec of allGraphQLSpecs) {
             try {
-                this.taskContext.logger.debug(`Processing GraphQL spec: ${spec.absoluteFilepath}`);
                 const converter = new GraphQLConverter({
                     context: this.taskContext,
                     filePath: spec.absoluteFilepath
                 });
                 const graphqlResult = await converter.convert();
-                const operationCount = Object.keys(graphqlResult.graphqlOperations).length;
-                const typeCount = Object.keys(graphqlResult.types).length;
-                this.taskContext.logger.debug(
-                    `GraphQL spec ${spec.absoluteFilepath} converted successfully with ${operationCount} operations and ${typeCount} types`
-                );
 
                 // Merge the GraphQL operations and types from this spec
                 Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
@@ -1495,18 +1481,6 @@ export class DocsDefinitionResolver {
                     String(error)
                 );
             }
-        }
-
-        const totalOperations = Object.keys(graphqlOperations).length;
-        const totalTypes = Object.keys(graphqlTypes).length;
-        this.taskContext.logger.debug(
-            `GraphQL extraction completed. Total operations extracted: ${totalOperations}, total types extracted: ${totalTypes}`
-        );
-        if (totalOperations > 0) {
-            this.taskContext.logger.debug(`GraphQL operation IDs: ${JSON.stringify(Object.keys(graphqlOperations))}`);
-        }
-        if (totalTypes > 0) {
-            this.taskContext.logger.debug(`GraphQL type IDs: ${JSON.stringify(Object.keys(graphqlTypes))}`);
         }
 
         return { operations: graphqlOperations, types: graphqlTypes };

@@ -909,9 +909,6 @@ export class ApiReferenceNodeConverter {
 
         // Add GraphQL operations if they exist in the rootPackage
         if (pkg.graphqlOperations != null) {
-            this.taskContext.logger.debug(
-                `Converting ${pkg.graphqlOperations.length} GraphQL operations to navigation items`
-            );
             pkg.graphqlOperations.forEach((graphqlOperation) => {
                 const operationId = APIV1Read.GraphQlOperationId(graphqlOperation.id);
                 if (this.#visitedGraphqlOperations.has(operationId)) {
@@ -941,16 +938,11 @@ export class ApiReferenceNodeConverter {
                     featureFlags: undefined
                 };
 
-                this.taskContext.logger.debug(
-                    `Adding GraphQL operation '${graphqlOperation.id}' as navigation item with title '${navigationItem.title}'`
-                );
                 additionalChildren.push(navigationItem);
             });
         }
 
         additionalChildren = this.mergeEndpointPairs(additionalChildren);
-
-        this.taskContext.logger.debug(`Total navigation children after processing: ${additionalChildren.length}`);
 
         if (this.apiSection.alphabetized) {
             additionalChildren = additionalChildren.sort((a, b) => {

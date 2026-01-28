@@ -32,8 +32,6 @@ async function fetchAndWriteFile(url: string, path: string, logger: Logger, inde
 }
 
 async function fetchGraphQLSchemaFromIntrospection(url: string, path: string, logger: Logger): Promise<void> {
-    logger.debug("Performing GraphQL introspection query");
-
     // Create the introspection query
     const introspectionQuery = getIntrospectionQuery();
 
@@ -50,13 +48,9 @@ async function fetchGraphQLSchemaFromIntrospection(url: string, path: string, lo
         // GitHub uses "token" format, most others use "Bearer"
         if (url.includes("github.com")) {
             headers.Authorization = `token ${authToken}`;
-            logger.debug("Using GitHub token authentication");
         } else {
             headers.Authorization = `Bearer ${authToken}`;
-            logger.debug("Using Bearer token authentication");
         }
-    } else {
-        logger.debug("No authentication token found, using unauthenticated request");
     }
 
     // Send POST request with introspection query
@@ -96,9 +90,7 @@ async function fetchGraphQLSchemaFromIntrospection(url: string, path: string, lo
         const schema = buildClientSchema(result.data);
         const sdl = printSchema(schema);
 
-        logger.debug("GraphQL schema introspection successful, writing SDL to file");
         await writeFile(path, sdl, "utf8");
-        logger.debug("GraphQL schema file written successfully");
     } catch (error) {
         throw new Error(`Failed to convert introspection result to SDL: ${error}`);
     }
