@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union.<a href="/lib/fern_undiscriminated_unions/union/client.rb">get</a>(request) -> FernUndiscriminatedUnions::Union::Types::MyUnion</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get</a>(request) -> Seed::Union::Types::MyUnion</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.union.get(request: 'string');
 <dl>
 <dd>
 
-**request:** `FernUndiscriminatedUnions::Union::Types::MyUnion` 
+**request:** `Seed::Union::Types::MyUnion` 
     
 </dd>
 </dl>
@@ -36,7 +36,7 @@ client.union.get(request: 'string');
 <dl>
 <dd>
 
-**request_options:** `FernUndiscriminatedUnions::Union::RequestOptions` 
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.union.get(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/fern_undiscriminated_unions/union/client.rb">get_metadata</a>() -> Internal::Types::Hash[FernUndiscriminatedUnions::Union::Types::Key, String]</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get_metadata</a>() -> Internal::Types::Hash[Seed::Union::Types::Key, String]</code></summary>
 <dl>
 <dd>
 
@@ -76,7 +76,7 @@ client.union.get_metadata();
 <dl>
 <dd>
 
-**request_options:** `FernUndiscriminatedUnions::Union::RequestOptions` 
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>
@@ -88,7 +88,7 @@ client.union.get_metadata();
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/fern_undiscriminated_unions/union/client.rb">update_metadata</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">update_metadata</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +116,7 @@ client.union.update_metadata(request: {});
 <dl>
 <dd>
 
-**request:** `FernUndiscriminatedUnions::Union::Types::MetadataUnion` 
+**request:** `Seed::Union::Types::MetadataUnion` 
     
 </dd>
 </dl>
@@ -124,7 +124,7 @@ client.union.update_metadata(request: {});
 <dl>
 <dd>
 
-**request_options:** `FernUndiscriminatedUnions::Union::RequestOptions` 
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>
@@ -136,7 +136,7 @@ client.union.update_metadata(request: {});
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/fern_undiscriminated_unions/union/client.rb">call</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">call</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -164,7 +164,7 @@ client.union.call(union: {});
 <dl>
 <dd>
 
-**request:** `FernUndiscriminatedUnions::Union::Types::Request` 
+**request:** `Seed::Union::Types::Request` 
     
 </dd>
 </dl>
@@ -172,7 +172,7 @@ client.union.call(union: {});
 <dl>
 <dd>
 
-**request_options:** `FernUndiscriminatedUnions::Union::RequestOptions` 
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>
@@ -184,7 +184,7 @@ client.union.call(union: {});
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/fern_undiscriminated_unions/union/client.rb">duplicate_types_union</a>(request) -> FernUndiscriminatedUnions::Union::Types::UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">duplicate_types_union</a>(request) -> Seed::Union::Types::UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -212,7 +212,7 @@ client.union.duplicate_types_union(request: 'string');
 <dl>
 <dd>
 
-**request:** `FernUndiscriminatedUnions::Union::Types::UnionWithDuplicateTypes` 
+**request:** `Seed::Union::Types::UnionWithDuplicateTypes` 
     
 </dd>
 </dl>
@@ -220,7 +220,7 @@ client.union.duplicate_types_union(request: 'string');
 <dl>
 <dd>
 
-**request_options:** `FernUndiscriminatedUnions::Union::RequestOptions` 
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>
@@ -232,7 +232,7 @@ client.union.duplicate_types_union(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/fern_undiscriminated_unions/union/client.rb">nested_unions</a>(request) -> String</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">nested_unions</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -260,7 +260,7 @@ client.union.nested_unions(request: 'string');
 <dl>
 <dd>
 
-**request:** `FernUndiscriminatedUnions::Union::Types::NestedUnionRoot` 
+**request:** `Seed::Union::Types::NestedUnionRoot` 
     
 </dd>
 </dl>
@@ -268,7 +268,7 @@ client.union.nested_unions(request: 'string');
 <dl>
 <dd>
 
-**request_options:** `FernUndiscriminatedUnions::Union::RequestOptions` 
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>
@@ -280,7 +280,7 @@ client.union.nested_unions(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/fern_undiscriminated_unions/union/client.rb">test_camel_case_properties</a>(request) -> String</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">test_camel_case_properties</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -311,7 +311,7 @@ client.union.test_camel_case_properties(payment_method: {
 <dl>
 <dd>
 
-**payment_method:** `FernUndiscriminatedUnions::Union::Types::PaymentMethodUnion` 
+**payment_method:** `Seed::Union::Types::PaymentMethodUnion` 
     
 </dd>
 </dl>
@@ -319,7 +319,7 @@ client.union.test_camel_case_properties(payment_method: {
 <dl>
 <dd>
 
-**request_options:** `FernUndiscriminatedUnions::Union::RequestOptions` 
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/fern_file_upload/service/client.rb">just_file</a>(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">just_file</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.just_file();
 <dl>
 <dd>
 
-**request_options:** `FernFileUpload::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.service.just_file();
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/fern_file_upload/service/client.rb">optional_args</a>(request) -> String</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">optional_args</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ client.service.optional_args();
 <dl>
 <dd>
 
-**request_options:** `FernFileUpload::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -80,7 +80,7 @@ client.service.optional_args();
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/fern_file_upload/service/client.rb">simple</a>() -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">simple</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -108,7 +108,7 @@ client.service.simple();
 <dl>
 <dd>
 
-**request_options:** `FernFileUpload::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/fern_any_auth/auth/client.rb">get_token</a>(request) -> FernAnyAuth::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**request_options:** `FernAnyAuth::Auth::RequestOptions` 
+**request_options:** `Seed::Auth::RequestOptions` 
     
 </dd>
 </dl>
@@ -78,7 +78,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/lib/fern_any_auth/user/client.rb">get</a>() -> Internal::Types::Array[FernAnyAuth::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -106,7 +106,7 @@ client.user.get();
 <dl>
 <dd>
 
-**request_options:** `FernAnyAuth::User::RequestOptions` 
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>
@@ -118,7 +118,7 @@ client.user.get();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/fern_any_auth/user/client.rb">get_admins</a>() -> Internal::Types::Array[FernAnyAuth::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_admins</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -146,7 +146,7 @@ client.user.get_admins();
 <dl>
 <dd>
 
-**request_options:** `FernAnyAuth::User::RequestOptions` 
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>

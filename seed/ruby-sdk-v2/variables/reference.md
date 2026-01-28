@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/fern_variables/service/client.rb">post</a>(endpoint_param) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">post</a>(endpoint_param) -> </code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.service.post();
 <dl>
 <dd>
 
-**request_options:** `FernVariables::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>

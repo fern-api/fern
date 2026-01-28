@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/fern_url_form_encoded/client.rb">submit_form_data</a>(request) -> FernUrlFormEncoded::Types::PostSubmitResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">submit_form_data</a>(request) -> Seed::Types::PostSubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -46,7 +46,7 @@ client.submit_form_data(
 <dl>
 <dd>
 
-**request_options:** `FernUrlFormEncoded::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>
