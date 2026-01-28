@@ -224,7 +224,11 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false
+        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
+        preserveUnmanagedFiles:
+            (generatorInvocation.raw?.output?.location === "local-file-system" &&
+                generatorInvocation.raw.output["preserve-unmanaged-files"]) ??
+            false
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 

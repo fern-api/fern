@@ -4,4 +4,6 @@
 
 export interface LocalFileSystemOutputLocationSchema {
     path: string;
+    "generate-full-project"?: boolean;
+    "preserve-unmanaged-files"?: boolean;
 }

@@ -11,10 +11,14 @@ export const LocalFileSystemOutputLocationSchema: core.serialization.ObjectSchem
     GeneratorsYml.LocalFileSystemOutputLocationSchema
 > = core.serialization.object({
     path: core.serialization.string(),
+    "generate-full-project": core.serialization.boolean().optional(),
+    "preserve-unmanaged-files": core.serialization.boolean().optional(),
 });
 
 export declare namespace LocalFileSystemOutputLocationSchema {
     export interface Raw {
         path: string;
+        "generate-full-project"?: boolean | null;
+        "preserve-unmanaged-files"?: boolean | null;
     }
 }

@@ -461,6 +461,12 @@ function getPublishConfig({
     packageName?: string;
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
+    const generateFullProject =
+        (generatorInvocation.raw?.output?.location === "local-file-system" &&
+            generatorInvocation.raw.output["generate-full-project"]) ??
+        org?.selfHostedSdKs ??
+        false;
+
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         const [owner, repo] = generatorInvocation.raw.github.uri.split("/");
         if (owner == null || repo == null) {
@@ -553,7 +559,7 @@ function getPublishConfig({
         }
 
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: org?.selfHostedSdKs ?? false,
+            generateFullProject,
             publishTarget
         });
     }
@@ -561,7 +567,7 @@ function getPublishConfig({
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => {
             return FernIr.PublishingConfig.filesystem({
-                generateFullProject: org?.selfHostedSdKs ?? false,
+                generateFullProject,
                 publishTarget: undefined
             });
         },
