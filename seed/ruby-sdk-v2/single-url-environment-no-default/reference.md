@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/lib/fern_single_url_environment_no_default/dummy/client.rb">get_dummy</a>() -> String</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">get_dummy</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.dummy.get_dummy();
 <dl>
 <dd>
 
-**request_options:** `FernSingleUrlEnvironmentNoDefault::Dummy::RequestOptions` 
+**request_options:** `Seed::Dummy::RequestOptions` 
     
 </dd>
 </dl>

@@ -23,7 +23,7 @@ public partial class NullableClient : INullableClient
             .Add("avatar", request.Avatar)
             .Add("activated", request.Activated)
             .Add("tags", request.Tags)
-            .Add("extra", request.Extra)
+            .Add("extra", request.Extra.IsDefined ? request.Extra.Value : null)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

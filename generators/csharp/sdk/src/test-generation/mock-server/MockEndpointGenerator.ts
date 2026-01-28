@@ -7,6 +7,7 @@ import {
     ObjectPropertyAccess,
     TypeId
 } from "@fern-fern/ir-sdk/api";
+import { DefaultValueExtractor, ExtractedDefault } from "../../DefaultValueExtractor";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -18,8 +19,11 @@ export declare namespace TestClass {
 }
 
 export class MockEndpointGenerator extends WithGeneration {
+    private readonly defaultValueExtractor: DefaultValueExtractor;
+
     constructor(private readonly context: SdkGeneratorContext) {
         super(context.generation);
+        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
@@ -48,10 +52,10 @@ export class MockEndpointGenerator extends WithGeneration {
                 // For form-urlencoded requests, we don't need the requestJson variable
                 // since we use FormUrlEncodedMatcher directly with key=value pairs
                 if (example.request != null && requestContentType !== "application/x-www-form-urlencoded") {
-                    // Filter out read-only properties from the request JSON
+                    // Filter out read-only properties from the request JSON and add defaults when enabled
                     // Read-only properties are not serialized by the SDK, so they should not be
                     // included in the mock server's expected request body
-                    const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request);
+                    const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request, endpoint);
 
                     writer.writeLine(`const string requestJson${suffix} = """`);
                     writer.writeLine(
@@ -108,7 +112,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 if (example.request != null) {
                     if (requestContentType === "application/x-www-form-urlencoded") {
                         // For form-urlencoded requests, use FormUrlEncodedMatcher
-                        const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request);
+                        const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request, endpoint);
                         const formPairs = this.convertToFormUrlEncodedPairs(filteredRequestJson);
                         writer.write(`.WithBody(new WireMock.Matchers.FormUrlEncodedMatcher([${formPairs}]))`);
                     } else if (typeof example.request.jsonExample !== "object") {
@@ -171,14 +175,14 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters out read-only properties from an example request body.
+     * Filters out read-only properties from an example request body and adds default values when enabled.
      * Uses the jsonExample directly to preserve any modifications made by other code
      * (e.g., OAuth credential placeholders set by deepSetProperty).
      * Only filters out read-only properties when necessary.
      */
-    private filterReadOnlyPropertiesFromExample(exampleRequest: ExampleRequestBody): unknown {
+    private filterReadOnlyPropertiesFromExample(exampleRequest: ExampleRequestBody, endpoint: HttpEndpoint): unknown {
         if (exampleRequest.type === "inlinedRequestBody") {
-            return this.filterInlinedRequestBody(exampleRequest);
+            return this.filterInlinedRequestBody(exampleRequest, endpoint);
         } else {
             // exampleRequest.type === "reference"
             // For reference request bodies, use the jsonExample directly to preserve
@@ -296,11 +300,16 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from an inlined request body.
+     * Filters read-only properties from an inlined request body and adds default values when enabled.
      * For types with read-only properties (directly or in nested types), uses recursive filtering.
      * For types without read-only properties, returns jsonExample directly to preserve any modifications.
      */
-    private filterInlinedRequestBody(exampleRequest: ExampleRequestBody.InlinedRequestBody): Record<string, unknown> {
+    private filterInlinedRequestBody(
+        exampleRequest: ExampleRequestBody.InlinedRequestBody,
+        endpoint: HttpEndpoint
+    ): Record<string, unknown> {
+        const useDefaults = this.generation.settings.useDefaultRequestParameterValues;
+
         // Check if any properties are read-only or have nested read-only properties
         const hasReadOnlyProperties = exampleRequest.properties.some(
             (prop) =>
@@ -308,13 +317,16 @@ export class MockEndpointGenerator extends WithGeneration {
                 this.typeHasReadOnlyProperties(prop.value.shape)
         );
 
-        // If no read-only properties, return the jsonExample directly to preserve any modifications
-        // (e.g., OAuth credential placeholders set by deepSetProperty)
-        if (!hasReadOnlyProperties) {
+        // Get the set of wire values present in the example
+        const exampleWireValues = new Set(exampleRequest.properties.map((prop) => prop.name.wireValue));
+
+        // If no read-only properties and no defaults to add, return the jsonExample directly
+        // to preserve any modifications (e.g., OAuth credential placeholders set by deepSetProperty)
+        if (!hasReadOnlyProperties && !useDefaults) {
             return (exampleRequest.jsonExample as Record<string, unknown>) ?? {};
         }
 
-        // Otherwise, use recursive filtering to remove read-only properties
+        // Build the result with filtering and defaults
         const result: Record<string, unknown> = {};
 
         for (const prop of exampleRequest.properties) {
@@ -333,7 +345,61 @@ export class MockEndpointGenerator extends WithGeneration {
             }
         }
 
+        // Add default values for properties not present in the example when useDefaults is enabled
+        if (useDefaults && endpoint.requestBody?.type === "inlinedRequestBody") {
+            const allProperties = [
+                ...endpoint.requestBody.properties,
+                ...(endpoint.requestBody.extendedProperties ?? [])
+            ];
+            for (const prop of allProperties) {
+                // Skip if already in the example
+                if (exampleWireValues.has(prop.name.wireValue)) {
+                    continue;
+                }
+                // Skip read-only properties
+                if (prop.propertyAccess === "READ_ONLY") {
+                    continue;
+                }
+                // Get the default value for this property
+                const defaultValue = this.defaultValueExtractor.extractDefault(prop.valueType);
+                if (defaultValue != null) {
+                    result[prop.name.wireValue] = this.parseDefaultValue(defaultValue);
+                }
+            }
+        }
+
         return result;
+    }
+
+    /**
+     * Parses a default value string into its JSON representation.
+     */
+    private parseDefaultValue(defaultValue: ExtractedDefault): unknown {
+        switch (defaultValue.csharpType) {
+            case "string":
+                return defaultValue.value
+                    .slice(1, -1)
+                    .replace(/\\"/g, '"')
+                    .replace(/\\r/g, "\r")
+                    .replace(/\\n/g, "\n")
+                    .replace(/\\t/g, "\t")
+                    .replace(/\\\\/g, "\\"); // Must be last to avoid double-unescaping
+            case "int":
+            case "long":
+            case "uint":
+            case "ulong":
+            case "float":
+            case "double":
+                return parseFloat(defaultValue.value.replace(/[LlFfDd]$/, ""));
+            case "bool":
+                return defaultValue.value === "true";
+            case "BigInteger": {
+                const match = defaultValue.value.match(/BigInteger\.Parse\("(.+)"\)/);
+                return match ? match[1] : defaultValue.value;
+            }
+            default:
+                return defaultValue.value;
+        }
     }
 
     /**

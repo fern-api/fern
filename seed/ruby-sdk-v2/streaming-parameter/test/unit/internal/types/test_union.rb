@@ -2,27 +2,27 @@
 
 require "test_helper"
 
-describe FernStreamingParameter::Internal::Types::Union do
-  class Rectangle < FernStreamingParameter::Internal::Types::Model
+describe Seed::Internal::Types::Union do
+  class Rectangle < Seed::Internal::Types::Model
     literal :type, "square"
 
     field :area, Float
   end
 
-  class Circle < FernStreamingParameter::Internal::Types::Model
+  class Circle < Seed::Internal::Types::Model
     literal :type, "circle"
 
     field :area, Float
   end
 
-  class Pineapple < FernStreamingParameter::Internal::Types::Model
+  class Pineapple < Seed::Internal::Types::Model
     literal :type, "pineapple"
 
     field :area, Float
   end
 
   module Shape
-    extend FernStreamingParameter::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     discriminant :type
 
@@ -31,7 +31,7 @@ describe FernStreamingParameter::Internal::Types::Union do
   end
 
   module StringOrInteger
-    extend FernStreamingParameter::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     member String
     member Integer

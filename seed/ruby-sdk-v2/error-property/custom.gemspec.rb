@@ -11,6 +11,6 @@ def add_custom_gemspec_data(spec)
 
   # spec.authors = ["Your name"]
   # spec.email = ["your.email@example.com"]
-  # spec.homepage = "https://github.com/your-org/fernerrorproperty-ruby"
+  # spec.homepage = "https://github.com/your-org/seed-ruby"
   # spec.license = "Your license"
 end

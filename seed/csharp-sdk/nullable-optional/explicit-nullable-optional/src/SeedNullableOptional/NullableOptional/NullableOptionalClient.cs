@@ -196,7 +196,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .Add("limit", request.Limit)
             .Add("offset", request.Offset)
             .Add("includeDeleted", request.IncludeDeleted)
-            .Add("sortBy", request.SortBy)
+            .Add("sortBy", request.SortBy.IsDefined ? request.SortBy.Value : null)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -259,7 +259,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .Add("query", request.Query)
             .Add("department", request.Department)
             .Add("role", request.Role)
-            .Add("isActive", request.IsActive)
+            .Add("isActive", request.IsActive.IsDefined ? request.IsActive.Value : null)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client
@@ -553,7 +553,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
         var _queryString = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 3)
             .Add("role", request.Role)
             .Add("status", request.Status)
-            .Add("secondaryRole", request.SecondaryRole)
+            .Add(
+                "secondaryRole",
+                request.SecondaryRole.IsDefined ? request.SecondaryRole.Value : null
+            )
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var response = await _client

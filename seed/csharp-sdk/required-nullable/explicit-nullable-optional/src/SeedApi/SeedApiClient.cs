@@ -37,7 +37,10 @@ public partial class SeedApiClient : ISeedApiClient
     {
         var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 4)
             .Add("optional_baz", request.OptionalBaz)
-            .Add("optional_nullable_baz", request.OptionalNullableBaz)
+            .Add(
+                "optional_nullable_baz",
+                request.OptionalNullableBaz.IsDefined ? request.OptionalNullableBaz.Value : null
+            )
             .Add("required_baz", request.RequiredBaz)
             .Add("required_nullable_baz", request.RequiredNullableBaz)
             .MergeAdditional(options?.AdditionalQueryParameters)

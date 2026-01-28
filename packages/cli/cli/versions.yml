@@ -1,10 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.51.3
+- version: 3.52.1
   changelogEntry:
     - summary: |
         Fix OpenAPI oneOf with discriminator to be parsed as discriminated union. Previously, when the discriminant property was defined in each variant schema (which is the standard OpenAPI pattern), the union was incorrectly parsed as an undiscriminated union. Now, any oneOf with a discriminator is correctly parsed as a discriminated union, and the discriminant property is filtered out from variant schemas to avoid duplication.
       type: fix
-  createdAt: "2026-01-27"
+  createdAt: "2026-01-28"
+- version: 3.52.0
+  changelogEntry:
+    - summary: |
+        Add support for `branch` property in pull-request GitHub mode. When specified, the PR will target this branch instead of the repository's default branch.
+      type: feat
+  createdAt: "2026-01-28"
+  irVersion: 63
+
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting "Invalid OpenAPI reference" errors for AsyncAPI JSON files. The validation rule now detects both YAML format (`asyncapi:`) and JSON format (`"asyncapi":`) when skipping AsyncAPI files.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 63
+
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting "Invalid OpenAPI reference" errors for AsyncAPI JSON files. The validation rule now detects both YAML format (`asyncapi:`) and JSON format (`"asyncapi":`) when skipping AsyncAPI files.
+      type: fix
+  createdAt: "2026-01-28"
   irVersion: 63
 
 - version: 3.51.2

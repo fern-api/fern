@@ -1,4 +1,4 @@
 {
-  "ignores": [],
+  "ignores": ["ws", "@types/ws"],
   "ignore-patterns": ["lib", "dist"]
 }

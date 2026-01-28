@@ -96,7 +96,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.738",
+    "@fern-fern/fiddle-sdk": "0.0.775",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "@inquirer/prompts": "^7.1.0",
     "@types/axios": "^0.14.0",
@@ -135,6 +135,8 @@
     "validate-npm-package-name": "^5.0.1",
     "vitest": "^4.0.8",
     "yaml": "^2.4.5",
-    "yargs": "^17.4.1"
+    "yargs": "^17.4.1",
+    "ws": "^8.17.1",
+    "@types/ws": "^8.5.10"
   }
 }

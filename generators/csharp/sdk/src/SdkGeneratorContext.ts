@@ -155,11 +155,16 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.Json.JsonAccessAttribute,
                 AsIsFiles.Json.JsonConfiguration,
                 AsIsFiles.Json.Nullable,
-                AsIsFiles.Json.OneOfSerializer,
                 AsIsFiles.Json.Optional,
                 AsIsFiles.Json.OptionalAttribute
             ]
         );
+
+        // When use-undiscriminated-unions is false, include OneOfSerializer for OneOf type serialization
+        if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Json.OneOfSerializer);
+        }
+
         // HTTP stuff
         files.push(
             ...[
@@ -225,7 +230,6 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
-            AsIsFiles.Test.Json.OneOfSerializerTests,
             AsIsFiles.Test.HeadersBuilderTests,
             AsIsFiles.Test.QueryStringBuilderTests,
             AsIsFiles.Test.QueryStringConverterTests,
@@ -248,6 +252,15 @@ export class SdkGeneratorContext extends GeneratorContext {
         }
 
         return files;
+    }
+
+    public override getAsIsTestUtils(): string[] {
+        // When use-undiscriminated-unions is false, include OneOfComparer for OneOf type comparisons
+        if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+            return Object.values(AsIsFiles.Test.Utils);
+        }
+        // Exclude OneOfComparer when using custom undiscriminated unions
+        return Object.values(AsIsFiles.Test.Utils).filter((file) => file !== AsIsFiles.Test.Utils.OneOfComparer);
     }
 
     public getAsyncCoreAsIsFiles(): string[] {
