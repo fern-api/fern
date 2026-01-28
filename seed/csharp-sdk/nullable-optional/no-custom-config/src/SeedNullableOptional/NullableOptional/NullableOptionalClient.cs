@@ -1014,12 +1014,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///             "optionalNullableArray",
     ///             "optionalNullableArray",
     ///         },
-    ///         NullableListOfNullables = new List&lt;string&gt;()
+    ///         NullableListOfNullables = new List&lt;string?&gt;()
     ///         {
     ///             "nullableListOfNullables",
     ///             "nullableListOfNullables",
     ///         },
-    ///         NullableMapOfNullables = new Dictionary&lt;string, Address&gt;()
+    ///         NullableMapOfNullables = new Dictionary&lt;string, Address?&gt;()
     ///         {
     ///             {
     ///                 "nullableMapOfNullables",
@@ -1306,7 +1306,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///     new SearchRequest
     ///     {
     ///         Query = "query",
-    ///         Filters = new Dictionary&lt;string, string&gt;() { { "filters", "filters" } },
+    ///         Filters = new Dictionary&lt;string, string?&gt;() { { "filters", "filters" } },
     ///         IncludeTypes = new List&lt;string&gt;() { "includeTypes", "includeTypes" },
     ///     }
     /// );

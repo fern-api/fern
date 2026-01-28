@@ -787,8 +787,11 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         );
         result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
-        result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
-        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
+        // When use-undiscriminated-unions is false, we need the OneOf package
+        if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+            result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
+            result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
+        }
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
         result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
         result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');

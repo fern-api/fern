@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/fern_content_type/service/client.rb">patch</a>(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">patch</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.service.patch(
 <dl>
 <dd>
 
-**request_options:** `FernContentType::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -59,7 +59,7 @@ client.service.patch(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/fern_content_type/service/client.rb">patch_complex</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">patch_complex</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -204,7 +204,7 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**request_options:** `FernContentType::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -216,7 +216,7 @@ client.service.patch_complex(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/fern_content_type/service/client.rb">named_patch_with_mixed</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">named_patch_with_mixed</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -296,7 +296,7 @@ client.service.named_patch_with_mixed(
 <dl>
 <dd>
 
-**request_options:** `FernContentType::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -308,7 +308,7 @@ client.service.named_patch_with_mixed(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/fern_content_type/service/client.rb">optional_merge_patch_test</a>(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">optional_merge_patch_test</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -399,7 +399,7 @@ client.service.optional_merge_patch_test(
 <dl>
 <dd>
 
-**request_options:** `FernContentType::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -411,7 +411,7 @@ client.service.optional_merge_patch_test(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/fern_content_type/service/client.rb">regular_patch</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">regular_patch</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -481,7 +481,7 @@ client.service.regular_patch(
 <dl>
 <dd>
 
-**request_options:** `FernContentType::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>

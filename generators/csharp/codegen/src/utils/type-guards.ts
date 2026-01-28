@@ -3,7 +3,7 @@ import { Literal } from "../ast/code/Literal";
 import { AstNode } from "../ast/core/AstNode";
 import { ClassReference } from "../ast/types/ClassReference";
 import { Type } from "../ast/types/IType";
-import { BaseType, Collection, Optional, Primitive, Value } from "../ast/types/Type";
+import { BaseType, Collection, Optional, OptionalWrapper, Primitive, Value } from "../ast/types/Type";
 import { type Provenance } from "../context/model-navigator";
 import { is as DynamicIR } from "./dynamic-ir-type-guards";
 import { is as IR } from "./ir-type-guards";
@@ -38,6 +38,7 @@ export const is = {
     Type: (value: unknown): value is BaseType => value instanceof BaseType,
     ClassReference: (value: unknown): value is ClassReference => value instanceof ClassReference,
     Optional: (value: Type): value is Optional => value instanceof Optional,
+    OptionalWrapper: (value: Type): value is OptionalWrapper => value instanceof OptionalWrapper,
     AsyncEnumerable: (value: Type | undefined): value is Type =>
         value != null &&
         value.asNonOptional().fullyQualifiedName.startsWith("System.Collections.Generic.IAsyncEnumerable"),

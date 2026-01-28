@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.53.0
+  changelogEntry:
+    - summary: |
+        Add `import_paths` config option to auto-load user-defined files when the SDK is imported.
+        This enables custom integrations (e.g., Sentry, logging) without modifying generated code.
+        Files specified in the array (e.g., `["sentry_integration", "custom_logging"]`) are imported
+        from the package root if they exist, using try/except to gracefully handle missing files.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 4.52.0
   changelogEntry:
     - summary: |

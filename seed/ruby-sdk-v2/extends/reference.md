@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/fern_extends/client.rb">extended_inline_request_body</a>(request) -> </code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">extended_inline_request_body</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.extended_inline_request_body(
 <dl>
 <dd>
 
-**request_options:** `FernExtends::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

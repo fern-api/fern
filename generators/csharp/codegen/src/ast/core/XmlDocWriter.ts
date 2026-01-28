@@ -4,6 +4,58 @@ import { AstNode } from "./AstNode";
 import { Writer } from "./Writer";
 
 export class XmlDocWriter {
+    // Tags that are safe to preserve in XML documentation comments
+    // Reference: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags
+    private static readonly SAFE_XML_DOC_TAGS = new Set([
+        // C# XML doc standard tags (officially documented)
+        "c",
+        "code",
+        "description",
+        "example",
+        "exception",
+        "include",
+        "inheritdoc",
+        "item",
+        "list",
+        "listheader",
+        "para",
+        "param",
+        "paramref",
+        "permission",
+        "remarks",
+        "returns",
+        "see",
+        "seealso",
+        "summary",
+        "term",
+        "typeparam",
+        "typeparamref",
+        "value",
+        // HTML formatting tags explicitly mentioned in Microsoft docs
+        "a",
+        "b",
+        "br",
+        "i",
+        "u",
+        // Additional HTML tags commonly used in practice (not officially documented
+        // but widely supported by documentation viewers)
+        "em",
+        "strong",
+        "p",
+        "ul",
+        "ol",
+        "li",
+        "pre",
+        "div",
+        "span",
+        "table",
+        "tr",
+        "td",
+        "th",
+        "thead",
+        "tbody"
+    ]);
+
     private writer: Writer;
     private wrotePrefixOnCurrentLine: boolean = false;
     constructor(writer: Writer) {
@@ -114,8 +166,23 @@ export class XmlDocWriter {
     }
 
     private escapeXmlDocContent(text: string): string {
-        text = this.decodeHtmlEntities(text);
-        return text.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        const decoded = this.decodeHtmlEntities(text);
+
+        // XML/HTML tag regex
+        const tagPattern = /<\/?([a-zA-Z][a-zA-Z0-9]*)\b[^>]*\/?>/g;
+        const tags: string[] = [];
+
+        // Replace safe tags with placeholders to protect them from escaping
+        const withPlaceholders = decoded.replace(tagPattern, (match, tagName: string) => {
+            if (XmlDocWriter.SAFE_XML_DOC_TAGS.has(tagName.toLowerCase())) {
+                const index = tags.push(match) - 1;
+                return `\uE000${index}\uE000`;
+            }
+            return match;
+        });
+        const escaped = withPlaceholders.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+
+        return escaped.replace(/\uE000(\d+)\uE000/g, (_, index: string) => tags[parseInt(index, 10)] ?? "");
     }
 
     private decodeHtmlEntities(text: string): string {

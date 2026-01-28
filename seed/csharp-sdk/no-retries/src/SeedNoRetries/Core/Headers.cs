@@ -15,7 +15,7 @@ internal sealed class Headers : Dictionary<string, HeaderValue>
     {
         foreach (var kvp in value)
         {
-            this[kvp.Key] = new HeaderValue(kvp.Value);
+            this[kvp.Key] = kvp.Value;
         }
     }
 

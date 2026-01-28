@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/fern_extra_properties/user/client.rb">create_user</a>(request) -> FernExtraProperties::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.user.create_user(
 <dl>
 <dd>
 
-**request_options:** `FernExtraProperties::User::RequestOptions` 
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>

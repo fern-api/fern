@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/fern_accept_header/service/client.rb">endpoint</a>() -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">endpoint</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.endpoint();
 <dl>
 <dd>
 
-**request_options:** `FernAcceptHeader::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>

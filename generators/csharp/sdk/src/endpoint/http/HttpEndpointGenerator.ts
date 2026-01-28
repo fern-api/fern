@@ -1207,12 +1207,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         const offsetType = this.context.csharpTypeMapper.convert({
-            reference: pagination.page.property.valueType
+            reference: pagination.page.property.valueType,
+            unboxOptionals: true
         });
         // use specified type or fallback to object
         const stepType = pagination.step
             ? this.context.csharpTypeMapper.convert({
-                  reference: pagination.step?.property.valueType
+                  reference: pagination.step?.property.valueType,
+                  unboxOptionals: true
               })
             : this.Primitive.object;
         const offsetPagerClassReference = this.Types.OffsetPager({
@@ -1238,7 +1240,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         endpoint
                     }),
                     this.csharp.codeblock(
-                        `request => ${this.dotAccess(requestParameter.type, "request", pagination.page)} ?? 0`
+                        `request => ${this.getPropertyWithDefault(requestParameter.type, "request", pagination.page, 0)}`
                     ),
                     this.csharp.codeblock((writer) => {
                         writer.writeLine("(request, offset) =>");
@@ -1259,7 +1261,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     }),
                     this.csharp.codeblock(
                         pagination.step
-                            ? `request => ${this.dotAccess(requestParameter.type, "request", pagination.step)} ?? 0`
+                            ? `request => ${this.getPropertyWithDefault(requestParameter.type, "request", pagination.step, 0)}`
                             : "null"
                     ),
                     this.csharp.codeblock(
@@ -1588,6 +1590,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
         const dotAccess = this.getDotAccess(enclosingType, property, allowOptional);
         return `${variableName}.${dotAccess.code}.${this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
+    }
+
+    private getPropertyWithDefault(
+        encType: ast.Type,
+        variableName: string,
+        property: RequestProperty | ResponseProperty,
+        defaultValue: number
+    ): string {
+        const propertyAccess = this.dotAccess(encType, variableName, property);
+
+        if (this.context.generation.settings.enableExplicitNullableOptional) {
+            return `${propertyAccess}.GetValueOrDefault(${defaultValue})`;
+        }
+        return `${propertyAccess} ?? ${defaultValue}`;
     }
 
     public override generateEndpointSnippet({
