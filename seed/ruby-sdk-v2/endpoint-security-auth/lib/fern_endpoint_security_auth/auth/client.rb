@@ -21,14 +21,11 @@ module FernEndpointSecurityAuth
       # @return [FernEndpointSecurityAuth::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         params = FernEndpointSecurityAuth::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret audience grant_type]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernEndpointSecurityAuth::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: FernEndpointSecurityAuth::Auth::Types::GetTokenRequest.new(body_bag).to_h,
+          body: FernEndpointSecurityAuth::Auth::Types::GetTokenRequest.new(params).to_h,
           request_options: request_options
         )
         begin

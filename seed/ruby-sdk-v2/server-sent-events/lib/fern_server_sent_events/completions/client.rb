@@ -21,14 +21,11 @@ module FernServerSentEvents
       # @return [untyped]
       def stream(request_options: {}, **params)
         params = FernServerSentEvents::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[query]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernServerSentEvents::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "stream",
-          body: FernServerSentEvents::Completions::Types::StreamCompletionRequest.new(body_bag).to_h,
+          body: FernServerSentEvents::Completions::Types::StreamCompletionRequest.new(params).to_h,
           request_options: request_options
         )
         begin

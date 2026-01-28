@@ -206,14 +206,11 @@ module FernUndiscriminatedUnions
       # @return [String]
       def test_camel_case_properties(request_options: {}, **params)
         params = FernUndiscriminatedUnions::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[payment_method]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernUndiscriminatedUnions::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/camel-case",
-          body: FernUndiscriminatedUnions::Union::Types::PaymentRequest.new(body_bag).to_h,
+          body: FernUndiscriminatedUnions::Union::Types::PaymentRequest.new(params).to_h,
           request_options: request_options
         )
         begin

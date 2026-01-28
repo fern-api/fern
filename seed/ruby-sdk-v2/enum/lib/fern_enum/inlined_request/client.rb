@@ -21,14 +21,11 @@ module FernEnum
       # @return [untyped]
       def send_(request_options: {}, **params)
         params = FernEnum::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernEnum::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "inlined",
-          body: FernEnum::InlinedRequest::Types::SendEnumInlinedRequest.new(body_bag).to_h,
+          body: FernEnum::InlinedRequest::Types::SendEnumInlinedRequest.new(params).to_h,
           request_options: request_options
         )
         begin

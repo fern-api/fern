@@ -118,8 +118,9 @@ module FernClientSideParams
       # @return [FernClientSideParams::Types::Types::SearchResponse]
       def search_resources(request_options: {}, **params)
         params = FernClientSideParams::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[query filters]
-        body_bag = params.slice(*body_prop_names)
+        request_data = FernClientSideParams::Service::Types::SearchResourcesRequest.new(params).to_h
+        non_body_param_names = %w[limit offset]
+        body = request_data.except(*non_body_param_names)
 
         query_param_names = %i[limit offset]
         query_params = {}
@@ -132,7 +133,7 @@ module FernClientSideParams
           method: "POST",
           path: "/api/resources/search",
           query: query_params,
-          body: FernClientSideParams::Service::Types::SearchResourcesRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin

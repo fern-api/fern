@@ -118,9 +118,6 @@ module FernPagination
         # @return [FernPagination::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_body_cursor_pagination(request_options: {}, **params)
           params = FernPagination::Internal::Types::Utils.normalize_keys(params)
-          body_prop_names = %i[pagination]
-          body_bag = params.slice(*body_prop_names)
-
           FernPagination::Internal::CursorItemIterator.new(
             cursor_field: :starting_after,
             item_field: :users,
@@ -131,7 +128,7 @@ module FernPagination
               base_url: request_options[:base_url],
               method: "POST",
               path: "/inline-users",
-              body: FernPagination::InlineUsers::InlineUsers::Types::ListUsersBodyCursorPaginationRequest.new(body_bag).to_h,
+              body: FernPagination::InlineUsers::InlineUsers::Types::ListUsersBodyCursorPaginationRequest.new(params).to_h,
               request_options: request_options
             )
             begin
@@ -264,9 +261,6 @@ module FernPagination
         # @return [FernPagination::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_body_offset_pagination(request_options: {}, **params)
           params = FernPagination::Internal::Types::Utils.normalize_keys(params)
-          body_prop_names = %i[pagination]
-          body_bag = params.slice(*body_prop_names)
-
           FernPagination::Internal::OffsetItemIterator.new(
             initial_page: query_params[:page],
             item_field: :users,
@@ -278,7 +272,7 @@ module FernPagination
               base_url: request_options[:base_url],
               method: "POST",
               path: "/inline-users",
-              body: FernPagination::InlineUsers::InlineUsers::Types::ListUsersBodyOffsetPaginationRequest.new(body_bag).to_h,
+              body: FernPagination::InlineUsers::InlineUsers::Types::ListUsersBodyOffsetPaginationRequest.new(params).to_h,
               request_options: request_options
             )
             begin

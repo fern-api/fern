@@ -117,9 +117,6 @@ module FernPagination
       # @return [FernPagination::Users::Types::ListUsersPaginationResponse]
       def list_with_body_cursor_pagination(request_options: {}, **params)
         params = FernPagination::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[pagination]
-        body_bag = params.slice(*body_prop_names)
-
         FernPagination::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
@@ -130,7 +127,7 @@ module FernPagination
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            body: FernPagination::Users::Types::ListUsersBodyCursorPaginationRequest.new(body_bag).to_h,
+            body: FernPagination::Users::Types::ListUsersBodyCursorPaginationRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -163,9 +160,6 @@ module FernPagination
       # @return [FernPagination::Users::Types::ListUsersTopLevelCursorPaginationResponse]
       def list_with_top_level_body_cursor_pagination(request_options: {}, **params)
         params = FernPagination::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[cursor filter]
-        body_bag = params.slice(*body_prop_names)
-
         FernPagination::Internal::CursorItemIterator.new(
           cursor_field: :next_cursor,
           item_field: :data,
@@ -176,7 +170,7 @@ module FernPagination
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users/top-level-cursor",
-            body: FernPagination::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest.new(body_bag).to_h,
+            body: FernPagination::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -309,9 +303,6 @@ module FernPagination
       # @return [FernPagination::Users::Types::ListUsersPaginationResponse]
       def list_with_body_offset_pagination(request_options: {}, **params)
         params = FernPagination::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[pagination]
-        body_bag = params.slice(*body_prop_names)
-
         FernPagination::Internal::OffsetItemIterator.new(
           initial_page: query_params[:page],
           item_field: :data,
@@ -323,7 +314,7 @@ module FernPagination
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            body: FernPagination::Users::Types::ListUsersBodyOffsetPaginationRequest.new(body_bag).to_h,
+            body: FernPagination::Users::Types::ListUsersBodyOffsetPaginationRequest.new(params).to_h,
             request_options: request_options
           )
           begin
