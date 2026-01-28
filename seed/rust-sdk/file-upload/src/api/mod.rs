@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{FileUploadClient, ServiceClient};
-pub use types::*;
+pub use resources::{ServiceClient, FileUploadClient};
+pub use types::{*};
+

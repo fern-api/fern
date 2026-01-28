@@ -5,7 +5,8 @@ import { RawClient } from "../http/RawClient";
 
 export interface QueryParameterCodeBlock {
     code: ast.CodeBlock;
-    queryParameterBagReference: string;
+    /** Reference to a variable containing the built query string */
+    queryStringReference?: string;
 }
 
 export interface HeaderParameterCodeBlock {

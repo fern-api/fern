@@ -63,8 +63,8 @@ public class AsyncRawServiceClient {
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -215,8 +215,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("just-file");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -356,8 +356,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("just-file");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, null);
@@ -407,8 +407,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("just-file");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
@@ -480,8 +480,8 @@ public class AsyncRawServiceClient {
                     true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -549,8 +549,8 @@ public class AsyncRawServiceClient {
                     httpUrl, "maybeInteger", request.getMaybeInteger().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -610,8 +610,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("with-content-type");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -759,8 +759,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("with-content-type");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, null);
@@ -810,8 +810,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("with-content-type");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
@@ -866,8 +866,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("with-form-encoding");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -1009,8 +1009,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("with-form-encoding");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, null);
@@ -1060,8 +1060,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("with-form-encoding");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
@@ -1121,8 +1121,8 @@ public class AsyncRawServiceClient {
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -1270,8 +1270,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("optional-args");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -1428,8 +1428,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("optional-args");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, null);
@@ -1484,8 +1484,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("optional-args");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
@@ -1540,8 +1540,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("inline-type");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -1687,8 +1687,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("inline-type");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, null);
@@ -1739,8 +1739,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("inline-type");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
@@ -1794,8 +1794,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("snippet");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()

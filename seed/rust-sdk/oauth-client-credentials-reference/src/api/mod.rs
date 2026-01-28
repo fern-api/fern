@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{AuthClient, OauthClientCredentialsReferenceClient, SimpleClient};
-pub use types::*;
+pub use resources::{AuthClient, SimpleClient, OauthClientCredentialsReferenceClient};
+pub use types::{*};
+

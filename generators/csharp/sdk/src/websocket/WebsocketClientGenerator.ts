@@ -1,7 +1,7 @@
 import { CSharpFile } from "@fern-api/csharp-base";
 import { ast, is, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Subpackage, WebSocketChannel } from "@fern-fern/ir-sdk/api";
+import { Subpackage, TypeReference, WebSocketChannel } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 /**
@@ -480,26 +480,24 @@ export class WebSocketClientGenerator extends WithGeneration {
                 );
 
                 if (hasQueryParameters) {
-                    writer.pushScope();
-
-                    writer.write("Query = ");
-                    writer.writeNode(
-                        this.csharp.instantiateClass({
-                            classReference: this.Types.QueryBuilder,
-                            arguments_: []
-                        })
+                    writer.write(
+                        `\n{\n    Query = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.websocketChannel.queryParameters.length})`
                     );
-                    writer.pushScope();
                     for (const queryParameter of this.websocketChannel.queryParameters) {
-                        writer.write(
-                            `{ "${queryParameter.name.name.originalName}", _options.${queryParameter.name.name.pascalCase.safeName} },\n`
-                        );
+                        const isComplexType = this.isComplexType(queryParameter.valueType);
+                        if (isComplexType) {
+                            writer.write(
+                                `\n        .AddDeepObject("${queryParameter.name.wireValue}", _options.${queryParameter.name.name.pascalCase.safeName})`
+                            );
+                        } else {
+                            writer.write(
+                                `\n        .Add("${queryParameter.name.wireValue}", _options.${queryParameter.name.name.pascalCase.safeName})`
+                            );
+                        }
                     }
-                    writer.popScope();
-                    writer.popScope();
-                    writer.writeTextStatement(";");
+                    writer.writeTextStatement("\n        .Build()\n}");
                 } else {
-                    writer.writeTextStatement(";");
+                    writer.writeTextStatement("");
                 }
 
                 const parts: (ast.AstNode | string)[] = [];
@@ -1036,6 +1034,30 @@ export class WebSocketClientGenerator extends WithGeneration {
         }
 
         return cls;
+    }
+
+    /**
+     * Determines if a type reference represents a complex type (object/named type)
+     * that should use AddDeepObject for query string serialization.
+     *
+     * @param typeReference - The type reference to check
+     * @returns True if the type is a named/object type, false for primitives and containers
+     */
+    private isComplexType(typeReference: TypeReference): boolean {
+        return typeReference._visit({
+            container: (container) => {
+                // For optional types, check the inner type
+                if (container.type === "optional") {
+                    return this.isComplexType(container.optional);
+                }
+                // Lists, maps, sets are not deep objects
+                return false;
+            },
+            named: () => true,
+            primitive: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     /**

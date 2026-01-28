@@ -39,6 +39,8 @@ class ApiClient:
 
         client = SeedInferredAuthImplicit(
             base_url="https://yourhost.com/path/to/api",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.nested.api.get_something()
         """
@@ -80,6 +82,8 @@ class AsyncApiClient:
 
         client = AsyncSeedInferredAuthImplicit(
             base_url="https://yourhost.com/path/to/api",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

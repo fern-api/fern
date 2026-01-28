@@ -8,6 +8,7 @@ pub enum Data {
             value: String,
         },
 
+        #[serde(rename = "base64")]
         Base64 {
             value: Vec<u8>,
         },

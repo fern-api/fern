@@ -91,10 +91,12 @@ public partial class SeedValidationClient : ISeedValidationClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["decimal"] = request.Decimal.ToString();
-        _query["even"] = request.Even.ToString();
-        _query["name"] = request.Name;
+        var _queryString = new SeedValidation.Core.QueryStringBuilder.Builder(capacity: 3)
+            .Add("decimal", request.Decimal)
+            .Add("even", request.Even)
+            .Add("name", request.Name)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -102,7 +104,7 @@ public partial class SeedValidationClient : ISeedValidationClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken

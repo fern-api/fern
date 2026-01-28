@@ -50,8 +50,8 @@ public class RawContentTypeClient {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("foo")
       .addPathSegments("bar");if (requestOptions != null) {
-        requestOptions.getQueryParameters().forEach((key, value) -> {
-          httpUrl.addQueryParameter(key, value);
+        requestOptions.getQueryParameters().forEach((_key, _value) -> {
+          httpUrl.addQueryParameter(_key, _value);
         } );
       }
       RequestBody body;
@@ -104,8 +104,8 @@ public class RawContentTypeClient {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
         .addPathSegments("foo")
         .addPathSegments("baz");if (requestOptions != null) {
-          requestOptions.getQueryParameters().forEach((key, value) -> {
-            httpUrl.addQueryParameter(key, value);
+          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+            httpUrl.addQueryParameter(_key, _value);
           } );
         }
         RequestBody body;

@@ -62,7 +62,6 @@ public class BaseMockServerTest
         Client = new SeedEndpointSecurityAuthClient(
             "TOKEN",
             "API_KEY",
-            "TOKEN",
             "USERNAME",
             "PASSWORD",
             "client_id",

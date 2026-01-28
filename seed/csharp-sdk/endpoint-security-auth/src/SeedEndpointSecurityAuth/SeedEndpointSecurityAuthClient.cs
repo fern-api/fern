@@ -7,8 +7,6 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
     private readonly RawClient _client;
 
     public SeedEndpointSecurityAuthClient(
-        string clientId,
-        string clientSecret,
         string? token = null,
         string? apiKey = null,
         string? clientId = null,

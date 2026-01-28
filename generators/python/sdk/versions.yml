@@ -1,5 +1,62 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.53.0
+  changelogEntry:
+    - summary: |
+        Add `import_paths` config option to auto-load user-defined files when the SDK is imported.
+        This enables custom integrations (e.g., Sentry, logging) without modifying generated code.
+        Files specified in the array (e.g., `["sentry_integration", "custom_logging"]`) are imported
+        from the package root if they exist, using try/except to gracefully handle missing files.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 4.52.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication. Fixes for wire test generation with inferred auth.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 4.51.3
+  changelogEntry:
+    - summary: |
+        Fix WebSocket methods and iterators to avoid parsing binary messages as JSON.
+      type: fix
+  createdAt: "2026-01-27"
+  irVersion: 62
+
+- version: 4.51.2
+  changelogEntry:
+    - summary: |
+        Skip generating raw client and `with_raw_response` property for intermediate clients that only
+        have nested clients but no direct endpoints. This reduces unnecessary code generation and makes
+        the SDK cleaner by only including raw client functionality where it's actually useful.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 4.51.1
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections to merge `additional_query_parameters` from `request_options`
+        into the connection URL. Query params now use the same encoding pattern as HTTP endpoints.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 4.51.0
+  changelogEntry:
+    - summary: |
+        Add intelligent SSE parsing for discriminated unions via `parse_sse_obj()`. This function
+        handles both data-level discrimination (discriminator inside JSON data payload) and
+        event-level discrimination (discriminator at SSE envelope level). For event-level unions,
+        it correctly parses the data field based on what the matching variant expects (string vs.
+        complex object), enabling proper handling of streaming responses with mixed data types.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
 
 - version: 4.50.0
   changelogEntry:

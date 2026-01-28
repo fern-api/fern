@@ -212,7 +212,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
             headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            queryString: queryParameterCodeBlock?.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -275,7 +275,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 bodyReference: requestBodyCodeBlock?.requestBodyReference,
                 pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
                 headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-                queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+                queryString: queryParameterCodeBlock?.queryStringReference,
                 endpointRequest: endpointSignatureInfo.request
             });
             if (apiRequestCodeBlock.code) {
@@ -1473,7 +1473,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
             headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {

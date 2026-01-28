@@ -1,4 +1,72 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.18.0
+  changelogEntry:
+    - summary: |
+        Add `QueryStringBuilder` class for building query strings with proper URL encoding.
+
+        Example usage:
+        ```csharp
+        var queryString = new QueryStringBuilder.Builder()
+            .Add("access_token", "abc123")
+            .Add("config_id", "cfg-456")
+            .AddDeepObject("session_settings", new { SystemPrompt = "Hello" })
+            .Build();
+        // Result: ?access_token=abc123&config_id=cfg-456&session_settings%5BSystemPrompt%5D=Hello
+        ```
+      type: feat
+    - summary: Improve header merging logic for better reliability and maintainability.
+      type: chore
+    - summary: |
+        Remove `additional-properties` and `experimental-additional-properties` configuration options.
+        AdditionalProperties support is now always enabled for all generated SDKs, simplifying the generator
+        and ensuring consistent behavior across all generated code. This feature allows handling of extra/unknown
+        properties in JSON responses.
+      type: chore
+  createdAt: "2026-01-22"
+  irVersion: 62
+
+- version: 2.17.5
+  changelogEntry:
+    - summary: |
+        Fix test equality comparison for nested OneOf values in collections.
+
+        Previously, when comparing objects containing `List<OneOf<...>>` properties (such as
+        `RelatedResources` in FHIR-style models), the test framework would incorrectly report
+        differences even when the values were identical. This was because the nested OneOf
+        comparer didn't recursively handle OneOf values within collections.
+
+        The fix adds a custom `EqualityAdapter` that registers itself with the inner
+        `NUnitEqualityComparer`, enabling proper recursive comparison of nested OneOf values.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.4
+  changelogEntry:
+    - summary: |
+        Fix extra properties support for inlined request bodies and improve test equality comparisons.
+
+        This fix addresses three issues with the `extra-properties: true` feature:
+        * Inlined request bodies now properly support `AdditionalProperties` for serialization/deserialization
+        * Test snippets now include extra properties from examples for both object types and wrapped requests
+        * Added `AdditionalPropertiesComparer` to handle type mismatches between JsonElement and native C# types in test assertions
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.3
+  changelogEntry:
+    - summary: |
+        Fix mock server tests to use FormUrlEncodedMatcher for form-urlencoded requests.
+
+        Previously, mock server tests used `WithBodyAsJson` for form-urlencoded requests, which
+        caused test failures because the SDK sends the request body as `key=value&key2=value2`
+        format, not JSON. This fix uses WireMock's `FormUrlEncodedMatcher` to properly match
+        form-urlencoded request bodies.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 2.17.2
   changelogEntry:
     - summary: |

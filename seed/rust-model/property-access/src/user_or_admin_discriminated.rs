@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UserOrAdminDiscriminated {
+        #[serde(rename = "user")]
         User {
             #[serde(flatten)]
             data: User,
@@ -10,12 +11,14 @@ pub enum UserOrAdminDiscriminated {
             foo: Foo,
         },
 
+        #[serde(rename = "admin")]
         Admin {
             admin: Admin,
             normal: String,
             foo: Foo,
         },
 
+        #[serde(rename = "empty")]
         Empty,
 }
 

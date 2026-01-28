@@ -1,8 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.50.2
+- version: 3.51.3
   changelogEntry:
     - summary: |
         Fix OpenAPI oneOf with discriminator to be parsed as discriminated union. Previously, when the discriminant property was defined in each variant schema (which is the standard OpenAPI pattern), the union was incorrectly parsed as an undiscriminated union. Now, any oneOf with a discriminator is correctly parsed as a discriminated union, and the discriminant property is filtered out from variant schemas to avoid duplication.
+      type: fix
+  createdAt: "2026-01-27"
+  irVersion: 63
+
+- version: 3.51.2
+  changelogEntry:
+    - summary: |
+        Fix air-gapped environment support for `fern generate --docs`. Added airgapped detection to skip external services that don't have local equivalents (Python docs generation, Venus organization lookup). Fixed protobuf air-gapped detection to use `detectAirGappedModeForProtobuf()` instead of `detectAirGappedMode()`. Added Venus-specific connectivity check for AI example enhancement that doesn't rely on the global cache.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.51.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev --broken-links` failing with "Failed to load API Definition" error for valid API configurations. The broken links validator now properly handles OpenAPI-only workspaces.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.51.0
+  changelogEntry:
+    - summary: |
+        Add support for OAS 3.2's `itemSchema` standard for SSE endpoints. When `text/event-stream` content type uses `itemSchema` instead of `schema`, it is now automatically treated as an SSE streaming endpoint with `x-fern-streaming: format: sse`.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.3
+  changelogEntry:
+    - summary: |
+        Fix Python library docs placeholder page appearing on published sites. The placeholder page is now only created during `fern docs dev` (local development), not during `fern generate --docs` (publishing).
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.2
+  changelogEntry:
+    - summary: |
+        Fix `python-docs` configuration not being detected when placed inside product or version files. Previously, `python-docs` only worked when placed in the top-level `docs.yml` navigation. Now it correctly searches through product files and version files referenced via `config.products` and `config.versions`.
       type: fix
   createdAt: "2026-01-26"
   irVersion: 63
