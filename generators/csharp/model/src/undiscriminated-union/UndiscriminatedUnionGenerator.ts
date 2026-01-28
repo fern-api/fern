@@ -966,7 +966,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
 
         for (const member of this.unionDeclaration.members) {
             // Unwrap outer nullable/optional before converting to C# type
-            const unwrappedType = this.unwrapOuterNullableOptional(member.type);
+            const unwrappedType = this.unwrapNullableOptional(member.type);
 
             const csharpType = this.context.csharpTypeMapper.convert({
                 reference: unwrappedType,
@@ -1090,15 +1090,14 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
     }
 
     /**
-     * Unwraps only the outermost nullable/optional wrapper from a type reference.
-     * Does not recursively unwrap nested nullable/optional wrappers.
+     * Recursively unwraps all nested top-level optional/nullable wrappers from a type reference.
      */
-    private unwrapOuterNullableOptional(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+    private unwrapNullableOptional(typeReference: FernIr.TypeReference): FernIr.TypeReference {
         return typeReference._visit<FernIr.TypeReference>({
             container: (container) => {
                 return container._visit<FernIr.TypeReference>({
-                    optional: (innerType) => innerType,
-                    nullable: (innerType) => innerType,
+                    optional: (innerType) => this.unwrapNullableOptional(innerType),
+                    nullable: (innerType) => this.unwrapNullableOptional(innerType),
                     list: () => typeReference,
                     set: () => typeReference,
                     map: () => typeReference,
@@ -1115,7 +1114,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
 
     private isContainerType(typeReference: FernIr.TypeReference): boolean {
         // First unwrap any outermost nullable/optional
-        const unwrapped = this.unwrapOuterNullableOptional(typeReference);
+        const unwrapped = this.unwrapNullableOptional(typeReference);
 
         return unwrapped._visit<boolean>({
             container: (container) => {
@@ -1138,7 +1137,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
 
     private isMapType(typeReference: FernIr.TypeReference): boolean {
         // First unwrap any outermost nullable/optional
-        const unwrapped = this.unwrapOuterNullableOptional(typeReference);
+        const unwrapped = this.unwrapNullableOptional(typeReference);
 
         return unwrapped._visit<boolean>({
             container: (container) => {
@@ -1161,7 +1160,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
 
     private isLiteralType(typeReference: FernIr.TypeReference): boolean {
         // First unwrap any outermost nullable/optional
-        const unwrapped = this.unwrapOuterNullableOptional(typeReference);
+        const unwrapped = this.unwrapNullableOptional(typeReference);
 
         return unwrapped._visit<boolean>({
             container: (container) => {
@@ -1184,7 +1183,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
 
     private getLiteralValue(typeReference: FernIr.TypeReference): string | boolean | undefined {
         // First unwrap any outermost nullable/optional
-        const unwrapped = this.unwrapOuterNullableOptional(typeReference);
+        const unwrapped = this.unwrapNullableOptional(typeReference);
 
         return unwrapped._visit<string | boolean | undefined>({
             container: (container) => {

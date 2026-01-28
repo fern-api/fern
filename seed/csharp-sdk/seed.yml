@@ -273,6 +273,7 @@ fixtures:
     - customConfig:
         use-default-request-parameter-values: true
         experimental-explicit-nullable-optional: true
+        use-undiscriminated-unions: true
       outputFolder: with-defaults
   undiscriminated-unions:
     - customConfig: null
