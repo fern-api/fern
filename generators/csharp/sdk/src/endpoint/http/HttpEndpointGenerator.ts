@@ -1207,12 +1207,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         const offsetType = this.context.csharpTypeMapper.convert({
-            reference: pagination.page.property.valueType
+            reference: pagination.page.property.valueType,
+            unboxOptionals: true
         });
         // use specified type or fallback to object
         const stepType = pagination.step
             ? this.context.csharpTypeMapper.convert({
-                  reference: pagination.step?.property.valueType
+                  reference: pagination.step?.property.valueType,
+                  unboxOptionals: true
               })
             : this.Primitive.object;
         const offsetPagerClassReference = this.Types.OffsetPager({
