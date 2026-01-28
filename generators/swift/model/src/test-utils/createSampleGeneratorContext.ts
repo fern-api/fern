@@ -1,7 +1,6 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createSampleIr } from "@fern-api/test-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -15,7 +14,8 @@ export async function createSampleGeneratorContext(pathToDefinition: string): Pr
         _visit: (visitor) => visitor.local()
     });
     return new ModelGeneratorContext(
-        ir as IntermediateRepresentation,
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+        ir as any,
         generatorConfig,
         customConfig,
         notificationService
