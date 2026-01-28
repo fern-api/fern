@@ -171,6 +171,16 @@
               "type": "null"
             }
           ]
+        },
+        "datetimeInString": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

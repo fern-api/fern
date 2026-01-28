@@ -245,7 +245,7 @@ export class ExampleGenerator extends WithGeneration {
             float: (p) => this.csharp.InstantiatedPrimitive.float(p),
             double: (p) => this.csharp.InstantiatedPrimitive.double(p),
             boolean: (p) => this.csharp.InstantiatedPrimitive.boolean(p),
-            string: (p) => this.csharp.InstantiatedPrimitive.string(p.original),
+            string: (p) => this.csharp.InstantiatedPrimitive.string(this.normalizeStringValue(p.original)),
             datetime: (example) => this.csharp.InstantiatedPrimitive.dateTime(example.datetime, parseDatetimes),
             date: (dateString) => this.csharp.InstantiatedPrimitive.date(dateString),
             uuid: (p) => this.csharp.InstantiatedPrimitive.uuid(p),
@@ -256,5 +256,16 @@ export class ExampleGenerator extends WithGeneration {
             }
         });
         return this.csharp.codeblock((writer) => writer.write(instantiatedPrimitive));
+    }
+
+    /**
+     * Normalizes string values that look like ISO datetime strings.
+     * This ensures consistency with the mock JSON which uses normalizeDates.
+     */
+    private normalizeStringValue(value: string): string {
+        if (is.isIsoDateTimeString(value) || is.isIsoDateString(value)) {
+            return new Date(value).toISOString();
+        }
+        return value;
     }
 }

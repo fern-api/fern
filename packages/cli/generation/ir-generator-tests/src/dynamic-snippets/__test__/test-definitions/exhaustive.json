@@ -1891,6 +1891,39 @@
                     },
                     "propertyAccess": null,
                     "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "datetimeInString",
+                            "camelCase": {
+                                "unsafeName": "datetimeInString",
+                                "safeName": "datetimeInString"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "datetime_in_string",
+                                "safeName": "datetime_in_string"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATETIME_IN_STRING",
+                                "safeName": "DATETIME_IN_STRING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DatetimeInString",
+                                "safeName": "DatetimeInString"
+                            }
+                        },
+                        "wireValue": "datetimeInString"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "extends": null,
