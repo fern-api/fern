@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc85
+  changelogEntry:
+    - summary: |
+        Fix detached HEAD error in publish workflow. When triggered by a tag push, the workflow
+        enters detached HEAD state, causing `rubygems/release-gem@v1` (which runs `rake release`)
+        to fail when pushing to a non-existent branch. Replaced with manual build/push steps using
+        `rubygems/configure-rubygems-credentials@v1.0.0` for OIDC auth, `bundle exec rake build`,
+        and `gem push pkg/*.gem`. Also replaced `bundler-cache: true` with explicit `bundle install`
+        for more reliable dependency installation.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
 - version: 1.0.0-rc84
   changelogEntry:
     - summary: |
