@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=./fern-versions-yml.schema.json
+# Test file demonstrating automatic version computation - no manual versions needed!
+- changelogEntry:
+    - summary: |
+        Breaking change: Redesigned the entire API for better consistency and performance.
+      type: break
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- changelogEntry:
+    - summary: |
+        Add new user authentication endpoints with OAuth2 support.
+      type: feat
+    - summary: |
+        Fix memory leak in WebSocket connections.
+      type: fix
+  createdAt: "2025-12-22"
+  irVersion: 61
+
+- changelogEntry:
+    - summary: |
+        Fix validation errors for edge case user inputs.
+      type: fix
+  createdAt: "2025-12-21"
+  irVersion: 61
+
+- version: 1.0.0
+  changelogEntry:
+    - summary: |
+        Initial release with core functionality.
+      type: feat
+  createdAt: "2025-12-20"
+  irVersion: 60
