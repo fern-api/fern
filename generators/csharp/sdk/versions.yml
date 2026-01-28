@@ -1,4 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.18.1
+  changelogEntry:
+    - summary: |
+        While most `<`s and `>`s should be escaped to `&lt;` and `&gt;` to avoid mangling the output,
+        genuine XML/HTML tags should be kept as-is; this commit scans for potential valid tags and
+        prevents their being escaped. (Ambiguous cases are escaped.)
+
+        Before:
+        ```
+        /// XMLDoc (C#) (Example of actual XML tags):
+        /// See &lt;a href="https://example.com/docs"&gt;the docs&lt;/a&gt; for more info.
+        /// Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+        /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
+        ```
+
+        After:
+        ```
+        /// XMLDoc (C#) (Example of actual XML tags):
+        /// See <a href="https://example.com/docs">the docs</a> for more info.
+        /// Use <code>getValue()</code> to retrieve the value.
+        /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
+        ```
+      type: fix
+  createdAt: "2026-01-27"
+  irVersion: 62
+
 - version: 2.18.0
   changelogEntry:
     - summary: |
