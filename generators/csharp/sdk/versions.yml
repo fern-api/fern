@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.19.2
+  changelogEntry:
+    - summary: |
+        Fixes certain missing references to Core utilities in interface files for the Optional wrapper.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
 - version: 2.19.1
   changelogEntry:
     - summary: |
@@ -12,9 +20,6 @@
         - `nullable<list<nullable<string>>>` generates `IEnumerable<string?>?`
         - `nullable<map<string, nullable<Address>>>` generates `Dictionary<string, Address?>?`
         - `optional<map<string, nullable<string>>>` generates `Dictionary<string, string?>?`
-      type: fix
-    - summary: |
-        Fixes certain missing references to Core utilities in interface files for the Optional wrapper.
       type: fix
   createdAt: "2026-01-28"
   irVersion: 62
