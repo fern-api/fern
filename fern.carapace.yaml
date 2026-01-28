@@ -1,0 +1,270 @@
+# yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+name: fern
+description: Fern CLI - API-first development platform
+flags:
+  log-level: Set the logging level
+  version: Print current version
+  v: Print current version (alias)
+completion:
+  flag:
+    log-level:
+      - trace
+      - debug
+      - info
+      - warn
+      - error
+commands:
+  - name: init
+    description: Initialize a Fern API
+    flags:
+      api: Initialize an API
+      docs: Initialize a docs website
+      organization: Organization name
+      org: Organization name (alias)
+      openapi: Filepath or URL to an existing OpenAPI spec
+      mintlify: Migrate docs from Mintlify provided a path to a mint.json file
+      readme: Migrate docs from Readme provided a URL
+    completion:
+      flag:
+        openapi:
+          - $files(*.json,*.yaml,*.yml)
+        mintlify:
+          - $files(mint.json)
+  - name: generate
+    description: Generate all generators in the specified group
+    flags:
+      api: If multiple APIs, specify the name with --api <name>
+      docs: If multiple docs sites, specify the name with --docs <name>
+      instance: The URL for the instance of docs
+      preview: Whether to generate a preview link for the docs
+      group: The group to generate
+      mode: Generation mode
+      version: The version for the generated packages
+      local: Run the generator(s) locally, using Docker
+      keepDocker: Prevent auto-deletion of the Docker containers
+      force: Ignore prompts to confirm generation
+      broken-links: Log a warning if there are broken links in the docs
+      strict-broken-links: Throw an error if there are broken links in the docs
+      disable-snippets: Disable snippets in docs generation
+      runner: Choose the container runtime to use for local generation
+      disable-dynamic-snippets: Disable dynamic SDK snippets in docs generation
+      prompt: Prompt for confirmation before generating
+      no-prompt: Skip confirmation prompts
+      skip-upload: Skip asset upload step and generate fake links for preview
+      fernignore: Path to a custom .fernignore file
+    completion:
+      flag:
+        mode:
+          - publish
+          - download_files
+          - github
+        runner:
+          - docker
+          - podman
+        fernignore:
+          - $files(.fernignore)
+  - name: check
+    description: Validates your Fern Definition. Logs errors.
+    flags:
+      api: Only run the command on the provided API
+      warnings: Log warnings in addition to errors
+      broken-links: Log a warning if there are broken links in the docs
+      strict-broken-links: Throw an error if there are broken links in the docs
+      local: Run validation locally without sending data to Fern API
+      from-openapi: Use the new parser and go directly from OpenAPI to IR
+  - name: diff
+    description: Diff two versions of an API
+    flags:
+      from: The previous version of the API
+      to: The next version of the API
+      from-version: The previous version of the API (e.g. 1.1.0)
+      from-generator-version: The previous version of the generator
+      to-generator-version: The next version of the generator
+      quiet: Whether to suppress output written to stderr
+      q: Whether to suppress output written to stderr (alias)
+  - name: sdk-diff
+    description: Diff two SDK directories
+    flags:
+      json: Output result as JSON
+    completion:
+      positional:
+        - [$directories]
+        - [$directories]
+  - name: add
+    description: Add a code generator to generators.yml
+    flags:
+      api: Only run the command on the provided API
+      group: Add the generator to the specified group
+    completion:
+      positional:
+        - [$cmdline]
+  - name: ir
+    description: Generate IR (Intermediate Representation)
+    flags:
+      api: Only run the command on the provided API
+      version: The version of IR to produce
+      language: Generate IR for a particular language
+      audience: Filter the IR for certain audiences
+      smart-casing: Whether to use smart casing
+      from-openapi: Use the new parser and go directly from OpenAPI to IR
+      disable-examples: Whether to disable automatic example generation in the IR
+    completion:
+      flag:
+        language:
+          - typescript
+          - javascript
+          - java
+          - python
+          - go
+          - ruby
+          - csharp
+          - swift
+          - kotlin
+          - php
+          - rust
+          - scala
+      positional:
+        - [$files]
+  - name: token
+    description: Generate a Fern Token
+    flags:
+      organization: The organization to create a token for
+      org: The organization to create a token for (alias)
+  - name: login
+    description: Log in to Fern via GitHub
+    flags:
+      device-code: Use device code authorization
+  - name: logout
+    description: Log out of Fern
+  - name: format
+    description: Formats your Fern Definition
+    flags:
+      ci: Fail with non-zero exit status if files are not formatted correctly
+      api: Only run the command on the provided API
+  - name: mock
+    description: Starts a mock server for an API
+    flags:
+      port: The port the server binds to
+      api: The API to mock
+  - name: test
+    description: Runs tests with a mock server in the background
+    flags:
+      api: The API to mock
+      command: The command to run to test your SDK
+      language: Run the tests configured to a specific language
+    completion:
+      flag:
+        language:
+          - typescript
+          - javascript
+          - java
+          - python
+          - go
+          - ruby
+          - csharp
+          - swift
+          - kotlin
+          - php
+          - rust
+          - scala
+  - name: upgrade
+    description: Upgrades Fern CLI version in fern.config.json
+    flags:
+      version: The version to upgrade to. Defaults to the latest release
+      from: The version to migrate from
+      yes: Automatically answer yes to migration prompts
+      y: Automatically answer yes to migration prompts (alias)
+  - name: downgrade
+    description: Downgrades Fern CLI version in fern.config.json
+    completion:
+      positional:
+        - [$cmdline]
+  - name: self-update
+    description: Updates the globally installed Fern CLI to the latest version
+    flags:
+      dry-run: Show what would be executed without running the update
+    completion:
+      positional:
+        - [$cmdline]
+  - name: api
+    description: Commands for managing APIs
+    commands:
+      - name: update
+        description: Pulls the latest OpenAPI spec from the specified origin
+        flags:
+          api: The API to update the spec for
+  - name: docs
+    description: Commands for managing your docs
+    commands:
+      - name: dev
+        description: Run a local development server to preview your docs
+        flags:
+          port: Run the development server on the following port
+          broken-links: Check for broken links in your docs
+          beta: Run the app router development server
+          legacy: Run the legacy development server
+          backend-port: Run the development backend server on the following port
+      - name: broken-links
+        description: Check for broken links in your docs
+        flags:
+          strict: Fail with non-zero exit status
+      - name: delete
+        description: Delete a preview docs deployment
+        flags:
+          all: Delete all preview deployments
+          confirm: Skip confirmation prompt
+        completion:
+          positional:
+            - [
+                $(fern docs list --format=completion 2>/dev/null || echo 'my-preview-site-1 my-preview-site-2 acme-preview')
+              ]
+      - name: list
+        description: List preview docs deployments
+        flags:
+          format: Output format (table, json, completion)
+  - name: write-definition
+    description: Write underlying Fern Definition for OpenAPI specs and API Dependencies
+    flags:
+      api: Only run the command on the provided API
+      language: Write the definition for a particular SDK language
+      preserve-schemas: Preserve potentially unsafe schema Ids in the generated fern definition
+    completion:
+      flag:
+        language:
+          - typescript
+          - javascript
+          - java
+          - python
+          - go
+          - ruby
+          - csharp
+          - swift
+          - kotlin
+          - php
+          - rust
+          - scala
+  - name: write-overrides
+    description: Generate a basic openapi overrides file
+    flags:
+      api: Only run the command on the provided API
+      exclude-models: When generating the initial overrides, also stub the models
+  - name: export
+    description: Export your API to an OpenAPI spec
+    flags:
+      api: Only run the command on the provided API
+    completion:
+      positional:
+        - [$files]
+  - name: jsonschema
+    description: Generate JSON Schema for a specific type
+    flags:
+      api: Only run the command on the provided API
+      type: The type to generate JSON Schema for
+    completion:
+      positional:
+        - [$files]
+  - name: write-translation
+    description: Generate translation directories for each language defined in docs.yml
+    flags:
+      stub: Return content as-is without calling the translation service
+      s: Return content as-is without calling the translation service (alias)
