@@ -202,6 +202,26 @@ service:
     simple:
       path: "/snippet"
       method: POST
+
+    withLiteralAndEnumTypes:
+      path: /with-literal-enum
+      method: POST
+      request:
+        body:
+          properties:
+            file: file
+            # Literal type - should NOT be JSON serialized
+            model_type: optional<ModelType>
+            # Open enum type - should NOT be JSON serialized
+            open_enum: optional<OpenEnumType>
+            # Regular string for comparison
+            maybe_name: optional<string>
+        content-type: multipart/form-data
+        name: LiteralEnumRequest
+      response:
+        status-code: 200
+        type: string
+
 types:
   Id: string
 
@@ -227,3 +247,14 @@ types:
     inline: true
     properties:
       bar: string
+
+  # Literal type - tests fix for issue where literals were incorrectly JSON-serialized
+  # in multipart form data. This mimics the customer's SpeechToTextModel = Literal["saarika:v2.5"]
+  ModelType: literal<"model_v1">
+
+  # Open enum type with multiple values - tests undiscriminated union of primitives
+  OpenEnumType:
+    enum:
+      - OPTION_A
+      - OPTION_B
+      - OPTION_C
