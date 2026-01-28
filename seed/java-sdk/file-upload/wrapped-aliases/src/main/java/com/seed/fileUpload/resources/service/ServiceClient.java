@@ -9,6 +9,7 @@ import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithOptionalQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
+import com.seed.fileUpload.resources.service.requests.LiteralEnumRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
@@ -247,5 +248,38 @@ public class ServiceClient {
 
     public void simple(RequestOptions requestOptions) {
         this.rawClient.simple(requestOptions).body();
+    }
+
+    public String withLiteralAndEnumTypes(File file, LiteralEnumRequest request) {
+        return this.rawClient.withLiteralAndEnumTypes(file, request).body();
+    }
+
+    public String withLiteralAndEnumTypes(File file, LiteralEnumRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(file, request, requestOptions)
+                .body();
+    }
+
+    public String withLiteralAndEnumTypes(InputStream stream, String filename) {
+        return this.rawClient.withLiteralAndEnumTypes(stream, filename).body();
+    }
+
+    public String withLiteralAndEnumTypes(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, mediaType)
+                .body();
+    }
+
+    public String withLiteralAndEnumTypes(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, requestOptions)
+                .body();
+    }
+
+    public String withLiteralAndEnumTypes(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, mediaType, requestOptions)
+                .body();
     }
 }
