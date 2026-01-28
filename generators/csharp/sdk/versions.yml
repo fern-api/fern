@@ -131,6 +131,7 @@
         properties in JSON responses.
       type: chore
   createdAt: "2026-01-22"
+  irVersion: 62
 
 - version: 2.17.5
   changelogEntry:
