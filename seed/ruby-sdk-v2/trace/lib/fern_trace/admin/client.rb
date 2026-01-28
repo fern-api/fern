@@ -147,16 +147,15 @@ module FernTrace
       # @return [untyped]
       def store_traced_test_case(request_options: {}, **params)
         params = FernTrace::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[submission_id test_case_id]
-        body_params = params.except(*path_param_names)
-        body_prop_names = %i[result trace_responses]
-        body_bag = body_params.slice(*body_prop_names)
+        request_data = FernTrace::Admin::Types::StoreTracedTestCaseRequest.new(params).to_h
+        non_body_param_names = %w[submissionId testCaseId]
+        body = request_data.except(*non_body_param_names)
 
         request = FernTrace::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-test-trace/submission/#{params[:submission_id]}/testCase/#{params[:test_case_id]}",
-          body: FernTrace::Admin::Types::StoreTracedTestCaseRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin
@@ -215,16 +214,15 @@ module FernTrace
       # @return [untyped]
       def store_traced_workspace(request_options: {}, **params)
         params = FernTrace::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[submission_id]
-        body_params = params.except(*path_param_names)
-        body_prop_names = %i[workspace_run_details trace_responses]
-        body_bag = body_params.slice(*body_prop_names)
+        request_data = FernTrace::Admin::Types::StoreTracedWorkspaceRequest.new(params).to_h
+        non_body_param_names = ["submissionId"]
+        body = request_data.except(*non_body_param_names)
 
         request = FernTrace::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-workspace-trace/submission/#{params[:submission_id]}",
-          body: FernTrace::Admin::Types::StoreTracedWorkspaceRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin

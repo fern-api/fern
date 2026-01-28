@@ -21,14 +21,11 @@ module FernStreamingParameter
       # @return [untyped]
       def generate(request_options: {}, **params)
         params = FernStreamingParameter::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[stream num_events]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernStreamingParameter::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "generate",
-          body: FernStreamingParameter::Dummy::Types::GenerateRequest.new(body_bag).to_h,
+          body: FernStreamingParameter::Dummy::Types::GenerateRequest.new(params).to_h,
           request_options: request_options
         )
         begin

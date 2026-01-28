@@ -1,5 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc84
+  changelogEntry:
+    - summary: |
+        Fix packageName being incorrectly used for folder/module naming. The packageName from
+        publish config (e.g., output.publish.rubygems.packageName) is now only used for the
+        gemspec spec.name field, not for folder structure or Ruby module names. This fixes
+        issues where gems with special characters in their package name (e.g., "square.rb")
+        would have incorrect folder structures (lib/square_rb/ instead of lib/square/) and
+        normalized gemspec names. The folder and module naming now correctly uses only the
+        custom config moduleName option or the organization name as fallback.
+      type: fix
+    - summary: |
+        Fix organization names with digits (e.g., "auth0") being incorrectly transformed to
+        "auth_0" in folder names. The snake_case transformation now preserves letter-digit
+        sequences, so "auth0" stays "auth0" and "OAuth2" becomes "oauth2" instead of "o_auth_2".
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
 - version: 1.0.0-rc83
   changelogEntry:
     - summary: |
