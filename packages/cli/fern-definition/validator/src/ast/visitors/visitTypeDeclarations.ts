@@ -160,7 +160,8 @@ export function visitTypeDeclaration({
                                     }
                                 },
                                 ["display-name"]: noop,
-                                availability: noop
+                                availability: noop,
+                                validation: noop
                             });
                         }
                     }
