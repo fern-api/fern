@@ -14,7 +14,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
 
       - name: Run Rubocop
         run: bundle exec rubocop
@@ -30,7 +32,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
 
       - name: Run Tests
         run: <% if (enableWireTests) { %>RUN_WIRE_TESTS=true <% } %>bundle exec rake test
@@ -48,12 +52,16 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
 
       - name: Publish to RubyGems
         uses: rubygems/release-gem@v1
