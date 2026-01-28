@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "use-default-request-parameter-values": true
+    "use-default-request-parameter-values": true,
+    "experimental-explicit-nullable-optional": true
   },
   "sdkVersion": "0.0.1"
 }

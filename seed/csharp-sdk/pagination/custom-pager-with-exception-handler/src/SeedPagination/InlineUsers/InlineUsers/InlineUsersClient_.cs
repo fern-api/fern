@@ -1191,7 +1191,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     ListUsersOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >
@@ -1245,7 +1245,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     ListUsersDoubleOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    double?,
+                    double,
                     object,
                     User
                 >
@@ -1296,7 +1296,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     ListUsersBodyOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >
@@ -1350,8 +1350,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     ListUsersOffsetStepPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
-                    int?,
+                    int,
+                    int,
                     User
                 >
                     .CreateInstanceAsync(
@@ -1403,8 +1403,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     ListWithOffsetPaginationHasNextPageRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
-                    int?,
+                    int,
+                    int,
                     User
                 >
                     .CreateInstanceAsync(
@@ -1597,7 +1597,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                     ListWithGlobalConfigRequest,
                     RequestOptions?,
                     UsernameContainer,
-                    int?,
+                    int,
                     object,
                     string
                 >

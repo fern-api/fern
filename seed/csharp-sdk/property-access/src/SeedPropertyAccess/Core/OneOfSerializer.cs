@@ -38,7 +38,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         JsonSerializer.Serialize(writer, value.Value, options);
     }
 
-    public override IOneOf? ReadAsPropertyName(
+    public override IOneOf ReadAsPropertyName(
         ref Utf8JsonReader reader,
         global::System.Type typeToConvert,
         JsonSerializerOptions options
@@ -46,7 +46,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
     {
         var stringValue = reader.GetString();
         if (stringValue == null)
-            return default;
+            throw new JsonException("Cannot deserialize null property name into OneOf type");
 
         // Try to deserialize the string value into one of the supported types
         foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
