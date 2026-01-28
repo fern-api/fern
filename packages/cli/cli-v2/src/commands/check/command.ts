@@ -1,8 +1,8 @@
 import type { Argv } from "yargs";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import type { Context } from "../context/Context";
-import type { GlobalArgs } from "../context/GlobalArgs";
-import { command } from "./_internal/command";
+import { loadFernYml } from "../../config/fern-yml/loadFernYml";
+import type { Context } from "../../context/Context";
+import type { GlobalArgs } from "../../context/GlobalArgs";
+import { command } from "../_internal/command";
 
 interface CheckArgs extends GlobalArgs {}
 

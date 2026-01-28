@@ -5009,6 +5009,12 @@ importers:
         specifier: ^17.4.1
         version: 17.7.2
 
+  packages/cli/cli-v2/dist/dev:
+    dependencies:
+      '@boundaryml/baml':
+        specifier: ^0.211.2
+        version: 0.211.2
+
   packages/cli/config:
     devDependencies:
       '@fern-api/configs':
