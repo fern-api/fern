@@ -1284,3 +1284,87 @@ func (u *UnionWithIdenticalStrings) Accept(visitor UnionWithIdenticalStringsVisi
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
+
+// Tests that union members named 'Type' or 'Value' don't collide with internal properties
+type UnionWithReservedNames struct {
+	TypeStringLiteral  string
+	ValueStringLiteral string
+	String             string
+
+	typ string
+}
+
+func NewUnionWithReservedNamesWithTypeStringLiteral() *UnionWithReservedNames {
+	return &UnionWithReservedNames{typ: "TypeStringLiteral", TypeStringLiteral: "type"}
+}
+
+func NewUnionWithReservedNamesWithValueStringLiteral() *UnionWithReservedNames {
+	return &UnionWithReservedNames{typ: "ValueStringLiteral", ValueStringLiteral: "value"}
+}
+
+func (u *UnionWithReservedNames) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithReservedNames) UnmarshalJSON(data []byte) error {
+	var valueTypeStringLiteral string
+	if err := json.Unmarshal(data, &valueTypeStringLiteral); err == nil {
+		u.typ = "TypeStringLiteral"
+		u.TypeStringLiteral = valueTypeStringLiteral
+		if u.TypeStringLiteral != "type" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "type", valueTypeStringLiteral)
+		}
+		return nil
+	}
+	var valueValueStringLiteral string
+	if err := json.Unmarshal(data, &valueValueStringLiteral); err == nil {
+		u.typ = "ValueStringLiteral"
+		u.ValueStringLiteral = valueValueStringLiteral
+		if u.ValueStringLiteral != "value" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "value", valueValueStringLiteral)
+		}
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithReservedNames) MarshalJSON() ([]byte, error) {
+	if u.typ == "TypeStringLiteral" || u.TypeStringLiteral != "" {
+		return json.Marshal("type")
+	}
+	if u.typ == "ValueStringLiteral" || u.ValueStringLiteral != "" {
+		return json.Marshal("value")
+	}
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithReservedNamesVisitor interface {
+	VisitTypeStringLiteral(string) error
+	VisitValueStringLiteral(string) error
+	VisitString(string) error
+}
+
+func (u *UnionWithReservedNames) Accept(visitor UnionWithReservedNamesVisitor) error {
+	if u.typ == "TypeStringLiteral" || u.TypeStringLiteral != "" {
+		return visitor.VisitTypeStringLiteral(u.TypeStringLiteral)
+	}
+	if u.typ == "ValueStringLiteral" || u.ValueStringLiteral != "" {
+		return visitor.VisitValueStringLiteral(u.ValueStringLiteral)
+	}
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}

@@ -158,6 +158,8 @@ export class Generation {
         baseExceptionClassName: () => this.customConfig["base-exception-class-name"] ?? "",
         /** When true, generates discriminated unions with type discriminators. Default: true. */
         shouldGeneratedDiscriminatedUnions: () => this.customConfig["use-discriminated-unions"] ?? true,
+        /** When true, generates undiscriminated unions with runtime type detection. Default: false. */
+        shouldGenerateUndiscriminatedUnions: () => this.customConfig["use-undiscriminated-unions"] ?? false,
         /** Custom name for the exported public client class. Default: "" (uses clientClassName or computed name). */
         exportedClientClassName: () => this.customConfig["exported-client-class-name"] ?? "",
         /** Custom name for the internal client class. Default: "" (auto-generated from organization/workspace). */

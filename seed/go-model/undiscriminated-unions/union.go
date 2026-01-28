@@ -386,3 +386,11 @@ func (c *ConvertToken) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// Tests that union members named 'Type' or 'Value' don't collide with internal properties
+type UnionWithReservedNames struct {
+	String string
+
+	typeStringLiteral  string
+	valueStringLiteral string
+}

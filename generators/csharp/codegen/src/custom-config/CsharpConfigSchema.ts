@@ -41,6 +41,7 @@ export const CsharpConfigSchema = z.object({
     "read-only-memory-types": z.optional(z.array(z.string())),
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),
+    "use-undiscriminated-unions": z.boolean().optional(),
     "experimental-fully-qualified-namespaces": z.boolean().optional(),
     "experimental-dotnet-format": z.boolean().optional(),
 
