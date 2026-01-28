@@ -16,6 +16,7 @@ fern-fern-generator-cli-sdk = { version = "^0.1.1", source = "fern-prod" }
 fern_fern_ir_v60 = "62.6.0"
 black = "^25.1.0"
 isort = "^6.0.1"
+poetry-core = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
