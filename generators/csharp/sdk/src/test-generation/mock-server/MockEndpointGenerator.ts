@@ -26,7 +26,11 @@ export class MockEndpointGenerator extends WithGeneration {
         return this.generateForExamples(endpoint, [example]);
     }
 
-    public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): ast.CodeBlock {
+    public generateForExamples(
+        endpoint: HttpEndpoint,
+        examples: ExampleEndpointCall[],
+        options?: { skipBodyMatch?: boolean }
+    ): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
             examples.forEach((example, index) => {
                 const suffix = examples.length === 1 ? "" : `_${index}`;
@@ -105,7 +109,8 @@ export class MockEndpointGenerator extends WithGeneration {
                 writer.write(
                     `.Using${endpoint.method.charAt(0).toUpperCase()}${endpoint.method.slice(1).toLowerCase()}()`
                 );
-                if (example.request != null) {
+                // Skip body matching for OAuth endpoints where the actual request may not include all optional fields
+                if (example.request != null && !options?.skipBodyMatch) {
                     if (requestContentType === "application/x-www-form-urlencoded") {
                         // For form-urlencoded requests, use FormUrlEncodedMatcher
                         const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request);
