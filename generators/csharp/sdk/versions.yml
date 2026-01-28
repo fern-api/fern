@@ -2,7 +2,7 @@
 - version: 2.19.2
   changelogEntry:
     - summary: |
-        Fixes certain missing references to Core utilities in interface files for the Optional wrapper.
+        Fixes missing references to Core utilities in interface files for the Optional wrapper.
       type: fix
   createdAt: "2026-01-28"
   irVersion: 62
