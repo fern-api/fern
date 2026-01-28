@@ -1370,7 +1370,8 @@ export class DocsDefinitionResolver {
             workspace,
             hideChildren,
             parentAvailability ?? item.availability,
-            openApiTags
+            openApiTags,
+            graphqlData.namespacesByOperationId
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
@@ -1444,9 +1445,11 @@ export class DocsDefinitionResolver {
     private async extractGraphQLData(): Promise<{
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
+        namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
     }> {
         const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+        const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
         // Find all GraphQL specs across all OSS workspaces
         const allGraphQLSpecs: GraphQLSpec[] = [];
@@ -1456,7 +1459,7 @@ export class DocsDefinitionResolver {
         }
 
         if (allGraphQLSpecs.length === 0) {
-            return { operations: {}, types: {} };
+            return { operations: {}, types: {}, namespacesByOperationId };
         }
 
         // Process each GraphQL spec
@@ -1471,6 +1474,13 @@ export class DocsDefinitionResolver {
                 // Merge the GraphQL operations and types from this spec
                 Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
 
+                // Track namespace for each operation from this spec
+                if (spec.namespace != null) {
+                    for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
+                        namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
+                    }
+                }
+
                 // Convert GraphQL types from api.latest to api.v1.register format
                 for (const [typeId, typeDefinition] of Object.entries(graphqlResult.types)) {
                     graphqlTypes[FdrAPI.TypeId(typeId)] = typeDefinition;
@@ -1483,7 +1493,7 @@ export class DocsDefinitionResolver {
             }
         }
 
-        return { operations: graphqlOperations, types: graphqlTypes };
+        return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
     }
 
     /**
