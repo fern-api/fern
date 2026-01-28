@@ -108,6 +108,11 @@ async function createJob({
         publishMetadata: generatorInvocation.publishMetadata
     };
 
+    // DEBUG: Log the create job payload
+    context.logger.info("=== DEBUG: Create Job Payload ===");
+    context.logger.info(`Output Mode: ${JSON.stringify(generatorInvocation.outputMode, null, 2)}`);
+    context.logger.info("=================================");
+
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.definition.rootApiFile.contents.name,
         version,
