@@ -1,5 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc84
+  changelogEntry:
+    - summary: |
+        Fix packageName being incorrectly used for folder/module naming. The packageName from
+        publish config (e.g., output.publish.rubygems.packageName) is now only used for the
+        gemspec spec.name field, not for folder structure or Ruby module names. This fixes
+        issues where gems with special characters in their package name (e.g., "square.rb")
+        would have incorrect folder structures (lib/square_rb/ instead of lib/square/) and
+        normalized gemspec names. The folder and module naming now correctly uses only the
+        custom config moduleName option or the organization name as fallback.
+      type: fix
+    - summary: |
+        Fix organization names with digits (e.g., "auth0") being incorrectly transformed to
+        "auth_0" in folder names. The snake_case transformation now preserves letter-digit
+        sequences, so "auth0" stays "auth0" and "OAuth2" becomes "oauth2" instead of "o_auth_2".
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
+- version: 1.0.0-rc83
+  changelogEntry:
+    - summary: |
+        Fix request body serialization bug where path/query/header parameters were incorrectly
+        serialized as nil values in the request body. For endpoints with inlined request bodies
+        that also have path, query, or header parameters, the wrapper type (which includes all
+        endpoint parameters) was being created with only body properties, causing non-body fields
+        to be nil and serialized as null in the JSON body. The fix uses a serialize-then-split
+        pattern: serialize ALL params through the wrapper type first, then remove non-body params
+        from the serialized result. This ensures proper type conversion while keeping non-body
+        params out of the request body.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
+- version: 1.0.0-rc82
+  changelogEntry:
+    - summary: |
+        Implement HTTP status code-based retry logic with exponential backoff. The SDK now automatically
+        retries requests that fail with retryable HTTP status codes (408, 429, 500, 502, 503, 504, 521,
+        522, 524) using exponential backoff with jitter. The retry logic respects Retry-After
+        headers when present. This addresses the feature gap where the SDK previously
+        only used Net::HTTP's network-level retries, which don't handle HTTP status codes like 429
+        (Too Many Requests). The max_retries parameter now controls application-level retries with
+        proper backoff, enabling compliance with rate-limiting requirements like Square App Marketplace.
+      type: feat
+  createdAt: "2026-01-27"
+  irVersion: 61
+
 - version: 1.0.0-rc81
   changelogEntry:
     - summary: |

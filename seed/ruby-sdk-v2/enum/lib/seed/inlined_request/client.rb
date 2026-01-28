@@ -21,14 +21,11 @@ module Seed
       # @return [untyped]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "inlined",
-          body: Seed::InlinedRequest::Types::SendEnumInlinedRequest.new(body_bag).to_h,
+          body: Seed::InlinedRequest::Types::SendEnumInlinedRequest.new(params).to_h,
           request_options: request_options
         )
         begin

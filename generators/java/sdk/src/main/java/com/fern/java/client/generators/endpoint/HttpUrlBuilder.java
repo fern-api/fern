@@ -119,9 +119,10 @@ public final class HttpUrlBuilder {
         this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
-    public GeneratedHttpUrl generateBuilder(List<EnrichedObjectProperty> queryParamProperties) {
+    public GeneratedHttpUrl generateBuilder(
+            List<EnrichedObjectProperty> queryParamProperties, boolean hasRequestOptions) {
         // Always use uninlineable code block to support additional query parameters from RequestOptions
-        return generateUnInlineableCodeBlock(queryParamProperties);
+        return generateUnInlineableCodeBlock(queryParamProperties, hasRequestOptions);
     }
 
     private GeneratedHttpUrl generateInlineableCodeBlock() {
@@ -140,7 +141,8 @@ public final class HttpUrlBuilder {
                 .build();
     }
 
-    private GeneratedHttpUrl generateUnInlineableCodeBlock(List<EnrichedObjectProperty> queryParamProperties) {
+    private GeneratedHttpUrl generateUnInlineableCodeBlock(
+            List<EnrichedObjectProperty> queryParamProperties, boolean hasRequestOptions) {
         CodeBlock.Builder codeBlock = CodeBlock.builder()
                 .add("$T $L = $T.parse(", HttpUrl.Builder.class, httpUrlname, HttpUrl.class)
                 .add(baseUrlReference)
@@ -216,14 +218,17 @@ public final class HttpUrlBuilder {
             }
         });
         // Add additional query parameters from RequestOptions (these override request-defined parameters)
-        codeBlock.beginControlFlow(
-                "if ($L != null)", AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-        codeBlock.beginControlFlow(
-                "$L.getQueryParameters().forEach((key, value) ->",
-                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-        codeBlock.addStatement("$L.addQueryParameter(key, value)", httpUrlname);
-        codeBlock.endControlFlow(")");
-        codeBlock.endControlFlow();
+        // Only emit this block when the calling method has requestOptions in scope
+        if (hasRequestOptions) {
+            codeBlock.beginControlFlow(
+                    "if ($L != null)", AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            codeBlock.beginControlFlow(
+                    "$L.getQueryParameters().forEach((_key, _value) ->",
+                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            codeBlock.addStatement("$L.addQueryParameter(_key, _value)", httpUrlname);
+            codeBlock.endControlFlow(")");
+            codeBlock.endControlFlow();
+        }
         return GeneratedHttpUrl.builder()
                 .initialization(codeBlock.build())
                 .inlineableBuild(CodeBlock.of("$L.build()", httpUrlname))

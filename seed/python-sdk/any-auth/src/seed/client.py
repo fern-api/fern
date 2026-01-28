@@ -62,9 +62,7 @@ class SeedAnyAuth:
     from seed import SeedAnyAuth
 
     client = SeedAnyAuth(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
+        base_url="YOUR_BASE_URL",
     )
 
     # or ...
@@ -223,9 +221,7 @@ class AsyncSeedAnyAuth:
     from seed import AsyncSeedAnyAuth
 
     client = AsyncSeedAnyAuth(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
+        base_url="YOUR_BASE_URL",
     )
 
     # or ...

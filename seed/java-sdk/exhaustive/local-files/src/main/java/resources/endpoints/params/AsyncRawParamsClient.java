@@ -55,153 +55,34 @@ public class AsyncRawParamsClient {
    */
   public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithPath(String param,
       RequestOptions requestOptions) {
-    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("params")
-      .addPathSegments("path")
-      .addPathSegment(param)
-      .build();
-    Request okhttpRequest = new Request.Builder()
-      .url(httpUrl)
-      .method("GET", null)
-      .headers(Headers.of(clientOptions.headers(requestOptions)))
-      .addHeader("Accept", "application/json")
-      .build();
-    OkHttpClient client = clientOptions.httpClient();
-    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-      client = clientOptions.httpClientWithTimeout(requestOptions);
-    }
-    CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-    client.newCall(okhttpRequest).enqueue(new Callback() {
-      @Override
-      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-        try (ResponseBody responseBody = response.body()) {
-          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-          if (response.isSuccessful()) {
-            future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
-            return;
-          }
-          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
-          return;
-        }
-        catch (IOException e) {
-          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-        }
-      }
-
-      @Override
-      public void onFailure(@NotNull Call call, @NotNull IOException e) {
-        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-      }
-    });
-    return future;
-  }
-
-  /**
-   * GET with path param
-   */
-  public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(String param) {
-    return getWithInlinePath(param,GetWithInlinePath.builder().build());
-  }
-
-  /**
-   * GET with path param
-   */
-  public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(String param,
-      RequestOptions requestOptions) {
-    return getWithInlinePath(param,GetWithInlinePath.builder().build(),requestOptions);
-  }
-
-  /**
-   * GET with path param
-   */
-  public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(String param,
-      GetWithInlinePath request) {
-    return getWithInlinePath(param,request,null);
-  }
-
-  /**
-   * GET with path param
-   */
-  public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(String param,
-      GetWithInlinePath request, RequestOptions requestOptions) {
-    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("params")
-      .addPathSegments("path")
-      .addPathSegment(param)
-      .build();
-    Request.Builder _requestBuilder = new Request.Builder()
-      .url(httpUrl)
-      .method("GET", null)
-      .headers(Headers.of(clientOptions.headers(requestOptions)))
-      .addHeader("Accept", "application/json");
-    Request okhttpRequest = _requestBuilder.build();
-    OkHttpClient client = clientOptions.httpClient();
-    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-      client = clientOptions.httpClientWithTimeout(requestOptions);
-    }
-    CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-    client.newCall(okhttpRequest).enqueue(new Callback() {
-      @Override
-      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-        try (ResponseBody responseBody = response.body()) {
-          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-          if (response.isSuccessful()) {
-            future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
-            return;
-          }
-          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
-          return;
-        }
-        catch (IOException e) {
-          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-        }
-      }
-
-      @Override
-      public void onFailure(@NotNull Call call, @NotNull IOException e) {
-        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-      }
-    });
-    return future;
-  }
-
-  /**
-   * GET with query param
-   */
-  public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithQuery(GetWithQuery request) {
-    return getWithQuery(request,null);
-  }
-
-  /**
-   * GET with query param
-   */
-  public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithQuery(GetWithQuery request,
-      RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("params")
-      ;QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-      QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), false);
-      Request.Builder _requestBuilder = new Request.Builder()
+      .addPathSegments("path")
+      .addPathSegment(param);if (requestOptions != null) {
+        requestOptions.getQueryParameters().forEach((_key, _value) -> {
+          httpUrl.addQueryParameter(_key, _value);
+        } );
+      }
+      Request okhttpRequest = new Request.Builder()
         .url(httpUrl.build())
         .method("GET", null)
-        .headers(Headers.of(clientOptions.headers(requestOptions)));
-      Request okhttpRequest = _requestBuilder.build();
+        .headers(Headers.of(clientOptions.headers(requestOptions)))
+        .addHeader("Accept", "application/json")
+        .build();
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
-      CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
+      CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
       client.newCall(okhttpRequest).enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-              future.complete(new SeedExhaustiveHttpResponse<>(null, response));
+              future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
               return;
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
@@ -220,41 +101,61 @@ public class AsyncRawParamsClient {
     }
 
     /**
-     * GET with multiple of same query param
+     * GET with path param
      */
-    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithAllowMultipleQuery(
-        GetWithMultipleQuery request) {
-      return getWithAllowMultipleQuery(request,null);
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(String param) {
+      return getWithInlinePath(param,GetWithInlinePath.builder().build());
     }
 
     /**
-     * GET with multiple of same query param
+     * GET with path param
      */
-    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithAllowMultipleQuery(
-        GetWithMultipleQuery request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(String param,
+        RequestOptions requestOptions) {
+      return getWithInlinePath(param,GetWithInlinePath.builder().build(),requestOptions);
+    }
+
+    /**
+     * GET with path param
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(String param,
+        GetWithInlinePath request) {
+      return getWithInlinePath(param,request,null);
+    }
+
+    /**
+     * GET with path param
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(String param,
+        GetWithInlinePath request, RequestOptions requestOptions) {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
         .addPathSegments("params")
-        ;QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
-        QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
+        .addPathSegments("path")
+        .addPathSegment(param);if (requestOptions != null) {
+          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+            httpUrl.addQueryParameter(_key, _value);
+          } );
+        }
         Request.Builder _requestBuilder = new Request.Builder()
           .url(httpUrl.build())
           .method("GET", null)
-          .headers(Headers.of(clientOptions.headers(requestOptions)));
+          .headers(Headers.of(clientOptions.headers(requestOptions)))
+          .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
           client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
           @Override
           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
             try (ResponseBody responseBody = response.body()) {
+              String responseBodyString = responseBody != null ? responseBody.string() : "{}";
               if (response.isSuccessful()) {
-                future.complete(new SeedExhaustiveHttpResponse<>(null, response));
+                future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                 return;
               }
-              String responseBodyString = responseBody != null ? responseBody.string() : "{}";
               Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
               future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
               return;
@@ -273,22 +174,27 @@ public class AsyncRawParamsClient {
       }
 
       /**
-       * GET with path and query params
+       * GET with query param
        */
-      public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithPathAndQuery(String param,
-          GetWithPathAndQuery request) {
-        return getWithPathAndQuery(param,request,null);
+      public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithQuery(
+          GetWithQuery request) {
+        return getWithQuery(request,null);
       }
 
       /**
-       * GET with path and query params
+       * GET with query param
        */
-      public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithPathAndQuery(String param,
-          GetWithPathAndQuery request, RequestOptions requestOptions) {
+      public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithQuery(GetWithQuery request,
+          RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
           .addPathSegments("params")
-          .addPathSegments("path-query")
-          .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+          ;QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+          QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), false);
+          if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+              httpUrl.addQueryParameter(_key, _value);
+            } );
+          }
           Request.Builder _requestBuilder = new Request.Builder()
             .url(httpUrl.build())
             .method("GET", null)
@@ -326,22 +232,27 @@ public class AsyncRawParamsClient {
         }
 
         /**
-         * GET with path and query params
+         * GET with multiple of same query param
          */
-        public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithInlinePathAndQuery(
-            String param, GetWithInlinePathAndQuery request) {
-          return getWithInlinePathAndQuery(param,request,null);
+        public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithAllowMultipleQuery(
+            GetWithMultipleQuery request) {
+          return getWithAllowMultipleQuery(request,null);
         }
 
         /**
-         * GET with path and query params
+         * GET with multiple of same query param
          */
-        public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithInlinePathAndQuery(
-            String param, GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
+        public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithAllowMultipleQuery(
+            GetWithMultipleQuery request, RequestOptions requestOptions) {
           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
             .addPathSegments("params")
-            .addPathSegments("path-query")
-            .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+            ;QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
+            QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
+            if (requestOptions != null) {
+              requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+              } );
+            }
             Request.Builder _requestBuilder = new Request.Builder()
               .url(httpUrl.build())
               .method("GET", null)
@@ -379,128 +290,251 @@ public class AsyncRawParamsClient {
           }
 
           /**
-           * PUT to update with path param
+           * GET with path and query params
            */
-          public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithPath(String param,
-              String request) {
-            return modifyWithPath(param,request,null);
+          public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithPathAndQuery(
+              String param, GetWithPathAndQuery request) {
+            return getWithPathAndQuery(param,request,null);
           }
 
           /**
-           * PUT to update with path param
+           * GET with path and query params
            */
-          public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithPath(String param,
-              String request, RequestOptions requestOptions) {
-            HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+          public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithPathAndQuery(
+              String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
+            HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
               .addPathSegments("params")
-              .addPathSegments("path")
-              .addPathSegment(param)
-              .build();
-            RequestBody body;
-            try {
-              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-            }
-            catch(JsonProcessingException e) {
-              throw new SeedExhaustiveException("Failed to serialize request", e);
-            }
-            Request okhttpRequest = new Request.Builder()
-              .url(httpUrl)
-              .method("PUT", body)
-              .headers(Headers.of(clientOptions.headers(requestOptions)))
-              .addHeader("Content-Type", "application/json")
-              .addHeader("Accept", "application/json")
-              .build();
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-              client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-            client.newCall(okhttpRequest).enqueue(new Callback() {
-              @Override
-              public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                  String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                  if (response.isSuccessful()) {
-                    future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+              .addPathSegments("path-query")
+              .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+              if (requestOptions != null) {
+                requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                  httpUrl.addQueryParameter(_key, _value);
+                } );
+              }
+              Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
+              Request okhttpRequest = _requestBuilder.build();
+              OkHttpClient client = clientOptions.httpClient();
+              if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                client = clientOptions.httpClientWithTimeout(requestOptions);
+              }
+              CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
+              client.newCall(okhttpRequest).enqueue(new Callback() {
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                  try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                      future.complete(new SeedExhaustiveHttpResponse<>(null, response));
+                      return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                   }
-                  Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                  future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
-                  return;
-                }
-                catch (IOException e) {
-                  future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-                }
-              }
-
-              @Override
-              public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-              }
-            });
-            return future;
-          }
-
-          /**
-           * PUT to update with path param
-           */
-          public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithInlinePath(
-              String param, ModifyResourceAtInlinedPath request) {
-            return modifyWithInlinePath(param,request,null);
-          }
-
-          /**
-           * PUT to update with path param
-           */
-          public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithInlinePath(
-              String param, ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
-            HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-              .addPathSegments("params")
-              .addPathSegments("path")
-              .addPathSegment(param)
-              .build();
-            RequestBody body;
-            try {
-              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
-            }
-            catch(JsonProcessingException e) {
-              throw new SeedExhaustiveException("Failed to serialize request", e);
-            }
-            Request okhttpRequest = new Request.Builder()
-              .url(httpUrl)
-              .method("PUT", body)
-              .headers(Headers.of(clientOptions.headers(requestOptions)))
-              .addHeader("Content-Type", "application/json")
-              .addHeader("Accept", "application/json")
-              .build();
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-              client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-            client.newCall(okhttpRequest).enqueue(new Callback() {
-              @Override
-              public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                  String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                  if (response.isSuccessful()) {
-                    future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
-                    return;
+                  catch (IOException e) {
+                    future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                   }
-                  Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                  future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
-                  return;
                 }
-                catch (IOException e) {
+
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
                   future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
                 }
+              });
+              return future;
+            }
+
+            /**
+             * GET with path and query params
+             */
+            public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithInlinePathAndQuery(
+                String param, GetWithInlinePathAndQuery request) {
+              return getWithInlinePathAndQuery(param,request,null);
+            }
+
+            /**
+             * GET with path and query params
+             */
+            public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithInlinePathAndQuery(
+                String param, GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
+              HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                .addPathSegments("params")
+                .addPathSegments("path-query")
+                .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+                if (requestOptions != null) {
+                  requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                    httpUrl.addQueryParameter(_key, _value);
+                  } );
+                }
+                Request.Builder _requestBuilder = new Request.Builder()
+                  .url(httpUrl.build())
+                  .method("GET", null)
+                  .headers(Headers.of(clientOptions.headers(requestOptions)));
+                Request okhttpRequest = _requestBuilder.build();
+                OkHttpClient client = clientOptions.httpClient();
+                if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                  client = clientOptions.httpClientWithTimeout(requestOptions);
+                }
+                CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
+                client.newCall(okhttpRequest).enqueue(new Callback() {
+                  @Override
+                  public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                      if (response.isSuccessful()) {
+                        future.complete(new SeedExhaustiveHttpResponse<>(null, response));
+                        return;
+                      }
+                      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                      Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                      future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                      return;
+                    }
+                    catch (IOException e) {
+                      future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                    }
+                  }
+
+                  @Override
+                  public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                  }
+                });
+                return future;
               }
 
-              @Override
-              public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+              /**
+               * PUT to update with path param
+               */
+              public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithPath(
+                  String param, String request) {
+                return modifyWithPath(param,request,null);
               }
-            });
-            return future;
-          }
-        }
+
+              /**
+               * PUT to update with path param
+               */
+              public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithPath(
+                  String param, String request, RequestOptions requestOptions) {
+                HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                  .addPathSegments("params")
+                  .addPathSegments("path")
+                  .addPathSegment(param);if (requestOptions != null) {
+                    requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                      httpUrl.addQueryParameter(_key, _value);
+                    } );
+                  }
+                  RequestBody body;
+                  try {
+                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                  }
+                  catch(JsonProcessingException e) {
+                    throw new SeedExhaustiveException("Failed to serialize request", e);
+                  }
+                  Request okhttpRequest = new Request.Builder()
+                    .url(httpUrl.build())
+                    .method("PUT", body)
+                    .headers(Headers.of(clientOptions.headers(requestOptions)))
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Accept", "application/json")
+                    .build();
+                  OkHttpClient client = clientOptions.httpClient();
+                  if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                    client = clientOptions.httpClientWithTimeout(requestOptions);
+                  }
+                  CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
+                  client.newCall(okhttpRequest).enqueue(new Callback() {
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                      try (ResponseBody responseBody = response.body()) {
+                        String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                        if (response.isSuccessful()) {
+                          future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                          return;
+                        }
+                        Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                        future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                        return;
+                      }
+                      catch (IOException e) {
+                        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                      }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                      future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                    }
+                  });
+                  return future;
+                }
+
+                /**
+                 * PUT to update with path param
+                 */
+                public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithInlinePath(
+                    String param, ModifyResourceAtInlinedPath request) {
+                  return modifyWithInlinePath(param,request,null);
+                }
+
+                /**
+                 * PUT to update with path param
+                 */
+                public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithInlinePath(
+                    String param, ModifyResourceAtInlinedPath request,
+                    RequestOptions requestOptions) {
+                  HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                    .addPathSegments("params")
+                    .addPathSegments("path")
+                    .addPathSegment(param);if (requestOptions != null) {
+                      requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                        httpUrl.addQueryParameter(_key, _value);
+                      } );
+                    }
+                    RequestBody body;
+                    try {
+                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    }
+                    catch(JsonProcessingException e) {
+                      throw new SeedExhaustiveException("Failed to serialize request", e);
+                    }
+                    Request okhttpRequest = new Request.Builder()
+                      .url(httpUrl.build())
+                      .method("PUT", body)
+                      .headers(Headers.of(clientOptions.headers(requestOptions)))
+                      .addHeader("Content-Type", "application/json")
+                      .addHeader("Accept", "application/json")
+                      .build();
+                    OkHttpClient client = clientOptions.httpClient();
+                    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                      client = clientOptions.httpClientWithTimeout(requestOptions);
+                    }
+                    CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
+                    client.newCall(okhttpRequest).enqueue(new Callback() {
+                      @Override
+                      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        try (ResponseBody responseBody = response.body()) {
+                          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                          if (response.isSuccessful()) {
+                            future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                            return;
+                          }
+                          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                          return;
+                        }
+                        catch (IOException e) {
+                          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                        }
+                      }
+
+                      @Override
+                      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                      }
+                    });
+                    return future;
+                  }
+                }

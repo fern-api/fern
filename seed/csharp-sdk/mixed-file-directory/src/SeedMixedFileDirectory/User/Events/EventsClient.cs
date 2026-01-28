@@ -17,23 +17,16 @@ public partial class EventsClient : IEventsClient
 
     public MetadataClient Metadata { get; }
 
-    /// <summary>
-    /// List all user events.
-    /// </summary>
-    /// <example><code>
-    /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
-    /// </code></example>
-    public async Task<IEnumerable<Event>> ListEventsAsync(
+    private async Task<WithRawResponse<IEnumerable<Event>>> ListEventsAsyncCore(
         ListUserEventsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.Limit != null)
-        {
-            _query["limit"] = request.Limit.Value.ToString();
-        }
+        var _queryString = new SeedMixedFileDirectory.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("limit", request.Limit)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -41,7 +34,7 @@ public partial class EventsClient : IEventsClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/events/",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -52,14 +45,28 @@ public partial class EventsClient : IEventsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<Event>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
+                throw new SeedMixedFileDirectoryApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedMixedFileDirectoryApiException(
@@ -68,5 +75,22 @@ public partial class EventsClient : IEventsClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// List all user events.
+    /// </summary>
+    /// <example><code>
+    /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<Event>> ListEventsAsync(
+        ListUserEventsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<Event>>(
+            ListEventsAsyncCore(request, options, cancellationToken)
+        );
     }
 }

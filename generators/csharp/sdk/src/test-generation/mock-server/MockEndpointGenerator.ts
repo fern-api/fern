@@ -1,5 +1,13 @@
 import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
-import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    ExampleRequestBody,
+    ExampleTypeReference,
+    HttpEndpoint,
+    ObjectPropertyAccess,
+    TypeId
+} from "@fern-fern/ir-sdk/api";
+import { DefaultValueExtractor, ExtractedDefault } from "../../DefaultValueExtractor";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -11,8 +19,11 @@ export declare namespace TestClass {
 }
 
 export class MockEndpointGenerator extends WithGeneration {
+    private readonly defaultValueExtractor: DefaultValueExtractor;
+
     constructor(private readonly context: SdkGeneratorContext) {
         super(context.generation);
+        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
@@ -37,10 +48,18 @@ export class MockEndpointGenerator extends WithGeneration {
                 responseSupported =
                     jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
 
-                if (example.request != null) {
+                const requestContentType = getContentTypeFromRequestBody(endpoint);
+                // For form-urlencoded requests, we don't need the requestJson variable
+                // since we use FormUrlEncodedMatcher directly with key=value pairs
+                if (example.request != null && requestContentType !== "application/x-www-form-urlencoded") {
+                    // Filter out read-only properties from the request JSON and add defaults when enabled
+                    // Read-only properties are not serialized by the SDK, so they should not be
+                    // included in the mock server's expected request body
+                    const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request, endpoint);
+
                     writer.writeLine(`const string requestJson${suffix} = """`);
                     writer.writeLine(
-                        JSON.stringify(example.request.jsonExample, text.normalizeDates, 2).replace(
+                        JSON.stringify(filteredRequestJson, text.normalizeDates, 2).replace(
                             /"\\{1,2}\$ref"/g,
                             '"$ref\"'
                         )
@@ -83,7 +102,6 @@ export class MockEndpointGenerator extends WithGeneration {
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
-                const requestContentType = getContentTypeFromRequestBody(endpoint);
                 if (requestContentType) {
                     writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
                 }
@@ -92,7 +110,12 @@ export class MockEndpointGenerator extends WithGeneration {
                     `.Using${endpoint.method.charAt(0).toUpperCase()}${endpoint.method.slice(1).toLowerCase()}()`
                 );
                 if (example.request != null) {
-                    if (typeof example.request.jsonExample !== "object") {
+                    if (requestContentType === "application/x-www-form-urlencoded") {
+                        // For form-urlencoded requests, use FormUrlEncodedMatcher
+                        const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request, endpoint);
+                        const formPairs = this.convertToFormUrlEncodedPairs(filteredRequestJson);
+                        writer.write(`.WithBody(new WireMock.Matchers.FormUrlEncodedMatcher([${formPairs}]))`);
+                    } else if (typeof example.request.jsonExample !== "object") {
                         // Not entirely sure why we can't use BodyAsJson here, but it causes test failure
                         writer.write(`.WithBody(requestJson${suffix})`);
                     } else {
@@ -149,5 +172,500 @@ export class MockEndpointGenerator extends WithGeneration {
             case "unknown":
                 return undefined;
         }
+    }
+
+    /**
+     * Filters out read-only properties from an example request body and adds default values when enabled.
+     * Uses the jsonExample directly to preserve any modifications made by other code
+     * (e.g., OAuth credential placeholders set by deepSetProperty).
+     * Only filters out read-only properties when necessary.
+     */
+    private filterReadOnlyPropertiesFromExample(exampleRequest: ExampleRequestBody, endpoint: HttpEndpoint): unknown {
+        if (exampleRequest.type === "inlinedRequestBody") {
+            return this.filterInlinedRequestBody(exampleRequest, endpoint);
+        } else {
+            // exampleRequest.type === "reference"
+            // For reference request bodies, use the jsonExample directly to preserve
+            // any modifications made by other code (e.g., deepSetProperty for OAuth credentials).
+            // We still need to filter out read-only properties if the referenced type has any.
+            return this.filterReferenceRequestBody(exampleRequest);
+        }
+    }
+
+    /**
+     * Filters read-only properties from a reference request body.
+     * For types with read-only properties (directly or in nested types), uses recursive filtering.
+     * For types without read-only properties, returns jsonExample directly to preserve any modifications.
+     */
+    private filterReferenceRequestBody(exampleRequest: ExampleRequestBody.Reference): unknown {
+        // Check if this type or any nested types have read-only properties
+        // If not, return the jsonExample directly to preserve any modifications (e.g., OAuth credentials)
+        if (!this.typeHasReadOnlyProperties(exampleRequest.shape)) {
+            return exampleRequest.jsonExample;
+        }
+
+        // Otherwise, use recursive filtering to remove read-only properties
+        return this.filterExampleTypeReference(exampleRequest);
+    }
+
+    /**
+     * Checks if a type or any of its nested types have read-only properties.
+     */
+    private typeHasReadOnlyProperties(shape: ExampleTypeReference["shape"]): boolean {
+        switch (shape.type) {
+            case "primitive":
+            case "unknown":
+                return false;
+
+            case "container":
+                return this.containerHasReadOnlyProperties(shape.container);
+
+            case "named":
+                return this.namedTypeHasReadOnlyProperties(shape);
+        }
+    }
+
+    /**
+     * Checks if a container type has read-only properties in its nested types.
+     */
+    private containerHasReadOnlyProperties(
+        container:
+            | { type: "list"; list: ExampleTypeReference[] }
+            | { type: "set"; set: ExampleTypeReference[] }
+            | { type: "optional"; optional: ExampleTypeReference | undefined }
+            | { type: "nullable"; nullable: ExampleTypeReference | undefined }
+            | { type: "map"; map: Array<{ key: ExampleTypeReference; value: ExampleTypeReference }> }
+            | { type: "literal"; literal: unknown }
+    ): boolean {
+        switch (container.type) {
+            case "list":
+                return container.list.some((item) => this.typeHasReadOnlyProperties(item.shape));
+
+            case "set":
+                return container.set.some((item) => this.typeHasReadOnlyProperties(item.shape));
+
+            case "optional":
+                return container.optional != null && this.typeHasReadOnlyProperties(container.optional.shape);
+
+            case "nullable":
+                return container.nullable != null && this.typeHasReadOnlyProperties(container.nullable.shape);
+
+            case "map":
+                return container.map.some((entry) => this.typeHasReadOnlyProperties(entry.value.shape));
+
+            case "literal":
+                return false;
+        }
+    }
+
+    /**
+     * Checks if a named type has read-only properties.
+     */
+    private namedTypeHasReadOnlyProperties(namedShape: {
+        type: "named";
+        typeName: { typeId: TypeId };
+        shape:
+            | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
+            | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
+            | { type: "enum"; value: { wireValue: string } }
+            | { type: "alias"; value: ExampleTypeReference }
+            | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
+    }): boolean {
+        const typeId = namedShape.typeName.typeId;
+        const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
+        const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
+
+        // If this type has read-only properties, return true
+        if (readOnlyNames.size > 0) {
+            return true;
+        }
+
+        // Check nested types
+        const innerShape = namedShape.shape;
+        switch (innerShape.type) {
+            case "object":
+                return innerShape.properties.some((prop) => this.typeHasReadOnlyProperties(prop.value.shape));
+
+            case "alias":
+                return this.typeHasReadOnlyProperties(innerShape.value.shape);
+
+            case "enum":
+                return false;
+
+            case "union":
+            case "undiscriminatedUnion":
+                // For unions, we'd need to check all variants, but for simplicity, assume no read-only properties
+                return false;
+        }
+    }
+
+    /**
+     * Filters read-only properties from an inlined request body and adds default values when enabled.
+     * For types with read-only properties (directly or in nested types), uses recursive filtering.
+     * For types without read-only properties, returns jsonExample directly to preserve any modifications.
+     */
+    private filterInlinedRequestBody(
+        exampleRequest: ExampleRequestBody.InlinedRequestBody,
+        endpoint: HttpEndpoint
+    ): Record<string, unknown> {
+        const useDefaults = this.generation.settings.useDefaultRequestParameterValues;
+
+        // Check if any properties are read-only or have nested read-only properties
+        const hasReadOnlyProperties = exampleRequest.properties.some(
+            (prop) =>
+                this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration) ||
+                this.typeHasReadOnlyProperties(prop.value.shape)
+        );
+
+        // Get the set of wire values present in the example
+        const exampleWireValues = new Set(exampleRequest.properties.map((prop) => prop.name.wireValue));
+
+        // If no read-only properties and no defaults to add, return the jsonExample directly
+        // to preserve any modifications (e.g., OAuth credential placeholders set by deepSetProperty)
+        if (!hasReadOnlyProperties && !useDefaults) {
+            return (exampleRequest.jsonExample as Record<string, unknown>) ?? {};
+        }
+
+        // Build the result with filtering and defaults
+        const result: Record<string, unknown> = {};
+
+        for (const prop of exampleRequest.properties) {
+            // Check if this property is read-only by looking up the original type declaration
+            if (this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration)) {
+                continue;
+            }
+            // Recursively filter the property value
+            result[prop.name.wireValue] = this.filterExampleTypeReference(prop.value);
+        }
+
+        // Also include extra properties if present
+        if (exampleRequest.extraProperties) {
+            for (const extraProp of exampleRequest.extraProperties) {
+                result[extraProp.name.wireValue] = this.filterExampleTypeReference(extraProp.value);
+            }
+        }
+
+        // Add default values for properties not present in the example when useDefaults is enabled
+        if (useDefaults && endpoint.requestBody?.type === "inlinedRequestBody") {
+            const allProperties = [
+                ...endpoint.requestBody.properties,
+                ...(endpoint.requestBody.extendedProperties ?? [])
+            ];
+            for (const prop of allProperties) {
+                // Skip if already in the example
+                if (exampleWireValues.has(prop.name.wireValue)) {
+                    continue;
+                }
+                // Skip read-only properties
+                if (prop.propertyAccess === "READ_ONLY") {
+                    continue;
+                }
+                // Get the default value for this property
+                const defaultValue = this.defaultValueExtractor.extractDefault(prop.valueType);
+                if (defaultValue != null) {
+                    result[prop.name.wireValue] = this.parseDefaultValue(defaultValue);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Parses a default value string into its JSON representation.
+     */
+    private parseDefaultValue(defaultValue: ExtractedDefault): unknown {
+        switch (defaultValue.csharpType) {
+            case "string":
+                return defaultValue.value
+                    .slice(1, -1)
+                    .replace(/\\"/g, '"')
+                    .replace(/\\r/g, "\r")
+                    .replace(/\\n/g, "\n")
+                    .replace(/\\t/g, "\t")
+                    .replace(/\\\\/g, "\\"); // Must be last to avoid double-unescaping
+            case "int":
+            case "long":
+            case "uint":
+            case "ulong":
+            case "float":
+            case "double":
+                return parseFloat(defaultValue.value.replace(/[LlFfDd]$/, ""));
+            case "bool":
+                return defaultValue.value === "true";
+            case "BigInteger": {
+                const match = defaultValue.value.match(/BigInteger\.Parse\("(.+)"\)/);
+                return match ? match[1] : defaultValue.value;
+            }
+            default:
+                return defaultValue.value;
+        }
+    }
+
+    /**
+     * Checks if a property is read-only by looking up its type declaration.
+     */
+    private isPropertyReadOnly(wireValue: string, typeDeclarationName: { typeId: TypeId } | undefined): boolean {
+        if (typeDeclarationName == null) {
+            return false;
+        }
+
+        const typeDeclaration = this.context.model.dereferenceType(typeDeclarationName.typeId).typeDeclaration;
+        if (typeDeclaration.shape.type !== "object") {
+            return false;
+        }
+
+        // Check properties
+        for (const prop of typeDeclaration.shape.properties) {
+            if (prop.name.wireValue === wireValue && prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                return true;
+            }
+        }
+
+        // Check extended properties
+        if (typeDeclaration.shape.extendedProperties) {
+            for (const prop of typeDeclaration.shape.extendedProperties) {
+                if (prop.name.wireValue === wireValue && prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Filters read-only properties from an example type reference.
+     * Recursively handles containers (optional, list, map, etc.) and named types.
+     */
+    private filterExampleTypeReference(exampleTypeRef: ExampleTypeReference): unknown {
+        const shape = exampleTypeRef.shape;
+
+        switch (shape.type) {
+            case "primitive":
+            case "unknown":
+                return exampleTypeRef.jsonExample;
+
+            case "container":
+                // For literal containers, just return the jsonExample value directly
+                // since the literal value is already the correct wire value
+                if (shape.container.type === "literal") {
+                    return exampleTypeRef.jsonExample;
+                }
+                return this.filterContainerExample(shape.container);
+
+            case "named":
+                return this.filterNamedExample(shape);
+        }
+    }
+
+    /**
+     * Filters read-only properties from a container example (optional, list, map, etc.).
+     */
+    private filterContainerExample(
+        container:
+            | { type: "list"; list: ExampleTypeReference[] }
+            | { type: "set"; set: ExampleTypeReference[] }
+            | { type: "optional"; optional: ExampleTypeReference | undefined }
+            | { type: "nullable"; nullable: ExampleTypeReference | undefined }
+            | { type: "map"; map: Array<{ key: ExampleTypeReference; value: ExampleTypeReference }> }
+            | { type: "literal"; literal: unknown }
+    ): unknown {
+        switch (container.type) {
+            case "list":
+                return container.list.map((item) => this.filterExampleTypeReference(item));
+
+            case "set":
+                return container.set.map((item) => this.filterExampleTypeReference(item));
+
+            case "optional":
+                if (container.optional == null) {
+                    return null;
+                }
+                return this.filterExampleTypeReference(container.optional);
+
+            case "nullable":
+                if (container.nullable == null) {
+                    return null;
+                }
+                return this.filterExampleTypeReference(container.nullable);
+
+            case "map": {
+                const mapResult: Record<string, unknown> = {};
+                for (const entry of container.map) {
+                    const key = entry.key.jsonExample;
+                    // JSON object keys are always strings, but the example might have numeric keys
+                    if (typeof key === "string" || typeof key === "number") {
+                        mapResult[String(key)] = this.filterExampleTypeReference(entry.value);
+                    }
+                }
+                return mapResult;
+            }
+
+            case "literal":
+                return this.extractLiteralValue(container.literal);
+        }
+    }
+
+    /**
+     * Extracts the actual value from an ExamplePrimitive literal.
+     * Literals in the IR are represented as discriminated unions like { type: "boolean", boolean: false }.
+     */
+    private extractLiteralValue(literal: unknown): unknown {
+        const lit = literal as { type: string; [key: string]: unknown };
+        switch (lit.type) {
+            case "boolean":
+                return lit.boolean;
+            case "string":
+                return (lit.string as { original: string })?.original ?? lit.string;
+            default:
+                // For other types, try to extract the value by type name
+                return lit[lit.type] ?? literal;
+        }
+    }
+
+    /**
+     * Filters read-only properties from a named type example.
+     */
+    private filterNamedExample(namedShape: {
+        type: "named";
+        typeName: { typeId: TypeId };
+        shape:
+            | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
+            | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
+            | { type: "enum"; value: { wireValue: string } }
+            | { type: "alias"; value: ExampleTypeReference }
+            | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
+    }): unknown {
+        const typeId = namedShape.typeName.typeId;
+        const innerShape = namedShape.shape;
+
+        switch (innerShape.type) {
+            case "object":
+                return this.filterObjectExample(typeId, innerShape.properties);
+
+            case "alias":
+                return this.filterExampleTypeReference(innerShape.value);
+
+            case "enum":
+                return innerShape.value.wireValue;
+
+            case "union":
+                // For unions, we need to handle the discriminant and the union value
+                return this.filterUnionExample(innerShape);
+
+            case "undiscriminatedUnion":
+                return this.filterExampleTypeReference(innerShape.singleUnionType);
+        }
+    }
+
+    /**
+     * Filters read-only properties from an object example.
+     */
+    private filterObjectExample(
+        typeId: TypeId,
+        properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>
+    ): Record<string, unknown> {
+        const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
+        const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
+
+        const result: Record<string, unknown> = {};
+        for (const prop of properties) {
+            if (readOnlyNames.has(prop.name.wireValue)) {
+                continue;
+            }
+            result[prop.name.wireValue] = this.filterExampleTypeReference(prop.value);
+        }
+        return result;
+    }
+
+    /**
+     * Filters read-only properties from a union example.
+     */
+    private filterUnionExample(unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown }): unknown {
+        // Union examples have a complex structure - for now, return the JSON example
+        // and rely on the SDK's serialization to handle read-only properties
+        const singleUnionType = unionShape.singleUnionType as {
+            wireDiscriminantValue: { wireValue: string };
+            shape:
+                | {
+                      type: "samePropertiesAsObject";
+                      typeId: TypeId;
+                      object: { properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> };
+                  }
+                | { type: "singleProperty"; jsonExample: unknown; typeReference: ExampleTypeReference }
+                | { type: "noProperties" };
+        };
+
+        const result: Record<string, unknown> = {
+            [unionShape.discriminant.wireValue]: singleUnionType.wireDiscriminantValue.wireValue
+        };
+
+        if (singleUnionType.shape.type === "samePropertiesAsObject") {
+            const filteredProps = this.filterObjectExample(
+                singleUnionType.shape.typeId,
+                singleUnionType.shape.object.properties
+            );
+            Object.assign(result, filteredProps);
+        } else if (singleUnionType.shape.type === "singleProperty") {
+            // Single property unions have a nested value
+            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape.typeReference);
+            // The property name for single property unions is typically the variant name
+            // but we need to check the union definition for the actual wire name
+            Object.assign(result, filteredValue);
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets the set of read-only property wire names for a type declaration.
+     */
+    private getReadOnlyPropertyNamesForType(typeDeclaration: {
+        shape: {
+            type: string;
+            properties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+        };
+    }): Set<string> {
+        const readOnlyNames = new Set<string>();
+        const shape = typeDeclaration.shape;
+
+        if (shape.type !== "object" || !shape.properties) {
+            return readOnlyNames;
+        }
+
+        for (const prop of shape.properties) {
+            if (prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                readOnlyNames.add(prop.name.wireValue);
+            }
+        }
+
+        if (shape.extendedProperties) {
+            for (const prop of shape.extendedProperties) {
+                if (prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                    readOnlyNames.add(prop.name.wireValue);
+                }
+            }
+        }
+
+        return readOnlyNames;
+    }
+
+    /**
+     * Converts a JSON object to form-urlencoded key=value pairs for use with FormUrlEncodedMatcher.
+     * Returns a string like: "key1=value1", "key2=value2"
+     */
+    private convertToFormUrlEncodedPairs(json: unknown): string {
+        if (typeof json !== "object" || json === null) {
+            return "";
+        }
+        const pairs: string[] = [];
+        for (const [key, value] of Object.entries(json)) {
+            if (value !== undefined && value !== null) {
+                pairs.push(`"${key}=${String(value)}"`);
+            }
+        }
+        return pairs.join(", ");
     }
 }

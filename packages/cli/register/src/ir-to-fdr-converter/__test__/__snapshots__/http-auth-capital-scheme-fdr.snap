@@ -1,0 +1,330 @@
+{
+  "apiName": "HTTP Auth Capital Scheme Test API",
+  "auth": {
+    "description": "Basic HTTP Authentication",
+    "passwordAlwaysEmpty": false,
+    "passwordName": "password",
+    "type": "basicAuth",
+    "usernameName": "username",
+  },
+  "authSchemes": {
+    "basicHttpAuthentication": {
+      "description": "Basic HTTP Authentication",
+      "passwordAlwaysEmpty": false,
+      "passwordName": "password",
+      "type": "basicAuth",
+      "usernameName": "username",
+    },
+    "bearerHttpAuthentication": {
+      "description": "Bearer token using a JWT",
+      "tokenName": "token",
+      "type": "bearerAuth",
+    },
+  },
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": true,
+        "authV2": [
+          "basicHttpAuthentication",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/basic-protected",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "message": "Basic auth successful",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "Basic auth successful",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getBasicProtected",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": [
+          {
+            "schemes": [
+              "basicHttpAuthentication",
+            ],
+          },
+        ],
+        "name": "Get resource protected by Basic auth",
+        "originalEndpointId": "endpoint_.getBasicProtected",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/basic-protected",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Success",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "getBasicProtected_Response_200",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "getBasicProtected_Response_200",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": true,
+        "authV2": [
+          "bearerHttpAuthentication",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/bearer-protected",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "message": "Bearer auth successful",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "Bearer auth successful",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getBearerProtected",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": [
+          {
+            "schemes": [
+              "bearerHttpAuthentication",
+            ],
+          },
+        ],
+        "name": "Get resource protected by Bearer auth",
+        "originalEndpointId": "endpoint_.getBearerProtected",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/bearer-protected",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Success",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "getBearerProtected_Response_200",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "getBearerProtected_Response_200",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "graphqlOperations": undefined,
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "getBasicProtected_Response_200": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "getBasicProtected_Response_200",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "getBearerProtected_Response_200": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "getBearerProtected_Response_200",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

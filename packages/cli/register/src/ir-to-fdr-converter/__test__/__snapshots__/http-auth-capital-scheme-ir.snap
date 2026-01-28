@@ -1,0 +1,889 @@
+{
+  "apiDisplayName": "HTTP Auth Capital Scheme Test API",
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "httpAuthCapitalSchemeTestApi",
+      "unsafeName": "httpAuthCapitalSchemeTestApi",
+    },
+    "originalName": "HTTP Auth Capital Scheme Test API",
+    "pascalCase": {
+      "safeName": "HttpAuthCapitalSchemeTestApi",
+      "unsafeName": "HttpAuthCapitalSchemeTestApi",
+    },
+    "screamingSnakeCase": {
+      "safeName": "HTTP_AUTH_CAPITAL_SCHEME_TEST_API",
+      "unsafeName": "HTTP_AUTH_CAPITAL_SCHEME_TEST_API",
+    },
+    "snakeCase": {
+      "safeName": "http_auth_capital_scheme_test_api",
+      "unsafeName": "http_auth_capital_scheme_test_api",
+    },
+  },
+  "apiPlayground": undefined,
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "_visit": [Function],
+        "docs": "Basic HTTP Authentication",
+        "key": "basicHttpAuthentication",
+        "password": {
+          "camelCase": {
+            "safeName": "password",
+            "unsafeName": "password",
+          },
+          "originalName": "password",
+          "pascalCase": {
+            "safeName": "Password",
+            "unsafeName": "Password",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PASSWORD",
+            "unsafeName": "PASSWORD",
+          },
+          "snakeCase": {
+            "safeName": "password",
+            "unsafeName": "password",
+          },
+        },
+        "passwordEnvVar": undefined,
+        "passwordOmit": false,
+        "type": "basic",
+        "username": {
+          "camelCase": {
+            "safeName": "username",
+            "unsafeName": "username",
+          },
+          "originalName": "username",
+          "pascalCase": {
+            "safeName": "Username",
+            "unsafeName": "Username",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USERNAME",
+            "unsafeName": "USERNAME",
+          },
+          "snakeCase": {
+            "safeName": "username",
+            "unsafeName": "username",
+          },
+        },
+        "usernameEnvVar": undefined,
+        "usernameOmit": false,
+      },
+      {
+        "_visit": [Function],
+        "docs": "Bearer token using a JWT",
+        "key": "bearerHttpAuthentication",
+        "token": {
+          "camelCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+          "originalName": "token",
+          "pascalCase": {
+            "safeName": "Token",
+            "unsafeName": "Token",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TOKEN",
+            "unsafeName": "TOKEN",
+          },
+          "snakeCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+        },
+        "tokenEnvVar": undefined,
+        "type": "bearer",
+      },
+    ],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "https://api.example.com/v1",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": undefined,
+          "id": "https://api.example.com/v1",
+          "name": {
+            "camelCase": {
+              "safeName": "httpsApiExampleComV1",
+              "unsafeName": "httpsApiExampleComV1",
+            },
+            "originalName": "https://api.example.com/v1",
+            "pascalCase": {
+              "safeName": "HttpsApiExampleComV1",
+              "unsafeName": "HttpsApiExampleComV1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "HTTPS_API_EXAMPLE_COM_V_1",
+              "unsafeName": "HTTPS_API_EXAMPLE_COM_V_1",
+            },
+            "snakeCase": {
+              "safeName": "https_api_example_com_v_1",
+              "unsafeName": "https_api_example_com_v_1",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {},
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.example.com/v1",
+          "displayName": "Get resource protected by Basic auth",
+          "docs": undefined,
+          "errors": [],
+          "fullPath": {
+            "head": "/basic-protected",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.getBasicProtected",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getBasicProtected",
+              "unsafeName": "getBasicProtected",
+            },
+            "originalName": "getBasicProtected",
+            "pascalCase": {
+              "safeName": "GetBasicProtected",
+              "unsafeName": "GetBasicProtected",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_BASIC_PROTECTED",
+              "unsafeName": "GET_BASIC_PROTECTED",
+            },
+            "snakeCase": {
+              "safeName": "get_basic_protected",
+              "unsafeName": "get_basic_protected",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/basic-protected",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Success",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "getBasicProtectedResponse200",
+                      "unsafeName": "getBasicProtectedResponse200",
+                    },
+                    "originalName": "getBasicProtected_Response_200",
+                    "pascalCase": {
+                      "safeName": "GetBasicProtectedResponse200",
+                      "unsafeName": "GetBasicProtectedResponse200",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "GET_BASIC_PROTECTED_RESPONSE_200",
+                      "unsafeName": "GET_BASIC_PROTECTED_RESPONSE_200",
+                    },
+                    "snakeCase": {
+                      "safeName": "get_basic_protected_response_200",
+                      "unsafeName": "get_basic_protected_response_200",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "getBasicProtected_Response_200",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getBasicProtectedExample": {
+                      "message": "Basic auth successful",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "Success",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 200,
+          },
+          "responseHeaders": [],
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "basicHttpAuthentication": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getBasicProtectedExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getBasicProtectedExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/basic-protected",
+                  },
+                  "environment": "https://api.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "message": "Basic auth successful",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Success",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "getBasicProtectedResponse200",
+                          "unsafeName": "getBasicProtectedResponse200",
+                        },
+                        "originalName": "getBasicProtected_Response_200",
+                        "pascalCase": {
+                          "safeName": "GetBasicProtectedResponse200",
+                          "unsafeName": "GetBasicProtectedResponse200",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "GET_BASIC_PROTECTED_RESPONSE_200",
+                          "unsafeName": "GET_BASIC_PROTECTED_RESPONSE_200",
+                        },
+                        "snakeCase": {
+                          "safeName": "get_basic_protected_response_200",
+                          "unsafeName": "get_basic_protected_response_200",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "getBasicProtected_Response_200",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getBasicProtectedExample": {
+                          "message": "Basic auth successful",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "Success",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.example.com/v1",
+          "displayName": "Get resource protected by Bearer auth",
+          "docs": undefined,
+          "errors": [],
+          "fullPath": {
+            "head": "/bearer-protected",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.getBearerProtected",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getBearerProtected",
+              "unsafeName": "getBearerProtected",
+            },
+            "originalName": "getBearerProtected",
+            "pascalCase": {
+              "safeName": "GetBearerProtected",
+              "unsafeName": "GetBearerProtected",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_BEARER_PROTECTED",
+              "unsafeName": "GET_BEARER_PROTECTED",
+            },
+            "snakeCase": {
+              "safeName": "get_bearer_protected",
+              "unsafeName": "get_bearer_protected",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/bearer-protected",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Success",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "getBearerProtectedResponse200",
+                      "unsafeName": "getBearerProtectedResponse200",
+                    },
+                    "originalName": "getBearerProtected_Response_200",
+                    "pascalCase": {
+                      "safeName": "GetBearerProtectedResponse200",
+                      "unsafeName": "GetBearerProtectedResponse200",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "GET_BEARER_PROTECTED_RESPONSE_200",
+                      "unsafeName": "GET_BEARER_PROTECTED_RESPONSE_200",
+                    },
+                    "snakeCase": {
+                      "safeName": "get_bearer_protected_response_200",
+                      "unsafeName": "get_bearer_protected_response_200",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "getBearerProtected_Response_200",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getBearerProtectedExample": {
+                      "message": "Bearer auth successful",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "Success",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 200,
+          },
+          "responseHeaders": [],
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "bearerHttpAuthentication": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getBearerProtectedExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getBearerProtectedExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/bearer-protected",
+                  },
+                  "environment": "https://api.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "message": "Bearer auth successful",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Success",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "getBearerProtectedResponse200",
+                          "unsafeName": "getBearerProtectedResponse200",
+                        },
+                        "originalName": "getBearerProtected_Response_200",
+                        "pascalCase": {
+                          "safeName": "GetBearerProtectedResponse200",
+                          "unsafeName": "GetBearerProtectedResponse200",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "GET_BEARER_PROTECTED_RESPONSE_200",
+                          "unsafeName": "GET_BEARER_PROTECTED_RESPONSE_200",
+                        },
+                        "snakeCase": {
+                          "safeName": "get_bearer_protected_response_200",
+                          "unsafeName": "get_bearer_protected_response_200",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "getBearerProtected_Response_200",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getBearerProtectedExample": {
+                          "message": "Bearer auth successful",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "Success",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "getBasicProtected_Response_200": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getBasicProtectedResponse200",
+            "unsafeName": "getBasicProtectedResponse200",
+          },
+          "originalName": "getBasicProtected_Response_200",
+          "pascalCase": {
+            "safeName": "GetBasicProtectedResponse200",
+            "unsafeName": "GetBasicProtectedResponse200",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_BASIC_PROTECTED_RESPONSE_200",
+            "unsafeName": "GET_BASIC_PROTECTED_RESPONSE_200",
+          },
+          "snakeCase": {
+            "safeName": "get_basic_protected_response_200",
+            "unsafeName": "get_basic_protected_response_200",
+          },
+        },
+        "typeId": "getBasicProtected_Response_200",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "BasicProtectedGetResponsesContentApplicationJsonSchemaMessage_example_0": "Basic auth successful",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "getBasicProtected_Response_200_example_autogenerated": {},
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "getBearerProtected_Response_200": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getBearerProtectedResponse200",
+            "unsafeName": "getBearerProtectedResponse200",
+          },
+          "originalName": "getBearerProtected_Response_200",
+          "pascalCase": {
+            "safeName": "GetBearerProtectedResponse200",
+            "unsafeName": "GetBearerProtectedResponse200",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_BEARER_PROTECTED_RESPONSE_200",
+            "unsafeName": "GET_BEARER_PROTECTED_RESPONSE_200",
+          },
+          "snakeCase": {
+            "safeName": "get_bearer_protected_response_200",
+            "unsafeName": "get_bearer_protected_response_200",
+          },
+        },
+        "typeId": "getBearerProtected_Response_200",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "BearerProtectedGetResponsesContentApplicationJsonSchemaMessage_example_0": "Bearer auth successful",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "getBearerProtected_Response_200_example_autogenerated": {},
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

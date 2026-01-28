@@ -13,20 +13,16 @@ public partial class MetadataClient : IMetadataClient
         _client = client;
     }
 
-    /// <summary>
-    /// Get event metadata.
-    /// </summary>
-    /// <example><code>
-    /// await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
-    /// </code></example>
-    public async Task<Metadata> GetMetadataAsync(
+    private async Task<WithRawResponse<Metadata>> GetMetadataAsyncCore(
         GetEventMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["id"] = request.Id;
+        var _queryString = new SeedMixedFileDirectory.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("id", request.Id)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -34,7 +30,7 @@ public partial class MetadataClient : IMetadataClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/events/metadata/",
-                    Query = _query,
+                    QueryString = _queryString,
                     Options = options,
                 },
                 cancellationToken
@@ -45,14 +41,28 @@ public partial class MetadataClient : IMetadataClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Metadata>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Metadata>(responseBody)!;
+                return new WithRawResponse<Metadata>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
+                throw new SeedMixedFileDirectoryApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedMixedFileDirectoryApiException(
@@ -61,5 +71,22 @@ public partial class MetadataClient : IMetadataClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Get event metadata.
+    /// </summary>
+    /// <example><code>
+    /// await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
+    /// </code></example>
+    public WithRawResponseTask<Metadata> GetMetadataAsync(
+        GetEventMetadataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Metadata>(
+            GetMetadataAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -283,16 +283,15 @@ module Seed
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def update_complex_profile(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[profile_id]
-        body_params = params.except(*path_param_names)
-        body_prop_names = %i[nullable_role nullable_status nullable_notification nullable_search_result nullable_array]
-        body_bag = body_params.slice(*body_prop_names)
+        request_data = Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(params).to_h
+        non_body_param_names = ["profileId"]
+        body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/profiles/complex/#{params[:profile_id]}",
-          body: Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin
@@ -431,16 +430,15 @@ module Seed
       # @return [Array[String]]
       def update_tags(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[user_id]
-        body_params = params.except(*path_param_names)
-        body_prop_names = %i[tags categories labels]
-        body_bag = body_params.slice(*body_prop_names)
+        request_data = Seed::NullableOptional::Types::UpdateTagsRequest.new(params).to_h
+        non_body_param_names = ["userId"]
+        body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/api/users/#{params[:user_id]}/tags",
-          body: Seed::NullableOptional::Types::UpdateTagsRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin
@@ -468,14 +466,11 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::SearchResult], nil]
       def get_search_results(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[query filters include_types]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/search",
-          body: Seed::NullableOptional::Types::SearchRequest.new(body_bag).to_h,
+          body: Seed::NullableOptional::Types::SearchRequest.new(params).to_h,
           request_options: request_options
         )
         begin

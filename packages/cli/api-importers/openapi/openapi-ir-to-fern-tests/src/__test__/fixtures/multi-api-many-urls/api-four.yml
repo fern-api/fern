@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: API Four
+  version: 1.0.0
+servers:
+  - url: https://four.example.com
+paths:
+  /four:
+    get:
+      operationId: getFour
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string

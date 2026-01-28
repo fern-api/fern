@@ -1,3 +1,4 @@
+# C# SDK Generator Features
 features:
   - id: USAGE
     description: |
@@ -31,6 +32,11 @@ features:
     advanced: true
     description: |
       The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
+
+  - id: RAW_RESPONSE
+    advanced: true
+    description: |
+      Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
   - id: FORWARD_COMPATIBLE_ENUMS
     advanced: true

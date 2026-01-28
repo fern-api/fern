@@ -1,8 +1,10 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { randomUUID } from "crypto";
 import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { loadFernYml } from "../config/loadFernYml";
+import { loadFernYml } from "../config/fern-yml/loadFernYml";
 import { ValidationError } from "../errors/ValidationError";
 
 const SAMPLE_FERN_YML = `edition: 2026-01-01
@@ -18,15 +20,17 @@ sdks:
     node:
       lang: typescript
       version: "1.4.0"
+      output:
+        path: ./sdks/node
 `;
 
 describe("loadFernYml", () => {
-    let testDir: string;
-    let nestedDir: string;
+    let testDir: AbsoluteFilePath;
+    let nestedDir: AbsoluteFilePath;
 
     beforeEach(async () => {
-        testDir = join(tmpdir(), `fern-test-${Date.now()}`);
-        nestedDir = join(testDir, "nested", "deep");
+        testDir = AbsoluteFilePath.of(join(tmpdir(), `fern-yml-test-${randomUUID()}`));
+        nestedDir = AbsoluteFilePath.of(join(testDir, "nested", "deep"));
         await mkdir(nestedDir, { recursive: true });
         await writeFile(join(testDir, "fern.yml"), SAMPLE_FERN_YML);
     });
@@ -36,50 +40,50 @@ describe("loadFernYml", () => {
     });
 
     it("finds fern.yml in the current directory", async () => {
-        const fernYml = await loadFernYml({ cwd: testDir });
+        const result = await loadFernYml({ cwd: testDir });
 
-        expect(fernYml.edition).toBe("2026-01-01");
-        expect(fernYml.org).toBe("acme");
+        expect(result.sourced.edition.value).toBe("2026-01-01");
+        expect(result.sourced.org.value).toBe("acme");
     });
 
     it("crawls up the directory tree to find fern.yml", async () => {
-        const fernYml = await loadFernYml({ cwd: nestedDir });
+        const result = await loadFernYml({ cwd: nestedDir });
 
-        expect(fernYml.edition).toBe("2026-01-01");
-        expect(fernYml.org).toBe("acme");
+        expect(result.sourced.edition.value).toBe("2026-01-01");
+        expect(result.sourced.org.value).toBe("acme");
     });
 
-    it("preserves source location for the root object via source property", async () => {
-        const fernYml = await loadFernYml({ cwd: testDir });
+    it("preserves source location for the root object", async () => {
+        const result = await loadFernYml({ cwd: testDir });
 
-        expect(fernYml.source.$loc.absoluteFilePath.toString()).toContain("fern.yml");
-        expect(fernYml.source.$loc.line).toBe(1);
-        expect(fernYml.source.$loc.column).toBe(1);
+        expect(result.sourced.$loc.absoluteFilePath.toString()).toContain("fern.yml");
+        expect(result.sourced.$loc.line).toBe(1);
+        expect(result.sourced.$loc.column).toBe(1);
     });
 
-    it("preserves source location for top-level values via source property", async () => {
-        const fernYml = await loadFernYml({ cwd: testDir });
+    it("preserves source location for top-level values", async () => {
+        const result = await loadFernYml({ cwd: testDir });
 
-        expect(fernYml.source.edition.$loc.line).toBe(1);
-        expect(fernYml.source.edition.$loc.column).toBe(10);
-        expect(fernYml.source.org.$loc.line).toBe(2);
-        expect(fernYml.source.org.$loc.column).toBe(6);
+        expect(result.sourced.edition.$loc.line).toBe(1);
+        expect(result.sourced.edition.$loc.column).toBe(10);
+        expect(result.sourced.org.$loc.line).toBe(2);
+        expect(result.sourced.org.$loc.column).toBe(6);
     });
 
-    it("preserves source location for nested values via source property", async () => {
-        const fernYml = await loadFernYml({ cwd: testDir });
+    it("preserves source location for nested values", async () => {
+        const result = await loadFernYml({ cwd: testDir });
 
-        const cli = fernYml.source.cli;
+        const cli = result.sourced.cli;
         expect(cli).toBeDefined();
         if (cli && "version" in cli) {
             expect(cli.version?.$loc.line).toBe(5);
         }
     });
 
-    it("preserves source location for deeply nested values via source property", async () => {
-        const fernYml = await loadFernYml({ cwd: testDir });
+    it("preserves source location for deeply nested values", async () => {
+        const result = await loadFernYml({ cwd: testDir });
 
-        const sdks = fernYml.source.sdks;
+        const sdks = result.sourced.sdks;
         expect(sdks).toBeDefined();
         if (sdks && "targets" in sdks) {
             const nodeTarget = sdks.targets?.node;
@@ -88,17 +92,28 @@ describe("loadFernYml", () => {
         }
     });
 
-    it("converts nested config values to plain types", async () => {
-        const fernYml = await loadFernYml({ cwd: testDir });
-        expect(fernYml.cli?.version).toBe("3.38.0");
-        expect(fernYml.sdks?.autorelease).toBe(true);
-        expect(fernYml.sdks?.defaultGroup).toBe("public");
-        expect(fernYml.sdks?.targets?.node?.lang).toBe("typescript");
-        expect(fernYml.sdks?.targets?.node?.version).toBe("1.4.0");
+    it("provides access to sourced values directly", async () => {
+        const result = await loadFernYml({ cwd: testDir });
+
+        // Since cli and sdks are present in the sample, we can narrow the types
+        const cli = result.sourced.cli;
+        expect(cli).toBeDefined();
+        if (cli && !("value" in cli)) {
+            expect(cli.version?.value).toBe("3.38.0");
+        }
+
+        const sdks = result.sourced.sdks;
+        expect(sdks).toBeDefined();
+        if (sdks && !("value" in sdks)) {
+            expect(sdks.autorelease?.value).toBe(true);
+            expect(sdks.defaultGroup?.value).toBe("public");
+            expect(sdks.targets?.node?.lang?.value).toBe("typescript");
+            expect(sdks.targets?.node?.version?.value).toBe("1.4.0");
+        }
     });
 
     it("throws when fern.yml is not found", async () => {
-        const emptyDir = join(tmpdir(), `fern-empty-${Date.now()}`);
+        const emptyDir = AbsoluteFilePath.of(join(tmpdir(), `fern-empty-${Date.now()}`));
         await mkdir(emptyDir, { recursive: true });
         try {
             await expect(loadFernYml({ cwd: emptyDir })).rejects.toThrow("fern.yml");
@@ -157,7 +172,9 @@ sdks:
                 }
 
                 const issueString = issue.toString();
-                expect(issueString).toBe("fern.yml:7:13: sdks.targets.node.lang must be a string");
+                expect(issueString).toBe(
+                    "fern.yml:7:13: sdks.targets.node.lang must be one of: csharp, go, java, php, python, ruby, rust, swift, typescript"
+                );
             }
         });
 
@@ -253,6 +270,8 @@ sdks:
   targets:
     node:
       lang: 12345
+      output:
+        path: ./sdks/node
 `
             );
 
@@ -268,7 +287,9 @@ sdks:
                     output.push(issue.toString());
                 }
 
-                expect(output).toEqual(["fern.yml:7:13: sdks.targets.node.lang must be a string"]);
+                expect(output).toEqual([
+                    "fern.yml:7:13: sdks.targets.node.lang must be one of: csharp, go, java, php, python, ruby, rust, swift, typescript"
+                ]);
             }
         });
     });
@@ -292,9 +313,14 @@ cli:
 `
             );
 
-            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await loadFernYml({ cwd: testDir });
 
-            expect(fernYml.cli?.version).toBe("4.0.0");
+            const cli = result.sourced.cli;
+            if (cli && !("value" in cli)) {
+                expect(cli.version?.value).toBe("4.0.0");
+            } else {
+                expect.fail("Expected cli to be defined");
+            }
         });
 
         it("resolves $ref for sdks configuration", async () => {
@@ -307,6 +333,8 @@ targets:
   python:
     lang: python
     version: "2.0.0"
+    output:
+      path: ./sdks/python
 `
             );
 
@@ -320,12 +348,17 @@ sdks:
 `
             );
 
-            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await loadFernYml({ cwd: testDir });
 
-            expect(fernYml.sdks?.autorelease).toBe(true);
-            expect(fernYml.sdks?.defaultGroup).toBe("production");
-            expect(fernYml.sdks?.targets?.python?.lang).toBe("python");
-            expect(fernYml.sdks?.targets?.python?.version).toBe("2.0.0");
+            const sdks = result.sourced.sdks;
+            if (sdks && !("value" in sdks)) {
+                expect(sdks.autorelease?.value).toBe(true);
+                expect(sdks.defaultGroup?.value).toBe("production");
+                expect(sdks.targets?.python?.lang?.value).toBe("python");
+                expect(sdks.targets?.python?.version?.value).toBe("2.0.0");
+            } else {
+                expect.fail("Expected sdks to be defined");
+            }
         });
 
         it("resolves $ref for individual SDK targets", async () => {
@@ -337,6 +370,8 @@ sdks:
                 `
 lang: typescript
 version: "1.5.0"
+output:
+  path: ./sdks/typescript
 config:
   packageName: "@acme/sdk"
 `
@@ -347,6 +382,8 @@ config:
                 `
 lang: python
 version: "2.1.0"
+output:
+  path: ./sdks/python
 config:
   packageName: acme-sdk
 `
@@ -367,12 +404,17 @@ sdks:
 `
             );
 
-            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await loadFernYml({ cwd: testDir });
 
-            expect(fernYml.sdks?.targets?.node?.lang).toBe("typescript");
-            expect(fernYml.sdks?.targets?.node?.version).toBe("1.5.0");
-            expect(fernYml.sdks?.targets?.python?.lang).toBe("python");
-            expect(fernYml.sdks?.targets?.python?.version).toBe("2.1.0");
+            const sdks = result.sourced.sdks;
+            if (sdks && !("value" in sdks)) {
+                expect(sdks.targets?.node?.lang?.value).toBe("typescript");
+                expect(sdks.targets?.node?.version?.value).toBe("1.5.0");
+                expect(sdks.targets?.python?.lang?.value).toBe("python");
+                expect(sdks.targets?.python?.version?.value).toBe("2.1.0");
+            } else {
+                expect.fail("Expected sdks to be defined");
+            }
         });
 
         it("resolves chained $ref references", async () => {
@@ -384,6 +426,8 @@ sdks:
                 `
 lang: typescript
 version: "1.0.0"
+output:
+  path: ./sdks/typescript
 `
             );
 
@@ -407,11 +451,16 @@ sdks:
 `
             );
 
-            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await loadFernYml({ cwd: testDir });
 
-            expect(fernYml.sdks?.autorelease).toBe(false);
-            expect(fernYml.sdks?.targets?.node?.lang).toBe("typescript");
-            expect(fernYml.sdks?.targets?.node?.version).toBe("1.0.0");
+            const sdks = result.sourced.sdks;
+            if (sdks && !("value" in sdks)) {
+                expect(sdks.autorelease?.value).toBe(false);
+                expect(sdks.targets?.node?.lang?.value).toBe("typescript");
+                expect(sdks.targets?.node?.version?.value).toBe("1.0.0");
+            } else {
+                expect.fail("Expected sdks to be defined");
+            }
         });
 
         it("throws ValidationError when $ref file does not exist", async () => {
@@ -523,6 +572,8 @@ version: 5.0.0
                 `
 lang: go
 version: "0.1.0"
+output:
+  path: ./sdks/go
 `
             );
 
@@ -541,12 +592,23 @@ sdks:
 `
             );
 
-            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await loadFernYml({ cwd: testDir });
 
-            expect(fernYml.cli?.version).toBe("5.0.0");
-            expect(fernYml.sdks?.autorelease).toBe(true);
-            expect(fernYml.sdks?.targets?.go?.lang).toBe("go");
-            expect(fernYml.sdks?.targets?.go?.version).toBe("0.1.0");
+            const cli = result.sourced.cli;
+            if (cli && !("value" in cli)) {
+                expect(cli.version?.value).toBe("5.0.0");
+            } else {
+                expect.fail("Expected cli to be defined");
+            }
+
+            const sdks = result.sourced.sdks;
+            if (sdks && !("value" in sdks)) {
+                expect(sdks.autorelease?.value).toBe(true);
+                expect(sdks.targets?.go?.lang?.value).toBe("go");
+                expect(sdks.targets?.go?.version?.value).toBe("0.1.0");
+            } else {
+                expect.fail("Expected sdks to be defined");
+            }
         });
     });
 });

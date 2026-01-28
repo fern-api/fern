@@ -16,6 +16,7 @@
 
 package com.fern.java.output;
 
+import com.fern.java.ICustomConfig.OutputDirectory;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaFileWriter;
 import com.squareup.javapoet.ClassName;
@@ -44,7 +45,9 @@ public abstract class GeneratedResourcesJavaFile extends GeneratedFile {
     }
 
     @Override
-    public final void writeToFile(Path directory, boolean isLocal, Optional<String> packagePrefix) throws IOException {
+    public final void writeToFile(
+            Path directory, boolean isLocal, Optional<String> packagePrefix, OutputDirectory outputDirectoryMode)
+            throws IOException {
         String packageName = getClassName().packageName();
         String contentsWithPackageName = "package " + getClassName().packageName() + ";\n\n" + contents();
 
@@ -61,15 +64,19 @@ public abstract class GeneratedResourcesJavaFile extends GeneratedFile {
 
         Path filepath;
         if (testFile().isPresent() && testFile().get()) {
-            filepath = directory
-                    .resolve("src/test/java")
-                    .resolve(packagePath)
-                    .resolve(getClassName().simpleName() + ".java");
+            // For test files, check output directory mode
+            Path baseDir = directory;
+            if (outputDirectoryMode == OutputDirectory.PROJECT_ROOT) {
+                baseDir = directory.resolve("src/test/java");
+            }
+            filepath = baseDir.resolve(packagePath).resolve(getClassName().simpleName() + ".java");
         } else {
-            filepath = directory
-                    .resolve("src/main/java")
-                    .resolve(packagePath)
-                    .resolve(getClassName().simpleName() + ".java");
+            // For production files, check output directory mode
+            Path baseDir = directory;
+            if (outputDirectoryMode == OutputDirectory.PROJECT_ROOT) {
+                baseDir = directory.resolve("src/main/java");
+            }
+            filepath = baseDir.resolve(packagePath).resolve(getClassName().simpleName() + ".java");
         }
 
         JavaFileWriter.write(filepath, contentsWithPackageName);

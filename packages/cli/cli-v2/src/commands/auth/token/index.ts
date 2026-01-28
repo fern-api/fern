@@ -1,0 +1,1 @@
+export { addTokenCommand } from "./command";

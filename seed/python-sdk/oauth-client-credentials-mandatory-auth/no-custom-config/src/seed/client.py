@@ -62,9 +62,7 @@ class SeedOauthClientCredentialsMandatoryAuth:
     from seed import SeedOauthClientCredentialsMandatoryAuth
 
     client = SeedOauthClientCredentialsMandatoryAuth(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
+        base_url="YOUR_BASE_URL",
     )
 
     # or ...
@@ -232,9 +230,7 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
     from seed import AsyncSeedOauthClientCredentialsMandatoryAuth
 
     client = AsyncSeedOauthClientCredentialsMandatoryAuth(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
+        base_url="YOUR_BASE_URL",
     )
 
     # or ...

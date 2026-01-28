@@ -25,6 +25,7 @@ if typing.TYPE_CHECKING:
         UnionWithDuplicateTypes,
         UnionWithIdenticalPrimitives,
         UnionWithIdenticalStrings,
+        UnionWithReservedNames,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "ConvertToken": ".types",
@@ -45,6 +46,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithDuplicateTypes": ".types",
     "UnionWithIdenticalPrimitives": ".types",
     "UnionWithIdenticalStrings": ".types",
+    "UnionWithReservedNames": ".types",
 }
 
 
@@ -88,4 +90,5 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
+    "UnionWithReservedNames",
 ]

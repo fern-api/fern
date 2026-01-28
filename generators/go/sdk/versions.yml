@@ -1,4 +1,54 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for exhaustive fixture. This includes several fixes:
+        - Fix int vs int64 type mismatch for long types by explicitly casting to int64
+        - Fix enum values to use .Ptr() method for pointer types
+        - Fix field names to use Go exported names (e.g., FieldString instead of String)
+        - Add Bytes helper function for []byte pointer types
+        - Skip endpoints returning primitive date types in wire tests (workaround for Go SDK
+          date parsing issue where time.Time expects RFC3339 datetime format)
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 61
+
+- version: 1.23.2
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union type matching in dynamic snippets and wire tests. Previously,
+        when converting example values to undiscriminated union types, the generator would accept
+        the first type that didn't throw an error, even if the conversion resulted in a nop (no-op).
+        This caused empty struct literals to be generated instead of properly initialized union
+        variants. The fix now skips types that result in nop conversions and continues to the next
+        type in the union.
+      type: fix
+  createdAt: "2026-01-25"
+  irVersion: 61
+
+- version: 1.23.1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic import ordering in generated Go files. Imports are now sorted
+        alphabetically by alias, preventing unnecessary churn in automated seed updates.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 61
+
+- version: 1.23.0
+  changelogEntry:
+    - summary: Add RecvRaw method to stream API and improve SSE terminator handling for more robust server-sent event processing
+      type: feat
+  createdAt: "2026-01-23"
+  irVersion: 61
+
+- version: 1.22.9
+  changelogEntry:
+    - summary: Update IR version to 61 to support Generation Metadata feature and maintain consistency with seed configuration.
+      type: chore
+  createdAt: "2026-01-21"
+  irVersion: 61
+
 - version: 1.22.8
   changelogEntry:
     - summary: Fix internal v1-side failure to pass alwaysSendRequiredProperties when visiting inlined request bodies.
@@ -30,6 +80,17 @@
         Gracefully handle `go fmt` failures during generation. When formatting fails, the generator
         now logs a warning and continues to output the generated files instead of failing the entire
         generation. This allows developers to debug generated output even when formatting issues occur.
+      type: fix
+  createdAt: "2026-01-12"
+  irVersion: 60
+
+- version: 1.22.5
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets for optional aliases to literal types. Previously, the generator
+        would produce invalid Go code like `&SortField("DEFAULT")` which tries to take the
+        address of a type conversion. Now it correctly uses the primitive's pointer helper
+        function (e.g., `fern.String("DEFAULT")`) for optional literal aliases.
       type: fix
   createdAt: "2026-01-12"
   irVersion: 60

@@ -12,20 +12,7 @@ public partial class SystemClient : ISystemClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.System.CreateUserAsync(
-    ///     new global::SeedCsharpNamespaceCollision.System.User
-    ///     {
-    ///         Line1 = "line1",
-    ///         Line2 = "line2",
-    ///         City = "city",
-    ///         State = "state",
-    ///         Zip = "zip",
-    ///         Country = "USA",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<User> CreateUserAsync(
+    private async Task<WithRawResponse<User>> CreateUserAsyncCore(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -49,17 +36,28 @@ public partial class SystemClient : ISystemClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedCsharpNamespaceCollisionException(
+                throw new SeedCsharpNamespaceCollisionApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedCsharpNamespaceCollisionApiException(
@@ -70,24 +68,7 @@ public partial class SystemClient : ISystemClient
         }
     }
 
-    /// <example><code>
-    /// await client.System.CreateTaskAsync(
-    ///     new global::SeedCsharpNamespaceCollision.System.Task
-    ///     {
-    ///         Name = "name",
-    ///         User = new global::SeedCsharpNamespaceCollision.System.User
-    ///         {
-    ///             Line1 = "line1",
-    ///             Line2 = "line2",
-    ///             City = "city",
-    ///             State = "state",
-    ///             Zip = "zip",
-    ///             Country = "USA",
-    ///         },
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<Task> CreateTaskAsync(
+    private async Task<WithRawResponse<Task>> CreateTaskAsyncCore(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -111,17 +92,28 @@ public partial class SystemClient : ISystemClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Task>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Task>(responseBody)!;
+                return new WithRawResponse<Task>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedCsharpNamespaceCollisionException(
+                throw new SeedCsharpNamespaceCollisionApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedCsharpNamespaceCollisionApiException(
@@ -130,5 +122,57 @@ public partial class SystemClient : ISystemClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.System.CreateUserAsync(
+    ///     new global::SeedCsharpNamespaceCollision.System.User
+    ///     {
+    ///         Line1 = "line1",
+    ///         Line2 = "line2",
+    ///         City = "city",
+    ///         State = "state",
+    ///         Zip = "zip",
+    ///         Country = "USA",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<User> CreateUserAsync(
+        User request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            CreateUserAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.System.CreateTaskAsync(
+    ///     new global::SeedCsharpNamespaceCollision.System.Task
+    ///     {
+    ///         Name = "name",
+    ///         User = new global::SeedCsharpNamespaceCollision.System.User
+    ///         {
+    ///             Line1 = "line1",
+    ///             Line2 = "line2",
+    ///             City = "city",
+    ///             State = "state",
+    ///             Zip = "zip",
+    ///             Country = "USA",
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Task> CreateTaskAsync(
+        Task request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Task>(
+            CreateTaskAsyncCore(request, options, cancellationToken)
+        );
     }
 }

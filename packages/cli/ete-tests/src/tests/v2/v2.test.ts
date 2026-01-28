@@ -17,17 +17,19 @@ sdks:
     typescript:
       lang: typescript
       version: "1.0.0"
+      output:
+        path: ./sdks/typescript
 `;
 
 const INVALID_FERN_YML = `org: 12345`;
 
-describe("fern v2", () => {
+describe("fern beta", () => {
     it("fern check (success)", async () => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
         await writeFile(join(tmpDir.path, "fern.yml"), VALID_FERN_YML);
 
-        const { stdout } = await runFernCli(["v2", "check"], {
+        const { stdout } = await runFernCli(["beta", "check"], {
             cwd: directory
         });
         expect(stdout).to.be.empty;
@@ -38,7 +40,7 @@ describe("fern v2", () => {
         const directory = AbsoluteFilePath.of(tmpDir.path);
         await writeFile(join(tmpDir.path, "fern.yml"), INVALID_FERN_YML);
 
-        const { stdout, stderr, exitCode } = await runFernCli(["v2", "check"], {
+        const { stdout, stderr, exitCode } = await runFernCli(["beta", "check"], {
             cwd: directory,
             reject: false
         });

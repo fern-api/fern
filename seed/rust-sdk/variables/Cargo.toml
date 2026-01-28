@@ -11,6 +11,7 @@ documentation = "https://docs.rs/seed_variables"
 doctest = false
 
 [dependencies]
+base64 = "0.22"
 bytes = "1.0"
 chrono = { version = "0.4", features = ["serde"] }
 futures = "0.3"

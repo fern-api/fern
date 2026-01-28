@@ -21,14 +21,11 @@ module Seed
       # @return [untyped]
       def patch(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[application require_auth]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
-          body: Seed::Service::Types::PatchProxyRequest.new(body_bag).to_h,
+          body: Seed::Service::Types::PatchProxyRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -60,16 +57,15 @@ module Seed
       # @return [untyped]
       def patch_complex(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[id]
-        body_params = params.except(*path_param_names)
-        body_prop_names = %i[name age active metadata tags email nickname bio profile_image_url settings]
-        body_bag = body_params.slice(*body_prop_names)
+        request_data = Seed::Service::Types::PatchComplexRequest.new(params).to_h
+        non_body_param_names = ["id"]
+        body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "complex/#{params[:id]}",
-          body: Seed::Service::Types::PatchComplexRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin
@@ -99,16 +95,15 @@ module Seed
       # @return [untyped]
       def named_patch_with_mixed(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[id]
-        body_params = params.except(*path_param_names)
-        body_prop_names = %i[app_id instructions active]
-        body_bag = body_params.slice(*body_prop_names)
+        request_data = Seed::Service::Types::NamedMixedPatchRequest.new(params).to_h
+        non_body_param_names = ["id"]
+        body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "named-mixed/#{params[:id]}",
-          body: Seed::Service::Types::NamedMixedPatchRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin
@@ -139,14 +134,11 @@ module Seed
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[required_field optional_string optional_integer optional_boolean nullable_string]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "optional-merge-patch-test",
-          body: Seed::Service::Types::OptionalMergePatchRequest.new(body_bag).to_h,
+          body: Seed::Service::Types::OptionalMergePatchRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -175,16 +167,15 @@ module Seed
       # @return [untyped]
       def regular_patch(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[id]
-        body_params = params.except(*path_param_names)
-        body_prop_names = %i[field_1 field_2]
-        body_bag = body_params.slice(*body_prop_names)
+        request_data = Seed::Service::Types::RegularPatchRequest.new(params).to_h
+        non_body_param_names = ["id"]
+        body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "regular/#{params[:id]}",
-          body: Seed::Service::Types::RegularPatchRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin

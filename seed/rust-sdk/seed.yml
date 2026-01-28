@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v62
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -10,6 +10,7 @@ buildScripts:
   testScript:
     commands:
       - cargo test
+      - if [ -f "run_wire_tests.sh" ]; then echo "Running wire tests..." && bash run_wire_tests.sh; fi
 
 publish:
   workingDirectory: generators/rust
@@ -116,6 +117,10 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  exhaustive:
+    - customConfig:
+        enableWireTests: true
+      outputFolder: .
   server-sent-event-examples:
     - customConfig:
         enableWireTests: true
@@ -128,3 +133,16 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+  license:
+    - customConfig: null
+      outputFolder: basic
+    - customConfig:
+        packageLicenseFile: "LICENSE.md"
+      outputFolder: custom-license-file
+    - customConfig:
+        packageLicenseFile: ""
+      outputFolder: empty-license-file
+    - customConfig:
+        packageLicense: "Apache-2.0"
+        packageLicenseFile: "LICENSE.md"
+      outputFolder: both-license-options

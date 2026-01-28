@@ -2756,4 +2756,462 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/openapi-example-summary-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/openapi-example-summary-ir.snap");
     });
+
+    it("should handle HTTP auth schemes with capital B (Basic and Bearer)", async () => {
+        // Test OpenAPI spec with Basic and Bearer schemes using capital B (case-insensitive per OAS spec)
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/http-auth-capital-scheme")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "http-auth-capital-scheme"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate auth schemes were processed correctly
+        // The OpenAPI spec uses "Basic" and "Bearer" with capital B, which should be handled case-insensitively
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toBeDefined();
+        // Should have 2 auth schemes: basic and bearer
+        expect(intermediateRepresentation.auth.schemes.length).toBe(2);
+
+        // Validate that both basic and bearer auth schemes are present
+        const authSchemeTypes = intermediateRepresentation.auth.schemes.map((scheme) => scheme.type);
+        expect(authSchemeTypes).toContain("basic");
+        expect(authSchemeTypes).toContain("bearer");
+
+        // Validate FDR auth schemes
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {}).length).toBe(2);
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/http-auth-capital-scheme-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/http-auth-capital-scheme-ir.snap");
+    });
+
+    it("should handle x-fern-basic extension with custom username/password names", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/x-fern-basic-auth")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "x-fern-basic-auth"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate auth was processed correctly
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toHaveLength(1);
+
+        // Validate the basic auth scheme structure
+        const basicAuthScheme = intermediateRepresentation.auth.schemes[0];
+        expect(basicAuthScheme).toBeDefined();
+        expect(basicAuthScheme?.type).toBe("basic");
+
+        // Verify that x-fern-basic custom names are correctly flowing through to the IR
+        // The OpenAPI spec has x-fern-basic with username.name="project_id" and password.name="api_token"
+        if (basicAuthScheme?.type === "basic") {
+            // Verify custom names from x-fern-basic are used
+            expect(basicAuthScheme.username.originalName).toBe("project_id");
+            expect(basicAuthScheme.password.originalName).toBe("api_token");
+
+            // Verify env vars are also passed through
+            expect(basicAuthScheme.usernameEnvVar).toBe("PLANT_STORE_PROJECT_ID");
+            expect(basicAuthScheme.passwordEnvVar).toBe("PLANT_STORE_API_TOKEN");
+        }
+
+        // Validate FDR auth schemes
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+        const fdrAuthSchemes = fdrApiDefinition.authSchemes;
+        expect(fdrAuthSchemes).toBeDefined();
+        if (fdrAuthSchemes) {
+            const basicAuth = Object.values(fdrAuthSchemes).find((scheme) => scheme.type === "basicAuth");
+            expect(basicAuth).toBeDefined();
+            if (basicAuth?.type === "basicAuth") {
+                // Verify custom names from x-fern-basic flow through to FDR
+                expect(basicAuth.usernameName).toBe("project_id");
+                expect(basicAuth.passwordName).toBe("api_token");
+            }
+        }
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-ir.snap");
+    });
+
+    it("should use apiNameOverride when provided to convertIrToFdrApi", async () => {
+        // Test that apiNameOverride parameter correctly overrides the apiName in FDR output
+        // This is used by DocsDefinitionResolver to use folder name instead of OpenAPI title
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/multi-api-folder-name")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "multi-api-folder-name"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Verify the IR has the OpenAPI title as apiName
+        expect(intermediateRepresentation.apiName.originalName).toBe("Pet Store API");
+
+        // Test 1: Without apiNameOverride, FDR should use the OpenAPI title
+        const fdrWithoutOverride = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Without override, apiName should be the OpenAPI title
+        expect(fdrWithoutOverride.apiName).toBe("Pet Store API");
+
+        // Test 2: With apiNameOverride, FDR should use the override value (folder name)
+        const folderName = "latest"; // Simulating a folder name like "fern/apis/latest/"
+        const fdrWithOverride = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context,
+            apiNameOverride: folderName
+        });
+
+        // With override, apiName should be the folder name
+        expect(fdrWithOverride.apiName).toBe("latest");
+    });
+
+    it("should handle AsyncAPI with JSON references to external files", async () => {
+        // Test AsyncAPI spec with $ref to external YAML files
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/asyncapi-json-refs")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "asyncapi-json-refs"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for AsyncAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that the AsyncAPI spec was parsed correctly
+        expect(intermediateRepresentation).toBeDefined();
+        expect(intermediateRepresentation.apiName).toBeDefined();
+
+        // Validate that the external $ref was resolved
+        expect(intermediateRepresentation.types).toBeDefined();
+
+        // Validate FDR structure
+        expect(fdrApiDefinition).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/asyncapi-json-refs-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/asyncapi-json-refs-ir.snap");
+    });
+
+    it("should handle schema-level example on response type - example defined on PlantResponse schema", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/schema-level-example")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "schema-level-example"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: true,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        expect(intermediateRepresentation.services).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        console.log("=== SCHEMA-LEVEL EXAMPLE TEST ===");
+        console.log("Root package endpoints:", fdrApiDefinition.rootPackage.endpoints?.length || 0);
+        console.log("Subpackages:", Object.keys(fdrApiDefinition.subpackages || {}));
+
+        let addPlantEndpoint;
+        if (fdrApiDefinition.rootPackage.endpoints && fdrApiDefinition.rootPackage.endpoints.length > 0) {
+            addPlantEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
+        } else {
+            for (const subpackage of Object.values(fdrApiDefinition.subpackages)) {
+                if (subpackage.endpoints && subpackage.endpoints.length > 0) {
+                    addPlantEndpoint = subpackage.endpoints[0];
+                    break;
+                }
+            }
+        }
+
+        console.log("Number of examples in FDR endpoint:", addPlantEndpoint?.examples?.length || 0);
+        console.log("Examples:", JSON.stringify(addPlantEndpoint?.examples, null, 2));
+        console.log("=== END SCHEMA-LEVEL EXAMPLE TEST ===");
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/schema-level-example-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/schema-level-example-ir.snap");
+    });
+
+    it("should handle response-level example - example defined on 200 response content", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/response-level-example")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "response-level-example"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: true,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        expect(intermediateRepresentation.services).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        console.log("=== RESPONSE-LEVEL EXAMPLE TEST ===");
+        console.log("Root package endpoints:", fdrApiDefinition.rootPackage.endpoints?.length || 0);
+        console.log("Subpackages:", Object.keys(fdrApiDefinition.subpackages || {}));
+
+        let addPlantEndpoint;
+        if (fdrApiDefinition.rootPackage.endpoints && fdrApiDefinition.rootPackage.endpoints.length > 0) {
+            addPlantEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
+        } else {
+            for (const subpackage of Object.values(fdrApiDefinition.subpackages)) {
+                if (subpackage.endpoints && subpackage.endpoints.length > 0) {
+                    addPlantEndpoint = subpackage.endpoints[0];
+                    break;
+                }
+            }
+        }
+
+        console.log("Number of examples in FDR endpoint:", addPlantEndpoint?.examples?.length || 0);
+        console.log("Examples:", JSON.stringify(addPlantEndpoint?.examples, null, 2));
+        console.log("=== END RESPONSE-LEVEL EXAMPLE TEST ===");
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/response-level-example-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/response-level-example-ir.snap");
+    });
 });

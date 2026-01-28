@@ -94,12 +94,29 @@ class AbstractGenerator(ABC):
             recursion_limit = generator_config.custom_config.get("recursion_limit")
 
         enable_wire_tests = False
-        if generator_config.custom_config is not None and "enable_wire_tests" in generator_config.custom_config:
-            enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
+        if generator_config.custom_config is not None:
+            # Check wire_tests.enabled first (preferred), fall back to enable_wire_tests (deprecated)
+            wire_tests_config = generator_config.custom_config.get("wire_tests")
+            wire_tests_enabled = None
+            if wire_tests_config is not None and isinstance(wire_tests_config, dict):
+                wire_tests_enabled = wire_tests_config.get("enabled")
+            # Use wire_tests.enabled if explicitly set, otherwise fall back to enable_wire_tests
+            if wire_tests_enabled is not None:
+                enable_wire_tests = wire_tests_enabled
+            elif "enable_wire_tests" in generator_config.custom_config:
+                enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
 
         package_path = None
         if generator_config.custom_config is not None and "package_path" in generator_config.custom_config:
             package_path = generator_config.custom_config.get("package_path")
+
+        mypy_exclude = None
+        if generator_config.custom_config is not None and "mypy_exclude" in generator_config.custom_config:
+            mypy_exclude = generator_config.custom_config.get("mypy_exclude")
+
+        import_paths = None
+        if generator_config.custom_config is not None and "import_paths" in generator_config.custom_config:
+            import_paths = generator_config.custom_config.get("import_paths")
 
         with Project(
             filepath=generator_config.output.path,
@@ -126,6 +143,8 @@ class AbstractGenerator(ABC):
             recursion_limit=recursion_limit,
             enable_wire_tests=enable_wire_tests,
             generator_exec_wrapper=generator_exec_wrapper,
+            mypy_exclude=mypy_exclude,
+            import_paths=import_paths,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,

@@ -10,13 +10,6 @@ public class SubmitFormDataTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
     {
-        const string requestJson = """
-            {
-              "username": "username",
-              "email": "email"
-            }
-            """;
-
         const string mockResponse = """
             {
               "status": "status",
@@ -31,7 +24,12 @@ public class SubmitFormDataTest : BaseMockServerTest
                     .WithPath("/submit")
                     .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(
+                        new WireMock.Matchers.FormUrlEncodedMatcher([
+                            "username=username",
+                            "email=email",
+                        ])
+                    )
             )
             .RespondWith(
                 WireMock
@@ -52,13 +50,6 @@ public class SubmitFormDataTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_2()
     {
-        const string requestJson = """
-            {
-              "username": "johndoe",
-              "email": "john@example.com"
-            }
-            """;
-
         const string mockResponse = """
             {
               "status": "success",
@@ -73,7 +64,12 @@ public class SubmitFormDataTest : BaseMockServerTest
                     .WithPath("/submit")
                     .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
+                    .WithBody(
+                        new WireMock.Matchers.FormUrlEncodedMatcher([
+                            "username=johndoe",
+                            "email=john@example.com",
+                        ])
+                    )
             )
             .RespondWith(
                 WireMock

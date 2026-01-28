@@ -34,10 +34,53 @@ public static class EqualConstraintExtensions
                 var propertiesComparer = new NUnitEqualityComparer();
                 var tolerance = Tolerance.Default;
                 propertiesComparer.CompareProperties = true;
+                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists)
+                propertiesComparer.ExternalComparers.Add(
+                    new OneOfEqualityAdapter(propertiesComparer)
+                );
                 return propertiesComparer.AreEqual(x.Value, y.Value, ref tolerance);
             }
         );
 
         return constraint;
+    }
+
+    /// <summary>
+    /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
+    /// This enables recursive comparison of nested OneOf values.
+    /// </summary>
+    private class OneOfEqualityAdapter : EqualityAdapter
+    {
+        private readonly NUnitEqualityComparer _comparer;
+
+        public OneOfEqualityAdapter(NUnitEqualityComparer comparer)
+        {
+            _comparer = comparer;
+        }
+
+        public override bool CanCompare(object? x, object? y)
+        {
+            return x is IOneOf && y is IOneOf;
+        }
+
+        public override bool AreEqual(object? x, object? y)
+        {
+            var oneOfX = (IOneOf?)x;
+            var oneOfY = (IOneOf?)y;
+
+            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+            if (oneOfX?.Value is null && oneOfY?.Value is null)
+            {
+                return true;
+            }
+
+            if (oneOfX?.Value is null || oneOfY?.Value is null)
+            {
+                return false;
+            }
+
+            var tolerance = Tolerance.Default;
+            return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
+        }
     }
 }

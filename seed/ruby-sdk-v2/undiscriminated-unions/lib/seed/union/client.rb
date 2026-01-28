@@ -206,14 +206,11 @@ module Seed
       # @return [String]
       def test_camel_case_properties(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[payment_method]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/camel-case",
-          body: Seed::Union::Types::PaymentRequest.new(body_bag).to_h,
+          body: Seed::Union::Types::PaymentRequest.new(params).to_h,
           request_options: request_options
         )
         begin

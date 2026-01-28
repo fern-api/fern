@@ -1,5 +1,52 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.17.2
+  changelogEntry:
+    - summary: |
+        Add serde helpers for base64 and BigInt types to properly serialize/deserialize these types
+        in JSON. Add execute_request_base64 method for handling base64 primitive endpoint responses.
+        Fix union variant serde rename to be case-sensitive for proper JSON deserialization.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 0.17.1
+  changelogEntry:
+    - summary: |
+        Fix compilation errors when generating SDKs without streaming endpoints by conditionally
+        including sse_stream.rs only when streaming endpoints exist. Also fix missing FixedOffset
+        import for DateTime types when dateTimeType is set to "offset" (the default).
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 0.17.0
+  changelogEntry:
+    - summary: |
+        Add OAuthTokenProvider for automatic OAuth token management with caching and refresh support.
+        The provider implements thread-safe token caching with a 2-minute expiration buffer,
+        double-checked locking pattern for concurrent access, and automatic token refresh.
+      type: feat
+  createdAt: "2026-01-22"
+  irVersion: 62
+
+- version: 0.16.0
+  changelogEntry:
+    - summary: |
+        Add `packageLicenseFile` config option to support custom license files. When set, uses `license-file` instead of `license` in Cargo.toml, allowing users to reference custom LICENSE.md files that are not standard SPDX identifiers.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 62
+
+- version: 0.15.0
+  changelogEntry:
+    - summary: |
+        Add platform headers (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version) to all HTTP
+        requests. These headers help identify SDK usage and version for API analytics and debugging.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 62
+
 - version: 0.14.3
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.

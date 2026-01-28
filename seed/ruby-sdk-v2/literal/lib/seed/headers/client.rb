@@ -23,8 +23,9 @@ module Seed
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[query]
-        body_bag = params.slice(*body_prop_names)
+        request_data = Seed::Headers::Types::SendLiteralsInHeadersRequest.new(params).to_h
+        non_body_param_names = %w[X-Endpoint-Version X-Async]
+        body = request_data.except(*non_body_param_names)
 
         headers = {}
         headers["X-Endpoint-Version"] = params[:endpoint_version] if params[:endpoint_version]
@@ -35,7 +36,7 @@ module Seed
           method: "POST",
           path: "headers",
           headers: headers,
-          body: Seed::Headers::Types::SendLiteralsInHeadersRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin

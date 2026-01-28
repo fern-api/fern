@@ -22,6 +22,7 @@ function getDependencyVersion(packageName) {
  * Common external dependencies for full builds (dev/prod with extensive externals)
  */
 export const FULL_EXTERNALS = [
+    "@boundaryml/baml",
     /^prettier(?:\/.*)?$/,
     /^prettier2(?:\/.*)?$/,
     /^vitest(?:\/.*)?$/,
@@ -34,7 +35,7 @@ export const FULL_EXTERNALS = [
 /**
  * Minimal external dependencies for local/unminified builds
  */
-export const MINIMAL_EXTERNALS = [];
+export const MINIMAL_EXTERNALS = ["@boundaryml/baml"];
 
 /**
  * Common tsup overrides for production-like builds with optimization

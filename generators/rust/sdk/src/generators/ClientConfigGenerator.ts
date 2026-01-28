@@ -68,6 +68,16 @@ export class ClientConfigGenerator {
                 visibility: PUBLIC
             }),
             rust.field({
+                name: "client_id",
+                type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
+                name: "client_secret",
+                type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
                 name: "timeout",
                 type: rust.Type.reference(rust.reference({ name: "Duration" })),
                 visibility: PUBLIC
@@ -101,6 +111,10 @@ export class ClientConfigGenerator {
         const userAgent = `${this.context.ir.apiName.pascalCase.safeName} Rust SDK`;
         const environmentEnumName = this.getEnvironmentEnumName();
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
+
+        // Platform headers for Fern SDK identification
+        const sdkName = this.context.getCrateName();
+        const sdkVersion = this.context.getCrateVersion();
 
         const defaultMethod = rust.method({
             name: "default",
@@ -140,6 +154,14 @@ export class ClientConfigGenerator {
                         value: Expression.none()
                     },
                     {
+                        name: "client_id",
+                        value: Expression.none()
+                    },
+                    {
+                        name: "client_secret",
+                        value: Expression.none()
+                    },
+                    {
                         name: "timeout",
                         value: Expression.functionCall("Duration::from_secs", [Expression.numberLiteral(60)])
                     },
@@ -149,7 +171,13 @@ export class ClientConfigGenerator {
                     },
                     {
                         name: "custom_headers",
-                        value: Expression.functionCall("HashMap::new", [])
+                        value: Expression.raw(
+                            `HashMap::from([
+            ("X-Fern-Language".to_string(), "Rust".to_string()),
+            ("X-Fern-SDK-Name".to_string(), "${sdkName}".to_string()),
+            ("X-Fern-SDK-Version".to_string(), "${sdkVersion}".to_string()),
+        ])`
+                        )
                     },
                     {
                         name: "user_agent",

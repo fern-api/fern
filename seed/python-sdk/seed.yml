@@ -260,6 +260,11 @@ fixtures:
     - customConfig:
         package_path: matryoshka/doll/structure
       outputFolder: package-path
+    - customConfig:
+        import_paths:
+          - custom_integration
+          - sentry_integration
+      outputFolder: import-paths
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -350,6 +355,14 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  python-mypy-exclude:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        mypy_exclude:
+          - "legacy/"
+          - "tests/integration/"
+      outputFolder: with-mypy-exclude
   python-positional-single-property:
     - customConfig: null
       outputFolder: no-custom-config

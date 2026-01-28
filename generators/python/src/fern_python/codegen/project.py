@@ -55,6 +55,8 @@ class Project:
         recursion_limit: Optional[int] = None,
         enable_wire_tests: bool = False,
         generator_exec_wrapper: Optional[GeneratorExecWrapper] = None,
+        mypy_exclude: Optional[List[str]] = None,
+        import_paths: Optional[List[str]] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
 
@@ -82,8 +84,19 @@ class Project:
         self._flat_layout = flat_layout
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
+        # Compute the package name for import_paths hook
+        package_name_for_import_paths = relative_path_to_project.replace("/", ".")
+        if normalized_package_path:
+            package_name_for_import_paths = (
+                f"{package_name_for_import_paths}.{normalized_package_path.replace('/', '.')}"
+            )
+
         self._module_manager = ModuleManager(
-            sorted_modules=sorted_modules, lazy_imports=lazy_imports, recursion_limit=recursion_limit
+            sorted_modules=sorted_modules,
+            lazy_imports=lazy_imports,
+            recursion_limit=recursion_limit,
+            import_paths=import_paths,
+            package_name=package_name_for_import_paths,
         )
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
@@ -96,6 +109,7 @@ class Project:
         self._exclude_types_from_init_exports = exclude_types_from_init_exports
         self._enable_wire_tests = enable_wire_tests
         self._generator_exec_wrapper = generator_exec_wrapper
+        self._mypy_exclude = mypy_exclude
 
     def get_module_path_for_imports(self) -> str:
         """
@@ -249,6 +263,7 @@ class Project:
                 extras=self._extras,
                 enable_wire_tests=self._enable_wire_tests,
                 user_defined_toml=self._user_defined_toml,
+                mypy_exclude=self._mypy_exclude,
             )
             py_project_toml.write()
 

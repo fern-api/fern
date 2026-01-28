@@ -12,6 +12,120 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
+    private async Task<WithRawResponse<string>> OptionalArgsAsyncCore(
+        OptionalArgsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var multipartFormRequest_ = new MultipartFormRequest
+        {
+            BaseUrl = _client.Options.BaseUrl,
+            Method = HttpMethod.Post,
+            Path = "/optional-args",
+            Options = options,
+        };
+        multipartFormRequest_.AddFileParameterPart("image_file", request.ImageFile, "image/jpeg");
+        multipartFormRequest_.AddJsonPart(
+            "request",
+            request.Request,
+            "application/json; charset=utf-8"
+        );
+        var response = await _client
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedFileUploadApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedFileUploadApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<WithRawResponse<string>> WithInlineTypeAsyncCore(
+        InlineTypeRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var multipartFormRequest_ = new MultipartFormRequest
+        {
+            BaseUrl = _client.Options.BaseUrl,
+            Method = HttpMethod.Post,
+            Path = "/inline-type",
+            Options = options,
+        };
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
+        multipartFormRequest_.AddJsonPart("request", request.Request);
+        var response = await _client
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedFileUploadApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedFileUploadApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     public async Task PostAsync(
         MyRequest request,
         RequestOptions? options = null,
@@ -100,24 +214,57 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["integer"] = request.Integer.ToString();
-        _query["listOfStrings"] = request.ListOfStrings;
-        _query["optionalListOfStrings"] = request.OptionalListOfStrings;
-        if (request.MaybeString != null)
-        {
-            _query["maybeString"] = request.MaybeString;
-        }
-        if (request.MaybeInteger != null)
-        {
-            _query["maybeInteger"] = request.MaybeInteger.Value.ToString();
-        }
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 5)
+            .Add("maybeString", request.MaybeString)
+            .Add("integer", request.Integer)
+            .Add("maybeInteger", request.MaybeInteger)
+            .Add("listOfStrings", request.ListOfStrings)
+            .Add("optionalListOfStrings", request.OptionalListOfStrings)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/just-file-with-query-params",
-            Query = _query,
+            QueryString = _queryString,
+            Options = options,
+        };
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
+        var response = await _client
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedFileUploadApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    public async Task JustFileWithOptionalQueryParamsAsync(
+        JustFileWithOptionalQueryParamsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("maybeString", request.MaybeString)
+            .Add("maybeInteger", request.MaybeInteger)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var multipartFormRequest_ = new MultipartFormRequest
+        {
+            BaseUrl = _client.Options.BaseUrl,
+            Method = HttpMethod.Post,
+            Path = "/just-file-with-optional-query-params",
+            QueryString = _queryString,
             Options = options,
         };
         multipartFormRequest_.AddFileParameterPart("file", request.File);
@@ -277,90 +424,26 @@ public partial class ServiceClient : IServiceClient
     /// <example><code>
     /// await client.Service.OptionalArgsAsync(new OptionalArgsRequest());
     /// </code></example>
-    public async Task<string> OptionalArgsAsync(
+    public WithRawResponseTask<string> OptionalArgsAsync(
         OptionalArgsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new MultipartFormRequest
-        {
-            BaseUrl = _client.Options.BaseUrl,
-            Method = HttpMethod.Post,
-            Path = "/optional-args",
-            Options = options,
-        };
-        multipartFormRequest_.AddFileParameterPart("image_file", request.ImageFile, "image/jpeg");
-        multipartFormRequest_.AddJsonPart(
-            "request",
-            request.Request,
-            "application/json; charset=utf-8"
+        return new WithRawResponseTask<string>(
+            OptionalArgsAsyncCore(request, options, cancellationToken)
         );
-        var response = await _client
-            .SendRequestAsync(multipartFormRequest_, cancellationToken)
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<string>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedFileUploadException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedFileUploadApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
     }
 
-    public async Task<string> WithInlineTypeAsync(
+    public WithRawResponseTask<string> WithInlineTypeAsync(
         InlineTypeRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new MultipartFormRequest
-        {
-            BaseUrl = _client.Options.BaseUrl,
-            Method = HttpMethod.Post,
-            Path = "/inline-type",
-            Options = options,
-        };
-        multipartFormRequest_.AddFileParameterPart("file", request.File);
-        multipartFormRequest_.AddJsonPart("request", request.Request);
-        var response = await _client
-            .SendRequestAsync(multipartFormRequest_, cancellationToken)
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<string>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedFileUploadException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedFileUploadApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask<string>(
+            WithInlineTypeAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <example><code>

@@ -12,10 +12,7 @@ public partial class PaymentClient : IPaymentClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
-    /// </code></example>
-    public async Task<string> CreateAsync(
+    private async Task<WithRawResponse<string>> CreateAsyncCore(
         CreatePaymentRequest request,
         IdempotentRequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -39,14 +36,28 @@ public partial class PaymentClient : IPaymentClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedIdempotencyHeadersException("Failed to deserialize response", e);
+                throw new SeedIdempotencyHeadersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedIdempotencyHeadersApiException(
@@ -55,6 +66,20 @@ public partial class PaymentClient : IPaymentClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
+    /// </code></example>
+    public WithRawResponseTask<string> CreateAsync(
+        CreatePaymentRequest request,
+        IdempotentRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            CreateAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <example><code>

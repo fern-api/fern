@@ -21,14 +21,11 @@ module Seed
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[prompt context query temperature stream aliased_context maybe_context object_with_literal]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "inlined",
-          body: Seed::Inlined::Types::SendLiteralsInlinedRequest.new(body_bag).to_h,
+          body: Seed::Inlined::Types::SendLiteralsInlinedRequest.new(params).to_h,
           request_options: request_options
         )
         begin

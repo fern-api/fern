@@ -266,6 +266,7 @@ class GemspecFile {
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
+        const gemName = this.context.getGemName();
         const extraDependenciesString = this.getExtraDependenciesString();
 
         return dedent`
@@ -277,7 +278,7 @@ class GemspecFile {
             # Note: A handful of these fields are required as part of the Ruby specification. 
             #       You can change them here or overwrite them in the custom gemspec file.
             Gem::Specification.new do |spec|
-            spec.name = "${moduleFolderName}"
+            spec.name = "${gemName}"
             spec.authors = ["${moduleName}"] 
             spec.version = ${moduleName}::VERSION
             spec.summary = "Ruby client library for the ${moduleName} API"

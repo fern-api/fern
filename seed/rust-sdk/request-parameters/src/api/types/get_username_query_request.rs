@@ -10,6 +10,7 @@ pub struct GetUsernameQueryRequest {
     pub date: NaiveDate,
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub deadline: DateTime<FixedOffset>,
+    #[serde(with = "crate::core::base64_bytes")]
     pub bytes: Vec<u8>,
     pub user: User,
     #[serde(rename = "userList")]
@@ -35,5 +36,6 @@ pub struct GetUsernameQueryRequest {
     #[serde(rename = "longParam")]
     pub long_param: i64,
     #[serde(rename = "bigIntParam")]
+    #[serde(with = "crate::core::bigint_string")]
     pub big_int_param: num_bigint::BigInt,
 }

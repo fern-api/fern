@@ -124,14 +124,11 @@ module Seed
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
       def get_default_starter_files(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[input_params output_type method_name]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/problem-crud/default-starter-files",
-          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(body_bag).to_h,
+          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(params).to_h,
           request_options: request_options
         )
         begin

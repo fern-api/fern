@@ -12,29 +12,17 @@ public partial class TestGroupClient : ITestGroupClient
         _client = client;
     }
 
-    /// <summary>
-    /// Post a nullable request body
-    /// </summary>
-    /// <example><code>
-    /// await client.TestGroup.TestMethodNameAsync(
-    ///     new TestMethodNameTestGroupRequest { PathParam = "path_param", Body = new PlainObject() }
-    /// );
-    /// </code></example>
-    public async Task<object> TestMethodNameAsync(
+    private async Task<WithRawResponse<object>> TestMethodNameAsyncCore(
         TestMethodNameTestGroupRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.QueryParamObject != null)
-        {
-            _query["query_param_object"] = JsonUtils.Serialize(request.QueryParamObject);
-        }
-        if (request.QueryParamInteger != null)
-        {
-            _query["query_param_integer"] = request.QueryParamInteger.Value.ToString();
-        }
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 2)
+            .AddDeepObject("query_param_object", request.QueryParamObject)
+            .Add("query_param_integer", request.QueryParamInteger)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -46,7 +34,7 @@ public partial class TestGroupClient : ITestGroupClient
                         ValueConvert.ToPathParameterString(request.PathParam)
                     ),
                     Body = request.Body,
-                    Query = _query,
+                    QueryString = _queryString,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -58,14 +46,28 @@ public partial class TestGroupClient : ITestGroupClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<object>(responseBody)!;
+                return new WithRawResponse<object>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
@@ -88,5 +90,24 @@ public partial class TestGroupClient : ITestGroupClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Post a nullable request body
+    /// </summary>
+    /// <example><code>
+    /// await client.TestGroup.TestMethodNameAsync(
+    ///     new TestMethodNameTestGroupRequest { PathParam = "path_param", Body = new PlainObject() }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<object> TestMethodNameAsync(
+        TestMethodNameTestGroupRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<object>(
+            TestMethodNameAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -50,14 +50,18 @@ public class AsyncRawParamsClient {
      */
     public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithPath(
             String param, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param)
-                .build();
+                .addPathSegment(param);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -106,14 +110,18 @@ public class AsyncRawParamsClient {
      */
     public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(
             GetWithInlinePath request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(request.getParam())
-                .build();
+                .addPathSegment(request.getParam());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
@@ -167,6 +175,11 @@ public class AsyncRawParamsClient {
                 .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -220,6 +233,11 @@ public class AsyncRawParamsClient {
                 .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -275,6 +293,11 @@ public class AsyncRawParamsClient {
                 .addPathSegments("path-query")
                 .addPathSegment(param);
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -330,6 +353,11 @@ public class AsyncRawParamsClient {
                 .addPathSegments("path-query")
                 .addPathSegment(request.getParam());
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -378,12 +406,16 @@ public class AsyncRawParamsClient {
      */
     public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithPath(
             String param, String request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param)
-                .build();
+                .addPathSegment(param);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -392,7 +424,7 @@ public class AsyncRawParamsClient {
             throw new CustomException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -443,12 +475,16 @@ public class AsyncRawParamsClient {
      */
     public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithInlinePath(
             ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(request.getParam())
-                .build();
+                .addPathSegment(request.getParam());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -457,7 +493,7 @@ public class AsyncRawParamsClient {
             throw new CustomException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

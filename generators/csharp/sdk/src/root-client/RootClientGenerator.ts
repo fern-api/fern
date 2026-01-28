@@ -477,44 +477,58 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         includeEnvVarArguments?: boolean;
         asSnippet?: boolean;
     }): ast.ClassInstantiation {
-        const arguments_ = [];
-        for (const header of this.context.ir.headers) {
-            if (
-                header.valueType.type === "container" &&
-                (header.valueType.container.type === "optional" || header.valueType.container.type === "literal")
-            ) {
-                continue;
+        const arguments_: ast.CodeBlock[] = [];
+        const seenParameterNames = new Set<string>();
+
+        // Helper to add argument only if not already seen (matches constructor deduplication)
+        const addArgumentIfNotSeen = (paramName: string, value: string) => {
+            if (!seenParameterNames.has(paramName)) {
+                seenParameterNames.add(paramName);
+                arguments_.push(this.csharp.codeblock(value));
             }
-            arguments_.push(this.csharp.codeblock(`"${header.name.name.screamingSnakeCase.safeName}"`));
-        }
+        };
+
+        // Process auth schemes first (matches constructor parameter order)
         if (this.context.ir.auth.requirement) {
             for (const scheme of this.context.ir.auth.schemes) {
                 switch (scheme.type) {
                     case "header":
                         if (scheme.headerEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(this.csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
+                            addArgumentIfNotSeen(
+                                scheme.name.name.camelCase.safeName,
+                                `"${scheme.name.name.screamingSnakeCase.safeName}"`
+                            );
                         }
                         break;
                     case "basic": {
                         if (scheme.usernameEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(this.csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
+                            addArgumentIfNotSeen(
+                                scheme.username.camelCase.safeName,
+                                `"${scheme.username.screamingSnakeCase.safeName}"`
+                            );
                         }
                         if (scheme.passwordEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(this.csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
+                            addArgumentIfNotSeen(
+                                scheme.password.camelCase.safeName,
+                                `"${scheme.password.screamingSnakeCase.safeName}"`
+                            );
                         }
                         break;
                     }
                     case "bearer":
                         if (scheme.tokenEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(this.csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
+                            addArgumentIfNotSeen(
+                                scheme.token.camelCase.safeName,
+                                `"${scheme.token.screamingSnakeCase.safeName}"`
+                            );
                         }
                         break;
                     case "oauth": {
                         if (this.context.getOauth() != null) {
-                            arguments_.push(this.csharp.codeblock('"CLIENT_ID"'));
-                            arguments_.push(this.csharp.codeblock('"CLIENT_SECRET"'));
+                            addArgumentIfNotSeen("clientId", '"CLIENT_ID"');
+                            addArgumentIfNotSeen("clientSecret", '"CLIENT_SECRET"');
                         } else {
-                            arguments_.push(this.csharp.codeblock('"TOKEN"'));
+                            addArgumentIfNotSeen("token", '"TOKEN"');
                         }
                         break;
                     }
@@ -534,7 +548,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                                     const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
                                     for (const credential of credentials) {
-                                        arguments_.push(this.csharp.codeblock(`"${credential.wireValue}"`));
+                                        addArgumentIfNotSeen(credential.camelName, `"${credential.wireValue}"`);
                                     }
                                 }
                             }
@@ -544,6 +558,21 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
             }
         }
+
+        // Process headers after auth schemes (matches constructor parameter order)
+        for (const header of this.context.ir.headers) {
+            if (
+                header.valueType.type === "container" &&
+                (header.valueType.container.type === "optional" || header.valueType.container.type === "literal")
+            ) {
+                continue;
+            }
+            addArgumentIfNotSeen(
+                header.name.name.camelCase.safeName,
+                `"${header.name.name.screamingSnakeCase.safeName}"`
+            );
+        }
+
         if (clientOptionsArgument != null) {
             arguments_.push(
                 this.csharp.codeblock((writer) => {
@@ -568,12 +597,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const requiredParameters: ConstructorParameter[] = [];
         const optionalParameters: ConstructorParameter[] = [];
         const literalParameters: LiteralParameter[] = [];
+        const seenParameterNames = new Set<string>();
 
         for (const scheme of this.context.ir.auth.schemes) {
-            allParameters.push(...this.getParameterFromAuthScheme(scheme));
+            for (const param of this.getParameterFromAuthScheme(scheme)) {
+                if (!seenParameterNames.has(param.name)) {
+                    allParameters.push(param);
+                    seenParameterNames.add(param.name);
+                }
+            }
         }
         for (const header of this.context.ir.headers) {
-            allParameters.push(this.getParameterForHeader(header));
+            const param = this.getParameterForHeader(header);
+            if (!seenParameterNames.has(param.name)) {
+                allParameters.push(param);
+                seenParameterNames.add(param.name);
+            }
         }
 
         for (const param of allParameters) {

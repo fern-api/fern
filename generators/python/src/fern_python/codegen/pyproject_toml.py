@@ -44,6 +44,7 @@ class PyProjectToml:
         extras: typing.Dict[str, List[str]] = {},
         enable_wire_tests: bool = False,
         user_defined_toml: Optional[str] = None,
+        mypy_exclude: Optional[List[str]] = None,
     ):
         self._name = name
         self._poetry_block = PyProjectToml.PoetryBlock(
@@ -60,6 +61,7 @@ class PyProjectToml:
         self._extras = extras
         self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml
+        self._mypy_exclude = mypy_exclude
 
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
@@ -70,7 +72,7 @@ class PyProjectToml:
                 python_version=self._python_version,
                 enable_wire_tests=self._enable_wire_tests,
             ),
-            PyProjectToml.PluginConfigurationBlock(),
+            PyProjectToml.PluginConfigurationBlock(mypy_exclude=self._mypy_exclude),
             PyProjectToml.BuildSystemBlock(),
         ]
         content = f"""[project]
@@ -250,14 +252,21 @@ types-python-dateutil = "^2.9.0.20240316"
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
+        mypy_exclude: Optional[List[str]] = None
+
         def to_string(self) -> str:
-            return """
+            mypy_exclude_config = ""
+            if self.mypy_exclude:
+                exclude_patterns = ", ".join([f'"{pattern}"' for pattern in self.mypy_exclude])
+                mypy_exclude_config = f"\nexclude = [{exclude_patterns}]"
+
+            return f"""
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
 
 [tool.mypy]
-plugins = ["pydantic.mypy"]
+plugins = ["pydantic.mypy"]{mypy_exclude_config}
 
 [tool.ruff]
 line-length = 120

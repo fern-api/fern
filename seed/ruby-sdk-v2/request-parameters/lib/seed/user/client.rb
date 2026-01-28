@@ -22,8 +22,9 @@ module Seed
       # @return [untyped]
       def create_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[username password name]
-        body_bag = params.slice(*body_prop_names)
+        request_data = Seed::User::Types::CreateUsernameRequest.new(params).to_h
+        non_body_param_names = ["tags"]
+        body = request_data.except(*non_body_param_names)
 
         query_param_names = %i[tags]
         query_params = {}
@@ -35,7 +36,7 @@ module Seed
           method: "POST",
           path: "/user/username",
           query: query_params,
-          body: Seed::User::Types::CreateUsernameRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin

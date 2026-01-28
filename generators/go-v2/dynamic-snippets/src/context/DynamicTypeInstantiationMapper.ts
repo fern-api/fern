@@ -76,6 +76,13 @@ export class DynamicTypeInstantiationMapper {
                             aliasImportPath
                         });
                     }
+                    // Special case: nullable + alias-of-literal
+                    // For fields like `SortField *SortField` where `type SortField = string` with literal value,
+                    // we use the primitive's pointer helper (e.g., fern.String("DEFAULT")) instead of
+                    // trying to take the address of a type conversion which is invalid Go.
+                    if (named?.type === "alias" && named.typeReference.type === "literal") {
+                        return this.convertLiteralToOptionalPrimitive(named.typeReference.value);
+                    }
                 }
                 // Default behavior for all other nullables
                 return go.TypeInstantiation.optional(
@@ -108,6 +115,13 @@ export class DynamicTypeInstantiationMapper {
                             aliasName,
                             aliasImportPath
                         });
+                    }
+                    // Special case: optional + alias-of-literal
+                    // For fields like `SortField *SortField` where `type SortField = string` with literal value,
+                    // we use the primitive's pointer helper (e.g., fern.String("DEFAULT")) instead of
+                    // trying to take the address of a type conversion which is invalid Go.
+                    if (named?.type === "alias" && named.typeReference.type === "literal") {
+                        return this.convertLiteralToOptionalPrimitive(named.typeReference.value);
                     }
                 }
                 // Default behavior for all other optionals
@@ -340,6 +354,17 @@ export class DynamicTypeInstantiationMapper {
         }
     }
 
+    private convertLiteralToOptionalPrimitive(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
+        switch (literal.type) {
+            case "boolean":
+                return go.TypeInstantiation.optional(go.TypeInstantiation.bool(literal.value));
+            case "string":
+                return go.TypeInstantiation.optional(go.TypeInstantiation.string(literal.value));
+            default:
+                assertNever(literal);
+        }
+    }
+
     private convertDiscriminatedUnion({
         discriminatedUnion,
         value
@@ -553,6 +578,10 @@ export class DynamicTypeInstantiationMapper {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 const typeInstantiation = this.convert({ typeReference, value });
+                // Skip types that result in nop() - this means the value didn't match the type
+                if (go.TypeInstantiation.isNop(typeInstantiation)) {
+                    continue;
+                }
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 continue;
