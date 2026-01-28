@@ -7,9 +7,21 @@ import {
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-import { snakeCase, upperFirst } from "lodash-es";
+import { upperFirst } from "lodash-es";
 import { RubyProject } from "../project/RubyProject";
 import { RubyTypeMapper } from "./RubyTypeMapper";
+
+/**
+ * Converts a string to snake_case for Ruby naming conventions.
+ * Unlike lodash's snakeCase, this does NOT treat letter-to-number transitions as word boundaries.
+ * For example: "auth0" -> "auth0" (not "auth_0"), "MyCompany" -> "my_company"
+ */
+function rubySnakeCase(str: string): string {
+    return str
+        .replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2")
+        .replace(/([a-z\d])([A-Z])/g, "$1_$2")
+        .toLowerCase();
+}
 
 const defaultVersion: string = "0.0.0";
 
@@ -51,7 +63,7 @@ export abstract class AbstractRubyGeneratorContext<
     public getRootFolderName(): string {
         // Use custom config moduleName if set, otherwise snake_case the organization name
         // Note: packageName from publish config is NOT used here - it's only for the gemspec name
-        return this.customConfig.moduleName ?? snakeCase(this.config.organization);
+        return this.customConfig.moduleName ?? rubySnakeCase(this.config.organization);
     }
 
     public getGemName(): string {

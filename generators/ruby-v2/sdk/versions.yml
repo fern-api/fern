@@ -16,6 +16,11 @@
         field controls the Ruby module name and folder structure (e.g., moduleName: "Square"
         produces lib/square/ folder and module Square).
       type: chore
+    - summary: |
+        Fix organization names with digits (e.g., "auth0") being incorrectly transformed to
+        "auth_0" in folder names. The snake_case transformation now preserves letter-digit
+        sequences, so "auth0" stays "auth0" and "OAuth2" becomes "oauth2" instead of "o_auth_2".
+      type: fix
   createdAt: "2026-01-28"
   irVersion: 61
 
