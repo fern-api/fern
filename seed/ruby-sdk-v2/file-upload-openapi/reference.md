@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>client.file_upload_example.<a href="/lib/fern_file_upload_openapi/file_upload_example/client.rb">upload_file</a>(request) -> String</code></summary>
+<details><summary><code>client.file_upload_example.<a href="/lib/seed/file_upload_example/client.rb">upload_file</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.file_upload_example.upload_file();
 <dl>
 <dd>
 
-**request_options:** `FernFileUploadOpenapi::FileUploadExample::RequestOptions` 
+**request_options:** `Seed::FileUploadExample::RequestOptions` 
     
 </dd>
 </dl>

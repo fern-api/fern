@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/fern_validation/client.rb">create</a>(request) -> FernValidation::Types::Type</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create</a>(request) -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.create(
 <dl>
 <dd>
 
-**shape:** `FernValidation::Types::Shape` 
+**shape:** `Seed::Types::Shape` 
     
 </dd>
 </dl>
@@ -64,7 +64,7 @@ client.create(
 <dl>
 <dd>
 
-**request_options:** `FernValidation::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>
@@ -76,7 +76,7 @@ client.create(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/fern_validation/client.rb">get</a>() -> FernValidation::Types::Type</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>() -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -132,7 +132,7 @@ client.get(
 <dl>
 <dd>
 
-**request_options:** `FernValidation::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

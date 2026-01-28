@@ -2,27 +2,27 @@
 
 require "test_helper"
 
-describe FernInferredAuthImplicitReference::Internal::Types::Union do
-  class Rectangle < FernInferredAuthImplicitReference::Internal::Types::Model
+describe Seed::Internal::Types::Union do
+  class Rectangle < Seed::Internal::Types::Model
     literal :type, "square"
 
     field :area, Float
   end
 
-  class Circle < FernInferredAuthImplicitReference::Internal::Types::Model
+  class Circle < Seed::Internal::Types::Model
     literal :type, "circle"
 
     field :area, Float
   end
 
-  class Pineapple < FernInferredAuthImplicitReference::Internal::Types::Model
+  class Pineapple < Seed::Internal::Types::Model
     literal :type, "pineapple"
 
     field :area, Float
   end
 
   module Shape
-    extend FernInferredAuthImplicitReference::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     discriminant :type
 
@@ -31,7 +31,7 @@ describe FernInferredAuthImplicitReference::Internal::Types::Union do
   end
 
   module StringOrInteger
-    extend FernInferredAuthImplicitReference::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     member String
     member Integer

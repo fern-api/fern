@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require_relative "../lib/fern_endpoint_security_auth"
+require_relative "../lib/seed"

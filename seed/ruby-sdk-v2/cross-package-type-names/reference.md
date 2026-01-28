@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folder_a.service.<a href="/lib/fern_cross_package_type_names/folder_a/service/client.rb">get_direct_thread</a>() -> FernCrossPackageTypeNames::FolderA::Service::Types::Response</code></summary>
+<details><summary><code>client.folder_a.service.<a href="/lib/seed/folder_a/service/client.rb">get_direct_thread</a>() -> Seed::FolderA::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.folder_a.service.get_direct_thread();
 <dl>
 <dd>
 
-**request_options:** `FernCrossPackageTypeNames::FolderA::Service::RequestOptions` 
+**request_options:** `Seed::FolderA::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -41,7 +41,7 @@ client.folder_a.service.get_direct_thread();
 </details>
 
 ## FolderD Service
-<details><summary><code>client.folder_d.service.<a href="/lib/fern_cross_package_type_names/folder_d/service/client.rb">get_direct_thread</a>() -> FernCrossPackageTypeNames::FolderD::Service::Types::Response</code></summary>
+<details><summary><code>client.folder_d.service.<a href="/lib/seed/folder_d/service/client.rb">get_direct_thread</a>() -> Seed::FolderD::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -69,7 +69,7 @@ client.folder_a.service.get_direct_thread();
 <dl>
 <dd>
 
-**request_options:** `FernCrossPackageTypeNames::FolderD::Service::RequestOptions` 
+**request_options:** `Seed::FolderD::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -82,7 +82,7 @@ client.folder_a.service.get_direct_thread();
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="/lib/fern_cross_package_type_names/foo/client.rb">find</a>(request) -> FernCrossPackageTypeNames::Foo::Types::ImportingType</code></summary>
+<details><summary><code>client.foo.<a href="/lib/seed/foo/client.rb">find</a>(request) -> Seed::Foo::Types::ImportingType</code></summary>
 <dl>
 <dd>
 
@@ -138,7 +138,7 @@ client.foo.find(
 <dl>
 <dd>
 
-**request_options:** `FernCrossPackageTypeNames::Foo::RequestOptions` 
+**request_options:** `Seed::Foo::RequestOptions` 
     
 </dd>
 </dl>

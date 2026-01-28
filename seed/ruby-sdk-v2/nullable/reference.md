@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/lib/fern_nullable/nullable/client.rb">get_users</a>() -> Internal::Types::Array[FernNullable::Nullable::Types::User]</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">get_users</a>() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -71,7 +71,7 @@ client.nullable.get_users(
 <dl>
 <dd>
 
-**request_options:** `FernNullable::Nullable::RequestOptions` 
+**request_options:** `Seed::Nullable::RequestOptions` 
     
 </dd>
 </dl>
@@ -83,7 +83,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/lib/fern_nullable/nullable/client.rb">create_user</a>(request) -> FernNullable::Nullable::Types::User</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">create_user</a>(request) -> Seed::Nullable::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -141,7 +141,7 @@ client.nullable.create_user(
 <dl>
 <dd>
 
-**metadata:** `FernNullable::Nullable::Types::Metadata` 
+**metadata:** `Seed::Nullable::Types::Metadata` 
     
 </dd>
 </dl>
@@ -157,7 +157,7 @@ client.nullable.create_user(
 <dl>
 <dd>
 
-**request_options:** `FernNullable::Nullable::RequestOptions` 
+**request_options:** `Seed::Nullable::RequestOptions` 
     
 </dd>
 </dl>
@@ -169,7 +169,7 @@ client.nullable.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/lib/fern_nullable/nullable/client.rb">delete_user</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">delete_user</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -205,7 +205,7 @@ client.nullable.delete_user(username: 'xy');
 <dl>
 <dd>
 
-**request_options:** `FernNullable::Nullable::RequestOptions` 
+**request_options:** `Seed::Nullable::RequestOptions` 
     
 </dd>
 </dl>

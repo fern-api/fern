@@ -1,6 +1,6 @@
 # Reference
 ## PropertyBasedError
-<details><summary><code>client.property_based_error.<a href="/lib/fern_error_property/property_based_error/client.rb">throw_error</a>() -> String</code></summary>
+<details><summary><code>client.property_based_error.<a href="/lib/seed/property_based_error/client.rb">throw_error</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.property_based_error.throw_error();
 <dl>
 <dd>
 
-**request_options:** `FernErrorProperty::PropertyBasedError::RequestOptions` 
+**request_options:** `Seed::PropertyBasedError::RequestOptions` 
     
 </dd>
 </dl>

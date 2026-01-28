@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.<a href="/lib/fern_exhaustive/endpoints/container/client.rb">get_and_return_list_of_primitives</a>(request) -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_list_of_primitives</a>(request) -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.endpoints.container.get_and_return_list_of_primitives(request: ['string',
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Container::RequestOptions` 
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.endpoints.container.get_and_return_list_of_primitives(request: ['string',
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/fern_exhaustive/endpoints/container/client.rb">get_and_return_list_of_objects</a>(request) -> Internal::Types::Array[FernExhaustive::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_list_of_objects</a>(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.endpoints.container.get_and_return_list_of_objects(request: [{
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[FernExhaustive::Types::Object_::Types::ObjectWithRequiredField]` 
+**request:** `Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -88,7 +88,7 @@ client.endpoints.container.get_and_return_list_of_objects(request: [{
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Container::RequestOptions` 
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
     
 </dd>
 </dl>
@@ -100,7 +100,7 @@ client.endpoints.container.get_and_return_list_of_objects(request: [{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/fern_exhaustive/endpoints/container/client.rb">get_and_return_set_of_primitives</a>(request) -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_set_of_primitives</a>(request) -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -136,7 +136,7 @@ client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(['s
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Container::RequestOptions` 
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
     
 </dd>
 </dl>
@@ -148,7 +148,7 @@ client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(['s
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/fern_exhaustive/endpoints/container/client.rb">get_and_return_set_of_objects</a>(request) -> Internal::Types::Array[FernExhaustive::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_set_of_objects</a>(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -178,7 +178,7 @@ client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[FernExhaustive::Types::Object_::Types::ObjectWithRequiredField]` 
+**request:** `Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -186,7 +186,7 @@ client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Container::RequestOptions` 
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
     
 </dd>
 </dl>
@@ -198,7 +198,7 @@ client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/fern_exhaustive/endpoints/container/client.rb">get_and_return_map_prim_to_prim</a>(request) -> Internal::Types::Hash[String, String]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_prim_to_prim</a>(request) -> Internal::Types::Hash[String, String]</code></summary>
 <dl>
 <dd>
 
@@ -236,7 +236,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(request: {
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Container::RequestOptions` 
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
     
 </dd>
 </dl>
@@ -248,7 +248,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(request: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/fern_exhaustive/endpoints/container/client.rb">get_and_return_map_of_prim_to_object</a>(request) -> Internal::Types::Hash[String, FernExhaustive::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_of_prim_to_object</a>(request) -> Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -280,7 +280,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, FernExhaustive::Types::Object_::Types::ObjectWithRequiredField]` 
+**request:** `Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -288,7 +288,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Container::RequestOptions` 
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
     
 </dd>
 </dl>
@@ -300,7 +300,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/lib/fern_exhaustive/endpoints/container/client.rb">get_and_return_optional</a>(request) -> FernExhaustive::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_optional</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -330,7 +330,7 @@ client.endpoints.container.get_and_return_optional(request: {
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -338,7 +338,7 @@ client.endpoints.container.get_and_return_optional(request: {
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Container::RequestOptions` 
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
     
 </dd>
 </dl>
@@ -351,7 +351,7 @@ client.endpoints.container.get_and_return_optional(request: {
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.endpoints.content_type.<a href="/lib/fern_exhaustive/endpoints/content_type/client.rb">post_json_patch_content_type</a>(request) -> </code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="/lib/seed/endpoints/content_type/client.rb">post_json_patch_content_type</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -395,7 +395,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithOptionalField` 
+**request:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -403,7 +403,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::ContentType::RequestOptions` 
+**request_options:** `Seed::Endpoints::ContentType::RequestOptions` 
     
 </dd>
 </dl>
@@ -415,7 +415,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.content_type.<a href="/lib/fern_exhaustive/endpoints/content_type/client.rb">post_json_patch_content_with_charset_type</a>(request) -> </code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="/lib/seed/endpoints/content_type/client.rb">post_json_patch_content_with_charset_type</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -459,7 +459,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithOptionalField` 
+**request:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -467,7 +467,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::ContentType::RequestOptions` 
+**request_options:** `Seed::Endpoints::ContentType::RequestOptions` 
     
 </dd>
 </dl>
@@ -480,7 +480,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.endpoints.enum.<a href="/lib/fern_exhaustive/endpoints/enum/client.rb">get_and_return_enum</a>(request) -> FernExhaustive::Types::Enum::Types::WeatherReport</code></summary>
+<details><summary><code>client.endpoints.enum.<a href="/lib/seed/endpoints/enum/client.rb">get_and_return_enum</a>(request) -> Seed::Types::Enum::Types::WeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -508,7 +508,7 @@ client.endpoints.enum.get_and_return_enum(request: 'SUNNY');
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Enum::Types::WeatherReport` 
+**request:** `Seed::Types::Enum::Types::WeatherReport` 
     
 </dd>
 </dl>
@@ -516,7 +516,7 @@ client.endpoints.enum.get_and_return_enum(request: 'SUNNY');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Enum::RequestOptions` 
+**request_options:** `Seed::Endpoints::Enum::RequestOptions` 
     
 </dd>
 </dl>
@@ -529,7 +529,7 @@ client.endpoints.enum.get_and_return_enum(request: 'SUNNY');
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/fern_exhaustive/endpoints/http_methods/client.rb">test_get</a>(id) -> String</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_get</a>(id) -> String</code></summary>
 <dl>
 <dd>
 
@@ -565,7 +565,7 @@ client.endpoints.http_methods.test_get(id: 'id');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -577,7 +577,7 @@ client.endpoints.http_methods.test_get(id: 'id');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/fern_exhaustive/endpoints/http_methods/client.rb">test_post</a>(request) -> FernExhaustive::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_post</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -605,7 +605,7 @@ client.endpoints.http_methods.test_post(string: 'string');
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -613,7 +613,7 @@ client.endpoints.http_methods.test_post(string: 'string');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -625,7 +625,7 @@ client.endpoints.http_methods.test_post(string: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/fern_exhaustive/endpoints/http_methods/client.rb">test_put</a>(id, request) -> FernExhaustive::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_put</a>(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -664,7 +664,7 @@ client.endpoints.http_methods.test_put(
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -672,7 +672,7 @@ client.endpoints.http_methods.test_put(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -684,7 +684,7 @@ client.endpoints.http_methods.test_put(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/fern_exhaustive/endpoints/http_methods/client.rb">test_patch</a>(id, request) -> FernExhaustive::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_patch</a>(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -737,7 +737,7 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithOptionalField` 
+**request:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -745,7 +745,7 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -757,7 +757,7 @@ client.endpoints.http_methods.test_patch(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="/lib/fern_exhaustive/endpoints/http_methods/client.rb">test_delete</a>(id) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_delete</a>(id) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -793,7 +793,7 @@ client.endpoints.http_methods.test_delete(id: 'id');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -806,7 +806,7 @@ client.endpoints.http_methods.test_delete(id: 'id');
 </details>
 
 ## Endpoints Object_
-<details><summary><code>client.endpoints.object.<a href="/lib/fern_exhaustive/endpoints/object/client.rb">get_and_return_with_optional_field</a>(request) -> FernExhaustive::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_optional_field</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -850,7 +850,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithOptionalField` 
+**request:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -858,7 +858,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Object_::RequestOptions` 
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
     
 </dd>
 </dl>
@@ -870,7 +870,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/fern_exhaustive/endpoints/object/client.rb">get_and_return_with_required_field</a>(request) -> FernExhaustive::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_required_field</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -898,7 +898,7 @@ client.endpoints.object.get_and_return_with_required_field(string: 'string');
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithRequiredField` 
+**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -906,7 +906,7 @@ client.endpoints.object.get_and_return_with_required_field(string: 'string');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Object_::RequestOptions` 
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
     
 </dd>
 </dl>
@@ -918,7 +918,7 @@ client.endpoints.object.get_and_return_with_required_field(string: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/fern_exhaustive/endpoints/object/client.rb">get_and_return_with_map_of_map</a>(request) -> FernExhaustive::Types::Object_::Types::ObjectWithMapOfMap</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_map_of_map</a>(request) -> Seed::Types::Object_::Types::ObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -950,7 +950,7 @@ client.endpoints.object.get_and_return_with_map_of_map(map: {
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::ObjectWithMapOfMap` 
+**request:** `Seed::Types::Object_::Types::ObjectWithMapOfMap` 
     
 </dd>
 </dl>
@@ -958,7 +958,7 @@ client.endpoints.object.get_and_return_with_map_of_map(map: {
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Object_::RequestOptions` 
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
     
 </dd>
 </dl>
@@ -970,7 +970,7 @@ client.endpoints.object.get_and_return_with_map_of_map(map: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/fern_exhaustive/endpoints/object/client.rb">get_and_return_nested_with_optional_field</a>(request) -> FernExhaustive::Types::Object_::Types::NestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_optional_field</a>(request) -> Seed::Types::Object_::Types::NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1017,7 +1017,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::NestedObjectWithOptionalField` 
+**request:** `Seed::Types::Object_::Types::NestedObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -1025,7 +1025,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Object_::RequestOptions` 
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
     
 </dd>
 </dl>
@@ -1037,7 +1037,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/fern_exhaustive/endpoints/object/client.rb">get_and_return_nested_with_required_field</a>(string, request) -> FernExhaustive::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field</a>(string, request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1093,7 +1093,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Object_::Types::NestedObjectWithRequiredField` 
+**request:** `Seed::Types::Object_::Types::NestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1101,7 +1101,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Object_::RequestOptions` 
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
     
 </dd>
 </dl>
@@ -1113,7 +1113,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/lib/fern_exhaustive/endpoints/object/client.rb">get_and_return_nested_with_required_field_as_list</a>(request) -> FernExhaustive::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field_as_list</a>(request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1179,7 +1179,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[FernExhaustive::Types::Object_::Types::NestedObjectWithRequiredField]` 
+**request:** `Internal::Types::Array[Seed::Types::Object_::Types::NestedObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -1187,7 +1187,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Object_::RequestOptions` 
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
     
 </dd>
 </dl>
@@ -1200,7 +1200,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
 </details>
 
 ## Endpoints Params
-<details><summary><code>client.endpoints.params.<a href="/lib/fern_exhaustive/endpoints/params/client.rb">get_with_path</a>(param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path</a>(param) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1250,7 +1250,7 @@ client.endpoints.params.get_with_path(param: 'param');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Params::RequestOptions` 
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1262,7 +1262,7 @@ client.endpoints.params.get_with_path(param: 'param');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/fern_exhaustive/endpoints/params/client.rb">get_with_inline_path</a>(param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_inline_path</a>(param) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1312,7 +1312,7 @@ client.endpoints.params.get_with_path(param: 'param');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Params::RequestOptions` 
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1324,7 +1324,7 @@ client.endpoints.params.get_with_path(param: 'param');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/fern_exhaustive/endpoints/params/client.rb">get_with_query</a>() -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_query</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -1385,7 +1385,7 @@ client.endpoints.params.get_with_query(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Params::RequestOptions` 
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1397,7 +1397,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/fern_exhaustive/endpoints/params/client.rb">get_with_allow_multiple_query</a>() -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_allow_multiple_query</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -1458,7 +1458,7 @@ client.endpoints.params.get_with_query(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Params::RequestOptions` 
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1470,7 +1470,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/fern_exhaustive/endpoints/params/client.rb">get_with_path_and_query</a>(param) -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path_and_query</a>(param) -> </code></summary>
 <dl>
 <dd>
 
@@ -1531,7 +1531,7 @@ client.endpoints.params.get_with_path_and_query(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Params::RequestOptions` 
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1543,7 +1543,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/fern_exhaustive/endpoints/params/client.rb">get_with_inline_path_and_query</a>(param) -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_inline_path_and_query</a>(param) -> </code></summary>
 <dl>
 <dd>
 
@@ -1604,7 +1604,7 @@ client.endpoints.params.get_with_path_and_query(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Params::RequestOptions` 
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1616,7 +1616,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/fern_exhaustive/endpoints/params/client.rb">modify_with_path</a>(param, request) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">modify_with_path</a>(param, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1677,7 +1677,7 @@ client.endpoints.params.modify_with_path(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Params::RequestOptions` 
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1689,7 +1689,7 @@ client.endpoints.params.modify_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/lib/fern_exhaustive/endpoints/params/client.rb">modify_with_inline_path</a>(param, request) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">modify_with_inline_path</a>(param, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1750,7 +1750,7 @@ client.endpoints.params.modify_with_path(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Params::RequestOptions` 
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1763,7 +1763,7 @@ client.endpoints.params.modify_with_path(
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_string</a>(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_string</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1799,7 +1799,7 @@ client.endpoints.primitive.get_and_return_string(request: 'string');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -1811,7 +1811,7 @@ client.endpoints.primitive.get_and_return_string(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_int</a>(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_int</a>(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1847,7 +1847,7 @@ client.endpoints.primitive.get_and_return_int(request: 1);
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -1859,7 +1859,7 @@ client.endpoints.primitive.get_and_return_int(request: 1);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_long</a>(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_long</a>(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1895,7 +1895,7 @@ client.endpoints.primitive.get_and_return_long(request: 1000000);
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -1907,7 +1907,7 @@ client.endpoints.primitive.get_and_return_long(request: 1000000);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_double</a>(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_double</a>(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1943,7 +1943,7 @@ client.endpoints.primitive.get_and_return_double(request: 1.1);
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -1955,7 +1955,7 @@ client.endpoints.primitive.get_and_return_double(request: 1.1);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_bool</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_bool</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -1991,7 +1991,7 @@ client.endpoints.primitive.get_and_return_bool(request: true);
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -2003,7 +2003,7 @@ client.endpoints.primitive.get_and_return_bool(request: true);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_datetime</a>(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_datetime</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2039,7 +2039,7 @@ client.endpoints.primitive.get_and_return_datetime(request: '2024-01-15T09:30:00
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -2051,7 +2051,7 @@ client.endpoints.primitive.get_and_return_datetime(request: '2024-01-15T09:30:00
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_date</a>(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_date</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2087,7 +2087,7 @@ client.endpoints.primitive.get_and_return_date(request: '2023-01-15');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -2099,7 +2099,7 @@ client.endpoints.primitive.get_and_return_date(request: '2023-01-15');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_uuid</a>(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_uuid</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2135,7 +2135,7 @@ client.endpoints.primitive.get_and_return_uuid(request: 'd5e9c84f-c2b2-4bf4-b4b0
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -2147,7 +2147,7 @@ client.endpoints.primitive.get_and_return_uuid(request: 'd5e9c84f-c2b2-4bf4-b4b0
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/fern_exhaustive/endpoints/primitive/client.rb">get_and_return_base_64</a>(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_base_64</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2183,7 +2183,7 @@ client.endpoints.primitive.get_and_return_base_64(request: 'SGVsbG8gd29ybGQh');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Primitive::RequestOptions` 
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -2196,7 +2196,7 @@ client.endpoints.primitive.get_and_return_base_64(request: 'SGVsbG8gd29ybGQh');
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.<a href="/lib/fern_exhaustive/endpoints/put/client.rb">add</a>(id) -> FernExhaustive::Endpoints::Put::Types::PutResponse</code></summary>
+<details><summary><code>client.endpoints.put.<a href="/lib/seed/endpoints/put/client.rb">add</a>(id) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2232,7 +2232,7 @@ client.endpoints.put.add(id: 'id');
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Put::RequestOptions` 
+**request_options:** `Seed::Endpoints::Put::RequestOptions` 
     
 </dd>
 </dl>
@@ -2245,7 +2245,7 @@ client.endpoints.put.add(id: 'id');
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.endpoints.union.<a href="/lib/fern_exhaustive/endpoints/union/client.rb">get_and_return_union</a>(request) -> FernExhaustive::Types::Union::Types::Animal</code></summary>
+<details><summary><code>client.endpoints.union.<a href="/lib/seed/endpoints/union/client.rb">get_and_return_union</a>(request) -> Seed::Types::Union::Types::Animal</code></summary>
 <dl>
 <dd>
 
@@ -2273,7 +2273,7 @@ client.endpoints.union.get_and_return_union();
 <dl>
 <dd>
 
-**request:** `FernExhaustive::Types::Union::Types::Animal` 
+**request:** `Seed::Types::Union::Types::Animal` 
     
 </dd>
 </dl>
@@ -2281,7 +2281,7 @@ client.endpoints.union.get_and_return_union();
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Union::RequestOptions` 
+**request_options:** `Seed::Endpoints::Union::RequestOptions` 
     
 </dd>
 </dl>
@@ -2294,7 +2294,7 @@ client.endpoints.union.get_and_return_union();
 </details>
 
 ## Endpoints Urls
-<details><summary><code>client.endpoints.urls.<a href="/lib/fern_exhaustive/endpoints/urls/client.rb">with_mixed_case</a>() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">with_mixed_case</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2322,7 +2322,7 @@ client.endpoints.urls.with_mixed_case();
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
     
 </dd>
 </dl>
@@ -2334,7 +2334,7 @@ client.endpoints.urls.with_mixed_case();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="/lib/fern_exhaustive/endpoints/urls/client.rb">no_ending_slash</a>() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">no_ending_slash</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2362,7 +2362,7 @@ client.endpoints.urls.no_ending_slash();
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
     
 </dd>
 </dl>
@@ -2374,7 +2374,7 @@ client.endpoints.urls.no_ending_slash();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="/lib/fern_exhaustive/endpoints/urls/client.rb">with_ending_slash</a>() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">with_ending_slash</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2402,7 +2402,7 @@ client.endpoints.urls.with_ending_slash();
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
     
 </dd>
 </dl>
@@ -2414,7 +2414,7 @@ client.endpoints.urls.with_ending_slash();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="/lib/fern_exhaustive/endpoints/urls/client.rb">with_underscores</a>() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">with_underscores</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2442,7 +2442,7 @@ client.endpoints.urls.with_underscores();
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
     
 </dd>
 </dl>
@@ -2455,7 +2455,7 @@ client.endpoints.urls.with_underscores();
 </details>
 
 ## InlinedRequests
-<details><summary><code>client.inlined_requests.<a href="/lib/fern_exhaustive/inlined_requests/client.rb">post_with_object_bodyand_response</a>(request) -> FernExhaustive::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.inlined_requests.<a href="/lib/seed/inlined_requests/client.rb">post_with_object_bodyand_response</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2533,7 +2533,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 <dl>
 <dd>
 
-**nested_object:** `FernExhaustive::Types::Object_::Types::ObjectWithOptionalField` 
+**nested_object:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -2541,7 +2541,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::InlinedRequests::RequestOptions` 
+**request_options:** `Seed::InlinedRequests::RequestOptions` 
     
 </dd>
 </dl>
@@ -2554,7 +2554,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 </details>
 
 ## NoAuth
-<details><summary><code>client.no_auth.<a href="/lib/fern_exhaustive/no_auth/client.rb">post_with_no_auth</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.no_auth.<a href="/lib/seed/no_auth/client.rb">post_with_no_auth</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -2604,7 +2604,7 @@ client.no_auth.post_with_no_auth();
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::NoAuth::RequestOptions` 
+**request_options:** `Seed::NoAuth::RequestOptions` 
     
 </dd>
 </dl>
@@ -2617,7 +2617,7 @@ client.no_auth.post_with_no_auth();
 </details>
 
 ## NoReqBody
-<details><summary><code>client.no_req_body.<a href="/lib/fern_exhaustive/no_req_body/client.rb">get_with_no_request_body</a>() -> FernExhaustive::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.no_req_body.<a href="/lib/seed/no_req_body/client.rb">get_with_no_request_body</a>() -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2645,7 +2645,7 @@ client.no_req_body.get_with_no_request_body();
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::NoReqBody::RequestOptions` 
+**request_options:** `Seed::NoReqBody::RequestOptions` 
     
 </dd>
 </dl>
@@ -2657,7 +2657,7 @@ client.no_req_body.get_with_no_request_body();
 </dl>
 </details>
 
-<details><summary><code>client.no_req_body.<a href="/lib/fern_exhaustive/no_req_body/client.rb">post_with_no_request_body</a>() -> String</code></summary>
+<details><summary><code>client.no_req_body.<a href="/lib/seed/no_req_body/client.rb">post_with_no_request_body</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2685,7 +2685,7 @@ client.no_req_body.post_with_no_request_body();
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::NoReqBody::RequestOptions` 
+**request_options:** `Seed::NoReqBody::RequestOptions` 
     
 </dd>
 </dl>
@@ -2698,7 +2698,7 @@ client.no_req_body.post_with_no_request_body();
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.req_with_headers.<a href="/lib/fern_exhaustive/req_with_headers/client.rb">get_with_custom_header</a>(request) -> </code></summary>
+<details><summary><code>client.req_with_headers.<a href="/lib/seed/req_with_headers/client.rb">get_with_custom_header</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -2746,7 +2746,7 @@ client.req_with_headers.get_with_custom_header(
 <dl>
 <dd>
 
-**request_options:** `FernExhaustive::ReqWithHeaders::RequestOptions` 
+**request_options:** `Seed::ReqWithHeaders::RequestOptions` 
     
 </dd>
 </dl>

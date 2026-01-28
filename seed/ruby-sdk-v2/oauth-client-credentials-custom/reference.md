@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/fern_oauth_client_credentials_custom/auth/client.rb">get_token_with_client_credentials</a>(request) -> FernOauthClientCredentialsCustom::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token_with_client_credentials</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -92,7 +92,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**request_options:** `FernOauthClientCredentialsCustom::Auth::RequestOptions` 
+**request_options:** `Seed::Auth::RequestOptions` 
     
 </dd>
 </dl>
@@ -104,7 +104,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/lib/fern_oauth_client_credentials_custom/auth/client.rb">refresh_token</a>(request) -> FernOauthClientCredentialsCustom::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">refresh_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +187,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**request_options:** `FernOauthClientCredentialsCustom::Auth::RequestOptions` 
+**request_options:** `Seed::Auth::RequestOptions` 
     
 </dd>
 </dl>
@@ -200,7 +200,7 @@ client.auth.refresh_token(
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.nested_no_auth.api.<a href="/lib/fern_oauth_client_credentials_custom/nested_no_auth/api/client.rb">get_something</a>() -> </code></summary>
+<details><summary><code>client.nested_no_auth.api.<a href="/lib/seed/nested_no_auth/api/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -228,7 +228,7 @@ client.nested_no_auth.api.get_something();
 <dl>
 <dd>
 
-**request_options:** `FernOauthClientCredentialsCustom::NestedNoAuth::Api::RequestOptions` 
+**request_options:** `Seed::NestedNoAuth::Api::RequestOptions` 
     
 </dd>
 </dl>
@@ -241,7 +241,7 @@ client.nested_no_auth.api.get_something();
 </details>
 
 ## Nested Api
-<details><summary><code>client.nested.api.<a href="/lib/fern_oauth_client_credentials_custom/nested/api/client.rb">get_something</a>() -> </code></summary>
+<details><summary><code>client.nested.api.<a href="/lib/seed/nested/api/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -269,7 +269,7 @@ client.nested.api.get_something();
 <dl>
 <dd>
 
-**request_options:** `FernOauthClientCredentialsCustom::Nested::Api::RequestOptions` 
+**request_options:** `Seed::Nested::Api::RequestOptions` 
     
 </dd>
 </dl>
@@ -282,7 +282,7 @@ client.nested.api.get_something();
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/lib/fern_oauth_client_credentials_custom/simple/client.rb">get_something</a>() -> </code></summary>
+<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -310,7 +310,7 @@ client.simple.get_something();
 <dl>
 <dd>
 
-**request_options:** `FernOauthClientCredentialsCustom::Simple::RequestOptions` 
+**request_options:** `Seed::Simple::RequestOptions` 
     
 </dd>
 </dl>

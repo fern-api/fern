@@ -1,6 +1,6 @@
 # Reference
 ## BasicAuth
-<details><summary><code>client.basic_auth.<a href="/lib/fern_basic_auth_environment_variables/basic_auth/client.rb">get_with_basic_auth</a>() -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.basic_auth.<a href="/lib/seed/basic_auth/client.rb">get_with_basic_auth</a>() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.basic_auth.get_with_basic_auth();
 <dl>
 <dd>
 
-**request_options:** `FernBasicAuthEnvironmentVariables::BasicAuth::RequestOptions` 
+**request_options:** `Seed::BasicAuth::RequestOptions` 
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ client.basic_auth.get_with_basic_auth();
 </dl>
 </details>
 
-<details><summary><code>client.basic_auth.<a href="/lib/fern_basic_auth_environment_variables/basic_auth/client.rb">post_with_basic_auth</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.basic_auth.<a href="/lib/seed/basic_auth/client.rb">post_with_basic_auth</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -104,7 +104,7 @@ client.basic_auth.post_with_basic_auth();
 <dl>
 <dd>
 
-**request_options:** `FernBasicAuthEnvironmentVariables::BasicAuth::RequestOptions` 
+**request_options:** `Seed::BasicAuth::RequestOptions` 
     
 </dd>
 </dl>

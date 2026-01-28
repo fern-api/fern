@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/fern_folders/client.rb">foo</a>() -> </code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ client.foo();
 <dl>
 <dd>
 
-**request_options:** `FernFolders::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.foo();
 </details>
 
 ## A B
-<details><summary><code>client.a.b.<a href="/lib/fern_folders/a/b/client.rb">foo</a>() -> </code></summary>
+<details><summary><code>client.a.b.<a href="/lib/seed/a/b/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ client.foo();
 <dl>
 <dd>
 
-**request_options:** `FernFolders::A::B::RequestOptions` 
+**request_options:** `Seed::A::B::RequestOptions` 
     
 </dd>
 </dl>
@@ -81,7 +81,7 @@ client.foo();
 </details>
 
 ## A C
-<details><summary><code>client.a.c.<a href="/lib/fern_folders/a/c/client.rb">foo</a>() -> </code></summary>
+<details><summary><code>client.a.c.<a href="/lib/seed/a/c/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -109,7 +109,7 @@ client.foo();
 <dl>
 <dd>
 
-**request_options:** `FernFolders::A::C::RequestOptions` 
+**request_options:** `Seed::A::C::RequestOptions` 
     
 </dd>
 </dl>
@@ -122,7 +122,7 @@ client.foo();
 </details>
 
 ## Folder
-<details><summary><code>client.folder.<a href="/lib/fern_folders/folder/client.rb">foo</a>() -> </code></summary>
+<details><summary><code>client.folder.<a href="/lib/seed/folder/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -150,7 +150,7 @@ client.foo();
 <dl>
 <dd>
 
-**request_options:** `FernFolders::Folder::RequestOptions` 
+**request_options:** `Seed::Folder::RequestOptions` 
     
 </dd>
 </dl>
@@ -163,7 +163,7 @@ client.foo();
 </details>
 
 ## Folder Service
-<details><summary><code>client.folder.service.<a href="/lib/fern_folders/folder/service/client.rb">endpoint</a>() -> </code></summary>
+<details><summary><code>client.folder.service.<a href="/lib/seed/folder/service/client.rb">endpoint</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -191,7 +191,7 @@ client.folder.service.endpoint();
 <dl>
 <dd>
 
-**request_options:** `FernFolders::Folder::Service::RequestOptions` 
+**request_options:** `Seed::Folder::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -203,7 +203,7 @@ client.folder.service.endpoint();
 </dl>
 </details>
 
-<details><summary><code>client.folder.service.<a href="/lib/fern_folders/folder/service/client.rb">unknown_request</a>(request) -> </code></summary>
+<details><summary><code>client.folder.service.<a href="/lib/seed/folder/service/client.rb">unknown_request</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -239,7 +239,7 @@ client.folder.service.unknown_request();
 <dl>
 <dd>
 
-**request_options:** `FernFolders::Folder::Service::RequestOptions` 
+**request_options:** `Seed::Folder::Service::RequestOptions` 
     
 </dd>
 </dl>
