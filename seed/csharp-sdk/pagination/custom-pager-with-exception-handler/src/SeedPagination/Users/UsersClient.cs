@@ -1498,7 +1498,7 @@ public partial class UsersClient : IUsersClient
                     ListUsersOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >
@@ -1552,7 +1552,7 @@ public partial class UsersClient : IUsersClient
                     ListUsersDoubleOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    double?,
+                    double,
                     object,
                     User
                 >
@@ -1603,7 +1603,7 @@ public partial class UsersClient : IUsersClient
                     ListUsersBodyOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >
@@ -1657,8 +1657,8 @@ public partial class UsersClient : IUsersClient
                     ListUsersOffsetStepPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
-                    int?,
+                    int,
+                    int,
                     User
                 >
                     .CreateInstanceAsync(
@@ -1710,8 +1710,8 @@ public partial class UsersClient : IUsersClient
                     ListWithOffsetPaginationHasNextPageRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
-                    int?,
+                    int,
+                    int,
                     User
                 >
                     .CreateInstanceAsync(
@@ -1949,7 +1949,7 @@ public partial class UsersClient : IUsersClient
                     ListWithGlobalConfigRequest,
                     RequestOptions?,
                     UsernameContainer,
-                    int?,
+                    int,
                     object,
                     string
                 >
@@ -1995,7 +1995,7 @@ public partial class UsersClient : IUsersClient
                     ListUsersOptionalDataRequest,
                     RequestOptions?,
                     ListUsersOptionalDataPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >

@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.0.0-rc83
+- version: 1.0.0-rc84
   changelogEntry:
     - summary: |
         Fix packageName being incorrectly used for folder/module naming. The packageName from
@@ -12,14 +12,24 @@
         custom config moduleName option or the organization name as fallback.
       type: fix
     - summary: |
-        Rename custom config field from "module" to "moduleName" for clarity. The moduleName
-        field controls the Ruby module name and folder structure (e.g., moduleName: "Square"
-        produces lib/square/ folder and module Square).
-      type: chore
-    - summary: |
         Fix organization names with digits (e.g., "auth0") being incorrectly transformed to
         "auth_0" in folder names. The snake_case transformation now preserves letter-digit
         sequences, so "auth0" stays "auth0" and "OAuth2" becomes "oauth2" instead of "o_auth_2".
+  createdAt: "2026-01-28"
+      type: fix
+  irVersion: 61
+
+- version: 1.0.0-rc83
+  changelogEntry:
+    - summary: |
+        Fix request body serialization bug where path/query/header parameters were incorrectly
+        serialized as nil values in the request body. For endpoints with inlined request bodies
+        that also have path, query, or header parameters, the wrapper type (which includes all
+        endpoint parameters) was being created with only body properties, causing non-body fields
+        to be nil and serialized as null in the JSON body. The fix uses a serialize-then-split
+        pattern: serialize ALL params through the wrapper type first, then remove non-body params
+        from the serialized result. This ensures proper type conversion while keeping non-body
+        params out of the request body.
       type: fix
   createdAt: "2026-01-28"
   irVersion: 61

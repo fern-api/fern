@@ -1,5 +1,6 @@
 using NUnit.Framework.Constraints;
-using <%= namespaces.root %>.Core;
+using <%= namespaces.root %>.Core;<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
+using OneOf;<% } %>
 
 namespace NUnit.Framework;
 
@@ -50,11 +51,54 @@ public static class OptionalComparerExtensions
                 // Use NUnit's property comparer for the inner values
                 var propertiesComparer = new NUnitEqualityComparer();
                 var tolerance = Tolerance.Default;
-                propertiesComparer.CompareProperties = true;
+                propertiesComparer.CompareProperties = true;<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
+                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists within Optional<T>)
+                propertiesComparer.ExternalComparers.Add(
+                    new OneOfEqualityAdapter(propertiesComparer)
+                );<% } %>
                 return propertiesComparer.AreEqual(xValue, yValue, ref tolerance);
             }
         );
 
         return constraint;
-    }
+    }<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
+
+    /// <summary>
+    /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
+    /// This enables recursive comparison of nested OneOf values within Optional<T> types.
+    /// </summary>
+    private class OneOfEqualityAdapter : EqualityAdapter
+    {
+        private readonly NUnitEqualityComparer _comparer;
+
+        public OneOfEqualityAdapter(NUnitEqualityComparer comparer)
+        {
+            _comparer = comparer;
+        }
+
+        public override bool CanCompare(object? x, object? y)
+        {
+            return x is IOneOf && y is IOneOf;
+        }
+
+        public override bool AreEqual(object? x, object? y)
+        {
+            var oneOfX = (IOneOf?)x;
+            var oneOfY = (IOneOf?)y;
+
+            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+            if (oneOfX?.Value is null && oneOfY?.Value is null)
+            {
+                return true;
+            }
+
+            if (oneOfX?.Value is null || oneOfY?.Value is null)
+            {
+                return false;
+            }
+
+            var tolerance = Tolerance.Default;
+            return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
+        }
+    }<% } %>
 }
