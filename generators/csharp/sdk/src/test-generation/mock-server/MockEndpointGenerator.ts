@@ -5,8 +5,7 @@ import {
     ExampleTypeReference,
     HttpEndpoint,
     ObjectPropertyAccess,
-    TypeId,
-    TypeReference
+    TypeId
 } from "@fern-fern/ir-sdk/api";
 import { DefaultValueExtractor, ExtractedDefault } from "../../DefaultValueExtractor";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
