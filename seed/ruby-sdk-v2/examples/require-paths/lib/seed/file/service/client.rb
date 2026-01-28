@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module File
     module Service
       class Client
-        # @param client [Seed::Internal::Http::RawClient]
+        # @param client [FernExamples::Internal::Http::RawClient]
         #
         # @return [void]
         def initialize(client:)
@@ -22,10 +22,10 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :filename
         #
-        # @return [Seed::Types::Types::File]
+        # @return [FernExamples::Types::Types::File]
         def get_file(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
+          params = FernExamples::Internal::Types::Utils.normalize_keys(params)
+          request = FernExamples::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "/file/#{params[:filename]}",
@@ -34,13 +34,13 @@ module Seed
           begin
             response = @client.send(request)
           rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
+            raise FernExamples::Errors::TimeoutError
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Types::File.load(response.body)
+            FernExamples::Types::Types::File.load(response.body)
           else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            error_class = FernExamples::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
         end

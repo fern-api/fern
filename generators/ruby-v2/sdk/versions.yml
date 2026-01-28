@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc85
+  changelogEntry:
+    - summary: |
+        Fix backward compatibility issue where module naming no longer used packageName from
+        publish config. The previous release (rc84) incorrectly removed packageName as a fallback
+        for module naming, which broke existing SDKs that relied on this behavior. Module naming
+        now correctly uses: moduleName config > packageName from publish config > organization.
+        Folder naming still uses: moduleName config > organization (not packageName), which
+        correctly fixes the special character issue from rc84.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
 - version: 1.0.0-rc84
   changelogEntry:
     - summary: |

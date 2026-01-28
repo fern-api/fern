@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Types
     module Types
       class Test < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend FernExamples::Internal::Types::Union
 
         discriminant :type
 

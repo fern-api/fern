@@ -1,10 +1,11 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec
+    FernGeneratorExec,
+    getPackageName
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
-import { upperFirst } from "lodash-es";
+import { camelCase, upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper";
 
@@ -46,10 +47,17 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootModuleName(): string {
-        // Use moduleName config first, then clientModuleName, then organization
+        // Priority: custom config moduleName > package name from publish config > clientModuleName > organization
+        // Use camelCase to convert hyphenated names (e.g., "nullable-optional") to valid Ruby module names
         // This aligns with AbstractRubyGeneratorContext.getRootModuleName()
+        const packageName = getPackageName(this.config);
         return upperFirst(
-            this.customConfig?.moduleName ?? this.customConfig?.clientModuleName ?? this.config.organization
+            camelCase(
+                this.customConfig?.moduleName ??
+                    packageName ??
+                    this.customConfig?.clientModuleName ??
+                    this.config.organization
+            )
         );
     }
 

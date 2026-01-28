@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Types
     class Type < Internal::Types::Model
-      extend Seed::Internal::Types::Union
+      extend FernExamples::Internal::Types::Union
 
-      member -> { Seed::Types::BasicType }
-      member -> { Seed::Types::ComplexType }
+      member -> { FernExamples::Types::BasicType }
+      member -> { FernExamples::Types::ComplexType }
     end
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Types
     class TypeWithSingleCharPropertyEqualToTypeStartingLetter < Internal::Types::Model
       field :t, -> { String }, optional: false, nullable: false

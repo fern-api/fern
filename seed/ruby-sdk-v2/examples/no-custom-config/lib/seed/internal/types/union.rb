@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Internal
     module Types
       # Define a union between two types
       module Union
-        include Seed::Internal::Types::Type
+        include FernExamples::Internal::Types::Type
 
         def members
           @members ||= []
@@ -46,9 +46,9 @@ module Seed
         # @return [Boolean]
         private def type_matches?(value, member_type)
           case member_type
-          when Seed::Internal::Types::Hash
+          when FernExamples::Internal::Types::Hash
             value.is_a?(::Hash)
-          when Seed::Internal::Types::Array
+          when FernExamples::Internal::Types::Array
             value.is_a?(::Array)
           when Class, Module
             value.is_a?(member_type)

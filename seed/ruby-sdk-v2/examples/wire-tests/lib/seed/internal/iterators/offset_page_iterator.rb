@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Internal
     class OffsetPageIterator
       include Enumerable
@@ -12,7 +12,7 @@ module Seed
       # @param has_next_field [Symbol] The field to pull the boolean of whether a next page exists from, if any.
       # @param step [Boolean] If true, treats the page number as a true offset (i.e. increments the page number by the number of items returned from each call rather than just 1)
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
-      # @return [Seed::Internal::OffsetPageIterator]
+      # @return [FernExamples::Internal::OffsetPageIterator]
       def initialize(initial_page:, item_field:, has_next_field:, step:, &block)
         @page_number = initial_page || (step ? 0 : 1)
         @item_field = item_field

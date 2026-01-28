@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Types
     module Types
       class CastMember < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend FernExamples::Internal::Types::Union
 
-        member -> { Seed::Types::Types::Actor }
-        member -> { Seed::Types::Types::Actress }
-        member -> { Seed::Types::Types::StuntDouble }
+        member -> { FernExamples::Types::Types::Actor }
+        member -> { FernExamples::Types::Types::Actress }
+        member -> { FernExamples::Types::Types::StuntDouble }
       end
     end
   end

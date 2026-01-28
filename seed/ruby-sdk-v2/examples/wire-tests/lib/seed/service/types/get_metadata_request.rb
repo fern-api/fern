@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Service
     module Types
       class GetMetadataRequest < Internal::Types::Model

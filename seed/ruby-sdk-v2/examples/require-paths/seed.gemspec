@@ -7,10 +7,10 @@ require_relative "custom.gemspec"
 #       You can change them here or overwrite them in the custom gemspec file.
 Gem::Specification.new do |spec|
   spec.name = "fern_examples"
-  spec.authors = ["Seed"]
-  spec.version = Seed::VERSION
-  spec.summary = "Ruby client library for the Seed API"
-  spec.description = "The Seed Ruby library provides convenient access to the Seed API from Ruby."
+  spec.authors = ["FernExamples"]
+  spec.version = FernExamples::VERSION
+  spec.summary = "Ruby client library for the FernExamples API"
+  spec.description = "The FernExamples Ruby library provides convenient access to the FernExamples API from Ruby."
   spec.required_ruby_version = ">= 3.3.0"
   spec.metadata["rubygems_mfa_required"] = "true"
 

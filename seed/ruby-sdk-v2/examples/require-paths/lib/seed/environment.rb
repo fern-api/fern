@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   class Environment
     PRODUCTION = "https://production.com/api"
     STAGING = "https://staging.com/api"

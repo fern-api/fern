@@ -1,6 +1,6 @@
-require "seed"
+require "fernexamples"
 
-client = Seed::Client.new(
+client = FernExamples::Client.new(
   token: '<token>',
   base_url: 'https://api.fern.com'
 );

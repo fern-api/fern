@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Types
     module Types
       class Exception < Internal::Types::Model
-        extend Seed::Internal::Types::Union
+        extend FernExamples::Internal::Types::Union
 
         discriminant :type
 
-        member -> { Seed::Types::Types::ExceptionInfo }, key: "GENERIC"
+        member -> { FernExamples::Types::Types::ExceptionInfo }, key: "GENERIC"
         member -> { Object }, key: "TIMEOUT"
       end
     end

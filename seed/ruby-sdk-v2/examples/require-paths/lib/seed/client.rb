@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   class Client
     # @param base_url [String, nil]
     # @param token [String]
     #
     # @return [void]
     def initialize(token:, base_url: nil)
-      @raw_client = Seed::Internal::Http::RawClient.new(
+      @raw_client = FernExamples::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_examples/0.0.1",
@@ -17,19 +17,19 @@ module Seed
       )
     end
 
-    # @return [Seed::File::Client]
+    # @return [FernExamples::File::Client]
     def file
-      @file ||= Seed::File::Client.new(client: @raw_client)
+      @file ||= FernExamples::File::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Health::Client]
+    # @return [FernExamples::Health::Client]
     def health
-      @health ||= Seed::Health::Client.new(client: @raw_client)
+      @health ||= FernExamples::Health::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Service::Client]
+    # @return [FernExamples::Service::Client]
     def service
-      @service ||= Seed::Service::Client.new(client: @raw_client)
+      @service ||= FernExamples::Service::Client.new(client: @raw_client)
     end
   end
 end

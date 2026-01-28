@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Types
     module ComplexType
-      extend Seed::Internal::Types::Enum
+      extend FernExamples::Internal::Types::Enum
 
       OBJECT = "object"
       UNION = "union"

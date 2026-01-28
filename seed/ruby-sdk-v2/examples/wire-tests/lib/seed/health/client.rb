@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Health
     class Client
-      # @param client [Seed::Internal::Http::RawClient]
+      # @param client [FernExamples::Internal::Http::RawClient]
       #
       # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @return [Seed::Service::Client]
+      # @return [FernExamples::Service::Client]
       def service
-        @service ||= Seed::Health::Service::Client.new(client: @client)
+        @service ||= FernExamples::Health::Service::Client.new(client: @client)
       end
     end
   end

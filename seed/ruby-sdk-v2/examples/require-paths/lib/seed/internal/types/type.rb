@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Seed
+module FernExamples
   module Internal
     module Types
       # @abstract
       module Type
-        include Seed::Internal::JSON::Serializable
+        include FernExamples::Internal::JSON::Serializable
 
         # Coerces a value to this type
         #
