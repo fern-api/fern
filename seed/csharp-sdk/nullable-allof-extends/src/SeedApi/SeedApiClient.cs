@@ -35,7 +35,7 @@ public partial class SeedApiClient : ISeedApiClient
     )
     {
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

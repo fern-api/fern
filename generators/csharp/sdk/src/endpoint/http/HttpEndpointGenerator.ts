@@ -1772,33 +1772,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
-
-                // Add client-level headers (from root client constructor)
-                // For endpoints that don't require auth, use AddWithoutAuth to skip the Authorization header
-                // and avoid triggering lazy auth token resolution
-                writer.writeLine();
-                if (endpoint.auth) {
-                    writer.write(".Add(_client.Options.Headers)");
-                } else {
-                    writer.write(".AddWithoutAuth(_client.Options.Headers)");
-                }
-
-                writer.writeLine();
-                writer.write(".Add(_client.Options.AdditionalHeaders)");
+                writer.writeLine(".Add(_client.Options.Headers)");
+                writer.writeLine(".Add(_client.Options.AdditionalHeaders)");
 
                 if (endpoint.idempotent) {
-                    writer.writeLine();
-                    writer.write(`.Add(${requestOptionsVar}?.GetIdempotencyHeaders())`);
+                    writer.writeLine(`.Add(${requestOptionsVar}?.GetIdempotencyHeaders())`);
                 }
 
-                writer.writeLine();
-                writer.write(`.Add(${requestOptionsVar}?.AdditionalHeaders)`);
-
-                writer.writeLine();
-                writer.write(".BuildAsync()");
-
-                writer.writeLine();
-                writer.write(".ConfigureAwait(false);");
+                writer.writeLine(`.Add(${requestOptionsVar}?.AdditionalHeaders)`);
+                writer.writeLine(".BuildAsync()");
+                writer.writeLine(".ConfigureAwait(false);");
 
                 writer.dedent();
             }),

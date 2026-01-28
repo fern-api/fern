@@ -22,7 +22,7 @@ public partial class ApiClient : IApiClient
     {
         var _headers =
             await new SeedOauthClientCredentialsEnvironmentVariables.Core.HeadersBuilder.Builder()
-                .AddWithoutAuth(_client.Options.Headers)
+                .Add(_client.Options.Headers)
                 .Add(_client.Options.AdditionalHeaders)
                 .Add(options?.AdditionalHeaders)
                 .BuildAsync()

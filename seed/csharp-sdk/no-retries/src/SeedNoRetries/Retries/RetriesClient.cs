@@ -18,7 +18,7 @@ public partial class RetriesClient : IRetriesClient
     )
     {
         var _headers = await new SeedNoRetries.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

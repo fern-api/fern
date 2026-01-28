@@ -18,7 +18,7 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
     )
     {
         var _headers = await new SeedErrorProperty.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

@@ -20,7 +20,7 @@ public partial class TasktestClient : ITasktestClient
     )
     {
         var _headers = await new SeedCsharpNamespaceConflict.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
