@@ -21,14 +21,11 @@ module FernAnyAuth
       # @return [FernAnyAuth::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         params = FernAnyAuth::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret audience grant_type]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernAnyAuth::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: FernAnyAuth::Auth::Types::GetTokenRequest.new(body_bag).to_h,
+          body: FernAnyAuth::Auth::Types::GetTokenRequest.new(params).to_h,
           request_options: request_options
         )
         begin

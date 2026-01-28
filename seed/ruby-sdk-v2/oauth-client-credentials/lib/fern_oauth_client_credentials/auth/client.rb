@@ -21,14 +21,11 @@ module FernOauthClientCredentials
       # @return [FernOauthClientCredentials::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
         params = FernOauthClientCredentials::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret audience grant_type scope]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernOauthClientCredentials::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: FernOauthClientCredentials::Auth::Types::GetTokenRequest.new(body_bag).to_h,
+          body: FernOauthClientCredentials::Auth::Types::GetTokenRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -56,14 +53,11 @@ module FernOauthClientCredentials
       # @return [FernOauthClientCredentials::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)
         params = FernOauthClientCredentials::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret refresh_token audience grant_type scope]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernOauthClientCredentials::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: FernOauthClientCredentials::Auth::Types::RefreshTokenRequest.new(body_bag).to_h,
+          body: FernOauthClientCredentials::Auth::Types::RefreshTokenRequest.new(params).to_h,
           request_options: request_options
         )
         begin

@@ -22,8 +22,9 @@ module FernInferredAuthImplicitNoExpiry
       # @return [FernInferredAuthImplicitNoExpiry::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
         params = FernInferredAuthImplicitNoExpiry::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret audience grant_type scope]
-        body_bag = params.slice(*body_prop_names)
+        request_data = FernInferredAuthImplicitNoExpiry::Auth::Types::GetTokenRequest.new(params).to_h
+        non_body_param_names = ["X-Api-Key"]
+        body = request_data.except(*non_body_param_names)
 
         headers = {}
         headers["X-Api-Key"] = params[:x_api_key] if params[:x_api_key]
@@ -33,7 +34,7 @@ module FernInferredAuthImplicitNoExpiry
           method: "POST",
           path: "/token",
           headers: headers,
-          body: FernInferredAuthImplicitNoExpiry::Auth::Types::GetTokenRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin
@@ -62,8 +63,9 @@ module FernInferredAuthImplicitNoExpiry
       # @return [FernInferredAuthImplicitNoExpiry::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)
         params = FernInferredAuthImplicitNoExpiry::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret refresh_token audience grant_type scope]
-        body_bag = params.slice(*body_prop_names)
+        request_data = FernInferredAuthImplicitNoExpiry::Auth::Types::RefreshTokenRequest.new(params).to_h
+        non_body_param_names = ["X-Api-Key"]
+        body = request_data.except(*non_body_param_names)
 
         headers = {}
         headers["X-Api-Key"] = params[:x_api_key] if params[:x_api_key]
@@ -73,7 +75,7 @@ module FernInferredAuthImplicitNoExpiry
           method: "POST",
           path: "/token/refresh",
           headers: headers,
-          body: FernInferredAuthImplicitNoExpiry::Auth::Types::RefreshTokenRequest.new(body_bag).to_h,
+          body: body,
           request_options: request_options
         )
         begin

@@ -21,14 +21,11 @@ module FernOauthClientCredentialsDefault
       # @return [FernOauthClientCredentialsDefault::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         params = FernOauthClientCredentialsDefault::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret grant_type]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernOauthClientCredentialsDefault::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: FernOauthClientCredentialsDefault::Auth::Types::GetTokenRequest.new(body_bag).to_h,
+          body: FernOauthClientCredentialsDefault::Auth::Types::GetTokenRequest.new(params).to_h,
           request_options: request_options
         )
         begin

@@ -21,14 +21,11 @@ module FernLiteral
       # @return [FernLiteral::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = FernLiteral::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[prompt context query temperature stream aliased_context maybe_context object_with_literal]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernLiteral::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "inlined",
-          body: FernLiteral::Inlined::Types::SendLiteralsInlinedRequest.new(body_bag).to_h,
+          body: FernLiteral::Inlined::Types::SendLiteralsInlinedRequest.new(params).to_h,
           request_options: request_options
         )
         begin

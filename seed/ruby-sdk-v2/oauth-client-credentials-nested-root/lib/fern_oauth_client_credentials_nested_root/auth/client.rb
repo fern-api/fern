@@ -21,14 +21,11 @@ module FernOauthClientCredentialsNestedRoot
       # @return [FernOauthClientCredentialsNestedRoot::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         params = FernOauthClientCredentialsNestedRoot::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret audience grant_type scope]
-        body_bag = params.slice(*body_prop_names)
-
         request = FernOauthClientCredentialsNestedRoot::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: FernOauthClientCredentialsNestedRoot::Auth::Types::GetTokenRequest.new(body_bag).to_h,
+          body: FernOauthClientCredentialsNestedRoot::Auth::Types::GetTokenRequest.new(params).to_h,
           request_options: request_options
         )
         begin
