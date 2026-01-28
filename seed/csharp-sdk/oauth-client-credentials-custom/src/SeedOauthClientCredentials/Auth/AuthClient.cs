@@ -19,7 +19,7 @@ public partial class AuthClient : IAuthClient
     )
     {
         var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -82,7 +82,7 @@ public partial class AuthClient : IAuthClient
     )
     {
         var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

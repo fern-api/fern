@@ -36,7 +36,7 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
     )
     {
         var _headers = await new SeedPropertyAccess.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

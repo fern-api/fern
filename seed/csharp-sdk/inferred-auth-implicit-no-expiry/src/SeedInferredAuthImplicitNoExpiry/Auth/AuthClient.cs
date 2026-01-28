@@ -20,7 +20,7 @@ public partial class AuthClient : IAuthClient
     {
         var _headers = await new SeedInferredAuthImplicitNoExpiry.Core.HeadersBuilder.Builder()
             .Add("X-Api-Key", request.XApiKey)
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -84,7 +84,7 @@ public partial class AuthClient : IAuthClient
     {
         var _headers = await new SeedInferredAuthImplicitNoExpiry.Core.HeadersBuilder.Builder()
             .Add("X-Api-Key", request.XApiKey)
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

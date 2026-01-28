@@ -21,7 +21,7 @@ public partial class HeadersClient : IHeadersClient
         var _headers = await new SeedLiteral.Core.HeadersBuilder.Builder()
             .Add("X-Endpoint-Version", request.EndpointVersion)
             .Add("X-Async", request.Async)
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

@@ -23,7 +23,7 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -101,7 +101,7 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -158,7 +158,7 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -217,7 +217,7 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -268,7 +268,7 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

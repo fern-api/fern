@@ -25,7 +25,7 @@ public partial class FooClient : IFooClient
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var _headers = await new SeedCrossPackageTypeNames.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

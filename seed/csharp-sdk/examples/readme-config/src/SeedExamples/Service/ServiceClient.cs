@@ -81,7 +81,7 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -150,7 +150,7 @@ public partial class ServiceClient : IServiceClient
             .Build();
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
             .Add("X-API-Version", request.XApiVersion)
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -213,7 +213,7 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
@@ -582,7 +582,7 @@ public partial class ServiceClient : IServiceClient
     )
     {
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

@@ -27,7 +27,7 @@ public partial class UsersClient : IUsersClient
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

@@ -33,7 +33,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
-                    .AddWithoutAuth(_client.Options.Headers)
+                    .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
                     .Add(options?.AdditionalHeaders)
                     .BuildAsync()

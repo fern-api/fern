@@ -18,6 +18,13 @@ public partial class PaymentClient : IPaymentClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedIdempotencyHeaders.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.GetIdempotencyHeaders())
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -26,6 +33,7 @@ public partial class PaymentClient : IPaymentClient
                     Method = HttpMethod.Post,
                     Path = "/payment",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -91,6 +99,12 @@ public partial class PaymentClient : IPaymentClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedIdempotencyHeaders.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -101,6 +115,7 @@ public partial class PaymentClient : IPaymentClient
                         "/payment/{0}",
                         ValueConvert.ToPathParameterString(paymentId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

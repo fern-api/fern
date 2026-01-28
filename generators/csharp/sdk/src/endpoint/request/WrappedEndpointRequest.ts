@@ -159,14 +159,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
 
                 // Add client-level headers (from root client constructor)
-                // For endpoints that don't require auth, use AddWithoutAuth to skip the Authorization header
-                // and avoid triggering lazy auth token resolution
                 writer.writeLine();
-                if (this.endpoint.auth) {
-                    writer.write(".Add(_client.Options.Headers)");
-                } else {
-                    writer.write(".AddWithoutAuth(_client.Options.Headers)");
-                }
+                writer.write(".Add(_client.Options.Headers)");
 
                 // Add client-level additional headers
                 writer.writeLine();
@@ -175,9 +169,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // For idempotent requests, add idempotency headers (as Dictionary<string, string>)
                 if (this.endpoint.idempotent) {
                     writer.writeLine();
-                    writer.write(
-                        `.Add(((${this.Types.IdempotentRequestOptionsInterface})${requestOptionsVar})?.GetIdempotencyHeaders())`
-                    );
+                    writer.write(`.Add(${requestOptionsVar}?.GetIdempotencyHeaders())`);
                 }
 
                 // Add request options additional headers (highest priority)

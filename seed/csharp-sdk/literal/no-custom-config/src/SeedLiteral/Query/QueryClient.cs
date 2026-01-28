@@ -31,7 +31,7 @@ public partial class QueryClient : IQueryClient
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var _headers = await new SeedLiteral.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

@@ -22,7 +22,7 @@ public partial class CompletionsClient : ICompletionsClient
     )
     {
         var _headers = await new SeedServerSentEvents.Core.HeadersBuilder.Builder()
-            .AddWithoutAuth(_client.Options.Headers)
+            .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()

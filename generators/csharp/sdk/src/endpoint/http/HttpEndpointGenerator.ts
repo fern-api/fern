@@ -1788,9 +1788,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 if (endpoint.idempotent) {
                     writer.writeLine();
-                    writer.write(
-                        `.Add(((${this.Types.IdempotentRequestOptionsInterface})${requestOptionsVar})?.GetIdempotencyHeaders())`
-                    );
+                    writer.write(`.Add(${requestOptionsVar}?.GetIdempotencyHeaders())`);
                 }
 
                 writer.writeLine();
