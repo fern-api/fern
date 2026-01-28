@@ -1,16 +1,16 @@
 import { resolve } from "@fern-api/fs-utils";
 import type { Argv } from "yargs";
-import { loadFernYml } from "../../config/fern-yml/loadFernYml";
-import type { Context } from "../../context/Context";
-import type { GlobalArgs } from "../../context/GlobalArgs";
-import { CliError } from "../../errors/CliError";
-import { ValidationError } from "../../errors/ValidationError";
-import { Target } from "../../sdk/config/Target";
-import { GeneratorPipeline } from "../../sdk/generator/GeneratorPipeline";
-import { TaskGroup } from "../../ui/TaskGroup";
-import { Workspace } from "../../workspace/Workspace";
-import { WorkspaceLoader } from "../../workspace/WorkspaceLoader";
-import { command } from "../_internal/command";
+import { loadFernYml } from "../../../config/fern-yml/loadFernYml";
+import type { Context } from "../../../context/Context";
+import type { GlobalArgs } from "../../../context/GlobalArgs";
+import { CliError } from "../../../errors/CliError";
+import { ValidationError } from "../../../errors/ValidationError";
+import { Target } from "../../../sdk/config/Target";
+import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline";
+import { TaskGroup } from "../../../ui/TaskGroup";
+import { Workspace } from "../../../workspace/Workspace";
+import { WorkspaceLoader } from "../../../workspace/WorkspaceLoader";
+import { command } from "../../_internal/command";
 
 interface GenerateArgs extends GlobalArgs {
     /** The SDK target to generate */
