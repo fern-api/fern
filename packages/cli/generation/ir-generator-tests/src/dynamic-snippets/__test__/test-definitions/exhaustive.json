@@ -1895,25 +1895,25 @@
                 {
                     "name": {
                         "name": {
-                            "originalName": "datetimeinstring",
+                            "originalName": "datetimeInString",
                             "camelCase": {
-                                "unsafeName": "datetimeinstring",
-                                "safeName": "datetimeinstring"
+                                "unsafeName": "datetimeInString",
+                                "safeName": "datetimeInString"
                             },
                             "snakeCase": {
-                                "unsafeName": "datetimeinstring",
-                                "safeName": "datetimeinstring"
+                                "unsafeName": "datetime_in_string",
+                                "safeName": "datetime_in_string"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATETIMEINSTRING",
-                                "safeName": "DATETIMEINSTRING"
+                                "unsafeName": "DATETIME_IN_STRING",
+                                "safeName": "DATETIME_IN_STRING"
                             },
                             "pascalCase": {
-                                "unsafeName": "Datetimeinstring",
-                                "safeName": "Datetimeinstring"
+                                "unsafeName": "DatetimeInString",
+                                "safeName": "DatetimeInString"
                             }
                         },
-                        "wireValue": "datetimeinstring"
+                        "wireValue": "datetimeInString"
                     },
                     "typeReference": {
                         "type": "optional",

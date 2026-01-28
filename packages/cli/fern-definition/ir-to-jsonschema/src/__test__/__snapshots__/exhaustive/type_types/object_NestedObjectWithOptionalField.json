@@ -172,7 +172,7 @@
             }
           ]
         },
-        "datetimeinstring": {
+        "datetimeInString": {
           "oneOf": [
             {
               "type": "string"
