@@ -35,7 +35,7 @@
     "ajv": "^8.17.1",
     "json-schema": "^0.4.0",
     "jsonpath-plus": "10.3.0",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "semver": "^7.5.8",
     "strip-ansi": "^7.1.0",
     "title": "^3.5.3",

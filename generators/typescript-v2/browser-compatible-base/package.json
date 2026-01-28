@@ -35,7 +35,7 @@
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@types/lodash-es": "^4.17.12",
     "depcheck": "^1.4.7",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

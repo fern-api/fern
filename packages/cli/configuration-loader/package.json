@@ -43,7 +43,7 @@
     "find-up": "^6.3.0",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.1",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "semver": "^7.6.2",
     "tinycolor2": "^1.6.0",
     "tmp-promise": "^3.0.3",

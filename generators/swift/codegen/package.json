@@ -33,7 +33,7 @@
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "number-to-words": "1.2.4",
     "zod": "^3.25.75"
   },
