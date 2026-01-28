@@ -7,7 +7,7 @@ import {
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-import { upperFirst } from "lodash-es";
+import { camelCase, upperFirst } from "lodash-es";
 import { RubyProject } from "../project/RubyProject";
 import { RubyTypeMapper } from "./RubyTypeMapper";
 
@@ -111,9 +111,11 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootModuleName(): string {
-        // Use custom config moduleName if set, otherwise upperFirst the organization name
-        // Note: packageName from publish config is NOT used here - it's only for the gemspec name
-        return upperFirst(this.customConfig.moduleName ?? this.config.organization);
+        // Priority: custom config moduleName > package name from publish config > organization name
+        // Use camelCase to convert hyphenated names (e.g., "nullable-optional") to valid Ruby module names
+        // Note: packageName is used here for backward compatibility with existing SDKs
+        const packageName = getPackageName(this.config);
+        return upperFirst(camelCase(this.customConfig.moduleName ?? packageName ?? this.config.organization));
     }
 
     public getRootModule(): ruby.Module_ {
