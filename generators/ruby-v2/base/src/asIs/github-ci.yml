@@ -47,13 +47,11 @@ jobs:
 
     permissions:
       id-token: write
-      contents: write
+      contents: read
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -63,5 +61,11 @@ jobs:
       - name: Install dependencies
         run: bundle install
 
-      - name: Publish to RubyGems
-        uses: rubygems/release-gem@v1
+      - name: Configure RubyGems credentials
+        uses: rubygems/configure-rubygems-credentials@v1.0.0
+
+      - name: Build gem
+        run: bundle exec rake build
+
+      - name: Push gem to RubyGems
+        run: gem push pkg/*.gem
