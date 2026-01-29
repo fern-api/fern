@@ -288,14 +288,20 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     /**
-     * Override to preserve parameter order for Java staged builders.
+     * Override to preserve parameter order and synthesize missing required fields for Java staged builders.
      *
      * Java uses type-state staged builders where method call order is enforced at compile time.
      * Unlike Python/TypeScript/Go which use keyword arguments or object literals (order-independent),
      * Java requires fields to be set in the exact order they appear in the schema definition.
      *
-     * This override calls the base implementation to preserve all error handling semantics,
-     * then reorders the results to match schema parameter order.
+     * Additionally, Java staged builders require ALL required fields to be called before optional
+     * fields become available. If an example only provides optional fields, we must synthesize
+     * placeholder values for missing required fields to generate valid code.
+     *
+     * This override:
+     * 1. Calls the base implementation to preserve all error handling semantics
+     * 2. Synthesizes placeholder values for missing required fields
+     * 3. Reorders results to match schema parameter order (required fields first)
      */
     public override associateByWireValue({
         parameters,
@@ -315,16 +321,114 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             byWireValue.set(instance.name.wireValue, instance);
         }
 
-        // Reorder instances to match schema parameter order
+        // Reorder instances to match schema parameter order, synthesizing placeholders for missing required fields
         const ordered: TypeInstance[] = [];
         for (const parameter of parameters) {
             const instance = byWireValue.get(parameter.name.wireValue);
             if (instance != null) {
                 ordered.push(instance);
+            } else if (!this.isOptional(parameter.typeReference)) {
+                // Synthesize a placeholder value for missing required fields
+                const placeholderValue = this.synthesizePlaceholderValue(parameter);
+                if (placeholderValue != null) {
+                    ordered.push({
+                        name: parameter.name,
+                        typeReference: parameter.typeReference,
+                        value: placeholderValue
+                    });
+                }
             }
         }
 
         return ordered;
+    }
+
+    /**
+     * Synthesizes a placeholder value for a missing required field based on its type.
+     * Returns undefined if the type cannot be synthesized.
+     */
+    private synthesizePlaceholderValue(parameter: FernIr.dynamic.NamedParameter): unknown {
+        return this.synthesizePlaceholderForType(parameter.typeReference, parameter.name.wireValue);
+    }
+
+    private synthesizePlaceholderForType(typeReference: FernIr.dynamic.TypeReference, fieldName: string): unknown {
+        switch (typeReference.type) {
+            case "primitive":
+                return this.synthesizePrimitivePlaceholder(typeReference.value, fieldName);
+            case "named": {
+                const namedType = this.resolveNamedType({ typeId: typeReference.value });
+                if (namedType == null) {
+                    return undefined;
+                }
+                switch (namedType.type) {
+                    case "alias":
+                        return this.synthesizePlaceholderForType(namedType.typeReference, fieldName);
+                    case "enum":
+                        // Use the first enum value as placeholder
+                        if (namedType.values.length > 0) {
+                            return namedType.values[0]?.wireValue;
+                        }
+                        return undefined;
+                    case "object":
+                    case "discriminatedUnion":
+                    case "undiscriminatedUnion":
+                        // Complex types are harder to synthesize - skip for now
+                        return undefined;
+                    default:
+                        return undefined;
+                }
+            }
+            case "list":
+                return [];
+            case "set":
+                return [];
+            case "map":
+                return {};
+            case "optional":
+            case "nullable":
+                // Optional/nullable fields don't need placeholders
+                return undefined;
+            case "literal":
+            case "unknown":
+                return undefined;
+            default:
+                return undefined;
+        }
+    }
+
+    private synthesizePrimitivePlaceholder(
+        primitive: FernIr.dynamic.PrimitiveTypeV1,
+        fieldName: string
+    ): unknown {
+        switch (primitive) {
+            case "STRING":
+                return `<${fieldName}>`;
+            case "INTEGER":
+                return 0;
+            case "LONG":
+                return 0;
+            case "DOUBLE":
+                return 0.0;
+            case "FLOAT":
+                return 0.0;
+            case "BOOLEAN":
+                return false;
+            case "DATE":
+                return "1970-01-01";
+            case "DATE_TIME":
+                return "1970-01-01T00:00:00Z";
+            case "UUID":
+                return "00000000-0000-0000-0000-000000000000";
+            case "BASE_64":
+                return "";
+            case "BIG_INTEGER":
+                return "0";
+            case "UINT":
+            case "UINT_64":
+                return 0;
+            default:
+                return undefined;
+        }
     }
 
     public getRootPackageName(): string {
