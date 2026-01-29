@@ -5,6 +5,7 @@
         Add support for ListType/SetType/MapType validation.
       type: feat
   createdAt: "2026-01-29"
+  irVersion: 63
 
 - version: 3.52.1
   changelogEntry:
