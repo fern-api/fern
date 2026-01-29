@@ -2,7 +2,7 @@
 - version: 3.53.0
   changelogEntry:
     - summary: |
-        Add support for `switcher-placement` field in docs.yml layout configuration. This allows users to specify the placement of the version and language switcher, with options `header` or `sidebar` (default: `sidebar`).
+        Add support for `switcher-placement` field in docs.yml layout configuration. This allows users to specify the placement of the version and language switcher, with options `header` or `sidebar` (default: `header`).
       type: feat
   createdAt: "2026-01-29"
   irVersion: 63
