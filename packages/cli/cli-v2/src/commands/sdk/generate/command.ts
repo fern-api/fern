@@ -69,7 +69,6 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
             })
             .option("container-engine", {
                 choices: ["docker", "podman"],
-                default: "docker",
                 description: "Choose the container engine to use for local generation"
             })
             .option("keep-container", {
@@ -178,7 +177,7 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
                 apiDefinition,
                 audiences: parseAudiences(args.audiences),
                 runtime,
-                containerEngine: args["container-engine"],
+                containerEngine: args["container-engine"] ?? "docker",
                 keepContainer: args["keep-container"] ?? false,
                 preview: args.preview ?? false,
                 outputPath: args.output != null ? resolve(context.cwd, args.output) : undefined,
