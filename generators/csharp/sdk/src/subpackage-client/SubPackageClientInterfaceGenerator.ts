@@ -37,14 +37,12 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
 
         for (const childSubpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(childSubpackage)) {
-                // Use concrete class reference (not interface) to match the implementing class's property type
-                // C# requires exact type match when implementing interface properties
                 interface_.addField({
                     name: childSubpackage.name.pascalCase.safeName,
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,
-                    type: this.context.getSubpackageClassReference(childSubpackage)
+                    type: this.context.getSubpackageInterfaceReference(childSubpackage)
                 });
             }
         }
