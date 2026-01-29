@@ -222,7 +222,7 @@ export class TaskGroup {
             }
             case "error": {
                 const duration = this.formatTaskDuration(task);
-                const errorLines = this.formatMultilineError(task.error);
+                const errorLines = this.formatMultilineText(task.error, chalk.red.bind(chalk));
                 return `${chalk.red("x")} ${name}${duration}${logLines}${errorLines}`;
             }
             case "skipped":
@@ -234,6 +234,8 @@ export class TaskGroup {
 
     private static readonly MAX_DISPLAYED_LOGS_TTY = 10;
 
+    private static readonly URL_PATTERN = /https?:\/\//i;
+
     private formatTaskLogs(logs: TaskLog[] | undefined): string {
         if (logs == null || logs.length === 0) {
             return "";
@@ -242,31 +244,33 @@ export class TaskGroup {
         // In TTY mode (interactive), limit logs to avoid overwhelming the display.
         // In CI/non-TTY mode, show all logs since the console can handle scrolling.
         const shouldLimit = this.context.isTTY;
-        const logsToShow =
-            shouldLimit && logs.length > TaskGroup.MAX_DISPLAYED_LOGS_TTY
-                ? logs.slice(-TaskGroup.MAX_DISPLAYED_LOGS_TTY)
-                : logs;
-        const hiddenCount = logs.length - logsToShow.length;
 
-        // Get max message length for TTY mode to prevent line wrapping
-        const maxMessageLength = shouldLimit ? this.getMaxLogMessageLength() : Infinity;
+        // Filter out debug logs containing URLs in TTY mode - they cause rendering
+        // issues in IDE terminals. These logs are still written to the log file.
+        const filteredLogs = shouldLimit
+            ? logs.filter((log) => log.level !== "debug" || !TaskGroup.URL_PATTERN.test(log.message))
+            : logs;
+
+        const logsToShow =
+            shouldLimit && filteredLogs.length > TaskGroup.MAX_DISPLAYED_LOGS_TTY
+                ? filteredLogs.slice(-TaskGroup.MAX_DISPLAYED_LOGS_TTY)
+                : filteredLogs;
+        const hiddenCount = logs.length - logsToShow.length;
 
         const formattedLogs = logsToShow
             .map((log) => {
-                const message = shouldLimit ? this.truncateMessage(log.message, maxMessageLength) : log.message;
                 switch (log.level) {
                     case "debug": {
+                        // For debug logs, we want to truncate the message to prevent line wrapping in TTY mode.
+                        const maxMessageLength = shouldLimit ? this.getMaxLogMessageLength() : Infinity;
+                        const message = shouldLimit ? this.truncateMessage(log.message, maxMessageLength) : log.message;
                         const icon = chalk.dim("•");
                         return `\n    ${icon} ${chalk.dim(message)}`;
                     }
-                    case "warn": {
-                        const icon = chalk.yellow("⚠");
-                        return `\n    ${icon} ${chalk.yellow(message)}`;
-                    }
-                    case "error": {
-                        const icon = chalk.red("✗");
-                        return `\n    ${icon} ${chalk.red(message)}`;
-                    }
+                    case "warn":
+                        return this.formatMultilineText(log.message, chalk.yellow.bind(chalk), chalk.yellow("⚠"));
+                    case "error":
+                        return this.formatMultilineText(log.message, chalk.red.bind(chalk), chalk.red("✗"));
                     default:
                         assertNever(log.level);
                 }
@@ -308,13 +312,19 @@ export class TaskGroup {
         return "";
     }
 
-    private formatMultilineError(error: string | undefined): string {
-        if (error == null) {
+    private formatMultilineText(text: string | undefined, colorFn: (text: string) => string, icon?: string): string {
+        if (text == null) {
             return "";
         }
-        // Split error into lines and format each with proper indentation.
-        const lines = error.split("\n").filter((line) => line.trim().length > 0);
-        return lines.map((line) => `\n    ${chalk.red(line)}`).join("");
+        // Split text into lines and format each with proper indentation.
+        const lines = text.split("\n").filter((line) => line.trim().length > 0);
+        if (icon != null) {
+            const [first, ...rest] = lines;
+            const firstLine = `\n    ${icon} ${colorFn(first ?? "")}`;
+            const restLines = rest.map((line) => `\n      ${colorFn(line)}`).join("");
+            return firstLine + restLines;
+        }
+        return lines.map((line) => `\n    ${colorFn(line)}`).join("");
     }
 
     private formatDuration(ms: number): string {

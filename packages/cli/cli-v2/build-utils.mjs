@@ -116,4 +116,9 @@ export async function buildCli(config) {
 
     // Run npm pkg fix to format and fix the package.json
     await execAsync("npm pkg fix");
+
+    // Install runtime dependencies if any
+    if (Object.keys(dependencies).length > 0) {
+        await execAsync("pnpm install --ignore-workspace");
+    }
 }
