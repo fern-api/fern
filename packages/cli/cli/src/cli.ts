@@ -547,7 +547,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("docs", {
                     string: true,
-                    description: "If multiple docs sites, specify the name with --docs <name>. Otherwise just --docs."
+                    description:
+                        "If multiple docs sites, specify the name with --docs <name>. Otherwise just --docs. Validates permissions for the target docs instance."
                 })
                 .option("instance", {
                     string: true,
