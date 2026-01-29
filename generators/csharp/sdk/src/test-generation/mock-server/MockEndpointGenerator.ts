@@ -5,7 +5,8 @@ import {
     ExampleTypeReference,
     HttpEndpoint,
     ObjectPropertyAccess,
-    TypeId
+    TypeId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { DefaultValueExtractor, ExtractedDefault } from "../../DefaultValueExtractor";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
@@ -556,6 +557,8 @@ export class MockEndpointGenerator extends WithGeneration {
 
     /**
      * Filters read-only properties from an object example.
+     * Also omits null values for properties that are optional-but-not-nullable,
+     * since the SDK won't serialize those nulls.
      */
     private filterObjectExample(
         typeId: TypeId,
@@ -563,13 +566,21 @@ export class MockEndpointGenerator extends WithGeneration {
     ): Record<string, unknown> {
         const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
         const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
+        const nullableNames = this.getNullablePropertyNamesForType(typeDeclaration);
 
         const result: Record<string, unknown> = {};
         for (const prop of properties) {
             if (readOnlyNames.has(prop.name.wireValue)) {
                 continue;
             }
-            result[prop.name.wireValue] = this.filterExampleTypeReference(prop.value);
+            const filteredValue = this.filterExampleTypeReference(prop.value);
+
+            // Omit null values for properties that are optional-but-not-nullable
+            // since the SDK won't serialize those nulls (JsonIgnoreCondition.WhenWritingNull)
+            if (filteredValue === null && !nullableNames.has(prop.name.wireValue)) {
+                continue;
+            }
+            result[prop.name.wireValue] = filteredValue;
         }
         return result;
     }
@@ -645,6 +656,41 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         return readOnlyNames;
+    }
+
+    /**
+     * Gets the set of nullable property wire names for a type declaration.
+     * A property is nullable if its type is a nullable container or optional<nullable<T>>.
+     */
+    private getNullablePropertyNamesForType(typeDeclaration: {
+        shape: {
+            type: string;
+            properties?: Array<{ name: { wireValue: string }; valueType: TypeReference }>;
+            extendedProperties?: Array<{ name: { wireValue: string }; valueType: TypeReference }>;
+        };
+    }): Set<string> {
+        const nullableNames = new Set<string>();
+        const shape = typeDeclaration.shape;
+
+        if (shape.type !== "object" || !shape.properties) {
+            return nullableNames;
+        }
+
+        for (const prop of shape.properties) {
+            if (this.context.isNullable(prop.valueType)) {
+                nullableNames.add(prop.name.wireValue);
+            }
+        }
+
+        if (shape.extendedProperties) {
+            for (const prop of shape.extendedProperties) {
+                if (this.context.isNullable(prop.valueType)) {
+                    nullableNames.add(prop.name.wireValue);
+                }
+            }
+        }
+
+        return nullableNames;
     }
 
     /**
