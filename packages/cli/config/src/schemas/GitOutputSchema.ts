@@ -1,13 +1,12 @@
 import { z } from "zod";
-
-export const GitModeSchema = z.enum(["pr", "release", "push"]);
-
-export type GitModeSchema = z.infer<typeof GitModeSchema>;
+import { GitOutputModeSchema } from "./GitOutputModeSchema";
+import { LicenseSchema } from "./LicenseSchema";
 
 export const GitOutputSchema = z.object({
     repository: z.string(),
-    mode: GitModeSchema.optional(),
-    branch: z.string().optional()
+    mode: GitOutputModeSchema.optional(),
+    branch: z.string().optional(),
+    license: LicenseSchema.optional()
 });
 
 export type GitOutputSchema = z.infer<typeof GitOutputSchema>;

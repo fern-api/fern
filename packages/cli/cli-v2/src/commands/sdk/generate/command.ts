@@ -1,3 +1,5 @@
+import type { Audiences } from "@fern-api/configuration";
+import type { ContainerRunner } from "@fern-api/core-utils";
 import { resolve } from "@fern-api/fs-utils";
 import type { Argv } from "yargs";
 import { loadFernYml } from "../../../config/fern-yml/loadFernYml";
@@ -5,10 +7,10 @@ import type { Context } from "../../../context/Context";
 import type { GlobalArgs } from "../../../context/GlobalArgs";
 import { CliError } from "../../../errors/CliError";
 import { ValidationError } from "../../../errors/ValidationError";
-import { Target } from "../../../sdk/config/Target";
+import type { Target } from "../../../sdk/config/Target";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline";
 import { TaskGroup } from "../../../ui/TaskGroup";
-import { Workspace } from "../../../workspace/Workspace";
+import type { Workspace } from "../../../workspace/Workspace";
 import { WorkspaceLoader } from "../../../workspace/WorkspaceLoader";
 import { command } from "../../_internal/command";
 
@@ -19,8 +21,14 @@ interface GenerateArgs extends GlobalArgs {
     /** Generator group to run (from fern.yml) */
     group?: string;
 
+    /** Filter by audiences */
+    audiences?: string[];
+
     /** Whether to run the generator locally in a container */
     local?: boolean;
+
+    /** Container engine to use for local generation */
+    "container-engine"?: ContainerRunner;
 
     /** Whether to keep containers after completion */
     "keep-container"?: boolean;
@@ -33,57 +41,65 @@ interface GenerateArgs extends GlobalArgs {
 
     /** Force generation without prompts */
     force?: boolean;
+
+    /** Override the version for generated packages */
+    version?: string;
 }
 
 export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
-    command(
-        cli,
-        "generate",
-        "Generate SDKs configured in fern.yml",
-        handleGenerate,
-        (yargs) =>
-            yargs
-                .option("target", {
-                    type: "string",
-                    description: "The SDK target to generate"
-                })
-                .option("group", {
-                    type: "string",
-                    description: "The SDK group to generate"
-                })
-                .option("local", {
-                    type: "boolean",
-                    default: false,
-                    description: "Run the generator locally in a container"
-                })
-                .option("keep-container", {
-                    type: "boolean",
-                    default: false,
-                    description: "Prevent auto-deletion of any containers used for local generation"
-                })
-                .option("preview", {
-                    type: "boolean",
-                    default: false,
-                    description: "Generate a preview of the generated SDK in a local preview directory"
-                })
-                .option("output", {
-                    type: "string",
-                    description: "Output directory for preview mode (requires --preview)"
-                })
-                .option("force", {
-                    type: "boolean",
-                    default: false,
-                    description: "Ignore prompts to confirm generation"
-                })
-        // TODO: Add remaining options (e.g. audiences, container runtime, etc).
+    command(cli, "generate", "Generate SDKs configured in fern.yml", handleGenerate, (yargs) =>
+        yargs
+            .option("target", {
+                type: "string",
+                description: "The SDK target to generate"
+            })
+            .option("group", {
+                type: "string",
+                description: "The SDK group to generate"
+            })
+            .option("audiences", {
+                type: "array",
+                string: true,
+                description: "Filter the target API(s) with the given audiences"
+            })
+            .option("local", {
+                type: "boolean",
+                default: false,
+                description: "Run the generator locally in a container"
+            })
+            .option("container-engine", {
+                choices: ["docker", "podman"],
+                default: "docker",
+                description: "Choose the container engine to use for local generation"
+            })
+            .option("keep-container", {
+                type: "boolean",
+                default: false,
+                description: "Prevent auto-deletion of any containers used for local generation"
+            })
+            .option("preview", {
+                type: "boolean",
+                default: false,
+                description: "Generate a preview of the generated SDK in a local preview directory"
+            })
+            .option("output", {
+                type: "string",
+                description: "Output directory for preview mode (requires --preview)"
+            })
+            .option("force", {
+                type: "boolean",
+                default: false,
+                description: "Ignore prompts to confirm generation"
+            })
+            .option("version", {
+                type: "string",
+                description: "The version to use for the generated packages (e.g. 1.0.0)"
+            })
     );
 }
 
 async function handleGenerate(context: Context, args: GenerateArgs): Promise<void> {
-    if (args.output != null && !args.preview) {
-        // TODO: Add support for --output override when there is exactly one target.
-        throw new Error("The --output flag can only be used with --preview");
-    }
+    validateArgs(args);
 
     const fernYml = await loadFernYml({ cwd: context.cwd });
 
@@ -155,15 +171,19 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
             });
 
             const result = await pipeline.run({
+                organization: workspace.org,
+                ai: workspace.ai,
                 task,
                 target,
                 apiDefinition,
+                audiences: parseAudiences(args.audiences),
                 runtime,
+                containerEngine: args["container-engine"],
                 keepContainer: args["keep-container"] ?? false,
                 preview: args.preview ?? false,
                 outputPath: args.output != null ? resolve(context.cwd, args.output) : undefined,
-                organization: workspace.org,
-                token
+                token,
+                version: args.version
             });
             if (!result.success) {
                 taskGroup.updateTask({
@@ -229,6 +249,28 @@ function filterTargetsByGroup(targets: Target[], groupName: string | undefined):
         return targets;
     }
     return targets.filter((target) => target.groups?.includes(groupName));
+}
+
+function parseAudiences(audiences: string[] | undefined): Audiences | undefined {
+    if (audiences == null || audiences.length === 0) {
+        return undefined;
+    }
+    return {
+        type: "select",
+        audiences
+    };
+}
+
+function validateArgs(args: GenerateArgs): void {
+    if (args.output != null && !args.preview) {
+        throw new Error("The --output flag can only be used with --preview");
+    }
+    if (args["container-engine"] != null && !args.local) {
+        throw new Error("The --container-engine flag can only be used with --local");
+    }
+    if (args.group != null && args.target != null) {
+        throw new Error("The --group and --target flags cannot be used together");
+    }
 }
 
 function maybePluralSdks(targets: Target[]): string {

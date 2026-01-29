@@ -7,14 +7,22 @@ import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoade
 import type { DockerImageReference } from "../DockerImageReference";
 import type { GitOutputConfig } from "../GitOutputConfig";
 import { LANGUAGES, type Language } from "../Language";
+import type { License } from "../License";
 import type { NpmPublishConfig } from "../NpmPublishConfig";
 import type { OutputConfig } from "../OutputConfig";
 import type { PublishConfig } from "../PublishConfig";
 import type { SdkConfig } from "../SdkConfig";
 import type { Target } from "../Target";
-import { getDockerImageReference } from "./getDockerImageReference";
+import { getImageReferenceFromLanguage } from "./getImageReferenceFromLanguage";
+import { getLanguageFromImage } from "./getLanguageFromImage";
 
 export namespace SdkConfigConverter {
+    export interface GeneratorInfo {
+        lang: Language;
+        image: string;
+        version: string;
+    }
+
     export type Result = Success | Failure;
 
     export interface Success {
@@ -117,16 +125,15 @@ export class SdkConfigConverter {
         target: schemas.SdkTargetSchema;
         sourced: Sourced<schemas.SdkTargetSchema>;
     }): Target | undefined {
-        const lang = this.resolveLanguage({ name, target, sourced });
-        if (lang == null) {
+        const generatorInfo = this.resolveGeneratorInfo({ name, target, sourced });
+        if (generatorInfo == null) {
             return undefined;
         }
-        const resolvedDockerImage = this.resolveDockerImage({ name, lang, version: target.version });
         return {
             name,
-            lang,
-            image: resolvedDockerImage.image,
-            version: target.version ?? resolvedDockerImage.tag,
+            lang: generatorInfo.lang,
+            image: generatorInfo.image,
+            version: generatorInfo.version,
             api: this.resolveApi({ api: target.api }),
             config: target.config != null ? this.convertConfig(target.config) : undefined,
             output: this.convertOutput({ output: target.output, sourced: sourced.output }),
@@ -142,20 +149,25 @@ export class SdkConfigConverter {
         return api ?? DEFAULT_API_NAME;
     }
 
-    private resolveDockerImage({
+    private resolveGeneratorInfo({
         name,
-        lang,
-        version
+        target,
+        sourced
     }: {
         name: string;
-        lang: Language;
-        version: string | undefined;
-    }): DockerImageReference {
-        const dockerImage = getDockerImageReference({ lang, version });
-        if (version == null) {
-            this.logger.debug(`Target "${name}" has no version specified, using ${dockerImage}`);
+        target: schemas.SdkTargetSchema;
+        sourced: Sourced<schemas.SdkTargetSchema>;
+    }): SdkConfigConverter.GeneratorInfo | undefined {
+        const lang = this.resolveLanguage({ name, target, sourced });
+        if (lang == null) {
+            return undefined;
         }
-        return dockerImage;
+        const resolvedDockerImage = this.resolveDockerImage({ name, lang, version: target.version });
+        return {
+            lang,
+            image: resolvedDockerImage.image,
+            version: resolvedDockerImage.tag
+        };
     }
 
     private convertConfig(config: Record<string, unknown>): Record<string, unknown> | undefined {
@@ -190,8 +202,16 @@ export class SdkConfigConverter {
         return {
             repository: git.repository,
             mode: git.mode ?? "pr",
-            branch: git.branch
+            branch: git.branch,
+            license: git.license != null ? this.convertLicense(git.license) : undefined
         };
+    }
+
+    private convertLicense(license: schemas.LicenseSchema): License {
+        if (schemas.isWellKnownLicense(license)) {
+            return { type: license };
+        }
+        return { type: "custom", path: license };
     }
 
     private convertPublish({
@@ -233,6 +253,9 @@ export class SdkConfigConverter {
         if (target.lang != null) {
             return target.lang;
         }
+        if (target.image != null) {
+            return getLanguageFromImage({ image: target.image });
+        }
         const lang: Language = name as Language;
         if (LANGUAGES.includes(lang)) {
             // If the name of the target matches a known language, the
@@ -246,5 +269,21 @@ export class SdkConfigConverter {
             })
         );
         return undefined;
+    }
+
+    private resolveDockerImage({
+        name,
+        lang,
+        version
+    }: {
+        name: string;
+        lang: Language;
+        version: string | undefined;
+    }): DockerImageReference {
+        const dockerImage = getImageReferenceFromLanguage({ lang, version });
+        if (version == null) {
+            this.logger.debug(`Target "${name}" has no version specified, using ${dockerImage}`);
+        }
+        return dockerImage;
     }
 }

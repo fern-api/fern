@@ -1,0 +1,18 @@
+edition: 2026-01-01
+
+org: test-org
+
+api:
+  specs:
+    - fern: ./definition
+
+sdks:
+  defaultGroup: local
+  targets:
+    typescript:
+      lang: typescript
+      version: 0.39.3
+      output:
+        path: ./generated/typescript
+      group:
+        - local
