@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "requiredString": {
+      "type": "string"
+    },
+    "optionalString": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "requiredString"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

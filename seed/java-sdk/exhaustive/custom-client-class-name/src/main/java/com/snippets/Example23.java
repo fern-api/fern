@@ -11,6 +11,7 @@ public class Example23 {
         client.endpoints()
                 .object()
                 .getAndReturnWithRequiredAndOptionalFields(ObjectWithRequiredAndOptionalFields.builder()
+                        .requiredString("<requiredString>")
                         .optionalString("optional value")
                         .build());
     }

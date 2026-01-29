@@ -1292,6 +1292,7 @@ a placeholder value before calling optional field methods.
 client.endpoints().object().getAndReturnWithRequiredAndOptionalFields(
     ObjectWithRequiredAndOptionalFields
         .builder()
+        .requiredString("<requiredString>")
         .optionalString("optional value")
         .build()
 );

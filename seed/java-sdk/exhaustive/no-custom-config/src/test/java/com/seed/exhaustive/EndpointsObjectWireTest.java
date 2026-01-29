@@ -904,6 +904,7 @@ public class EndpointsObjectWireTest {
         ObjectWithRequiredAndOptionalFields response = client.endpoints()
                 .object()
                 .getAndReturnWithRequiredAndOptionalFields(ObjectWithRequiredAndOptionalFields.builder()
+                        .requiredString("<requiredString>")
                         .optionalString("optional value")
                         .build());
         RecordedRequest request = server.takeRequest();
