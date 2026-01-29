@@ -396,10 +396,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
     }
 
-    private synthesizePrimitivePlaceholder(
-        primitive: FernIr.dynamic.PrimitiveTypeV1,
-        fieldName: string
-    ): unknown {
+    private synthesizePrimitivePlaceholder(primitive: FernIr.dynamic.PrimitiveTypeV1, fieldName: string): unknown {
         switch (primitive) {
             case "STRING":
                 return `<${fieldName}>`;
