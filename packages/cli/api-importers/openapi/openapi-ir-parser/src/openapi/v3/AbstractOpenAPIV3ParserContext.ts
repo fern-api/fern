@@ -311,7 +311,10 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             if (!schemaDefinition || isReferenceObject(schemaDefinition)) {
                 continue;
             }
-            mapping.set(schemaName, getExtension<string>(schemaDefinition, FernOpenAPIExtension.SDK_NAMESPACE) || this.namespace);
+            mapping.set(
+                schemaName,
+                getExtension<string>(schemaDefinition, FernOpenAPIExtension.SDK_NAMESPACE) || this.namespace
+            );
         }
 
         return mapping;
