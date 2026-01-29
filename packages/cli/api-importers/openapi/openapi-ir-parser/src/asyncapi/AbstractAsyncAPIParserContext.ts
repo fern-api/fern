@@ -174,6 +174,6 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
     }
 
     public getNamespace(schemaId: SchemaId): string | undefined {
-        return undefined;
+        return this.namespace;
     }
 }
