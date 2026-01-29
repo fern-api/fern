@@ -3,7 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
 import { Source } from "./Source";
 
-export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec;
+export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec | GraphQLSpec;
 
 export interface OpenAPISpec {
     type: "openapi";
@@ -32,4 +32,11 @@ export interface ProtobufSpec {
     fromOpenAPI: boolean;
     dependencies: string[];
     settings?: ParseOpenAPIOptions;
+}
+
+export interface GraphQLSpec {
+    type: "graphql";
+    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    namespace?: string;
 }

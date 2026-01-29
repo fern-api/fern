@@ -196,7 +196,7 @@ Examples should use the first available auth scheme (admin).
         "slug": undefined,
       },
     ],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [

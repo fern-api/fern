@@ -42,5 +42,6 @@ export * from "./AsyncApiSettingsSchema";
 export * from "./AsyncApiSpecSchema";
 export * from "./ConjureSchema";
 export * from "./SpecSchema";
+export * from "./GraphQlSpecSchema";
 export * from "./ProtobufSpecSchema";
 export * from "./Language";

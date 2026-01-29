@@ -50,9 +50,9 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         js: undefined,
         pageActions: undefined,
         theme: undefined,
-        editThisPageLaunch: undefined,
         header: undefined,
-        footer: undefined
+        footer: undefined,
+        editThisPageLaunch: undefined
     },
     jsFiles: undefined,
     id: undefined

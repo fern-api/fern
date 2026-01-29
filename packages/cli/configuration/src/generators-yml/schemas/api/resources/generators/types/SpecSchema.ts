@@ -8,4 +8,5 @@ export type SpecSchema =
     | GeneratorsYml.OpenApiSpecSchema
     | GeneratorsYml.AsyncApiSpecSchema
     | GeneratorsYml.ProtobufSpecSchema
-    | GeneratorsYml.OpenRpcSpecSchema;
+    | GeneratorsYml.OpenRpcSpecSchema
+    | GeneratorsYml.GraphQlSpecSchema;

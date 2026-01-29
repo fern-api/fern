@@ -6,7 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_plantUpdates",
@@ -32,7 +32,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "plantOrders",
       "pointsTo": undefined,
       "subpackageId": "subpackage_plantOrders",
@@ -108,7 +108,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "plantUpdates",
       "pointsTo": undefined,
       "subpackageId": "subpackage_plantUpdates",

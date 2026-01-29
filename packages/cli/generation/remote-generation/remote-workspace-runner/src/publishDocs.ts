@@ -271,13 +271,23 @@ export async function publishDocs({
                 }
             }
         },
-        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+        registerApi: async ({
+            ir,
+            snippetsConfig,
+            playgroundConfig,
+            graphqlOperations,
+            graphqlTypes,
+            apiName,
+            workspace
+        }) => {
             // Use apiName from docs.yml (folder name) as the API identifier for FDR
             // This ensures users can reference APIs by their folder name in docs components
             let apiDefinition = convertIrToFdrApi({
                 ir,
                 snippetsConfig,
                 playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
                 context,
                 apiNameOverride: apiName
             });

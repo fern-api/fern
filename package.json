@@ -143,7 +143,8 @@
       "@fern-api/fdr-sdk": "0.144.7-efc9f5ccf",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
-      "form-data": "^4.0.4"
+      "form-data": "^4.0.4",
+      "@fern-api/ui-core-utils": "0.144.7-efc9f5ccf"
     }
   },
   "catalog": {

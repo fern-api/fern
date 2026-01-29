@@ -16,7 +16,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_commentsService",
@@ -111,7 +111,7 @@
               ],
             },
           ],
-          "name": "Add a Comment",
+          "name": "Createcomment",
           "originalEndpointId": "endpoint_commentsService.createcomment",
           "path": {
             "parts": [
@@ -200,7 +200,7 @@
           "slug": undefined,
         },
       ],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "commentsService",
       "pointsTo": undefined,
       "subpackageId": "subpackage_commentsService",
