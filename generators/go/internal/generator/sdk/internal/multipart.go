@@ -119,6 +119,9 @@ func (w *MultipartWriter) writeFile(
 		filename    = getFilename(file)
 		contentType = getContentType(file)
 	)
+	if filename == "" {
+		filename = field
+	}
 	if contentType == "" {
 		contentType = defaultContentType
 	}
