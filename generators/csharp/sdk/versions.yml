@@ -2,6 +2,15 @@
 - version: 2.19.6
   changelogEntry:
     - summary: |
+        Remove .NET 6 (EOL 2024/10/12) and 7 (EOL 2024/05/14) target frameworks from generated SDKs as they are no longer supported by Microsoft.
+        The generated SDKs now only target .NET Framework 4.6.2, .NET Standard 2.0, and .NET 8.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.6
+  changelogEntry:
+    - summary: |
         Fix wire test generation to preserve string field values that contain datetime-like strings.
       type: fix
   createdAt: "2026-01-29"
