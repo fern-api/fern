@@ -79,9 +79,9 @@
               "responseBody": {
                 "comment": {
                   "author": "string",
-                  "createdAt": 1,
+                  "created_at": 1,
                   "id": "string",
-                  "resourceId": "string",
+                  "resource_id": "string",
                   "text": "string",
                 },
               },
@@ -90,9 +90,9 @@
                 "value": {
                   "comment": {
                     "author": "string",
-                    "createdAt": 1,
+                    "created_at": 1,
                     "id": "string",
-                    "resourceId": "string",
+                    "resource_id": "string",
                     "text": "string",
                   },
                 },
@@ -111,7 +111,7 @@
               ],
             },
           ],
-          "name": "Createcomment",
+          "name": "Add a Comment",
           "originalEndpointId": "endpoint_commentsService.createcomment",
           "path": {
             "parts": [
@@ -244,7 +244,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "resourceId",
+            "key": "resource_id",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -307,7 +307,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "createdAt",
+            "key": "created_at",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -342,7 +342,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "resourceId",
+            "key": "resource_id",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
