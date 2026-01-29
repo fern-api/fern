@@ -1,9 +1,13 @@
+export { AiConfigSchema } from "./AiConfigSchema";
+export { AiProviderSchema } from "./AiProviderSchema";
 export { ApiDefinitionSchema } from "./ApiDefinitionSchema";
 export { ApiSpecSchema } from "./ApiSpecSchema";
 export { ApisSchema } from "./ApisSchema";
 export { CliSchema } from "./CliSchema";
 export { FernYmlSchema } from "./FernYmlSchema";
-export { GitModeSchema, GitOutputSchema } from "./GitOutputSchema";
+export { GitOutputModeSchema } from "./GitOutputModeSchema";
+export { GitOutputSchema } from "./GitOutputSchema";
+export { isWellKnownLicense, LicenseSchema } from "./LicenseSchema";
 export { NpmPublishSchema } from "./NpmPublishSchema";
 export { OutputSchema } from "./OutputSchema";
 export { PublishSchema } from "./PublishSchema";

@@ -10,7 +10,11 @@ public partial class SeedApiClient : ISeedApiClient
     {
         try
         {
-            var defaultHeaders = new Headers(
+            clientOptions ??= new ClientOptions();
+            clientOptions.ExceptionHandler = new ExceptionHandler(
+                new SeedApiExceptionInterceptor(clientOptions)
+            );
+            var platformHeaders = new Headers(
                 new Dictionary<string, string>()
                 {
                     { "X-Fern-Language", "C#" },
@@ -19,11 +23,7 @@ public partial class SeedApiClient : ISeedApiClient
                     { "User-Agent", "Ferncsharp-grpc-proto-exhaustive/0.0.1" },
                 }
             );
-            clientOptions ??= new ClientOptions();
-            clientOptions.ExceptionHandler = new ExceptionHandler(
-                new SeedApiExceptionInterceptor(clientOptions)
-            );
-            foreach (var header in defaultHeaders)
+            foreach (var header in platformHeaders)
             {
                 if (!clientOptions.Headers.ContainsKey(header.Key))
                 {
