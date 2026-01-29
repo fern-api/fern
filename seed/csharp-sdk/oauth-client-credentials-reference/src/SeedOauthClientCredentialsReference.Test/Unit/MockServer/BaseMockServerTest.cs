@@ -19,8 +19,8 @@ public class BaseMockServerTest
     {
         const string requestJson_0 = """
             {
-              "client_id": "CLIENT_ID",
-              "client_secret": "CLIENT_SECRET"
+              "client_id": "client_id",
+              "client_secret": "client_secret"
             }
             """;
 
@@ -41,8 +41,8 @@ public class BaseMockServerTest
             );
         const string requestJson_1 = """
             {
-              "client_id": "CLIENT_ID",
-              "client_secret": "CLIENT_SECRET"
+              "client_id": "client_id",
+              "client_secret": "client_secret"
             }
             """;
 

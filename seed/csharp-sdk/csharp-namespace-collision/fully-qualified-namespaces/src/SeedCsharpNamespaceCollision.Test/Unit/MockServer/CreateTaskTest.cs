@@ -19,7 +19,6 @@ public class CreateTaskTest : BaseMockServerTest
 
         const string mockResponse = """
             {
-              "id": "id",
               "name": "name",
               "email": "email",
               "password": "password"

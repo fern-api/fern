@@ -420,6 +420,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -428,6 +434,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-with-datetime-like-string",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
