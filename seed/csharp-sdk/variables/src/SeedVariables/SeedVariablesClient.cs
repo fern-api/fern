@@ -29,5 +29,5 @@ public partial class SeedVariablesClient : ISeedVariablesClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

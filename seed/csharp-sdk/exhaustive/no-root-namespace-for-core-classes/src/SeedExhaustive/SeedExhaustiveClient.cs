@@ -42,13 +42,13 @@ public partial class SeedExhaustiveClient : ISeedExhaustiveClient
         ReqWithHeaders = new ReqWithHeadersClient(_client);
     }
 
-    public EndpointsClient Endpoints { get; }
+    public IEndpointsClient Endpoints { get; }
 
-    public InlinedRequestsClient InlinedRequests { get; }
+    public IInlinedRequestsClient InlinedRequests { get; }
 
-    public NoAuthClient NoAuth { get; }
+    public INoAuthClient NoAuth { get; }
 
-    public NoReqBodyClient NoReqBody { get; }
+    public INoReqBodyClient NoReqBody { get; }
 
-    public ReqWithHeadersClient ReqWithHeaders { get; }
+    public IReqWithHeadersClient ReqWithHeaders { get; }
 }

@@ -29,5 +29,5 @@ public partial class SeedNurseryApiClient : ISeedNurseryApiClient
         Package = new PackageClient(_client);
     }
 
-    public PackageClient Package { get; }
+    public IPackageClient Package { get; }
 }

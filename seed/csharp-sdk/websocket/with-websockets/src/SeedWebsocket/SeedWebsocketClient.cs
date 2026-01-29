@@ -30,7 +30,7 @@ public partial class SeedWebsocketClient : ISeedWebsocketClient
         Empty = new EmptyClient(_client);
     }
 
-    public EmptyClient Empty { get; }
+    public IEmptyClient Empty { get; }
 
     public RealtimeApi CreateRealtimeApi(RealtimeApi.Options options)
     {

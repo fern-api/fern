@@ -2,5 +2,5 @@ namespace SeedAccept;
 
 public partial interface ISeedAcceptClient
 {
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

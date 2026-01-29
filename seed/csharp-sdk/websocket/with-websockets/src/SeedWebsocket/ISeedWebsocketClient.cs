@@ -4,5 +4,5 @@ namespace SeedWebsocket;
 
 public partial interface ISeedWebsocketClient
 {
-    public EmptyClient Empty { get; }
+    public IEmptyClient Empty { get; }
 }

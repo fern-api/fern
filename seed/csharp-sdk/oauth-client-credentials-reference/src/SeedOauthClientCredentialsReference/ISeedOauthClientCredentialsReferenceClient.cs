@@ -2,6 +2,6 @@ namespace SeedOauthClientCredentialsReference;
 
 public partial interface ISeedOauthClientCredentialsReferenceClient
 {
-    public AuthClient Auth { get; }
-    public SimpleClient Simple { get; }
+    public IAuthClient Auth { get; }
+    public ISimpleClient Simple { get; }
 }

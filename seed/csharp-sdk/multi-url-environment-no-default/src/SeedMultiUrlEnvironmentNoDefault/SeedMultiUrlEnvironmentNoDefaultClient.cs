@@ -42,7 +42,7 @@ public partial class SeedMultiUrlEnvironmentNoDefaultClient
         S3 = new S3Client(_client);
     }
 
-    public Ec2Client Ec2 { get; }
+    public IEc2Client Ec2 { get; }
 
-    public S3Client S3 { get; }
+    public IS3Client S3 { get; }
 }

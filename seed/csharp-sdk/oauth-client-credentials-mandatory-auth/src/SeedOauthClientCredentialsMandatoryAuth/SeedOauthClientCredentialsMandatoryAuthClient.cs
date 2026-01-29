@@ -47,9 +47,9 @@ public partial class SeedOauthClientCredentialsMandatoryAuthClient
         Simple = new SimpleClient(_client);
     }
 
-    public AuthClient Auth { get; }
+    public IAuthClient Auth { get; }
 
-    public NestedClient Nested { get; }
+    public INestedClient Nested { get; }
 
-    public SimpleClient Simple { get; }
+    public ISimpleClient Simple { get; }
 }

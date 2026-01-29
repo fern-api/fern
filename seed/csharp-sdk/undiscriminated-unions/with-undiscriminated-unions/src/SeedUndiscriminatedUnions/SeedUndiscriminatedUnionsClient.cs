@@ -29,5 +29,5 @@ public partial class SeedUndiscriminatedUnionsClient : ISeedUndiscriminatedUnion
         Union = new UnionClient(_client);
     }
 
-    public UnionClient Union { get; }
+    public IUnionClient Union { get; }
 }

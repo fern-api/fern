@@ -43,11 +43,11 @@ public partial class SeedExamplesClient : ISeedExamplesClient
         Service = new ServiceClient(_client);
     }
 
-    public FileClient File { get; }
+    public IFileClient File { get; }
 
-    public HealthClient Health { get; }
+    public IHealthClient Health { get; }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 
     private async Task<WithRawResponse<string>> EchoAsyncCore(
         string request,

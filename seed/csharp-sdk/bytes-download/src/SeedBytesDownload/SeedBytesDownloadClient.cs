@@ -29,5 +29,5 @@ public partial class SeedBytesDownloadClient : ISeedBytesDownloadClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

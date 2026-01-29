@@ -29,5 +29,5 @@ public partial class SeedApiClient : ISeedApiClient
         TestGroup = new TestGroupClient(_client);
     }
 
-    public TestGroupClient TestGroup { get; }
+    public ITestGroupClient TestGroup { get; }
 }
