@@ -1,3 +1,4 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
@@ -49,6 +50,62 @@ const OPENAPI_EXAMPLES_KEYS = [
     OpenAPIExtension.REDOCLY_CODE_SAMPLES_CAMEL,
     OpenAPIExtension.REDOCLY_CODE_SAMPLES_KEBAB
 ];
+
+// Sentinel value used to escape $ref keys in example data so they are not resolved by Redocly's bundler
+const ESCAPED_REF_KEY = "__fern_literal_ref__";
+
+/**
+ * Escapes $ref keys in example data to prevent Redocly's bundler from resolving them.
+ * This is necessary because $ref in example data should be treated as literal string values,
+ * not as JSON Schema references.
+ */
+function escapeRefsInExamples<T>(obj: T, isInExampleContext: boolean = false): T {
+    if (Array.isArray(obj)) {
+        return obj.map((item) => escapeRefsInExamples(item, isInExampleContext)) as T;
+    }
+
+    if (!isPlainObject(obj)) {
+        return obj;
+    }
+
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
+        const enteringExampleContext = OPENAPI_EXAMPLES_KEYS.includes(key);
+        const newIsInExampleContext = isInExampleContext || enteringExampleContext;
+
+        if (isInExampleContext && key === "$ref") {
+            // Escape $ref key in example data
+            result[ESCAPED_REF_KEY] = escapeRefsInExamples(value, newIsInExampleContext);
+        } else {
+            result[key] = escapeRefsInExamples(value, newIsInExampleContext);
+        }
+    }
+    return result as T;
+}
+
+/**
+ * Unescapes $ref keys in example data after Redocly's bundler has processed the document.
+ */
+function unescapeRefsInExamples<T>(obj: T): T {
+    if (Array.isArray(obj)) {
+        return obj.map((item) => unescapeRefsInExamples(item)) as T;
+    }
+
+    if (!isPlainObject(obj)) {
+        return obj;
+    }
+
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
+        if (key === ESCAPED_REF_KEY) {
+            // Unescape the key back to $ref
+            result["$ref"] = unescapeRefsInExamples(value);
+        } else {
+            result[key] = unescapeRefsInExamples(value);
+        }
+    }
+    return result as T;
+}
 
 export async function loadOpenAPI({
     context,
@@ -161,12 +218,16 @@ export async function loadOpenAPI({
     }
 
     if (overridesFilepath != null || absolutePathToOpenAPIOverlays != null || result !== parsed) {
-        return await parseOpenAPI({
+        // Escape $ref keys in example data before parsing to prevent Redocly's bundler from resolving them
+        const escapedResult = escapeRefsInExamples(result);
+        const parsedResult = await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides: overridesFilepath,
             absolutePathToOpenAPIOverlays,
-            parsed: result
+            parsed: escapedResult
         });
+        // Unescape $ref keys after parsing
+        return unescapeRefsInExamples(parsedResult);
     }
     return result;
 }

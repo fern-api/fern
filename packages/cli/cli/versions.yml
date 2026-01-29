@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.1
+  changelogEntry:
+    - summary: |
+        Fix `$ref` keys in `x-fern-examples` being incorrectly resolved as JSON Schema references. When example data in OpenAPI overrides contains `$ref` keys (as literal string values, not schema references), they are now preserved as-is instead of being processed by the bundler. This also fixes a bug where `$ref` in example data could corrupt `x-fern-global-headers` optional flags.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.52.0
   changelogEntry:
     - summary: |

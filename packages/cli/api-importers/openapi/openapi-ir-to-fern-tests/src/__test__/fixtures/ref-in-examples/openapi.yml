@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  title: Test $ref in examples bug
+  version: 1.0.0
+x-fern-global-headers:
+  - header: Square-Version
+    optional: true
+paths:
+  /v2/customers/custom-attribute-definitions:
+    post:
+      operationId: createCustomAttributeDefinition
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custom_attribute_definition:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                    name:
+                      type: string
+                    schema:
+                      type: object
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string

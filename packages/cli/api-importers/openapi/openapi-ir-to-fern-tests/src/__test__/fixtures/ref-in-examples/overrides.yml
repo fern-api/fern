@@ -1,0 +1,10 @@
+paths:
+  /v2/customers/custom-attribute-definitions:
+    post:
+      x-fern-examples:
+      - request:
+          custom_attribute_definition:
+            key: "favoriteShow"
+            name: "Favorite Show"
+            schema:
+              $ref: https://developer-production-s3.s3.amazonaws.com/schema.json#type

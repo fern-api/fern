@@ -1,0 +1,154 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "create": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "custom_attribute_definition": {
+                      "key": "favoriteShow",
+                      "name": "Favorite Show",
+                      "schema": {
+                        "$ref": "https://developer-production-s3.s3.amazonaws.com/schema.json#type",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/customers/custom-attribute-definitions",
+              "request": {
+                "body": {
+                  "properties": {
+                    "custom_attribute_definition": "optional<CreateRequestCustomAttributeDefinition>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "CreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "CreateRequestCustomAttributeDefinition": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "key": "optional<string>",
+              "name": "optional<string>",
+              "schema": "optional<map<string, unknown>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  CreateRequestCustomAttributeDefinition:
+    properties:
+      key: optional<string>
+      name: optional<string>
+      schema: optional<map<string, unknown>>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateResponse:
+    properties:
+      id: optional<string>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /v2/customers/custom-attribute-definitions
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: CreateRequest
+        body:
+          properties:
+            custom_attribute_definition: optional<CreateRequestCustomAttributeDefinition>
+        content-type: application/json
+      response:
+        docs: Success
+        type: CreateResponse
+        status-code: 200
+      examples:
+        - request:
+            custom_attribute_definition:
+              key: favoriteShow
+              name: Favorite Show
+              schema:
+                $ref: >-
+                  https://developer-production-s3.s3.amazonaws.com/schema.json#type
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test $ref in examples bug",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "headers": {
+        "Square-Version": {
+          "env": undefined,
+          "name": undefined,
+          "type": "optional<string>",
+        },
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test $ref in examples bug
+headers:
+  Square-Version:
+    type: optional<string>
+",
+  },
+}
