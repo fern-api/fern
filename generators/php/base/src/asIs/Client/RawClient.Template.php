@@ -252,17 +252,46 @@ class RawClient
      */
     private function encodeQuery(array $query): string
     {
+        $flatParams = $this->flattenQueryParams($query);
         $parts = [];
-        foreach ($query as $key => $value) {
-            if (is_array($value)) {
-                foreach ($value as $item) {
-                    $parts[] = urlencode($key) . '=' . $this->encodeQueryValue($item);
-                }
-            } else {
-                $parts[] = urlencode($key) . '=' . $this->encodeQueryValue($value);
-            }
+        foreach ($flatParams as [$key, $value]) {
+            $parts[] = urlencode($key) . '=' . $this->encodeQueryValue($value);
         }
         return implode('&', $parts);
+    }
+
+    /**
+     * Recursively flattens nested arrays into query parameter format with bracket notation.
+     * For example: ['filter' => ['name' => 'john']] becomes [['filter[name]', 'john']]
+     *
+     * @param array<string, mixed> $data
+     * @param string|null $keyPrefix
+     * @return array<array{string, mixed}>
+     */
+    private function flattenQueryParams(array $data, ?string $keyPrefix = null): array
+    {
+        $result = [];
+        foreach ($data as $key => $value) {
+            $fullKey = $keyPrefix !== null ? "{$keyPrefix}[{$key}]" : (string)$key;
+
+            if (is_array($value) && !empty($value) && !self::isSequential($value)) {
+                // Associative array (object-like) - recurse with bracket notation
+                $result = array_merge($result, $this->flattenQueryParams($value, $fullKey));
+            } elseif (is_array($value)) {
+                // Sequential array - each item gets the same key (exploded)
+                foreach ($value as $item) {
+                    if (is_array($item) && !empty($item) && !self::isSequential($item)) {
+                        // Array of objects
+                        $result = array_merge($result, $this->flattenQueryParams($item, $fullKey));
+                    } else {
+                        $result[] = [$fullKey, $item];
+                    }
+                }
+            } else {
+                $result[] = [$fullKey, $value];
+            }
+        }
+        return $result;
     }
 
     private function encodeQueryValue(mixed $value): string
