@@ -29,5 +29,5 @@ public partial class SeedServerSentEventsClient : ISeedServerSentEventsClient
         Completions = new CompletionsClient(_client);
     }
 
-    public CompletionsClient Completions { get; }
+    public ICompletionsClient Completions { get; }
 }

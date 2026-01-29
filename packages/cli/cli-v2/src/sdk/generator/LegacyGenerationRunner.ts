@@ -1,8 +1,10 @@
 import type { Audiences } from "@fern-api/configuration";
 import { generatorsYml } from "@fern-api/configuration";
+import type { ContainerRunner } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ContainerExecutionEnvironment, GenerationRunner } from "@fern-api/local-workspace-runner";
 import { TaskResult } from "@fern-api/task-context";
+import type { AiConfig } from "../../ai/config/AiConfig";
 import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter";
 import type { ApiDefinition } from "../../api/config/ApiDefinition";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
@@ -36,11 +38,14 @@ export namespace LegacyGenerationRunner {
         /** Organization name */
         organization: string;
 
+        /** AI configuration */
+        ai?: AiConfig;
+
         /** Audiences to filter by */
         audiences?: Audiences;
 
-        /** Version override for the generated SDK */
-        version?: string;
+        /** Container engine to use for local generation */
+        containerEngine?: ContainerRunner;
 
         /** Whether to keep Docker containers after generation */
         keepContainer?: boolean;
@@ -50,6 +55,9 @@ export namespace LegacyGenerationRunner {
 
         /** Custom output path for preview mode */
         outputPath?: AbsoluteFilePath;
+
+        /** Version override for the generated SDK */
+        version?: string;
     }
 
     export interface Result {
@@ -78,7 +86,7 @@ export class LegacyGenerationRunner {
     public async run(args: LegacyGenerationRunner.RunArgs): Promise<LegacyGenerationRunner.Result> {
         const taskContext = new TaskContextAdapter({ context: this.context, task: args.task });
         try {
-            const generatorInvocation = this.invocationAdapter.adapt(args.target);
+            const generatorInvocation = await this.invocationAdapter.adapt(args.target);
             const generatorGroup: generatorsYml.GeneratorGroup = {
                 groupName: args.target.name,
                 audiences: args.audiences ?? { type: "all" },
@@ -89,7 +97,8 @@ export class LegacyGenerationRunner {
             const containerImage = `${args.target.image}:${args.target.version}`;
             const executionEnvironment = new ContainerExecutionEnvironment({
                 containerImage,
-                keepContainer: args.keepContainer ?? false
+                keepContainer: args.keepContainer ?? false,
+                runner: args.containerEngine
             });
 
             const workspaceAdapter = new LegacyFernWorkspaceAdapter({
@@ -106,12 +115,12 @@ export class LegacyGenerationRunner {
                 generatorGroup,
                 context: taskContext,
                 outputVersionOverride: args.version,
+                ai: args.ai,
+                absolutePathToFernConfig: undefined,
+                irVersionOverride: undefined,
                 shouldGenerateDynamicSnippetTests: false,
                 skipUnstableDynamicSnippetTests: true,
-                irVersionOverride: undefined,
-                absolutePathToFernConfig: undefined,
-                inspect: false,
-                ai: undefined
+                inspect: false
             });
 
             if (taskContext.getResult() === TaskResult.Failure) {

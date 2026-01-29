@@ -49,5 +49,5 @@ public partial class SeedWebsocketAuthClient : ISeedWebsocketAuthClient
         Auth = new AuthClient(_client);
     }
 
-    public AuthClient Auth { get; }
+    public IAuthClient Auth { get; }
 }

@@ -29,5 +29,5 @@ public partial class SeedApiClient : ISeedApiClient
         FileUploadExample = new FileUploadExampleClient(_client);
     }
 
-    public FileUploadExampleClient FileUploadExample { get; }
+    public IFileUploadExampleClient FileUploadExample { get; }
 }

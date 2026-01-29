@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.54.0
+  changelogEntry:
+    - summary: |
+        Add `status_code` property to `HttpResponse` and `AsyncHttpResponse` classes.
+        This allows users to access the HTTP status code when using `with_raw_response`.
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 62
+
 - version: 4.53.1
   changelogEntry:
     - summary: |

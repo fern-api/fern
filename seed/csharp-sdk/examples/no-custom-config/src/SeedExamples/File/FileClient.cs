@@ -14,7 +14,7 @@ public partial class FileClient : IFileClient
         Service = new ServiceClient(_client);
     }
 
-    public NotificationClient Notification { get; }
+    public INotificationClient Notification { get; }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

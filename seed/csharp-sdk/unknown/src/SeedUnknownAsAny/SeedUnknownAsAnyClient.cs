@@ -29,5 +29,5 @@ public partial class SeedUnknownAsAnyClient : ISeedUnknownAsAnyClient
         Unknown = new UnknownClient(_client);
     }
 
-    public UnknownClient Unknown { get; }
+    public IUnknownClient Unknown { get; }
 }

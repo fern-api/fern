@@ -2,6 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, SourceLocation } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
+import type { AiConfig } from "../ai/config/AiConfig";
 import type { ApiDefinition } from "../api/config/ApiDefinition";
 import { ApiDefinitionConverter } from "../api/config/converter/ApiDefinitionConverter";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader";
@@ -53,6 +54,7 @@ export class WorkspaceLoader {
             };
         }
 
+        const ai = this.convertAi({ fernYml });
         const apis = await this.convertApis({ fernYml });
         const cliVersion = await this.convertCliVersion({ fernYml });
         const sdks = await this.convertSdks({ fernYml });
@@ -64,6 +66,7 @@ export class WorkspaceLoader {
         }
 
         const workspace: Workspace = {
+            ai,
             apis,
             org: fernYml.data.org,
             cliVersion,
@@ -81,6 +84,17 @@ export class WorkspaceLoader {
         return {
             success: true,
             workspace
+        };
+    }
+
+    private convertAi({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): AiConfig | undefined {
+        const ai = fernYml.data.ai;
+        if (ai == null) {
+            return undefined;
+        }
+        return {
+            provider: ai.provider,
+            model: ai.model
         };
     }
 

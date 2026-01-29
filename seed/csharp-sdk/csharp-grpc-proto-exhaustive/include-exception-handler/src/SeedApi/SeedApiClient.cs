@@ -41,5 +41,5 @@ public partial class SeedApiClient : ISeedApiClient
         }
     }
 
-    public DataserviceClient Dataservice { get; }
+    public IDataserviceClient Dataservice { get; }
 }

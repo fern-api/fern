@@ -8,6 +8,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
+from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
@@ -416,6 +417,55 @@ class ObjectClient:
         """
         _response = self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    def get_and_return_with_datetime_like_string(
+        self,
+        *,
+        datetime_like_string: str,
+        actual_datetime: dt.datetime,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithDatetimeLikeString:
+        """
+        Tests that string fields containing datetime-like values are NOT reformatted.
+        The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+        without being converted to "2023-08-31T14:15:22.000Z".
+
+        Parameters
+        ----------
+        datetime_like_string : str
+            A string field that happens to contain a datetime-like value
+
+        actual_datetime : dt.datetime
+            An actual datetime field for comparison
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithDatetimeLikeString
+
+        Examples
+        --------
+        import datetime
+
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_datetime_like_string(
+            datetime_like_string="2023-08-31T14:15:22Z",
+            actual_datetime=datetime.datetime.fromisoformat(
+                "2023-08-31 14:15:22+00:00",
+            ),
+        )
+        """
+        _response = self._raw_client.get_and_return_with_datetime_like_string(
+            datetime_like_string=datetime_like_string, actual_datetime=actual_datetime, request_options=request_options
         )
         return _response.data
 
@@ -865,5 +915,61 @@ class AsyncObjectClient:
         """
         _response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_with_datetime_like_string(
+        self,
+        *,
+        datetime_like_string: str,
+        actual_datetime: dt.datetime,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithDatetimeLikeString:
+        """
+        Tests that string fields containing datetime-like values are NOT reformatted.
+        The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+        without being converted to "2023-08-31T14:15:22.000Z".
+
+        Parameters
+        ----------
+        datetime_like_string : str
+            A string field that happens to contain a datetime-like value
+
+        actual_datetime : dt.datetime
+            An actual datetime field for comparison
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithDatetimeLikeString
+
+        Examples
+        --------
+        import asyncio
+        import datetime
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_datetime_like_string(
+                datetime_like_string="2023-08-31T14:15:22Z",
+                actual_datetime=datetime.datetime.fromisoformat(
+                    "2023-08-31 14:15:22+00:00",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_datetime_like_string(
+            datetime_like_string=datetime_like_string, actual_datetime=actual_datetime, request_options=request_options
         )
         return _response.data

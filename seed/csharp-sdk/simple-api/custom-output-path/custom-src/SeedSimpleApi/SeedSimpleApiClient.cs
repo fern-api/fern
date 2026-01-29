@@ -37,5 +37,5 @@ public partial class SeedSimpleApiClient : ISeedSimpleApiClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

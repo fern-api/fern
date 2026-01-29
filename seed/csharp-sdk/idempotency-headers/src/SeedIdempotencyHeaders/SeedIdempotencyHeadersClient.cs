@@ -37,5 +37,5 @@ public partial class SeedIdempotencyHeadersClient : ISeedIdempotencyHeadersClien
         Payment = new PaymentClient(_client);
     }
 
-    public PaymentClient Payment { get; }
+    public IPaymentClient Payment { get; }
 }

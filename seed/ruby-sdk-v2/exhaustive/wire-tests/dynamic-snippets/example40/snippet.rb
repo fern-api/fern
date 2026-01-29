@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.urls.with_mixed_case();
+client.endpoints.put.add(id: 'id');

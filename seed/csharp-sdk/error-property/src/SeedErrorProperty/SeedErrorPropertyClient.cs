@@ -29,5 +29,5 @@ public partial class SeedErrorPropertyClient : ISeedErrorPropertyClient
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
 
-    public PropertyBasedErrorClient PropertyBasedError { get; }
+    public IPropertyBasedErrorClient PropertyBasedError { get; }
 }

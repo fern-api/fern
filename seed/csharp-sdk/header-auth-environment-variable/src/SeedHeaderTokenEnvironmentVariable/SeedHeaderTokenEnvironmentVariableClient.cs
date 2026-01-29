@@ -48,7 +48,7 @@ public partial class SeedHeaderTokenEnvironmentVariableClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

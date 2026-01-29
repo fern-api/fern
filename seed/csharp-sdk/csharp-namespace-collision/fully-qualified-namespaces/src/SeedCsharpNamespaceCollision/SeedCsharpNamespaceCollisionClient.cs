@@ -31,7 +31,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         System = new SystemClient(_client);
     }
 
-    public SystemClient System { get; }
+    public ISystemClient System { get; }
 
     private async Task<WithRawResponse<User>> CreateUserAsyncCore(
         User request,

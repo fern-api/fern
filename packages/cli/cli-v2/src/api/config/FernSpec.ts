@@ -3,7 +3,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { ApiSpec } from "./ApiSpec";
 
 /**
- * A native Fern definition.
+ * A Fern definition.
  *
  * Points to the root directory containing Fern definition files
  * (api.yml, types, endpoints, etc.).
