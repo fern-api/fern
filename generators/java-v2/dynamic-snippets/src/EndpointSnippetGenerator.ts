@@ -988,7 +988,10 @@ export class EndpointSnippetGenerator {
         // in the snippet request. This ensures the builder methods are called in the correct order.
         const providedWireValues = new Set(filteredProperties.map((p) => p.name.wireValue));
         const missingRequiredProperties = parameters
-            .filter((param) => !this.context.isOptional(param.typeReference) && !providedWireValues.has(param.name.wireValue))
+            .filter(
+                (param) =>
+                    !this.context.isOptional(param.typeReference) && !providedWireValues.has(param.name.wireValue)
+            )
             .filter((param) => !this.context.isDirectLiteral(param.typeReference))
             .map((param) => ({
                 name: param.name,
