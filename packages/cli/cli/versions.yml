@@ -2,7 +2,7 @@
 - version: 3.53.0
   changelogEntry:
     - summary: |
-        Add support for ListType/SetType/MapType validation.
+        Add internal support for ListType/SetType/MapType validation into IR.
       type: feat
   createdAt: "2026-01-29"
   irVersion: 63
