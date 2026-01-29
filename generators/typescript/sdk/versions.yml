@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.46.1
+  changelogEntry:
+    - summary: |
+        Fix `outputSrcOnly` not working with `local-file-system` output mode when the organization has
+        `selfHostedSdKs` enabled. The `outputSrcOnly` check now takes priority over `shouldGenerateFullProject`,
+        ensuring that when a user explicitly sets `outputSrcOnly: true`, only the src contents are output
+        without the full project structure.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.46.0
   changelogEntry:
     - summary: |
