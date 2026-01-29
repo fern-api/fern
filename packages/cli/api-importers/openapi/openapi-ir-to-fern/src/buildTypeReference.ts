@@ -25,7 +25,6 @@ import {
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
-import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { getDeclarationFileFromGroupName } from "./utils/getDeclarationFileForSchema";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
