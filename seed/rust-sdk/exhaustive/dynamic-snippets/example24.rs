@@ -11,12 +11,6 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_query(
-            &GetWithQueryQueryRequest {
-                query: "query".to_string(),
-                number: 1,
-            },
-            None,
-        )
+        .get_with_path(&"param".to_string(), None)
         .await;
 }

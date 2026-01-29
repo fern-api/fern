@@ -1143,6 +1143,67 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_datetime_like_string</a>(request: ObjectWithDatetimeLikeString) -> Result&lt;ObjectWithDatetimeLikeString, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_with_datetime_like_string(
+            &ObjectWithDatetimeLikeString {
+                datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
+                actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
 <details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_path</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>

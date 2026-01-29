@@ -11,10 +11,8 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_base_64(
-            &base64::engine::general_purpose::STANDARD
-                .decode("SGVsbG8gd29ybGQh")
-                .unwrap(),
+        .get_and_return_date(
+            &NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
             None,
         )
         .await;
