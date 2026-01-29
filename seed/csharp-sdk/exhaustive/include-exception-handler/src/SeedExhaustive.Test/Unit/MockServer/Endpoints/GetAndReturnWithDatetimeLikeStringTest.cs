@@ -64,14 +64,14 @@ public class GetAndReturnWithDatetimeLikeStringTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "datetimeLikeString": "2023-08-31T14:15:22.000Z",
+              "datetimeLikeString": "2023-08-31T14:15:22Z",
               "actualDatetime": "2023-08-31T14:15:22.000Z"
             }
             """;
 
         const string mockResponse = """
             {
-              "datetimeLikeString": "2023-08-31T14:15:22.000Z",
+              "datetimeLikeString": "2023-08-31T14:15:22Z",
               "actualDatetime": "2023-08-31T14:15:22.000Z"
             }
             """;

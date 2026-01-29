@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "datetimeLikeString": {
+      "type": "string"
+    },
+    "actualDatetime": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "datetimeLikeString",
+    "actualDatetime"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
