@@ -311,15 +311,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             if (!schemaDefinition || isReferenceObject(schemaDefinition)) {
                 continue;
             }
-
-            const overrideNamespace = getExtension<string>(schemaDefinition, FernOpenAPIExtension.SDK_NAMESPACE);
-            if (overrideNamespace) {
-                this.logger.debug(
-                    `Schema ${schemaName} has override namespace: ${overrideNamespace}, definition: ${JSON.stringify(schemaDefinition)}`
-                );
-            }
-
-            mapping.set(schemaName, overrideNamespace || this.namespace);
+            mapping.set(schemaName, getExtension<string>(schemaDefinition, FernOpenAPIExtension.SDK_NAMESPACE) || this.namespace);
         }
 
         return mapping;
