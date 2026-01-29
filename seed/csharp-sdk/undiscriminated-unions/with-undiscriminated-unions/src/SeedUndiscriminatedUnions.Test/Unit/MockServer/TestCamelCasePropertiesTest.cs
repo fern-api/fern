@@ -1,7 +1,6 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUndiscriminatedUnions;
-using SeedUndiscriminatedUnions.Core;
+using SeedUndiscriminatedUnions.Test.Utils;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 
@@ -45,9 +44,7 @@ public class TestCamelCasePropertiesTest : BaseMockServerTest
                 PaymentMethod = new TokenizeCard { Method = "method", CardNumber = "cardNumber" },
             }
         );
-        var actualJson = JsonUtils.SerializeToElement(response);
-        var expectedJson = JsonUtils.Deserialize<JsonElement>(mockResponse);
-        Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer());
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -91,8 +88,6 @@ public class TestCamelCasePropertiesTest : BaseMockServerTest
                 },
             }
         );
-        var actualJson = JsonUtils.SerializeToElement(response);
-        var expectedJson = JsonUtils.Deserialize<JsonElement>(mockResponse);
-        Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer());
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

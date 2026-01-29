@@ -132,27 +132,15 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                         writer.write("var response = ");
                         writer.writeNodeStatement(endpointSnippet);
                         if (responseBodyType === "json") {
-                            // Use JSON element comparison for reliable deep equality
-                            // This handles collections and union types correctly
-                            writer.write("var actualJson = ");
                             writer.writeNodeStatement(
                                 this.csharp.invokeMethod({
-                                    on: this.Types.JsonUtils,
-                                    method: "SerializeToElement",
-                                    arguments_: [this.csharp.codeblock("response")]
+                                    on: this.Types.JsonAssert,
+                                    method: "AreEqual",
+                                    arguments_: [
+                                        this.csharp.codeblock("response"),
+                                        this.csharp.codeblock("mockResponse")
+                                    ]
                                 })
-                            );
-                            writer.write("var expectedJson = ");
-                            writer.writeNodeStatement(
-                                this.csharp.invokeMethod({
-                                    on: this.Types.JsonUtils,
-                                    method: "Deserialize",
-                                    generics: [this.System.Text.Json.JsonElement],
-                                    arguments_: [this.csharp.codeblock("mockResponse")]
-                                })
-                            );
-                            writer.writeTextStatement(
-                                "Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer())"
                             );
                         } else if (responseBodyType === "text") {
                             writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");

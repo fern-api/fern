@@ -93,6 +93,7 @@ export const AsIsFiles = {
         },
         Utils: {
             AdditionalPropertiesComparer: "test/Utils/AdditionalPropertiesComparer.Template.cs",
+            JsonAssert: "test/Utils/JsonAssert.Template.cs",
             JsonElementComparer: "test/Utils/JsonElementComparer.Template.cs",
             NUnitExtensions: "test/Utils/NUnitExtensions.Template.cs",
             OneOfComparer: "test/Utils/OneOfComparer.Template.cs",
