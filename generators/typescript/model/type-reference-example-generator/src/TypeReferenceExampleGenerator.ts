@@ -1,4 +1,4 @@
-import { ExampleTypeReference } from "@fern-fern/ir-sdk/api";
+import { ExampleTypeReference } from "@fern-api/ir-sdk";
 import { GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 
 import { GeneratedTypeReferenceExampleImpl } from "./GeneratedTypeReferenceExampleImpl";

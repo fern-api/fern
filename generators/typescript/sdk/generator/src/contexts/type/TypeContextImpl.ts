@@ -1,15 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    FernIr,
     NameAndWireValue,
     PropertyPathItem,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     ExportsManager,
     getTextOfTsNode,
@@ -641,11 +641,11 @@ export class TypeContextImpl implements TypeContext {
         return type._visit({
             container: (container) =>
                 container._visit({
-                    list: (value: FernIr.TypeReference) => this.isInline(value),
+                    list: (value: FernIr.ListType) => this.isInline(value.list),
                     map: (value: FernIr.MapType) => this.isInline(value.keyType) || this.isInline(value.valueType),
                     nullable: (value: FernIr.TypeReference) => this.isInline(value),
                     optional: (value: FernIr.TypeReference) => this.isInline(value),
-                    set: (value: FernIr.TypeReference) => this.isInline(value),
+                    set: (value: FernIr.SetType) => this.isInline(value.set),
                     literal: () => false,
                     _other: () => false
                 }),

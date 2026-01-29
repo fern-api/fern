@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { Name } from "@fern-api/ir-sdk";
 import { PackageId, Reference } from "@fern-typescript/commons";
 
 import { GeneratedExpressInlinedRequestBodySchema } from "./GeneratedExpressInlinedRequestBodySchema";

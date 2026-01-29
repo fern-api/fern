@@ -1,4 +1,4 @@
-import { ErrorDiscriminationByPropertyStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ErrorDiscriminationByPropertyStrategy, HttpEndpoint } from "@fern-api/ir-sdk";
 import { PackageId, Zurg } from "@fern-typescript/commons";
 import { GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";

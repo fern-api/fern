@@ -1,4 +1,4 @@
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";

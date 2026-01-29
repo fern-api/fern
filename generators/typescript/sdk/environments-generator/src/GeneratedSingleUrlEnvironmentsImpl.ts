@@ -3,7 +3,7 @@ import {
     EnvironmentId,
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";

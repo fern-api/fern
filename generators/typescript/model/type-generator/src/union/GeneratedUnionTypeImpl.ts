@@ -1,10 +1,10 @@
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
+    FernIr,
     SingleUnionTypeProperty,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { GetReferenceOpts, getPropertyKey } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";

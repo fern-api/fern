@@ -5,7 +5,7 @@ import {
     Type,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { Reference } from "@fern-typescript/commons";
 import {
     GeneratedAliasTypeSchema,

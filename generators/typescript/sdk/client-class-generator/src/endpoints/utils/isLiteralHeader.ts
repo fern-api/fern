@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpHeader } from "@fern-fern/ir-sdk/api";
+import { HttpHeader } from "@fern-api/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 
 export function isLiteralHeader(header: HttpHeader, context: SdkContext): boolean {

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import type { FernIr } from "@fern-fern/ir-sdk";
+import type { FernIr } from "@fern-api/ir-sdk";
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

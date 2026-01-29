@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { AuthScheme, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { ExportedFilePath } from "@fern-typescript/commons";
 import { GeneratedFile, SdkContext } from "@fern-typescript/contexts";
 

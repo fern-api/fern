@@ -1,4 +1,4 @@
-import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ObjectTypeDeclaration } from "@fern-api/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts";

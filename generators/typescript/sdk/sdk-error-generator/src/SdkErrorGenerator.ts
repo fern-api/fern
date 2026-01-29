@@ -1,4 +1,4 @@
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { ErrorDeclaration } from "@fern-api/ir-sdk";
 import { GeneratedSdkError } from "@fern-typescript/contexts";
 
 import { GeneratedSdkErrorClassImpl } from "./GeneratedSdkErrorClassImpl";

@@ -1,4 +1,4 @@
-import { ApiVersionScheme, HttpHeader } from "@fern-fern/ir-sdk/api";
+import { ApiVersionScheme, HttpHeader } from "@fern-api/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedVersion, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

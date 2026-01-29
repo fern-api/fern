@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ErrorDeclaration, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getSchemaOptions, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";

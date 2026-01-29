@@ -11,7 +11,7 @@ import {
     PrimitiveTypeV2,
     ResponseError,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     getElementTypeFromArrayType,
     getFullPathForEndpoint,

@@ -1,4 +1,4 @@
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName } from "@fern-api/ir-sdk";
 import { BaseContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";

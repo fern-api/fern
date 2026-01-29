@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { TypeReference } from "@fern-api/ir-sdk";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 

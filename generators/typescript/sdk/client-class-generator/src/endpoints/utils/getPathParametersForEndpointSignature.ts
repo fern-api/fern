@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpService, PathParameter } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, PathParameter } from "@fern-api/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 
 import { getNonVariablePathParameters } from "./getNonVariablePathParameters";

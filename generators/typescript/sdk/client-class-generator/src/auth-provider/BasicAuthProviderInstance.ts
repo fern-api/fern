@@ -1,4 +1,4 @@
-import type { BasicAuthScheme } from "@fern-fern/ir-sdk/api";
+import type { BasicAuthScheme } from "@fern-api/ir-sdk";
 import { getPropertyKey } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

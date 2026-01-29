@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Name, NameAndWireValue } from "@fern-fern/ir-sdk/api";
+import { Name, NameAndWireValue } from "@fern-api/ir-sdk";
 
 /**
  * Determines the user-facing property name for SDK parameters (query, header, path, file).

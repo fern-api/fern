@@ -1,4 +1,4 @@
-import { InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
+import { InlinedRequestBodyProperty } from "@fern-api/ir-sdk";
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { ExpressContext } from "..";
 

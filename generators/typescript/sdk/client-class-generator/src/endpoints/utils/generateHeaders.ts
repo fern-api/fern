@@ -1,11 +1,11 @@
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
+    FernIr,
     HeaderAuthScheme,
     HttpEndpoint,
     HttpHeader,
     HttpService,
     IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 

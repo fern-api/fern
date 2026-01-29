@@ -1,4 +1,4 @@
-import { IntermediateRepresentation, WebSocketChannel } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, WebSocketChannel } from "@fern-api/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass } from "@fern-typescript/contexts";
 

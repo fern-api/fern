@@ -1,4 +1,4 @@
-import { FernIr } from "@fern-fern/ir-sdk";
+import { FernIr } from "@fern-api/ir-sdk";
 import { getPropertyKey } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

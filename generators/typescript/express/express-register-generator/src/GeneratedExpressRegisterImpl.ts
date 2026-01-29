@@ -1,4 +1,4 @@
-import { IntermediateRepresentation, Name, Package } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, Name, Package } from "@fern-api/ir-sdk";
 import { convertHttpPathToExpressRoute, getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";

@@ -3,7 +3,7 @@ import {
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpResponseBody
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";

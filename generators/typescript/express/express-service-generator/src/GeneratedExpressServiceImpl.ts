@@ -6,7 +6,7 @@ import {
     HttpService,
     Package,
     PathParameter
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     convertHttpPathToExpressRoute,
     getPropertyKey,

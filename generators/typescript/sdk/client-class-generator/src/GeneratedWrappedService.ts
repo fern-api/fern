@@ -1,5 +1,5 @@
 import { SetRequired } from "@fern-api/core-utils";
-import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
+import { Subpackage, SubpackageId } from "@fern-api/ir-sdk";
 import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ClassDeclarationStructure, Scope, ts } from "ts-morph";

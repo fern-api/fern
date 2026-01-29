@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-fern/ir-sdk/api";
+import { HttpService } from "@fern-api/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedExpressService } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";

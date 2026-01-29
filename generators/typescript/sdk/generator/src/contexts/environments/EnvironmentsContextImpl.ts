@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";

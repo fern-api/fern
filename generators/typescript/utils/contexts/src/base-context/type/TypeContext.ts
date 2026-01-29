@@ -1,13 +1,13 @@
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    FernIr,
     ResolvedTypeReference,
     Type,
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { GeneratedType } from "./GeneratedType";

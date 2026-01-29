@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { TypeReference } from "@fern-api/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { ExpressContext } from "@fern-typescript/contexts";

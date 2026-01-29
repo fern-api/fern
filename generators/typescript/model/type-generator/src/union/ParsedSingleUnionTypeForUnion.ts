@@ -4,7 +4,7 @@ import {
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { BaseContext } from "@fern-typescript/contexts";
 import {
     AbstractKnownSingleUnionType,

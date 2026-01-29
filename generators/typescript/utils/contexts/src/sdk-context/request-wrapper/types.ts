@@ -1,4 +1,4 @@
-import { FileProperty, HttpHeader, PathParameter, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { FileProperty, HttpHeader, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 
 export interface RequestWrapperBodyProperty {
     propertyName: string;

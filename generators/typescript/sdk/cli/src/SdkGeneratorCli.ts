@@ -1,8 +1,8 @@
 import { FernGeneratorExec } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
 import { getNamespaceExport } from "@fern-api/typescript-base";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
     convertJestImportsToVitest,

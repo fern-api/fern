@@ -4,7 +4,7 @@ import {
     ObjectPropertyAccess,
     ObjectTypeDeclaration,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     GetReferenceOpts,
     generateInlinePropertiesModule,

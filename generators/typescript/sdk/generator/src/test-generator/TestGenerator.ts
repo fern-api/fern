@@ -18,7 +18,7 @@ import {
     Name,
     OAuthTokenEndpoint,
     ObjectPropertyAccess
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     DependencyManager,
     DependencyType,

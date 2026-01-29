@@ -1,4 +1,4 @@
-import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall } from "@fern-api/ir-sdk";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";

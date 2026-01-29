@@ -1,4 +1,4 @@
-import { SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
+import { SingleUnionTypeProperty } from "@fern-api/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedType, ModelContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";

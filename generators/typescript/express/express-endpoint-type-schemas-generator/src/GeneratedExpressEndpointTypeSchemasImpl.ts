@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService } from "@fern-api/ir-sdk";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

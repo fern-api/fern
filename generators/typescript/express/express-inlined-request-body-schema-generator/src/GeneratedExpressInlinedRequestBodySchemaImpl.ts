@@ -1,4 +1,4 @@
-import { HttpEndpoint, InlinedRequestBody } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, InlinedRequestBody } from "@fern-api/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getPropertyKey, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressInlinedRequestBodySchema } from "@fern-typescript/contexts";

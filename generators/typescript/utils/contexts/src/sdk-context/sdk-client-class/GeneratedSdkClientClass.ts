@@ -1,4 +1,4 @@
-import { EndpointId, ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
+import { EndpointId, ExampleEndpointCall } from "@fern-api/ir-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { EndpointSampleCode } from "../../commons";

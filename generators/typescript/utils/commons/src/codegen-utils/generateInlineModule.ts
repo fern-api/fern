@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ContainerType, DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 import {
     ModuleDeclarationKind,
     ModuleDeclarationStructure,
@@ -202,10 +202,10 @@ function generateTypeVisitor<TOut>(
         unknown: visitor.other,
         container: (containerType) =>
             containerType._visit({
-                list: visitor.list,
+                list: (listType) => visitor.list(listType.list),
                 literal: visitor.other,
                 map: visitor.map,
-                set: visitor.set,
+                set: (setType) => visitor.set(setType.set),
                 optional: (typeReference) => generateTypeVisitor(typeReference, visitor),
                 nullable: (typeReference) => generateTypeVisitor(typeReference, visitor),
                 _other: visitor.other
@@ -225,11 +225,11 @@ function getNamedType(typeReference: TypeReference): NamedType | undefined {
                 case "optional":
                     return getNamedType(typeReference.container.optional);
                 case "list":
-                    return getNamedType(typeReference.container.list);
+                    return getNamedType((typeReference.container as ContainerType.List).list);
                 case "map":
                     return getNamedType(typeReference.container.valueType);
                 case "set":
-                    return getNamedType(typeReference.container.set);
+                    return getNamedType((typeReference.container as ContainerType.Set).set);
                 case "literal":
                     return undefined;
                 default:

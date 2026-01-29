@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernIr } from "@fern-fern/ir-sdk";
-import { ObjectProperty, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr, ObjectProperty, UnionTypeDeclaration } from "@fern-api/ir-sdk";
 import {
     FernWriters,
     getPropertyKey,

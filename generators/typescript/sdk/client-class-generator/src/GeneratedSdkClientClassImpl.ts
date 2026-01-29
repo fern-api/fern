@@ -13,7 +13,7 @@ import {
     SubpackageId,
     VariableDeclaration,
     VariableId
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     ExportsManager,
     getParameterNameForRootPathParameter,

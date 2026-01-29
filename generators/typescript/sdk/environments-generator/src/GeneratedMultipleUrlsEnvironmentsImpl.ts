@@ -4,7 +4,7 @@ import {
     EnvironmentId,
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { FernWriters, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";

@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-api/ir-sdk";
 
 export function getExampleEndpointCallsForTests({
     endpoint,

@@ -5,7 +5,7 @@ import {
     ResolvedTypeReference,
     ShapeType,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { getSchemaOptions } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 

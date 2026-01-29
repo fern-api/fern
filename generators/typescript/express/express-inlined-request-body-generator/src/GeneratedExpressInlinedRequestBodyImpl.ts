@@ -1,4 +1,4 @@
-import { InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
+import { InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-api/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 

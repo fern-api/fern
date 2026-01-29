@@ -1,7 +1,7 @@
 import { noop, SetRequired } from "@fern-api/core-utils";
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleEndpointCall,
+    FernIr,
     FileProperty,
     FileUploadRequest,
     FileUploadRequestProperty,
@@ -19,7 +19,7 @@ import {
     QueryParameter,
     TypeDeclaration,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     generateInlinePropertiesModule,
     getExampleEndpointCalls,

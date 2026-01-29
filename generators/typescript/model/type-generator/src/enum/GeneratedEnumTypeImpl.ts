@@ -1,4 +1,4 @@
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
+import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-api/ir-sdk";
 import { GetReferenceOpts, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
 import {

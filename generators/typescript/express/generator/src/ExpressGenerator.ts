@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
-import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import {
     AsIsManager,
     CoreUtilitiesManager,

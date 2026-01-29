@@ -8,7 +8,7 @@ import {
     IntermediateRepresentation,
     SdkRequest,
     SdkRequestShape
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     Fetcher,
     GetReferenceOpts,

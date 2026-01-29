@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpRequestBody, Name } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpRequestBody, Name } from "@fern-api/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample } from "@fern-typescript/contexts";
 

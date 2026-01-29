@@ -6,7 +6,7 @@ import {
     HttpRequestBody,
     Name,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { GetReferenceOpts, getPropertyKey, isExpressionUndefined, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

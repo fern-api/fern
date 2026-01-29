@@ -1,4 +1,4 @@
-import { HeaderAuthScheme } from "@fern-fern/ir-sdk/api";
+import { HeaderAuthScheme } from "@fern-api/ir-sdk";
 import { getPropertyKey } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

@@ -7,7 +7,7 @@ import {
     NameAndWireValue,
     PathParameter,
     QueryParameter
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { ts } from "ts-morph";
 
 import { GeneratedFile } from "../../commons/GeneratedFile";

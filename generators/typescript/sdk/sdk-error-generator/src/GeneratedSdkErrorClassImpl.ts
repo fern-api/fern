@@ -1,4 +1,4 @@
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { ErrorDeclaration } from "@fern-api/ir-sdk";
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkErrorClass, SdkContext } from "@fern-typescript/contexts";

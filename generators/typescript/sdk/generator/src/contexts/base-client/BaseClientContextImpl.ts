@@ -1,6 +1,6 @@
 import type { SetRequired } from "@fern-api/core-utils";
-import { FernIr } from "@fern-fern/ir-sdk";
-import type { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import type { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { FernIr } from "@fern-api/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";

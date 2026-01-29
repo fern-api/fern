@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { GeneratedVersion, VersionContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";

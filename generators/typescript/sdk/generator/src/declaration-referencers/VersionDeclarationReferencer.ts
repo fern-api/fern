@@ -1,4 +1,4 @@
-import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
+import { ApiVersionScheme } from "@fern-api/ir-sdk";
 import {
     ExportedFilePath,
     ExportsManager,

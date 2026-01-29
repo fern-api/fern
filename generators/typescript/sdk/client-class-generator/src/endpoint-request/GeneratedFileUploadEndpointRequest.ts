@@ -5,7 +5,7 @@ import {
     HttpRequestBody,
     HttpService,
     IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     Fetcher,
     GetReferenceOpts,

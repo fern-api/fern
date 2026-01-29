@@ -1,11 +1,11 @@
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    FernIr,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { ExportsManager, ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";

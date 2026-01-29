@@ -1,4 +1,4 @@
-import { ExamplePathParameter, Name, PathParameter } from "@fern-fern/ir-sdk/api";
+import { ExamplePathParameter, Name, PathParameter } from "@fern-api/ir-sdk";
 import { getSdkParameterPropertyName } from "./getSdkParameterPropertyName";
 
 /**

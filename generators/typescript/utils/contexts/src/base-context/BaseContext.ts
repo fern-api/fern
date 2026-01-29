@@ -1,5 +1,5 @@
+import { Constants } from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
-import { Constants } from "@fern-fern/ir-sdk/api";
 import { CoreUtilities, ExternalDependencies } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 

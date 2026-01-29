@@ -1,4 +1,4 @@
-import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-fern/ir-sdk/api";
+import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-api/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {

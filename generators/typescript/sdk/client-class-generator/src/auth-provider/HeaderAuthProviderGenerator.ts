@@ -1,4 +1,4 @@
-import type { FernIr } from "@fern-fern/ir-sdk";
+import type { FernIr } from "@fern-api/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
 import {

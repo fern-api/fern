@@ -1,4 +1,4 @@
-import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-api/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -294,8 +294,8 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
     return TypeReference._visit(iterable, {
         container: (container) =>
             ContainerType._visit(container, {
-                list: (itemType) => context.type.stringify(value, itemType, { includeNullCheckIfOptional: false }),
-                set: (itemType) => context.type.stringify(value, itemType, { includeNullCheckIfOptional: false }),
+                list: (listType) => context.type.stringify(value, listType.list, { includeNullCheckIfOptional: false }),
+                set: (setType) => context.type.stringify(value, setType.set, { includeNullCheckIfOptional: false }),
                 map: () => {
                     throw new Error("Map is not iterable.");
                 },

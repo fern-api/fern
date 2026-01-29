@@ -1,4 +1,4 @@
-import { DeclaredTypeName, ShapeType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, ShapeType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 import {
     CoreUtilities,
     ExportsManager,

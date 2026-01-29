@@ -1,4 +1,4 @@
-import { TypeReference, WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
+import { TypeReference, WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";

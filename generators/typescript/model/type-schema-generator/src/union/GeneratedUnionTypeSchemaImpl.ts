@@ -1,4 +1,4 @@
-import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-api/ir-sdk";
 import { Zurg } from "@fern-typescript/commons";
 import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import {

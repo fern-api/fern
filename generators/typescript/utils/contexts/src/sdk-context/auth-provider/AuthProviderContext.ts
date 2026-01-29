@@ -1,4 +1,4 @@
-import { FernIr } from "@fern-fern/ir-sdk";
+import { FernIr } from "@fern-api/ir-sdk";
 import { ts } from "ts-morph";
 import { SdkContext } from "../SdkContext";
 

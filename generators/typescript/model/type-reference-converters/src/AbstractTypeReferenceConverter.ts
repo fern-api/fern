@@ -7,7 +7,7 @@ import {
     PrimitiveTypeV1,
     ShapeType,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import { BaseContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -140,8 +140,8 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected container(container: ContainerType, params: ConvertTypeReferenceParams): T {
         return ContainerType._visit<T>(container, {
             map: (type) => this.map(type, setGenericIn(params, genericIn.Map)),
-            list: (type) => this.list(type, setGenericIn(params, genericIn.List)),
-            set: (type) => this.set(type, setGenericIn(params, genericIn.Set)),
+            list: (type) => this.list(type.list, setGenericIn(params, genericIn.List)),
+            set: (type) => this.set(type.set, setGenericIn(params, genericIn.Set)),
             nullable: (type) => this.nullable(type, params),
             optional: (type) => this.optional(type, params),
             literal: (type) => this.literal(type, params),

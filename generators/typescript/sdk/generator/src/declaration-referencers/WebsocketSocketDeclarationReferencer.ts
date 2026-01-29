@@ -1,4 +1,4 @@
-import { SubpackageId } from "@fern-fern/ir-sdk/api";
+import { SubpackageId } from "@fern-api/ir-sdk";
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";

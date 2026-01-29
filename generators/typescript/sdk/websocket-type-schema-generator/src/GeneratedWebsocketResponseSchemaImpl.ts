@@ -1,4 +1,4 @@
-import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
+import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-api/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getSchemaOptions, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedWebsocketTypeSchema, SdkContext } from "@fern-typescript/contexts";

@@ -1,4 +1,4 @@
-import { SubpackageId, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import { SubpackageId, WebSocketChannel, WebSocketChannelId } from "@fern-api/ir-sdk";
 import { ExportsManager, ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, WebsocketClassContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";

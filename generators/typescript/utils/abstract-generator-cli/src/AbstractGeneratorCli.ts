@@ -9,10 +9,9 @@ import {
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernIr, IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { FernIr, serialization } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     constructNpmPackage,
     constructNpmPackageArgs,

@@ -1,4 +1,4 @@
-import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { Name, SdkRequest } from "@fern-api/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 

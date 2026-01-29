@@ -1,5 +1,4 @@
-import { FernIr } from "@fern-fern/ir-sdk";
-import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, FernIr, QueryParameter, TypeReference } from "@fern-api/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import {

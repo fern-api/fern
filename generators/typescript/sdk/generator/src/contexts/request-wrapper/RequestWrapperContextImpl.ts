@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { Name, SdkRequest } from "@fern-api/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";

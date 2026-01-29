@@ -6,7 +6,7 @@ import {
     SubpackageId,
     WebSocketChannel,
     WebSocketChannelId
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 
 export class PackageResolver {

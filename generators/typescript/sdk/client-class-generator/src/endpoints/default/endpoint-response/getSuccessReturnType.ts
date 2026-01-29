@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-api/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 

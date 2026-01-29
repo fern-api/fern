@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-api/ir-sdk";
 import { getParameterNameForPositionalPathParameter } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

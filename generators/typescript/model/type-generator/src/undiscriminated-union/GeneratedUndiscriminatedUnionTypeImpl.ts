@@ -1,10 +1,10 @@
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleTypeShape,
+    FernIr,
     TypeReference,
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     GetReferenceOpts,
     getWriterForMultiLineUnionType,

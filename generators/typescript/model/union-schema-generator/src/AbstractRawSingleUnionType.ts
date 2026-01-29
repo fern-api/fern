@@ -1,4 +1,4 @@
-import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
+import { NameAndWireValue } from "@fern-api/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 

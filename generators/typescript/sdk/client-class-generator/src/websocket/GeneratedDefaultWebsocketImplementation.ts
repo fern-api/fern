@@ -6,7 +6,7 @@ import type {
     QueryParameter,
     WebSocketChannel,
     WebSocketChannelId
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import {
     getParameterNameForPropertyPathParameterName,
     getPropertyKey,

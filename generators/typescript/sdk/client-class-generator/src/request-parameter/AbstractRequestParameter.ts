@@ -5,7 +5,7 @@ import {
     HttpService,
     QueryParameter,
     SdkRequest
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";

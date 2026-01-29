@@ -1,4 +1,4 @@
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName } from "@fern-api/ir-sdk";
 import { CoreUtilities, ExportsManager, ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressErrorSchemaContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-schema-generator";

@@ -1,4 +1,4 @@
-import { EnvironmentBaseUrlId } from "@fern-fern/ir-sdk/api";
+import { EnvironmentBaseUrlId } from "@fern-api/ir-sdk";
 import { ts } from "ts-morph";
 
 import { GeneratedFile } from "../../commons/GeneratedFile";
