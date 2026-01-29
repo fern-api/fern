@@ -1,3 +1,5 @@
+using SeedRequestParameters.Core;
+
 namespace SeedRequestParameters;
 
 public partial interface IUserClient
@@ -15,7 +17,7 @@ public partial interface IUserClient
     );
 
     Task CreateUsernameOptionalAsync(
-        CreateUsernameBodyOptionalProperties? request,
+        Optional<CreateUsernameBodyOptionalProperties?> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

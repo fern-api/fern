@@ -488,6 +488,12 @@ export class Generation {
                 namespace: this.namespaces.core,
                 origin: this.model.staticExplicit("FormRequest")
             }),
+        /** Optional<T> wrapper type for explicit undefined/null semantics */
+        Optional: () =>
+            this.csharp.classReference({
+                namespace: this.namespaces.core,
+                origin: this.model.staticExplicit("Optional")
+            }),
         /** Configuration options for the SDK client (base URL, headers, timeout, etc.) */
         ClientOptions: () =>
             this.csharp.classReference({

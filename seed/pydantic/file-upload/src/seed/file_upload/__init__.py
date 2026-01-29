@@ -4,22 +4,26 @@
 
 from .resources import (
     Id,
+    ModelType,
     MyAliasObject,
     MyCollectionAliasObject,
     MyInlineType,
     MyObject,
     MyObjectWithOptional,
     ObjectType,
+    OpenEnumType,
     service,
 )
 
 __all__ = [
     "Id",
+    "ModelType",
     "MyAliasObject",
     "MyCollectionAliasObject",
     "MyInlineType",
     "MyObject",
     "MyObjectWithOptional",
     "ObjectType",
+    "OpenEnumType",
     "service",
 ]

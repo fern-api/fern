@@ -4611,8 +4611,8 @@ importers:
         specifier: workspace:*
         version: link:../workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.738
-        version: 0.0.738
+        specifier: 0.0.775
+        version: 0.0.775
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -4941,8 +4941,8 @@ importers:
         specifier: workspace:*
         version: link:../yaml/loader
       '@fern-fern/fiddle-sdk':
-        specifier: ^0.0.605
-        version: 0.0.605
+        specifier: 0.0.775
+        version: 0.0.775
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -5007,8 +5007,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/path-utils
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.738
-        version: 0.0.738
+        specifier: 0.0.775
+        version: 0.0.775
       node-fetch:
         specifier: '2'
         version: 2.7.0
@@ -5068,8 +5068,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.738
-        version: 0.0.738
+        specifier: 0.0.775
+        version: 0.0.775
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -6316,8 +6316,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.738
-        version: 0.0.738
+        specifier: 0.0.775
+        version: 0.0.775
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1167
         version: 0.0.1167
@@ -6470,8 +6470,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.738
-        version: 0.0.738
+        specifier: 0.0.775
+        version: 0.0.775
       axios:
         specifier: ^1.12.0
         version: 1.12.2
@@ -7179,8 +7179,8 @@ importers:
         specifier: workspace:*
         version: link:../../api-importers/v3-importer-commons
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.738
-        version: 0.0.738
+        specifier: 0.0.775
+        version: 0.0.775
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -7963,8 +7963,8 @@ importers:
         specifier: ^0.0.5297
         version: 0.0.5297
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.738
-        version: 0.0.738
+        specifier: 0.0.775
+        version: 0.0.775
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -8191,8 +8191,8 @@ importers:
         specifier: workspace:*
         version: link:../cli/workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.738
-        version: 0.0.738
+        specifier: 0.0.775
+        version: 0.0.775
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -9617,11 +9617,8 @@ packages:
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
 
-  '@fern-fern/fiddle-sdk@0.0.605':
-    resolution: {integrity: sha512-xQhQTl+vqKoGnRlBG92sdXT6e2tDWED/V7As3rL1uA7/3DuSEpQaaSAGuAkBh+IP1GGn6oEgxmVGL+ncwI4FIw==}
-
-  '@fern-fern/fiddle-sdk@0.0.738':
-    resolution: {integrity: sha512-GKIhgsyuVjVW4j8FK2wv9xJAGRHh3hHD98MFiLt+E65iM2TjAgVlhnzTsvWTf2cqWNC/sJ83RVo4GY6mhaPCRg==}
+  '@fern-fern/fiddle-sdk@0.0.775':
+    resolution: {integrity: sha512-6X9GausW5nlOnV62tiAFye3H2fTM0nEQlfsZBZVaMADI1o0aqT2TrYuR9zLMH5ZYv21AHYXeCheoWAVIjuXRxA==}
 
   '@fern-fern/generator-cli-sdk@0.1.8':
     resolution: {integrity: sha512-sQPt1AALvDStOXYhkEB0tBLLkEcxn940WhWmSot8dMfyQFg1G4n+Ovz8cH9N+MsebarCZP0IE3NP+oxQOFAuiA==}
@@ -15351,6 +15348,7 @@ packages:
   tar@7.5.4:
     resolution: {integrity: sha512-AN04xbWGrSTDmVwlI4/GTlIIwMFk/XEv7uL8aa57zuvRy6s4hdBed+lVq2fAZ89XDa7Us3ANXcE3Tvqvja1kTA==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   terminal-link@3.0.0:
     resolution: {integrity: sha512-flFL3m4wuixmf6IfhFJd1YPiLiMuxEc8uHRM1buzIeZPm22Au2pDqBJQgdo7n1WfPU1ONFGv7YDwpFBmHGF6lg==}
@@ -17614,17 +17612,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fiddle-sdk@0.0.605':
-    dependencies:
-      form-data: 4.0.5
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.14.1
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/fiddle-sdk@0.0.738':
+  '@fern-fern/fiddle-sdk@0.0.775':
     dependencies:
       form-data: 4.0.5
       js-base64: 3.7.2

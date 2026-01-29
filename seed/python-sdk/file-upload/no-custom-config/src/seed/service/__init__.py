@@ -8,21 +8,25 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         Id,
+        ModelType,
         MyAliasObject,
         MyCollectionAliasObject,
         MyInlineType,
         MyObject,
         MyObjectWithOptional,
         ObjectType,
+        OpenEnumType,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "Id": ".types",
+    "ModelType": ".types",
     "MyAliasObject": ".types",
     "MyCollectionAliasObject": ".types",
     "MyInlineType": ".types",
     "MyObject": ".types",
     "MyObjectWithOptional": ".types",
     "ObjectType": ".types",
+    "OpenEnumType": ".types",
 }
 
 
@@ -49,10 +53,12 @@ def __dir__():
 
 __all__ = [
     "Id",
+    "ModelType",
     "MyAliasObject",
     "MyCollectionAliasObject",
     "MyInlineType",
     "MyObject",
     "MyObjectWithOptional",
     "ObjectType",
+    "OpenEnumType",
 ]

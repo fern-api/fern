@@ -202,6 +202,23 @@ service:
     simple:
       path: "/snippet"
       method: POST
+
+    withLiteralAndEnumTypes:
+      path: /with-literal-enum
+      method: POST
+      request:
+        body:
+          properties:
+            file: file
+            model_type: optional<ModelType>
+            open_enum: optional<OpenEnumType>
+            maybe_name: optional<string>
+        content-type: multipart/form-data
+        name: LiteralEnumRequest
+      response:
+        status-code: 200
+        type: string
+
 types:
   Id: string
 
@@ -227,3 +244,11 @@ types:
     inline: true
     properties:
       bar: string
+
+  ModelType: literal<"model_v1">
+
+  OpenEnumType:
+    enum:
+      - OPTION_A
+      - OPTION_B
+      - OPTION_C

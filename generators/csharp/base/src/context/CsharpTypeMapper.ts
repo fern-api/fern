@@ -16,8 +16,10 @@ import { GeneratorContext } from "./GeneratorContext";
 export declare namespace CsharpTypeMapper {
     interface Args {
         reference: TypeReference;
-        /* Defaults to false */
+        /* Defaults to false. When true, unwraps optional<T> containers and returns T instead of T? */
         unboxOptionals?: boolean;
+        /* Defaults to false. When true, unwraps nullable<T> containers (removes ? marker). When false, preserves nullable markers. */
+        unboxNullable?: boolean;
         /* Defaults to false */
         fullyQualified?: boolean;
     }
@@ -27,12 +29,18 @@ export class CsharpTypeMapper extends WithGeneration {
     public constructor(private readonly context: GeneratorContext) {
         super(context.generation);
     }
-    public convert({ reference, unboxOptionals = false, fullyQualified = false }: CsharpTypeMapper.Args): ast.Type {
+    public convert({
+        reference,
+        unboxOptionals = false,
+        unboxNullable = false,
+        fullyQualified = false
+    }: CsharpTypeMapper.Args): ast.Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
                     container: reference.container,
-                    unboxOptionals
+                    unboxOptionals,
+                    unboxNullable
                 });
             case "named":
                 return this.convertNamed({ named: reference, fullyQualified });
@@ -73,17 +81,25 @@ export class CsharpTypeMapper extends WithGeneration {
 
     private convertContainer({
         container,
-        unboxOptionals
+        unboxOptionals,
+        unboxNullable
     }: {
         container: ContainerType;
         unboxOptionals: boolean;
+        unboxNullable: boolean;
     }): ast.Type {
         switch (container.type) {
             case "list":
-                return this.Collection.list(this.convert({ reference: container.list, unboxOptionals: true }));
+                return this.Collection.list(
+                    this.convert({ reference: container.list, unboxOptionals: true, unboxNullable: false })
+                );
             case "map": {
                 const key = this.convert({ reference: container.keyType });
-                const value = this.convert({ reference: container.valueType, unboxOptionals: true });
+                const value = this.convert({
+                    reference: container.valueType,
+                    unboxOptionals: true,
+                    unboxNullable: false
+                });
                 if (is.Primitive.object(value)) {
                     // object map values should be nullable.
                     return this.Collection.map(key, value.asOptional());
@@ -91,10 +107,12 @@ export class CsharpTypeMapper extends WithGeneration {
                 return this.Collection.map(key, value);
             }
             case "set":
-                return this.Collection.set(this.convert({ reference: container.set, unboxOptionals: true }));
+                return this.Collection.set(
+                    this.convert({ reference: container.set, unboxOptionals: true, unboxNullable: false })
+                );
             case "optional": {
                 if (unboxOptionals) {
-                    return this.convert({ reference: container.optional, unboxOptionals });
+                    return this.convert({ reference: container.optional, unboxOptionals, unboxNullable });
                 }
 
                 // Use experimental explicit nullable/optional handling if enabled
@@ -106,29 +124,31 @@ export class CsharpTypeMapper extends WithGeneration {
                     // If optional wraps nullable (optional<nullable<T>>), use Optional<T?> wrapper
                     // Otherwise, use T? to rely on JSON serialization's default omit-if-null behavior
                     if (isInnerNullable) {
-                        return this.asOptionalWrapper(this.convert({ reference: innerType }));
+                        return this.asOptionalWrapper(this.convert({ reference: innerType, unboxNullable }));
                     } else {
-                        return this.convert({ reference: innerType }).asOptional();
+                        return this.convert({ reference: innerType, unboxNullable }).asOptional();
                     }
                 } else {
                     // Legacy behavior: always use T? for optional
-                    return this.convert({ reference: container.optional }).asOptional();
+                    return this.convert({ reference: container.optional, unboxNullable }).asOptional();
                 }
             }
             case "nullable":
-                // Use experimental explicit nullable/optional handling if enabled
-                if (this.generation.settings.enableExplicitNullableOptional) {
-                    // Use ? syntax for nullable reference types
-                    // When unwrapping optionals (e.g., inside collections), preserve nullable
-                    return unboxOptionals
-                        ? this.convert({ reference: container.nullable, unboxOptionals: false }).asOptional()
-                        : this.convert({ reference: container.nullable }).asOptional();
-                } else {
-                    // Legacy behavior
-                    return unboxOptionals
-                        ? this.convert({ reference: container.nullable, unboxOptionals })
-                        : this.convert({ reference: container.nullable }).asOptional();
+                // When unboxNullable is false (the default), preserve the nullable marker
+                // This ensures nullable<T> inside collections becomes T? not T
+                if (!unboxNullable) {
+                    // Preserve nullable: convert inner type and add ? marker
+                    // Pass through unboxOptionals to handle cases like nullable<optional<T>>
+                    return this.convert({
+                        reference: container.nullable,
+                        unboxOptionals,
+                        unboxNullable: false
+                    }).asNullable();
                 }
+
+                // If unboxNullable is true, unwrap the nullable without adding ?
+                // (This case is not currently used but included for completeness)
+                return this.convert({ reference: container.nullable, unboxOptionals, unboxNullable: false });
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -138,8 +158,13 @@ export class CsharpTypeMapper extends WithGeneration {
 
     /**
      * Wraps a type in Optional<T> for explicit optional/undefined semantics.
+     * If the type is already an OptionalWrapper, returns it unchanged to avoid double-wrapping.
      */
     private asOptionalWrapper(type: ast.Type): ast.Type {
+        // Prevent double-wrapping Optional<Optional<T>>
+        if (is.OptionalWrapper(type)) {
+            return type;
+        }
         return new ast.OptionalWrapper(type, this.generation);
     }
 

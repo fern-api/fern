@@ -9,3 +9,4 @@
 "/optional-args"
 "/inline-type"
 "/snippet"
+"/with-literal-enum"

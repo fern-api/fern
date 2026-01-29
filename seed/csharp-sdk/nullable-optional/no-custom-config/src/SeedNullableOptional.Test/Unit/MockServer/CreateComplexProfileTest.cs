@@ -355,12 +355,12 @@ public class CreateComplexProfileTest : BaseMockServerTest
                     "optionalNullableArray",
                     "optionalNullableArray",
                 },
-                NullableListOfNullables = new List<string>()
+                NullableListOfNullables = new List<string?>()
                 {
                     "nullableListOfNullables",
                     "nullableListOfNullables",
                 },
-                NullableMapOfNullables = new Dictionary<string, Address>()
+                NullableMapOfNullables = new Dictionary<string, Address?>()
                 {
                     {
                         "nullableMapOfNullables",

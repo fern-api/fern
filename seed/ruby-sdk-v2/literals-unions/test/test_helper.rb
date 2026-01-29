@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require_relative "../lib/fern_literals_unions"
+require_relative "../lib/seed"

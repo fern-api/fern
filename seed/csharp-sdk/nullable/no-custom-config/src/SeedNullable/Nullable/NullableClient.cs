@@ -245,7 +245,7 @@ public partial class NullableClient : INullableClient
     ///             Avatar = "avatar",
     ///             Activated = true,
     ///             Status = new Status(new Status.Active()),
-    ///             Values = new Dictionary&lt;string, string&gt;() { { "values", "values" } },
+    ///             Values = new Dictionary&lt;string, string?&gt;() { { "values", "values" } },
     ///         },
     ///         Avatar = "avatar",
     ///     }
