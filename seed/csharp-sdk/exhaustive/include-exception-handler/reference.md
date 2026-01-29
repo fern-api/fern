@@ -1064,6 +1064,68 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnWithDatetimeLikeStringAsync</a>(ObjectWithDatetimeLikeString { ... }) -> WithRawResponseTask&lt;ObjectWithDatetimeLikeString&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
+    new ObjectWithDatetimeLikeString
+    {
+        DatetimeLikeString = "2023-08-31T14:15:22Z",
+        ActualDatetime = new DateTime(2023, 08, 31, 14, 15, 22, 000),
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
 <details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithPathAsync</a>(param) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>

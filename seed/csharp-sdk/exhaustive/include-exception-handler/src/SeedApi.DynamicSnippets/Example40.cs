@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -12,7 +13,11 @@ public class Example40
             }
         );
 
-        await client.Endpoints.Urls.WithMixedCaseAsync();
+        await client.Endpoints.Put.AddAsync(
+            new PutRequest {
+                Id = "id"
+            }
+        );
     }
 
 }

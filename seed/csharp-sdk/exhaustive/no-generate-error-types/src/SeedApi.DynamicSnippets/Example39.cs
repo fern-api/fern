@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -13,13 +12,8 @@ public class Example39
             }
         );
 
-        await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog {
-                    Name = "name",
-                    LikesToWoof = true
-                }
-            )
+        await client.Endpoints.Primitive.GetAndReturnBase64Async(
+            "SGVsbG8gd29ybGQh"
         );
     }
 

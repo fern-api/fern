@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -12,7 +13,14 @@ public class Example41
             }
         );
 
-        await client.Endpoints.Urls.NoEndingSlashAsync();
+        await client.Endpoints.Union.GetAndReturnUnionAsync(
+            new Animal(
+                new Dog {
+                    Name = "name",
+                    LikesToWoof = true
+                }
+            )
+        );
     }
 
 }
