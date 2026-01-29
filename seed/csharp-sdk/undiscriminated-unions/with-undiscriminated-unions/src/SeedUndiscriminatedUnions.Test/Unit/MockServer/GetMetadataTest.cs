@@ -1,5 +1,5 @@
+using System.Text.Json;
 using NUnit.Framework;
-using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
@@ -26,10 +26,9 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.Union.GetMetadataAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Dictionary<Key, string>>(mockResponse)).UsingDefaults()
-        );
+        var actualJson = JsonUtils.SerializeToElement(response);
+        var expectedJson = JsonUtils.Deserialize<JsonElement>(mockResponse);
+        Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer());
     }
 
     [NUnit.Framework.Test]
@@ -53,9 +52,8 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.Union.GetMetadataAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Dictionary<Key, string>>(mockResponse)).UsingDefaults()
-        );
+        var actualJson = JsonUtils.SerializeToElement(response);
+        var expectedJson = JsonUtils.Deserialize<JsonElement>(mockResponse);
+        Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer());
     }
 }

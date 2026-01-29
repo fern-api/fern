@@ -1,3 +1,4 @@
+using System.Text.Json;
 using NUnit.Framework;
 using SeedUndiscriminatedUnions.Core;
 
@@ -33,6 +34,8 @@ public class NestedUnionsTest : BaseMockServerTest
             );
 
         var response = await Client.Union.NestedUnionsAsync("string");
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        var actualJson = JsonUtils.SerializeToElement(response);
+        var expectedJson = JsonUtils.Deserialize<JsonElement>(mockResponse);
+        Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer());
     }
 }

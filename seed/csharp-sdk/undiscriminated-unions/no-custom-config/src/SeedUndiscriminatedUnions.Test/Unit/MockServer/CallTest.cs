@@ -1,3 +1,4 @@
+using System.Text.Json;
 using NUnit.Framework;
 using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
@@ -51,7 +52,9 @@ public class CallTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
+        var actualJson = JsonUtils.SerializeToElement(response);
+        var expectedJson = JsonUtils.Deserialize<JsonElement>(mockResponse);
+        Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer());
     }
 
     [NUnit.Framework.Test]
@@ -98,6 +101,8 @@ public class CallTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
+        var actualJson = JsonUtils.SerializeToElement(response);
+        var expectedJson = JsonUtils.Deserialize<JsonElement>(mockResponse);
+        Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer());
     }
 }

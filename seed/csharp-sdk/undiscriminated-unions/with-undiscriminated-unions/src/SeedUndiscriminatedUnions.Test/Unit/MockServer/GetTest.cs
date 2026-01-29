@@ -1,5 +1,5 @@
+using System.Text.Json;
 using NUnit.Framework;
-using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
@@ -34,9 +34,8 @@ public class GetTest : BaseMockServerTest
             );
 
         var response = await Client.Union.GetAsync("string");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<MyUnion>(mockResponse)).UsingDefaults()
-        );
+        var actualJson = JsonUtils.SerializeToElement(response);
+        var expectedJson = JsonUtils.Deserialize<JsonElement>(mockResponse);
+        Assert.That(actualJson, Is.EqualTo(expectedJson).UsingJsonElementComparer());
     }
 }
