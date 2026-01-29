@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets not being generated when using the v3 OpenAPI parser. The workspace is now loaded for dynamic snippet generation even when the v3 parser successfully generates the IR, ensuring that generators.yml configuration is available for snippet generation.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.52.1
   changelogEntry:
     - summary: |
