@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct User {
     pub id: String,
     pub name: String,

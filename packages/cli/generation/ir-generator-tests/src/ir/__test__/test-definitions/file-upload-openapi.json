@@ -481,55 +481,53 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:FileId",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_:FileId",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": {
+                                                    "originalName": "FileId",
+                                                    "camelCase": {
+                                                        "unsafeName": "fileID",
+                                                        "safeName": "fileID"
                                                     },
-                                                    "name": {
-                                                        "originalName": "FileId",
-                                                        "camelCase": {
-                                                            "unsafeName": "fileID",
-                                                            "safeName": "fileID"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "file_id",
-                                                            "safeName": "file_id"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "FILE_ID",
-                                                            "safeName": "FILE_ID"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "FileID",
-                                                            "safeName": "FileID"
+                                                    "snakeCase": {
+                                                        "unsafeName": "file_id",
+                                                        "safeName": "file_id"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "FILE_ID",
+                                                        "safeName": "FILE_ID"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "FileID",
+                                                        "safeName": "FileID"
+                                                    }
+                                                },
+                                                "displayName": null
+                                            },
+                                            "shape": {
+                                                "type": "alias",
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "string"
+                                                            }
                                                         }
                                                     },
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "alias",
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "string",
-                                                                "string": {
-                                                                    "original": "string"
-                                                                }
-                                                            }
-                                                        },
-                                                        "jsonExample": "string"
-                                                    }
+                                                    "jsonExample": "string"
                                                 }
-                                            },
-                                            "jsonExample": "string"
-                                        }
+                                            }
+                                        },
+                                        "jsonExample": "string"
                                     }
                                 },
                                 "docs": null

@@ -307,7 +307,12 @@ export abstract class AbstractSwiftGeneratorContext<
                             : swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
                     optional: (ref) =>
                         swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
-                    list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
+                    list: (ref) => {
+                        // Handle both old format (TypeReference directly) and new format (ListType with .list property)
+                        const listTypeRef =
+                            "list" in ref ? (ref as { list: TypeReference }).list : (ref as TypeReference);
+                        return swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(listTypeRef, fromSymbol));
+                    },
                     _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             case "primitive":

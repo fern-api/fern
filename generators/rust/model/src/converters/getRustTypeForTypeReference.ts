@@ -39,15 +39,18 @@ export function generateRustTypeForTypeReference(
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
                     // Propagate wrapInBox to the element type
-                    const elementType = isFloatingPointType(setType)
+                    // Handle both old format (TypeReference directly) and new format (SetType with .set property)
+                    const setTypeRef =
+                        "set" in setType ? (setType as { set: TypeReference }).set : (setType as TypeReference);
+                    const elementType = isFloatingPointType(setTypeRef)
                         ? rust.Type.reference(
                               rust.reference({
                                   name: "OrderedFloat",
                                   module: "ordered_float",
-                                  genericArgs: [generateRustTypeForTypeReference(setType, context, wrapInBox)]
+                                  genericArgs: [generateRustTypeForTypeReference(setTypeRef, context, wrapInBox)]
                               })
                           )
-                        : generateRustTypeForTypeReference(setType, context, wrapInBox);
+                        : generateRustTypeForTypeReference(setTypeRef, context, wrapInBox);
 
                     return rust.Type.reference(
                         rust.reference({
@@ -60,10 +63,14 @@ export function generateRustTypeForTypeReference(
                     rust.Type.option(generateRustTypeForTypeReference(nullableType, context, wrapInBox)),
                 optional: (optionalType) =>
                     rust.Type.option(generateRustTypeForTypeReference(optionalType, context, wrapInBox)),
-                list: (listType) =>
+                list: (listType) => {
                     // Vec is heap-allocated, but we need to Box the inner type if it's recursive
                     // This generates Vec<Box<T>> for recursive types, not Box<Vec<T>>
-                    rust.Type.vec(generateRustTypeForTypeReference(listType, context, wrapInBox)),
+                    // Handle both old format (TypeReference directly) and new format (ListType with .list property)
+                    const listTypeRef =
+                        "list" in listType ? (listType as { list: TypeReference }).list : (listType as TypeReference);
+                    return rust.Type.vec(generateRustTypeForTypeReference(listTypeRef, context, wrapInBox));
+                },
                 _other: () => {
                     // Fallback for unknown container types
                     return rust.Type.reference(

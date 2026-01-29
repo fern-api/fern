@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UserProfile {
     pub user_id: UserID,
     pub email: UserEmail,

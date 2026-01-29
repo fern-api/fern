@@ -368,7 +368,9 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 },
                                 "docs": "getFooResponse",
@@ -519,53 +521,51 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "map",
-                                                    "map": [
-                                                        {
-                                                            "key": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "key"
-                                                                        }
+                                        "shape": {
+                                            "type": "container",
+                                            "container": {
+                                                "type": "map",
+                                                "map": [
+                                                    {
+                                                        "key": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "key"
                                                                     }
-                                                                },
-                                                                "jsonExample": "key"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "unknown",
-                                                                    "unknown": "value"
-                                                                },
-                                                                "jsonExample": "value"
-                                                            }
+                                                            "jsonExample": "key"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "unknown",
+                                                                "unknown": "value"
+                                                            },
+                                                            "jsonExample": "value"
                                                         }
-                                                    ],
-                                                    "keyType": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
-                                                    },
-                                                    "valueType": {
-                                                        "_type": "unknown"
                                                     }
+                                                ],
+                                                "keyType": {
+                                                    "_type": "primitive",
+                                                    "primitive": {
+                                                        "v1": "STRING",
+                                                        "v2": {
+                                                            "type": "string",
+                                                            "default": null,
+                                                            "validation": null
+                                                        }
+                                                    }
+                                                },
+                                                "valueType": {
+                                                    "_type": "unknown"
                                                 }
-                                            },
-                                            "jsonExample": {
-                                                "key": "value"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
                                         }
                                     }
                                 },
@@ -577,7 +577,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "ae765f47",
+                                "id": "9dd62188",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -591,58 +591,56 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "map",
-                                                    "map": [
-                                                        {
-                                                            "key": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "string"
-                                                                        }
+                                        "shape": {
+                                            "type": "container",
+                                            "container": {
+                                                "type": "map",
+                                                "map": [
+                                                    {
+                                                        "key": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "string"
                                                                     }
-                                                                },
-                                                                "jsonExample": "string"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "unknown",
-                                                                    "unknown": {
-                                                                        "key": "value"
-                                                                    }
-                                                                },
-                                                                "jsonExample": {
+                                                            "jsonExample": "string"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "unknown",
+                                                                "unknown": {
                                                                     "key": "value"
                                                                 }
+                                                            },
+                                                            "jsonExample": {
+                                                                "key": "value"
                                                             }
                                                         }
-                                                    ],
-                                                    "keyType": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
-                                                    },
-                                                    "valueType": {
-                                                        "_type": "unknown"
                                                     }
+                                                ],
+                                                "keyType": {
+                                                    "_type": "primitive",
+                                                    "primitive": {
+                                                        "v1": "STRING",
+                                                        "v2": {
+                                                            "type": "string",
+                                                            "default": null,
+                                                            "validation": null
+                                                        }
+                                                    }
+                                                },
+                                                "valueType": {
+                                                    "_type": "unknown"
                                                 }
-                                            },
-                                            "jsonExample": {
-                                                "string": {
-                                                    "key": "value"
-                                                }
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "string": {
+                                                "key": "value"
                                             }
                                         }
                                     }
@@ -946,7 +944,9 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "docs": null,
@@ -976,7 +976,9 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 },
                                 "docs": null,
@@ -1027,7 +1029,9 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 },
                                 "docs": "Foo created.",
@@ -1226,53 +1230,51 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "map",
-                                                    "map": [
-                                                        {
-                                                            "key": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "key"
-                                                                        }
+                                        "shape": {
+                                            "type": "container",
+                                            "container": {
+                                                "type": "map",
+                                                "map": [
+                                                    {
+                                                        "key": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "key"
                                                                     }
-                                                                },
-                                                                "jsonExample": "key"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "unknown",
-                                                                    "unknown": "value"
-                                                                },
-                                                                "jsonExample": "value"
-                                                            }
+                                                            "jsonExample": "key"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "unknown",
+                                                                "unknown": "value"
+                                                            },
+                                                            "jsonExample": "value"
                                                         }
-                                                    ],
-                                                    "keyType": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
-                                                    },
-                                                    "valueType": {
-                                                        "_type": "unknown"
                                                     }
+                                                ],
+                                                "keyType": {
+                                                    "_type": "primitive",
+                                                    "primitive": {
+                                                        "v1": "STRING",
+                                                        "v2": {
+                                                            "type": "string",
+                                                            "default": null,
+                                                            "validation": null
+                                                        }
+                                                    }
+                                                },
+                                                "valueType": {
+                                                    "_type": "unknown"
                                                 }
-                                            },
-                                            "jsonExample": {
-                                                "key": "value"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "key": "value"
                                         }
                                     }
                                 },
@@ -1284,7 +1286,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "e1f6ebd",
+                                "id": "92d7071a",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1352,58 +1354,56 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "map",
-                                                    "map": [
-                                                        {
-                                                            "key": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "string"
-                                                                        }
+                                        "shape": {
+                                            "type": "container",
+                                            "container": {
+                                                "type": "map",
+                                                "map": [
+                                                    {
+                                                        "key": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "string"
                                                                     }
-                                                                },
-                                                                "jsonExample": "string"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "unknown",
-                                                                    "unknown": {
-                                                                        "key": "value"
-                                                                    }
-                                                                },
-                                                                "jsonExample": {
+                                                            "jsonExample": "string"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "unknown",
+                                                                "unknown": {
                                                                     "key": "value"
                                                                 }
+                                                            },
+                                                            "jsonExample": {
+                                                                "key": "value"
                                                             }
                                                         }
-                                                    ],
-                                                    "keyType": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
-                                                    },
-                                                    "valueType": {
-                                                        "_type": "unknown"
                                                     }
+                                                ],
+                                                "keyType": {
+                                                    "_type": "primitive",
+                                                    "primitive": {
+                                                        "v1": "STRING",
+                                                        "v2": {
+                                                            "type": "string",
+                                                            "default": null,
+                                                            "validation": null
+                                                        }
+                                                    }
+                                                },
+                                                "valueType": {
+                                                    "_type": "unknown"
                                                 }
-                                            },
-                                            "jsonExample": {
-                                                "string": {
-                                                    "key": "value"
-                                                }
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "string": {
+                                                "key": "value"
                                             }
                                         }
                                     }

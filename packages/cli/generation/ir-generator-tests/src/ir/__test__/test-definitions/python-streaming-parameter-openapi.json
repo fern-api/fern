@@ -1621,218 +1621,216 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:ChatResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": {
-                                                        "originalName": "ChatResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "chatResponse",
-                                                            "safeName": "chatResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "chat_response",
-                                                            "safeName": "chat_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "CHAT_RESPONSE",
-                                                            "safeName": "CHAT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ChatResponse",
-                                                            "safeName": "ChatResponse"
-                                                        }
-                                                    },
-                                                    "displayName": null
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_:ChatResponse",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
                                                 },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "Hello! How can I help you?"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "Hello! How can I help you?"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "Hello! How can I help you?"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:ChatResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "ChatResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "chatResponse",
-                                                                        "safeName": "chatResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "chat_response",
-                                                                        "safeName": "chat_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CHAT_RESPONSE",
-                                                                        "safeName": "CHAT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ChatResponse",
-                                                                        "safeName": "ChatResponse"
-                                                                    }
-                                                                },
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "finish_reason",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "finishReason",
-                                                                        "safeName": "finishReason"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "finish_reason",
-                                                                        "safeName": "finish_reason"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "FINISH_REASON",
-                                                                        "safeName": "FINISH_REASON"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "FinishReason",
-                                                                        "safeName": "FinishReason"
-                                                                    }
-                                                                },
-                                                                "wireValue": "finish_reason"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "complete"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "complete"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "complete"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:ChatResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "ChatResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "chatResponse",
-                                                                        "safeName": "chatResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "chat_response",
-                                                                        "safeName": "chat_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CHAT_RESPONSE",
-                                                                        "safeName": "CHAT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ChatResponse",
-                                                                        "safeName": "ChatResponse"
-                                                                    }
-                                                                },
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
+                                                "name": {
+                                                    "originalName": "ChatResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "chatResponse",
+                                                        "safeName": "chatResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "chat_response",
+                                                        "safeName": "chat_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "CHAT_RESPONSE",
+                                                        "safeName": "CHAT_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ChatResponse",
+                                                        "safeName": "ChatResponse"
+                                                    }
+                                                },
+                                                "displayName": null
                                             },
-                                            "jsonExample": {
-                                                "message": "Hello! How can I help you?",
-                                                "finish_reason": "complete"
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
+                                                            },
+                                                            "wireValue": "message"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
+                                                                            "primitive": {
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "Hello! How can I help you?"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "Hello! How can I help you?"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "Hello! How can I help you?"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:ChatResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "name": {
+                                                                "originalName": "ChatResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "chatResponse",
+                                                                    "safeName": "chatResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "chat_response",
+                                                                    "safeName": "chat_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "CHAT_RESPONSE",
+                                                                    "safeName": "CHAT_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ChatResponse",
+                                                                    "safeName": "ChatResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    },
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "finish_reason",
+                                                                "camelCase": {
+                                                                    "unsafeName": "finishReason",
+                                                                    "safeName": "finishReason"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "finish_reason",
+                                                                    "safeName": "finish_reason"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "FINISH_REASON",
+                                                                    "safeName": "FINISH_REASON"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "FinishReason",
+                                                                    "safeName": "FinishReason"
+                                                                }
+                                                            },
+                                                            "wireValue": "finish_reason"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
+                                                                            "primitive": {
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "complete"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "complete"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "complete"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:ChatResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "name": {
+                                                                "originalName": "ChatResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "chatResponse",
+                                                                    "safeName": "chatResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "chat_response",
+                                                                    "safeName": "chat_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "CHAT_RESPONSE",
+                                                                    "safeName": "CHAT_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ChatResponse",
+                                                                    "safeName": "ChatResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "message": "Hello! How can I help you?",
+                                            "finish_reason": "complete"
                                         }
                                     }
                                 },
@@ -1844,7 +1842,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8b296d4c",
+                                "id": "352371f5",
                                 "url": "/chat",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1942,218 +1940,216 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
+                                        "shape": {
+                                            "type": "named",
                                             "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
                                                                 },
-                                                                "wireValue": "message"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ChatResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "chatResponse",
-                                                                        "safeName": "chatResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "chat_response",
-                                                                        "safeName": "chat_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CHAT_RESPONSE",
-                                                                        "safeName": "CHAT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ChatResponse",
-                                                                        "safeName": "ChatResponse"
-                                                                    }
+                                                            "wireValue": "message"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "ChatResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "chatResponse",
+                                                                    "safeName": "chatResponse"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "chat_response",
+                                                                    "safeName": "chat_response"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:ChatResponse"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "CHAT_RESPONSE",
+                                                                    "safeName": "CHAT_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ChatResponse",
+                                                                    "safeName": "ChatResponse"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "message"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "message"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:ChatResponse"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "message"
                                                                                 }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "message"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": "message"
+                                                                }
                                                             },
-                                                            "propertyAccess": null
+                                                            "jsonExample": "message"
                                                         },
-                                                        {
+                                                        "propertyAccess": null
+                                                    },
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "finish_reason",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "finishReason",
-                                                                        "safeName": "finishReason"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "finish_reason",
-                                                                        "safeName": "finish_reason"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "FINISH_REASON",
-                                                                        "safeName": "FINISH_REASON"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "FinishReason",
-                                                                        "safeName": "FinishReason"
-                                                                    }
+                                                                "originalName": "finish_reason",
+                                                                "camelCase": {
+                                                                    "unsafeName": "finishReason",
+                                                                    "safeName": "finishReason"
                                                                 },
-                                                                "wireValue": "finish_reason"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "finish_reason",
+                                                                    "safeName": "finish_reason"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "FINISH_REASON",
+                                                                    "safeName": "FINISH_REASON"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "FinishReason",
+                                                                    "safeName": "FinishReason"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ChatResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "chatResponse",
-                                                                        "safeName": "chatResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "chat_response",
-                                                                        "safeName": "chat_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CHAT_RESPONSE",
-                                                                        "safeName": "CHAT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ChatResponse",
-                                                                        "safeName": "ChatResponse"
-                                                                    }
+                                                            "wireValue": "finish_reason"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "ChatResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "chatResponse",
+                                                                    "safeName": "chatResponse"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "chat_response",
+                                                                    "safeName": "chat_response"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:ChatResponse"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "CHAT_RESPONSE",
+                                                                    "safeName": "CHAT_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ChatResponse",
+                                                                    "safeName": "ChatResponse"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "finish_reason"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "finish_reason"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:ChatResponse"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "finish_reason"
                                                                                 }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "finish_reason"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": "finish_reason"
+                                                                }
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": {
-                                                        "originalName": "ChatResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "chatResponse",
-                                                            "safeName": "chatResponse"
+                                                            "jsonExample": "finish_reason"
                                                         },
-                                                        "snakeCase": {
-                                                            "unsafeName": "chat_response",
-                                                            "safeName": "chat_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "CHAT_RESPONSE",
-                                                            "safeName": "CHAT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ChatResponse",
-                                                            "safeName": "ChatResponse"
-                                                        }
-                                                    },
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:ChatResponse"
-                                                }
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             },
-                                            "jsonExample": {
-                                                "message": "message",
-                                                "finish_reason": "finish_reason"
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "ChatResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "chatResponse",
+                                                        "safeName": "chatResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "chat_response",
+                                                        "safeName": "chat_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "CHAT_RESPONSE",
+                                                        "safeName": "CHAT_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ChatResponse",
+                                                        "safeName": "ChatResponse"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:ChatResponse"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "message": "message",
+                                            "finish_reason": "finish_reason"
                                         }
                                     }
                                 },

@@ -127,7 +127,7 @@
                 "docs": undefined,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "8d5cd302",
+                "id": "5ea877a3",
                 "name": undefined,
                 "queryParameters": [],
                 "request": {
@@ -476,504 +476,475 @@
                   "type": "ok",
                   "value": {
                     "_visit": [Function],
-                    "type": "body",
-                    "value": {
-                      "jsonExample": {
-                        "createdAt": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "id": "id",
-                        "inStock": true,
-                        "price": 1.1,
-                        "title": "title",
-                      },
+                    "jsonExample": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "id": "id",
+                      "inStock": true,
+                      "price": 1.1,
+                      "title": "title",
+                    },
+                    "shape": {
+                      "_visit": [Function],
                       "shape": {
                         "_visit": [Function],
-                        "shape": {
-                          "_visit": [Function],
-                          "extraProperties": undefined,
-                          "properties": [
-                            {
+                        "extraProperties": undefined,
+                        "properties": [
+                          {
+                            "name": {
                               "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "id",
-                                    "unsafeName": "id",
-                                  },
-                                  "originalName": "id",
-                                  "pascalCase": {
-                                    "safeName": "Id",
-                                    "unsafeName": "Id",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "ID",
-                                    "unsafeName": "ID",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "id",
-                                    "unsafeName": "id",
-                                  },
+                                "camelCase": {
+                                  "safeName": "id",
+                                  "unsafeName": "id",
                                 },
-                                "wireValue": "id",
+                                "originalName": "id",
+                                "pascalCase": {
+                                  "safeName": "Id",
+                                  "unsafeName": "Id",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "ID",
+                                  "unsafeName": "ID",
+                                },
+                                "snakeCase": {
+                                  "safeName": "id",
+                                  "unsafeName": "id",
+                                },
                               },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
+                              "wireValue": "id",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
                               },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": "id",
-                                "shape": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": "id",
+                              "shape": {
+                                "_visit": [Function],
+                                "primitive": {
                                   "_visit": [Function],
-                                  "primitive": {
-                                    "_visit": [Function],
-                                    "string": {
-                                      "original": "id",
-                                    },
-                                    "type": "string",
+                                  "string": {
+                                    "original": "id",
                                   },
-                                  "type": "primitive",
+                                  "type": "string",
                                 },
+                                "type": "primitive",
                               },
                             },
-                            {
+                          },
+                          {
+                            "name": {
                               "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "title",
-                                    "unsafeName": "title",
-                                  },
-                                  "originalName": "title",
-                                  "pascalCase": {
-                                    "safeName": "Title",
-                                    "unsafeName": "Title",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "TITLE",
-                                    "unsafeName": "TITLE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "title",
-                                    "unsafeName": "title",
-                                  },
+                                "camelCase": {
+                                  "safeName": "title",
+                                  "unsafeName": "title",
                                 },
-                                "wireValue": "title",
+                                "originalName": "title",
+                                "pascalCase": {
+                                  "safeName": "Title",
+                                  "unsafeName": "Title",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TITLE",
+                                  "unsafeName": "TITLE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "title",
+                                  "unsafeName": "title",
+                                },
                               },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
+                              "wireValue": "title",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
                               },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": "title",
-                                "shape": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": "title",
+                              "shape": {
+                                "_visit": [Function],
+                                "primitive": {
                                   "_visit": [Function],
-                                  "primitive": {
-                                    "_visit": [Function],
-                                    "string": {
-                                      "original": "title",
-                                    },
-                                    "type": "string",
+                                  "string": {
+                                    "original": "title",
                                   },
-                                  "type": "primitive",
+                                  "type": "string",
                                 },
+                                "type": "primitive",
                               },
                             },
-                            {
+                          },
+                          {
+                            "name": {
                               "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "price",
-                                    "unsafeName": "price",
-                                  },
-                                  "originalName": "price",
-                                  "pascalCase": {
-                                    "safeName": "Price",
-                                    "unsafeName": "Price",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRICE",
-                                    "unsafeName": "PRICE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "price",
-                                    "unsafeName": "price",
-                                  },
+                                "camelCase": {
+                                  "safeName": "price",
+                                  "unsafeName": "price",
                                 },
-                                "wireValue": "price",
+                                "originalName": "price",
+                                "pascalCase": {
+                                  "safeName": "Price",
+                                  "unsafeName": "Price",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRICE",
+                                  "unsafeName": "PRICE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "price",
+                                  "unsafeName": "price",
+                                },
                               },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
+                              "wireValue": "price",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
                               },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": 1.1,
-                                "shape": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": 1.1,
+                              "shape": {
+                                "_visit": [Function],
+                                "primitive": {
                                   "_visit": [Function],
-                                  "primitive": {
-                                    "_visit": [Function],
-                                    "float": 1.1,
-                                    "type": "float",
-                                  },
-                                  "type": "primitive",
+                                  "float": 1.1,
+                                  "type": "float",
                                 },
+                                "type": "primitive",
                               },
                             },
-                            {
+                          },
+                          {
+                            "name": {
                               "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "inStock",
-                                    "unsafeName": "inStock",
-                                  },
-                                  "originalName": "inStock",
-                                  "pascalCase": {
-                                    "safeName": "InStock",
-                                    "unsafeName": "InStock",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "IN_STOCK",
-                                    "unsafeName": "IN_STOCK",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "in_stock",
-                                    "unsafeName": "in_stock",
-                                  },
+                                "camelCase": {
+                                  "safeName": "inStock",
+                                  "unsafeName": "inStock",
                                 },
-                                "wireValue": "inStock",
+                                "originalName": "inStock",
+                                "pascalCase": {
+                                  "safeName": "InStock",
+                                  "unsafeName": "InStock",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "IN_STOCK",
+                                  "unsafeName": "IN_STOCK",
+                                },
+                                "snakeCase": {
+                                  "safeName": "in_stock",
+                                  "unsafeName": "in_stock",
+                                },
                               },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
+                              "wireValue": "inStock",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
                               },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": true,
-                                "shape": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": true,
+                              "shape": {
+                                "_visit": [Function],
+                                "container": {
                                   "_visit": [Function],
-                                  "container": {
-                                    "_visit": [Function],
-                                    "optional": {
-                                      "jsonExample": true,
-                                      "shape": {
-                                        "_visit": [Function],
-                                        "primitive": {
-                                          "_visit": [Function],
-                                          "boolean": true,
-                                          "type": "boolean",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "optional",
-                                    "valueType": {
+                                  "optional": {
+                                    "jsonExample": true,
+                                    "shape": {
                                       "_visit": [Function],
                                       "primitive": {
-                                        "v1": "BOOLEAN",
-                                        "v2": {
-                                          "_visit": [Function],
-                                          "default": undefined,
-                                          "type": "boolean",
-                                        },
+                                        "_visit": [Function],
+                                        "boolean": true,
+                                        "type": "boolean",
                                       },
                                       "type": "primitive",
                                     },
                                   },
-                                  "type": "container",
-                                },
-                              },
-                            },
-                            {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "createdAt",
-                                    "unsafeName": "createdAt",
-                                  },
-                                  "originalName": "createdAt",
-                                  "pascalCase": {
-                                    "safeName": "CreatedAt",
-                                    "unsafeName": "CreatedAt",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "CREATED_AT",
-                                    "unsafeName": "CREATED_AT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "created_at",
-                                    "unsafeName": "created_at",
-                                  },
-                                },
-                                "wireValue": "createdAt",
-                              },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
-                              },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": "2024-01-15T09:30:00Z",
-                                "shape": {
-                                  "_visit": [Function],
-                                  "container": {
+                                  "type": "optional",
+                                  "valueType": {
                                     "_visit": [Function],
-                                    "optional": {
-                                      "jsonExample": "2024-01-15T09:30:00Z",
-                                      "shape": {
+                                    "primitive": {
+                                      "v1": "BOOLEAN",
+                                      "v2": {
                                         "_visit": [Function],
-                                        "primitive": {
-                                          "_visit": [Function],
-                                          "datetime": 2024-01-15T09:30:00.000Z,
-                                          "raw": "2024-01-15T09:30:00Z",
-                                          "type": "datetime",
-                                        },
-                                        "type": "primitive",
+                                        "default": undefined,
+                                        "type": "boolean",
                                       },
                                     },
-                                    "type": "optional",
-                                    "valueType": {
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "container",
+                              },
+                            },
+                          },
+                          {
+                            "name": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "createdAt",
+                                  "unsafeName": "createdAt",
+                                },
+                                "originalName": "createdAt",
+                                "pascalCase": {
+                                  "safeName": "CreatedAt",
+                                  "unsafeName": "CreatedAt",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "CREATED_AT",
+                                  "unsafeName": "CREATED_AT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "created_at",
+                                  "unsafeName": "created_at",
+                                },
+                              },
+                              "wireValue": "createdAt",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": "2024-01-15T09:30:00Z",
+                              "shape": {
+                                "_visit": [Function],
+                                "container": {
+                                  "_visit": [Function],
+                                  "optional": {
+                                    "jsonExample": "2024-01-15T09:30:00Z",
+                                    "shape": {
                                       "_visit": [Function],
                                       "primitive": {
-                                        "v1": "DATE_TIME",
-                                        "v2": {
-                                          "_visit": [Function],
-                                          "type": "dateTime",
-                                        },
+                                        "_visit": [Function],
+                                        "datetime": 2024-01-15T09:30:00.000Z,
+                                        "raw": "2024-01-15T09:30:00Z",
+                                        "type": "datetime",
                                       },
                                       "type": "primitive",
                                     },
                                   },
-                                  "type": "container",
-                                },
-                              },
-                            },
-                            {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "description",
-                                    "unsafeName": "description",
-                                  },
-                                  "originalName": "description",
-                                  "pascalCase": {
-                                    "safeName": "Description",
-                                    "unsafeName": "Description",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "DESCRIPTION",
-                                    "unsafeName": "DESCRIPTION",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "description",
-                                    "unsafeName": "description",
-                                  },
-                                },
-                                "wireValue": "description",
-                              },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
-                              },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": "description",
-                                "shape": {
-                                  "_visit": [Function],
-                                  "container": {
+                                  "type": "optional",
+                                  "valueType": {
                                     "_visit": [Function],
-                                    "optional": {
-                                      "jsonExample": "description",
-                                      "shape": {
+                                    "primitive": {
+                                      "v1": "DATE_TIME",
+                                      "v2": {
                                         "_visit": [Function],
-                                        "container": {
-                                          "_visit": [Function],
-                                          "nullable": {
-                                            "jsonExample": "description",
-                                            "shape": {
-                                              "_visit": [Function],
-                                              "primitive": {
-                                                "_visit": [Function],
-                                                "string": {
-                                                  "original": "description",
-                                                },
-                                                "type": "string",
-                                              },
-                                              "type": "primitive",
-                                            },
-                                          },
-                                          "type": "nullable",
-                                          "valueType": {
-                                            "_visit": [Function],
-                                            "primitive": {
-                                              "v1": "STRING",
-                                              "v2": {
-                                                "_visit": [Function],
-                                                "default": undefined,
-                                                "type": "string",
-                                                "validation": {
-                                                  "format": undefined,
-                                                  "maxLength": undefined,
-                                                  "minLength": undefined,
-                                                  "pattern": undefined,
-                                                },
-                                              },
-                                            },
-                                            "type": "primitive",
-                                          },
-                                        },
-                                        "type": "container",
+                                        "type": "dateTime",
                                       },
                                     },
-                                    "type": "optional",
-                                    "valueType": {
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "container",
+                              },
+                            },
+                          },
+                          {
+                            "name": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "description",
+                                  "unsafeName": "description",
+                                },
+                                "originalName": "description",
+                                "pascalCase": {
+                                  "safeName": "Description",
+                                  "unsafeName": "Description",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "DESCRIPTION",
+                                  "unsafeName": "DESCRIPTION",
+                                },
+                                "snakeCase": {
+                                  "safeName": "description",
+                                  "unsafeName": "description",
+                                },
+                              },
+                              "wireValue": "description",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": "description",
+                              "shape": {
+                                "_visit": [Function],
+                                "container": {
+                                  "_visit": [Function],
+                                  "optional": {
+                                    "jsonExample": "description",
+                                    "shape": {
                                       "_visit": [Function],
                                       "container": {
                                         "_visit": [Function],
                                         "nullable": {
+                                          "jsonExample": "description",
+                                          "shape": {
+                                            "_visit": [Function],
+                                            "primitive": {
+                                              "_visit": [Function],
+                                              "string": {
+                                                "original": "description",
+                                              },
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "nullable",
+                                        "valueType": {
                                           "_visit": [Function],
                                           "primitive": {
                                             "v1": "STRING",
@@ -991,49 +962,76 @@
                                           },
                                           "type": "primitive",
                                         },
-                                        "type": "nullable",
                                       },
                                       "type": "container",
                                     },
                                   },
-                                  "type": "container",
+                                  "type": "optional",
+                                  "valueType": {
+                                    "_visit": [Function],
+                                    "container": {
+                                      "_visit": [Function],
+                                      "nullable": {
+                                        "_visit": [Function],
+                                        "primitive": {
+                                          "v1": "STRING",
+                                          "v2": {
+                                            "_visit": [Function],
+                                            "default": undefined,
+                                            "type": "string",
+                                            "validation": {
+                                              "format": undefined,
+                                              "maxLength": undefined,
+                                              "minLength": undefined,
+                                              "pattern": undefined,
+                                            },
+                                          },
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "type": "nullable",
+                                    },
+                                    "type": "container",
+                                  },
                                 },
+                                "type": "container",
                               },
                             },
-                          ],
-                          "type": "object",
-                        },
-                        "type": "named",
-                        "typeName": {
-                          "displayName": undefined,
-                          "fernFilepath": {
-                            "allParts": [],
-                            "file": undefined,
-                            "packagePath": [],
                           },
-                          "name": {
-                            "camelCase": {
-                              "safeName": "product",
-                              "unsafeName": "product",
-                            },
-                            "originalName": "Product",
-                            "pascalCase": {
-                              "safeName": "Product",
-                              "unsafeName": "Product",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "PRODUCT",
-                              "unsafeName": "PRODUCT",
-                            },
-                            "snakeCase": {
-                              "safeName": "product",
-                              "unsafeName": "product",
-                            },
-                          },
-                          "typeId": "Product",
+                        ],
+                        "type": "object",
+                      },
+                      "type": "named",
+                      "typeName": {
+                        "displayName": undefined,
+                        "fernFilepath": {
+                          "allParts": [],
+                          "file": undefined,
+                          "packagePath": [],
                         },
+                        "name": {
+                          "camelCase": {
+                            "safeName": "product",
+                            "unsafeName": "product",
+                          },
+                          "originalName": "Product",
+                          "pascalCase": {
+                            "safeName": "Product",
+                            "unsafeName": "Product",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "PRODUCT",
+                            "unsafeName": "PRODUCT",
+                          },
+                          "snakeCase": {
+                            "safeName": "product",
+                            "unsafeName": "product",
+                          },
+                        },
+                        "typeId": "Product",
                       },
                     },
+                    "type": "body",
                   },
                 },
                 "rootPathParameters": [],
@@ -1457,7 +1455,7 @@
                     },
                   },
                 ],
-                "id": "f3ca135c",
+                "id": "e57e8349",
                 "name": undefined,
                 "queryParameters": [],
                 "request": undefined,
@@ -1466,504 +1464,475 @@
                   "type": "ok",
                   "value": {
                     "_visit": [Function],
-                    "type": "body",
-                    "value": {
-                      "jsonExample": {
-                        "createdAt": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "id": "id",
-                        "inStock": true,
-                        "price": 1.1,
-                        "title": "title",
-                      },
+                    "jsonExample": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "id": "id",
+                      "inStock": true,
+                      "price": 1.1,
+                      "title": "title",
+                    },
+                    "shape": {
+                      "_visit": [Function],
                       "shape": {
                         "_visit": [Function],
-                        "shape": {
-                          "_visit": [Function],
-                          "extraProperties": undefined,
-                          "properties": [
-                            {
+                        "extraProperties": undefined,
+                        "properties": [
+                          {
+                            "name": {
                               "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "id",
-                                    "unsafeName": "id",
-                                  },
-                                  "originalName": "id",
-                                  "pascalCase": {
-                                    "safeName": "Id",
-                                    "unsafeName": "Id",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "ID",
-                                    "unsafeName": "ID",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "id",
-                                    "unsafeName": "id",
-                                  },
+                                "camelCase": {
+                                  "safeName": "id",
+                                  "unsafeName": "id",
                                 },
-                                "wireValue": "id",
+                                "originalName": "id",
+                                "pascalCase": {
+                                  "safeName": "Id",
+                                  "unsafeName": "Id",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "ID",
+                                  "unsafeName": "ID",
+                                },
+                                "snakeCase": {
+                                  "safeName": "id",
+                                  "unsafeName": "id",
+                                },
                               },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
+                              "wireValue": "id",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
                               },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": "id",
-                                "shape": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": "id",
+                              "shape": {
+                                "_visit": [Function],
+                                "primitive": {
                                   "_visit": [Function],
-                                  "primitive": {
-                                    "_visit": [Function],
-                                    "string": {
-                                      "original": "id",
-                                    },
-                                    "type": "string",
+                                  "string": {
+                                    "original": "id",
                                   },
-                                  "type": "primitive",
+                                  "type": "string",
                                 },
+                                "type": "primitive",
                               },
                             },
-                            {
+                          },
+                          {
+                            "name": {
                               "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "title",
-                                    "unsafeName": "title",
-                                  },
-                                  "originalName": "title",
-                                  "pascalCase": {
-                                    "safeName": "Title",
-                                    "unsafeName": "Title",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "TITLE",
-                                    "unsafeName": "TITLE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "title",
-                                    "unsafeName": "title",
-                                  },
+                                "camelCase": {
+                                  "safeName": "title",
+                                  "unsafeName": "title",
                                 },
-                                "wireValue": "title",
+                                "originalName": "title",
+                                "pascalCase": {
+                                  "safeName": "Title",
+                                  "unsafeName": "Title",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TITLE",
+                                  "unsafeName": "TITLE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "title",
+                                  "unsafeName": "title",
+                                },
                               },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
+                              "wireValue": "title",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
                               },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": "title",
-                                "shape": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": "title",
+                              "shape": {
+                                "_visit": [Function],
+                                "primitive": {
                                   "_visit": [Function],
-                                  "primitive": {
-                                    "_visit": [Function],
-                                    "string": {
-                                      "original": "title",
-                                    },
-                                    "type": "string",
+                                  "string": {
+                                    "original": "title",
                                   },
-                                  "type": "primitive",
+                                  "type": "string",
                                 },
+                                "type": "primitive",
                               },
                             },
-                            {
+                          },
+                          {
+                            "name": {
                               "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "price",
-                                    "unsafeName": "price",
-                                  },
-                                  "originalName": "price",
-                                  "pascalCase": {
-                                    "safeName": "Price",
-                                    "unsafeName": "Price",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRICE",
-                                    "unsafeName": "PRICE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "price",
-                                    "unsafeName": "price",
-                                  },
+                                "camelCase": {
+                                  "safeName": "price",
+                                  "unsafeName": "price",
                                 },
-                                "wireValue": "price",
+                                "originalName": "price",
+                                "pascalCase": {
+                                  "safeName": "Price",
+                                  "unsafeName": "Price",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRICE",
+                                  "unsafeName": "PRICE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "price",
+                                  "unsafeName": "price",
+                                },
                               },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
+                              "wireValue": "price",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
                               },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": 1.1,
-                                "shape": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": 1.1,
+                              "shape": {
+                                "_visit": [Function],
+                                "primitive": {
                                   "_visit": [Function],
-                                  "primitive": {
-                                    "_visit": [Function],
-                                    "float": 1.1,
-                                    "type": "float",
-                                  },
-                                  "type": "primitive",
+                                  "float": 1.1,
+                                  "type": "float",
                                 },
+                                "type": "primitive",
                               },
                             },
-                            {
+                          },
+                          {
+                            "name": {
                               "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "inStock",
-                                    "unsafeName": "inStock",
-                                  },
-                                  "originalName": "inStock",
-                                  "pascalCase": {
-                                    "safeName": "InStock",
-                                    "unsafeName": "InStock",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "IN_STOCK",
-                                    "unsafeName": "IN_STOCK",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "in_stock",
-                                    "unsafeName": "in_stock",
-                                  },
+                                "camelCase": {
+                                  "safeName": "inStock",
+                                  "unsafeName": "inStock",
                                 },
-                                "wireValue": "inStock",
+                                "originalName": "inStock",
+                                "pascalCase": {
+                                  "safeName": "InStock",
+                                  "unsafeName": "InStock",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "IN_STOCK",
+                                  "unsafeName": "IN_STOCK",
+                                },
+                                "snakeCase": {
+                                  "safeName": "in_stock",
+                                  "unsafeName": "in_stock",
+                                },
                               },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
+                              "wireValue": "inStock",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
                               },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": true,
-                                "shape": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": true,
+                              "shape": {
+                                "_visit": [Function],
+                                "container": {
                                   "_visit": [Function],
-                                  "container": {
-                                    "_visit": [Function],
-                                    "optional": {
-                                      "jsonExample": true,
-                                      "shape": {
-                                        "_visit": [Function],
-                                        "primitive": {
-                                          "_visit": [Function],
-                                          "boolean": true,
-                                          "type": "boolean",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "optional",
-                                    "valueType": {
+                                  "optional": {
+                                    "jsonExample": true,
+                                    "shape": {
                                       "_visit": [Function],
                                       "primitive": {
-                                        "v1": "BOOLEAN",
-                                        "v2": {
-                                          "_visit": [Function],
-                                          "default": undefined,
-                                          "type": "boolean",
-                                        },
+                                        "_visit": [Function],
+                                        "boolean": true,
+                                        "type": "boolean",
                                       },
                                       "type": "primitive",
                                     },
                                   },
-                                  "type": "container",
-                                },
-                              },
-                            },
-                            {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "createdAt",
-                                    "unsafeName": "createdAt",
-                                  },
-                                  "originalName": "createdAt",
-                                  "pascalCase": {
-                                    "safeName": "CreatedAt",
-                                    "unsafeName": "CreatedAt",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "CREATED_AT",
-                                    "unsafeName": "CREATED_AT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "created_at",
-                                    "unsafeName": "created_at",
-                                  },
-                                },
-                                "wireValue": "createdAt",
-                              },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
-                              },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": "2024-01-15T09:30:00Z",
-                                "shape": {
-                                  "_visit": [Function],
-                                  "container": {
+                                  "type": "optional",
+                                  "valueType": {
                                     "_visit": [Function],
-                                    "optional": {
-                                      "jsonExample": "2024-01-15T09:30:00Z",
-                                      "shape": {
+                                    "primitive": {
+                                      "v1": "BOOLEAN",
+                                      "v2": {
                                         "_visit": [Function],
-                                        "primitive": {
-                                          "_visit": [Function],
-                                          "datetime": 2024-01-15T09:30:00.000Z,
-                                          "raw": "2024-01-15T09:30:00Z",
-                                          "type": "datetime",
-                                        },
-                                        "type": "primitive",
+                                        "default": undefined,
+                                        "type": "boolean",
                                       },
                                     },
-                                    "type": "optional",
-                                    "valueType": {
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "container",
+                              },
+                            },
+                          },
+                          {
+                            "name": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "createdAt",
+                                  "unsafeName": "createdAt",
+                                },
+                                "originalName": "createdAt",
+                                "pascalCase": {
+                                  "safeName": "CreatedAt",
+                                  "unsafeName": "CreatedAt",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "CREATED_AT",
+                                  "unsafeName": "CREATED_AT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "created_at",
+                                  "unsafeName": "created_at",
+                                },
+                              },
+                              "wireValue": "createdAt",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": "2024-01-15T09:30:00Z",
+                              "shape": {
+                                "_visit": [Function],
+                                "container": {
+                                  "_visit": [Function],
+                                  "optional": {
+                                    "jsonExample": "2024-01-15T09:30:00Z",
+                                    "shape": {
                                       "_visit": [Function],
                                       "primitive": {
-                                        "v1": "DATE_TIME",
-                                        "v2": {
-                                          "_visit": [Function],
-                                          "type": "dateTime",
-                                        },
+                                        "_visit": [Function],
+                                        "datetime": 2024-01-15T09:30:00.000Z,
+                                        "raw": "2024-01-15T09:30:00Z",
+                                        "type": "datetime",
                                       },
                                       "type": "primitive",
                                     },
                                   },
-                                  "type": "container",
-                                },
-                              },
-                            },
-                            {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "description",
-                                    "unsafeName": "description",
-                                  },
-                                  "originalName": "description",
-                                  "pascalCase": {
-                                    "safeName": "Description",
-                                    "unsafeName": "Description",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "DESCRIPTION",
-                                    "unsafeName": "DESCRIPTION",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "description",
-                                    "unsafeName": "description",
-                                  },
-                                },
-                                "wireValue": "description",
-                              },
-                              "originalTypeDeclaration": {
-                                "displayName": undefined,
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "file": undefined,
-                                  "packagePath": [],
-                                },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
-                                "typeId": "Product",
-                              },
-                              "propertyAccess": undefined,
-                              "value": {
-                                "jsonExample": "description",
-                                "shape": {
-                                  "_visit": [Function],
-                                  "container": {
+                                  "type": "optional",
+                                  "valueType": {
                                     "_visit": [Function],
-                                    "optional": {
-                                      "jsonExample": "description",
-                                      "shape": {
+                                    "primitive": {
+                                      "v1": "DATE_TIME",
+                                      "v2": {
                                         "_visit": [Function],
-                                        "container": {
-                                          "_visit": [Function],
-                                          "nullable": {
-                                            "jsonExample": "description",
-                                            "shape": {
-                                              "_visit": [Function],
-                                              "primitive": {
-                                                "_visit": [Function],
-                                                "string": {
-                                                  "original": "description",
-                                                },
-                                                "type": "string",
-                                              },
-                                              "type": "primitive",
-                                            },
-                                          },
-                                          "type": "nullable",
-                                          "valueType": {
-                                            "_visit": [Function],
-                                            "primitive": {
-                                              "v1": "STRING",
-                                              "v2": {
-                                                "_visit": [Function],
-                                                "default": undefined,
-                                                "type": "string",
-                                                "validation": {
-                                                  "format": undefined,
-                                                  "maxLength": undefined,
-                                                  "minLength": undefined,
-                                                  "pattern": undefined,
-                                                },
-                                              },
-                                            },
-                                            "type": "primitive",
-                                          },
-                                        },
-                                        "type": "container",
+                                        "type": "dateTime",
                                       },
                                     },
-                                    "type": "optional",
-                                    "valueType": {
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "container",
+                              },
+                            },
+                          },
+                          {
+                            "name": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "description",
+                                  "unsafeName": "description",
+                                },
+                                "originalName": "description",
+                                "pascalCase": {
+                                  "safeName": "Description",
+                                  "unsafeName": "Description",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "DESCRIPTION",
+                                  "unsafeName": "DESCRIPTION",
+                                },
+                                "snakeCase": {
+                                  "safeName": "description",
+                                  "unsafeName": "description",
+                                },
+                              },
+                              "wireValue": "description",
+                            },
+                            "originalTypeDeclaration": {
+                              "displayName": undefined,
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": undefined,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                                "originalName": "Product",
+                                "pascalCase": {
+                                  "safeName": "Product",
+                                  "unsafeName": "Product",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "PRODUCT",
+                                  "unsafeName": "PRODUCT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "product",
+                                  "unsafeName": "product",
+                                },
+                              },
+                              "typeId": "Product",
+                            },
+                            "propertyAccess": undefined,
+                            "value": {
+                              "jsonExample": "description",
+                              "shape": {
+                                "_visit": [Function],
+                                "container": {
+                                  "_visit": [Function],
+                                  "optional": {
+                                    "jsonExample": "description",
+                                    "shape": {
                                       "_visit": [Function],
                                       "container": {
                                         "_visit": [Function],
                                         "nullable": {
+                                          "jsonExample": "description",
+                                          "shape": {
+                                            "_visit": [Function],
+                                            "primitive": {
+                                              "_visit": [Function],
+                                              "string": {
+                                                "original": "description",
+                                              },
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "nullable",
+                                        "valueType": {
                                           "_visit": [Function],
                                           "primitive": {
                                             "v1": "STRING",
@@ -1981,49 +1950,76 @@
                                           },
                                           "type": "primitive",
                                         },
-                                        "type": "nullable",
                                       },
                                       "type": "container",
                                     },
                                   },
-                                  "type": "container",
+                                  "type": "optional",
+                                  "valueType": {
+                                    "_visit": [Function],
+                                    "container": {
+                                      "_visit": [Function],
+                                      "nullable": {
+                                        "_visit": [Function],
+                                        "primitive": {
+                                          "v1": "STRING",
+                                          "v2": {
+                                            "_visit": [Function],
+                                            "default": undefined,
+                                            "type": "string",
+                                            "validation": {
+                                              "format": undefined,
+                                              "maxLength": undefined,
+                                              "minLength": undefined,
+                                              "pattern": undefined,
+                                            },
+                                          },
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "type": "nullable",
+                                    },
+                                    "type": "container",
+                                  },
                                 },
+                                "type": "container",
                               },
                             },
-                          ],
-                          "type": "object",
-                        },
-                        "type": "named",
-                        "typeName": {
-                          "displayName": undefined,
-                          "fernFilepath": {
-                            "allParts": [],
-                            "file": undefined,
-                            "packagePath": [],
                           },
-                          "name": {
-                            "camelCase": {
-                              "safeName": "product",
-                              "unsafeName": "product",
-                            },
-                            "originalName": "Product",
-                            "pascalCase": {
-                              "safeName": "Product",
-                              "unsafeName": "Product",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "PRODUCT",
-                              "unsafeName": "PRODUCT",
-                            },
-                            "snakeCase": {
-                              "safeName": "product",
-                              "unsafeName": "product",
-                            },
-                          },
-                          "typeId": "Product",
+                        ],
+                        "type": "object",
+                      },
+                      "type": "named",
+                      "typeName": {
+                        "displayName": undefined,
+                        "fernFilepath": {
+                          "allParts": [],
+                          "file": undefined,
+                          "packagePath": [],
                         },
+                        "name": {
+                          "camelCase": {
+                            "safeName": "product",
+                            "unsafeName": "product",
+                          },
+                          "originalName": "Product",
+                          "pascalCase": {
+                            "safeName": "Product",
+                            "unsafeName": "Product",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "PRODUCT",
+                            "unsafeName": "PRODUCT",
+                          },
+                          "snakeCase": {
+                            "safeName": "product",
+                            "unsafeName": "product",
+                          },
+                        },
+                        "typeId": "Product",
                       },
                     },
+                    "type": "body",
                   },
                 },
                 "rootPathParameters": [],

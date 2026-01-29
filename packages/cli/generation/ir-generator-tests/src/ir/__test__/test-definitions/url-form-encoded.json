@@ -576,218 +576,216 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:PostSubmitResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": {
-                                                        "originalName": "PostSubmitResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "postSubmitResponse",
-                                                            "safeName": "postSubmitResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "post_submit_response",
-                                                            "safeName": "post_submit_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "POST_SUBMIT_RESPONSE",
-                                                            "safeName": "POST_SUBMIT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "PostSubmitResponse",
-                                                            "safeName": "PostSubmitResponse"
-                                                        }
-                                                    },
-                                                    "displayName": null
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_:PostSubmitResponse",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
                                                 },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
-                                                                },
-                                                                "wireValue": "status"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "success"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "success"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "success"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:PostSubmitResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "PostSubmitResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "postSubmitResponse",
-                                                                        "safeName": "postSubmitResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "post_submit_response",
-                                                                        "safeName": "post_submit_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
-                                                                        "safeName": "POST_SUBMIT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "PostSubmitResponse",
-                                                                        "safeName": "PostSubmitResponse"
-                                                                    }
-                                                                },
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "Data received successfully."
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "Data received successfully."
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "Data received successfully."
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:PostSubmitResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "PostSubmitResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "postSubmitResponse",
-                                                                        "safeName": "postSubmitResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "post_submit_response",
-                                                                        "safeName": "post_submit_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
-                                                                        "safeName": "POST_SUBMIT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "PostSubmitResponse",
-                                                                        "safeName": "PostSubmitResponse"
-                                                                    }
-                                                                },
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
+                                                "name": {
+                                                    "originalName": "PostSubmitResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "postSubmitResponse",
+                                                        "safeName": "postSubmitResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "post_submit_response",
+                                                        "safeName": "post_submit_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                        "safeName": "POST_SUBMIT_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PostSubmitResponse",
+                                                        "safeName": "PostSubmitResponse"
+                                                    }
+                                                },
+                                                "displayName": null
                                             },
-                                            "jsonExample": {
-                                                "status": "success",
-                                                "message": "Data received successfully."
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "status",
+                                                                "camelCase": {
+                                                                    "unsafeName": "status",
+                                                                    "safeName": "status"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "status",
+                                                                    "safeName": "status"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STATUS",
+                                                                    "safeName": "STATUS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Status",
+                                                                    "safeName": "Status"
+                                                                }
+                                                            },
+                                                            "wireValue": "status"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
+                                                                            "primitive": {
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "success"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "success"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "success"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:PostSubmitResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "name": {
+                                                                "originalName": "PostSubmitResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "postSubmitResponse",
+                                                                    "safeName": "postSubmitResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "post_submit_response",
+                                                                    "safeName": "post_submit_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                                    "safeName": "POST_SUBMIT_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "PostSubmitResponse",
+                                                                    "safeName": "PostSubmitResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    },
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
+                                                            },
+                                                            "wireValue": "message"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
+                                                                            "primitive": {
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "Data received successfully."
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "Data received successfully."
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "Data received successfully."
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:PostSubmitResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "name": {
+                                                                "originalName": "PostSubmitResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "postSubmitResponse",
+                                                                    "safeName": "postSubmitResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "post_submit_response",
+                                                                    "safeName": "post_submit_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                                    "safeName": "POST_SUBMIT_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "PostSubmitResponse",
+                                                                    "safeName": "PostSubmitResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "status": "success",
+                                            "message": "Data received successfully."
                                         }
                                     }
                                 },
@@ -799,7 +797,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "c060712e",
+                                "id": "21b7b3cf",
                                 "url": "/submit",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -896,218 +894,216 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
+                                        "shape": {
+                                            "type": "named",
                                             "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
+                                                                "originalName": "status",
+                                                                "camelCase": {
+                                                                    "unsafeName": "status",
+                                                                    "safeName": "status"
                                                                 },
-                                                                "wireValue": "status"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "status",
+                                                                    "safeName": "status"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STATUS",
+                                                                    "safeName": "STATUS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Status",
+                                                                    "safeName": "Status"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "PostSubmitResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "postSubmitResponse",
-                                                                        "safeName": "postSubmitResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "post_submit_response",
-                                                                        "safeName": "post_submit_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
-                                                                        "safeName": "POST_SUBMIT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "PostSubmitResponse",
-                                                                        "safeName": "PostSubmitResponse"
-                                                                    }
+                                                            "wireValue": "status"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "PostSubmitResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "postSubmitResponse",
+                                                                    "safeName": "postSubmitResponse"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "post_submit_response",
+                                                                    "safeName": "post_submit_response"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:PostSubmitResponse"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                                    "safeName": "POST_SUBMIT_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "PostSubmitResponse",
+                                                                    "safeName": "PostSubmitResponse"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "status"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "status"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:PostSubmitResponse"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "status"
                                                                                 }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "status"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": "status"
+                                                                }
                                                             },
-                                                            "propertyAccess": null
+                                                            "jsonExample": "status"
                                                         },
-                                                        {
+                                                        "propertyAccess": null
+                                                    },
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
                                                                 },
-                                                                "wireValue": "message"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "PostSubmitResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "postSubmitResponse",
-                                                                        "safeName": "postSubmitResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "post_submit_response",
-                                                                        "safeName": "post_submit_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
-                                                                        "safeName": "POST_SUBMIT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "PostSubmitResponse",
-                                                                        "safeName": "PostSubmitResponse"
-                                                                    }
+                                                            "wireValue": "message"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "PostSubmitResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "postSubmitResponse",
+                                                                    "safeName": "postSubmitResponse"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "post_submit_response",
+                                                                    "safeName": "post_submit_response"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:PostSubmitResponse"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                                    "safeName": "POST_SUBMIT_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "PostSubmitResponse",
+                                                                    "safeName": "PostSubmitResponse"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "message"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "message"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:PostSubmitResponse"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "message"
                                                                                 }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "message"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": "message"
+                                                                }
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": {
-                                                        "originalName": "PostSubmitResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "postSubmitResponse",
-                                                            "safeName": "postSubmitResponse"
+                                                            "jsonExample": "message"
                                                         },
-                                                        "snakeCase": {
-                                                            "unsafeName": "post_submit_response",
-                                                            "safeName": "post_submit_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "POST_SUBMIT_RESPONSE",
-                                                            "safeName": "POST_SUBMIT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "PostSubmitResponse",
-                                                            "safeName": "PostSubmitResponse"
-                                                        }
-                                                    },
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:PostSubmitResponse"
-                                                }
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             },
-                                            "jsonExample": {
-                                                "status": "status",
-                                                "message": "message"
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "PostSubmitResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "postSubmitResponse",
+                                                        "safeName": "postSubmitResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "post_submit_response",
+                                                        "safeName": "post_submit_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                        "safeName": "POST_SUBMIT_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PostSubmitResponse",
+                                                        "safeName": "PostSubmitResponse"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:PostSubmitResponse"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "status": "status",
+                                            "message": "message"
                                         }
                                     }
                                 },

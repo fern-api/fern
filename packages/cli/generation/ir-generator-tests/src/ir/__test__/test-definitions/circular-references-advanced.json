@@ -2364,7 +2364,9 @@
                                     "typeId": "type_ast:Node",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -2653,9 +2655,13 @@
                                             "typeId": "type_ast:Node",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -2900,7 +2906,9 @@
                                         "typeId": "type_ast:FieldValue",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "minItems": null,
+                                    "maxItems": null
                                 }
                             }
                         },

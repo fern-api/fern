@@ -487,7 +487,9 @@
                                     "typeId": "type_imdb:Cast",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,

@@ -542,6 +542,8 @@
                   "type": "named",
                   "typeId": "RateTier",
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "container",
