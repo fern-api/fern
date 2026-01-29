@@ -202,10 +202,10 @@ function generateTypeVisitor<TOut>(
         unknown: visitor.other,
         container: (containerType) =>
             containerType._visit({
-                list: visitor.list,
+                list: (listType) => visitor.list(listType.list),
                 literal: visitor.other,
                 map: visitor.map,
-                set: visitor.set,
+                set: (setType) => visitor.set(setType.set),
                 optional: (typeReference) => generateTypeVisitor(typeReference, visitor),
                 nullable: (typeReference) => generateTypeVisitor(typeReference, visitor),
                 _other: visitor.other
