@@ -15,6 +15,7 @@ import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
 import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
 import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.fern.sdk.resources.inlinedrequests.requests.RequiredAndOptionalRequest;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.lang.Object;
@@ -112,4 +113,73 @@ public class AsyncRawInlinedRequestsClient {
       });
       return future;
     }
-  }
+
+    /**
+     * POST with required and optional fields in request body.
+     * Tests that snippets correctly order required fields before optional fields
+     * for staged builders (Java).
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> postWithRequiredAndOptionalFields(
+        RequiredAndOptionalRequest request) {
+      return postWithRequiredAndOptionalFields(request,null);
+    }
+
+    /**
+     * POST with required and optional fields in request body.
+     * Tests that snippets correctly order required fields before optional fields
+     * for staged builders (Java).
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> postWithRequiredAndOptionalFields(
+        RequiredAndOptionalRequest request, RequestOptions requestOptions) {
+      HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+        .addPathSegments("req-bodies")
+        .addPathSegments("required-and-optional");if (requestOptions != null) {
+          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+            httpUrl.addQueryParameter(_key, _value);
+          } );
+        }
+        RequestBody body;
+        try {
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        }
+        catch(JsonProcessingException e) {
+          throw new SeedExhaustiveException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+          .url(httpUrl.build())
+          .method("POST", body)
+          .headers(Headers.of(clientOptions.headers(requestOptions)))
+          .addHeader("Content-Type", "application/json")
+          .addHeader("Accept", "application/json")
+          .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+          client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+          @Override
+          public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            try (ResponseBody responseBody = response.body()) {
+              String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+              if (response.isSuccessful()) {
+                future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                return;
+              }
+              Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+              future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+              return;
+            }
+            catch (IOException e) {
+              future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            }
+          }
+
+          @Override
+          public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          }
+        });
+        return future;
+      }
+    }

@@ -2367,6 +2367,76 @@ client.inlinedRequests().postWithObjectBodyandResponse(
 </dl>
 </details>
 
+<details><summary><code>client.inlinedRequests.postWithRequiredAndOptionalFields(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with required and optional fields in request body.
+Tests that snippets correctly order required fields before optional fields
+for staged builders (Java).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.inlinedRequests().postWithRequiredAndOptionalFields(
+    RequiredAndOptionalRequest
+        .builder()
+        .requiredString("<requiredString>")
+        .optionalString("optional_value")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requiredString:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optionalString:** `Optional<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## NoAuth
 <details><summary><code>client.noAuth.postWithNoAuth(request) -> Boolean</code></summary>
 <dl>

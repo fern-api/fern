@@ -6,6 +6,7 @@ package com.seed.exhaustive;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.types.PostWithObjectBody;
+import com.seed.exhaustive.types.RequiredAndOptionalRequest;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 
 public class InlinedRequestsClient {
@@ -39,6 +40,26 @@ public class InlinedRequestsClient {
             PostWithObjectBody request, RequestOptions requestOptions) {
         return this.rawClient
                 .postWithObjectBodyandResponse(request, requestOptions)
+                .body();
+    }
+
+    /**
+     * POST with required and optional fields in request body.
+     * Tests that snippets correctly order required fields before optional fields
+     * for staged builders (Java).
+     */
+    public String postWithRequiredAndOptionalFields(RequiredAndOptionalRequest request) {
+        return this.rawClient.postWithRequiredAndOptionalFields(request).body();
+    }
+
+    /**
+     * POST with required and optional fields in request body.
+     * Tests that snippets correctly order required fields before optional fields
+     * for staged builders (Java).
+     */
+    public String postWithRequiredAndOptionalFields(RequiredAndOptionalRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .postWithRequiredAndOptionalFields(request, requestOptions)
                 .body();
     }
 }

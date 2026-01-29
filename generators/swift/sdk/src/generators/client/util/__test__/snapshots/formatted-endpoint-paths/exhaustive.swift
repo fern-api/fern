@@ -64,6 +64,7 @@
 
 // service_inlined-requests
 "/req-bodies/object"
+"/req-bodies/required-and-optional"
 
 // service_no-auth
 "/no-auth"

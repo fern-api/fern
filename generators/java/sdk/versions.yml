@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.34.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for staged builders when required fields are not provided
+        in the example. The generator now includes placeholder values for missing required fields,
+        ensuring the builder methods are called in the correct order for Java's type-state staged
+        builder pattern.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.34.5
   changelogEntry:
     - summary: |

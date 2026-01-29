@@ -983,7 +983,24 @@ export class EndpointSnippetGenerator {
         const filteredProperties = bodyProperties.filter(
             (parameter) => !this.context.isDirectLiteral(parameter.typeReference)
         );
-        const sortedProperties = this.context.sortTypeInstancesByRequiredFirst(filteredProperties, parameters);
+
+        // For Java staged builders, we need to include required fields even if they're not provided
+        // in the snippet request. This ensures the builder methods are called in the correct order.
+        const providedWireValues = new Set(filteredProperties.map((p) => p.name.wireValue));
+        const missingRequiredProperties = parameters
+            .filter(
+                (param) =>
+                    !this.context.isOptional(param.typeReference) && !providedWireValues.has(param.name.wireValue)
+            )
+            .filter((param) => !this.context.isDirectLiteral(param.typeReference))
+            .map((param) => ({
+                name: param.name,
+                typeReference: param.typeReference,
+                value: this.getPlaceholderValue(param)
+            }));
+
+        const allProperties = [...filteredProperties, ...missingRequiredProperties];
+        const sortedProperties = this.context.sortTypeInstancesByRequiredFirst(allProperties, parameters);
         return sortedProperties.map((parameter) => ({
             name: this.context.getMethodName(parameter.name.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
@@ -992,6 +1009,39 @@ export class EndpointSnippetGenerator {
                 as: "request"
             })
         }));
+    }
+
+    private getPlaceholderValue(param: FernIr.dynamic.NamedParameter): unknown {
+        // Generate a placeholder value based on the type
+        const typeRef = param.typeReference;
+        if (typeRef.type === "primitive") {
+            switch (typeRef.value) {
+                case "STRING":
+                case "BIG_INTEGER":
+                case "BASE_64":
+                    return `<${param.name.wireValue}>`;
+                case "INTEGER":
+                case "LONG":
+                case "UINT":
+                case "UINT_64":
+                    return 0;
+                case "FLOAT":
+                case "DOUBLE":
+                    return 0.0;
+                case "BOOLEAN":
+                    return false;
+                case "DATE":
+                    return "2024-01-01";
+                case "DATE_TIME":
+                    return "2024-01-01T00:00:00Z";
+                case "UUID":
+                    return "00000000-0000-0000-0000-000000000000";
+                default:
+                    return `<${param.name.wireValue}>`;
+            }
+        }
+        // For complex types, use a string placeholder
+        return `<${param.name.wireValue}>`;
     }
 
     private getPathParameters({
