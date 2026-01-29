@@ -17,7 +17,7 @@ export class SnippetJsonGenerator extends WithGeneration {
 
     public async generate(): Promise<FernGeneratorExec.Snippets> {
         const rootClientSnippet = await this.rootClientGenerator
-            .generateExampleClientInstantiationSnippet({ asSnippet: true })
+            .generateExampleClientInstantiationSnippet({ asSnippet: true, includeEnvVarArguments: true })
             .toFormattedSnippetAsync({
                 allNamespaceSegments: this.context.getAllNamespaceSegments(),
                 allTypeClassReferences: this.context.getAllTypeClassReferences(),

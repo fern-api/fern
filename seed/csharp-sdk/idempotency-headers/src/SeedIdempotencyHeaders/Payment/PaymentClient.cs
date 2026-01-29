@@ -21,7 +21,7 @@ public partial class PaymentClient : IPaymentClient
         var _headers = await new SeedIdempotencyHeaders.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.GetIdempotencyHeaders())
+            .Add(((IIdempotentRequestOptions?)options)?.GetIdempotencyHeaders())
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);

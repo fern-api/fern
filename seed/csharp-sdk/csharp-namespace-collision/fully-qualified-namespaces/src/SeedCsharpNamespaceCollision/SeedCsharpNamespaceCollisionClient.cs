@@ -10,7 +10,8 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
 
     public SeedCsharpNamespaceCollisionClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -19,8 +20,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                 { "User-Agent", "Ferncsharp-namespace-collision/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {

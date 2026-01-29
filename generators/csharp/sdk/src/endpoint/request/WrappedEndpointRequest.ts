@@ -169,7 +169,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // For idempotent requests, add idempotency headers (as Dictionary<string, string>)
                 if (this.endpoint.idempotent) {
                     writer.writeLine();
-                    writer.write(`.Add(${requestOptionsVar}?.GetIdempotencyHeaders())`);
+                    writer.write(
+                        `.Add(((${this.Types.IdempotentRequestOptionsInterface.name}?)${requestOptionsVar})?.GetIdempotencyHeaders())`
+                    );
                 }
 
                 // Add request options additional headers (highest priority)

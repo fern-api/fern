@@ -98,6 +98,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 writer.writeNodeStatement(
                     this.rootClientGenerator.generateExampleClientInstantiationSnippet({
                         includeEnvVarArguments: true,
+                        asSnippet: false,
                         clientOptionsArgument: this.csharp.instantiateClass({
                             classReference: this.Types.ClientOptions,
                             arguments_: [
