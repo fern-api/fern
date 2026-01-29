@@ -8,10 +8,14 @@ import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUserna
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersDoubleOffsetPaginationRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequestForOptionalData;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListWithGlobalConfigRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.types.Order;
 import com.seed.pagination.resources.inlineusers.inlineusers.types.User;
 import com.seed.pagination.resources.inlineusers.inlineusers.types.WithCursor;
@@ -153,7 +157,7 @@ public class InlineUsersInlineUsersWireTest {
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
         SyncPagingIterable<User> response = client.inlineUsers()
                 .inlineUsers()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                .listWithOffsetPagination(ListUsersOffsetPaginationRequest.builder()
                         .page(1)
                         .perPage(1)
                         .order(Order.ASC)
@@ -178,9 +182,9 @@ public class InlineUsersInlineUsersWireTest {
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
         SyncPagingIterable<User> response = client.inlineUsers()
                 .inlineUsers()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
-                        .page(1)
-                        .perPage(1)
+                .listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest.builder()
+                        .page(1.1)
+                        .perPage(1.1)
                         .order(Order.ASC)
                         .startingAfter("starting_after")
                         .build());
@@ -278,7 +282,7 @@ public class InlineUsersInlineUsersWireTest {
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
         SyncPagingIterable<User> response = client.inlineUsers()
                 .inlineUsers()
-                .listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest.builder()
+                .listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest.builder()
                         .page(1)
                         .limit(1)
                         .order(Order.ASC)
@@ -324,7 +328,7 @@ public class InlineUsersInlineUsersWireTest {
                                 "{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
         SyncPagingIterable<User> response = client.inlineUsers()
                 .inlineUsers()
-                .listWithExtendedResults(ListUsersExtendedRequest.builder()
+                .listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData.builder()
                         .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                         .build());
         RecordedRequest request = server.takeRequest();

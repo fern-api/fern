@@ -2,5 +2,5 @@ namespace SeedSingleUrlEnvironmentNoDefault;
 
 public partial interface ISeedSingleUrlEnvironmentNoDefaultClient
 {
-    public DummyClient Dummy { get; }
+    public IDummyClient Dummy { get; }
 }

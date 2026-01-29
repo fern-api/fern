@@ -33,9 +33,9 @@ public partial class SeedAudiencesClient : ISeedAudiencesClient
         Foo = new FooClient(_client);
     }
 
-    public FolderAClient FolderA { get; }
+    public IFolderAClient FolderA { get; }
 
-    public FolderDClient FolderD { get; }
+    public IFolderDClient FolderD { get; }
 
-    public FooClient Foo { get; }
+    public IFooClient Foo { get; }
 }

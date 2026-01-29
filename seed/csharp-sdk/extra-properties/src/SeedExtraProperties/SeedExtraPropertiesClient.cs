@@ -29,5 +29,5 @@ public partial class SeedExtraPropertiesClient : ISeedExtraPropertiesClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

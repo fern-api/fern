@@ -2,5 +2,5 @@ namespace SeedExtraProperties;
 
 public partial interface ISeedExtraPropertiesClient
 {
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

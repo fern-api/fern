@@ -15,7 +15,7 @@ public partial class EventsClient : IEventsClient
         Metadata = new MetadataClient(_client);
     }
 
-    public MetadataClient Metadata { get; }
+    public IMetadataClient Metadata { get; }
 
     private async Task<WithRawResponse<IEnumerable<Event>>> ListEventsAsyncCore(
         ListUserEventsRequest request,

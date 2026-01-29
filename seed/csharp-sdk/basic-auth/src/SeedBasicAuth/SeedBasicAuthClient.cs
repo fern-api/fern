@@ -33,5 +33,5 @@ public partial class SeedBasicAuthClient : ISeedBasicAuthClient
         BasicAuth = new BasicAuthClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; }
+    public IBasicAuthClient BasicAuth { get; }
 }

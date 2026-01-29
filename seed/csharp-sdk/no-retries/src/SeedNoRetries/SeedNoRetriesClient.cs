@@ -29,5 +29,5 @@ public partial class SeedNoRetriesClient : ISeedNoRetriesClient
         Retries = new RetriesClient(_client);
     }
 
-    public RetriesClient Retries { get; }
+    public IRetriesClient Retries { get; }
 }

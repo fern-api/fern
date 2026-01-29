@@ -1,4 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
+import chalk from "chalk";
 import { CliError } from "../errors/CliError";
 import { ValidationError } from "../errors/ValidationError";
 import { Context } from "./Context";
@@ -42,27 +43,27 @@ function createContext(options: GlobalArgs): Context {
 function handleError(context: Context, error: unknown): void {
     if (error instanceof ValidationError) {
         for (const issue of error.issues) {
-            context.stderr.info(issue.toString());
+            process.stderr.write(`${chalk.red(issue.toString())}\n`);
         }
         return;
     }
 
     if (error instanceof CliError) {
         if (error.message.length > 0) {
-            context.stderr.error(error.message);
+            process.stderr.write(`${chalk.red(error.message)}\n`);
         }
         return;
     }
 
     if (error instanceof Error) {
-        context.stderr.error(error.message);
-        if (error.stack != null) {
-            context.stderr.debug(error.stack);
+        process.stderr.write(`${chalk.red(error.message)}\n`);
+        if (error.stack != null && context.logLevel === LogLevel.Debug) {
+            process.stderr.write(`${chalk.dim(error.stack)}\n`);
         }
         return;
     }
 
-    context.stderr.error(String(error));
+    process.stderr.write(`${chalk.red(String(error))}\n`);
 }
 
 function parseLogLevel(level: string): LogLevel {

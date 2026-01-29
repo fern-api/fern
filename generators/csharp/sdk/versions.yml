@@ -8,6 +8,14 @@
   createdAt: "2026-01-29"
   irVersion: 62
 
+- version: 2.19.7
+  changelogEntry:
+    - summary: |
+        Top-level clients now use interface types for sub-clients instead of concrete types.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
 - version: 2.19.6
   changelogEntry:
     - summary: |

@@ -15,7 +15,7 @@ public partial class AClient : IAClient
         C = new CClient(_client);
     }
 
-    public BClient B { get; }
+    public IBClient B { get; }
 
-    public CClient C { get; }
+    public ICClient C { get; }
 }
