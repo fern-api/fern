@@ -179,6 +179,7 @@ func main() {
         "slug": undefined,
       },
     ],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [],
     "types": [],

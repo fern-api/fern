@@ -2,7 +2,7 @@ namespace SeedPathParameters;
 
 public partial interface IUserClient
 {
-    Task<User> GetUserAsync(
+    WithRawResponseTask<User> GetUserAsync(
         string tenantId,
         string userId,
         GetUsersRequest request,
@@ -10,14 +10,14 @@ public partial interface IUserClient
         CancellationToken cancellationToken = default
     );
 
-    Task<User> CreateUserAsync(
+    WithRawResponseTask<User> CreateUserAsync(
         string tenantId,
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<User> UpdateUserAsync(
+    WithRawResponseTask<User> UpdateUserAsync(
         string tenantId,
         string userId,
         UpdateUserRequest request,
@@ -25,7 +25,7 @@ public partial interface IUserClient
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> SearchUsersAsync(
+    WithRawResponseTask<IEnumerable<User>> SearchUsersAsync(
         string tenantId,
         string userId,
         SearchUsersRequest request,
@@ -36,7 +36,7 @@ public partial interface IUserClient
     /// <summary>
     /// Test endpoint with path parameter that has a text prefix (v{version})
     /// </summary>
-    Task<User> GetUserMetadataAsync(
+    WithRawResponseTask<User> GetUserMetadataAsync(
         string tenantId,
         string userId,
         int version,
@@ -48,7 +48,7 @@ public partial interface IUserClient
     /// <summary>
     /// Test endpoint with path parameters listed in different order than found in path
     /// </summary>
-    Task<User> GetUserSpecificsAsync(
+    WithRawResponseTask<User> GetUserSpecificsAsync(
         string tenantId,
         string userId,
         int version,

@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: API One
+  version: 1.0.0
+servers:
+  - url: https://one.example.com
+paths:
+  /one:
+    get:
+      operationId: getOne
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string

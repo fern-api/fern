@@ -2,7 +2,7 @@ namespace SeedIdempotencyHeaders;
 
 public partial interface IPaymentClient
 {
-    Task<string> CreateAsync(
+    WithRawResponseTask<string> CreateAsync(
         CreatePaymentRequest request,
         IdempotentRequestOptions? options = null,
         CancellationToken cancellationToken = default

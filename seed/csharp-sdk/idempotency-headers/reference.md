@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">CreateAsync</a>(CreatePaymentRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">CreateAsync</a>(CreatePaymentRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 

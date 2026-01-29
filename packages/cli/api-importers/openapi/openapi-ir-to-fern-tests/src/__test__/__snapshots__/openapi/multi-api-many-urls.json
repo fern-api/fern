@@ -1,0 +1,208 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getFour": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/four",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../api-four.yml",
+              },
+              "url": "four",
+            },
+            "getOne": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/one",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../api-one.yml",
+              },
+              "url": "one",
+            },
+            "getThree": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/three",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../api-three.yml",
+              },
+              "url": "three",
+            },
+            "getTwo": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/two",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../api-two.yml",
+              },
+              "url": "two",
+            },
+          },
+          "source": {
+            "openapi": "../api-four.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getOne:
+      path: /one
+      method: GET
+      source:
+        openapi: ../api-one.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      url: one
+      examples:
+        - response:
+            body: string
+    getTwo:
+      path: /two
+      method: GET
+      source:
+        openapi: ../api-two.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      url: two
+      examples:
+        - response:
+            body: string
+    getThree:
+      path: /three
+      method: GET
+      source:
+        openapi: ../api-three.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      url: three
+      examples:
+        - response:
+            body: string
+    getFour:
+      path: /four
+      method: GET
+      source:
+        openapi: ../api-four.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      url: four
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../api-four.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "default",
+      "default-url": "one",
+      "display-name": "API One",
+      "environments": {
+        "default": {
+          "urls": {
+            "four": "https://four.example.com",
+            "one": "https://one.example.com",
+            "three": "https://three.example.com",
+            "two": "https://two.example.com",
+          },
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "one",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: API One
+environments:
+  default:
+    urls:
+      one: https://one.example.com
+      two: https://two.example.com
+      three: https://three.example.com
+      four: https://four.example.com
+default-environment: default
+default-url: one
+",
+  },
+}

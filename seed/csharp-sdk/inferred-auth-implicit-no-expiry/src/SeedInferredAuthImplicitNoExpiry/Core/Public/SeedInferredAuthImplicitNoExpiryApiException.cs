@@ -6,8 +6,9 @@ namespace SeedInferredAuthImplicitNoExpiry;
 public class SeedInferredAuthImplicitNoExpiryApiException(
     string message,
     int statusCode,
-    object body
-) : SeedInferredAuthImplicitNoExpiryException(message)
+    object body,
+    Exception? innerException = null
+) : SeedInferredAuthImplicitNoExpiryException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

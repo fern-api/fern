@@ -3,8 +3,12 @@ namespace SeedPackageYml;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedPackageYmlApiException(string message, int statusCode, object body)
-    : SeedPackageYmlException(message)
+public class SeedPackageYmlApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedPackageYmlException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

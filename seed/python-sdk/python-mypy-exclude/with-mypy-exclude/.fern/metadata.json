@@ -1,0 +1,12 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "mypy_exclude": [
+      "legacy/",
+      "tests/integration/"
+    ]
+  },
+  "sdkVersion": "0.0.1"
+}

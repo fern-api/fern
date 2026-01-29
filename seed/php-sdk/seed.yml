@@ -146,10 +146,11 @@ fixtures:
             analyze: echo skip
             hello: echo hello
 scripts:
-  - image: composer:2.7.9
+  - image: fernapi/php-seed
     commands:
       build:
-        - composer install
+        # Retry composer install up to 3 times to handle intermittent network failures
+        - for i in 1 2 3; do composer install --no-interaction && break || { echo "Attempt $i failed, retrying..."; sleep 5; }; done
         - composer build
         - composer analyze
       test:
@@ -166,10 +167,6 @@ allowedFailures:
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
   - examples:no-custom-config
   - examples:readme-config
-  # Enums don't support the fromJson method yet.
-  - exhaustive
-  # Wire tests have a bug where tests extend TestCase instead of WireMockTestCase
-  - exhaustive:wire-tests
   - trace
   - circular-references
   - circular-references-advanced

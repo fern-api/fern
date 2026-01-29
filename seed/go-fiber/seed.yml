@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v60
 displayName: Fiber
 image: fernapi/fern-go-fiber
 changelogLocation: ../../generators/go/fiber/versions.yml

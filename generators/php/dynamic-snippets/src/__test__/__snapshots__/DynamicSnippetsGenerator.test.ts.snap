@@ -283,15 +283,19 @@ namespace Example;
 
 use Acme\\AcmeClient;
 use Acme\\Service\\Requests\\MyRequest;
-use Example\\Utils\\File;
+use Acme\\Utils\\File;
 
 $client = new AcmeClient();
 $client->service->post(
     new MyRequest([
-        'file' => File->createFromString("Hello, world!"),
+        'file' => File::createFromString("Hello, world!", "Hello, world!"),
         'fileList' => [
-            File->createFromString("First"),
-            File->createFromString("Second"),
+            File::createFromString("First", "First"),
+            File::createFromString("Second", "Second"),
+        ],
+        'maybeFile' => File::createFromString("example_maybe_file", "example_maybe_file"),
+        'maybeFileList' => [
+            File::createFromString("example_maybe_file_list", "example_maybe_file_list"),
         ],
     ]),
 );
@@ -305,12 +309,12 @@ namespace Example;
 
 use Acme\\AcmeClient;
 use Acme\\Service\\Requests\\JustFileRequest;
-use Example\\Utils\\File;
+use Acme\\Utils\\File;
 
 $client = new AcmeClient();
 $client->service->justFile(
     new JustFileRequest([
-        'file' => File->createFromString("Hello, world!"),
+        'file' => File::createFromString("Hello, world!", "Hello, world!"),
     ]),
 );
 "
@@ -323,14 +327,14 @@ namespace Example;
 
 use Acme\\AcmeClient;
 use Acme\\Service\\Requests\\JustFileWithQueryParamsRequest;
-use Example\\Utils\\File;
+use Acme\\Utils\\File;
 
 $client = new AcmeClient();
 $client->service->justFileWithQueryParams(
     new JustFileWithQueryParamsRequest([
         'integer' => 42,
         'maybeString' => 'exists',
-        'file' => File->createFromString("Hello, world!"),
+        'file' => File::createFromString("Hello, world!", "Hello, world!"),
     ]),
 );
 "

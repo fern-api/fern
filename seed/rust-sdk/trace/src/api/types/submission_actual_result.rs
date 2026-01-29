@@ -3,16 +3,19 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum ActualResult {
-    Value {
-        value: VariableValue,
-    },
+        #[serde(rename = "value")]
+        Value {
+            value: VariableValue,
+        },
 
-    Exception {
-        #[serde(flatten)]
-        data: ExceptionInfo,
-    },
+        #[serde(rename = "exception")]
+        Exception {
+            #[serde(flatten)]
+            data: ExceptionInfo,
+        },
 
-    ExceptionV2 {
-        value: ExceptionV2,
-    },
+        #[serde(rename = "exceptionV2")]
+        ExceptionV2 {
+            value: ExceptionV2,
+        },
 }

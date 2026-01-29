@@ -12,17 +12,18 @@ public partial class AuthClient : IAuthClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Auth.GetTokenAsync(
-    ///     new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
-    /// );
-    /// </code></example>
-    public async Task<TokenResponse> GetTokenAsync(
+    private async Task<WithRawResponse<TokenResponse>> GetTokenAsyncCore(
         GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedOauthClientCredentialsReference.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -31,6 +32,7 @@ public partial class AuthClient : IAuthClient
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -41,17 +43,28 @@ public partial class AuthClient : IAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                return new WithRawResponse<TokenResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedOauthClientCredentialsReferenceException(
+                throw new SeedOauthClientCredentialsReferenceApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedOauthClientCredentialsReferenceApiException(
@@ -60,5 +73,21 @@ public partial class AuthClient : IAuthClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Auth.GetTokenAsync(
+    ///     new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<TokenResponse> GetTokenAsync(
+        GetTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TokenResponse>(
+            GetTokenAsyncCore(request, options, cancellationToken)
+        );
     }
 }

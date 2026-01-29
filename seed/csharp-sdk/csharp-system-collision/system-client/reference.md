@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">CreateUserAsync</a>(User { ... }) -> User</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -49,7 +49,7 @@ await client.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">CreateTaskAsync</a>(Task { ... }) -> Task</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 

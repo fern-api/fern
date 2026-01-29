@@ -12,18 +12,18 @@ public partial class SubmissionClient : ISubmissionClient
         _client = client;
     }
 
-    /// <summary>
-    /// Returns sessionId and execution server URL for session. Spins up server.
-    /// </summary>
-    /// <example><code>
-    /// await client.Submission.CreateExecutionSessionAsync(Language.Java);
-    /// </code></example>
-    public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(
+    private async Task<WithRawResponse<ExecutionSessionResponse>> CreateExecutionSessionAsyncCore(
         Language language,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -34,6 +34,7 @@ public partial class SubmissionClient : ISubmissionClient
                         "/sessions/create-session/{0}",
                         ValueConvert.ToPathParameterString(language)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -44,14 +45,158 @@ public partial class SubmissionClient : ISubmissionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ExecutionSessionResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<ExecutionSessionResponse>(responseBody)!;
+                return new WithRawResponse<ExecutionSessionResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedTraceException("Failed to deserialize response", e);
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 
+    private async Task<WithRawResponse<ExecutionSessionResponse?>> GetExecutionSessionAsyncCore(
+        string sessionId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/sessions/{0}",
+                        ValueConvert.ToPathParameterString(sessionId)
+                    ),
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ExecutionSessionResponse?>(responseBody)!;
+                return new WithRawResponse<ExecutionSessionResponse?>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<GetExecutionSessionStateResponse>
+    > GetExecutionSessionsStateAsyncCore(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/sessions/execution-sessions-state",
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<GetExecutionSessionStateResponse>(
+                    responseBody
+                )!;
+                return new WithRawResponse<GetExecutionSessionStateResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedTraceApiException(
@@ -63,53 +208,37 @@ public partial class SubmissionClient : ISubmissionClient
     }
 
     /// <summary>
+    /// Returns sessionId and execution server URL for session. Spins up server.
+    /// </summary>
+    /// <example><code>
+    /// await client.Submission.CreateExecutionSessionAsync(Language.Java);
+    /// </code></example>
+    public WithRawResponseTask<ExecutionSessionResponse> CreateExecutionSessionAsync(
+        Language language,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ExecutionSessionResponse>(
+            CreateExecutionSessionAsyncCore(language, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
     /// Returns execution server URL for session. Returns empty if session isn't registered.
     /// </summary>
     /// <example><code>
     /// await client.Submission.GetExecutionSessionAsync("sessionId");
     /// </code></example>
-    public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(
+    public WithRawResponseTask<ExecutionSessionResponse?> GetExecutionSessionAsync(
         string sessionId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/sessions/{0}",
-                        ValueConvert.ToPathParameterString(sessionId)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<ExecutionSessionResponse?>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask<ExecutionSessionResponse?>(
+            GetExecutionSessionAsyncCore(sessionId, options, cancellationToken)
+        );
     }
 
     /// <summary>
@@ -124,6 +253,12 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -134,6 +269,7 @@ public partial class SubmissionClient : ISubmissionClient
                         "/sessions/stop/{0}",
                         ValueConvert.ToPathParameterString(sessionId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -156,43 +292,13 @@ public partial class SubmissionClient : ISubmissionClient
     /// <example><code>
     /// await client.Submission.GetExecutionSessionsStateAsync();
     /// </code></example>
-    public async Task<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync(
+    public WithRawResponseTask<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/sessions/execution-sessions-state",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<GetExecutionSessionStateResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedTraceException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask<GetExecutionSessionStateResponse>(
+            GetExecutionSessionsStateAsyncCore(options, cancellationToken)
+        );
     }
 }

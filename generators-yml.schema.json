@@ -540,6 +540,16 @@
               "type": "null"
             }
           ]
+        },
+        "omit": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

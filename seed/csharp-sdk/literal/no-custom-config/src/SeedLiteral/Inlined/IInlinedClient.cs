@@ -2,7 +2,7 @@ namespace SeedLiteral;
 
 public partial interface IInlinedClient
 {
-    Task<SendResponse> SendAsync(
+    WithRawResponseTask<SendResponse> SendAsync(
         SendLiteralsInlinedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

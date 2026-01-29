@@ -1,0 +1,43 @@
+types:
+  # Undiscriminated union that can be either a string or an object
+  DocumentItem:
+    discriminated: false
+    union:
+      - string
+      - DocumentObject
+
+  DocumentObject:
+    properties:
+      text: string
+
+  RerankRequest:
+    properties:
+      documents: list<DocumentItem>
+      query: string
+
+  RerankResponse:
+    properties:
+      results: list<string>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    rerank:
+      docs: Rerank documents based on relevance to a query
+      method: POST
+      path: /rerank
+      request:
+        body: RerankRequest
+      response: RerankResponse
+      examples:
+        - request:
+            documents:
+              - text: "Carson City is the capital city of the American state of Nevada."
+              - text: "Washington, D.C. is the capital of the United States."
+            query: "What is the capital of the United States?"
+          response:
+            body:
+              results:
+                - "Washington, D.C. is the capital of the United States."
+                - "Carson City is the capital city of the American state of Nevada."

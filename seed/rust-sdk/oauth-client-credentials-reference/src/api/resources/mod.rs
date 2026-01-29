@@ -5,7 +5,7 @@
 //! - **Auth**
 //! - **Simple**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod auth;
 pub mod simple;
@@ -20,9 +20,10 @@ impl OauthClientCredentialsReferenceClient {
         Ok(Self {
             config: config.clone(),
             auth: AuthClient::new(config.clone())?,
-            simple: SimpleClient::new(config.clone())?,
+            simple: SimpleClient::new(config.clone())?
         })
     }
+
 }
 
 pub use auth::AuthClient;

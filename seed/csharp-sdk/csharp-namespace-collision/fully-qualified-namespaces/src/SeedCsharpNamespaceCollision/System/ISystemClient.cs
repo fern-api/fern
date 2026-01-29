@@ -2,13 +2,13 @@ namespace SeedCsharpNamespaceCollision.System;
 
 public partial interface ISystemClient
 {
-    Task<User> CreateUserAsync(
+    WithRawResponseTask<User> CreateUserAsync(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Task> CreateTaskAsync(
+    WithRawResponseTask<Task> CreateTaskAsync(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -12,27 +12,22 @@ public partial class FooClient : IFooClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Foo.FindAsync(
-    ///     new FindRequest
-    ///     {
-    ///         OptionalString = "optionalString",
-    ///         PublicProperty = "publicProperty",
-    ///         PrivateProperty = 1,
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<ImportingType> FindAsync(
+    private async Task<WithRawResponse<ImportingType>> FindAsyncCore(
         FindRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.OptionalString != null)
-        {
-            _query["optionalString"] = request.OptionalString;
-        }
+        var _queryString = new SeedAudiences.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("optionalString", request.OptionalString)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedAudiences.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -41,7 +36,8 @@ public partial class FooClient : IFooClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -52,14 +48,28 @@ public partial class FooClient : IFooClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ImportingType>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<ImportingType>(responseBody)!;
+                return new WithRawResponse<ImportingType>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedAudiencesException("Failed to deserialize response", e);
+                throw new SeedAudiencesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedAudiencesApiException(
@@ -68,5 +78,26 @@ public partial class FooClient : IFooClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Foo.FindAsync(
+    ///     new FindRequest
+    ///     {
+    ///         OptionalString = "optionalString",
+    ///         PublicProperty = "publicProperty",
+    ///         PrivateProperty = 1,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ImportingType> FindAsync(
+        FindRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ImportingType>(
+            FindAsyncCore(request, options, cancellationToken)
+        );
     }
 }

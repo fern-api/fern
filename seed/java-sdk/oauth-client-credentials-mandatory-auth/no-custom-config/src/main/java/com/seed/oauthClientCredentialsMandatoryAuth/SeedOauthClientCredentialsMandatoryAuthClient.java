@@ -57,4 +57,12 @@ public class SeedOauthClientCredentialsMandatoryAuthClient {
             String clientId, String clientSecret) {
         return SeedOauthClientCredentialsMandatoryAuthClientBuilder.withCredentials(clientId, clientSecret);
     }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static SeedOauthClientCredentialsMandatoryAuthClientBuilder._Builder builder() {
+        return SeedOauthClientCredentialsMandatoryAuthClientBuilder.builder();
+    }
 }

@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { filterRequestBody, isEmptyObject } from "./filterHelpers";
+import { filterRequestBody, isEmptyObject, unwrapExampleValue } from "./filterHelpers";
 
 export interface EnhancedExampleRecord {
     endpoint: string;
@@ -14,6 +14,8 @@ export interface EnhancedExampleRecord {
     requestBody?: unknown;
     responseBody?: unknown;
     headerParameterNames?: string[];
+    queryParameterNames?: string[];
+    pathParameterNames?: string[];
 }
 
 /**
@@ -101,8 +103,8 @@ export async function writeAiExamplesOverride({
                 let queryParams = { ...(example.queryParameters ?? {}) };
                 let headerParams = { ...(example.headers ?? {}) };
 
-                // Build a headers object for filtering that includes both existing headers
-                // and header parameter names from the OpenAPI spec (which may not have values yet)
+                // Build parameter objects for filtering using ONLY spec-defined parameter names
+                // This prevents form data fields from being incorrectly extracted as query/path params
                 const headersForFiltering: Record<string, unknown> = { ...headerParams };
                 if (example.headerParameterNames) {
                     for (const headerName of example.headerParameterNames) {
@@ -112,12 +114,51 @@ export async function writeAiExamplesOverride({
                     }
                 }
 
+                // Build query params object using spec-defined names only
+                const queryParamsForFiltering: Record<string, unknown> = {};
+                if (example.queryParameterNames) {
+                    for (const queryName of example.queryParameterNames) {
+                        queryParamsForFiltering[queryName] = queryParams[queryName] ?? "";
+                    }
+                }
+
+                // Build path params object using spec-defined names only
+                const pathParamsForFiltering: Record<string, unknown> = {};
+                if (example.pathParameterNames) {
+                    for (const pathName of example.pathParameterNames) {
+                        pathParamsForFiltering[pathName] = pathParams[pathName] ?? "";
+                    }
+                }
+
+                // Extract the inner value if the request body is wrapped in a "body" key
+                // The Lambda response sometimes wraps the request in { "body": { ... } }
+                let requestBodyToProcess = example.requestBody;
+                if (
+                    requestBodyToProcess !== null &&
+                    requestBodyToProcess !== undefined &&
+                    typeof requestBodyToProcess === "object" &&
+                    !Array.isArray(requestBodyToProcess) &&
+                    "body" in requestBodyToProcess
+                ) {
+                    requestBodyToProcess = (requestBodyToProcess as Record<string, unknown>).body;
+                }
+
+                // Unwrap FDR typed value wrappers from request body
+                // This converts { "file": { "type": "filename", "value": "test.wav" } } to { "file": "test.wav" }
+                const unwrappedRequestBody = unwrapExampleValue(requestBodyToProcess);
+
                 // Filter out path/query/header params from request body and extract any AI-generated values
                 // The AI model sometimes incorrectly includes these in the request body
-                let filteredRequestBody: unknown = example.requestBody;
-                if (example.requestBody !== undefined) {
+                // Use spec-defined parameter names to avoid extracting form data fields
+                let filteredRequestBody: unknown = unwrappedRequestBody;
+                if (unwrappedRequestBody !== undefined) {
                     const { filteredBody, extractedPathParams, extractedQueryParams, extractedHeaders } =
-                        filterRequestBody(example.requestBody, pathParams, queryParams, headersForFiltering);
+                        filterRequestBody(
+                            unwrappedRequestBody,
+                            pathParamsForFiltering,
+                            queryParamsForFiltering,
+                            headersForFiltering
+                        );
                     filteredRequestBody = filteredBody;
 
                     // Merge extracted values into the appropriate parameter sections
@@ -154,17 +195,18 @@ export async function writeAiExamplesOverride({
                     fernExample.headers = headerParams;
                 }
 
-                // Only write request body if it's non-empty after filtering
+                // Only write request if it's non-empty after filtering
+                // Note: In x-fern-examples schema, request is directly the value (ExampleTypeReferenceSchema),
+                // not wrapped in body. Response uses ExampleBodyResponseSchema which has a body property.
                 if (filteredRequestBody !== undefined && !isEmptyObject(filteredRequestBody)) {
-                    fernExample.request = {
-                        body: filteredRequestBody
-                    };
+                    fernExample.request = filteredRequestBody;
                 }
 
-                // Only write response body if it's non-empty
-                if (example.responseBody !== undefined && !isEmptyObject(example.responseBody)) {
+                // Unwrap FDR typed value wrappers from response body and write if non-empty
+                const unwrappedResponseBody = unwrapExampleValue(example.responseBody);
+                if (unwrappedResponseBody !== undefined && !isEmptyObject(unwrappedResponseBody)) {
                     fernExample.response = {
-                        body: example.responseBody
+                        body: unwrappedResponseBody
                     };
                 }
 

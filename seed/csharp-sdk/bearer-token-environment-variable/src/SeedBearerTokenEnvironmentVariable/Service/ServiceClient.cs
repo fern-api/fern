@@ -12,17 +12,17 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <summary>
-    /// GET request with custom api key
-    /// </summary>
-    /// <example><code>
-    /// await client.Service.GetWithBearerTokenAsync();
-    /// </code></example>
-    public async Task<string> GetWithBearerTokenAsync(
+    private async Task<WithRawResponse<string>> GetWithBearerTokenAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedBearerTokenEnvironmentVariable.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +30,7 @@ public partial class ServiceClient : IServiceClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "apiKey",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -40,17 +41,28 @@ public partial class ServiceClient : IServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedBearerTokenEnvironmentVariableException(
+                throw new SeedBearerTokenEnvironmentVariableApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedBearerTokenEnvironmentVariableApiException(
@@ -59,5 +71,21 @@ public partial class ServiceClient : IServiceClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// GET request with custom api key
+    /// </summary>
+    /// <example><code>
+    /// await client.Service.GetWithBearerTokenAsync();
+    /// </code></example>
+    public WithRawResponseTask<string> GetWithBearerTokenAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            GetWithBearerTokenAsyncCore(options, cancellationToken)
+        );
     }
 }

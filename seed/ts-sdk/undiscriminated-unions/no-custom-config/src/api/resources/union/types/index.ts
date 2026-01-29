@@ -16,3 +16,4 @@ export * from "./TypeWithOptionalUnion.js";
 export * from "./UnionWithDuplicateTypes.js";
 export * from "./UnionWithIdenticalPrimitives.js";
 export * from "./UnionWithIdenticalStrings.js";
+export * from "./UnionWithReservedNames.js";

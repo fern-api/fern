@@ -115,14 +115,16 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                     errorName,
                     errorId,
                     fernFilepath: convertedSchema.schema.typeDeclaration.name.fernFilepath,
-                    convertedSchema
+                    convertedSchema,
+                    mediaTypeObject
                 });
             } else if (convertedSchema.type.type === "named") {
                 return this.constructErrorConverterOutput({
                     errorName,
                     errorId,
                     fernFilepath: convertedSchema.type.fernFilepath,
-                    convertedSchema
+                    convertedSchema,
+                    mediaTypeObject
                 });
             }
         }
@@ -133,12 +135,14 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         errorName,
         errorId,
         fernFilepath,
-        convertedSchema
+        convertedSchema,
+        mediaTypeObject
     }: {
         errorName: string;
         errorId: string;
         fernFilepath: FernFilepath;
         convertedSchema: Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject;
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
     }): ResponseErrorConverter.Output {
         return {
             error: {
@@ -154,9 +158,72 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             statusCode: this.statusCode,
             isWildcardStatusCode: this.isWildcardStatusCode,
             inlinedTypes: convertedSchema.inlinedTypes,
-            examples: convertedSchema.examples,
+            examples: this.convertErrorExamples({ mediaTypeObject }),
             headers: this.convertResponseHeaders()
         };
+    }
+
+    /**
+     * Converts error examples from the media type object, using the summary field
+     * as the example name when available (similar to how endpoint examples work).
+     */
+    private convertErrorExamples({
+        mediaTypeObject
+    }: {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
+    }): Record<string, OpenAPIV3_1.ExampleObject> | undefined {
+        const examples = this.context.getNamedExamplesFromMediaTypeObject({
+            mediaTypeObject,
+            breadcrumbs: this.breadcrumbs,
+            defaultExampleName: `${[...this.group, this.method].join("_")}_error_example`
+        });
+
+        if (examples.length === 0) {
+            return undefined;
+        }
+
+        const usedExampleNames = new Set<string>();
+        const result: Record<string, OpenAPIV3_1.ExampleObject> = {};
+
+        for (const [key, example] of examples) {
+            const resolvedExample = this.context.resolveExampleWithValue(example);
+            const resolvedExampleObject = this.context.resolveExampleRecursively({
+                example,
+                breadcrumbs: this.breadcrumbs
+            });
+            const exampleName = this.getIdForErrorExample({ key, example: resolvedExampleObject, usedExampleNames });
+            usedExampleNames.add(exampleName);
+
+            if (resolvedExample != null) {
+                result[exampleName] = resolvedExample as OpenAPIV3_1.ExampleObject;
+            }
+        }
+
+        return Object.keys(result).length > 0 ? result : undefined;
+    }
+
+    /**
+     * Determines the unique identifier for an error example, using the summary field
+     * when available and handling duplicate collisions.
+     */
+    private getIdForErrorExample({
+        key,
+        example,
+        usedExampleNames
+    }: {
+        key: string;
+        example: unknown;
+        usedExampleNames: Set<string>;
+    }): string {
+        if (this.context.isExampleWithSummary(example)) {
+            const summary = example.summary;
+            if (!usedExampleNames.has(summary)) {
+                return summary;
+            }
+            const disambiguatedName = `${summary} (${key})`;
+            return usedExampleNames.has(disambiguatedName) ? key : disambiguatedName;
+        }
+        return key;
     }
 
     private getErrorNameForStatusCode(statusCode: number, isWildcard?: boolean): string | undefined {

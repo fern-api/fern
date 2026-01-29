@@ -11,7 +11,7 @@ export class ValidationIssue {
     /** The source location where the issue was found */
     public readonly location: SourceLocation;
     /** The path to the value in the YAML document (e.g., ["cli", "version"]) */
-    public readonly yamlPath: ReadonlyArray<string | number>;
+    public readonly yamlPath?: ReadonlyArray<string | number>;
 
     constructor({
         message,
@@ -20,7 +20,7 @@ export class ValidationIssue {
     }: {
         message: string;
         location: SourceLocation;
-        yamlPath: ReadonlyArray<string | number>;
+        yamlPath?: ReadonlyArray<string | number>;
     }) {
         this.message = message;
         this.location = location;

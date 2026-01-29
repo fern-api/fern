@@ -6,6 +6,8 @@ package com.seed.api.resources.testgroup;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;
+import com.seed.api.types.PlainObject;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncTestGroupClient {
@@ -23,6 +25,21 @@ public class AsyncTestGroupClient {
      */
     public AsyncRawTestGroupClient withRawResponse() {
         return this.rawClient;
+    }
+
+    /**
+     * Post a nullable request body
+     */
+    public CompletableFuture<Object> testMethodName(String pathParam, Optional<PlainObject> body) {
+        return this.rawClient.testMethodName(pathParam, body).thenApply(response -> response.body());
+    }
+
+    /**
+     * Post a nullable request body
+     */
+    public CompletableFuture<Object> testMethodName(
+            String pathParam, Optional<PlainObject> body, RequestOptions requestOptions) {
+        return this.rawClient.testMethodName(pathParam, body, requestOptions).thenApply(response -> response.body());
     }
 
     /**

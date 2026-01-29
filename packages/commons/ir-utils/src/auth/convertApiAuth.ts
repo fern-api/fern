@@ -180,7 +180,9 @@ function generateBasicAuth({
         docs,
         username: casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
+        usernameOmit: rawScheme?.username?.omit,
         password: casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
-        passwordEnvVar: rawScheme?.password?.env
+        passwordEnvVar: rawScheme?.password?.env,
+        passwordOmit: rawScheme?.password?.omit
     });
 }

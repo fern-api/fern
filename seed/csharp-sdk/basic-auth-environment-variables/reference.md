@@ -1,6 +1,6 @@
 # Reference
 ## BasicAuth
-<details><summary><code>client.BasicAuth.<a href="/src/SeedBasicAuthEnvironmentVariables/BasicAuth/BasicAuthClient.cs">GetWithBasicAuthAsync</a>() -> bool</code></summary>
+<details><summary><code>client.BasicAuth.<a href="/src/SeedBasicAuthEnvironmentVariables/BasicAuth/BasicAuthClient.cs">GetWithBasicAuthAsync</a>() -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ await client.BasicAuth.GetWithBasicAuthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.BasicAuth.<a href="/src/SeedBasicAuthEnvironmentVariables/BasicAuth/BasicAuthClient.cs">PostWithBasicAuthAsync</a>(object { ... }) -> bool</code></summary>
+<details><summary><code>client.BasicAuth.<a href="/src/SeedBasicAuthEnvironmentVariables/BasicAuth/BasicAuthClient.cs">PostWithBasicAuthAsync</a>(object { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 

@@ -132,7 +132,7 @@ export function convertWebhookOperation({
                 multipartFormData,
                 response: convertedResponse?.value,
                 description: operation.description,
-                examples: convertWebhookExamples(request.type === "multipart" ? undefined : request.fullExamples),
+                examples: convertWebhookExamples(request.fullExamples),
                 source
             };
             return webhook;

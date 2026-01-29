@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedQueryParameters/User/UserClient.cs">GetUsernameAsync</a>(GetUsersRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedQueryParameters/User/UserClient.cs">GetUsernameAsync</a>(GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

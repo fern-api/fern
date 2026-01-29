@@ -1,4 +1,57 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.45.1
+  changelogEntry:
+    - summary: Remove check if body is `null` or `undefined`. If `null`, it is valid JSON `null`, and if `undefined`, it handles correctly to not have a body.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.45.0
+  changelogEntry:
+    - summary: |
+        Add support for additional query parameters in WebSocket connections. The `ConnectArgs`
+        interface now includes an optional `queryParams` property that allows users to pass
+        additional query parameters that get merged into the WebSocket URL alongside any
+        channel-defined query parameters.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.44.2
+  changelogEntry:
+    - summary: |
+        Fix README pagination section being included even when the SDK has no autopaginated endpoints.
+        The pagination section is now only included in the README when there is at least one endpoint
+        with pagination defined.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.44.1
+  changelogEntry:
+    - summary: |
+        Fix optional query parameters with date/datetime types throwing serialization errors when
+        undefined. Previously, optional query parameters that were named types aliasing Date (like
+        `before?: Before` where `Before = Date`) would call `jsonOrThrow` unconditionally, causing
+        "Expected Date object. Received undefined" errors when the parameter was omitted. Now the
+        generator adds a null check for optional date/datetime query parameters, matching the
+        behavior already used for object-type query parameters.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
+- version: 3.44.0
+  changelogEntry:
+    - summary: |
+        Enable forward compatible enums when the serde layer is enabled. Previously, the
+        `enableForwardCompatibleEnums` option only worked when `noSerdeLayer` was true.
+        Now enum types include `| string` regardless of the serde layer setting when
+        `enableForwardCompatibleEnums` is enabled, allowing TypeScript SDKs to accept
+        unrecognized enum values from APIs.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 63
+
 - version: 3.43.13
   changelogEntry:
     - summary: |

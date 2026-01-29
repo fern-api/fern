@@ -44,6 +44,20 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    public func justFileWithOptionalQueryParams(maybeString: String? = nil, maybeInteger: Int? = nil, request: Requests.JustFileWithOptionalQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/just-file-with-optional-query-params",
+            contentType: .multipartFormData,
+            queryParams: [
+                "maybeString": maybeString.map { .string($0) }, 
+                "maybeInteger": maybeInteger.map { .int($0) }
+            ],
+            body: request.asMultipartFormData(),
+            requestOptions: requestOptions
+        )
+    }
+
     public func withContentType(request: Requests.WithContentTypeRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
@@ -101,6 +115,17 @@ public final class ServiceClient: Sendable {
             method: .post,
             path: "/snippet",
             requestOptions: requestOptions
+        )
+    }
+
+    public func withLiteralAndEnumTypes(request: Requests.LiteralEnumRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/with-literal-enum",
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
+            requestOptions: requestOptions,
+            responseType: String.self
         )
     }
 }

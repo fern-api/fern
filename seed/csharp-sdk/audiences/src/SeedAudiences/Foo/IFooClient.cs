@@ -2,7 +2,7 @@ namespace SeedAudiences;
 
 public partial interface IFooClient
 {
-    Task<ImportingType> FindAsync(
+    WithRawResponseTask<ImportingType> FindAsync(
         FindRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

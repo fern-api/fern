@@ -25,6 +25,8 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
     private final MethodSpec requestOptionsMethodSpec;
     private final MethodSpec noRequestBodyMethodSpec;
     private final MethodSpec noRequestBodyWithRequestOptionsMethodSpec;
+    private final MethodSpec bodyOnlyMethodSpec;
+    private final MethodSpec bodyOnlyWithRequestOptionsMethodSpec;
     private final MethodSpec byteArrayMethodSpec;
     private final MethodSpec nonRequestOptionsByteArrayMethodSpec;
     private final MethodSpec inputStreamMethodSpec;
@@ -37,6 +39,8 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
             MethodSpec noRequestBodyWithRequestOptionsMethodSpec,
+            MethodSpec bodyOnlyMethodSpec,
+            MethodSpec bodyOnlyWithRequestOptionsMethodSpec,
             MethodSpec byteArrayMethodSpec,
             MethodSpec nonRequestOptionsByteArrayMethodSpec,
             MethodSpec inputStreamMethodSpec,
@@ -47,6 +51,8 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
         this.requestOptionsMethodSpec = requestOptionsMethodSpec;
         this.noRequestBodyMethodSpec = noRequestBodyMethodSpec;
         this.noRequestBodyWithRequestOptionsMethodSpec = noRequestBodyWithRequestOptionsMethodSpec;
+        this.bodyOnlyMethodSpec = bodyOnlyMethodSpec;
+        this.bodyOnlyWithRequestOptionsMethodSpec = bodyOnlyWithRequestOptionsMethodSpec;
         this.byteArrayMethodSpec = byteArrayMethodSpec;
         this.nonRequestOptionsByteArrayMethodSpec = nonRequestOptionsByteArrayMethodSpec;
         this.inputStreamMethodSpec = inputStreamMethodSpec;
@@ -73,6 +79,16 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
     @Override
     public Optional<MethodSpec> getNoRequestBodyWithRequestOptionsMethodSpec() {
         return Optional.ofNullable(noRequestBodyWithRequestOptionsMethodSpec);
+    }
+
+    @Override
+    public Optional<MethodSpec> getBodyOnlyMethodSpec() {
+        return Optional.ofNullable(bodyOnlyMethodSpec);
+    }
+
+    @Override
+    public Optional<MethodSpec> getBodyOnlyWithRequestOptionsMethodSpec() {
+        return Optional.ofNullable(bodyOnlyWithRequestOptionsMethodSpec);
     }
 
     @Override

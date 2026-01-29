@@ -46,8 +46,8 @@ export declare namespace RawClient {
         pathParameterReferences?: Record<string, string>;
         /** the headers to pass to the endpoint */
         headerBagReference?: string;
-        /** the query parameters to pass to the endpoint */
-        queryBagReference?: string;
+        /** query string (including the leading '?' if non-empty) */
+        queryString?: string;
         endpointRequest?: EndpointRequest;
         /** the request type, defaults to Json if none */
         requestType: RequestBodyType | undefined;
@@ -76,7 +76,7 @@ export class RawClient extends WithGeneration {
         bodyReference,
         pathParameterReferences,
         headerBagReference,
-        queryBagReference,
+        queryString,
         endpointRequest,
         requestType
     }: RawClient.CreateHttpRequestWrapperArgs): RawClient.CreateHttpRequestWrapperCodeBlock {
@@ -107,10 +107,10 @@ export class RawClient extends WithGeneration {
                 assignment: this.csharp.codeblock(bodyReference)
             });
         }
-        if (queryBagReference != null) {
+        if (queryString != null) {
             args.push({
-                name: "Query",
-                assignment: this.csharp.codeblock(queryBagReference)
+                name: "QueryString",
+                assignment: this.csharp.codeblock(queryString)
             });
         }
         if (headerBagReference != null) {
@@ -298,7 +298,8 @@ export class RawClient extends WithGeneration {
             on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
             arguments_: [request, this.csharp.codeblock(this.names.parameters.cancellationToken)],
-            async: true
+            async: true,
+            configureAwait: false
         });
     }
 

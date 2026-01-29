@@ -118,7 +118,9 @@ client = SeedApi(
     ...,
 )
 with client.with_raw_response.chat_stream(...) as response:
-    print(response.headers)  # access the response headers
+    print(
+        response.headers
+    )  # access the response headersprint(response.status_code)  # access the response status code
     for chunk in response.data:
         print(chunk)  # access the underlying object(s)
 ```

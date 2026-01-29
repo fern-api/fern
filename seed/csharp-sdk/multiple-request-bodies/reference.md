@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">UploadJsonDocumentAsync</a>(UploadDocumentRequest { ... }) -> OneOf&lt;DocumentMetadata, DocumentUploadResult&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">UploadJsonDocumentAsync</a>(UploadDocumentRequest { ... }) -> WithRawResponseTask&lt;OneOf&lt;DocumentMetadata, DocumentUploadResult&gt;&gt;</code></summary>
 <dl>
 <dd>
 

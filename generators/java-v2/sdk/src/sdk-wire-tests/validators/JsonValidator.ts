@@ -6,7 +6,23 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
  * Validator for JSON assertions in wire tests.
  */
 export class JsonValidator {
+    // Thresholds for deciding when to use resource files vs inline JSON
+    private static readonly INLINE_JSON_THRESHOLD_LINES = 50;
+    private static readonly INLINE_JSON_THRESHOLD_BYTES = 2048;
+
     constructor(private readonly context: SdkGeneratorContext) {}
+
+    /**
+     * Checks if JSON data should be stored in a resource file instead of inline.
+     * Returns true if the JSON exceeds size thresholds (50 lines or 2KB).
+     */
+    public shouldUseResourceFile(jsonData: unknown): boolean {
+        const json = JSON.stringify(jsonData, null, 2);
+        const lines = json.split("\n").length;
+        return (
+            lines > JsonValidator.INLINE_JSON_THRESHOLD_LINES || json.length > JsonValidator.INLINE_JSON_THRESHOLD_BYTES
+        );
+    }
 
     /**
      * Formats a JSON object as a multi-line Java string variable with proper concatenation.

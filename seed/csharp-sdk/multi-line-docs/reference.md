@@ -58,7 +58,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedMultiLineDocs/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMultiLineDocs/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

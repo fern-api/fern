@@ -12,16 +12,19 @@ public partial class OrganizationsClient : IOrganizationsClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
-    /// </code></example>
-    public async Task<Organization> GetOrganizationAsync(
+    private async Task<WithRawResponse<Organization>> GetOrganizationAsyncCore(
         string tenantId,
         string organizationId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -33,6 +36,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         ValueConvert.ToPathParameterString(tenantId),
                         ValueConvert.ToPathParameterString(organizationId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -43,14 +47,28 @@ public partial class OrganizationsClient : IOrganizationsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Organization>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Organization>(responseBody)!;
+                return new WithRawResponse<Organization>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -61,22 +79,18 @@ public partial class OrganizationsClient : IOrganizationsClient
         }
     }
 
-    /// <example><code>
-    /// await client.Organizations.GetOrganizationUserAsync(
-    ///     new GetOrganizationUserRequest
-    ///     {
-    ///         TenantId = "tenant_id",
-    ///         OrganizationId = "organization_id",
-    ///         UserId = "user_id",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<User> GetOrganizationUserAsync(
+    private async Task<WithRawResponse<User>> GetOrganizationUserAsyncCore(
         GetOrganizationUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -89,6 +103,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         ValueConvert.ToPathParameterString(request.OrganizationId),
                         ValueConvert.ToPathParameterString(request.UserId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -99,14 +114,28 @@ public partial class OrganizationsClient : IOrganizationsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<User>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
+                return new WithRawResponse<User>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -117,14 +146,7 @@ public partial class OrganizationsClient : IOrganizationsClient
         }
     }
 
-    /// <example><code>
-    /// await client.Organizations.SearchOrganizationsAsync(
-    ///     "tenant_id",
-    ///     "organization_id",
-    ///     new SearchOrganizationsRequest { Limit = 1 }
-    /// );
-    /// </code></example>
-    public async Task<IEnumerable<Organization>> SearchOrganizationsAsync(
+    private async Task<WithRawResponse<IEnumerable<Organization>>> SearchOrganizationsAsyncCore(
         string tenantId,
         string organizationId,
         SearchOrganizationsRequest request,
@@ -132,11 +154,16 @@ public partial class OrganizationsClient : IOrganizationsClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.Limit != null)
-        {
-            _query["limit"] = request.Limit.Value.ToString();
-        }
+        var _queryString = new SeedPathParameters.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("limit", request.Limit)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -148,7 +175,8 @@ public partial class OrganizationsClient : IOrganizationsClient
                         ValueConvert.ToPathParameterString(tenantId),
                         ValueConvert.ToPathParameterString(organizationId)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -159,14 +187,28 @@ public partial class OrganizationsClient : IOrganizationsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<Organization>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<Organization>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<Organization>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPathParametersException("Failed to deserialize response", e);
+                throw new SeedPathParametersApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPathParametersApiException(
@@ -175,5 +217,67 @@ public partial class OrganizationsClient : IOrganizationsClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
+    /// </code></example>
+    public WithRawResponseTask<Organization> GetOrganizationAsync(
+        string tenantId,
+        string organizationId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Organization>(
+            GetOrganizationAsyncCore(tenantId, organizationId, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Organizations.GetOrganizationUserAsync(
+    ///     new GetOrganizationUserRequest
+    ///     {
+    ///         TenantId = "tenant_id",
+    ///         OrganizationId = "organization_id",
+    ///         UserId = "user_id",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<User> GetOrganizationUserAsync(
+        GetOrganizationUserRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<User>(
+            GetOrganizationUserAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Organizations.SearchOrganizationsAsync(
+    ///     "tenant_id",
+    ///     "organization_id",
+    ///     new SearchOrganizationsRequest { Limit = 1 }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<Organization>> SearchOrganizationsAsync(
+        string tenantId,
+        string organizationId,
+        SearchOrganizationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<Organization>>(
+            SearchOrganizationsAsyncCore(
+                tenantId,
+                organizationId,
+                request,
+                options,
+                cancellationToken
+            )
+        );
     }
 }

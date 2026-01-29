@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "sortField": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SortField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "query": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SortField": {
+      "const": "DEFAULT"
+    }
+  }
+}

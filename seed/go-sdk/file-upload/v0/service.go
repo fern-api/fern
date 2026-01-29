@@ -10,6 +10,40 @@ import (
 )
 
 var (
+	justFileWithOptionalQueryParamsRequestFieldMaybeString  = big.NewInt(1 << 0)
+	justFileWithOptionalQueryParamsRequestFieldMaybeInteger = big.NewInt(1 << 1)
+)
+
+type JustFileWithOptionalQueryParamsRequest struct {
+	MaybeString  *string `json:"-" url:"maybeString,omitempty"`
+	MaybeInteger *int    `json:"-" url:"maybeInteger,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (j *JustFileWithOptionalQueryParamsRequest) require(field *big.Int) {
+	if j.explicitFields == nil {
+		j.explicitFields = big.NewInt(0)
+	}
+	j.explicitFields.Or(j.explicitFields, field)
+}
+
+// SetMaybeString sets the MaybeString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (j *JustFileWithOptionalQueryParamsRequest) SetMaybeString(maybeString *string) {
+	j.MaybeString = maybeString
+	j.require(justFileWithOptionalQueryParamsRequestFieldMaybeString)
+}
+
+// SetMaybeInteger sets the MaybeInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (j *JustFileWithOptionalQueryParamsRequest) SetMaybeInteger(maybeInteger *int) {
+	j.MaybeInteger = maybeInteger
+	j.require(justFileWithOptionalQueryParamsRequestFieldMaybeInteger)
+}
+
+var (
 	justFileWithQueryParamsRequestFieldMaybeString           = big.NewInt(1 << 0)
 	justFileWithQueryParamsRequestFieldInteger               = big.NewInt(1 << 1)
 	justFileWithQueryParamsRequestFieldMaybeInteger          = big.NewInt(1 << 2)
@@ -109,6 +143,8 @@ func (m *MyRequest) require(field *big.Int) {
 }
 
 type Id = string
+
+type ModelType = string
 
 type MyAliasObject = *MyObject
 
@@ -386,6 +422,31 @@ func (o ObjectType) Ptr() *ObjectType {
 	return &o
 }
 
+type OpenEnumType string
+
+const (
+	OpenEnumTypeOptionA OpenEnumType = "OPTION_A"
+	OpenEnumTypeOptionB OpenEnumType = "OPTION_B"
+	OpenEnumTypeOptionC OpenEnumType = "OPTION_C"
+)
+
+func NewOpenEnumTypeFromString(s string) (OpenEnumType, error) {
+	switch s {
+	case "OPTION_A":
+		return OpenEnumTypeOptionA, nil
+	case "OPTION_B":
+		return OpenEnumTypeOptionB, nil
+	case "OPTION_C":
+		return OpenEnumTypeOptionC, nil
+	}
+	var t OpenEnumType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OpenEnumType) Ptr() *OpenEnumType {
+	return &o
+}
+
 type WithContentTypeRequest struct {
 	Foo    string    `json:"foo" url:"-"`
 	Bar    *MyObject `json:"bar,omitempty" url:"-"`
@@ -454,4 +515,20 @@ func (i *InlineTypeRequest) require(field *big.Int) {
 		i.explicitFields = big.NewInt(0)
 	}
 	i.explicitFields.Or(i.explicitFields, field)
+}
+
+type LiteralEnumRequest struct {
+	ModelType *ModelType    `json:"model_type,omitempty" url:"-"`
+	OpenEnum  *OpenEnumType `json:"open_enum,omitempty" url:"-"`
+	MaybeName *string       `json:"maybe_name,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *LiteralEnumRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
 }

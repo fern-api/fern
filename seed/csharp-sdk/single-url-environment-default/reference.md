@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.Dummy.<a href="/src/SeedSingleUrlEnvironmentDefault/Dummy/DummyClient.cs">GetDummyAsync</a>() -> string</code></summary>
+<details><summary><code>client.Dummy.<a href="/src/SeedSingleUrlEnvironmentDefault/Dummy/DummyClient.cs">GetDummyAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 

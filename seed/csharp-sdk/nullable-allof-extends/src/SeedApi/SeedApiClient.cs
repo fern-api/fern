@@ -9,7 +9,8 @@ public partial class SeedApiClient : ISeedApiClient
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -18,8 +19,7 @@ public partial class SeedApiClient : ISeedApiClient
                 { "User-Agent", "Fernnullable-allof-extends/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,17 +29,17 @@ public partial class SeedApiClient : ISeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <summary>
-    /// Returns a RootObject which inherits from a nullable schema.
-    /// </summary>
-    /// <example><code>
-    /// await client.GetTestAsync();
-    /// </code></example>
-    public async Task<RootObject> GetTestAsync(
+    private async Task<WithRawResponse<RootObject>> GetTestAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -47,6 +47,7 @@ public partial class SeedApiClient : ISeedApiClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "test",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -57,14 +58,28 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<RootObject>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<RootObject>(responseBody)!;
+                return new WithRawResponse<RootObject>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -75,18 +90,18 @@ public partial class SeedApiClient : ISeedApiClient
         }
     }
 
-    /// <summary>
-    /// Creates a test object with nullable allOf in request body.
-    /// </summary>
-    /// <example><code>
-    /// await client.CreateTestAsync(new RootObject());
-    /// </code></example>
-    public async Task<RootObject> CreateTestAsync(
+    private async Task<WithRawResponse<RootObject>> CreateTestAsyncCore(
         RootObject request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -95,6 +110,7 @@ public partial class SeedApiClient : ISeedApiClient
                     Method = HttpMethod.Post,
                     Path = "test",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -106,14 +122,28 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<RootObject>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<RootObject>(responseBody)!;
+                return new WithRawResponse<RootObject>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -122,5 +152,36 @@ public partial class SeedApiClient : ISeedApiClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Returns a RootObject which inherits from a nullable schema.
+    /// </summary>
+    /// <example><code>
+    /// await client.GetTestAsync();
+    /// </code></example>
+    public WithRawResponseTask<RootObject> GetTestAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<RootObject>(GetTestAsyncCore(options, cancellationToken));
+    }
+
+    /// <summary>
+    /// Creates a test object with nullable allOf in request body.
+    /// </summary>
+    /// <example><code>
+    /// await client.CreateTestAsync(new RootObject());
+    /// </code></example>
+    public WithRawResponseTask<RootObject> CreateTestAsync(
+        RootObject request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<RootObject>(
+            CreateTestAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">SubmitFormDataAsync</a>(PostSubmitRequest { ... }) -> PostSubmitResponse</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">SubmitFormDataAsync</a>(PostSubmitRequest { ... }) -> WithRawResponseTask&lt;PostSubmitResponse&gt;</code></summary>
 <dl>
 <dd>
 

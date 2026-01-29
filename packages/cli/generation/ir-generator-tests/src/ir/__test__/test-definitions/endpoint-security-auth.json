@@ -414,6 +414,7 @@
                     }
                 },
                 "usernameEnvVar": "MY_USERNAME",
+                "usernameOmit": null,
                 "password": {
                     "originalName": "password",
                     "camelCase": {
@@ -434,6 +435,7 @@
                     }
                 },
                 "passwordEnvVar": "MY_PASSWORD",
+                "passwordOmit": null,
                 "key": "Basic",
                 "docs": null
             },

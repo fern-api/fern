@@ -101,13 +101,17 @@ export class DynamicTypeLiteralMapper {
         switch (primitive) {
             case "STRING":
             case "UUID":
-            case "BASE_64":
-            case "BIG_INTEGER":
                 return rust.Expression.methodCall({
                     target: rust.Expression.stringLiteral("value"),
                     method: "to_string",
                     args: []
                 });
+            case "BIG_INTEGER":
+                // BigInt is num_bigint::BigInt in Rust - generate zero for placeholder
+                return rust.Expression.raw('BigInt::parse_bytes("0".as_bytes(), 10).unwrap()');
+            case "BASE_64":
+                // Base64 is Vec<u8> in Rust - generate empty vec for placeholder
+                return rust.Expression.raw("vec![]");
             case "INTEGER":
             case "LONG":
             case "UINT":
@@ -237,11 +241,16 @@ export class DynamicTypeLiteralMapper {
             case "BASE_64": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
-                    return rust.Expression.raw("Default::default()");
+                    return rust.Expression.raw("vec![]");
                 }
+                // Base64 is Vec<u8> in Rust - decode the base64 string to bytes
                 return rust.Expression.methodCall({
-                    target: rust.Expression.stringLiteral(str),
-                    method: "to_string",
+                    target: rust.Expression.methodCall({
+                        target: rust.Expression.raw("base64::engine::general_purpose::STANDARD"),
+                        method: "decode",
+                        args: [rust.Expression.stringLiteral(str)]
+                    }),
+                    method: "unwrap",
                     args: []
                 });
             }
@@ -250,9 +259,13 @@ export class DynamicTypeLiteralMapper {
                 if (str == null) {
                     return rust.Expression.raw("Default::default()");
                 }
+                // BigInt is num_bigint::BigInt in Rust - parse from string
                 return rust.Expression.methodCall({
-                    target: rust.Expression.stringLiteral(str),
-                    method: "to_string",
+                    target: rust.Expression.functionCall("BigInt::parse_bytes", [
+                        rust.Expression.raw(`${JSON.stringify(str)}.as_bytes()`),
+                        rust.Expression.numberLiteral(10)
+                    ]),
+                    method: "unwrap",
                     args: []
                 });
             }

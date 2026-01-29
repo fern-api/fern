@@ -212,3 +212,12 @@ types:
     properties:
       method: string
       tokenId: string
+
+  # Test union with reserved property name collisions
+  UnionWithReservedNames:
+    docs: Tests that union members named 'Type' or 'Value' don't collide with internal properties
+    discriminated: false
+    union:
+      - literal<"type">
+      - literal<"value">
+      - string

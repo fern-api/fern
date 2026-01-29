@@ -59,6 +59,18 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "flexible_datetime.rs"
     },
+    Base64Bytes: {
+        relativePathToDir: "src/core",
+        filename: "base64_bytes.rs"
+    },
+    BigIntString: {
+        relativePathToDir: "src/core",
+        filename: "bigint_string.rs"
+    },
+    OAuthTokenProvider: {
+        relativePathToDir: "src/core",
+        filename: "oauth_token_provider.rs"
+    },
     CoreMod: {
         relativePathToDir: "src/core",
         filename: "mod.rs"

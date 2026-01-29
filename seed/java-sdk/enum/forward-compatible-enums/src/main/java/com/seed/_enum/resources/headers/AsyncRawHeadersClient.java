@@ -36,12 +36,16 @@ public class AsyncRawHeadersClient {
 
     public CompletableFuture<SeedEnumHttpResponse<Void>> send(
             SendEnumAsHeaderRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("headers")
-                .build();
+                .addPathSegments("headers");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         _requestBuilder.addHeader("operand", request.getOperand().toString());

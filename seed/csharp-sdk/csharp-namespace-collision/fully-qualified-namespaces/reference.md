@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateUserAsync</a>(User { ... }) -> User</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ await client.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateTaskAsync</a>(Task { ... }) -> Task</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +96,7 @@ await client.CreateTaskAsync(
 </details>
 
 ## System
-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> User</code></summary>
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -146,7 +146,7 @@ await client.System.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> Task</code></summary>
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 

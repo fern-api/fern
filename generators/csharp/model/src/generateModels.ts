@@ -5,6 +5,7 @@ import { EnumGenerator } from "./enum/EnumGenerator";
 import { StringEnumGenerator } from "./enum/StringEnumGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
+import { UndiscriminatedUnionGenerator } from "./undiscriminated-union/UndiscriminatedUnionGenerator";
 import { UnionGenerator } from "./union/UnionGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
@@ -24,7 +25,16 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             object: (otd) => {
                 return new ObjectGenerator(context, typeDeclaration, otd).generate();
             },
-            undiscriminatedUnion: () => undefined,
+            undiscriminatedUnion: (undiscriminatedUnionDeclaration) => {
+                if (context.settings.shouldGenerateUndiscriminatedUnions) {
+                    return new UndiscriminatedUnionGenerator(
+                        context,
+                        typeDeclaration,
+                        undiscriminatedUnionDeclaration
+                    ).generate();
+                }
+                return undefined;
+            },
             union: (unionDeclaration) => {
                 if (context.settings.shouldGeneratedDiscriminatedUnions) {
                     return new UnionGenerator(context, typeDeclaration, unionDeclaration).generate();

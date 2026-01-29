@@ -16,3 +16,4 @@ export * from "./TypeWithOptionalUnion";
 export * from "./UnionWithDuplicateTypes";
 export * from "./UnionWithIdenticalPrimitives";
 export * from "./UnionWithIdenticalStrings";
+export * from "./UnionWithReservedNames";

@@ -236,6 +236,9 @@ export class WireTestGenerator {
         );
 
         const pythonFile = this.buildTestFile(serviceName, endpointTestCases);
+        if (pythonFile === null) {
+            return null;
+        }
 
         return new WriteablePythonFile({
             filename: `test_${serviceName}`,
@@ -257,7 +260,7 @@ export class WireTestGenerator {
             exampleIndex: number;
             isErrorResponse: boolean;
         }>
-    ): python.PythonFile {
+    ): python.PythonFile | null {
         const statements: python.AstNode[] = [];
 
         // Add raw imports that the AST doesn't support (simple "import X" statements)
@@ -269,6 +272,7 @@ export class WireTestGenerator {
         statements.push(this.createImportRegistration());
 
         // Add test functions for each endpoint
+        let testFunctionCount = 0;
         for (const { endpoint, example, service, exampleIndex, isErrorResponse } of testCases) {
             const testFunction = this.generateEndpointTestFunction(
                 serviceName,
@@ -280,7 +284,12 @@ export class WireTestGenerator {
             );
             if (testFunction) {
                 statements.push(testFunction);
+                testFunctionCount++;
             }
+        }
+
+        if (testFunctionCount === 0) {
+            return null;
         }
 
         const pathSegments = `tests/wire/test_${serviceName}`.split("/");
@@ -338,6 +347,22 @@ export class WireTestGenerator {
             // This ensures all required auth parameters are supplied with fake values
             statements.push(python.codeBlock(`client = get_client(test_id)`));
 
+            // Exclusions use definition-level identifiers in the form "<service_path>.<endpoint_name>"
+            // or "<service_path>.*" to exclude an entire service.
+            const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const servicePath = servicePathParts.join(".");
+            const selector =
+                servicePath.length > 0
+                    ? `${servicePath}.${endpoint.name.snakeCase.safeName}`
+                    : endpoint.name.snakeCase.safeName;
+            const excluded = this.context.customConfig.wire_tests?.exclusions ?? [];
+            if (
+                excluded.includes(selector) ||
+                excluded.some((pattern) => pattern.endsWith(".*") && selector.startsWith(pattern.slice(0, -2) + "."))
+            ) {
+                return null;
+            }
+
             // Generate the API call AST directly
             const apiCallAst = this.generateApiCallAst(endpoint, example);
 
@@ -368,9 +393,14 @@ export class WireTestGenerator {
             }
 
             // Verify request count using test ID for filtering
+            // When testing the inferred auth token endpoint, expect 2 requests:
+            // 1. The automatic token fetch request
+            // 2. The actual API call being tested
+            // For all other endpoints, expect 1 request (the auth token fetch goes to a different endpoint)
+            const expectedRequestCount = this.isInferredAuthTokenEndpoint(endpoint) ? 2 : 1;
             statements.push(
                 python.codeBlock(
-                    `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, 1)`
+                    `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, ${expectedRequestCount})`
                 )
             );
 
@@ -386,6 +416,38 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Checks if the IR has any inferred auth schemes.
+     * When inferred auth is present, the client will make an additional request to get a token.
+     */
+    private hasInferredAuth(): boolean {
+        if (!this.context.ir.auth?.schemes) {
+            return false;
+        }
+        return this.context.ir.auth.schemes.some((scheme) => scheme.type === "inferred");
+    }
+
+    /**
+     * Checks if an endpoint is the inferred auth token endpoint.
+     * When testing the auth token endpoint with inferred auth, expect 2 requests:
+     * 1. The automatic token fetch request
+     * 2. The actual API call being tested
+     */
+    private isInferredAuthTokenEndpoint(endpoint: HttpEndpoint): boolean {
+        if (!this.context.ir.auth?.schemes) {
+            return false;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                const tokenEndpointId = scheme.tokenEndpoint.endpoint.endpointId;
+                if (endpoint.id === tokenEndpointId) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

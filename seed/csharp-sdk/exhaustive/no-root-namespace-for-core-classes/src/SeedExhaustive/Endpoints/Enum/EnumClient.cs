@@ -1,4 +1,5 @@
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -13,15 +14,18 @@ public partial class EnumClient : IEnumClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
-    /// </code></example>
-    public async Task<WeatherReport> GetAndReturnEnumAsync(
+    private async Task<WithRawResponse<WeatherReport>> GetAndReturnEnumAsyncCore(
         WeatherReport request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +34,7 @@ public partial class EnumClient : IEnumClient
                     Method = HttpMethod.Post,
                     Path = "/enum",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -40,14 +45,28 @@ public partial class EnumClient : IEnumClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<WeatherReport>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<WeatherReport>(responseBody)!;
+                return new WithRawResponse<WeatherReport>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExhaustiveApiException(
@@ -56,5 +75,19 @@ public partial class EnumClient : IEnumClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
+    /// </code></example>
+    public WithRawResponseTask<WeatherReport> GetAndReturnEnumAsync(
+        WeatherReport request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<WeatherReport>(
+            GetAndReturnEnumAsyncCore(request, options, cancellationToken)
+        );
     }
 }

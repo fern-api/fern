@@ -3,8 +3,12 @@ namespace SeedMixedCase;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedMixedCaseApiException(string message, int statusCode, object body)
-    : SeedMixedCaseException(message)
+public class SeedMixedCaseApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedMixedCaseException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

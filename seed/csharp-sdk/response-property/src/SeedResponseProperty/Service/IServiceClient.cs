@@ -2,43 +2,43 @@ namespace SeedResponseProperty;
 
 public partial interface IServiceClient
 {
-    Task<Response> GetMovieAsync(
+    WithRawResponseTask<Response> GetMovieAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Response> GetMovieDocsAsync(
+    WithRawResponseTask<Response> GetMovieDocsAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<StringResponse> GetMovieNameAsync(
+    WithRawResponseTask<StringResponse> GetMovieNameAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Response> GetMovieMetadataAsync(
+    WithRawResponseTask<Response> GetMovieMetadataAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Response?> GetOptionalMovieAsync(
+    WithRawResponseTask<Response?> GetOptionalMovieAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<WithDocs?> GetOptionalMovieDocsAsync(
+    WithRawResponseTask<WithDocs?> GetOptionalMovieDocsAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<StringResponse?> GetOptionalMovieNameAsync(
+    WithRawResponseTask<StringResponse?> GetOptionalMovieNameAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

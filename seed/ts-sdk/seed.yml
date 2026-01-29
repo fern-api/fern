@@ -443,6 +443,10 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+    - outputFolder: forward-compatible-enums-with-serde
+      customConfig:
+        enableForwardCompatibleEnums: true
+        noSerdeLayer: false
   pagination:
     - outputFolder: no-custom-config
       customConfig: null
@@ -505,6 +509,7 @@ scripts:
 allowedFailures:
   - enum:no-custom-config
   - enum:forward-compatible-enums
+  - enum:forward-compatible-enums-with-serde
   - enum:serde
   - error-property:no-custom-config
   - error-property:union-utils

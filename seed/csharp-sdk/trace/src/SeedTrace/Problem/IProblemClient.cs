@@ -5,7 +5,7 @@ public partial interface IProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    Task<CreateProblemResponse> CreateProblemAsync(
+    WithRawResponseTask<CreateProblemResponse> CreateProblemAsync(
         CreateProblemRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -14,7 +14,7 @@ public partial interface IProblemClient
     /// <summary>
     /// Updates a problem
     /// </summary>
-    Task<UpdateProblemResponse> UpdateProblemAsync(
+    WithRawResponseTask<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request,
         RequestOptions? options = null,
@@ -33,7 +33,7 @@ public partial interface IProblemClient
     /// <summary>
     /// Returns default starter files for problem
     /// </summary>
-    Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
+    WithRawResponseTask<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

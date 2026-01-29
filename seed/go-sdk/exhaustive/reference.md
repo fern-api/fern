@@ -361,7 +361,7 @@ request := &types.ObjectWithOptionalField{
             1,
         ),
         Long: fern.Int64(
-            1000000,
+            int64(1000000),
         ),
         Double: fern.Float64(
             1.1,
@@ -384,7 +384,9 @@ request := &types.ObjectWithOptionalField{
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         ),
-        Base64: []byte("SGVsbG8gd29ybGQh"),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
         List: []string{
             "list",
             "list",
@@ -451,7 +453,7 @@ request := &types.ObjectWithOptionalField{
             1,
         ),
         Long: fern.Int64(
-            1000000,
+            int64(1000000),
         ),
         Double: fern.Float64(
             1.1,
@@ -474,7 +476,9 @@ request := &types.ObjectWithOptionalField{
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         ),
-        Base64: []byte("SGVsbG8gd29ybGQh"),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
         List: []string{
             "list",
             "list",
@@ -734,7 +738,7 @@ request := &types.ObjectWithOptionalField{
             1,
         ),
         Long: fern.Int64(
-            1000000,
+            int64(1000000),
         ),
         Double: fern.Float64(
             1.1,
@@ -757,7 +761,9 @@ request := &types.ObjectWithOptionalField{
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         ),
-        Base64: []byte("SGVsbG8gd29ybGQh"),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
         List: []string{
             "list",
             "list",
@@ -878,7 +884,7 @@ request := &types.ObjectWithOptionalField{
             1,
         ),
         Long: fern.Int64(
-            1000000,
+            int64(1000000),
         ),
         Double: fern.Float64(
             1.1,
@@ -901,7 +907,9 @@ request := &types.ObjectWithOptionalField{
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         ),
-        Base64: []byte("SGVsbG8gd29ybGQh"),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
         List: []string{
             "list",
             "list",
@@ -1070,7 +1078,7 @@ request := &types.NestedObjectWithOptionalField{
                 1,
             ),
             Long: fern.Int64(
-                1000000,
+                int64(1000000),
             ),
             Double: fern.Float64(
                 1.1,
@@ -1093,7 +1101,9 @@ request := &types.NestedObjectWithOptionalField{
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             ),
-            Base64: []byte("SGVsbG8gd29ybGQh"),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
             List: []string{
                 "list",
                 "list",
@@ -1163,7 +1173,7 @@ request := &types.NestedObjectWithRequiredField{
                 1,
             ),
             Long: fern.Int64(
-                1000000,
+                int64(1000000),
             ),
             Double: fern.Float64(
                 1.1,
@@ -1186,7 +1196,9 @@ request := &types.NestedObjectWithRequiredField{
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             ),
-            Base64: []byte("SGVsbG8gd29ybGQh"),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
             List: []string{
                 "list",
                 "list",
@@ -1266,7 +1278,7 @@ request := []*types.NestedObjectWithRequiredField{
                     1,
                 ),
                 Long: fern.Int64(
-                    1000000,
+                    int64(1000000),
                 ),
                 Double: fern.Float64(
                     1.1,
@@ -1289,7 +1301,9 @@ request := []*types.NestedObjectWithRequiredField{
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                 ),
-                Base64: []byte("SGVsbG8gd29ybGQh"),
+                Base64: fern.Bytes(
+                    []byte("SGVsbG8gd29ybGQh"),
+                ),
                 List: []string{
                     "list",
                     "list",
@@ -1315,7 +1329,7 @@ request := []*types.NestedObjectWithRequiredField{
                     1,
                 ),
                 Long: fern.Int64(
-                    1000000,
+                    int64(1000000),
                 ),
                 Double: fern.Float64(
                     1.1,
@@ -1338,7 +1352,9 @@ request := []*types.NestedObjectWithRequiredField{
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                 ),
-                Base64: []byte("SGVsbG8gd29ybGQh"),
+                Base64: fern.Bytes(
+                    []byte("SGVsbG8gd29ybGQh"),
+                ),
                 List: []string{
                     "list",
                     "list",
@@ -2555,7 +2571,7 @@ POST with custom object in request body, response is an object
 
 ```go
 request := &fern.PostWithObjectBody{
-        String: "string",
+        FieldString: "string",
         Integer: 1,
         NestedObject: &types.ObjectWithOptionalField{
             FieldString: fern.String(
@@ -2565,7 +2581,7 @@ request := &fern.PostWithObjectBody{
                 1,
             ),
             Long: fern.Int64(
-                1000000,
+                int64(1000000),
             ),
             Double: fern.Float64(
                 1.1,
@@ -2588,7 +2604,9 @@ request := &fern.PostWithObjectBody{
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             ),
-            Base64: []byte("SGVsbG8gd29ybGQh"),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
             List: []string{
                 "list",
                 "list",

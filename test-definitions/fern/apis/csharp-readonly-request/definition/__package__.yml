@@ -1,0 +1,58 @@
+types:
+  Vendor:
+    docs: A vendor object with read-only timestamps
+    properties:
+      id:
+        docs: The unique identifier for the vendor.
+        type: string
+      name:
+        docs: The name of the vendor.
+        type: string
+      created_at:
+        docs: The timestamp when the vendor was created.
+        type: string
+        access: read-only
+      updated_at:
+        docs: The timestamp when the vendor was last updated.
+        type: string
+        access: read-only
+
+  CreateVendorRequest:
+    docs: Request to create vendors
+    properties:
+      vendors:
+        docs: Map of vendor ID to vendor data
+        type: map<string, Vendor>
+
+  CreateVendorResponse:
+    docs: Response from creating vendors
+    properties:
+      vendors:
+        docs: Map of vendor ID to created vendor
+        type: map<string, Vendor>
+
+service:
+  auth: false
+  base-path: /vendors
+  endpoints:
+    batchCreate:
+      method: POST
+      path: /batch
+      request: CreateVendorRequest
+      response: CreateVendorResponse
+      examples:
+        - request:
+            vendors:
+              vendor-1:
+                id: "vendor-1"
+                name: "Acme Corp"
+                created_at: "2024-01-01T00:00:00Z"
+                updated_at: "2024-01-01T00:00:00Z"
+          response:
+            body:
+              vendors:
+                vendor-1:
+                  id: "vendor-1"
+                  name: "Acme Corp"
+                  created_at: "2024-01-01T00:00:00Z"
+                  updated_at: "2024-01-01T00:00:00Z"

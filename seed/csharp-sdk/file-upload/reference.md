@@ -40,7 +40,7 @@ await client.Service.JustFileAsync(new JustFileRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedFileUpload/Service/ServiceClient.cs">OptionalArgsAsync</a>(OptionalArgsRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedFileUpload/Service/ServiceClient.cs">OptionalArgsAsync</a>(OptionalArgsRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 

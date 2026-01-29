@@ -1,6 +1,6 @@
 # Reference
 ## NullableOptional
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetUserAsync</a>(userId) -> UserResponse</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ await client.NullableOptional.GetUserAsync("userId");
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> UserResponse</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -125,7 +125,7 @@ await client.NullableOptional.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateUserAsync</a>(userId, UpdateUserRequest { ... }) -> UserResponse</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateUserAsync</a>(userId, UpdateUserRequest { ... }) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -205,7 +205,7 @@ await client.NullableOptional.UpdateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">ListUsersAsync</a>(ListUsersRequest { ... }) -> IEnumerable&lt;UserResponse&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">ListUsersAsync</a>(ListUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -267,7 +267,7 @@ await client.NullableOptional.ListUsersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> IEnumerable&lt;UserResponse&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -329,7 +329,7 @@ await client.NullableOptional.SearchUsersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">CreateComplexProfileAsync</a>(ComplexProfile { ... }) -> ComplexProfile</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">CreateComplexProfileAsync</a>(ComplexProfile { ... }) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
 <dl>
 <dd>
 
@@ -525,7 +525,7 @@ await client.NullableOptional.CreateComplexProfileAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetComplexProfileAsync</a>(profileId) -> ComplexProfile</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetComplexProfileAsync</a>(profileId) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
 <dl>
 <dd>
 
@@ -579,7 +579,7 @@ await client.NullableOptional.GetComplexProfileAsync("profileId");
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateComplexProfileAsync</a>(profileId, UpdateComplexProfileRequest { ... }) -> ComplexProfile</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateComplexProfileAsync</a>(profileId, UpdateComplexProfileRequest { ... }) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
 <dl>
 <dd>
 
@@ -682,7 +682,7 @@ await client.NullableOptional.UpdateComplexProfileAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">TestDeserializationAsync</a>(DeserializationTestRequest { ... }) -> DeserializationTestResponse</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">TestDeserializationAsync</a>(DeserializationTestRequest { ... }) -> WithRawResponseTask&lt;DeserializationTestResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -798,7 +798,7 @@ await client.NullableOptional.TestDeserializationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">FilterByRoleAsync</a>(FilterByRoleRequest { ... }) -> IEnumerable&lt;UserResponse&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">FilterByRoleAsync</a>(FilterByRoleRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -859,7 +859,7 @@ await client.NullableOptional.FilterByRoleAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetNotificationSettingsAsync</a>(userId) -> NotificationMethod?</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetNotificationSettingsAsync</a>(userId) -> WithRawResponseTask&lt;NotificationMethod?&gt;</code></summary>
 <dl>
 <dd>
 
@@ -913,7 +913,7 @@ await client.NullableOptional.GetNotificationSettingsAsync("userId");
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateTagsAsync</a>(userId, UpdateTagsRequest { ... }) -> IEnumerable&lt;string&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateTagsAsync</a>(userId, UpdateTagsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;string&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -983,7 +983,7 @@ await client.NullableOptional.UpdateTagsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetSearchResultsAsync</a>(SearchRequest { ... }) -> IEnumerable&lt;SearchResult&gt;?</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetSearchResultsAsync</a>(SearchRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;SearchResult&gt;?&gt;</code></summary>
 <dl>
 <dd>
 

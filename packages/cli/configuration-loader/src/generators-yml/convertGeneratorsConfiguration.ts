@@ -10,6 +10,15 @@ import path from "path";
 
 import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName";
 
+/**
+ * Union type representing any spec-level settings schema.
+ * Used for parsing global api.settings which may contain settings from any spec type.
+ */
+type AnySpecSettingsSchema =
+    | generatorsYml.OpenApiSettingsSchema
+    | generatorsYml.AsyncApiSettingsSchema
+    | generatorsYml.BaseApiSettingsSchema;
+
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
@@ -145,7 +154,7 @@ function parseAsyncApiDefinitionSettingsSchema(
 }
 
 export function parseBaseApiDefinitionSettingsSchema(
-    settings: generatorsYml.BaseApiSettingsSchema | undefined
+    settings: AnySpecSettingsSchema | undefined
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...UNDEFINED_API_DEFINITION_SETTINGS,
@@ -157,6 +166,10 @@ export function parseBaseApiDefinitionSettingsSchema(
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        groupMultiApiEnvironments:
+            settings != null && "group-multi-api-environments" in settings
+                ? settings["group-multi-api-environments"]
+                : undefined,
         removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
             settings?.["remove-discriminants-from-schemas"]
         ),
@@ -729,10 +742,11 @@ async function convertOutputMode({
                     })
                 );
             case "pull-request": {
+                const pullRequestConfig = generator.github as generatorsYml.GithubPullRequestSchema;
                 const reviewers = _getReviewers({
                     topLevelReviewers: maybeTopLevelReviewers,
                     groupLevelReviewers: maybeGroupLevelReviewers,
-                    outputModeReviewers: (generator.github as generatorsYml.GithubPullRequestSchema).reviewers
+                    outputModeReviewers: pullRequestConfig.reviewers
                 });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
@@ -741,7 +755,8 @@ async function convertOutputMode({
                         license,
                         publishInfo,
                         downloadSnippets,
-                        reviewers
+                        reviewers,
+                        branch: pullRequestConfig.branch
                     })
                 );
             }

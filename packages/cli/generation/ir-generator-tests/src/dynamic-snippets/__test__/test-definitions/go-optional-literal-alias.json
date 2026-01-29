@@ -1,0 +1,255 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:SortField": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "SortField",
+                    "camelCase": {
+                        "unsafeName": "sortField",
+                        "safeName": "sortField"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "sort_field",
+                        "safeName": "sort_field"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SORT_FIELD",
+                        "safeName": "SORT_FIELD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SortField",
+                        "safeName": "SortField"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "literal",
+                "value": {
+                    "type": "string",
+                    "value": "DEFAULT"
+                }
+            }
+        },
+        "type_:SearchRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SearchRequest",
+                    "camelCase": {
+                        "unsafeName": "searchRequest",
+                        "safeName": "searchRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_request",
+                        "safeName": "search_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_REQUEST",
+                        "safeName": "SEARCH_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchRequest",
+                        "safeName": "SearchRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "sortField",
+                            "camelCase": {
+                                "unsafeName": "sortField",
+                                "safeName": "sortField"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "sort_field",
+                                "safeName": "sort_field"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SORT_FIELD",
+                                "safeName": "SORT_FIELD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SortField",
+                                "safeName": "SortField"
+                            }
+                        },
+                        "wireValue": "sortField"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:SortField"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "query",
+                            "camelCase": {
+                                "unsafeName": "query",
+                                "safeName": "query"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "query",
+                                "safeName": "query"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "QUERY",
+                                "safeName": "QUERY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Query",
+                                "safeName": "Query"
+                            }
+                        },
+                        "wireValue": "query"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:SearchResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SearchResponse",
+                    "camelCase": {
+                        "unsafeName": "searchResponse",
+                        "safeName": "searchResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_response",
+                        "safeName": "search_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_RESPONSE",
+                        "safeName": "SEARCH_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchResponse",
+                        "safeName": "SearchResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "result",
+                            "camelCase": {
+                                "unsafeName": "result",
+                                "safeName": "result"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "result",
+                                "safeName": "result"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RESULT",
+                                "safeName": "RESULT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Result",
+                                "safeName": "Result"
+                            }
+                        },
+                        "wireValue": "result"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.search": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "search",
+                    "camelCase": {
+                        "unsafeName": "search",
+                        "safeName": "search"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search",
+                        "safeName": "search"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH",
+                        "safeName": "SEARCH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Search",
+                        "safeName": "Search"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/search"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:SearchRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

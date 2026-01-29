@@ -55,6 +55,9 @@ export interface ProcessingResult {
     endpointKey: string;
     enhancedReq?: unknown;
     enhancedRes?: unknown;
+    extractedHeaders?: Record<string, unknown>;
+    extractedPathParams?: Record<string, unknown>;
+    extractedQueryParams?: Record<string, unknown>;
     success: boolean;
     error?: string;
 }

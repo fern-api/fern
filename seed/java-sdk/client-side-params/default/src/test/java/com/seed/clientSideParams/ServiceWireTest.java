@@ -330,11 +330,9 @@ public class ServiceWireTest {
 
     @Test
     public void testListUsers() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"users\":[{\"user_id\":\"user_id\",\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"identities\":[{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1},{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1}],\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"picture\":\"picture\",\"name\":\"name\",\"nickname\":\"nickname\",\"multifactor\":[\"multifactor\",\"multifactor\"],\"last_ip\":\"last_ip\",\"last_login\":\"2024-01-15T09:30:00Z\",\"logins_count\":1,\"blocked\":true,\"given_name\":\"given_name\",\"family_name\":\"family_name\"},{\"user_id\":\"user_id\",\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"identities\":[{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1},{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1}],\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"picture\":\"picture\",\"name\":\"name\",\"nickname\":\"nickname\",\"multifactor\":[\"multifactor\",\"multifactor\"],\"last_ip\":\"last_ip\",\"last_login\":\"2024-01-15T09:30:00Z\",\"logins_count\":1,\"blocked\":true,\"given_name\":\"given_name\",\"family_name\":\"family_name\"}],\"start\":1,\"limit\":1,\"length\":1,\"total\":1}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ServiceWireTest_testListUsers_response.json")));
         PaginatedUserResponse response = client.service()
                 .listUsers(ListUsersRequest.builder()
                         .page(1)
@@ -353,117 +351,8 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"users\": [\n"
-                + "    {\n"
-                + "      \"user_id\": \"user_id\",\n"
-                + "      \"email\": \"email\",\n"
-                + "      \"email_verified\": true,\n"
-                + "      \"username\": \"username\",\n"
-                + "      \"phone_number\": \"phone_number\",\n"
-                + "      \"phone_verified\": true,\n"
-                + "      \"created_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "      \"updated_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "      \"identities\": [\n"
-                + "        {\n"
-                + "          \"connection\": \"connection\",\n"
-                + "          \"user_id\": \"user_id\",\n"
-                + "          \"provider\": \"provider\",\n"
-                + "          \"is_social\": true,\n"
-                + "          \"access_token\": \"access_token\",\n"
-                + "          \"expires_in\": 1\n"
-                + "        },\n"
-                + "        {\n"
-                + "          \"connection\": \"connection\",\n"
-                + "          \"user_id\": \"user_id\",\n"
-                + "          \"provider\": \"provider\",\n"
-                + "          \"is_social\": true,\n"
-                + "          \"access_token\": \"access_token\",\n"
-                + "          \"expires_in\": 1\n"
-                + "        }\n"
-                + "      ],\n"
-                + "      \"app_metadata\": {\n"
-                + "        \"app_metadata\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"user_metadata\": {\n"
-                + "        \"user_metadata\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"picture\": \"picture\",\n"
-                + "      \"name\": \"name\",\n"
-                + "      \"nickname\": \"nickname\",\n"
-                + "      \"multifactor\": [\n"
-                + "        \"multifactor\",\n"
-                + "        \"multifactor\"\n"
-                + "      ],\n"
-                + "      \"last_ip\": \"last_ip\",\n"
-                + "      \"last_login\": \"2024-01-15T09:30:00Z\",\n"
-                + "      \"logins_count\": 1,\n"
-                + "      \"blocked\": true,\n"
-                + "      \"given_name\": \"given_name\",\n"
-                + "      \"family_name\": \"family_name\"\n"
-                + "    },\n"
-                + "    {\n"
-                + "      \"user_id\": \"user_id\",\n"
-                + "      \"email\": \"email\",\n"
-                + "      \"email_verified\": true,\n"
-                + "      \"username\": \"username\",\n"
-                + "      \"phone_number\": \"phone_number\",\n"
-                + "      \"phone_verified\": true,\n"
-                + "      \"created_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "      \"updated_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "      \"identities\": [\n"
-                + "        {\n"
-                + "          \"connection\": \"connection\",\n"
-                + "          \"user_id\": \"user_id\",\n"
-                + "          \"provider\": \"provider\",\n"
-                + "          \"is_social\": true,\n"
-                + "          \"access_token\": \"access_token\",\n"
-                + "          \"expires_in\": 1\n"
-                + "        },\n"
-                + "        {\n"
-                + "          \"connection\": \"connection\",\n"
-                + "          \"user_id\": \"user_id\",\n"
-                + "          \"provider\": \"provider\",\n"
-                + "          \"is_social\": true,\n"
-                + "          \"access_token\": \"access_token\",\n"
-                + "          \"expires_in\": 1\n"
-                + "        }\n"
-                + "      ],\n"
-                + "      \"app_metadata\": {\n"
-                + "        \"app_metadata\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"user_metadata\": {\n"
-                + "        \"user_metadata\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"picture\": \"picture\",\n"
-                + "      \"name\": \"name\",\n"
-                + "      \"nickname\": \"nickname\",\n"
-                + "      \"multifactor\": [\n"
-                + "        \"multifactor\",\n"
-                + "        \"multifactor\"\n"
-                + "      ],\n"
-                + "      \"last_ip\": \"last_ip\",\n"
-                + "      \"last_login\": \"2024-01-15T09:30:00Z\",\n"
-                + "      \"logins_count\": 1,\n"
-                + "      \"blocked\": true,\n"
-                + "      \"given_name\": \"given_name\",\n"
-                + "      \"family_name\": \"family_name\"\n"
-                + "    }\n"
-                + "  ],\n"
-                + "  \"start\": 1,\n"
-                + "  \"limit\": 1,\n"
-                + "  \"length\": 1,\n"
-                + "  \"total\": 1\n"
-                + "}";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ServiceWireTest_testListUsers_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(
@@ -497,11 +386,9 @@ public class ServiceWireTest {
 
     @Test
     public void testGetUserById() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"user_id\",\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"identities\":[{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1},{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1}],\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"picture\":\"picture\",\"name\":\"name\",\"nickname\":\"nickname\",\"multifactor\":[\"multifactor\",\"multifactor\"],\"last_ip\":\"last_ip\",\"last_login\":\"2024-01-15T09:30:00Z\",\"logins_count\":1,\"blocked\":true,\"given_name\":\"given_name\",\"family_name\":\"family_name\"}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ServiceWireTest_testGetUserById_response.json")));
         User response = client.service()
                 .getUserById(
                         "userId",
@@ -516,58 +403,8 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"user_id\": \"user_id\",\n"
-                + "  \"email\": \"email\",\n"
-                + "  \"email_verified\": true,\n"
-                + "  \"username\": \"username\",\n"
-                + "  \"phone_number\": \"phone_number\",\n"
-                + "  \"phone_verified\": true,\n"
-                + "  \"created_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"updated_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"identities\": [\n"
-                + "    {\n"
-                + "      \"connection\": \"connection\",\n"
-                + "      \"user_id\": \"user_id\",\n"
-                + "      \"provider\": \"provider\",\n"
-                + "      \"is_social\": true,\n"
-                + "      \"access_token\": \"access_token\",\n"
-                + "      \"expires_in\": 1\n"
-                + "    },\n"
-                + "    {\n"
-                + "      \"connection\": \"connection\",\n"
-                + "      \"user_id\": \"user_id\",\n"
-                + "      \"provider\": \"provider\",\n"
-                + "      \"is_social\": true,\n"
-                + "      \"access_token\": \"access_token\",\n"
-                + "      \"expires_in\": 1\n"
-                + "    }\n"
-                + "  ],\n"
-                + "  \"app_metadata\": {\n"
-                + "    \"app_metadata\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"user_metadata\": {\n"
-                + "    \"user_metadata\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"picture\": \"picture\",\n"
-                + "  \"name\": \"name\",\n"
-                + "  \"nickname\": \"nickname\",\n"
-                + "  \"multifactor\": [\n"
-                + "    \"multifactor\",\n"
-                + "    \"multifactor\"\n"
-                + "  ],\n"
-                + "  \"last_ip\": \"last_ip\",\n"
-                + "  \"last_login\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"logins_count\": 1,\n"
-                + "  \"blocked\": true,\n"
-                + "  \"given_name\": \"given_name\",\n"
-                + "  \"family_name\": \"family_name\"\n"
-                + "}";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ServiceWireTest_testGetUserById_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(
@@ -601,11 +438,9 @@ public class ServiceWireTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"user_id\",\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"identities\":[{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1},{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1}],\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"picture\":\"picture\",\"name\":\"name\",\"nickname\":\"nickname\",\"multifactor\":[\"multifactor\",\"multifactor\"],\"last_ip\":\"last_ip\",\"last_login\":\"2024-01-15T09:30:00Z\",\"logins_count\":1,\"blocked\":true,\"given_name\":\"given_name\",\"family_name\":\"family_name\"}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ServiceWireTest_testCreateUser_response.json")));
         User response = client.service()
                 .createUser(CreateUserRequest.builder()
                         .email("email")
@@ -689,58 +524,8 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"user_id\": \"user_id\",\n"
-                + "  \"email\": \"email\",\n"
-                + "  \"email_verified\": true,\n"
-                + "  \"username\": \"username\",\n"
-                + "  \"phone_number\": \"phone_number\",\n"
-                + "  \"phone_verified\": true,\n"
-                + "  \"created_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"updated_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"identities\": [\n"
-                + "    {\n"
-                + "      \"connection\": \"connection\",\n"
-                + "      \"user_id\": \"user_id\",\n"
-                + "      \"provider\": \"provider\",\n"
-                + "      \"is_social\": true,\n"
-                + "      \"access_token\": \"access_token\",\n"
-                + "      \"expires_in\": 1\n"
-                + "    },\n"
-                + "    {\n"
-                + "      \"connection\": \"connection\",\n"
-                + "      \"user_id\": \"user_id\",\n"
-                + "      \"provider\": \"provider\",\n"
-                + "      \"is_social\": true,\n"
-                + "      \"access_token\": \"access_token\",\n"
-                + "      \"expires_in\": 1\n"
-                + "    }\n"
-                + "  ],\n"
-                + "  \"app_metadata\": {\n"
-                + "    \"app_metadata\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"user_metadata\": {\n"
-                + "    \"user_metadata\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"picture\": \"picture\",\n"
-                + "  \"name\": \"name\",\n"
-                + "  \"nickname\": \"nickname\",\n"
-                + "  \"multifactor\": [\n"
-                + "    \"multifactor\",\n"
-                + "    \"multifactor\"\n"
-                + "  ],\n"
-                + "  \"last_ip\": \"last_ip\",\n"
-                + "  \"last_login\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"logins_count\": 1,\n"
-                + "  \"blocked\": true,\n"
-                + "  \"given_name\": \"given_name\",\n"
-                + "  \"family_name\": \"family_name\"\n"
-                + "}";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ServiceWireTest_testCreateUser_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(
@@ -774,11 +559,9 @@ public class ServiceWireTest {
 
     @Test
     public void testUpdateUser() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"user_id\":\"user_id\",\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"identities\":[{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1},{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1}],\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"picture\":\"picture\",\"name\":\"name\",\"nickname\":\"nickname\",\"multifactor\":[\"multifactor\",\"multifactor\"],\"last_ip\":\"last_ip\",\"last_login\":\"2024-01-15T09:30:00Z\",\"logins_count\":1,\"blocked\":true,\"given_name\":\"given_name\",\"family_name\":\"family_name\"}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ServiceWireTest_testUpdateUser_response.json")));
         User response = client.service()
                 .updateUser(
                         "userId",
@@ -864,58 +647,8 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"user_id\": \"user_id\",\n"
-                + "  \"email\": \"email\",\n"
-                + "  \"email_verified\": true,\n"
-                + "  \"username\": \"username\",\n"
-                + "  \"phone_number\": \"phone_number\",\n"
-                + "  \"phone_verified\": true,\n"
-                + "  \"created_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"updated_at\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"identities\": [\n"
-                + "    {\n"
-                + "      \"connection\": \"connection\",\n"
-                + "      \"user_id\": \"user_id\",\n"
-                + "      \"provider\": \"provider\",\n"
-                + "      \"is_social\": true,\n"
-                + "      \"access_token\": \"access_token\",\n"
-                + "      \"expires_in\": 1\n"
-                + "    },\n"
-                + "    {\n"
-                + "      \"connection\": \"connection\",\n"
-                + "      \"user_id\": \"user_id\",\n"
-                + "      \"provider\": \"provider\",\n"
-                + "      \"is_social\": true,\n"
-                + "      \"access_token\": \"access_token\",\n"
-                + "      \"expires_in\": 1\n"
-                + "    }\n"
-                + "  ],\n"
-                + "  \"app_metadata\": {\n"
-                + "    \"app_metadata\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"user_metadata\": {\n"
-                + "    \"user_metadata\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"picture\": \"picture\",\n"
-                + "  \"name\": \"name\",\n"
-                + "  \"nickname\": \"nickname\",\n"
-                + "  \"multifactor\": [\n"
-                + "    \"multifactor\",\n"
-                + "    \"multifactor\"\n"
-                + "  ],\n"
-                + "  \"last_ip\": \"last_ip\",\n"
-                + "  \"last_login\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"logins_count\": 1,\n"
-                + "  \"blocked\": true,\n"
-                + "  \"given_name\": \"given_name\",\n"
-                + "  \"family_name\": \"family_name\"\n"
-                + "}";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ServiceWireTest_testUpdateUser_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(
@@ -958,11 +691,9 @@ public class ServiceWireTest {
 
     @Test
     public void testListConnections() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "[{\"id\":\"id\",\"name\":\"name\",\"display_name\":\"display_name\",\"strategy\":\"strategy\",\"options\":{\"options\":{\"key\":\"value\"}},\"enabled_clients\":[\"enabled_clients\",\"enabled_clients\"],\"realms\":[\"realms\",\"realms\"],\"is_domain_connection\":true,\"metadata\":{\"metadata\":{\"key\":\"value\"}}},{\"id\":\"id\",\"name\":\"name\",\"display_name\":\"display_name\",\"strategy\":\"strategy\",\"options\":{\"options\":{\"key\":\"value\"}},\"enabled_clients\":[\"enabled_clients\",\"enabled_clients\"],\"realms\":[\"realms\",\"realms\"],\"is_domain_connection\":true,\"metadata\":{\"metadata\":{\"key\":\"value\"}}}]"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ServiceWireTest_testListConnections_response.json")));
         List<Connection> response = client.service()
                 .listConnections(ListConnectionsRequest.builder()
                         .strategy("strategy")
@@ -976,59 +707,8 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "[\n"
-                + "  {\n"
-                + "    \"id\": \"id\",\n"
-                + "    \"name\": \"name\",\n"
-                + "    \"display_name\": \"display_name\",\n"
-                + "    \"strategy\": \"strategy\",\n"
-                + "    \"options\": {\n"
-                + "      \"options\": {\n"
-                + "        \"key\": \"value\"\n"
-                + "      }\n"
-                + "    },\n"
-                + "    \"enabled_clients\": [\n"
-                + "      \"enabled_clients\",\n"
-                + "      \"enabled_clients\"\n"
-                + "    ],\n"
-                + "    \"realms\": [\n"
-                + "      \"realms\",\n"
-                + "      \"realms\"\n"
-                + "    ],\n"
-                + "    \"is_domain_connection\": true,\n"
-                + "    \"metadata\": {\n"
-                + "      \"metadata\": {\n"
-                + "        \"key\": \"value\"\n"
-                + "      }\n"
-                + "    }\n"
-                + "  },\n"
-                + "  {\n"
-                + "    \"id\": \"id\",\n"
-                + "    \"name\": \"name\",\n"
-                + "    \"display_name\": \"display_name\",\n"
-                + "    \"strategy\": \"strategy\",\n"
-                + "    \"options\": {\n"
-                + "      \"options\": {\n"
-                + "        \"key\": \"value\"\n"
-                + "      }\n"
-                + "    },\n"
-                + "    \"enabled_clients\": [\n"
-                + "      \"enabled_clients\",\n"
-                + "      \"enabled_clients\"\n"
-                + "    ],\n"
-                + "    \"realms\": [\n"
-                + "      \"realms\",\n"
-                + "      \"realms\"\n"
-                + "    ],\n"
-                + "    \"is_domain_connection\": true,\n"
-                + "    \"metadata\": {\n"
-                + "      \"metadata\": {\n"
-                + "        \"key\": \"value\"\n"
-                + "      }\n"
-                + "    }\n"
-                + "  }\n"
-                + "]";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ServiceWireTest_testListConnections_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(
@@ -1137,11 +817,9 @@ public class ServiceWireTest {
 
     @Test
     public void testListClients() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"start\":1,\"limit\":1,\"length\":1,\"total\":1,\"clients\":[{\"client_id\":\"client_id\",\"tenant\":\"tenant\",\"name\":\"name\",\"description\":\"description\",\"global\":true,\"client_secret\":\"client_secret\",\"app_type\":\"app_type\",\"logo_uri\":\"logo_uri\",\"is_first_party\":true,\"oidc_conformant\":true,\"callbacks\":[\"callbacks\",\"callbacks\"],\"allowed_origins\":[\"allowed_origins\",\"allowed_origins\"],\"web_origins\":[\"web_origins\",\"web_origins\"],\"grant_types\":[\"grant_types\",\"grant_types\"],\"jwt_configuration\":{\"jwt_configuration\":{\"key\":\"value\"}},\"signing_keys\":[{\"signing_keys\":{\"key\":\"value\"}},{\"signing_keys\":{\"key\":\"value\"}}],\"encryption_key\":{\"encryption_key\":{\"key\":\"value\"}},\"sso\":true,\"sso_disabled\":true,\"cross_origin_auth\":true,\"cross_origin_loc\":\"cross_origin_loc\",\"custom_login_page_on\":true,\"custom_login_page\":\"custom_login_page\",\"custom_login_page_preview\":\"custom_login_page_preview\",\"form_template\":\"form_template\",\"is_heroku_app\":true,\"addons\":{\"addons\":{\"key\":\"value\"}},\"token_endpoint_auth_method\":\"token_endpoint_auth_method\",\"client_metadata\":{\"client_metadata\":{\"key\":\"value\"}},\"mobile\":{\"mobile\":{\"key\":\"value\"}}},{\"client_id\":\"client_id\",\"tenant\":\"tenant\",\"name\":\"name\",\"description\":\"description\",\"global\":true,\"client_secret\":\"client_secret\",\"app_type\":\"app_type\",\"logo_uri\":\"logo_uri\",\"is_first_party\":true,\"oidc_conformant\":true,\"callbacks\":[\"callbacks\",\"callbacks\"],\"allowed_origins\":[\"allowed_origins\",\"allowed_origins\"],\"web_origins\":[\"web_origins\",\"web_origins\"],\"grant_types\":[\"grant_types\",\"grant_types\"],\"jwt_configuration\":{\"jwt_configuration\":{\"key\":\"value\"}},\"signing_keys\":[{\"signing_keys\":{\"key\":\"value\"}},{\"signing_keys\":{\"key\":\"value\"}}],\"encryption_key\":{\"encryption_key\":{\"key\":\"value\"}},\"sso\":true,\"sso_disabled\":true,\"cross_origin_auth\":true,\"cross_origin_loc\":\"cross_origin_loc\",\"custom_login_page_on\":true,\"custom_login_page\":\"custom_login_page\",\"custom_login_page_preview\":\"custom_login_page_preview\",\"form_template\":\"form_template\",\"is_heroku_app\":true,\"addons\":{\"addons\":{\"key\":\"value\"}},\"token_endpoint_auth_method\":\"token_endpoint_auth_method\",\"client_metadata\":{\"client_metadata\":{\"key\":\"value\"}},\"mobile\":{\"mobile\":{\"key\":\"value\"}}}]}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ServiceWireTest_testListClients_response.json")));
         PaginatedClientResponse response = client.service()
                 .listClients(ListClientsRequest.builder()
                         .fields("fields")
@@ -1160,165 +838,8 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"start\": 1,\n"
-                + "  \"limit\": 1,\n"
-                + "  \"length\": 1,\n"
-                + "  \"total\": 1,\n"
-                + "  \"clients\": [\n"
-                + "    {\n"
-                + "      \"client_id\": \"client_id\",\n"
-                + "      \"tenant\": \"tenant\",\n"
-                + "      \"name\": \"name\",\n"
-                + "      \"description\": \"description\",\n"
-                + "      \"global\": true,\n"
-                + "      \"client_secret\": \"client_secret\",\n"
-                + "      \"app_type\": \"app_type\",\n"
-                + "      \"logo_uri\": \"logo_uri\",\n"
-                + "      \"is_first_party\": true,\n"
-                + "      \"oidc_conformant\": true,\n"
-                + "      \"callbacks\": [\n"
-                + "        \"callbacks\",\n"
-                + "        \"callbacks\"\n"
-                + "      ],\n"
-                + "      \"allowed_origins\": [\n"
-                + "        \"allowed_origins\",\n"
-                + "        \"allowed_origins\"\n"
-                + "      ],\n"
-                + "      \"web_origins\": [\n"
-                + "        \"web_origins\",\n"
-                + "        \"web_origins\"\n"
-                + "      ],\n"
-                + "      \"grant_types\": [\n"
-                + "        \"grant_types\",\n"
-                + "        \"grant_types\"\n"
-                + "      ],\n"
-                + "      \"jwt_configuration\": {\n"
-                + "        \"jwt_configuration\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"signing_keys\": [\n"
-                + "        {\n"
-                + "          \"signing_keys\": {\n"
-                + "            \"key\": \"value\"\n"
-                + "          }\n"
-                + "        },\n"
-                + "        {\n"
-                + "          \"signing_keys\": {\n"
-                + "            \"key\": \"value\"\n"
-                + "          }\n"
-                + "        }\n"
-                + "      ],\n"
-                + "      \"encryption_key\": {\n"
-                + "        \"encryption_key\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"sso\": true,\n"
-                + "      \"sso_disabled\": true,\n"
-                + "      \"cross_origin_auth\": true,\n"
-                + "      \"cross_origin_loc\": \"cross_origin_loc\",\n"
-                + "      \"custom_login_page_on\": true,\n"
-                + "      \"custom_login_page\": \"custom_login_page\",\n"
-                + "      \"custom_login_page_preview\": \"custom_login_page_preview\",\n"
-                + "      \"form_template\": \"form_template\",\n"
-                + "      \"is_heroku_app\": true,\n"
-                + "      \"addons\": {\n"
-                + "        \"addons\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"token_endpoint_auth_method\": \"token_endpoint_auth_method\",\n"
-                + "      \"client_metadata\": {\n"
-                + "        \"client_metadata\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"mobile\": {\n"
-                + "        \"mobile\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      }\n"
-                + "    },\n"
-                + "    {\n"
-                + "      \"client_id\": \"client_id\",\n"
-                + "      \"tenant\": \"tenant\",\n"
-                + "      \"name\": \"name\",\n"
-                + "      \"description\": \"description\",\n"
-                + "      \"global\": true,\n"
-                + "      \"client_secret\": \"client_secret\",\n"
-                + "      \"app_type\": \"app_type\",\n"
-                + "      \"logo_uri\": \"logo_uri\",\n"
-                + "      \"is_first_party\": true,\n"
-                + "      \"oidc_conformant\": true,\n"
-                + "      \"callbacks\": [\n"
-                + "        \"callbacks\",\n"
-                + "        \"callbacks\"\n"
-                + "      ],\n"
-                + "      \"allowed_origins\": [\n"
-                + "        \"allowed_origins\",\n"
-                + "        \"allowed_origins\"\n"
-                + "      ],\n"
-                + "      \"web_origins\": [\n"
-                + "        \"web_origins\",\n"
-                + "        \"web_origins\"\n"
-                + "      ],\n"
-                + "      \"grant_types\": [\n"
-                + "        \"grant_types\",\n"
-                + "        \"grant_types\"\n"
-                + "      ],\n"
-                + "      \"jwt_configuration\": {\n"
-                + "        \"jwt_configuration\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"signing_keys\": [\n"
-                + "        {\n"
-                + "          \"signing_keys\": {\n"
-                + "            \"key\": \"value\"\n"
-                + "          }\n"
-                + "        },\n"
-                + "        {\n"
-                + "          \"signing_keys\": {\n"
-                + "            \"key\": \"value\"\n"
-                + "          }\n"
-                + "        }\n"
-                + "      ],\n"
-                + "      \"encryption_key\": {\n"
-                + "        \"encryption_key\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"sso\": true,\n"
-                + "      \"sso_disabled\": true,\n"
-                + "      \"cross_origin_auth\": true,\n"
-                + "      \"cross_origin_loc\": \"cross_origin_loc\",\n"
-                + "      \"custom_login_page_on\": true,\n"
-                + "      \"custom_login_page\": \"custom_login_page\",\n"
-                + "      \"custom_login_page_preview\": \"custom_login_page_preview\",\n"
-                + "      \"form_template\": \"form_template\",\n"
-                + "      \"is_heroku_app\": true,\n"
-                + "      \"addons\": {\n"
-                + "        \"addons\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"token_endpoint_auth_method\": \"token_endpoint_auth_method\",\n"
-                + "      \"client_metadata\": {\n"
-                + "        \"client_metadata\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      },\n"
-                + "      \"mobile\": {\n"
-                + "        \"mobile\": {\n"
-                + "          \"key\": \"value\"\n"
-                + "        }\n"
-                + "      }\n"
-                + "    }\n"
-                + "  ]\n"
-                + "}";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ServiceWireTest_testListClients_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(
@@ -1352,11 +873,9 @@ public class ServiceWireTest {
 
     @Test
     public void testGetClient() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"client_id\":\"client_id\",\"tenant\":\"tenant\",\"name\":\"name\",\"description\":\"description\",\"global\":true,\"client_secret\":\"client_secret\",\"app_type\":\"app_type\",\"logo_uri\":\"logo_uri\",\"is_first_party\":true,\"oidc_conformant\":true,\"callbacks\":[\"callbacks\",\"callbacks\"],\"allowed_origins\":[\"allowed_origins\",\"allowed_origins\"],\"web_origins\":[\"web_origins\",\"web_origins\"],\"grant_types\":[\"grant_types\",\"grant_types\"],\"jwt_configuration\":{\"jwt_configuration\":{\"key\":\"value\"}},\"signing_keys\":[{\"signing_keys\":{\"key\":\"value\"}},{\"signing_keys\":{\"key\":\"value\"}}],\"encryption_key\":{\"encryption_key\":{\"key\":\"value\"}},\"sso\":true,\"sso_disabled\":true,\"cross_origin_auth\":true,\"cross_origin_loc\":\"cross_origin_loc\",\"custom_login_page_on\":true,\"custom_login_page\":\"custom_login_page\",\"custom_login_page_preview\":\"custom_login_page_preview\",\"form_template\":\"form_template\",\"is_heroku_app\":true,\"addons\":{\"addons\":{\"key\":\"value\"}},\"token_endpoint_auth_method\":\"token_endpoint_auth_method\",\"client_metadata\":{\"client_metadata\":{\"key\":\"value\"}},\"mobile\":{\"mobile\":{\"key\":\"value\"}}}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ServiceWireTest_testGetClient_response.json")));
         Client response = client.service()
                 .getClient(
                         "clientId",
@@ -1371,82 +890,8 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"client_id\": \"client_id\",\n"
-                + "  \"tenant\": \"tenant\",\n"
-                + "  \"name\": \"name\",\n"
-                + "  \"description\": \"description\",\n"
-                + "  \"global\": true,\n"
-                + "  \"client_secret\": \"client_secret\",\n"
-                + "  \"app_type\": \"app_type\",\n"
-                + "  \"logo_uri\": \"logo_uri\",\n"
-                + "  \"is_first_party\": true,\n"
-                + "  \"oidc_conformant\": true,\n"
-                + "  \"callbacks\": [\n"
-                + "    \"callbacks\",\n"
-                + "    \"callbacks\"\n"
-                + "  ],\n"
-                + "  \"allowed_origins\": [\n"
-                + "    \"allowed_origins\",\n"
-                + "    \"allowed_origins\"\n"
-                + "  ],\n"
-                + "  \"web_origins\": [\n"
-                + "    \"web_origins\",\n"
-                + "    \"web_origins\"\n"
-                + "  ],\n"
-                + "  \"grant_types\": [\n"
-                + "    \"grant_types\",\n"
-                + "    \"grant_types\"\n"
-                + "  ],\n"
-                + "  \"jwt_configuration\": {\n"
-                + "    \"jwt_configuration\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"signing_keys\": [\n"
-                + "    {\n"
-                + "      \"signing_keys\": {\n"
-                + "        \"key\": \"value\"\n"
-                + "      }\n"
-                + "    },\n"
-                + "    {\n"
-                + "      \"signing_keys\": {\n"
-                + "        \"key\": \"value\"\n"
-                + "      }\n"
-                + "    }\n"
-                + "  ],\n"
-                + "  \"encryption_key\": {\n"
-                + "    \"encryption_key\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"sso\": true,\n"
-                + "  \"sso_disabled\": true,\n"
-                + "  \"cross_origin_auth\": true,\n"
-                + "  \"cross_origin_loc\": \"cross_origin_loc\",\n"
-                + "  \"custom_login_page_on\": true,\n"
-                + "  \"custom_login_page\": \"custom_login_page\",\n"
-                + "  \"custom_login_page_preview\": \"custom_login_page_preview\",\n"
-                + "  \"form_template\": \"form_template\",\n"
-                + "  \"is_heroku_app\": true,\n"
-                + "  \"addons\": {\n"
-                + "    \"addons\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"token_endpoint_auth_method\": \"token_endpoint_auth_method\",\n"
-                + "  \"client_metadata\": {\n"
-                + "    \"client_metadata\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  },\n"
-                + "  \"mobile\": {\n"
-                + "    \"mobile\": {\n"
-                + "      \"key\": \"value\"\n"
-                + "    }\n"
-                + "  }\n"
-                + "}";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ServiceWireTest_testGetClient_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(

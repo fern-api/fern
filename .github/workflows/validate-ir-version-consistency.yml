@@ -1,0 +1,40 @@
+name: Validate IR Version Consistency
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "seed/**/seed.yml"
+      - "generators/**/versions.yml"
+      - "scripts/validate-ir-version-consistency.sh"
+      - ".github/workflows/validate-ir-version-consistency.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "seed/**/seed.yml"
+      - "generators/**/versions.yml"
+      - "scripts/validate-ir-version-consistency.sh"
+      - ".github/workflows/validate-ir-version-consistency.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-ir-versions:
+    name: Validate IR Version Consistency
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            seed
+            generators
+            scripts
+            .github
+
+      - name: Validate IR version consistency
+        run: ./scripts/validate-ir-version-consistency.sh

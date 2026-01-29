@@ -3,8 +3,12 @@ namespace SeedApiWideBasePath;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedApiWideBasePathApiException(string message, int statusCode, object body)
-    : SeedApiWideBasePathException(message)
+public class SeedApiWideBasePathApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedApiWideBasePathException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

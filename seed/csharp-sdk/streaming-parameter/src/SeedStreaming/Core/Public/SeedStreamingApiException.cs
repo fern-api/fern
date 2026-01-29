@@ -3,8 +3,12 @@ namespace SeedStreaming;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedStreamingApiException(string message, int statusCode, object body)
-    : SeedStreamingException(message)
+public class SeedStreamingApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedStreamingException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

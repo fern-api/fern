@@ -8,25 +8,32 @@ public partial class SeedMultiUrlEnvironmentClient : ISeedMultiUrlEnvironmentCli
 
     public SeedMultiUrlEnvironmentClient(string? token = null, ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token ?? ""}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedMultiUrlEnvironment" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernmulti-url-environment/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>() { { "Authorization", $"Bearer {token ?? ""}" } }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
+        _client = new RawClient(clientOptionsWithAuth);
         Ec2 = new Ec2Client(_client);
         S3 = new S3Client(_client);
     }

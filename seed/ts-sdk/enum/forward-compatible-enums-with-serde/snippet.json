@@ -1,0 +1,60 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifier_override": "endpoint_headers.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.headers.send({\n    operand: \">\",\n    maybeOperand: \">\",\n    operandOrColor: \"red\",\n    maybeOperandOrColor: undefined\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inlined",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-request.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.inlinedRequest.send({\n    operand: \">\",\n    operandOrColor: \"red\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/path/{operand}/{operandOrColor}",
+                "method": "POST",
+                "identifier_override": "endpoint_path-param.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.pathParam.send(\">\", \"red\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/query",
+                "method": "POST",
+                "identifier_override": "endpoint_query-param.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.queryParam.send({\n    operand: \">\",\n    operandOrColor: \"red\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/query-list",
+                "method": "POST",
+                "identifier_override": "endpoint_query-param.sendList"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.queryParam.sendList({\n    operand: \">\",\n    maybeOperand: \">\",\n    operandOrColor: \"red\",\n    maybeOperandOrColor: \"red\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

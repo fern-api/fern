@@ -5,4 +5,7 @@
 import * as GeneratorsYml from "../../../../../index";
 
 export interface AuthVariable
-    extends GeneratorsYml.fernDefinition.WithEnvironmentVariable, GeneratorsYml.fernDefinition.WithName {}
+    extends GeneratorsYml.fernDefinition.WithEnvironmentVariable, GeneratorsYml.fernDefinition.WithName {
+    /** If true, the auth variable will be omitted from the SDK. */
+    omit?: boolean;
+}

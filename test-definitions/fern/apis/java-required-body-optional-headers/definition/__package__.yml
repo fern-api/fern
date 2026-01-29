@@ -1,0 +1,132 @@
+service:
+  base-path: /api
+  auth: false
+  endpoints:
+    # Endpoint with required body and optional header - should generate body-only overloads
+    createUser:
+      docs: Create a new user. Has required body and optional header.
+      method: POST
+      path: /users
+      request:
+        name: CreateUserRequest
+        body: UserData
+        headers:
+          X-Correlation-Id:
+            type: optional<string>
+            docs: Optional correlation ID for request tracing
+      response: User
+
+    # Endpoint with required body and optional query param - should generate body-only overloads
+    updateUser:
+      docs: Update an existing user. Has required body and optional query param.
+      method: PUT
+      path: /users/{userId}
+      path-parameters:
+        userId: string
+      request:
+        name: UpdateUserRequest
+        body: UserData
+        query-parameters:
+          dryRun:
+            type: optional<boolean>
+            docs: If true, validate the update without persisting
+      response: User
+
+    # Endpoint with required body and both optional header and query param - should generate body-only overloads
+    createUserWithOptions:
+      docs: Create a user with optional header and query param.
+      method: POST
+      path: /users/with-options
+      request:
+        name: CreateUserWithOptionsRequest
+        body: UserData
+        headers:
+          X-Request-Id:
+            type: optional<string>
+            docs: Optional request ID
+        query-parameters:
+          validate:
+            type: optional<boolean>
+            docs: Whether to validate the request
+      response: User
+
+    # Endpoint with required body and required header - should NOT generate body-only overloads
+    createUserWithRequiredHeader:
+      docs: Create a user with required header.
+      method: POST
+      path: /users/required-header
+      request:
+        name: CreateUserWithRequiredHeaderRequest
+        body: UserData
+        headers:
+          X-Api-Key:
+            type: string
+            docs: Required API key header
+      response: User
+
+    # Endpoint with required body and required query param - should NOT generate body-only overloads
+    createUserWithRequiredQuery:
+      docs: Create a user with required query param.
+      method: POST
+      path: /users/required-query
+      request:
+        name: CreateUserWithRequiredQueryRequest
+        body: UserData
+        query-parameters:
+          tenantId:
+            type: string
+            docs: Required tenant ID
+      response: User
+
+    # Endpoint with no body (just optional headers) - should NOT generate body-only overloads
+    getUsers:
+      docs: Get all users with optional filtering.
+      method: GET
+      path: /users
+      request:
+        name: GetUsersRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Maximum number of users to return
+      response: list<User>
+
+    # Endpoint with inlined body and optional header - should NOT generate body-only overloads
+    # (inlined bodies don't have a standalone type)
+    createUserInlined:
+      docs: Create a user with inlined body and optional header.
+      method: POST
+      path: /users/inlined
+      request:
+        name: CreateUserInlinedRequest
+        headers:
+          X-Trace-Id:
+            type: optional<string>
+            docs: Optional trace ID for request tracing
+        body:
+          properties:
+            name: string
+            email: string
+            age:
+              type: optional<integer>
+              docs: User's age
+      response: User
+
+types:
+  UserData:
+    docs: User data for creation/update
+    properties:
+      name: string
+      email: string
+      age:
+        type: optional<integer>
+        docs: User's age
+
+  User:
+    docs: User entity
+    properties:
+      id: string
+      name: string
+      email: string
+      age: optional<integer>
+      createdAt: string

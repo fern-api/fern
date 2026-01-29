@@ -5,33 +5,33 @@ namespace SeedExhaustive.Endpoints;
 
 public partial interface IHttpMethodsClient
 {
-    Task<string> TestGetAsync(
+    WithRawResponseTask<string> TestGetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<ObjectWithOptionalField> TestPostAsync(
+    WithRawResponseTask<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<ObjectWithOptionalField> TestPutAsync(
+    WithRawResponseTask<ObjectWithOptionalField> TestPutAsync(
         string id,
         ObjectWithRequiredField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<ObjectWithOptionalField> TestPatchAsync(
+    WithRawResponseTask<ObjectWithOptionalField> TestPatchAsync(
         string id,
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<bool> TestDeleteAsync(
+    WithRawResponseTask<bool> TestDeleteAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -270,6 +270,8 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
             };
         },
         passthrough: () => {
+            const knownRawKeys = new Set<string>(schema._getRawProperties() as string[]);
+            const knownParsedKeys = new Set<string>(schema._getParsedProperties() as string[]);
             const baseSchema: BaseObjectSchema<Raw & { [key: string]: unknown }, Parsed & { [key: string]: unknown }> =
                 {
                     _getParsedProperties: () => schema._getParsedProperties(),
@@ -279,10 +281,18 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
+                        const extraProperties: Record<string, unknown> = {};
+                        if (typeof raw === "object" && raw != null) {
+                            for (const [key, value] of Object.entries(raw)) {
+                                if (!knownRawKeys.has(key)) {
+                                    extraProperties[key] = value;
+                                }
+                            }
+                        }
                         return {
                             ok: true,
                             value: {
-                                ...(raw as any),
+                                ...extraProperties,
                                 ...transformed.value,
                             },
                         };
@@ -292,10 +302,18 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
+                        const extraProperties: Record<string, unknown> = {};
+                        if (typeof parsed === "object" && parsed != null) {
+                            for (const [key, value] of Object.entries(parsed)) {
+                                if (!knownParsedKeys.has(key)) {
+                                    extraProperties[key] = value;
+                                }
+                            }
+                        }
                         return {
                             ok: true,
                             value: {
-                                ...(parsed as any),
+                                ...extraProperties,
                                 ...transformed.value,
                             },
                         };

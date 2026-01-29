@@ -49,4 +49,12 @@ public class AsyncSeedOauthClientCredentialsReferenceClient {
             String clientId, String clientSecret) {
         return AsyncSeedOauthClientCredentialsReferenceClientBuilder.withCredentials(clientId, clientSecret);
     }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static AsyncSeedOauthClientCredentialsReferenceClientBuilder._Builder builder() {
+        return AsyncSeedOauthClientCredentialsReferenceClientBuilder.builder();
+    }
 }

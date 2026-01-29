@@ -9,7 +9,7 @@ public partial interface IUserClient
     /// <summary>
     /// List all users.
     /// </summary>
-    Task<IEnumerable<User>> ListAsync(
+    WithRawResponseTask<IEnumerable<User>> ListAsync(
         ListUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

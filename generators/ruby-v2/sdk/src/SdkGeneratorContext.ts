@@ -384,6 +384,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return undefined;
     }
 
+    public get selfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
+    }
+
     public isMultipleBaseUrlsEnvironment(): boolean {
         return this.ir.environments?.environments.type === "multipleBaseUrls";
     }

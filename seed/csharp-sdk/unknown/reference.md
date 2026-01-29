@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.Unknown.<a href="/src/SeedUnknownAsAny/Unknown/UnknownClient.cs">PostAsync</a>(object { ... }) -> IEnumerable&lt;object&gt;</code></summary>
+<details><summary><code>client.Unknown.<a href="/src/SeedUnknownAsAny/Unknown/UnknownClient.cs">PostAsync</a>(object { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;object&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "val
 </dl>
 </details>
 
-<details><summary><code>client.Unknown.<a href="/src/SeedUnknownAsAny/Unknown/UnknownClient.cs">PostObjectAsync</a>(MyObject { ... }) -> IEnumerable&lt;object&gt;</code></summary>
+<details><summary><code>client.Unknown.<a href="/src/SeedUnknownAsAny/Unknown/UnknownClient.cs">PostObjectAsync</a>(MyObject { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;object&gt;&gt;</code></summary>
 <dl>
 <dd>
 

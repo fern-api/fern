@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">GetUsersAsync</a>(GetUsersRequest { ... }) -> IEnumerable&lt;User&gt;</code></summary>
+<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">GetUsersAsync</a>(GetUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -49,7 +49,7 @@ await client.Nullable.GetUsersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -105,7 +105,7 @@ await client.Nullable.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">DeleteUserAsync</a>(DeleteUserRequest { ... }) -> bool</code></summary>
+<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">DeleteUserAsync</a>(DeleteUserRequest { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 

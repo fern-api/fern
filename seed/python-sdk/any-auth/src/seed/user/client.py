@@ -39,9 +39,7 @@ class UserClient:
         from seed import SeedAnyAuth
 
         client = SeedAnyAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get()
         """
@@ -64,9 +62,7 @@ class UserClient:
         from seed import SeedAnyAuth
 
         client = SeedAnyAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get_admins()
         """
@@ -107,9 +103,7 @@ class AsyncUserClient:
         from seed import AsyncSeedAnyAuth
 
         client = AsyncSeedAnyAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 
@@ -140,9 +134,7 @@ class AsyncUserClient:
         from seed import AsyncSeedAnyAuth
 
         client = AsyncSeedAnyAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 

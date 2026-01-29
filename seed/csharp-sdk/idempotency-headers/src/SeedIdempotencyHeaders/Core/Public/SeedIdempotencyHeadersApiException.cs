@@ -3,8 +3,12 @@ namespace SeedIdempotencyHeaders;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedIdempotencyHeadersApiException(string message, int statusCode, object body)
-    : SeedIdempotencyHeadersException(message)
+public class SeedIdempotencyHeadersApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedIdempotencyHeadersException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

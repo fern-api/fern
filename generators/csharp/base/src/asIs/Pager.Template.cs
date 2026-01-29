@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+using global::System.Runtime.CompilerServices;
 
 namespace <%= namespace%>;
 
@@ -26,7 +26,7 @@ public interface Pager<TItem> : IAsyncEnumerable<TItem>
     /// <returns>
     /// The next <see cref="Page{TItem}"/>.
     /// </returns>
-    public Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default);
+    public global::System.Threading.Tasks.Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enumerate the values a <see cref="Page{TItem}"/> at a time.  This may
@@ -69,7 +69,7 @@ public interface BiPager<TItem> : IAsyncEnumerable<TItem>
     /// <returns>
     /// The next <see cref="Page{TItem}"/>.
     /// </returns>
-    public Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default);
+    public global::System.Threading.Tasks.Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get the previous <see cref="Page{TItem}"/>.
@@ -78,7 +78,7 @@ public interface BiPager<TItem> : IAsyncEnumerable<TItem>
     /// <returns>
     /// The previous <see cref="Page{TItem}"/>.
     /// </returns>
-    public Task<Page<TItem>> GetPreviousPageAsync(CancellationToken cancellationToken = default);
+    public global::System.Threading.Tasks.Task<Page<TItem>> GetPreviousPageAsync(CancellationToken cancellationToken = default);
 }
 
 internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem>
@@ -89,7 +89,7 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
     private readonly SendRequest _sendRequest;
     private readonly ParseApiCallDelegate _parseApiCall;
 
-    internal delegate Task<TResponse> SendRequest(
+    internal delegate global::System.Threading.Tasks.Task<TResponse> SendRequest(
         TRequest request,
         TRequestOptions? options,
         CancellationToken cancellationToken
@@ -131,7 +131,7 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         HasNextPage = hasNextPage;
     }
 
-    internal static async Task<
+    internal static async global::System.Threading.Tasks.Task<
         OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem>
     > CreateInstanceAsync(
         TRequest request,
@@ -185,7 +185,7 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
             );
     }
 
-    private async Task<Page<TItem>> SendRequestAndHandleResponse(
+    private async global::System.Threading.Tasks.Task<Page<TItem>> SendRequestAndHandleResponse(
         TRequest request,
         TRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -294,7 +294,7 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         return (request, hasNextPage, page);
     }
 
-    public async Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
+    public async global::System.Threading.Tasks.Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
     {
         if (_request is null)
         {
@@ -350,7 +350,7 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
     /// <summary>
     /// Delegate for sending a request.
     /// </summary>
-    internal delegate Task<TResponse> SendRequest(
+    internal delegate global::System.Threading.Tasks.Task<TResponse> SendRequest(
         TRequest request,
         TRequestOptions? options,
         CancellationToken cancellationToken
@@ -407,7 +407,7 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
     /// <summary>
     /// Create a new instance of <see cref="CursorPager{TRequest,TRequestOptions,TResponse,TCursor,TItem}"/>.
     /// </summary>
-    internal static async Task<
+    internal static async global::System.Threading.Tasks.Task<
         CursorPager<TRequest, TRequestOptions, TResponse, TCursor, TItem>
     > CreateInstanceAsync(
         TRequest? request,
@@ -459,7 +459,7 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
         };
     }
 
-    private async Task<Page<TItem>> SendRequestAndHandleResponse(
+    private async global::System.Threading.Tasks.Task<Page<TItem>> SendRequestAndHandleResponse(
         TRequest request,
         TRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -474,7 +474,7 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
         return page;
     }
 
-    public async Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
+    public async global::System.Threading.Tasks.Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
     {
         if (_request is null)
         {

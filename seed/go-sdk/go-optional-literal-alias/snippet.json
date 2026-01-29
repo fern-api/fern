@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/search",
+                "method": "POST",
+                "identifier_override": "endpoint_.search"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-optional-literal-alias/fern\"\n\tfernclient \"github.com/go-optional-literal-alias/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Search(\n\tcontext.TODO(),\n\t\u0026fern.SearchRequest{\n\t\tQuery: \"test query\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

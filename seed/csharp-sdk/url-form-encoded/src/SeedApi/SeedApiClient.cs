@@ -9,7 +9,8 @@ public partial class SeedApiClient : ISeedApiClient
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -18,8 +19,7 @@ public partial class SeedApiClient : ISeedApiClient
                 { "User-Agent", "Fernurl-form-encoded/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,17 +29,18 @@ public partial class SeedApiClient : ISeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.SubmitFormDataAsync(
-    ///     new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
-    /// );
-    /// </code></example>
-    public async Task<PostSubmitResponse> SubmitFormDataAsync(
+    private async Task<WithRawResponse<PostSubmitResponse>> SubmitFormDataAsyncCore(
         PostSubmitRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new FormRequest
@@ -48,6 +49,7 @@ public partial class SeedApiClient : ISeedApiClient
                     Method = HttpMethod.Post,
                     Path = "submit",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/x-www-form-urlencoded",
                     Options = options,
                 },
@@ -59,14 +61,28 @@ public partial class SeedApiClient : ISeedApiClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<PostSubmitResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<PostSubmitResponse>(responseBody)!;
+                return new WithRawResponse<PostSubmitResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -75,5 +91,21 @@ public partial class SeedApiClient : ISeedApiClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.SubmitFormDataAsync(
+    ///     new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<PostSubmitResponse> SubmitFormDataAsync(
+        PostSubmitRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<PostSubmitResponse>(
+            SubmitFormDataAsyncCore(request, options, cancellationToken)
+        );
     }
 }

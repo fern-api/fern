@@ -49,7 +49,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             ? `Omit<typeof ${this.typeName}, "${GeneratedEnumTypeImpl.VISIT_PROPERTTY_NAME}">`
             : `typeof ${this.typeName}`;
         const baseType = `${typeofConst}[keyof ${typeofConst}]`;
-        const shouldWidenType = !this.includeSerdeLayer && this.enableForwardCompatibleEnums;
+        const shouldWidenType = this.enableForwardCompatibleEnums;
         const type: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
             name: this.typeName,
@@ -69,7 +69,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
         );
 
-        const shouldWidenType = !this.includeSerdeLayer && this.enableForwardCompatibleEnums;
+        const shouldWidenType = this.enableForwardCompatibleEnums;
         const unionMembers = shouldWidenType
             ? [...enumLiteralTypes, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)]
             : enumLiteralTypes;

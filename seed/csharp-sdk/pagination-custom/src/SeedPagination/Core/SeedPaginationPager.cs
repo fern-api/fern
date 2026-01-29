@@ -1,11 +1,13 @@
-using System.Runtime.CompilerServices;
 using global::System.Net.Http;
+using global::System.Runtime.CompilerServices;
 
 namespace SeedPagination.Core;
 
 internal static class SeedPaginationPagerFactory
 {
-    internal static async Task<SeedPaginationPager<TItem>> CreateAsync<TItem>(
+    internal static async global::System.Threading.Tasks.Task<
+        SeedPaginationPager<TItem>
+    > CreateAsync<TItem>(
         SeedPaginationPagerContext context,
         CancellationToken cancellationToken = default
     )
@@ -56,9 +58,11 @@ public class SeedPaginationPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem
         CurrentPage = page;
     }
 
-    public async Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
+    public async global::System.Threading.Tasks.Task<Page<TItem>> GetNextPageAsync(
+        CancellationToken cancellationToken = default
+    )
     {
-        if (_nextPageRequest == null)
+        if (_nextPageRequest is null)
         {
             return Page<TItem>.Empty;
         }
@@ -67,11 +71,11 @@ public class SeedPaginationPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem
             .ConfigureAwait(false);
     }
 
-    public async Task<Page<TItem>> GetPreviousPageAsync(
+    public async global::System.Threading.Tasks.Task<Page<TItem>> GetPreviousPageAsync(
         CancellationToken cancellationToken = default
     )
     {
-        if (_previousPageRequest == null)
+        if (_previousPageRequest is null)
         {
             return Page<TItem>.Empty;
         }
@@ -80,7 +84,7 @@ public class SeedPaginationPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem
             .ConfigureAwait(false);
     }
 
-    private async Task<Page<TItem>> SendRequestAndHandleResponse(
+    private async global::System.Threading.Tasks.Task<Page<TItem>> SendRequestAndHandleResponse(
         HttpRequestMessage request,
         CancellationToken cancellationToken = default
     )
@@ -96,7 +100,7 @@ public class SeedPaginationPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem
         return page;
     }
 
-    internal static async Task<(
+    internal static async global::System.Threading.Tasks.Task<(
         HttpRequestMessage? nextPageRequest,
         bool hasNextPage,
         HttpRequestMessage? previousPageRequest,

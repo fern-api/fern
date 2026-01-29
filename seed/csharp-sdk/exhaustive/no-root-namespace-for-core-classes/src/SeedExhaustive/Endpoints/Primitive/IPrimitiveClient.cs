@@ -1,58 +1,59 @@
+using SeedExhaustive;
 using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
 public partial interface IPrimitiveClient
 {
-    Task<string> GetAndReturnStringAsync(
+    WithRawResponseTask<string> GetAndReturnStringAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<int> GetAndReturnIntAsync(
+    WithRawResponseTask<int> GetAndReturnIntAsync(
         int request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<long> GetAndReturnLongAsync(
+    WithRawResponseTask<long> GetAndReturnLongAsync(
         long request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<double> GetAndReturnDoubleAsync(
+    WithRawResponseTask<double> GetAndReturnDoubleAsync(
         double request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<bool> GetAndReturnBoolAsync(
+    WithRawResponseTask<bool> GetAndReturnBoolAsync(
         bool request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<DateTime> GetAndReturnDatetimeAsync(
+    WithRawResponseTask<DateTime> GetAndReturnDatetimeAsync(
         DateTime request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<DateOnly> GetAndReturnDateAsync(
+    WithRawResponseTask<DateOnly> GetAndReturnDateAsync(
         DateOnly request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> GetAndReturnUuidAsync(
+    WithRawResponseTask<string> GetAndReturnUuidAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> GetAndReturnBase64Async(
+    WithRawResponseTask<string> GetAndReturnBase64Async(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

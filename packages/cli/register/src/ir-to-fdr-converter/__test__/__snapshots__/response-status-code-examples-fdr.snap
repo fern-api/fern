@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": undefined,
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_sessions",
@@ -49,7 +50,7 @@
               "examples": [
                 {
                   "description": undefined,
-                  "name": "validationerror",
+                  "name": "ValidationError example",
                   "responseBody": {
                     "type": "json",
                     "value": {
@@ -78,7 +79,7 @@
               "examples": [
                 {
                   "description": undefined,
-                  "name": "notfound",
+                  "name": "NotFound example",
                   "responseBody": {
                     "type": "json",
                     "value": {
@@ -107,7 +108,7 @@
               "examples": [
                 {
                   "description": undefined,
-                  "name": "methodnotallowed",
+                  "name": "MethodNotAllowed example",
                   "responseBody": {
                     "type": "json",
                     "value": {
@@ -136,7 +137,7 @@
               "examples": [
                 {
                   "description": undefined,
-                  "name": "servererror",
+                  "name": "ServerError example",
                   "responseBody": {
                     "type": "json",
                     "value": {
@@ -286,6 +287,7 @@
           "slug": undefined,
         },
       ],
+      "graphqlOperations": undefined,
       "name": "sessions",
       "pointsTo": undefined,
       "subpackageId": "subpackage_sessions",

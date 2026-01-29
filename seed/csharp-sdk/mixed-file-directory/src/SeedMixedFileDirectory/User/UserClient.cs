@@ -16,23 +16,22 @@ public partial class UserClient : IUserClient
 
     public EventsClient Events { get; }
 
-    /// <summary>
-    /// List all users.
-    /// </summary>
-    /// <example><code>
-    /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
-    /// </code></example>
-    public async Task<IEnumerable<User>> ListAsync(
+    private async Task<WithRawResponse<IEnumerable<User>>> ListAsyncCore(
         ListUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.Limit != null)
-        {
-            _query["limit"] = request.Limit.Value.ToString();
-        }
+        var _queryString = new SeedMixedFileDirectory.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("limit", request.Limit)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedMixedFileDirectory.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -40,7 +39,8 @@ public partial class UserClient : IUserClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/",
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -51,14 +51,28 @@ public partial class UserClient : IUserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<User>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
+                throw new SeedMixedFileDirectoryApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedMixedFileDirectoryApiException(
@@ -67,5 +81,22 @@ public partial class UserClient : IUserClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// List all users.
+    /// </summary>
+    /// <example><code>
+    /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<User>> ListAsync(
+        ListUsersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<User>>(
+            ListAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -3,8 +3,12 @@ namespace SeedEmptyClients;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedEmptyClientsApiException(string message, int statusCode, object body)
-    : SeedEmptyClientsException(message)
+public class SeedEmptyClientsApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedEmptyClientsException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

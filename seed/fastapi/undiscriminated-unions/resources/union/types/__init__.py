@@ -20,6 +20,7 @@ from .type_with_optional_union import TypeWithOptionalUnion
 from .union_with_duplicate_types import UnionWithDuplicateTypes
 from .union_with_identical_primitives import UnionWithIdenticalPrimitives
 from .union_with_identical_strings import UnionWithIdenticalStrings
+from .union_with_reserved_names import UnionWithReservedNames
 
 __all__ = [
     "ConvertToken",
@@ -40,4 +41,5 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
+    "UnionWithReservedNames",
 ]

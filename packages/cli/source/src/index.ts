@@ -1,5 +1,6 @@
 export { createSourcedArray } from "./createSourcedArray";
 export { createSourcedObject } from "./createSourcedObject";
+export { isNullish } from "./isNullish";
 export { type Locatable } from "./Locatable";
 export {
     type Sourced,

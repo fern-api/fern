@@ -7,6 +7,7 @@ import (
 	"go/parser"
 	"go/token"
 	"path"
+	"sort"
 	"strconv"
 	"strings"
 	"unicode"
@@ -140,8 +141,18 @@ func (f *fileWriter) File() (*File, error) {
 	}
 	header.P("package ", f.packageName)
 	header.P("import (")
-	for importDecl, importAlias := range f.scope.Imports.Values {
-		header.P(fmt.Sprintf("%s %q", importAlias, importDecl))
+	// Sort imports by alias for deterministic output.
+	type importStatement struct {
+		Alias string
+		Path  string
+	}
+	var imports []importStatement
+	for importPath, importAlias := range f.scope.Imports.Values {
+		imports = append(imports, importStatement{Alias: importAlias, Path: importPath})
+	}
+	sort.Slice(imports, func(i, j int) bool { return imports[i].Alias < imports[j].Alias })
+	for _, imp := range imports {
+		header.P(fmt.Sprintf("%s %q", imp.Alias, imp.Path))
 	}
 	header.P(")")
 

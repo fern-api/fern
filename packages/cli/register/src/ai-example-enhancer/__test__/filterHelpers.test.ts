@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { filterRequestBody, isEmptyObject } from "../filterHelpers";
+import { filterRequestBody, isEmptyObject, unwrapExampleValue } from "../filterHelpers";
 
 describe("isEmptyObject", () => {
     it("returns true for null", () => {
@@ -249,5 +249,122 @@ describe("filterRequestBody", () => {
         expect(result.extractedHeaders).toEqual({
             "xi-api-key": "your-api-key-here"
         });
+    });
+});
+
+describe("unwrapExampleValue", () => {
+    it("returns null for null input", () => {
+        expect(unwrapExampleValue(null)).toBe(null);
+    });
+
+    it("returns undefined for undefined input", () => {
+        expect(unwrapExampleValue(undefined)).toBe(undefined);
+    });
+
+    it("returns primitive values unchanged", () => {
+        expect(unwrapExampleValue("hello")).toBe("hello");
+        expect(unwrapExampleValue(42)).toBe(42);
+        expect(unwrapExampleValue(true)).toBe(true);
+    });
+
+    it("unwraps simple FDR typed value with type and value", () => {
+        const input = { type: "json", value: "hello world" };
+        expect(unwrapExampleValue(input)).toBe("hello world");
+    });
+
+    it("unwraps FDR typed value with only value property", () => {
+        const input = { value: "hello world" };
+        expect(unwrapExampleValue(input)).toBe("hello world");
+    });
+
+    it("returns undefined for FDR typed value with only type property", () => {
+        const input = { type: "json" };
+        expect(unwrapExampleValue(input)).toBe(undefined);
+    });
+
+    it("unwraps nested object with FDR typed values", () => {
+        const input = {
+            file: { type: "filename", value: "lecture_recording.wav" },
+            text: { type: "json", value: "Good morning everyone" }
+        };
+        expect(unwrapExampleValue(input)).toEqual({
+            file: "lecture_recording.wav",
+            text: "Good morning everyone"
+        });
+    });
+
+    it("removes fields with only type property (no value)", () => {
+        const input = {
+            file: { type: "filename", value: "test.wav" },
+            enabled_spooled_file: { type: "boolean" }
+        };
+        expect(unwrapExampleValue(input)).toEqual({
+            file: "test.wav"
+        });
+    });
+
+    it("preserves regular objects that are not FDR wrappers", () => {
+        const input = {
+            settings: {
+                stability: 0.5,
+                similarity_boost: 0.75
+            }
+        };
+        expect(unwrapExampleValue(input)).toEqual({
+            settings: {
+                stability: 0.5,
+                similarity_boost: 0.75
+            }
+        });
+    });
+
+    it("handles arrays by unwrapping each element", () => {
+        const input = [
+            { type: "json", value: "first" },
+            { type: "json", value: "second" }
+        ];
+        expect(unwrapExampleValue(input)).toEqual(["first", "second"]);
+    });
+
+    it("handles deeply nested structures", () => {
+        const input = {
+            outer: {
+                inner: { type: "json", value: "nested value" }
+            }
+        };
+        expect(unwrapExampleValue(input)).toEqual({
+            outer: {
+                inner: "nested value"
+            }
+        });
+    });
+
+    it("real-world example: forced alignment endpoint request", () => {
+        const input = {
+            file: { type: "filename", value: "lecture_recording.wav" },
+            text: { type: "json", value: "Good morning everyone, welcome to the lecture on machine learning." },
+            enabled_spooled_file: { type: "boolean" }
+        };
+        expect(unwrapExampleValue(input)).toEqual({
+            file: "lecture_recording.wav",
+            text: "Good morning everyone, welcome to the lecture on machine learning."
+        });
+    });
+
+    it("does not unwrap objects with more than 2 keys", () => {
+        const input = {
+            type: "json",
+            value: "test",
+            extra: "field"
+        };
+        expect(unwrapExampleValue(input)).toEqual({
+            type: "json",
+            value: "test",
+            extra: "field"
+        });
+    });
+
+    it("does not unwrap empty objects", () => {
+        expect(unwrapExampleValue({})).toEqual({});
     });
 });

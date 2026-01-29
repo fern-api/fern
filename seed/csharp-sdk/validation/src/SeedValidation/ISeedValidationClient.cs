@@ -2,13 +2,13 @@ namespace SeedValidation;
 
 public partial interface ISeedValidationClient
 {
-    Task<Type> CreateAsync(
+    WithRawResponseTask<Type> CreateAsync(
         CreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Type> GetAsync(
+    WithRawResponseTask<Type> GetAsync(
         GetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

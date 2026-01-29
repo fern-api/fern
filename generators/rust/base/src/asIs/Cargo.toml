@@ -3,7 +3,7 @@ name = "{{PACKAGE_NAME}}"
 version = "{{PACKAGE_VERSION}}"
 edition = "2021"
 description = "{{PACKAGE_DESCRIPTION}}"
-license = "{{PACKAGE_LICENSE}}"
+{{PACKAGE_LICENSE_FIELD}}
 repository = "{{PACKAGE_REPOSITORY}}"
 documentation = "{{PACKAGE_DOCUMENTATION}}"
 

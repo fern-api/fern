@@ -13,7 +13,11 @@
 <dd>
 
 ```go
-request := &upload.JustFileRequest{}
+request := &upload.JustFileRequest{
+        File: strings.NewReader(
+            "",
+        ),
+    }
 client.Service.JustFile(
         context.TODO(),
         request,
@@ -43,7 +47,11 @@ client.Service.JustFile(
 <dd>
 
 ```go
-request := &upload.OptionalArgsRequest{}
+request := &upload.OptionalArgsRequest{
+        ImageFile: strings.NewReader(
+            "",
+        ),
+    }
 client.Service.OptionalArgs(
         context.TODO(),
         request,

@@ -21,7 +21,9 @@
 //!                 id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
 //!                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
 //!                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-//!                 bytes: "SGVsbG8gd29ybGQh".to_string(),
+//!                 bytes: base64::engine::general_purpose::STANDARD
+//!                     .decode("SGVsbG8gd29ybGQh")
+//!                     .unwrap(),
 //!                 user: User {
 //!                     name: "name".to_string(),
 //!                     tags: vec!["tags".to_string(), "tags".to_string()],
@@ -74,14 +76,15 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod client;
-pub mod config;
-pub mod core;
 pub mod error;
+pub mod core;
+pub mod config;
+pub mod client;
 pub mod prelude;
 
-pub use api::*;
-pub use client::*;
-pub use config::*;
-pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError};
+pub use api::{*};
+pub use core::{*};
+pub use config::{*};
+pub use client::{*};
+

@@ -1,0 +1,1412 @@
+{
+  "apiDisplayName": "Plant Store API",
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "plantStoreApi",
+      "unsafeName": "plantStoreApi",
+    },
+    "originalName": "Plant Store API",
+    "pascalCase": {
+      "safeName": "PlantStoreApi",
+      "unsafeName": "PlantStoreApi",
+    },
+    "screamingSnakeCase": {
+      "safeName": "PLANT_STORE_API",
+      "unsafeName": "PLANT_STORE_API",
+    },
+    "snakeCase": {
+      "safeName": "plant_store_api",
+      "unsafeName": "plant_store_api",
+    },
+  },
+  "apiPlayground": undefined,
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [
+      {
+        "_visit": [Function],
+        "docs": "Basic authentication with custom field names",
+        "key": "basicAuth",
+        "password": {
+          "camelCase": {
+            "safeName": "apiToken",
+            "unsafeName": "apiToken",
+          },
+          "originalName": "api_token",
+          "pascalCase": {
+            "safeName": "ApiToken",
+            "unsafeName": "ApiToken",
+          },
+          "screamingSnakeCase": {
+            "safeName": "API_TOKEN",
+            "unsafeName": "API_TOKEN",
+          },
+          "snakeCase": {
+            "safeName": "api_token",
+            "unsafeName": "api_token",
+          },
+        },
+        "passwordEnvVar": "PLANT_STORE_API_TOKEN",
+        "passwordOmit": false,
+        "type": "basic",
+        "username": {
+          "camelCase": {
+            "safeName": "projectId",
+            "unsafeName": "projectId",
+          },
+          "originalName": "project_id",
+          "pascalCase": {
+            "safeName": "ProjectId",
+            "unsafeName": "ProjectId",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PROJECT_ID",
+            "unsafeName": "PROJECT_ID",
+          },
+          "snakeCase": {
+            "safeName": "project_id",
+            "unsafeName": "project_id",
+          },
+        },
+        "usernameEnvVar": "PLANT_STORE_PROJECT_ID",
+        "usernameOmit": false,
+      },
+    ],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "https://api.plantstore.example.com/v1",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": undefined,
+          "id": "https://api.plantstore.example.com/v1",
+          "name": {
+            "camelCase": {
+              "safeName": "httpsApiPlantstoreExampleComV1",
+              "unsafeName": "httpsApiPlantstoreExampleComV1",
+            },
+            "originalName": "https://api.plantstore.example.com/v1",
+            "pascalCase": {
+              "safeName": "HttpsApiPlantstoreExampleComV1",
+              "unsafeName": "HttpsApiPlantstoreExampleComV1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "HTTPS_API_PLANTSTORE_EXAMPLE_COM_V_1",
+              "unsafeName": "HTTPS_API_PLANTSTORE_EXAMPLE_COM_V_1",
+            },
+            "snakeCase": {
+              "safeName": "https_api_plantstore_example_com_v_1",
+              "unsafeName": "https_api_plantstore_example_com_v_1",
+            },
+          },
+          "url": "https://api.plantstore.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {
+    "GetPlantRequestUnauthorizedError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "getPlantRequestUnauthorizedError",
+            "unsafeName": "getPlantRequestUnauthorizedError",
+          },
+          "originalName": "GetPlantRequestUnauthorizedError",
+          "pascalCase": {
+            "safeName": "GetPlantRequestUnauthorizedError",
+            "unsafeName": "GetPlantRequestUnauthorizedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_PLANT_REQUEST_UNAUTHORIZED_ERROR",
+            "unsafeName": "GET_PLANT_REQUEST_UNAUTHORIZED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_plant_request_unauthorized_error",
+            "unsafeName": "get_plant_request_unauthorized_error",
+          },
+        },
+        "wireValue": "GetPlantRequestUnauthorizedError",
+      },
+      "displayName": "UnauthorizedError",
+      "docs": "Unauthorized",
+      "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
+      "name": {
+        "errorId": "GetPlantRequestUnauthorizedError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getPlantRequestUnauthorizedError",
+            "unsafeName": "getPlantRequestUnauthorizedError",
+          },
+          "originalName": "GetPlantRequestUnauthorizedError",
+          "pascalCase": {
+            "safeName": "GetPlantRequestUnauthorizedError",
+            "unsafeName": "GetPlantRequestUnauthorizedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_PLANT_REQUEST_UNAUTHORIZED_ERROR",
+            "unsafeName": "GET_PLANT_REQUEST_UNAUTHORIZED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_plant_request_unauthorized_error",
+            "unsafeName": "get_plant_request_unauthorized_error",
+          },
+        },
+      },
+      "statusCode": 401,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+    "ListPlantsRequestUnauthorizedError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "listPlantsRequestUnauthorizedError",
+            "unsafeName": "listPlantsRequestUnauthorizedError",
+          },
+          "originalName": "ListPlantsRequestUnauthorizedError",
+          "pascalCase": {
+            "safeName": "ListPlantsRequestUnauthorizedError",
+            "unsafeName": "ListPlantsRequestUnauthorizedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "LIST_PLANTS_REQUEST_UNAUTHORIZED_ERROR",
+            "unsafeName": "LIST_PLANTS_REQUEST_UNAUTHORIZED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "list_plants_request_unauthorized_error",
+            "unsafeName": "list_plants_request_unauthorized_error",
+          },
+        },
+        "wireValue": "ListPlantsRequestUnauthorizedError",
+      },
+      "displayName": "UnauthorizedError",
+      "docs": "Unauthorized",
+      "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
+      "name": {
+        "errorId": "ListPlantsRequestUnauthorizedError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "listPlantsRequestUnauthorizedError",
+            "unsafeName": "listPlantsRequestUnauthorizedError",
+          },
+          "originalName": "ListPlantsRequestUnauthorizedError",
+          "pascalCase": {
+            "safeName": "ListPlantsRequestUnauthorizedError",
+            "unsafeName": "ListPlantsRequestUnauthorizedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "LIST_PLANTS_REQUEST_UNAUTHORIZED_ERROR",
+            "unsafeName": "LIST_PLANTS_REQUEST_UNAUTHORIZED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "list_plants_request_unauthorized_error",
+            "unsafeName": "list_plants_request_unauthorized_error",
+          },
+        },
+      },
+      "statusCode": 401,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "Plant",
+      "Error",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.plantstore.example.com/v1",
+          "displayName": "List all plants",
+          "docs": undefined,
+          "errors": [
+            {
+              "docs": "Unauthorized",
+              "error": {
+                "errorId": "ListPlantsRequestUnauthorizedError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "listPlantsRequestUnauthorizedError",
+                    "unsafeName": "listPlantsRequestUnauthorizedError",
+                  },
+                  "originalName": "ListPlantsRequestUnauthorizedError",
+                  "pascalCase": {
+                    "safeName": "ListPlantsRequestUnauthorizedError",
+                    "unsafeName": "ListPlantsRequestUnauthorizedError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "LIST_PLANTS_REQUEST_UNAUTHORIZED_ERROR",
+                    "unsafeName": "LIST_PLANTS_REQUEST_UNAUTHORIZED_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "list_plants_request_unauthorized_error",
+                    "unsafeName": "list_plants_request_unauthorized_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/plants",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.listPlants",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "listPlants",
+              "unsafeName": "listPlants",
+            },
+            "originalName": "listPlants",
+            "pascalCase": {
+              "safeName": "ListPlants",
+              "unsafeName": "ListPlants",
+            },
+            "screamingSnakeCase": {
+              "safeName": "LIST_PLANTS",
+              "unsafeName": "LIST_PLANTS",
+            },
+            "snakeCase": {
+              "safeName": "list_plants",
+              "unsafeName": "list_plants",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/plants",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "List of plants",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                        "originalName": "Plant",
+                        "pascalCase": {
+                          "safeName": "Plant",
+                          "unsafeName": "Plant",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PLANT",
+                          "unsafeName": "PLANT",
+                        },
+                        "snakeCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Plant",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "listPlantsExample": [
+                      {
+                        "id": "plant-123",
+                        "name": "Monstera Deliciosa",
+                        "species": "Monstera",
+                      },
+                    ],
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "List of plants",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 200,
+          },
+          "responseHeaders": [],
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "basicAuth": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_listPlantsExample_200": {
+                "codeSamples": undefined,
+                "displayName": "listPlantsExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/plants",
+                  },
+                  "environment": "https://api.plantstore.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": [
+                      {
+                        "id": "plant-123",
+                        "name": "Monstera Deliciosa",
+                        "species": "Monstera",
+                      },
+                    ],
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "List of plants",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "container": {
+                        "_visit": [Function],
+                        "list": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "displayName": undefined,
+                          "fernFilepath": {
+                            "allParts": [],
+                            "file": undefined,
+                            "packagePath": [],
+                          },
+                          "inline": false,
+                          "name": {
+                            "camelCase": {
+                              "safeName": "plant",
+                              "unsafeName": "plant",
+                            },
+                            "originalName": "Plant",
+                            "pascalCase": {
+                              "safeName": "Plant",
+                              "unsafeName": "Plant",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "PLANT",
+                              "unsafeName": "PLANT",
+                            },
+                            "snakeCase": {
+                              "safeName": "plant",
+                              "unsafeName": "plant",
+                            },
+                          },
+                          "type": "named",
+                          "typeId": "Plant",
+                        },
+                        "type": "list",
+                      },
+                      "type": "container",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "listPlantsExample": [
+                          {
+                            "id": "plant-123",
+                            "name": "Monstera Deliciosa",
+                            "species": "Monstera",
+                          },
+                        ],
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "List of plants",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [
+            {
+              "docs": undefined,
+              "explode": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "plantId",
+                  "unsafeName": "plantId",
+                },
+                "originalName": "plantId",
+                "pascalCase": {
+                  "safeName": "PlantId",
+                  "unsafeName": "PlantId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PLANT_ID",
+                  "unsafeName": "PLANT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "plant_id",
+                  "unsafeName": "plant_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "plantId_example": "plantId",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.plantstore.example.com/v1",
+          "displayName": "Get a plant by ID",
+          "docs": undefined,
+          "errors": [
+            {
+              "docs": "Unauthorized",
+              "error": {
+                "errorId": "GetPlantRequestUnauthorizedError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "getPlantRequestUnauthorizedError",
+                    "unsafeName": "getPlantRequestUnauthorizedError",
+                  },
+                  "originalName": "GetPlantRequestUnauthorizedError",
+                  "pascalCase": {
+                    "safeName": "GetPlantRequestUnauthorizedError",
+                    "unsafeName": "GetPlantRequestUnauthorizedError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "GET_PLANT_REQUEST_UNAUTHORIZED_ERROR",
+                    "unsafeName": "GET_PLANT_REQUEST_UNAUTHORIZED_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "get_plant_request_unauthorized_error",
+                    "unsafeName": "get_plant_request_unauthorized_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/plants/",
+            "parts": [
+              {
+                "pathParameter": "plantId",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [],
+          "id": "endpoint_.getPlant",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getPlant",
+              "unsafeName": "getPlant",
+            },
+            "originalName": "getPlant",
+            "pascalCase": {
+              "safeName": "GetPlant",
+              "unsafeName": "GetPlant",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_PLANT",
+              "unsafeName": "GET_PLANT",
+            },
+            "snakeCase": {
+              "safeName": "get_plant",
+              "unsafeName": "get_plant",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/plants/",
+            "parts": [
+              {
+                "pathParameter": "plantId",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "docs": undefined,
+              "explode": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "plantId",
+                  "unsafeName": "plantId",
+                },
+                "originalName": "plantId",
+                "pascalCase": {
+                  "safeName": "PlantId",
+                  "unsafeName": "PlantId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PLANT_ID",
+                  "unsafeName": "PLANT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "plant_id",
+                  "unsafeName": "plant_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "plantId_example": "plantId",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Plant details",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "plant",
+                      "unsafeName": "plant",
+                    },
+                    "originalName": "Plant",
+                    "pascalCase": {
+                      "safeName": "Plant",
+                      "unsafeName": "Plant",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PLANT",
+                      "unsafeName": "PLANT",
+                    },
+                    "snakeCase": {
+                      "safeName": "plant",
+                      "unsafeName": "plant",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Plant",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getPlantExample": {
+                      "id": "plant-123",
+                      "name": "Monstera Deliciosa",
+                      "species": "Monstera",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "Plant details",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 200,
+          },
+          "responseHeaders": [],
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "basicAuth": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getPlantExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getPlantExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/plants/plantId",
+                  },
+                  "environment": "https://api.plantstore.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {
+                    "plantId": "plantId",
+                  },
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "id": "plant-123",
+                      "name": "Monstera Deliciosa",
+                      "species": "Monstera",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Plant details",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                        "originalName": "Plant",
+                        "pascalCase": {
+                          "safeName": "Plant",
+                          "unsafeName": "Plant",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PLANT",
+                          "unsafeName": "PLANT",
+                        },
+                        "snakeCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Plant",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getPlantExample": {
+                          "id": "plant-123",
+                          "name": "Monstera Deliciosa",
+                          "species": "Monstera",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "Plant details",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "Error": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "typeId": "Error",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorCode_example_0": "UNAUTHORIZED",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorMessage_example_0": "Invalid credentials",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Error_example_autogenerated": {
+            "code": "UNAUTHORIZED",
+            "message": "Invalid credentials",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Plant": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "plant",
+            "unsafeName": "plant",
+          },
+          "originalName": "Plant",
+          "pascalCase": {
+            "safeName": "Plant",
+            "unsafeName": "Plant",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PLANT",
+            "unsafeName": "PLANT",
+          },
+          "snakeCase": {
+            "safeName": "plant",
+            "unsafeName": "plant",
+          },
+        },
+        "typeId": "Plant",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Plant identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PlantId_example_0": "plant-123",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Plant name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PlantName_example_0": "Monstera Deliciosa",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Plant species",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "species",
+                  "unsafeName": "species",
+                },
+                "originalName": "species",
+                "pascalCase": {
+                  "safeName": "Species",
+                  "unsafeName": "Species",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SPECIES",
+                  "unsafeName": "SPECIES",
+                },
+                "snakeCase": {
+                  "safeName": "species",
+                  "unsafeName": "species",
+                },
+              },
+              "wireValue": "species",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PlantSpecies_example_0": "Monstera",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Plant_example_autogenerated": {
+            "id": "plant-123",
+            "name": "Monstera Deliciosa",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

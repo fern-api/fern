@@ -2,19 +2,19 @@ namespace SeedNullable;
 
 public partial interface INullableClient
 {
-    Task<IEnumerable<User>> GetUsersAsync(
+    WithRawResponseTask<IEnumerable<User>> GetUsersAsync(
         GetUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<User> CreateUserAsync(
+    WithRawResponseTask<User> CreateUserAsync(
         CreateUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<bool> DeleteUserAsync(
+    WithRawResponseTask<bool> DeleteUserAsync(
         DeleteUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

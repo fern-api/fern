@@ -23,13 +23,14 @@ export async function validateDocsBrokenLinks({
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         const startTime = performance.now();
-        const fernWorkspaces = await Promise.all(
-            project.apiWorkspaces.map(async (workspace) => {
-                return workspace.toFernWorkspace({ context });
-            })
-        );
         const ossWorkspaces = await filterOssWorkspaces(project);
-        const violations = await validateDocsWorkspace(docsWorkspace, context, fernWorkspaces, ossWorkspaces, true);
+        const violations = await validateDocsWorkspace(
+            docsWorkspace,
+            context,
+            project.apiWorkspaces,
+            ossWorkspaces,
+            true
+        );
 
         const elapsedMillis = performance.now() - startTime;
         logViolations({

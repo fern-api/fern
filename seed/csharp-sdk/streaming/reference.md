@@ -40,7 +40,7 @@ client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumE
 </dl>
 </details>
 
-<details><summary><code>client.Dummy.<a href="/src/SeedStreaming/Dummy/DummyClient.cs">GenerateAsync</a>(Generateequest { ... }) -> StreamResponse</code></summary>
+<details><summary><code>client.Dummy.<a href="/src/SeedStreaming/Dummy/DummyClient.cs">GenerateAsync</a>(Generateequest { ... }) -> WithRawResponseTask&lt;StreamResponse&gt;</code></summary>
 <dl>
 <dd>
 

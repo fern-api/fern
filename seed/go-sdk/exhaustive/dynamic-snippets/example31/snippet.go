@@ -15,7 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    request := 1000000
+    request := int64(1000000)
     client.Endpoints.Primitive.GetAndReturnLong(
         context.TODO(),
         request,

@@ -2,7 +2,7 @@ namespace SeedLiteral;
 
 public partial interface IQueryClient
 {
-    Task<SendResponse> SendAsync(
+    WithRawResponseTask<SendResponse> SendAsync(
         SendLiteralsInQueryRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

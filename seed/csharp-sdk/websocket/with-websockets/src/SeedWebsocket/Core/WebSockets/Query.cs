@@ -1,4 +1,4 @@
-using System.Collections;
+using global::System.Collections;
 
 namespace SeedWebsocket.Core.WebSockets;
 
@@ -42,7 +42,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
     /// <param name="value">The parameter value.</param>
     public void Add(string key, bool? value)
     {
-        if (value == null || string.IsNullOrEmpty(key))
+        if (value is null || string.IsNullOrEmpty(key))
         {
             return;
         }
@@ -56,7 +56,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
     /// <param name="value">The parameter value.</param>
     public void Add(string key, int? value)
     {
-        if (value == null || string.IsNullOrEmpty(key))
+        if (value is null || string.IsNullOrEmpty(key))
         {
             return;
         }
@@ -70,7 +70,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
     /// <param name="value">The parameter value.</param>
     public void Add(string key, float? value)
     {
-        if (value == null || string.IsNullOrEmpty(key))
+        if (value is null || string.IsNullOrEmpty(key))
         {
             return;
         }
@@ -84,7 +84,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
     /// <param name="value">The parameter value.</param>
     public void Add(string key, double? value)
     {
-        if (value == null || string.IsNullOrEmpty(key))
+        if (value is null || string.IsNullOrEmpty(key))
         {
             return;
         }
@@ -98,7 +98,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
     /// <param name="value">The parameter value.</param>
     public void Add(string key, decimal? value)
     {
-        if (value == null || string.IsNullOrEmpty(key))
+        if (value is null || string.IsNullOrEmpty(key))
         {
             return;
         }
@@ -112,7 +112,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
     /// <param name="value">The parameter value.</param>
     public void Add(string key, Object? value)
     {
-        if (value == null || string.IsNullOrEmpty(key))
+        if (value is null || string.IsNullOrEmpty(key))
         {
             return;
         }

@@ -1,0 +1,1 @@
+export { addAuthCommand } from "./command";

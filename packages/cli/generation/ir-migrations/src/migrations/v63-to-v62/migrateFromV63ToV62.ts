@@ -91,7 +91,14 @@ function convertApiAuth(auth: IrVersions.V63.ApiAuth): IrVersions.V62.ApiAuth {
 function convertAuthScheme(scheme: IrVersions.V63.AuthScheme): IrVersions.V62.AuthScheme {
     switch (scheme.type) {
         case "basic":
-            return IrVersions.V62.AuthScheme.basic(scheme);
+            return IrVersions.V62.AuthScheme.basic({
+                key: scheme.key,
+                docs: scheme.docs,
+                username: scheme.username,
+                usernameEnvVar: scheme.usernameEnvVar,
+                password: scheme.password,
+                passwordEnvVar: scheme.passwordEnvVar
+            });
         case "bearer":
             return IrVersions.V62.AuthScheme.bearer(scheme);
         case "header":

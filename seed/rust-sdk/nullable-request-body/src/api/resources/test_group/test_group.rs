@@ -1,6 +1,6 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions, QueryBuilder};
+use reqwest::{Method};
+use crate::api::{*};
 
 pub struct TestGroupClient {
     pub http_client: HttpClient,
@@ -9,8 +9,8 @@ pub struct TestGroupClient {
 impl TestGroupClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?
+})
     }
 
     /// Post a nullable request body
@@ -22,23 +22,16 @@ impl TestGroupClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn test_method_name(
-        &self,
-        path_param: &String,
-        request: &TestMethodNameRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<serde_json::Value, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::POST,
-                &format!("optional-request-body/{}", path_param),
-                Some(serde_json::to_value(&request.body).unwrap_or_default()),
-                QueryBuilder::new()
-                    .serialize("query_param_object", request.query_param_object.clone())
-                    .serialize("query_param_integer", request.query_param_integer.clone())
-                    .build(),
-                options,
-            )
-            .await
+    pub async fn test_method_name(&self, path_param: &String, request: &TestMethodNameRequest, options: Option<RequestOptions>) -> Result<serde_json::Value, ApiError> {
+        self.http_client.execute_request(
+            Method::POST,
+            &format!("optional-request-body/{}", path_param),
+            Some(serde_json::to_value(&request.body).unwrap_or_default()),
+            QueryBuilder::new().serialize("query_param_object", request.query_param_object.clone()).serialize("query_param_integer", request.query_param_integer.clone())
+            .build(),
+            options,
+        ).await
     }
+
 }
+

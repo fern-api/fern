@@ -6,8 +6,9 @@ namespace SeedOauthClientCredentialsMandatoryAuth;
 public class SeedOauthClientCredentialsMandatoryAuthApiException(
     string message,
     int statusCode,
-    object body
-) : SeedOauthClientCredentialsMandatoryAuthException(message)
+    object body,
+    Exception? innerException = null
+) : SeedOauthClientCredentialsMandatoryAuthException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

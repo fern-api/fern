@@ -3,7 +3,7 @@ import { ValidationIssue } from "@fern-api/yaml-loader";
 /**
  * A validation error that contains source code for each validation issue.
  *
- * These errors should be written to stderr.
+ * When displayed, each issue is shown on its own line with file:line:col prefix.
  */
 export class ValidationError extends Error {
     public readonly issues: ValidationIssue[];

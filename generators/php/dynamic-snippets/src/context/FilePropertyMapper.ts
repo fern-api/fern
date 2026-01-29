@@ -62,11 +62,11 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): php.TypeLiteral {
-        const fileValue = this.context.getSingleFileValue({ property, record });
+        let fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return php.TypeLiteral.nop();
+            fileValue = `example_${property.wireValue ?? "file"}`;
         }
-        return php.TypeLiteral.file(fileValue);
+        return php.TypeLiteral.file(fileValue, this.context.rootNamespace);
     }
 
     private getArrayFileProperty({
@@ -78,9 +78,12 @@ export class FilePropertyMapper {
     }): php.TypeLiteral {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return php.TypeLiteral.nop();
+            const fallback = `example_${property.wireValue ?? "files"}`;
+            return php.TypeLiteral.list({ values: [php.TypeLiteral.file(fallback, this.context.rootNamespace)] });
         }
-        return php.TypeLiteral.list({ values: fileValues.map((value) => php.TypeLiteral.file(value)) });
+        return php.TypeLiteral.list({
+            values: fileValues.map((value) => php.TypeLiteral.file(value, this.context.rootNamespace))
+        });
     }
 
     private getBodyProperty({

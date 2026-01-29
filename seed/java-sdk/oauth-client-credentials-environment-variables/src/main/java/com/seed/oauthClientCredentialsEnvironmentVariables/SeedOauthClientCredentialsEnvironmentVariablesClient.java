@@ -65,4 +65,12 @@ public class SeedOauthClientCredentialsEnvironmentVariablesClient {
             String clientId, String clientSecret) {
         return SeedOauthClientCredentialsEnvironmentVariablesClientBuilder.withCredentials(clientId, clientSecret);
     }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static SeedOauthClientCredentialsEnvironmentVariablesClientBuilder._Builder builder() {
+        return SeedOauthClientCredentialsEnvironmentVariablesClientBuilder.builder();
+    }
 }

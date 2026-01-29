@@ -3,7 +3,7 @@ namespace SeedPackageYml;
 public partial interface ISeedPackageYmlClient
 {
     public ServiceClient Service { get; }
-    Task<string> EchoAsync(
+    WithRawResponseTask<string> EchoAsync(
         string id,
         EchoRequest request,
         RequestOptions? options = null,

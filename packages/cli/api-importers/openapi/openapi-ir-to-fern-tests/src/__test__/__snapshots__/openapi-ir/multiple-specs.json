@@ -45,6 +45,7 @@
           "file": "../openapi-v1.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "errors": {},
@@ -108,6 +109,7 @@
           "file": "../openapi-v2.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "errors": {},
@@ -250,6 +252,7 @@
           "file": "../openapi-v3.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "errors": {},

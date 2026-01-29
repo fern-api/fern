@@ -1,0 +1,200 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:PublicPayload": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "PublicPayload",
+                    "camelCase": {
+                        "unsafeName": "publicPayload",
+                        "safeName": "publicPayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "public_payload",
+                        "safeName": "public_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PUBLIC_PAYLOAD",
+                        "safeName": "PUBLIC_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PublicPayload",
+                        "safeName": "PublicPayload"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE",
+                                "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Message",
+                                "safeName": "Message"
+                            }
+                        },
+                        "wireValue": "message"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:PrivatePayload": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "PrivatePayload",
+                    "camelCase": {
+                        "unsafeName": "privatePayload",
+                        "safeName": "privatePayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "private_payload",
+                        "safeName": "private_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRIVATE_PAYLOAD",
+                        "safeName": "PRIVATE_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PrivatePayload",
+                        "safeName": "PrivatePayload"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "secret",
+                            "camelCase": {
+                                "unsafeName": "secret",
+                                "safeName": "secret"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "secret",
+                                "safeName": "secret"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SECRET",
+                                "safeName": "SECRET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Secret",
+                                "safeName": "Secret"
+                            }
+                        },
+                        "wireValue": "secret"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:NoAudiencePayload": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "NoAudiencePayload",
+                    "camelCase": {
+                        "unsafeName": "noAudiencePayload",
+                        "safeName": "noAudiencePayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "no_audience_payload",
+                        "safeName": "no_audience_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NO_AUDIENCE_PAYLOAD",
+                        "safeName": "NO_AUDIENCE_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NoAudiencePayload",
+                        "safeName": "NoAudiencePayload"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        },
+                        "wireValue": "data"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {},
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

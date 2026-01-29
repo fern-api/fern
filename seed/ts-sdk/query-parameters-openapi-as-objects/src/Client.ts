@@ -109,7 +109,7 @@ export class SeedApiClient {
             bytes,
             user,
             userList,
-            optionalDeadline,
+            optionalDeadline: optionalDeadline != null ? optionalDeadline : undefined,
             keyValue: keyValue != null ? toJson(keyValue) : undefined,
             optionalString,
             nestedUser,

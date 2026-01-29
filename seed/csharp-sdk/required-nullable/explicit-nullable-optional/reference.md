@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetFooAsync</a>(GetFooRequest { ... }) -> Foo</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetFooAsync</a>(GetFooRequest { ... }) -> WithRawResponseTask&lt;Foo&gt;</code></summary>
 <dl>
 <dd>
 
@@ -45,7 +45,7 @@ await client.GetFooAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">UpdateFooAsync</a>(id, UpdateFooRequest { ... }) -> Foo</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">UpdateFooAsync</a>(id, UpdateFooRequest { ... }) -> WithRawResponseTask&lt;Foo&gt;</code></summary>
 <dl>
 <dd>
 

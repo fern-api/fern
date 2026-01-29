@@ -30,7 +30,7 @@ func do() {
                 1,
             ),
             Long: fern.Int64(
-                1000000,
+                int64(1000000),
             ),
             Double: fern.Float64(
                 1.1,
@@ -53,7 +53,9 @@ func do() {
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             ),
-            Base64: []byte("SGVsbG8gd29ybGQh"),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
             List: []string{
                 "list",
                 "list",

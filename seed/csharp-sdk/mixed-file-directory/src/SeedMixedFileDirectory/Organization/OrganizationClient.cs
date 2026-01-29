@@ -12,18 +12,18 @@ public partial class OrganizationClient : IOrganizationClient
         _client = client;
     }
 
-    /// <summary>
-    /// Create a new organization.
-    /// </summary>
-    /// <example><code>
-    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
-    /// </code></example>
-    public async Task<Organization> CreateAsync(
+    private async Task<WithRawResponse<Organization>> CreateAsyncCore(
         CreateOrganizationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedMixedFileDirectory.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -32,6 +32,7 @@ public partial class OrganizationClient : IOrganizationClient
                     Method = HttpMethod.Post,
                     Path = "/organizations/",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -42,14 +43,28 @@ public partial class OrganizationClient : IOrganizationClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Organization>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Organization>(responseBody)!;
+                return new WithRawResponse<Organization>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
+                throw new SeedMixedFileDirectoryApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedMixedFileDirectoryApiException(
@@ -58,5 +73,22 @@ public partial class OrganizationClient : IOrganizationClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Create a new organization.
+    /// </summary>
+    /// <example><code>
+    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
+    /// </code></example>
+    public WithRawResponseTask<Organization> CreateAsync(
+        CreateOrganizationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Organization>(
+            CreateAsyncCore(request, options, cancellationToken)
+        );
     }
 }
