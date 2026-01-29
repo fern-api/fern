@@ -125,10 +125,12 @@ export function registerLiteralEnumsForTypeReference({
                     });
                 },
                 list: (lt) => {
+                    // Handle both old format (TypeReference directly) and new format (ListType with .list property)
+                    const listTypeRef = "list" in lt ? (lt as { list: TypeReference }).list : lt;
                     registerLiteralEnumsForTypeReference({
                         parentSymbol,
                         registry,
-                        typeReference: lt
+                        typeReference: listTypeRef
                     });
                 },
                 nullable: (typeReference) => {
@@ -145,11 +147,13 @@ export function registerLiteralEnumsForTypeReference({
                         typeReference
                     });
                 },
-                set: (typeReference) => {
+                set: (st) => {
+                    // Handle both old format (TypeReference directly) and new format (SetType with .set property)
+                    const setTypeRef = "set" in st ? (st as { set: TypeReference }).set : st;
                     registerLiteralEnumsForTypeReference({
                         parentSymbol,
                         registry,
-                        typeReference
+                        typeReference: setTypeRef
                     });
                 },
                 _other: noop

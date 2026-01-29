@@ -527,7 +527,9 @@
                                     "typeId": "type_service:DocumentItem",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -708,7 +710,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -2009,35 +2013,13 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_service:RerankResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            {
-                                                                "originalName": "service",
-                                                                "camelCase": {
-                                                                    "unsafeName": "service",
-                                                                    "safeName": "service"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "service",
-                                                                    "safeName": "service"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "SERVICE",
-                                                                    "safeName": "SERVICE"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Service",
-                                                                    "safeName": "Service"
-                                                                }
-                                                            }
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": {
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_service:RerankResponse",
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
                                                             "originalName": "service",
                                                             "camelCase": {
                                                                 "unsafeName": "service",
@@ -2056,129 +2038,129 @@
                                                                 "safeName": "Service"
                                                             }
                                                         }
-                                                    },
-                                                    "name": {
-                                                        "originalName": "RerankResponse",
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "service",
                                                         "camelCase": {
-                                                            "unsafeName": "rerankResponse",
-                                                            "safeName": "rerankResponse"
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
                                                         },
                                                         "snakeCase": {
-                                                            "unsafeName": "rerank_response",
-                                                            "safeName": "rerank_response"
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
                                                         },
                                                         "screamingSnakeCase": {
-                                                            "unsafeName": "RERANK_RESPONSE",
-                                                            "safeName": "RERANK_RESPONSE"
+                                                            "unsafeName": "SERVICE",
+                                                            "safeName": "SERVICE"
                                                         },
                                                         "pascalCase": {
-                                                            "unsafeName": "RerankResponse",
-                                                            "safeName": "RerankResponse"
+                                                            "unsafeName": "Service",
+                                                            "safeName": "Service"
                                                         }
-                                                    },
-                                                    "displayName": null
+                                                    }
                                                 },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "name": {
+                                                    "originalName": "RerankResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "rerankResponse",
+                                                        "safeName": "rerankResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "rerank_response",
+                                                        "safeName": "rerank_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "RERANK_RESPONSE",
+                                                        "safeName": "RERANK_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "RerankResponse",
+                                                        "safeName": "RerankResponse"
+                                                    }
+                                                },
+                                                "displayName": null
+                                            },
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "results",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "results",
-                                                                        "safeName": "results"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "results",
-                                                                        "safeName": "results"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESULTS",
-                                                                        "safeName": "RESULTS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Results",
-                                                                        "safeName": "Results"
-                                                                    }
+                                                                "originalName": "results",
+                                                                "camelCase": {
+                                                                    "unsafeName": "results",
+                                                                    "safeName": "results"
                                                                 },
-                                                                "wireValue": "results"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "list",
-                                                                        "list": [
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "Washington, D.C. is the capital of the United States."
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "Washington, D.C. is the capital of the United States."
-                                                                            },
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "Carson City is the capital city of the American state of Nevada."
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "Carson City is the capital city of the American state of Nevada."
-                                                                            }
-                                                                        ],
-                                                                        "itemType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
+                                                                "snakeCase": {
+                                                                    "unsafeName": "results",
+                                                                    "safeName": "results"
                                                                 },
-                                                                "jsonExample": [
-                                                                    "Washington, D.C. is the capital of the United States.",
-                                                                    "Carson City is the capital city of the American state of Nevada."
-                                                                ]
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RESULTS",
+                                                                    "safeName": "RESULTS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Results",
+                                                                    "safeName": "Results"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_service:RerankResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
+                                                            "wireValue": "results"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "list",
+                                                                    "list": [
                                                                         {
-                                                                            "originalName": "service",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "service",
-                                                                                "safeName": "service"
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "Washington, D.C. is the capital of the United States."
+                                                                                    }
+                                                                                }
                                                                             },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "service",
-                                                                                "safeName": "service"
+                                                                            "jsonExample": "Washington, D.C. is the capital of the United States."
+                                                                        },
+                                                                        {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "Carson City is the capital city of the American state of Nevada."
+                                                                                    }
+                                                                                }
                                                                             },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "SERVICE",
-                                                                                "safeName": "SERVICE"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Service",
-                                                                                "safeName": "Service"
-                                                                            }
+                                                                            "jsonExample": "Carson City is the capital city of the American state of Nevada."
                                                                         }
                                                                     ],
-                                                                    "packagePath": [],
-                                                                    "file": {
+                                                                    "itemType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": [
+                                                                "Washington, D.C. is the capital of the United States.",
+                                                                "Carson City is the capital city of the American state of Nevada."
+                                                            ]
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_service:RerankResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [
+                                                                    {
                                                                         "originalName": "service",
                                                                         "camelCase": {
                                                                             "unsafeName": "service",
@@ -2197,40 +2179,60 @@
                                                                             "safeName": "Service"
                                                                         }
                                                                     }
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "RerankResponse",
+                                                                ],
+                                                                "packagePath": [],
+                                                                "file": {
+                                                                    "originalName": "service",
                                                                     "camelCase": {
-                                                                        "unsafeName": "rerankResponse",
-                                                                        "safeName": "rerankResponse"
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "rerank_response",
-                                                                        "safeName": "rerank_response"
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "RERANK_RESPONSE",
-                                                                        "safeName": "RERANK_RESPONSE"
+                                                                        "unsafeName": "SERVICE",
+                                                                        "safeName": "SERVICE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "RerankResponse",
-                                                                        "safeName": "RerankResponse"
+                                                                        "unsafeName": "Service",
+                                                                        "safeName": "Service"
                                                                     }
-                                                                },
-                                                                "displayName": null
+                                                                }
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "results": [
-                                                    "Washington, D.C. is the capital of the United States.",
-                                                    "Carson City is the capital city of the American state of Nevada."
-                                                ]
+                                                            "name": {
+                                                                "originalName": "RerankResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "rerankResponse",
+                                                                    "safeName": "rerankResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "rerank_response",
+                                                                    "safeName": "rerank_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RERANK_RESPONSE",
+                                                                    "safeName": "RERANK_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "RerankResponse",
+                                                                    "safeName": "RerankResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "results": [
+                                                "Washington, D.C. is the capital of the United States.",
+                                                "Carson City is the capital city of the American state of Nevada."
+                                            ]
                                         }
                                     }
                                 },
@@ -2242,7 +2244,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "c076bdd6",
+                                "id": "3da6880f",
                                 "url": "/rerank",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2793,79 +2795,57 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
+                                        "shape": {
+                                            "type": "named",
                                             "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "results",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "results",
-                                                                        "safeName": "results"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "results",
-                                                                        "safeName": "results"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESULTS",
-                                                                        "safeName": "RESULTS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Results",
-                                                                        "safeName": "Results"
-                                                                    }
+                                                                "originalName": "results",
+                                                                "camelCase": {
+                                                                    "unsafeName": "results",
+                                                                    "safeName": "results"
                                                                 },
-                                                                "wireValue": "results"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "results",
+                                                                    "safeName": "results"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RESULTS",
+                                                                    "safeName": "RESULTS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Results",
+                                                                    "safeName": "Results"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "RerankResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "rerankResponse",
-                                                                        "safeName": "rerankResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "rerank_response",
-                                                                        "safeName": "rerank_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RERANK_RESPONSE",
-                                                                        "safeName": "RERANK_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "RerankResponse",
-                                                                        "safeName": "RerankResponse"
-                                                                    }
+                                                            "wireValue": "results"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "RerankResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "rerankResponse",
+                                                                    "safeName": "rerankResponse"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        {
-                                                                            "originalName": "service",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "service",
-                                                                                "safeName": "service"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "service",
-                                                                                "safeName": "service"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "SERVICE",
-                                                                                "safeName": "SERVICE"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Service",
-                                                                                "safeName": "Service"
-                                                                            }
-                                                                        }
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": {
+                                                                "snakeCase": {
+                                                                    "unsafeName": "rerank_response",
+                                                                    "safeName": "rerank_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RERANK_RESPONSE",
+                                                                    "safeName": "RERANK_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "RerankResponse",
+                                                                    "safeName": "RerankResponse"
+                                                                }
+                                                            },
+                                                            "fernFilepath": {
+                                                                "allParts": [
+                                                                    {
                                                                         "originalName": "service",
                                                                         "camelCase": {
                                                                             "unsafeName": "service",
@@ -2884,108 +2864,108 @@
                                                                             "safeName": "Service"
                                                                         }
                                                                     }
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_service:RerankResponse"
+                                                                ],
+                                                                "packagePath": [],
+                                                                "file": {
+                                                                    "originalName": "service",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SERVICE",
+                                                                        "safeName": "SERVICE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Service",
+                                                                        "safeName": "Service"
+                                                                    }
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "list",
-                                                                        "list": [
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "results"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "results"
-                                                                            },
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "results"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "results"
-                                                                            }
-                                                                        ],
-                                                                        "itemType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
+                                                            "displayName": null,
+                                                            "typeId": "type_service:RerankResponse"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "list",
+                                                                    "list": [
+                                                                        {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
                                                                                     "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                                    "string": {
+                                                                                        "original": "results"
+                                                                                    }
                                                                                 }
+                                                                            },
+                                                                            "jsonExample": "results"
+                                                                        },
+                                                                        {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "results"
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": "results"
+                                                                        }
+                                                                    ],
+                                                                    "itemType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": [
-                                                                    "results",
-                                                                    "results"
-                                                                ]
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": {
-                                                        "originalName": "RerankResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "rerankResponse",
-                                                            "safeName": "rerankResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "rerank_response",
-                                                            "safeName": "rerank_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "RERANK_RESPONSE",
-                                                            "safeName": "RERANK_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "RerankResponse",
-                                                            "safeName": "RerankResponse"
-                                                        }
-                                                    },
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            {
-                                                                "originalName": "service",
-                                                                "camelCase": {
-                                                                    "unsafeName": "service",
-                                                                    "safeName": "service"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "service",
-                                                                    "safeName": "service"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "SERVICE",
-                                                                    "safeName": "SERVICE"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Service",
-                                                                    "safeName": "Service"
                                                                 }
-                                                            }
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": {
+                                                            },
+                                                            "jsonExample": [
+                                                                "results",
+                                                                "results"
+                                                            ]
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
+                                            },
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "RerankResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "rerankResponse",
+                                                        "safeName": "rerankResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "rerank_response",
+                                                        "safeName": "rerank_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "RERANK_RESPONSE",
+                                                        "safeName": "RERANK_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "RerankResponse",
+                                                        "safeName": "RerankResponse"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
                                                             "originalName": "service",
                                                             "camelCase": {
                                                                 "unsafeName": "service",
@@ -3004,17 +2984,37 @@
                                                                 "safeName": "Service"
                                                             }
                                                         }
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_service:RerankResponse"
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "results": [
-                                                    "results",
-                                                    "results"
-                                                ]
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "service",
+                                                        "camelCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SERVICE",
+                                                            "safeName": "SERVICE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Service",
+                                                            "safeName": "Service"
+                                                        }
+                                                    }
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_service:RerankResponse"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "results": [
+                                                "results",
+                                                "results"
+                                            ]
                                         }
                                     }
                                 },

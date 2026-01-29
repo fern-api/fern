@@ -767,129 +767,127 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:ResponseBody",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": {
-                                                        "originalName": "ResponseBody",
-                                                        "camelCase": {
-                                                            "unsafeName": "responseBody",
-                                                            "safeName": "responseBody"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "response_body",
-                                                            "safeName": "response_body"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSE_BODY",
-                                                            "safeName": "RESPONSE_BODY"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ResponseBody",
-                                                            "safeName": "ResponseBody"
-                                                        }
-                                                    },
-                                                    "displayName": null
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_:ResponseBody",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
                                                 },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "name": {
+                                                    "originalName": "ResponseBody",
+                                                    "camelCase": {
+                                                        "unsafeName": "responseBody",
+                                                        "safeName": "responseBody"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "response_body",
+                                                        "safeName": "response_body"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "RESPONSE_BODY",
+                                                        "safeName": "RESPONSE_BODY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ResponseBody",
+                                                        "safeName": "ResponseBody"
+                                                    }
+                                                },
+                                                "displayName": null
+                                            },
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
+                                                                "originalName": "success",
+                                                                "camelCase": {
+                                                                    "unsafeName": "success",
+                                                                    "safeName": "success"
                                                                 },
-                                                                "wireValue": "success"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "success",
+                                                                    "safeName": "success"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SUCCESS",
+                                                                    "safeName": "SUCCESS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Success",
+                                                                    "safeName": "Success"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "boolean",
-                                                                                    "boolean": true
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": true
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "wireValue": "success"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "BOOLEAN",
-                                                                                "v2": {
-                                                                                    "type": "boolean",
-                                                                                    "default": null
-                                                                                }
+                                                                                "type": "boolean",
+                                                                                "boolean": true
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": true
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "BOOLEAN",
+                                                                            "v2": {
+                                                                                "type": "boolean",
+                                                                                "default": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": true
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:ResponseBody",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "ResponseBody",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "responseBody",
-                                                                        "safeName": "responseBody"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "response_body",
-                                                                        "safeName": "response_body"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESPONSE_BODY",
-                                                                        "safeName": "RESPONSE_BODY"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ResponseBody",
-                                                                        "safeName": "ResponseBody"
-                                                                    }
-                                                                },
-                                                                "displayName": null
+                                                            "jsonExample": true
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:ResponseBody",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "success": true
+                                                            "name": {
+                                                                "originalName": "ResponseBody",
+                                                                "camelCase": {
+                                                                    "unsafeName": "responseBody",
+                                                                    "safeName": "responseBody"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "response_body",
+                                                                    "safeName": "response_body"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RESPONSE_BODY",
+                                                                    "safeName": "RESPONSE_BODY"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ResponseBody",
+                                                                    "safeName": "ResponseBody"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "success": true
                                         }
                                     }
                                 },
@@ -901,7 +899,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "e41175c1",
+                                "id": "ebf11d30",
                                 "url": "/postWithNullableNamedRequestBodyType/id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -989,129 +987,127 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
+                                        "shape": {
+                                            "type": "named",
                                             "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
+                                                                "originalName": "success",
+                                                                "camelCase": {
+                                                                    "unsafeName": "success",
+                                                                    "safeName": "success"
                                                                 },
-                                                                "wireValue": "success"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "success",
+                                                                    "safeName": "success"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SUCCESS",
+                                                                    "safeName": "SUCCESS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Success",
+                                                                    "safeName": "Success"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ResponseBody",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "responseBody",
-                                                                        "safeName": "responseBody"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "response_body",
-                                                                        "safeName": "response_body"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESPONSE_BODY",
-                                                                        "safeName": "RESPONSE_BODY"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ResponseBody",
-                                                                        "safeName": "ResponseBody"
-                                                                    }
+                                                            "wireValue": "success"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "ResponseBody",
+                                                                "camelCase": {
+                                                                    "unsafeName": "responseBody",
+                                                                    "safeName": "responseBody"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "response_body",
+                                                                    "safeName": "response_body"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:ResponseBody"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RESPONSE_BODY",
+                                                                    "safeName": "RESPONSE_BODY"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ResponseBody",
+                                                                    "safeName": "ResponseBody"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "boolean",
-                                                                                    "boolean": true
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": true
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:ResponseBody"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "BOOLEAN",
-                                                                                "v2": {
-                                                                                    "type": "boolean",
-                                                                                    "default": null
-                                                                                }
+                                                                                "type": "boolean",
+                                                                                "boolean": true
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": true
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "BOOLEAN",
+                                                                            "v2": {
+                                                                                "type": "boolean",
+                                                                                "default": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": true
+                                                                }
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": {
-                                                        "originalName": "ResponseBody",
-                                                        "camelCase": {
-                                                            "unsafeName": "responseBody",
-                                                            "safeName": "responseBody"
+                                                            "jsonExample": true
                                                         },
-                                                        "snakeCase": {
-                                                            "unsafeName": "response_body",
-                                                            "safeName": "response_body"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSE_BODY",
-                                                            "safeName": "RESPONSE_BODY"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ResponseBody",
-                                                            "safeName": "ResponseBody"
-                                                        }
-                                                    },
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:ResponseBody"
-                                                }
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             },
-                                            "jsonExample": {
-                                                "success": true
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "ResponseBody",
+                                                    "camelCase": {
+                                                        "unsafeName": "responseBody",
+                                                        "safeName": "responseBody"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "response_body",
+                                                        "safeName": "response_body"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "RESPONSE_BODY",
+                                                        "safeName": "RESPONSE_BODY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ResponseBody",
+                                                        "safeName": "ResponseBody"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:ResponseBody"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "success": true
                                         }
                                     }
                                 },
@@ -1605,129 +1601,127 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:ResponseBody",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": {
-                                                        "originalName": "ResponseBody",
-                                                        "camelCase": {
-                                                            "unsafeName": "responseBody",
-                                                            "safeName": "responseBody"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "response_body",
-                                                            "safeName": "response_body"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSE_BODY",
-                                                            "safeName": "RESPONSE_BODY"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ResponseBody",
-                                                            "safeName": "ResponseBody"
-                                                        }
-                                                    },
-                                                    "displayName": null
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_:ResponseBody",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
                                                 },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "name": {
+                                                    "originalName": "ResponseBody",
+                                                    "camelCase": {
+                                                        "unsafeName": "responseBody",
+                                                        "safeName": "responseBody"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "response_body",
+                                                        "safeName": "response_body"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "RESPONSE_BODY",
+                                                        "safeName": "RESPONSE_BODY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ResponseBody",
+                                                        "safeName": "ResponseBody"
+                                                    }
+                                                },
+                                                "displayName": null
+                                            },
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
+                                                                "originalName": "success",
+                                                                "camelCase": {
+                                                                    "unsafeName": "success",
+                                                                    "safeName": "success"
                                                                 },
-                                                                "wireValue": "success"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "success",
+                                                                    "safeName": "success"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SUCCESS",
+                                                                    "safeName": "SUCCESS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Success",
+                                                                    "safeName": "Success"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "boolean",
-                                                                                    "boolean": true
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": true
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "wireValue": "success"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "BOOLEAN",
-                                                                                "v2": {
-                                                                                    "type": "boolean",
-                                                                                    "default": null
-                                                                                }
+                                                                                "type": "boolean",
+                                                                                "boolean": true
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": true
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "BOOLEAN",
+                                                                            "v2": {
+                                                                                "type": "boolean",
+                                                                                "default": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": true
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:ResponseBody",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "ResponseBody",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "responseBody",
-                                                                        "safeName": "responseBody"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "response_body",
-                                                                        "safeName": "response_body"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESPONSE_BODY",
-                                                                        "safeName": "RESPONSE_BODY"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ResponseBody",
-                                                                        "safeName": "ResponseBody"
-                                                                    }
-                                                                },
-                                                                "displayName": null
+                                                            "jsonExample": true
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:ResponseBody",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "success": true
+                                                            "name": {
+                                                                "originalName": "ResponseBody",
+                                                                "camelCase": {
+                                                                    "unsafeName": "responseBody",
+                                                                    "safeName": "responseBody"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "response_body",
+                                                                    "safeName": "response_body"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RESPONSE_BODY",
+                                                                    "safeName": "RESPONSE_BODY"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ResponseBody",
+                                                                    "safeName": "ResponseBody"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "success": true
                                         }
                                     }
                                 },
@@ -1739,7 +1733,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8878bc1c",
+                                "id": "937776a9",
                                 "url": "/postWithNonNullableNamedRequestBodyType/id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1928,129 +1922,127 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
+                                        "shape": {
+                                            "type": "named",
                                             "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
+                                                                "originalName": "success",
+                                                                "camelCase": {
+                                                                    "unsafeName": "success",
+                                                                    "safeName": "success"
                                                                 },
-                                                                "wireValue": "success"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "success",
+                                                                    "safeName": "success"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SUCCESS",
+                                                                    "safeName": "SUCCESS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Success",
+                                                                    "safeName": "Success"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ResponseBody",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "responseBody",
-                                                                        "safeName": "responseBody"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "response_body",
-                                                                        "safeName": "response_body"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESPONSE_BODY",
-                                                                        "safeName": "RESPONSE_BODY"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ResponseBody",
-                                                                        "safeName": "ResponseBody"
-                                                                    }
+                                                            "wireValue": "success"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "ResponseBody",
+                                                                "camelCase": {
+                                                                    "unsafeName": "responseBody",
+                                                                    "safeName": "responseBody"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "response_body",
+                                                                    "safeName": "response_body"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:ResponseBody"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RESPONSE_BODY",
+                                                                    "safeName": "RESPONSE_BODY"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ResponseBody",
+                                                                    "safeName": "ResponseBody"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "boolean",
-                                                                                    "boolean": true
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": true
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:ResponseBody"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "BOOLEAN",
-                                                                                "v2": {
-                                                                                    "type": "boolean",
-                                                                                    "default": null
-                                                                                }
+                                                                                "type": "boolean",
+                                                                                "boolean": true
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": true
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "BOOLEAN",
+                                                                            "v2": {
+                                                                                "type": "boolean",
+                                                                                "default": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": true
+                                                                }
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": {
-                                                        "originalName": "ResponseBody",
-                                                        "camelCase": {
-                                                            "unsafeName": "responseBody",
-                                                            "safeName": "responseBody"
+                                                            "jsonExample": true
                                                         },
-                                                        "snakeCase": {
-                                                            "unsafeName": "response_body",
-                                                            "safeName": "response_body"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSE_BODY",
-                                                            "safeName": "RESPONSE_BODY"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ResponseBody",
-                                                            "safeName": "ResponseBody"
-                                                        }
-                                                    },
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:ResponseBody"
-                                                }
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             },
-                                            "jsonExample": {
-                                                "success": true
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "ResponseBody",
+                                                    "camelCase": {
+                                                        "unsafeName": "responseBody",
+                                                        "safeName": "responseBody"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "response_body",
+                                                        "safeName": "response_body"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "RESPONSE_BODY",
+                                                        "safeName": "RESPONSE_BODY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ResponseBody",
+                                                        "safeName": "ResponseBody"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:ResponseBody"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "success": true
                                         }
                                     }
                                 },

@@ -834,112 +834,110 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:SearchResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": {
-                                                        "originalName": "SearchResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "searchResponse",
-                                                            "safeName": "searchResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "search_response",
-                                                            "safeName": "search_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "SEARCH_RESPONSE",
-                                                            "safeName": "SEARCH_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "SearchResponse",
-                                                            "safeName": "SearchResponse"
-                                                        }
-                                                    },
-                                                    "displayName": null
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_:SearchResponse",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
                                                 },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "result",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "result",
-                                                                        "safeName": "result"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "result",
-                                                                        "safeName": "result"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESULT",
-                                                                        "safeName": "RESULT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Result",
-                                                                        "safeName": "Result"
-                                                                    }
-                                                                },
-                                                                "wireValue": "result"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "search result"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "search result"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:SearchResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "SearchResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "searchResponse",
-                                                                        "safeName": "searchResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "search_response",
-                                                                        "safeName": "search_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SEARCH_RESPONSE",
-                                                                        "safeName": "SEARCH_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "SearchResponse",
-                                                                        "safeName": "SearchResponse"
-                                                                    }
-                                                                },
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
+                                                "name": {
+                                                    "originalName": "SearchResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "searchResponse",
+                                                        "safeName": "searchResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "search_response",
+                                                        "safeName": "search_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SEARCH_RESPONSE",
+                                                        "safeName": "SEARCH_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "SearchResponse",
+                                                        "safeName": "SearchResponse"
+                                                    }
+                                                },
+                                                "displayName": null
                                             },
-                                            "jsonExample": {
-                                                "result": "search result"
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "result",
+                                                                "camelCase": {
+                                                                    "unsafeName": "result",
+                                                                    "safeName": "result"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "result",
+                                                                    "safeName": "result"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RESULT",
+                                                                    "safeName": "RESULT"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Result",
+                                                                    "safeName": "Result"
+                                                                }
+                                                            },
+                                                            "wireValue": "result"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "search result"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "search result"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:SearchResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "name": {
+                                                                "originalName": "SearchResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "searchResponse",
+                                                                    "safeName": "searchResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "search_response",
+                                                                    "safeName": "search_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SEARCH_RESPONSE",
+                                                                    "safeName": "SEARCH_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "SearchResponse",
+                                                                    "safeName": "SearchResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "result": "search result"
                                         }
                                     }
                                 },
@@ -951,7 +949,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "5bbb80d5",
+                                "id": "9d468cf2",
                                 "url": "/search",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1165,112 +1163,110 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
+                                        "shape": {
+                                            "type": "named",
                                             "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "result",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "result",
-                                                                        "safeName": "result"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "result",
-                                                                        "safeName": "result"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESULT",
-                                                                        "safeName": "RESULT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Result",
-                                                                        "safeName": "Result"
-                                                                    }
+                                                                "originalName": "result",
+                                                                "camelCase": {
+                                                                    "unsafeName": "result",
+                                                                    "safeName": "result"
                                                                 },
-                                                                "wireValue": "result"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "result",
+                                                                    "safeName": "result"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "RESULT",
+                                                                    "safeName": "RESULT"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Result",
+                                                                    "safeName": "Result"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "SearchResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "searchResponse",
-                                                                        "safeName": "searchResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "search_response",
-                                                                        "safeName": "search_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SEARCH_RESPONSE",
-                                                                        "safeName": "SEARCH_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "SearchResponse",
-                                                                        "safeName": "SearchResponse"
-                                                                    }
+                                                            "wireValue": "result"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "SearchResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "searchResponse",
+                                                                    "safeName": "searchResponse"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "search_response",
+                                                                    "safeName": "search_response"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:SearchResponse"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SEARCH_RESPONSE",
+                                                                    "safeName": "SEARCH_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "SearchResponse",
+                                                                    "safeName": "SearchResponse"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "result"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "result"
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": {
-                                                        "originalName": "SearchResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "searchResponse",
-                                                            "safeName": "searchResponse"
+                                                            "displayName": null,
+                                                            "typeId": "type_:SearchResponse"
                                                         },
-                                                        "snakeCase": {
-                                                            "unsafeName": "search_response",
-                                                            "safeName": "search_response"
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "result"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "result"
                                                         },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "SEARCH_RESPONSE",
-                                                            "safeName": "SEARCH_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "SearchResponse",
-                                                            "safeName": "SearchResponse"
-                                                        }
-                                                    },
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:SearchResponse"
-                                                }
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             },
-                                            "jsonExample": {
-                                                "result": "result"
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "SearchResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "searchResponse",
+                                                        "safeName": "searchResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "search_response",
+                                                        "safeName": "search_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SEARCH_RESPONSE",
+                                                        "safeName": "SEARCH_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "SearchResponse",
+                                                        "safeName": "SearchResponse"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:SearchResponse"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "result": "result"
                                         }
                                     }
                                 },

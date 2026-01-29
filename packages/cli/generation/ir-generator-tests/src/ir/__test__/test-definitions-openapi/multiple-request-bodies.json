@@ -386,7 +386,9 @@
                                         "_type": "list",
                                         "list": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -793,7 +795,9 @@
                                                             "validation": null
                                                         }
                                                     }
-                                                }
+                                                },
+                                                "minItems": null,
+                                                "maxItems": null
                                             }
                                         }
                                     }
@@ -947,458 +951,458 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:UploadDocumentResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": {
-                                                        "originalName": "UploadDocumentResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "uploadDocumentResponse",
-                                                            "safeName": "uploadDocumentResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "upload_document_response",
-                                                            "safeName": "upload_document_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
-                                                            "safeName": "UPLOAD_DOCUMENT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "UploadDocumentResponse",
-                                                            "safeName": "UploadDocumentResponse"
-                                                        }
-                                                    },
-                                                    "displayName": null
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_:UploadDocumentResponse",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
                                                 },
-                                                "shape": {
-                                                    "type": "undiscriminatedUnion",
-                                                    "index": 0,
-                                                    "singleUnionType": {
-                                                        "shape": {
-                                                            "type": "named",
-                                                            "typeName": {
-                                                                "typeId": "type_:DocumentMetadata",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "DocumentMetadata",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "documentMetadata",
-                                                                        "safeName": "documentMetadata"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "document_metadata",
-                                                                        "safeName": "document_metadata"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "DOCUMENT_METADATA",
-                                                                        "safeName": "DOCUMENT_METADATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "DocumentMetadata",
-                                                                        "safeName": "DocumentMetadata"
-                                                                    }
-                                                                },
-                                                                "displayName": null
+                                                "name": {
+                                                    "originalName": "UploadDocumentResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "uploadDocumentResponse",
+                                                        "safeName": "uploadDocumentResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "upload_document_response",
+                                                        "safeName": "upload_document_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
+                                                        "safeName": "UPLOAD_DOCUMENT_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "UploadDocumentResponse",
+                                                        "safeName": "UploadDocumentResponse"
+                                                    }
+                                                },
+                                                "displayName": null
+                                            },
+                                            "shape": {
+                                                "type": "undiscriminatedUnion",
+                                                "index": 0,
+                                                "singleUnionType": {
+                                                    "shape": {
+                                                        "type": "named",
+                                                        "typeName": {
+                                                            "typeId": "type_:DocumentMetadata",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
                                                             },
-                                                            "shape": {
-                                                                "type": "object",
-                                                                "properties": [
-                                                                    {
+                                                            "name": {
+                                                                "originalName": "DocumentMetadata",
+                                                                "camelCase": {
+                                                                    "unsafeName": "documentMetadata",
+                                                                    "safeName": "documentMetadata"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "document_metadata",
+                                                                    "safeName": "document_metadata"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "DOCUMENT_METADATA",
+                                                                    "safeName": "DOCUMENT_METADATA"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "DocumentMetadata",
+                                                                    "safeName": "DocumentMetadata"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "shape": {
+                                                            "type": "object",
+                                                            "properties": [
+                                                                {
+                                                                    "name": {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "id",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                }
+                                                                            "originalName": "id",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "id",
+                                                                                "safeName": "id"
                                                                             },
-                                                                            "wireValue": "id"
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "id",
+                                                                                "safeName": "id"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "ID",
+                                                                                "safeName": "ID"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "ID",
+                                                                                "safeName": "ID"
+                                                                            }
                                                                         },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "integer",
-                                                                                                "integer": 1
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": 1
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
+                                                                        "wireValue": "id"
+                                                                    },
+                                                                    "value": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "optional",
+                                                                                "optional": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
                                                                                         "primitive": {
-                                                                                            "v1": "INTEGER",
-                                                                                            "v2": {
-                                                                                                "type": "integer",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
+                                                                                            "type": "integer",
+                                                                                            "integer": 1
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": 1
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "INTEGER",
+                                                                                        "v2": {
+                                                                                            "type": "integer",
+                                                                                            "default": null,
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": 1
+                                                                            }
                                                                         },
-                                                                        "originalTypeDeclaration": {
-                                                                            "typeId": "type_:DocumentMetadata",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
-                                                                            "displayName": null
-                                                                        },
-                                                                        "propertyAccess": null
+                                                                        "jsonExample": 1
                                                                     },
-                                                                    {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "title",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "title",
-                                                                                    "safeName": "title"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "title",
-                                                                                    "safeName": "title"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "TITLE",
-                                                                                    "safeName": "TITLE"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Title",
-                                                                                    "safeName": "Title"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "title"
+                                                                    "originalTypeDeclaration": {
+                                                                        "typeId": "type_:DocumentMetadata",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
                                                                         },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "title"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "title"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
+                                                                        "name": {
+                                                                            "originalName": "DocumentMetadata",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "documentMetadata",
+                                                                                "safeName": "documentMetadata"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "document_metadata",
+                                                                                "safeName": "document_metadata"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DOCUMENT_METADATA",
+                                                                                "safeName": "DOCUMENT_METADATA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "DocumentMetadata",
+                                                                                "safeName": "DocumentMetadata"
+                                                                            }
+                                                                        },
+                                                                        "displayName": null
+                                                                    },
+                                                                    "propertyAccess": null
+                                                                },
+                                                                {
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "title",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "title",
+                                                                                "safeName": "title"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "title",
+                                                                                "safeName": "title"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TITLE",
+                                                                                "safeName": "TITLE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Title",
+                                                                                "safeName": "Title"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "title"
+                                                                    },
+                                                                    "value": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "optional",
+                                                                                "optional": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
                                                                                         "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "title"
                                                                                             }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "title"
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": "title"
+                                                                            }
                                                                         },
-                                                                        "originalTypeDeclaration": {
-                                                                            "typeId": "type_:DocumentMetadata",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
-                                                                            "displayName": null
-                                                                        },
-                                                                        "propertyAccess": null
+                                                                        "jsonExample": "title"
                                                                     },
-                                                                    {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "author",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "author",
-                                                                                    "safeName": "author"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "author",
-                                                                                    "safeName": "author"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "AUTHOR",
-                                                                                    "safeName": "AUTHOR"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Author",
-                                                                                    "safeName": "Author"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "author"
+                                                                    "originalTypeDeclaration": {
+                                                                        "typeId": "type_:DocumentMetadata",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
                                                                         },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "author"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "author"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
+                                                                        "name": {
+                                                                            "originalName": "DocumentMetadata",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "documentMetadata",
+                                                                                "safeName": "documentMetadata"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "document_metadata",
+                                                                                "safeName": "document_metadata"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DOCUMENT_METADATA",
+                                                                                "safeName": "DOCUMENT_METADATA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "DocumentMetadata",
+                                                                                "safeName": "DocumentMetadata"
+                                                                            }
+                                                                        },
+                                                                        "displayName": null
+                                                                    },
+                                                                    "propertyAccess": null
+                                                                },
+                                                                {
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "author",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "author",
+                                                                                "safeName": "author"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "author",
+                                                                                "safeName": "author"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "AUTHOR",
+                                                                                "safeName": "AUTHOR"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Author",
+                                                                                "safeName": "Author"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "author"
+                                                                    },
+                                                                    "value": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "optional",
+                                                                                "optional": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
                                                                                         "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "author"
                                                                                             }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "author"
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": "author"
+                                                                            }
                                                                         },
-                                                                        "originalTypeDeclaration": {
-                                                                            "typeId": "type_:DocumentMetadata",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
-                                                                            "displayName": null
-                                                                        },
-                                                                        "propertyAccess": null
+                                                                        "jsonExample": "author"
                                                                     },
-                                                                    {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "tags",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "tags",
-                                                                                    "safeName": "tags"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "tags",
-                                                                                    "safeName": "tags"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "TAGS",
-                                                                                    "safeName": "TAGS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Tags",
-                                                                                    "safeName": "Tags"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "tags"
+                                                                    "originalTypeDeclaration": {
+                                                                        "typeId": "type_:DocumentMetadata",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
                                                                         },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "container",
-                                                                                            "container": {
-                                                                                                "type": "list",
-                                                                                                "list": [
-                                                                                                    {
-                                                                                                        "shape": {
-                                                                                                            "type": "unknown",
-                                                                                                            "unknown": {
-                                                                                                                "key": "value"
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "jsonExample": {
+                                                                        "name": {
+                                                                            "originalName": "DocumentMetadata",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "documentMetadata",
+                                                                                "safeName": "documentMetadata"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "document_metadata",
+                                                                                "safeName": "document_metadata"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DOCUMENT_METADATA",
+                                                                                "safeName": "DOCUMENT_METADATA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "DocumentMetadata",
+                                                                                "safeName": "DocumentMetadata"
+                                                                            }
+                                                                        },
+                                                                        "displayName": null
+                                                                    },
+                                                                    "propertyAccess": null
+                                                                },
+                                                                {
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "tags",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "tags",
+                                                                                "safeName": "tags"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "tags",
+                                                                                "safeName": "tags"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TAGS",
+                                                                                "safeName": "TAGS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Tags",
+                                                                                "safeName": "Tags"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "tags"
+                                                                    },
+                                                                    "value": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "optional",
+                                                                                "optional": {
+                                                                                    "shape": {
+                                                                                        "type": "container",
+                                                                                        "container": {
+                                                                                            "type": "list",
+                                                                                            "list": [
+                                                                                                {
+                                                                                                    "shape": {
+                                                                                                        "type": "unknown",
+                                                                                                        "unknown": {
                                                                                                             "key": "value"
                                                                                                         }
+                                                                                                    },
+                                                                                                    "jsonExample": {
+                                                                                                        "key": "value"
                                                                                                     }
-                                                                                                ],
-                                                                                                "itemType": {
-                                                                                                    "_type": "unknown"
                                                                                                 }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": [
-                                                                                            {
-                                                                                                "key": "value"
-                                                                                            }
-                                                                                        ]
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "container",
-                                                                                        "container": {
-                                                                                            "_type": "list",
-                                                                                            "list": {
+                                                                                            ],
+                                                                                            "itemType": {
                                                                                                 "_type": "unknown"
                                                                                             }
                                                                                         }
+                                                                                    },
+                                                                                    "jsonExample": [
+                                                                                        {
+                                                                                            "key": "value"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "container",
+                                                                                    "container": {
+                                                                                        "_type": "list",
+                                                                                        "list": {
+                                                                                            "_type": "unknown"
+                                                                                        },
+                                                                                        "minItems": null,
+                                                                                        "maxItems": null
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": [
-                                                                                {
-                                                                                    "key": "value"
-                                                                                }
-                                                                            ]
+                                                                            }
                                                                         },
-                                                                        "originalTypeDeclaration": {
-                                                                            "typeId": "type_:DocumentMetadata",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
-                                                                            "displayName": null
+                                                                        "jsonExample": [
+                                                                            {
+                                                                                "key": "value"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    "originalTypeDeclaration": {
+                                                                        "typeId": "type_:DocumentMetadata",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
                                                                         },
-                                                                        "propertyAccess": null
-                                                                    }
-                                                                ],
-                                                                "extraProperties": null
-                                                            }
-                                                        },
-                                                        "jsonExample": {
-                                                            "id": 1,
-                                                            "title": "title",
-                                                            "author": "author",
-                                                            "tags": [
-                                                                {
-                                                                    "key": "value"
+                                                                        "name": {
+                                                                            "originalName": "DocumentMetadata",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "documentMetadata",
+                                                                                "safeName": "documentMetadata"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "document_metadata",
+                                                                                "safeName": "document_metadata"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DOCUMENT_METADATA",
+                                                                                "safeName": "DOCUMENT_METADATA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "DocumentMetadata",
+                                                                                "safeName": "DocumentMetadata"
+                                                                            }
+                                                                        },
+                                                                        "displayName": null
+                                                                    },
+                                                                    "propertyAccess": null
                                                                 }
-                                                            ]
+                                                            ],
+                                                            "extraProperties": null
                                                         }
+                                                    },
+                                                    "jsonExample": {
+                                                        "id": 1,
+                                                        "title": "title",
+                                                        "author": "author",
+                                                        "tags": [
+                                                            {
+                                                                "key": "value"
+                                                            }
+                                                        ]
                                                     }
                                                 }
-                                            },
-                                            "jsonExample": {
-                                                "id": 1,
-                                                "title": "title",
-                                                "author": "author",
-                                                "tags": [
-                                                    {
-                                                        "key": "value"
-                                                    }
-                                                ]
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "id": 1,
+                                            "title": "title",
+                                            "author": "author",
+                                            "tags": [
+                                                {
+                                                    "key": "value"
+                                                }
+                                            ]
                                         }
                                     }
                                 },
@@ -1410,7 +1414,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "268aa71",
+                                "id": "1e27bef4",
                                 "url": "/documents/upload",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1556,7 +1560,9 @@
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "minItems": null,
+                                                                "maxItems": null
                                                             }
                                                         }
                                                     }
@@ -1571,481 +1577,481 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
+                                        "shape": {
+                                            "type": "named",
                                             "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "undiscriminatedUnion",
-                                                    "index": 0,
-                                                    "singleUnionType": {
+                                                "type": "undiscriminatedUnion",
+                                                "index": 0,
+                                                "singleUnionType": {
+                                                    "shape": {
+                                                        "type": "named",
                                                         "shape": {
-                                                            "type": "named",
-                                                            "shape": {
-                                                                "type": "object",
-                                                                "properties": [
-                                                                    {
+                                                            "type": "object",
+                                                            "properties": [
+                                                                {
+                                                                    "name": {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "id",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                }
+                                                                            "originalName": "id",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "id",
+                                                                                "safeName": "id"
                                                                             },
-                                                                            "wireValue": "id"
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "id",
+                                                                                "safeName": "id"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "ID",
+                                                                                "safeName": "ID"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "ID",
+                                                                                "safeName": "ID"
+                                                                            }
                                                                         },
-                                                                        "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
+                                                                        "wireValue": "id"
+                                                                    },
+                                                                    "originalTypeDeclaration": {
+                                                                        "name": {
+                                                                            "originalName": "DocumentMetadata",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "documentMetadata",
+                                                                                "safeName": "documentMetadata"
                                                                             },
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "document_metadata",
+                                                                                "safeName": "document_metadata"
                                                                             },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:DocumentMetadata"
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DOCUMENT_METADATA",
+                                                                                "safeName": "DOCUMENT_METADATA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "DocumentMetadata",
+                                                                                "safeName": "DocumentMetadata"
+                                                                            }
                                                                         },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "integer",
-                                                                                                "integer": 1
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": 1
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:DocumentMetadata"
+                                                                    },
+                                                                    "value": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "optional",
+                                                                                "optional": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
                                                                                         "primitive": {
-                                                                                            "v1": "INTEGER",
-                                                                                            "v2": {
-                                                                                                "type": "integer",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
+                                                                                            "type": "integer",
+                                                                                            "integer": 1
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": 1
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "INTEGER",
+                                                                                        "v2": {
+                                                                                            "type": "integer",
+                                                                                            "default": null,
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": 1
+                                                                            }
                                                                         },
-                                                                        "propertyAccess": null
+                                                                        "jsonExample": 1
                                                                     },
-                                                                    {
+                                                                    "propertyAccess": null
+                                                                },
+                                                                {
+                                                                    "name": {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "title",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "title",
-                                                                                    "safeName": "title"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "title",
-                                                                                    "safeName": "title"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "TITLE",
-                                                                                    "safeName": "TITLE"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Title",
-                                                                                    "safeName": "Title"
-                                                                                }
+                                                                            "originalName": "title",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "title",
+                                                                                "safeName": "title"
                                                                             },
-                                                                            "wireValue": "title"
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "title",
+                                                                                "safeName": "title"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TITLE",
+                                                                                "safeName": "TITLE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Title",
+                                                                                "safeName": "Title"
+                                                                            }
                                                                         },
-                                                                        "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
+                                                                        "wireValue": "title"
+                                                                    },
+                                                                    "originalTypeDeclaration": {
+                                                                        "name": {
+                                                                            "originalName": "DocumentMetadata",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "documentMetadata",
+                                                                                "safeName": "documentMetadata"
                                                                             },
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "document_metadata",
+                                                                                "safeName": "document_metadata"
                                                                             },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:DocumentMetadata"
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DOCUMENT_METADATA",
+                                                                                "safeName": "DOCUMENT_METADATA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "DocumentMetadata",
+                                                                                "safeName": "DocumentMetadata"
+                                                                            }
                                                                         },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "title"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "title"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:DocumentMetadata"
+                                                                    },
+                                                                    "value": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "optional",
+                                                                                "optional": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
                                                                                         "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "title"
                                                                                             }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "title"
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": "title"
+                                                                            }
                                                                         },
-                                                                        "propertyAccess": null
+                                                                        "jsonExample": "title"
                                                                     },
-                                                                    {
+                                                                    "propertyAccess": null
+                                                                },
+                                                                {
+                                                                    "name": {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "author",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "author",
-                                                                                    "safeName": "author"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "author",
-                                                                                    "safeName": "author"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "AUTHOR",
-                                                                                    "safeName": "AUTHOR"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Author",
-                                                                                    "safeName": "Author"
-                                                                                }
+                                                                            "originalName": "author",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "author",
+                                                                                "safeName": "author"
                                                                             },
-                                                                            "wireValue": "author"
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "author",
+                                                                                "safeName": "author"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "AUTHOR",
+                                                                                "safeName": "AUTHOR"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Author",
+                                                                                "safeName": "Author"
+                                                                            }
                                                                         },
-                                                                        "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
+                                                                        "wireValue": "author"
+                                                                    },
+                                                                    "originalTypeDeclaration": {
+                                                                        "name": {
+                                                                            "originalName": "DocumentMetadata",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "documentMetadata",
+                                                                                "safeName": "documentMetadata"
                                                                             },
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "document_metadata",
+                                                                                "safeName": "document_metadata"
                                                                             },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:DocumentMetadata"
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DOCUMENT_METADATA",
+                                                                                "safeName": "DOCUMENT_METADATA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "DocumentMetadata",
+                                                                                "safeName": "DocumentMetadata"
+                                                                            }
                                                                         },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "author"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "author"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:DocumentMetadata"
+                                                                    },
+                                                                    "value": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "optional",
+                                                                                "optional": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
                                                                                         "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "author"
                                                                                             }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "author"
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": "author"
+                                                                            }
                                                                         },
-                                                                        "propertyAccess": null
+                                                                        "jsonExample": "author"
                                                                     },
-                                                                    {
+                                                                    "propertyAccess": null
+                                                                },
+                                                                {
+                                                                    "name": {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "tags",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "tags",
-                                                                                    "safeName": "tags"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "tags",
-                                                                                    "safeName": "tags"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "TAGS",
-                                                                                    "safeName": "TAGS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Tags",
-                                                                                    "safeName": "Tags"
-                                                                                }
+                                                                            "originalName": "tags",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "tags",
+                                                                                "safeName": "tags"
                                                                             },
-                                                                            "wireValue": "tags"
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "tags",
+                                                                                "safeName": "tags"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TAGS",
+                                                                                "safeName": "TAGS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Tags",
+                                                                                "safeName": "Tags"
+                                                                            }
                                                                         },
-                                                                        "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
+                                                                        "wireValue": "tags"
+                                                                    },
+                                                                    "originalTypeDeclaration": {
+                                                                        "name": {
+                                                                            "originalName": "DocumentMetadata",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "documentMetadata",
+                                                                                "safeName": "documentMetadata"
                                                                             },
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "document_metadata",
+                                                                                "safeName": "document_metadata"
                                                                             },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:DocumentMetadata"
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DOCUMENT_METADATA",
+                                                                                "safeName": "DOCUMENT_METADATA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "DocumentMetadata",
+                                                                                "safeName": "DocumentMetadata"
+                                                                            }
                                                                         },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": {
-                                                                                        "shape": {
-                                                                                            "type": "container",
-                                                                                            "container": {
-                                                                                                "type": "list",
-                                                                                                "list": [
-                                                                                                    {
-                                                                                                        "shape": {
-                                                                                                            "type": "unknown",
-                                                                                                            "unknown": {
-                                                                                                                "key": "value"
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "jsonExample": {
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:DocumentMetadata"
+                                                                    },
+                                                                    "value": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "optional",
+                                                                                "optional": {
+                                                                                    "shape": {
+                                                                                        "type": "container",
+                                                                                        "container": {
+                                                                                            "type": "list",
+                                                                                            "list": [
+                                                                                                {
+                                                                                                    "shape": {
+                                                                                                        "type": "unknown",
+                                                                                                        "unknown": {
                                                                                                             "key": "value"
                                                                                                         }
                                                                                                     },
-                                                                                                    {
-                                                                                                        "shape": {
-                                                                                                            "type": "unknown",
-                                                                                                            "unknown": {
-                                                                                                                "key": "value"
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "jsonExample": {
+                                                                                                    "jsonExample": {
+                                                                                                        "key": "value"
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "shape": {
+                                                                                                        "type": "unknown",
+                                                                                                        "unknown": {
                                                                                                             "key": "value"
                                                                                                         }
+                                                                                                    },
+                                                                                                    "jsonExample": {
+                                                                                                        "key": "value"
                                                                                                     }
-                                                                                                ],
-                                                                                                "itemType": {
-                                                                                                    "_type": "unknown"
                                                                                                 }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": [
-                                                                                            {
-                                                                                                "key": "value"
-                                                                                            },
-                                                                                            {
-                                                                                                "key": "value"
-                                                                                            }
-                                                                                        ]
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "container",
-                                                                                        "container": {
-                                                                                            "_type": "list",
-                                                                                            "list": {
+                                                                                            ],
+                                                                                            "itemType": {
                                                                                                 "_type": "unknown"
                                                                                             }
                                                                                         }
+                                                                                    },
+                                                                                    "jsonExample": [
+                                                                                        {
+                                                                                            "key": "value"
+                                                                                        },
+                                                                                        {
+                                                                                            "key": "value"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "container",
+                                                                                    "container": {
+                                                                                        "_type": "list",
+                                                                                        "list": {
+                                                                                            "_type": "unknown"
+                                                                                        },
+                                                                                        "minItems": null,
+                                                                                        "maxItems": null
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": [
-                                                                                {
-                                                                                    "key": "value"
-                                                                                },
-                                                                                {
-                                                                                    "key": "value"
-                                                                                }
-                                                                            ]
+                                                                            }
                                                                         },
-                                                                        "propertyAccess": null
-                                                                    }
-                                                                ],
-                                                                "extraProperties": null
-                                                            },
-                                                            "typeName": {
-                                                                "name": {
-                                                                    "originalName": "DocumentMetadata",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "documentMetadata",
-                                                                        "safeName": "documentMetadata"
+                                                                        "jsonExample": [
+                                                                            {
+                                                                                "key": "value"
+                                                                            },
+                                                                            {
+                                                                                "key": "value"
+                                                                            }
+                                                                        ]
                                                                     },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "document_metadata",
-                                                                        "safeName": "document_metadata"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "DOCUMENT_METADATA",
-                                                                        "safeName": "DOCUMENT_METADATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "DocumentMetadata",
-                                                                        "safeName": "DocumentMetadata"
-                                                                    }
-                                                                },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_:DocumentMetadata"
-                                                            }
-                                                        },
-                                                        "jsonExample": {
-                                                            "id": 1,
-                                                            "title": "title",
-                                                            "author": "author",
-                                                            "tags": [
-                                                                {
-                                                                    "key": "value"
-                                                                },
-                                                                {
-                                                                    "key": "value"
+                                                                    "propertyAccess": null
                                                                 }
-                                                            ]
+                                                            ],
+                                                            "extraProperties": null
+                                                        },
+                                                        "typeName": {
+                                                            "name": {
+                                                                "originalName": "DocumentMetadata",
+                                                                "camelCase": {
+                                                                    "unsafeName": "documentMetadata",
+                                                                    "safeName": "documentMetadata"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "document_metadata",
+                                                                    "safeName": "document_metadata"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "DOCUMENT_METADATA",
+                                                                    "safeName": "DOCUMENT_METADATA"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "DocumentMetadata",
+                                                                    "safeName": "DocumentMetadata"
+                                                                }
+                                                            },
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:DocumentMetadata"
                                                         }
+                                                    },
+                                                    "jsonExample": {
+                                                        "id": 1,
+                                                        "title": "title",
+                                                        "author": "author",
+                                                        "tags": [
+                                                            {
+                                                                "key": "value"
+                                                            },
+                                                            {
+                                                                "key": "value"
+                                                            }
+                                                        ]
                                                     }
-                                                },
-                                                "typeName": {
-                                                    "name": {
-                                                        "originalName": "UploadDocumentResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "uploadDocumentResponse",
-                                                            "safeName": "uploadDocumentResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "upload_document_response",
-                                                            "safeName": "upload_document_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
-                                                            "safeName": "UPLOAD_DOCUMENT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "UploadDocumentResponse",
-                                                            "safeName": "UploadDocumentResponse"
-                                                        }
-                                                    },
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:UploadDocumentResponse"
                                                 }
                                             },
-                                            "jsonExample": {
-                                                "id": 1,
-                                                "title": "title",
-                                                "author": "author",
-                                                "tags": [
-                                                    {
-                                                        "key": "value"
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "UploadDocumentResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "uploadDocumentResponse",
+                                                        "safeName": "uploadDocumentResponse"
                                                     },
-                                                    {
-                                                        "key": "value"
+                                                    "snakeCase": {
+                                                        "unsafeName": "upload_document_response",
+                                                        "safeName": "upload_document_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
+                                                        "safeName": "UPLOAD_DOCUMENT_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "UploadDocumentResponse",
+                                                        "safeName": "UploadDocumentResponse"
                                                     }
-                                                ]
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:UploadDocumentResponse"
                                             }
+                                        },
+                                        "jsonExample": {
+                                            "id": 1,
+                                            "title": "title",
+                                            "author": "author",
+                                            "tags": [
+                                                {
+                                                    "key": "value"
+                                                },
+                                                {
+                                                    "key": "value"
+                                                }
+                                            ]
                                         }
                                     }
                                 },

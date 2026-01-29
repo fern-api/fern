@@ -201,7 +201,9 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": null
+                                        "shape": {
+                                            "type": "unknown"
+                                        }
                                     }
                                 },
                                 "docs": null

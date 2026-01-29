@@ -333,7 +333,9 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 }
                             }
@@ -598,370 +600,337 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:ExampleResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": {
-                                                        "originalName": "ExampleResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "exampleResponse",
-                                                            "safeName": "exampleResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "example_response",
-                                                            "safeName": "example_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "EXAMPLE_RESPONSE",
-                                                            "safeName": "EXAMPLE_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ExampleResponse",
-                                                            "safeName": "ExampleResponse"
-                                                        }
-                                                    },
-                                                    "displayName": null
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "typeId": "type_:ExampleResponse",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
                                                 },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "name": {
+                                                    "originalName": "ExampleResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "exampleResponse",
+                                                        "safeName": "exampleResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "example_response",
+                                                        "safeName": "example_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "EXAMPLE_RESPONSE",
+                                                        "safeName": "EXAMPLE_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ExampleResponse",
+                                                        "safeName": "ExampleResponse"
+                                                    }
+                                                },
+                                                "displayName": null
+                                            },
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
+                                                                "originalName": "status",
+                                                                "camelCase": {
+                                                                    "unsafeName": "status",
+                                                                    "safeName": "status"
                                                                 },
-                                                                "wireValue": "status"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "status",
+                                                                    "safeName": "status"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STATUS",
+                                                                    "safeName": "STATUS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Status",
+                                                                    "safeName": "Status"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "named",
-                                                                                "typeName": {
-                                                                                    "typeId": "type_:ExampleResponseStatus",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
+                                                            "wireValue": "status"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "named",
+                                                                            "typeName": {
+                                                                                "typeId": "type_:ExampleResponseStatus",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": {
+                                                                                    "originalName": "ExampleResponseStatus",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "exampleResponseStatus",
+                                                                                        "safeName": "exampleResponseStatus"
                                                                                     },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "example_response_status",
+                                                                                        "safeName": "example_response_status"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "EXAMPLE_RESPONSE_STATUS",
+                                                                                        "safeName": "EXAMPLE_RESPONSE_STATUS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "ExampleResponseStatus",
+                                                                                        "safeName": "ExampleResponseStatus"
+                                                                                    }
+                                                                                },
+                                                                                "displayName": null
+                                                                            },
+                                                                            "shape": {
+                                                                                "type": "enum",
+                                                                                "value": {
                                                                                     "name": {
-                                                                                        "originalName": "ExampleResponseStatus",
+                                                                                        "originalName": "success",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "exampleResponseStatus",
-                                                                                            "safeName": "exampleResponseStatus"
+                                                                                            "unsafeName": "success",
+                                                                                            "safeName": "success"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "example_response_status",
-                                                                                            "safeName": "example_response_status"
+                                                                                            "unsafeName": "success",
+                                                                                            "safeName": "success"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-                                                                                            "safeName": "EXAMPLE_RESPONSE_STATUS"
+                                                                                            "unsafeName": "SUCCESS",
+                                                                                            "safeName": "SUCCESS"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "ExampleResponseStatus",
-                                                                                            "safeName": "ExampleResponseStatus"
+                                                                                            "unsafeName": "Success",
+                                                                                            "safeName": "Success"
                                                                                         }
                                                                                     },
-                                                                                    "displayName": null
-                                                                                },
-                                                                                "shape": {
-                                                                                    "type": "enum",
-                                                                                    "value": {
-                                                                                        "name": {
-                                                                                            "originalName": "success",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "success",
-                                                                                                "safeName": "success"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "success",
-                                                                                                "safeName": "success"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "SUCCESS",
-                                                                                                "safeName": "SUCCESS"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Success",
-                                                                                                "safeName": "Success"
-                                                                                            }
-                                                                                        },
-                                                                                        "wireValue": "success"
-                                                                                    }
+                                                                                    "wireValue": "success"
                                                                                 }
-                                                                            },
-                                                                            "jsonExample": "success"
+                                                                            }
                                                                         },
-                                                                        "valueType": {
-                                                                            "_type": "named",
-                                                                            "name": {
-                                                                                "originalName": "ExampleResponseStatus",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "exampleResponseStatus",
-                                                                                    "safeName": "exampleResponseStatus"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "example_response_status",
-                                                                                    "safeName": "example_response_status"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-                                                                                    "safeName": "EXAMPLE_RESPONSE_STATUS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "ExampleResponseStatus",
-                                                                                    "safeName": "ExampleResponseStatus"
-                                                                                }
+                                                                        "jsonExample": "success"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "named",
+                                                                        "name": {
+                                                                            "originalName": "ExampleResponseStatus",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "exampleResponseStatus",
+                                                                                "safeName": "exampleResponseStatus"
                                                                             },
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "example_response_status",
+                                                                                "safeName": "example_response_status"
                                                                             },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:ExampleResponseStatus",
-                                                                            "default": null,
-                                                                            "inline": null
-                                                                        }
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "EXAMPLE_RESPONSE_STATUS",
+                                                                                "safeName": "EXAMPLE_RESPONSE_STATUS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "ExampleResponseStatus",
+                                                                                "safeName": "ExampleResponseStatus"
+                                                                            }
+                                                                        },
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:ExampleResponseStatus",
+                                                                        "default": null,
+                                                                        "inline": null
                                                                     }
-                                                                },
-                                                                "jsonExample": "success"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:ExampleResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "ExampleResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "exampleResponse",
-                                                                        "safeName": "exampleResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "example_response",
-                                                                        "safeName": "example_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EXAMPLE_RESPONSE",
-                                                                        "safeName": "EXAMPLE_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ExampleResponse",
-                                                                        "safeName": "ExampleResponse"
-                                                                    }
-                                                                },
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
+                                                            "jsonExample": "success"
                                                         },
-                                                        {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:ExampleResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "message"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "message"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                            "name": {
+                                                                "originalName": "ExampleResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "exampleResponse",
+                                                                    "safeName": "exampleResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "example_response",
+                                                                    "safeName": "example_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "EXAMPLE_RESPONSE",
+                                                                    "safeName": "EXAMPLE_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ExampleResponse",
+                                                                    "safeName": "ExampleResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    },
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
+                                                            },
+                                                            "wireValue": "message"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "message"
                                                                                 }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "message"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": "message"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:ExampleResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "ExampleResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "exampleResponse",
-                                                                        "safeName": "exampleResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "example_response",
-                                                                        "safeName": "example_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EXAMPLE_RESPONSE",
-                                                                        "safeName": "EXAMPLE_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ExampleResponse",
-                                                                        "safeName": "ExampleResponse"
-                                                                    }
-                                                                },
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
+                                                            "jsonExample": "message"
                                                         },
-                                                        {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "custom_fields",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "customFields",
-                                                                        "safeName": "customFields"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "custom_fields",
-                                                                        "safeName": "custom_fields"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CUSTOM_FIELDS",
-                                                                        "safeName": "CUSTOM_FIELDS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "CustomFields",
-                                                                        "safeName": "CustomFields"
-                                                                    }
-                                                                },
-                                                                "wireValue": "custom_fields"
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:ExampleResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "map",
-                                                                                    "map": [
-                                                                                        {
-                                                                                            "key": {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "key"
-                                                                                                        }
+                                                            "name": {
+                                                                "originalName": "ExampleResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "exampleResponse",
+                                                                    "safeName": "exampleResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "example_response",
+                                                                    "safeName": "example_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "EXAMPLE_RESPONSE",
+                                                                    "safeName": "EXAMPLE_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ExampleResponse",
+                                                                    "safeName": "ExampleResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    },
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "custom_fields",
+                                                                "camelCase": {
+                                                                    "unsafeName": "customFields",
+                                                                    "safeName": "customFields"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "custom_fields",
+                                                                    "safeName": "custom_fields"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "CUSTOM_FIELDS",
+                                                                    "safeName": "CUSTOM_FIELDS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "CustomFields",
+                                                                    "safeName": "CustomFields"
+                                                                }
+                                                            },
+                                                            "wireValue": "custom_fields"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "map",
+                                                                                "map": [
+                                                                                    {
+                                                                                        "key": {
+                                                                                            "shape": {
+                                                                                                "type": "primitive",
+                                                                                                "primitive": {
+                                                                                                    "type": "string",
+                                                                                                    "string": {
+                                                                                                        "original": "key"
                                                                                                     }
-                                                                                                },
-                                                                                                "jsonExample": "key"
+                                                                                                }
                                                                                             },
-                                                                                            "value": {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "value"
-                                                                                                        }
+                                                                                            "jsonExample": "key"
+                                                                                        },
+                                                                                        "value": {
+                                                                                            "shape": {
+                                                                                                "type": "primitive",
+                                                                                                "primitive": {
+                                                                                                    "type": "string",
+                                                                                                    "string": {
+                                                                                                        "original": "value"
                                                                                                     }
-                                                                                                },
-                                                                                                "jsonExample": "value"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    "keyType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
+                                                                                                }
+                                                                                            },
+                                                                                            "jsonExample": "value"
                                                                                         }
                                                                                     }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": {
-                                                                                "key": "value"
-                                                                            }
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "map",
+                                                                                ],
                                                                                 "keyType": {
                                                                                     "_type": "primitive",
                                                                                     "primitive": {
@@ -985,53 +954,86 @@
                                                                                     }
                                                                                 }
                                                                             }
+                                                                        },
+                                                                        "jsonExample": {
+                                                                            "key": "value"
+                                                                        }
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "container",
+                                                                        "container": {
+                                                                            "_type": "map",
+                                                                            "keyType": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "valueType": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "minProperties": null,
+                                                                            "maxProperties": null
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": {
-                                                                    "key": "value"
                                                                 }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:ExampleResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": {
-                                                                    "originalName": "ExampleResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "exampleResponse",
-                                                                        "safeName": "exampleResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "example_response",
-                                                                        "safeName": "example_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EXAMPLE_RESPONSE",
-                                                                        "safeName": "EXAMPLE_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ExampleResponse",
-                                                                        "safeName": "ExampleResponse"
-                                                                    }
-                                                                },
-                                                                "displayName": null
+                                                            "jsonExample": {
+                                                                "key": "value"
+                                                            }
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "typeId": "type_:ExampleResponse",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "status": "success",
-                                                "message": "message",
-                                                "custom_fields": {
-                                                    "key": "value"
-                                                }
+                                                            "name": {
+                                                                "originalName": "ExampleResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "exampleResponse",
+                                                                    "safeName": "exampleResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "example_response",
+                                                                    "safeName": "example_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "EXAMPLE_RESPONSE",
+                                                                    "safeName": "EXAMPLE_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ExampleResponse",
+                                                                    "safeName": "ExampleResponse"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "status": "success",
+                                            "message": "message",
+                                            "custom_fields": {
+                                                "key": "value"
                                             }
                                         }
                                     }
@@ -1044,7 +1046,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "eca09560",
+                                "id": "6c0d087b",
                                 "url": "/example",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1058,370 +1060,337 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": {
+                                        "shape": {
+                                            "type": "named",
                                             "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
+                                                                "originalName": "status",
+                                                                "camelCase": {
+                                                                    "unsafeName": "status",
+                                                                    "safeName": "status"
                                                                 },
-                                                                "wireValue": "status"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "status",
+                                                                    "safeName": "status"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STATUS",
+                                                                    "safeName": "STATUS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Status",
+                                                                    "safeName": "Status"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ExampleResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "exampleResponse",
-                                                                        "safeName": "exampleResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "example_response",
-                                                                        "safeName": "example_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EXAMPLE_RESPONSE",
-                                                                        "safeName": "EXAMPLE_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ExampleResponse",
-                                                                        "safeName": "ExampleResponse"
-                                                                    }
+                                                            "wireValue": "status"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "ExampleResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "exampleResponse",
+                                                                    "safeName": "exampleResponse"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "example_response",
+                                                                    "safeName": "example_response"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:ExampleResponse"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "EXAMPLE_RESPONSE",
+                                                                    "safeName": "EXAMPLE_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ExampleResponse",
+                                                                    "safeName": "ExampleResponse"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:ExampleResponse"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "named",
                                                                             "shape": {
-                                                                                "type": "named",
-                                                                                "shape": {
-                                                                                    "type": "enum",
-                                                                                    "value": {
-                                                                                        "name": {
-                                                                                            "originalName": "success",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "success",
-                                                                                                "safeName": "success"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "success",
-                                                                                                "safeName": "success"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "SUCCESS",
-                                                                                                "safeName": "SUCCESS"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Success",
-                                                                                                "safeName": "Success"
-                                                                                            }
-                                                                                        },
-                                                                                        "wireValue": "success"
-                                                                                    }
-                                                                                },
-                                                                                "typeName": {
+                                                                                "type": "enum",
+                                                                                "value": {
                                                                                     "name": {
-                                                                                        "originalName": "ExampleResponseStatus",
+                                                                                        "originalName": "success",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "exampleResponseStatus",
-                                                                                            "safeName": "exampleResponseStatus"
+                                                                                            "unsafeName": "success",
+                                                                                            "safeName": "success"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "example_response_status",
-                                                                                            "safeName": "example_response_status"
+                                                                                            "unsafeName": "success",
+                                                                                            "safeName": "success"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-                                                                                            "safeName": "EXAMPLE_RESPONSE_STATUS"
+                                                                                            "unsafeName": "SUCCESS",
+                                                                                            "safeName": "SUCCESS"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "ExampleResponseStatus",
-                                                                                            "safeName": "ExampleResponseStatus"
+                                                                                            "unsafeName": "Success",
+                                                                                            "safeName": "Success"
                                                                                         }
                                                                                     },
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
+                                                                                    "wireValue": "success"
+                                                                                }
+                                                                            },
+                                                                            "typeName": {
+                                                                                "name": {
+                                                                                    "originalName": "ExampleResponseStatus",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "exampleResponseStatus",
+                                                                                        "safeName": "exampleResponseStatus"
                                                                                     },
-                                                                                    "displayName": null,
-                                                                                    "typeId": "type_:ExampleResponseStatus"
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "success"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "named",
-                                                                            "name": {
-                                                                                "originalName": "ExampleResponseStatus",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "exampleResponseStatus",
-                                                                                    "safeName": "exampleResponseStatus"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "example_response_status",
-                                                                                    "safeName": "example_response_status"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-                                                                                    "safeName": "EXAMPLE_RESPONSE_STATUS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "ExampleResponseStatus",
-                                                                                    "safeName": "ExampleResponseStatus"
-                                                                                }
-                                                                            },
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:ExampleResponseStatus",
-                                                                            "default": null,
-                                                                            "inline": null
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "success"
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ExampleResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "exampleResponse",
-                                                                        "safeName": "exampleResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "example_response",
-                                                                        "safeName": "example_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EXAMPLE_RESPONSE",
-                                                                        "safeName": "EXAMPLE_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ExampleResponse",
-                                                                        "safeName": "ExampleResponse"
-                                                                    }
-                                                                },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_:ExampleResponse"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "message"
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "example_response_status",
+                                                                                        "safeName": "example_response_status"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "EXAMPLE_RESPONSE_STATUS",
+                                                                                        "safeName": "EXAMPLE_RESPONSE_STATUS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "ExampleResponseStatus",
+                                                                                        "safeName": "ExampleResponseStatus"
                                                                                     }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "message"
+                                                                                },
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "displayName": null,
+                                                                                "typeId": "type_:ExampleResponseStatus"
+                                                                            }
                                                                         },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
+                                                                        "jsonExample": "success"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "named",
+                                                                        "name": {
+                                                                            "originalName": "ExampleResponseStatus",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "exampleResponseStatus",
+                                                                                "safeName": "exampleResponseStatus"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "example_response_status",
+                                                                                "safeName": "example_response_status"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "EXAMPLE_RESPONSE_STATUS",
+                                                                                "safeName": "EXAMPLE_RESPONSE_STATUS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "ExampleResponseStatus",
+                                                                                "safeName": "ExampleResponseStatus"
+                                                                            }
+                                                                        },
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:ExampleResponseStatus",
+                                                                        "default": null,
+                                                                        "inline": null
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "success"
+                                                        },
+                                                        "propertyAccess": null
+                                                    },
+                                                    {
+                                                        "name": {
+                                                            "name": {
+                                                                "originalName": "message",
+                                                                "camelCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "message",
+                                                                    "safeName": "message"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "MESSAGE",
+                                                                    "safeName": "MESSAGE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Message",
+                                                                    "safeName": "Message"
+                                                                }
+                                                            },
+                                                            "wireValue": "message"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "ExampleResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "exampleResponse",
+                                                                    "safeName": "exampleResponse"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "example_response",
+                                                                    "safeName": "example_response"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "EXAMPLE_RESPONSE",
+                                                                    "safeName": "EXAMPLE_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ExampleResponse",
+                                                                    "safeName": "ExampleResponse"
+                                                                }
+                                                            },
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:ExampleResponse"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "message"
                                                                                 }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": "message"
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
                                                                             }
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": "message"
+                                                                }
                                                             },
-                                                            "propertyAccess": null
+                                                            "jsonExample": "message"
                                                         },
-                                                        {
+                                                        "propertyAccess": null
+                                                    },
+                                                    {
+                                                        "name": {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "custom_fields",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "customFields",
-                                                                        "safeName": "customFields"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "custom_fields",
-                                                                        "safeName": "custom_fields"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CUSTOM_FIELDS",
-                                                                        "safeName": "CUSTOM_FIELDS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "CustomFields",
-                                                                        "safeName": "CustomFields"
-                                                                    }
+                                                                "originalName": "custom_fields",
+                                                                "camelCase": {
+                                                                    "unsafeName": "customFields",
+                                                                    "safeName": "customFields"
                                                                 },
-                                                                "wireValue": "custom_fields"
+                                                                "snakeCase": {
+                                                                    "unsafeName": "custom_fields",
+                                                                    "safeName": "custom_fields"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "CUSTOM_FIELDS",
+                                                                    "safeName": "CUSTOM_FIELDS"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "CustomFields",
+                                                                    "safeName": "CustomFields"
+                                                                }
                                                             },
-                                                            "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ExampleResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "exampleResponse",
-                                                                        "safeName": "exampleResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "example_response",
-                                                                        "safeName": "example_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EXAMPLE_RESPONSE",
-                                                                        "safeName": "EXAMPLE_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ExampleResponse",
-                                                                        "safeName": "ExampleResponse"
-                                                                    }
+                                                            "wireValue": "custom_fields"
+                                                        },
+                                                        "originalTypeDeclaration": {
+                                                            "name": {
+                                                                "originalName": "ExampleResponse",
+                                                                "camelCase": {
+                                                                    "unsafeName": "exampleResponse",
+                                                                    "safeName": "exampleResponse"
                                                                 },
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                "snakeCase": {
+                                                                    "unsafeName": "example_response",
+                                                                    "safeName": "example_response"
                                                                 },
-                                                                "displayName": null,
-                                                                "typeId": "type_:ExampleResponse"
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "EXAMPLE_RESPONSE",
+                                                                    "safeName": "EXAMPLE_RESPONSE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "ExampleResponse",
+                                                                    "safeName": "ExampleResponse"
+                                                                }
                                                             },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "map",
-                                                                                    "map": [
-                                                                                        {
-                                                                                            "key": {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "custom_fields"
-                                                                                                        }
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:ExampleResponse"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "map",
+                                                                                "map": [
+                                                                                    {
+                                                                                        "key": {
+                                                                                            "shape": {
+                                                                                                "type": "primitive",
+                                                                                                "primitive": {
+                                                                                                    "type": "string",
+                                                                                                    "string": {
+                                                                                                        "original": "custom_fields"
                                                                                                     }
-                                                                                                },
-                                                                                                "jsonExample": "custom_fields"
+                                                                                                }
                                                                                             },
-                                                                                            "value": {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "custom_fields"
-                                                                                                        }
+                                                                                            "jsonExample": "custom_fields"
+                                                                                        },
+                                                                                        "value": {
+                                                                                            "shape": {
+                                                                                                "type": "primitive",
+                                                                                                "primitive": {
+                                                                                                    "type": "string",
+                                                                                                    "string": {
+                                                                                                        "original": "custom_fields"
                                                                                                     }
-                                                                                                },
-                                                                                                "jsonExample": "custom_fields"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    "keyType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
+                                                                                                }
+                                                                                            },
+                                                                                            "jsonExample": "custom_fields"
                                                                                         }
                                                                                     }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": {
-                                                                                "custom_fields": "custom_fields"
-                                                                            }
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "map",
+                                                                                ],
                                                                                 "keyType": {
                                                                                     "_type": "primitive",
                                                                                     "primitive": {
@@ -1445,53 +1414,86 @@
                                                                                     }
                                                                                 }
                                                                             }
+                                                                        },
+                                                                        "jsonExample": {
+                                                                            "custom_fields": "custom_fields"
+                                                                        }
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "container",
+                                                                        "container": {
+                                                                            "_type": "map",
+                                                                            "keyType": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "valueType": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "minProperties": null,
+                                                                            "maxProperties": null
                                                                         }
                                                                     }
-                                                                },
-                                                                "jsonExample": {
-                                                                    "custom_fields": "custom_fields"
                                                                 }
                                                             },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": {
-                                                        "originalName": "ExampleResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "exampleResponse",
-                                                            "safeName": "exampleResponse"
+                                                            "jsonExample": {
+                                                                "custom_fields": "custom_fields"
+                                                            }
                                                         },
-                                                        "snakeCase": {
-                                                            "unsafeName": "example_response",
-                                                            "safeName": "example_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "EXAMPLE_RESPONSE",
-                                                            "safeName": "EXAMPLE_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ExampleResponse",
-                                                            "safeName": "ExampleResponse"
-                                                        }
-                                                    },
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:ExampleResponse"
-                                                }
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
                                             },
-                                            "jsonExample": {
-                                                "status": "success",
-                                                "message": "message",
-                                                "custom_fields": {
-                                                    "custom_fields": "custom_fields"
-                                                }
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "ExampleResponse",
+                                                    "camelCase": {
+                                                        "unsafeName": "exampleResponse",
+                                                        "safeName": "exampleResponse"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "example_response",
+                                                        "safeName": "example_response"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "EXAMPLE_RESPONSE",
+                                                        "safeName": "EXAMPLE_RESPONSE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ExampleResponse",
+                                                        "safeName": "ExampleResponse"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:ExampleResponse"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "status": "success",
+                                            "message": "message",
+                                            "custom_fields": {
+                                                "custom_fields": "custom_fields"
                                             }
                                         }
                                     }

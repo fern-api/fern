@@ -10,9 +10,7 @@ import { Literal } from "./Literal";
 export const ContainerType: core.serialization.Schema<serializers.ContainerType.Raw, FernIr.ContainerType> =
     core.serialization
         .union(core.serialization.discriminant("type", "_type"), {
-            list: core.serialization.object({
-                list: core.serialization.lazy(() => serializers.TypeReference),
-            }),
+            list: core.serialization.lazyObject(() => serializers.ListType),
             map: core.serialization.lazyObject(() => serializers.MapType),
             nullable: core.serialization.object({
                 nullable: core.serialization.lazy(() => serializers.TypeReference),
@@ -20,9 +18,7 @@ export const ContainerType: core.serialization.Schema<serializers.ContainerType.
             optional: core.serialization.object({
                 optional: core.serialization.lazy(() => serializers.TypeReference),
             }),
-            set: core.serialization.object({
-                set: core.serialization.lazy(() => serializers.TypeReference),
-            }),
+            set: core.serialization.lazyObject(() => serializers.SetType),
             literal: core.serialization.object({
                 literal: Literal,
             }),
@@ -31,7 +27,7 @@ export const ContainerType: core.serialization.Schema<serializers.ContainerType.
             transform: (value) => {
                 switch (value.type) {
                     case "list":
-                        return FernIr.ContainerType.list(value.list);
+                        return FernIr.ContainerType.list(value);
                     case "map":
                         return FernIr.ContainerType.map(value);
                     case "nullable":
@@ -39,7 +35,7 @@ export const ContainerType: core.serialization.Schema<serializers.ContainerType.
                     case "optional":
                         return FernIr.ContainerType.optional(value.optional);
                     case "set":
-                        return FernIr.ContainerType.set(value.set);
+                        return FernIr.ContainerType.set(value);
                     case "literal":
                         return FernIr.ContainerType.literal(value.literal);
                     default:
@@ -58,9 +54,8 @@ export declare namespace ContainerType {
         | ContainerType.Set
         | ContainerType.Literal;
 
-    export interface List {
+    export interface List extends serializers.ListType.Raw {
         _type: "list";
-        list: serializers.TypeReference.Raw;
     }
 
     export interface Map extends serializers.MapType.Raw {
@@ -77,9 +72,8 @@ export declare namespace ContainerType {
         optional: serializers.TypeReference.Raw;
     }
 
-    export interface Set {
+    export interface Set extends serializers.SetType.Raw {
         _type: "set";
-        set: serializers.TypeReference.Raw;
     }
 
     export interface Literal {
