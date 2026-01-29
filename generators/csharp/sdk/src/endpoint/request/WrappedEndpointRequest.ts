@@ -175,9 +175,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const service =
             this.context.getHttpService(this.serviceId) ?? fail(`Service with id ${this.serviceId} not found`);
         const headers = [...service.headers, ...this.endpoint.headers];
-        if (headers.length === 0) {
-            return undefined;
-        }
 
         const requestOptionsVar = this.endpoint.idempotent
             ? this.names.parameters.idempotentOptions
@@ -191,7 +188,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 );
                 writer.indent();
 
-                // Add all headers (required, optional, and nullable) using fluent API
+                // Add all endpoint-specific headers (required, optional, and nullable) using fluent API
                 // The Add method handles null values and serialization automatically
                 for (const header of headers) {
                     writer.writeLine();
@@ -199,7 +196,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     writer.write(`.Add("${header.name.wireValue}", ${headerReference})`);
                 }
 
-                // Add client-level headers (from root client constructor - includes lazy auth headers)
+                // Add client-level headers (from root client constructor)
                 writer.writeLine();
                 writer.write(".Add(_client.Options.Headers)");
 
@@ -211,7 +208,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 if (this.endpoint.idempotent) {
                     writer.writeLine();
                     writer.write(
-                        `.Add(((${this.Types.IdempotentRequestOptionsInterface})${requestOptionsVar})?.GetIdempotencyHeaders())`
+                        `.Add(((${this.Types.IdempotentRequestOptionsInterface.name}?)${requestOptionsVar})?.GetIdempotencyHeaders())`
                     );
                 }
 

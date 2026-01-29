@@ -40,7 +40,7 @@ Instantiate and use the client with the following:
 using SeedOauthClientCredentials.Auth;
 using SeedOauthClientCredentials;
 
-var client = new SeedOauthClientCredentialsClient("CLIENT_ID", "CLIENT_SECRET");
+var client = new SeedOauthClientCredentialsClient("client_id", "client_secret");
 await client.Auth.GetTokenAsync(
     new GetTokenRequest
     {

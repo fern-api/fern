@@ -761,10 +761,11 @@ async function convertOutputMode({
                     })
                 );
             case "pull-request": {
+                const pullRequestConfig = generator.github as generatorsYml.GithubPullRequestSchema;
                 const reviewers = _getReviewers({
                     topLevelReviewers: maybeTopLevelReviewers,
                     groupLevelReviewers: maybeGroupLevelReviewers,
-                    outputModeReviewers: (generator.github as generatorsYml.GithubPullRequestSchema).reviewers
+                    outputModeReviewers: pullRequestConfig.reviewers
                 });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
@@ -773,7 +774,8 @@ async function convertOutputMode({
                         license,
                         publishInfo,
                         downloadSnippets,
-                        reviewers
+                        reviewers,
+                        branch: pullRequestConfig.branch
                     })
                 );
             }

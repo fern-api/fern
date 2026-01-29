@@ -3,19 +3,23 @@
 # isort: skip_file
 
 from .id import Id
+from .model_type import ModelType
 from .my_alias_object import MyAliasObject
 from .my_collection_alias_object import MyCollectionAliasObject
 from .my_inline_type import MyInlineType
 from .my_object import MyObject
 from .my_object_with_optional import MyObjectWithOptional
 from .object_type import ObjectType
+from .open_enum_type import OpenEnumType
 
 __all__ = [
     "Id",
+    "ModelType",
     "MyAliasObject",
     "MyCollectionAliasObject",
     "MyInlineType",
     "MyObject",
     "MyObjectWithOptional",
     "ObjectType",
+    "OpenEnumType",
 ]

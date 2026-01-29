@@ -191,16 +191,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string,
         serviceId: ServiceId
     ) {
-        const request = endpointSignatureInfo.request;
-
         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
         if (queryParameterCodeBlock != null) {
             queryParameterCodeBlock.code.write(writer);
         }
-        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-        if (headerParameterCodeBlock != null) {
-            headerParameterCodeBlock.code.write(writer);
-        }
+        const headerParameterCodeBlock =
+            endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+            this.getDefaultHeaderParameterCodeBlock({ endpoint });
+        headerParameterCodeBlock.code.write(writer);
         const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             writer.writeNode(requestBodyCodeBlock.code);
@@ -211,7 +209,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
             queryString: queryParameterCodeBlock?.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
@@ -260,10 +258,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             if (queryParameterCodeBlock != null) {
                 queryParameterCodeBlock.code.write(writer);
             }
-            const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-            if (headerParameterCodeBlock != null) {
-                headerParameterCodeBlock.code.write(writer);
-            }
+            const headerParameterCodeBlock =
+                endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+                this.getDefaultHeaderParameterCodeBlock({ endpoint });
+            headerParameterCodeBlock.code.write(writer);
             const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
             if (requestBodyCodeBlock?.code != null) {
                 writer.writeNode(requestBodyCodeBlock.code);
@@ -274,7 +272,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 endpoint,
                 bodyReference: requestBodyCodeBlock?.requestBodyReference,
                 pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-                headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+                headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
                 queryString: queryParameterCodeBlock?.queryStringReference,
                 endpointRequest: endpointSignatureInfo.request
             });
@@ -1459,10 +1457,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (queryParameterCodeBlock != null) {
             queryParameterCodeBlock.code.write(writer);
         }
-        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-        if (headerParameterCodeBlock != null) {
-            headerParameterCodeBlock.code.write(writer);
-        }
+        const headerParameterCodeBlock =
+            endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+            this.getDefaultHeaderParameterCodeBlock({ endpoint });
+        headerParameterCodeBlock.code.write(writer);
         const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             writer.writeNode(requestBodyCodeBlock.code);
@@ -1474,7 +1472,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -1772,5 +1770,40 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         } else {
             return this.names.parameters.requestOptions;
         }
+    }
+
+    /**
+     * Generates header code block for endpoints without a request parameter.
+     * This ensures client-level headers (API key, SDK version, etc.) are always included.
+     */
+    private getDefaultHeaderParameterCodeBlock({ endpoint }: { endpoint: HttpEndpoint }): {
+        code: ast.CodeBlock;
+        headerParameterBagReference: string;
+    } {
+        const requestOptionsVar = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+
+        return {
+            code: this.csharp.codeblock((writer) => {
+                writer.write(
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                );
+                writer.indent();
+                writer.writeLine(".Add(_client.Options.Headers)");
+                writer.writeLine(".Add(_client.Options.AdditionalHeaders)");
+
+                if (endpoint.idempotent) {
+                    writer.writeLine(
+                        `.Add(((${this.Types.IdempotentRequestOptionsInterface.name}?)${requestOptionsVar})?.GetIdempotencyHeaders())`
+                    );
+                }
+
+                writer.writeLine(`.Add(${requestOptionsVar}?.AdditionalHeaders)`);
+                writer.writeLine(".BuildAsync()");
+                writer.writeLine(".ConfigureAwait(false);");
+
+                writer.dedent();
+            }),
+            headerParameterBagReference: this.names.variables.headers
+        };
     }
 }

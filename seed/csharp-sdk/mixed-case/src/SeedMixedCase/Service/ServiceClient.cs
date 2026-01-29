@@ -18,6 +18,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedMixedCase.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -28,6 +34,7 @@ public partial class ServiceClient : IServiceClient
                         "/resource/{0}",
                         ValueConvert.ToPathParameterString(resourceId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -81,6 +88,12 @@ public partial class ServiceClient : IServiceClient
             .Add("beforeDate", request.BeforeDate)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedMixedCase.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -89,6 +102,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethod.Get,
                     Path = "/resource",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

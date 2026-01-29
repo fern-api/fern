@@ -8,7 +8,8 @@ public partial class SeedAliasClient : ISeedAliasClient
 
     public SeedAliasClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedAliasClient : ISeedAliasClient
                 { "User-Agent", "Fernalias/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -37,6 +37,12 @@ public partial class SeedAliasClient : ISeedAliasClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedAlias.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -44,6 +50,7 @@ public partial class SeedAliasClient : ISeedAliasClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(typeId)),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

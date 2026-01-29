@@ -18,6 +18,12 @@ public partial class OrganizationClient : IOrganizationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedMixedFileDirectory.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -26,6 +32,7 @@ public partial class OrganizationClient : IOrganizationClient
                     Method = HttpMethod.Post,
                     Path = "/organizations/",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

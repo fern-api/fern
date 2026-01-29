@@ -29,6 +29,12 @@ public partial class QueryParamClient : IQueryParamClient
             .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -37,6 +43,7 @@ public partial class QueryParamClient : IQueryParamClient
                     Method = HttpMethod.Post,
                     Path = "query",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -80,6 +87,12 @@ public partial class QueryParamClient : IQueryParamClient
             .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -88,6 +101,7 @@ public partial class QueryParamClient : IQueryParamClient
                     Method = HttpMethod.Post,
                     Path = "query-list",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
