@@ -163,12 +163,21 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         typescriptProject,
                         shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
-                    await typescriptProject.npmPackTo({
-                        logger,
-                        destinationPath,
-                        zipFilename: OUTPUT_ZIP_FILENAME,
-                        unzipOutput: options?.unzipOutput
-                    });
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                    } else {
+                        await typescriptProject.npmPackTo({
+                            logger,
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput
+                        });
+                    }
                 },
                 github: async (githubOutputMode) => {
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
@@ -184,12 +193,21 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     await typescriptProject.generateLockfile(logger);
                     await typescriptProject.checkFix(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
-                    await typescriptProject.copyProjectTo({
-                        logger,
-                        destinationPath,
-                        zipFilename: OUTPUT_ZIP_FILENAME,
-                        unzipOutput: options?.unzipOutput
-                    });
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                    } else {
+                        await typescriptProject.copyProjectTo({
+                            logger,
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput
+                        });
+                    }
                 },
                 downloadFiles: async () => {
                     await typescriptProject.installDependencies(logger);
