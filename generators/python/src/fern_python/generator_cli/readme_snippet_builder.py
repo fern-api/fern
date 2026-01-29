@@ -259,6 +259,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                     )
                 )
                 writer.write_line("print(response.headers)  # access the response headers")
+                writer.write_line("print(response.status_code)  # access the response status code")
                 writer.write_line("print(response.data)  # access the underlying object")
 
             if pagination_endpoint_id and (
@@ -311,7 +312,8 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                             )
                         ],
                         body=[
-                            AST.Expression("print(response.headers)  # access the response headers\n"),
+                            AST.Expression("print(response.headers)  # access the response headers"),
+                            AST.Expression("print(response.status_code)  # access the response status code\n"),
                             AST.ForStatement(
                                 target="chunk",
                                 iterable="response.data",
