@@ -97,6 +97,7 @@ client = SeedApi(
 )
 response = client.file_upload_example.with_raw_response.upload_file()
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
