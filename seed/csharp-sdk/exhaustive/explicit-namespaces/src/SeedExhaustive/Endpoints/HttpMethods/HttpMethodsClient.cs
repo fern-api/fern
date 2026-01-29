@@ -20,6 +20,12 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +36,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         "/http-methods/{0}",
                         ValueConvert.ToPathParameterString(id)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -78,6 +85,12 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -86,6 +99,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     Method = HttpMethod.Post,
                     Path = "/http-methods",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -135,6 +149,12 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -146,6 +166,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         ValueConvert.ToPathParameterString(id)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -195,6 +216,12 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -206,6 +233,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         ValueConvert.ToPathParameterString(id)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -254,6 +282,12 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -264,6 +298,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                         "/http-methods/{0}",
                         ValueConvert.ToPathParameterString(id)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

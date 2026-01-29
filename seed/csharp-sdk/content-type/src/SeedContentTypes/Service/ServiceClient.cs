@@ -22,6 +22,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +36,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = "",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/merge-patch+json",
                     Options = options,
                 },
@@ -93,6 +100,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -101,6 +114,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format("complex/{0}", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/merge-patch+json",
                     Options = options,
                 },
@@ -143,6 +157,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -151,6 +171,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format("named-mixed/{0}", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/merge-patch+json",
                     Options = options,
                 },
@@ -195,6 +216,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -203,6 +230,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = "optional-merge-patch-test",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/merge-patch+json",
                     Options = options,
                 },
@@ -239,6 +267,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -247,6 +281,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format("regular/{0}", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

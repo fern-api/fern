@@ -98,6 +98,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 writer.writeNodeStatement(
                     this.rootClientGenerator.generateExampleClientInstantiationSnippet({
                         includeEnvVarArguments: true,
+                        asSnippet: false,
                         clientOptionsArgument: this.csharp.instantiateClass({
                             classReference: this.Types.ClientOptions,
                             arguments_: [
@@ -301,8 +302,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         "CLIENT_SECRET"
                     );
                 });
+                // Skip body matching for OAuth endpoints because the OAuthTokenProvider only sends
+                // required fields (client_id, client_secret), while the example may include optional
+                // fields (scope, audience, grant_type) that won't be in the actual request
                 writer.writeNode(
-                    this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples)
+                    this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples, {
+                        skipBodyMatch: true
+                    })
                 );
                 if (shouldScope) {
                     writer.popScope();
@@ -332,8 +338,11 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                             return response?.type === "ok" && response.value.type === "body";
                         }
                     );
+                    // Skip body matching for refresh endpoint as well
                     writer.writeNode(
-                        this.mockEndpointGenerator.generateForExamples(refreshHttpEndpoint, refreshUseableExamples)
+                        this.mockEndpointGenerator.generateForExamples(refreshHttpEndpoint, refreshUseableExamples, {
+                            skipBodyMatch: true
+                        })
                     );
                 }
                 if (shouldScope) {

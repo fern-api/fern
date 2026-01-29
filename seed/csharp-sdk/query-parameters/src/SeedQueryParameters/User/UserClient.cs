@@ -35,6 +35,12 @@ public partial class UserClient : IUserClient
             .Add("filter", request.Filter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedQueryParameters.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -43,6 +49,7 @@ public partial class UserClient : IUserClient
                     Method = HttpMethod.Get,
                     Path = "/user",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

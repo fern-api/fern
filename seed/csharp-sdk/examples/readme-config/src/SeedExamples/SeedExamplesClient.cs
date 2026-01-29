@@ -12,25 +12,32 @@ public partial class SeedExamplesClient : ISeedExamplesClient
 
     public SeedExamplesClient(string token, ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExamples" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernexamples/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>() { { "Authorization", $"Bearer {token}" } }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
+        _client = new RawClient(clientOptionsWithAuth);
         File = new FileClient(_client);
         Health = new HealthClient(_client);
         Service = new ServiceClient(_client);
@@ -48,6 +55,12 @@ public partial class SeedExamplesClient : ISeedExamplesClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -56,6 +69,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -104,6 +118,12 @@ public partial class SeedExamplesClient : ISeedExamplesClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -112,6 +132,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

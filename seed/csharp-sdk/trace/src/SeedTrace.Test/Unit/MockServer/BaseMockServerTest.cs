@@ -26,6 +26,7 @@ public class BaseMockServerTest
         // Initialize the Client
         Client = new SeedTraceClient(
             "TOKEN",
+            "X_RANDOM_HEADER",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

@@ -26,6 +26,12 @@ public partial class UserClient : IUserClient
             .Add("limit", request.Limit)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedMixedFileDirectory.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -34,6 +40,7 @@ public partial class UserClient : IUserClient
                     Method = HttpMethod.Get,
                     Path = "/users/",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

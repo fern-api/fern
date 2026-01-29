@@ -19,6 +19,12 @@ public partial class AuthClient : IAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -27,6 +33,7 @@ public partial class AuthClient : IAuthClient
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

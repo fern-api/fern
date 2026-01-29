@@ -18,6 +18,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -28,6 +34,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         "/api/users/{0}",
                         ValueConvert.ToPathParameterString(userId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -76,6 +83,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -84,6 +97,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     Method = HttpMethod.Post,
                     Path = "/api/users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -133,6 +147,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -144,6 +164,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         ValueConvert.ToPathParameterString(userId)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -199,6 +220,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .Add("sortBy", request.SortBy.IsDefined ? request.SortBy.Value : null)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -207,6 +234,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     Method = HttpMethod.Get,
                     Path = "/api/users",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -262,6 +290,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .Add("isActive", request.IsActive.IsDefined ? request.IsActive.Value : null)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -270,6 +304,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     Method = HttpMethod.Get,
                     Path = "/api/users/search",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -318,6 +353,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -326,6 +367,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     Method = HttpMethod.Post,
                     Path = "/api/profiles/complex",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -374,6 +416,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -384,6 +432,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         "/api/profiles/complex/{0}",
                         ValueConvert.ToPathParameterString(profileId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -433,6 +482,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -444,6 +499,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         ValueConvert.ToPathParameterString(profileId)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -492,6 +548,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -500,6 +562,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     Method = HttpMethod.Post,
                     Path = "/api/test/deserialization",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -559,6 +622,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
             )
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -567,6 +636,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     Method = HttpMethod.Get,
                     Path = "/api/users/filter",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -615,6 +685,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -625,6 +701,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         "/api/users/{0}/notifications",
                         ValueConvert.ToPathParameterString(userId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -674,6 +751,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -685,6 +768,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                         ValueConvert.ToPathParameterString(userId)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -733,6 +817,12 @@ public partial class NullableOptionalClient : INullableOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -741,6 +831,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
                     Method = HttpMethod.Post,
                     Path = "/api/search",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
