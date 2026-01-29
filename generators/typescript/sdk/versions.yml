@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.46.0
+  changelogEntry:
+    - summary: |
+        Add `outputSrcOnly` configuration option that outputs only the contents of the `src/` directory
+        directly to the destination path, without the `src/` wrapper directory. This is useful when you
+        want to integrate the generated source files directly into another project without the extra
+        directory nesting. The option takes priority over `outputSourceFiles` when both are enabled.
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.45.1
   changelogEntry:
     - summary: Remove check if body is `null` or `undefined`. If `null`, it is valid JSON `null`, and if `undefined`, it handles correctly to not have a body.

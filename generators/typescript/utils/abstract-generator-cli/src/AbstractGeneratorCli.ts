@@ -204,6 +204,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         });
                         return;
                     }
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                        return;
+                    }
                     if (this.outputSourceFiles(customConfig)) {
                         await typescriptProject.copySrcTo({
                             destinationPath,
@@ -264,6 +273,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
     protected abstract getPackageManager(customConfig: CustomConfig): "pnpm" | "yarn";
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
+    protected abstract outputSrcOnly(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
     protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
 
