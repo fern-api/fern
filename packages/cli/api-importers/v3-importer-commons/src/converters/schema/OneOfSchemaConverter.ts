@@ -69,19 +69,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return this.convertAsUndiscriminatedUnion();
     }
 
-    private unionVariantsContainLiteral({ discriminantProperty }: { discriminantProperty: string }): boolean {
-        for (const [_, reference] of Object.entries(this.schema.discriminator?.mapping ?? {})) {
-            const schema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
-                reference: { $ref: reference },
-                breadcrumbs: this.breadcrumbs
-            });
-            if (schema.resolved && !Object.keys(schema.value.properties ?? {}).includes(discriminantProperty)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * Filters out the discriminant property from a schema's properties.
      * This is needed when the discriminant is redeclared in variant schemas.
