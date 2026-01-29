@@ -1507,12 +1507,14 @@ export class SdkGenerator {
     }
 
     private generateWebhooksHelper(): void {
+        const tempSourceFile = this.project.createSourceFile("__webhooks_temp__.ts");
         this.coreUtilitiesManager
             .getCoreUtilities({
-                sourceFile: this.project.createSourceFile("__webhooks_temp__.ts"),
-                importsManager: new ImportsManager({
-                    sourceFile: this.project.createSourceFile("__webhooks_imports_temp__.ts")
-                })
+                sourceFile: tempSourceFile,
+                importsManager: new ImportsManager({}),
+                exportsManager: this.exportsManager,
+                relativePackagePath: this.relativePackagePath,
+                relativeTestPath: this.getRelativeTestPath()
             })
             .webhooks.WebhooksHelper._getReferenceToType();
     }
