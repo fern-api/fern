@@ -594,6 +594,8 @@ export class SdkGenerator {
         this.context.logger.debug("Generating auth providers");
         this.generateAuthProviders();
         this.context.logger.debug("Generated auth providers");
+        this.generateWebhooksHelper();
+        this.context.logger.debug("Generated webhooks helper");
 
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
@@ -1502,6 +1504,17 @@ export class SdkGenerator {
                     .writeToFile(context);
             }
         });
+    }
+
+    private generateWebhooksHelper(): void {
+        this.coreUtilitiesManager
+            .getCoreUtilities({
+                sourceFile: this.project.createSourceFile("__webhooks_temp__.ts"),
+                importsManager: new ImportsManager({
+                    sourceFile: this.project.createSourceFile("__webhooks_imports_temp__.ts")
+                })
+            })
+            .webhooks.WebhooksHelper._getReferenceToType();
     }
 
     private withSnippet({
