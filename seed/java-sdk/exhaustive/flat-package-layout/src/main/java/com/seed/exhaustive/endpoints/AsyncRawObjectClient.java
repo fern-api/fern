@@ -16,6 +16,7 @@ import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
 import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
+import com.seed.exhaustive.types.types.ObjectWithRequiredAndOptionalFields;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
 import java.io.IOException;
 import java.util.List;
@@ -503,6 +504,83 @@ public class AsyncRawObjectClient {
                         future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBodyString, ObjectWithDatetimeLikeString.class),
+                                response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedExhaustiveApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Tests that Java staged builders correctly handle examples that only provide
+     * optional fields. The generated snippet must include the required field with
+     * a placeholder value before calling optional field methods.
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredAndOptionalFields>>
+            getAndReturnWithRequiredAndOptionalFields(ObjectWithRequiredAndOptionalFields request) {
+        return getAndReturnWithRequiredAndOptionalFields(request, null);
+    }
+
+    /**
+     * Tests that Java staged builders correctly handle examples that only provide
+     * optional fields. The generated snippet must include the required field with
+     * a placeholder value before calling optional field methods.
+     */
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredAndOptionalFields>>
+            getAndReturnWithRequiredAndOptionalFields(
+                    ObjectWithRequiredAndOptionalFields request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("object")
+                .addPathSegments("get-and-return-with-required-and-optional-fields");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedExhaustiveException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredAndOptionalFields>> future =
+                new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedExhaustiveHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBodyString, ObjectWithRequiredAndOptionalFields.class),
                                 response));
                         return;
                     }

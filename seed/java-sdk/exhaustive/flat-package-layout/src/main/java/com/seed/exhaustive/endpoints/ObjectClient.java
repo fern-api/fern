@@ -10,6 +10,7 @@ import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
 import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
+import com.seed.exhaustive.types.types.ObjectWithRequiredAndOptionalFields;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
 import java.util.List;
 
@@ -133,6 +134,28 @@ public class ObjectClient {
             ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnWithDatetimeLikeString(request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Tests that Java staged builders correctly handle examples that only provide
+     * optional fields. The generated snippet must include the required field with
+     * a placeholder value before calling optional field methods.
+     */
+    public ObjectWithRequiredAndOptionalFields getAndReturnWithRequiredAndOptionalFields(
+            ObjectWithRequiredAndOptionalFields request) {
+        return this.rawClient.getAndReturnWithRequiredAndOptionalFields(request).body();
+    }
+
+    /**
+     * Tests that Java staged builders correctly handle examples that only provide
+     * optional fields. The generated snippet must include the required field with
+     * a placeholder value before calling optional field methods.
+     */
+    public ObjectWithRequiredAndOptionalFields getAndReturnWithRequiredAndOptionalFields(
+            ObjectWithRequiredAndOptionalFields request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithRequiredAndOptionalFields(request, requestOptions)
                 .body();
     }
 }

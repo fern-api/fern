@@ -300,6 +300,32 @@
             }
         },
         {
+            "example_identifier": "OnlyOptionalFieldProvided",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-required-and-optional-fields",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredAndOptionalFields"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredAndOptionalFields;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithRequiredAndOptionalFields(\n            ObjectWithRequiredAndOptionalFields\n                .builder()\n                .optionalString(\"optional value\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredAndOptionalFields;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithRequiredAndOptionalFields(\n            ObjectWithRequiredAndOptionalFields\n                .builder()\n                .optionalString(\"optional value\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b4f822fd",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-required-and-optional-fields",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredAndOptionalFields"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredAndOptionalFields;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithRequiredAndOptionalFields(\n            ObjectWithRequiredAndOptionalFields\n                .builder()\n                .requiredString(\"requiredString\")\n                .optionalString(\"optionalString\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredAndOptionalFields;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithRequiredAndOptionalFields(\n            ObjectWithRequiredAndOptionalFields\n                .builder()\n                .requiredString(\"requiredString\")\n                .optionalString(\"optionalString\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "88011d74",
             "id": {
                 "method": "GET",

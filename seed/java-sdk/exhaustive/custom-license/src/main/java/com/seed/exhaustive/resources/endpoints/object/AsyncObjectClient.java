@@ -10,6 +10,7 @@ import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequired
 import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredAndOptionalFields;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -138,6 +139,28 @@ public class AsyncObjectClient {
             ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnWithDatetimeLikeString(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests that Java staged builders correctly handle examples that only provide
+     * optional fields. The generated snippet must include the required field with
+     * a placeholder value before calling optional field methods.
+     */
+    public CompletableFuture<ObjectWithRequiredAndOptionalFields> getAndReturnWithRequiredAndOptionalFields(
+            ObjectWithRequiredAndOptionalFields request) {
+        return this.rawClient.getAndReturnWithRequiredAndOptionalFields(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests that Java staged builders correctly handle examples that only provide
+     * optional fields. The generated snippet must include the required field with
+     * a placeholder value before calling optional field methods.
+     */
+    public CompletableFuture<ObjectWithRequiredAndOptionalFields> getAndReturnWithRequiredAndOptionalFields(
+            ObjectWithRequiredAndOptionalFields request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithRequiredAndOptionalFields(request, requestOptions)
                 .thenApply(response -> response.body());
     }
 }

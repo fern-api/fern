@@ -77,3 +77,25 @@ service:
             body:
               datetimeLikeString: "2023-08-31T14:15:22Z"
               actualDatetime: "2023-08-31T14:15:22Z"
+
+    getAndReturnWithRequiredAndOptionalFields:
+      docs: |
+        Tests that Java staged builders correctly handle examples that only provide
+        optional fields. The generated snippet must include the required field with
+        a placeholder value before calling optional field methods.
+      path: /get-and-return-with-required-and-optional-fields
+      method: POST
+      request: objects.ObjectWithRequiredAndOptionalFields
+      response: objects.ObjectWithRequiredAndOptionalFields
+      examples:
+        - name: OnlyOptionalFieldProvided
+          docs: |
+            This example only provides the optional field, which tests that the
+            Java SDK generator correctly synthesizes a placeholder for the required
+            field in the staged builder pattern.
+          request:
+            optionalString: "optional value"
+          response:
+            body:
+              requiredString: "required"
+              optionalString: "optional value"

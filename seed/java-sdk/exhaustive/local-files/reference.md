@@ -1260,6 +1260,67 @@ client.endpoints().object().getAndReturnWithDatetimeLikeString(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.getAndReturnWithRequiredAndOptionalFields(request) -> ObjectWithRequiredAndOptionalFields</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that Java staged builders correctly handle examples that only provide
+optional fields. The generated snippet must include the required field with
+a placeholder value before calling optional field methods.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithRequiredAndOptionalFields(
+    ObjectWithRequiredAndOptionalFields
+        .builder()
+        .optionalString("optional value")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredAndOptionalFields` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
 <details><summary><code>client.endpoints.params.getWithPath(param) -> String</code></summary>
 <dl>

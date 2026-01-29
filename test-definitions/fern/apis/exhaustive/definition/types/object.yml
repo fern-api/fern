@@ -54,6 +54,19 @@ types:
         type: datetime
         docs: An actual datetime field for comparison
 
+  ObjectWithRequiredAndOptionalFields:
+    docs: |
+      This type tests that Java staged builders correctly handle objects
+      with both required and optional fields. The required field must be
+      called first before any optional fields can be set.
+    properties:
+      requiredString:
+        type: string
+        docs: A required string field that must be set first in staged builders
+      optionalString:
+        type: optional<string>
+        docs: An optional string field that can only be set after required fields
+
 errors:
   ObjectWithOptionalFieldError:
     status-code: 400
