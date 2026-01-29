@@ -2,7 +2,7 @@
 - version: 2.19.7
   changelogEntry:
     - summary: |
-        The top-level client now uses the interface types for sub-clients instead of concrete types.
+        Top-level clients now use interface types for sub-clients instead of concrete types.
       type: fix
   createdAt: "2026-01-29"
   irVersion: 62
