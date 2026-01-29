@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.1
+  changelogEntry:
+    - summary: |
+        Fix ambiguous type references (CS0104) for sub-client interfaces when multiple sub-clients share the same name in different namespaces.
+      type: fix
+    - summary: |
+        Fix duplicate implicit conversion operators (CS0557) for undiscriminated unions with multiple variants that resolve to the same type.
+      type: fix
+    - summary: |
+        Add transitive implicit conversion operators for nested undiscriminated unions.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
 - version: 2.20.0
   changelogEntry:
     - summary: |

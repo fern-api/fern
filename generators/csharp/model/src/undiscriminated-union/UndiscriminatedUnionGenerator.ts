@@ -140,12 +140,21 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             })
         });
 
-        // Generate implicit conversion operators (skip literals - they have fixed values)
+        // Generate implicit conversion operators (skip literals and duplicates)
+        const generatedOperatorTypes = new Set<string>();
         for (const member of this.members) {
             if (!member.isNull && !this.isLiteralType(member.typeReference)) {
-                this.generateImplicitOperator(class_, member);
+                // Use fullyQualifiedName to identify the C# type signature
+                const typeSignature = member.csharpType.fullyQualifiedName;
+                if (!generatedOperatorTypes.has(typeSignature)) {
+                    this.generateImplicitOperator(class_, member);
+                    generatedOperatorTypes.add(typeSignature);
+                }
             }
         }
+
+        // Generate transitive implicit conversion operators for nested unions
+        this.generateTransitiveImplicitOperators(class_, generatedOperatorTypes);
 
         // Generate equality methods
         this.generateEqualityMethods(class_, typeField, valueField);
@@ -546,6 +555,107 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             useExpressionBody: true,
             body: this.csharp.codeblock(`new("${member.discriminator}", value)`)
         });
+    }
+
+    /**
+     * Generate transitive implicit conversion operators for nested unions.
+     * C# doesn't chain implicit conversions, so if we have:
+     *   OuterUnion <- MiddleUnion <- LeafType
+     * Users can't pass LeafType directly where OuterUnion is expected.
+     * This method generates direct conversions from leaf types to the outer union.
+     */
+    private generateTransitiveImplicitOperators(class_: ast.Class, generatedOperatorTypes: Set<string>): void {
+        for (const member of this.members) {
+            const nestedUnionInfo = this.getNestedUndiscriminatedUnionInfo(member.typeReference);
+            if (nestedUnionInfo == null) {
+                continue;
+            }
+            const { nestedUnionDeclaration, nestedClassReference } = nestedUnionInfo;
+
+            // For each member of the nested union, generate a transitive implicit operator
+            for (const nestedMember of nestedUnionDeclaration.members) {
+                const unwrappedType = this.unwrapNullableOptional(nestedMember.type);
+
+                if (this.getNestedUndiscriminatedUnionInfo(unwrappedType) != null) {
+                    continue;
+                }
+
+                const { isNull } = this.getTypeInfo(unwrappedType);
+                if (isNull) {
+                    continue;
+                }
+
+                if (this.isLiteralType(unwrappedType)) {
+                    continue;
+                }
+
+                const leafCsharpType = this.context.csharpTypeMapper.convert({
+                    reference: unwrappedType,
+                    fullyQualified: true
+                });
+                const typeSignature = leafCsharpType.fullyQualifiedName;
+                if (generatedOperatorTypes.has(typeSignature)) {
+                    continue;
+                }
+
+                if (is.Primitive.object(leafCsharpType.asNonOptional())) {
+                    continue;
+                }
+
+                if (this.isContainerType(unwrappedType)) {
+                    continue;
+                }
+
+                // Generate the transitive implicit operator
+                // The body casts the leaf value to the intermediate union type (using its implicit operator),
+                // then wraps it in the outer union with the intermediate's discriminator
+                class_.addOperator({
+                    type: ast.Class.CastOperator.Type.Implicit,
+                    parameter: this.csharp.parameter({
+                        name: "value",
+                        type: leafCsharpType
+                    }),
+                    useExpressionBody: true,
+                    body: this.csharp.codeblock((writer: Writer) => {
+                        writer.write(`new("${member.discriminator}", (`);
+                        writer.writeNode(nestedClassReference);
+                        writer.write(")value)");
+                    })
+                });
+
+                generatedOperatorTypes.add(typeSignature);
+            }
+        }
+    }
+
+    /**
+     * Check if a type reference is a named type that resolves to an undiscriminated union.
+     * Returns the union declaration and class reference if so, null otherwise.
+     */
+    private getNestedUndiscriminatedUnionInfo(typeReference: FernIr.TypeReference): {
+        nestedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
+        nestedClassReference: ast.ClassReference;
+    } | null {
+        // Only named types can be undiscriminated unions
+        if (typeReference.type !== "named") {
+            return null;
+        }
+
+        const namedType = typeReference;
+        const typeDeclaration = this.context.ir.types[namedType.typeId];
+        if (typeDeclaration == null) {
+            return null;
+        }
+
+        if (typeDeclaration.shape.type !== "undiscriminatedUnion") {
+            return null;
+        }
+
+        const nestedClassReference = this.context.csharpTypeMapper.convertToClassReference(typeDeclaration);
+        return {
+            nestedUnionDeclaration: typeDeclaration.shape,
+            nestedClassReference
+        };
     }
 
     private generateJsonConverter(class_: ast.Class, typeField: ast.Field, valueField: ast.Field): void {

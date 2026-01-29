@@ -8,13 +8,18 @@ using SeedUndiscriminatedUnions.Core;
 namespace SeedUndiscriminatedUnions;
 
 /// <summary>
-/// Nested union root.
+/// Union with multiple named type aliases that all resolve to the same C# type (string).
+/// Without the fix, this would generate duplicate implicit operators:
+///   public static implicit operator UnionWithTypeAliases(string value) =&gt; ...
+///   public static implicit operator UnionWithTypeAliases(string value) =&gt; ...
+///   public static implicit operator UnionWithTypeAliases(string value) =&gt; ...
+/// causing CS0557 compiler error.
 /// </summary>
-[JsonConverter(typeof(NestedUnionRoot.JsonConverter))]
+[JsonConverter(typeof(UnionWithTypeAliases.JsonConverter))]
 [Serializable]
-public class NestedUnionRoot
+public class UnionWithTypeAliases
 {
-    private NestedUnionRoot(string type, object? value)
+    private UnionWithTypeAliases(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -35,19 +40,17 @@ public class NestedUnionRoot
     /// <summary>
     /// Factory method to create a union from a string value.
     /// </summary>
-    public static NestedUnionRoot FromString(string value) => new("string", value);
+    public static UnionWithTypeAliases FromString(string value) => new("string", value);
 
     /// <summary>
-    /// Factory method to create a union from a IEnumerable<string> value.
+    /// Factory method to create a union from a string value.
     /// </summary>
-    public static NestedUnionRoot FromListOfString(IEnumerable<string> value) => new("list", value);
+    public static UnionWithTypeAliases FromUserId(string value) => new("userId", value);
 
     /// <summary>
-    /// Factory method to create a union from a SeedUndiscriminatedUnions.NestedUnionL1 value.
+    /// Factory method to create a union from a string value.
     /// </summary>
-    public static NestedUnionRoot FromNestedUnionL1(
-        SeedUndiscriminatedUnions.NestedUnionL1 value
-    ) => new("nestedUnionL1", value);
+    public static UnionWithTypeAliases FromName(string value) => new("name", value);
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "string"
@@ -55,14 +58,14 @@ public class NestedUnionRoot
     public bool IsString() => Type == "string";
 
     /// <summary>
-    /// Returns true if <see cref="Type"/> is "list"
+    /// Returns true if <see cref="Type"/> is "userId"
     /// </summary>
-    public bool IsListOfString() => Type == "list";
+    public bool IsUserId() => Type == "userId";
 
     /// <summary>
-    /// Returns true if <see cref="Type"/> is "nestedUnionL1"
+    /// Returns true if <see cref="Type"/> is "name"
     /// </summary>
-    public bool IsNestedUnionL1() => Type == "nestedUnionL1";
+    public bool IsName() => Type == "name";
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
@@ -74,22 +77,22 @@ public class NestedUnionRoot
             : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
 
     /// <summary>
-    /// Returns the value as a <see cref="IEnumerable<string>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
+    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'userId', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list'.</exception>
-    public IEnumerable<string> AsListOfString() =>
-        IsListOfString()
-            ? (IEnumerable<string>)Value!
-            : throw new SeedUndiscriminatedUnionsException("Union type is not 'list'");
+    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'userId'.</exception>
+    public string AsUserId() =>
+        IsUserId()
+            ? (string)Value!
+            : throw new SeedUndiscriminatedUnionsException("Union type is not 'userId'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedUndiscriminatedUnions.NestedUnionL1"/> if <see cref="Type"/> is 'nestedUnionL1', otherwise throws an exception.
+    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'name', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'nestedUnionL1'.</exception>
-    public SeedUndiscriminatedUnions.NestedUnionL1 AsNestedUnionL1() =>
-        IsNestedUnionL1()
-            ? (SeedUndiscriminatedUnions.NestedUnionL1)Value!
-            : throw new SeedUndiscriminatedUnionsException("Union type is not 'nestedUnionL1'");
+    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'name'.</exception>
+    public string AsName() =>
+        IsName()
+            ? (string)Value!
+            : throw new SeedUndiscriminatedUnionsException("Union type is not 'name'");
 
     /// <summary>
     /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
@@ -106,13 +109,13 @@ public class NestedUnionRoot
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="IEnumerable<string>"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
     /// </summary>
-    public bool TryGetListOfString(out IEnumerable<string>? value)
+    public bool TryGetUserId(out string? value)
     {
-        if (Type == "list")
+        if (Type == "userId")
         {
-            value = (IEnumerable<string>)Value!;
+            value = (string)Value!;
             return true;
         }
         value = null;
@@ -120,50 +123,42 @@ public class NestedUnionRoot
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedUndiscriminatedUnions.NestedUnionL1"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
     /// </summary>
-    public bool TryGetNestedUnionL1(out SeedUndiscriminatedUnions.NestedUnionL1? value)
+    public bool TryGetName(out string? value)
     {
-        if (Type == "nestedUnionL1")
+        if (Type == "name")
         {
-            value = (SeedUndiscriminatedUnions.NestedUnionL1)Value!;
+            value = (string)Value!;
             return true;
         }
         value = null;
         return false;
     }
 
-    public T Match<T>(
-        Func<string, T> onString,
-        Func<IEnumerable<string>, T> onListOfString,
-        Func<SeedUndiscriminatedUnions.NestedUnionL1, T> onNestedUnionL1
-    )
+    public T Match<T>(Func<string, T> onString, Func<string, T> onUserId, Func<string, T> onName)
     {
         return Type switch
         {
             "string" => onString(AsString()),
-            "list" => onListOfString(AsListOfString()),
-            "nestedUnionL1" => onNestedUnionL1(AsNestedUnionL1()),
+            "userId" => onUserId(AsUserId()),
+            "name" => onName(AsName()),
             _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
         };
     }
 
-    public void Visit(
-        Action<string> onString,
-        Action<IEnumerable<string>> onListOfString,
-        Action<SeedUndiscriminatedUnions.NestedUnionL1> onNestedUnionL1
-    )
+    public void Visit(Action<string> onString, Action<string> onUserId, Action<string> onName)
     {
         switch (Type)
         {
             case "string":
                 onString(AsString());
                 break;
-            case "list":
-                onListOfString(AsListOfString());
+            case "userId":
+                onUserId(AsUserId());
                 break;
-            case "nestedUnionL1":
-                onNestedUnionL1(AsNestedUnionL1());
+            case "name":
+                onName(AsName());
                 break;
             default:
                 throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
@@ -189,7 +184,7 @@ public class NestedUnionRoot
             return false;
         if (ReferenceEquals(this, obj))
             return true;
-        if (obj is not NestedUnionRoot other)
+        if (obj is not UnionWithTypeAliases other)
             return false;
 
         // Compare type discriminators
@@ -205,19 +200,12 @@ public class NestedUnionRoot
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator NestedUnionRoot(string value) => new("string", value);
-
-    public static implicit operator NestedUnionRoot(
-        SeedUndiscriminatedUnions.NestedUnionL1 value
-    ) => new("nestedUnionL1", value);
-
-    public static implicit operator NestedUnionRoot(int value) =>
-        new("nestedUnionL1", (NestedUnionL1)value);
+    public static implicit operator UnionWithTypeAliases(string value) => new("string", value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<NestedUnionRoot>
+    internal sealed class JsonConverter : JsonConverter<UnionWithTypeAliases>
     {
-        public override NestedUnionRoot? Read(
+        public override UnionWithTypeAliases? Read(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options
@@ -232,35 +220,8 @@ public class NestedUnionRoot
             {
                 var stringValue = reader.GetString()!;
 
-                NestedUnionRoot stringResult = new("string", stringValue);
+                UnionWithTypeAliases stringResult = new("string", stringValue);
                 return stringResult;
-            }
-
-            if (reader.TokenType == JsonTokenType.StartArray)
-            {
-                var document = JsonDocument.ParseValue(ref reader);
-
-                var types = new (string Key, System.Type Type)[]
-                {
-                    ("list", typeof(IEnumerable<string>)),
-                };
-
-                foreach (var (key, type) in types)
-                {
-                    try
-                    {
-                        var value = document.Deserialize(type, options);
-                        if (value != null)
-                        {
-                            NestedUnionRoot result = new(key, value);
-                            return result;
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        // Try next type;
-                    }
-                }
             }
 
             if (reader.TokenType == JsonTokenType.StartObject)
@@ -269,7 +230,8 @@ public class NestedUnionRoot
 
                 var types = new (string Key, System.Type Type)[]
                 {
-                    ("nestedUnionL1", typeof(SeedUndiscriminatedUnions.NestedUnionL1)),
+                    ("userId", typeof(string)),
+                    ("name", typeof(string)),
                 };
 
                 foreach (var (key, type) in types)
@@ -279,7 +241,7 @@ public class NestedUnionRoot
                         var value = document.Deserialize(type, options);
                         if (value != null)
                         {
-                            NestedUnionRoot result = new(key, value);
+                            UnionWithTypeAliases result = new(key, value);
                             return result;
                         }
                     }
@@ -291,13 +253,13 @@ public class NestedUnionRoot
             }
 
             throw new JsonException(
-                $"Cannot deserialize JSON token {reader.TokenType} into NestedUnionRoot"
+                $"Cannot deserialize JSON token {reader.TokenType} into UnionWithTypeAliases"
             );
         }
 
         public override void Write(
             Utf8JsonWriter writer,
-            NestedUnionRoot value,
+            UnionWithTypeAliases value,
             JsonSerializerOptions options
         )
         {
@@ -314,20 +276,20 @@ public class NestedUnionRoot
             );
         }
 
-        public override NestedUnionRoot? ReadAsPropertyName(
+        public override UnionWithTypeAliases? ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
             var stringValue = reader.GetString()!;
-            NestedUnionRoot result = new("string", stringValue);
+            UnionWithTypeAliases result = new("string", stringValue);
             return result;
         }
 
         public override void WriteAsPropertyName(
             Utf8JsonWriter writer,
-            NestedUnionRoot value,
+            UnionWithTypeAliases value,
             JsonSerializerOptions options
         )
         {
