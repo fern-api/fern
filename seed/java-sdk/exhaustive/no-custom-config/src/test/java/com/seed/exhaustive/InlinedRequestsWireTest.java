@@ -193,6 +193,7 @@ public class InlinedRequestsWireTest {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"ok\""));
         String response = client.inlinedRequests()
                 .postWithRequiredAndOptionalFields(RequiredAndOptionalRequest.builder()
+                        .requiredString("<requiredString>")
                         .optionalString("optional_value")
                         .build());
         RecordedRequest request = server.takeRequest();

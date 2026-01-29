@@ -2399,6 +2399,7 @@ for staged builders (Java).
 client.inlinedRequests().postWithRequiredAndOptionalFields(
     RequiredAndOptionalRequest
         .builder()
+        .requiredString("<requiredString>")
         .optionalString("optional_value")
         .build()
 );

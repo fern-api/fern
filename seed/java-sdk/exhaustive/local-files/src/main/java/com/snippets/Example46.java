@@ -14,6 +14,7 @@ public class Example46 {
         client.inlinedRequests().postWithRequiredAndOptionalFields(
             RequiredAndOptionalRequest
                 .builder()
+                .requiredString("<requiredString>")
                 .optionalString("optional_value")
                 .build()
         );
