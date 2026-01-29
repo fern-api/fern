@@ -140,10 +140,16 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             })
         });
 
-        // Generate implicit conversion operators (skip literals - they have fixed values)
+        // Generate implicit conversion operators (skip literals and duplicates)
+        const generatedOperatorTypes = new Set<string>();
         for (const member of this.members) {
             if (!member.isNull && !this.isLiteralType(member.typeReference)) {
-                this.generateImplicitOperator(class_, member);
+                // Use fullyQualifiedName to identify the C# type signature
+                const typeSignature = member.csharpType.fullyQualifiedName;
+                if (!generatedOperatorTypes.has(typeSignature)) {
+                    this.generateImplicitOperator(class_, member);
+                    generatedOperatorTypes.add(typeSignature);
+                }
             }
         }
 
