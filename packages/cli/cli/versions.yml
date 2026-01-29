@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.54.0
+  changelogEntry:
+    - summary: Add schema namespace resolution to OpenAPI importers for proper type reference targeting
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.53.0
   changelogEntry:
     - summary: |
