@@ -468,3 +468,32 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock", "POST", "/object/get-and-return-nested-with-required-field-list", nil, 1)
 }
+
+func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
+	t *testing.T,
+) {
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &types.ObjectWithDatetimeLikeString{
+		DatetimeLikeString: "2023-08-31T14:15:22Z",
+		ActualDatetime: fern.MustParseDateTime(
+			"2023-08-31T14:15:22Z",
+		),
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock", "POST", "/object/get-and-return-with-datetime-like-string", nil, 1)
+}

@@ -2,6 +2,7 @@ export type { InlineTypeRequest } from "./InlineTypeRequest.js";
 export type { JustFileRequest } from "./JustFileRequest.js";
 export type { JustFileWithOptionalQueryParamsRequest } from "./JustFileWithOptionalQueryParamsRequest.js";
 export type { JustFileWithQueryParamsRequest } from "./JustFileWithQueryParamsRequest.js";
+export type { LiteralEnumRequest } from "./LiteralEnumRequest.js";
 export type { MyOtherRequest } from "./MyOtherRequest.js";
 export type { MyRequest } from "./MyRequest.js";
 export type { OptionalArgsRequest } from "./OptionalArgsRequest.js";

@@ -129,3 +129,22 @@ func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 	}
 	return response.Body, nil
 }
+
+// Tests that string fields containing datetime-like values are NOT reformatted.
+// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+// without being converted to "2023-08-31T14:15:22.000Z".
+func (c *Client) GetAndReturnWithDatetimeLikeString(
+	ctx context.Context,
+	request *types.ObjectWithDatetimeLikeString,
+	opts ...option.RequestOption,
+) (*types.ObjectWithDatetimeLikeString, error) {
+	response, err := c.WithRawResponse.GetAndReturnWithDatetimeLikeString(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

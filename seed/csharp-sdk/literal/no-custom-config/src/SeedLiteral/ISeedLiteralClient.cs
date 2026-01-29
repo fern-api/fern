@@ -2,9 +2,9 @@ namespace SeedLiteral;
 
 public partial interface ISeedLiteralClient
 {
-    public HeadersClient Headers { get; }
-    public InlinedClient Inlined { get; }
-    public PathClient Path { get; }
-    public QueryClient Query { get; }
-    public ReferenceClient Reference { get; }
+    public IHeadersClient Headers { get; }
+    public IInlinedClient Inlined { get; }
+    public IPathClient Path { get; }
+    public IQueryClient Query { get; }
+    public IReferenceClient Reference { get; }
 }

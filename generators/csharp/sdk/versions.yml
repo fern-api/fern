@@ -1,4 +1,155 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.0
+  changelogEntry:
+    - summary: |
+        Remove .NET 6 (EOL 2024/10/12) and 7 (EOL 2024/05/14) target frameworks from generated SDKs as they are no longer supported by Microsoft.
+        The generated SDKs now only target .NET Framework 4.6.2, .NET Standard 2.0, and .NET 8.
+      type: chore
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.7
+  changelogEntry:
+    - summary: |
+        Top-level clients now use interface types for sub-clients instead of concrete types.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to preserve string field values that contain datetime-like strings.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.5
+  changelogEntry:
+    - summary: |
+        Fix missing client-level headers for endpoints without endpoint-specific headers.
+
+        Previously, endpoints that didn't have endpoint-specific headers (like custom request headers)
+        would not include client-level headers (API key, SDK version, additional headers) in their
+        HTTP requests. This caused authentication failures for APIs that rely on headers set at the
+        client level.
+
+        The fix ensures that all endpoints now properly merge headers from:
+        * Client options headers (API key, SDK version, etc.)
+        * Client additional headers (user-provided at client construction)
+        * Request options additional headers (user-provided per-request)
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.4
+  changelogEntry:
+    - summary: |
+        Fix missing `[Optional]` and/or `Nullable` attributes on generated properties with defaults.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.3
+  changelogEntry:
+    - summary: |
+        Fully unwrap optional-nullable wrappers when generating undiscriminated unions.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.2
+  changelogEntry:
+    - summary: |
+        Fixes missing references to Core utilities in interface files for the Optional wrapper.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.1
+  changelogEntry:
+    - summary: |
+        Fix nullable element types in collections to correctly preserve nullable markers.
+
+        Previously, nullable types nested inside collections would incorrectly strip the inner nullable marker:
+        - `nullable<list<nullable<string>>>` incorrectly generated `IEnumerable<string>?`
+        - `nullable<map<string, nullable<Address>>>` incorrectly generated `Dictionary<string, Address>?`
+
+        Now generates correctly:
+        - `nullable<list<nullable<string>>>` generates `IEnumerable<string?>?`
+        - `nullable<map<string, nullable<Address>>>` generates `Dictionary<string, Address?>?`
+        - `optional<map<string, nullable<string>>>` generates `Dictionary<string, string?>?`
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.0
+  changelogEntry:
+    - summary: |
+        Add support for type-safe undiscriminated unions with the new `use-undiscriminated-unions` configuration option.
+
+        Undiscriminated unions provide a clean, type-safe way to work with values that can be one of several types:
+
+        ```csharp
+        // Creating union values
+        var response = MyUnion.FromString("hello");
+        var response = MyUnion.FromInt(42);
+        var response = MyUnion.FromCustomObject(new CustomObject { ... });
+
+        // Type-safe value access with Is* properties and As* methods
+        if (response.IsString)
+        {
+            string value = response.AsString();
+            Console.WriteLine($"Got string: {value}");
+        }
+        else if (response.IsInt)
+        {
+            int value = response.AsInt();
+            Console.WriteLine($"Got integer: {value}");
+        }
+
+        // Safe extraction with TryAs* pattern (no exceptions)
+        if (response.TryAsCustomObject(out var obj))
+        {
+            Console.WriteLine($"Got object: {obj.Name}");
+        }
+        ```
+
+        This provides better IntelliSense support and compile-time safety compared to working with generic `object` types.
+      type: feat
+    - summary: |
+        Reduce NuGet package dependencies. The OneOf library is no longer required when undiscriminated unions are not used,
+        resulting in smaller package sizes and fewer transitive dependencies.
+      type: chore
+  createdAt: "2026-01-27"
+  irVersion: 62
+
+- version: 2.18.1
+  changelogEntry:
+    - summary: |
+        While most `<`s and `>`s should be escaped to `&lt;` and `&gt;` to avoid mangling the output,
+        genuine XML/HTML tags should be kept as-is; this commit scans for potential valid tags and
+        prevents their being escaped. (Ambiguous cases are escaped.)
+
+        Before:
+        ```
+        /// XMLDoc (C#) (Example of actual XML tags):
+        /// See &lt;a href="https://example.com/docs"&gt;the docs&lt;/a&gt; for more info.
+        /// Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+        /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
+        ```
+
+        After:
+        ```
+        /// XMLDoc (C#) (Example of actual XML tags):
+        /// See <a href="https://example.com/docs">the docs</a> for more info.
+        /// Use <code>getValue()</code> to retrieve the value.
+        /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
+        ```
+      type: fix
+  createdAt: "2026-01-27"
+  irVersion: 62
+
 - version: 2.18.0
   changelogEntry:
     - summary: |

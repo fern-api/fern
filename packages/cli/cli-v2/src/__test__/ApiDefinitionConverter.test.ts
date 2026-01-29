@@ -6,11 +6,11 @@ import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { isAsyncApiSpec } from "../api/config/AsyncApiSpec";
 import { isConjureSpec } from "../api/config/ConjureSpec";
+import { ApiDefinitionConverter, DEFAULT_API_NAME } from "../api/config/converter/ApiDefinitionConverter";
 import { isFernSpec } from "../api/config/FernSpec";
 import { isOpenApiSpec } from "../api/config/OpenApiSpec";
 import { isOpenRpcSpec } from "../api/config/OpenRpcSpec";
 import { isProtobufSpec } from "../api/config/ProtobufSpec";
-import { ApiDefinitionConverter, DEFAULT_API_NAME } from "../api/converter/ApiDefinitionConverter";
 import { loadFernYml } from "../config/fern-yml/loadFernYml";
 
 describe("ApiDefinitionConverter", () => {
@@ -469,6 +469,162 @@ apis:
                 expect(result.issues).toHaveLength(1);
                 expect(result.issues[0]?.message).toContain("does not exist");
                 expect(result.issues[0]?.location).toBeDefined();
+            }
+        });
+
+        it("fails when multiple Fern specs are provided", async () => {
+            await mkdir(join(testDir, "definition1"), { recursive: true });
+            await mkdir(join(testDir, "definition2"), { recursive: true });
+            await writeFile(join(testDir, "definition1/api.yml"), "name: api1");
+            await writeFile(join(testDir, "definition2/api.yml"), "name: api2");
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - fern: definition1
+    - fern: definition2
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createConverter().convert({ fernYml });
+
+            expect(result.success).toBe(false);
+            if (!result.success) {
+                expect(result.issues.length).toBeGreaterThanOrEqual(1);
+                expect(result.issues.some((i) => i.message.includes("Multiple Fern specs"))).toBe(true);
+            }
+        });
+
+        it("fails when multiple Conjure specs are provided", async () => {
+            await mkdir(join(testDir, "conjure1"), { recursive: true });
+            await mkdir(join(testDir, "conjure2"), { recursive: true });
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - conjure: conjure1
+    - conjure: conjure2
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createConverter().convert({ fernYml });
+
+            expect(result.success).toBe(false);
+            if (!result.success) {
+                expect(result.issues.length).toBeGreaterThanOrEqual(1);
+                expect(result.issues.some((i) => i.message.includes("Multiple Conjure specs"))).toBe(true);
+            }
+        });
+
+        it("fails when Fern and Conjure specs are mixed", async () => {
+            await mkdir(join(testDir, "definition"), { recursive: true });
+            await mkdir(join(testDir, "conjure"), { recursive: true });
+            await writeFile(join(testDir, "definition/api.yml"), "name: api");
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - fern: definition
+    - conjure: conjure
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createConverter().convert({ fernYml });
+
+            expect(result.success).toBe(false);
+            if (!result.success) {
+                expect(result.issues.length).toBeGreaterThanOrEqual(1);
+                expect(result.issues.some((i) => i.message.includes("cannot be mixed with other spec types"))).toBe(
+                    true
+                );
+            }
+        });
+
+        it("fails when Fern spec is mixed with OpenAPI specs", async () => {
+            await mkdir(join(testDir, "definition"), { recursive: true });
+            await writeFile(join(testDir, "definition/api.yml"), "name: api");
+            await writeFile(join(testDir, "openapi.yml"), "openapi: 3.0.0");
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - fern: definition
+    - openapi: openapi.yml
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createConverter().convert({ fernYml });
+
+            expect(result.success).toBe(false);
+            if (!result.success) {
+                expect(result.issues.length).toBeGreaterThanOrEqual(1);
+                expect(result.issues.some((i) => i.message.includes("Fern specs cannot be mixed"))).toBe(true);
+            }
+        });
+
+        it("fails when Conjure spec is mixed with OpenAPI specs", async () => {
+            await mkdir(join(testDir, "conjure"), { recursive: true });
+            await writeFile(join(testDir, "openapi.yml"), "openapi: 3.0.0");
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - conjure: conjure
+    - openapi: openapi.yml
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createConverter().convert({ fernYml });
+
+            expect(result.success).toBe(false);
+            if (!result.success) {
+                expect(result.issues.length).toBeGreaterThanOrEqual(1);
+                expect(result.issues.some((i) => i.message.includes("Conjure specs cannot be mixed"))).toBe(true);
+            }
+        });
+
+        it("allows multiple OpenAPI specs to be mixed together", async () => {
+            await writeFile(join(testDir, "openapi1.yml"), "openapi: 3.0.0");
+            await writeFile(join(testDir, "openapi2.yml"), "openapi: 3.0.0");
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - openapi: openapi1.yml
+    - openapi: openapi2.yml
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createConverter().convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                const api = result.apis[DEFAULT_API_NAME];
+                expect(api?.specs).toHaveLength(2);
             }
         });
     });

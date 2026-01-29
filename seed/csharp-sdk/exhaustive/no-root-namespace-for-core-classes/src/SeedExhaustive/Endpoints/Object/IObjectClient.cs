@@ -42,4 +42,15 @@ public partial interface IObjectClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Tests that string fields containing datetime-like values are NOT reformatted.
+    /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+    /// without being converted to "2023-08-31T14:15:22.000Z".
+    /// </summary>
+    WithRawResponseTask<ObjectWithDatetimeLikeString> GetAndReturnWithDatetimeLikeStringAsync(
+        ObjectWithDatetimeLikeString request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

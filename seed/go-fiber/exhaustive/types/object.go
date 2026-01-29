@@ -256,6 +256,106 @@ func (n *NestedObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// This type tests that string fields containing datetime-like values
+// are NOT reformatted by the wire test generator. The string field
+// should preserve its exact value even if it looks like a datetime.
+var (
+	objectWithDatetimeLikeStringFieldDatetimeLikeString = big.NewInt(1 << 0)
+	objectWithDatetimeLikeStringFieldActualDatetime     = big.NewInt(1 << 1)
+)
+
+type ObjectWithDatetimeLikeString struct {
+	// A string field that happens to contain a datetime-like value
+	DatetimeLikeString string `json:"datetimeLikeString" url:"datetimeLikeString"`
+	// An actual datetime field for comparison
+	ActualDatetime time.Time `json:"actualDatetime" url:"actualDatetime"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+}
+
+func (o *ObjectWithDatetimeLikeString) GetDatetimeLikeString() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatetimeLikeString
+}
+
+func (o *ObjectWithDatetimeLikeString) GetActualDatetime() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.ActualDatetime
+}
+
+func (o *ObjectWithDatetimeLikeString) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
+}
+
+func (o *ObjectWithDatetimeLikeString) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetDatetimeLikeString sets the DatetimeLikeString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithDatetimeLikeString) SetDatetimeLikeString(datetimeLikeString string) {
+	o.DatetimeLikeString = datetimeLikeString
+	o.require(objectWithDatetimeLikeStringFieldDatetimeLikeString)
+}
+
+// SetActualDatetime sets the ActualDatetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithDatetimeLikeString) SetActualDatetime(actualDatetime time.Time) {
+	o.ActualDatetime = actualDatetime
+	o.require(objectWithDatetimeLikeStringFieldActualDatetime)
+}
+
+func (o *ObjectWithDatetimeLikeString) UnmarshalJSON(data []byte) error {
+	type embed ObjectWithDatetimeLikeString
+	var unmarshaler = struct {
+		embed
+		ActualDatetime *internal.DateTime `json:"actualDatetime"`
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*o = ObjectWithDatetimeLikeString(unmarshaler.embed)
+	o.ActualDatetime = unmarshaler.ActualDatetime.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	return nil
+}
+
+func (o *ObjectWithDatetimeLikeString) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithDatetimeLikeString
+	var marshaler = struct {
+		embed
+		ActualDatetime *internal.DateTime `json:"actualDatetime"`
+	}{
+		embed:          embed(*o),
+		ActualDatetime: internal.NewDateTime(o.ActualDatetime),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithDatetimeLikeString) String() string {
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
 var (
 	objectWithMapOfMapFieldMap = big.NewInt(1 << 0)
 )

@@ -13,6 +13,7 @@ from ......core.route_args import get_route_args
 from ......security import ApiAuth, FernAuth
 from .....types.resources.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from .....types.resources.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
+from .....types.resources.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
 from .....types.resources.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from .....types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 from .....types.resources.object.types.object_with_required_field import ObjectWithRequiredField
@@ -55,6 +56,17 @@ class AbstractEndpointsObjectService(AbstractFernService):
         self, *, body: typing.List[NestedObjectWithRequiredField], auth: ApiAuth
     ) -> NestedObjectWithRequiredField: ...
 
+    @abc.abstractmethod
+    def get_and_return_with_datetime_like_string(
+        self, *, body: ObjectWithDatetimeLikeString, auth: ApiAuth
+    ) -> ObjectWithDatetimeLikeString:
+        """
+        Tests that string fields containing datetime-like values are NOT reformatted.
+        The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+        without being converted to "2023-08-31T14:15:22.000Z".
+        """
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -68,6 +80,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
         cls.__init_get_and_return_nested_with_optional_field(router=router)
         cls.__init_get_and_return_nested_with_required_field(router=router)
         cls.__init_get_and_return_nested_with_required_field_as_list(router=router)
+        cls.__init_get_and_return_with_datetime_like_string(router=router)
 
     @classmethod
     def __init_get_and_return_with_optional_field(cls, router: fastapi.APIRouter) -> None:
@@ -351,4 +364,51 @@ class AbstractEndpointsObjectService(AbstractFernService):
             response_model=None,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field_as_list.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field_as_list, default_tag="endpoints.object"),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_and_return_with_datetime_like_string(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_and_return_with_datetime_like_string)
+        type_hints = typing.get_type_hints(cls.get_and_return_with_datetime_like_string)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
+            elif parameter_name == "auth":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.get_and_return_with_datetime_like_string,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.get_and_return_with_datetime_like_string)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithDatetimeLikeString:
+            try:
+                return cls.get_and_return_with_datetime_like_string(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_and_return_with_datetime_like_string' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(
+            path="/object/get-and-return-with-datetime-like-string",
+            response_model=None,
+            description=AbstractEndpointsObjectService.get_and_return_with_datetime_like_string.__doc__,
+            **get_route_args(cls.get_and_return_with_datetime_like_string, default_tag="endpoints.object"),
         )(wrapper)

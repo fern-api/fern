@@ -22,6 +22,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +36,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-with-optional-field",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -80,6 +87,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -88,6 +101,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-with-required-field",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -136,6 +150,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -144,6 +164,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-with-map-of-map",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -194,6 +215,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -202,6 +229,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-nested-with-optional-field",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -255,6 +283,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -266,6 +300,7 @@ public partial class ObjectClient : IObjectClient
                         ValueConvert.ToPathParameterString(string_)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -318,6 +353,12 @@ public partial class ObjectClient : IObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -326,6 +367,7 @@ public partial class ObjectClient : IObjectClient
                     Method = HttpMethod.Post,
                     Path = "/object/get-and-return-nested-with-required-field-list",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -340,6 +382,73 @@ public partial class ObjectClient : IObjectClient
                     responseBody
                 )!;
                 return new WithRawResponse<NestedObjectWithRequiredField>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithDatetimeLikeString>
+    > GetAndReturnWithDatetimeLikeStringAsyncCore(
+        ObjectWithDatetimeLikeString request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-datetime-like-string",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithDatetimeLikeString>(
+                    responseBody
+                )!;
+                return new WithRawResponse<ObjectWithDatetimeLikeString>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -574,6 +683,31 @@ public partial class ObjectClient : IObjectClient
     {
         return new WithRawResponseTask<NestedObjectWithRequiredField>(
             GetAndReturnNestedWithRequiredFieldAsListAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Tests that string fields containing datetime-like values are NOT reformatted.
+    /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+    /// without being converted to "2023-08-31T14:15:22.000Z".
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
+    ///     new ObjectWithDatetimeLikeString
+    ///     {
+    ///         DatetimeLikeString = "2023-08-31T14:15:22Z",
+    ///         ActualDatetime = new DateTime(2023, 08, 31, 14, 15, 22, 000),
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithDatetimeLikeString> GetAndReturnWithDatetimeLikeStringAsync(
+        ObjectWithDatetimeLikeString request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithDatetimeLikeString>(
+            GetAndReturnWithDatetimeLikeStringAsyncCore(request, options, cancellationToken)
         );
     }
 }

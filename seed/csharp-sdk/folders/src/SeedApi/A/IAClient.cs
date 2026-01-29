@@ -5,6 +5,6 @@ namespace SeedApi.A;
 
 public partial interface IAClient
 {
-    public BClient B { get; }
-    public CClient C { get; }
+    public IBClient B { get; }
+    public ICClient C { get; }
 }

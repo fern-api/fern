@@ -1,0 +1,36 @@
+edition: 2026-01-01
+org: test-org
+
+api:
+  specs:
+    - openapi: openapi.yml
+      settings:
+        respectNullableSchemas: true
+        coerceEnumsToLiterals: true
+        onlyIncludeReferencedSchemas: true
+        inlinePathParameters: false
+        objectQueryParameters: true
+        respectReadonlySchemas: true
+        typeDatesAsStrings: true
+        defaultIntegerFormat: int64
+        pathParameterOrder: specOrder
+        exampleGeneration:
+          request:
+            maxDepth: 3
+          response:
+            maxDepth: 5
+        filter:
+          endpoints:
+            - "GET /pets"
+            - "POST /pets"
+
+sdks:
+  defaultGroup: local
+  targets:
+    typescript:
+      lang: typescript
+      version: 0.39.3
+      output:
+        path: ./generated/typescript
+      group:
+        - local

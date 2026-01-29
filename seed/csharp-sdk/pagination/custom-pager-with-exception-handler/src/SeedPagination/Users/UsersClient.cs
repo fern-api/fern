@@ -49,6 +49,12 @@ public partial class UsersClient : IUsersClient
                     .Add("starting_after", request.StartingAfter)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -57,6 +63,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -131,6 +138,12 @@ public partial class UsersClient : IUsersClient
                     .Add("cursor", request.Cursor)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -139,6 +152,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Post,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -210,6 +224,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -218,6 +238,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Post,
                             Path = "/users",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -297,6 +318,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -305,6 +332,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Post,
                             Path = "/users/top-level-cursor",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -383,6 +411,12 @@ public partial class UsersClient : IUsersClient
                     .Add("starting_after", request.StartingAfter)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -391,6 +425,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -468,6 +503,12 @@ public partial class UsersClient : IUsersClient
                     .Add("starting_after", request.StartingAfter)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -476,6 +517,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -546,6 +588,12 @@ public partial class UsersClient : IUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -554,6 +602,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Post,
                             Path = "/users",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -630,6 +679,12 @@ public partial class UsersClient : IUsersClient
                     .Add("order", request.Order)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -638,6 +693,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -718,6 +774,12 @@ public partial class UsersClient : IUsersClient
                     .Add("order", request.Order)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -726,6 +788,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -800,6 +863,12 @@ public partial class UsersClient : IUsersClient
                     .Add("cursor", request.Cursor)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -808,6 +877,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -886,6 +956,12 @@ public partial class UsersClient : IUsersClient
                     .Add("cursor", request.Cursor)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -894,6 +970,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -967,6 +1044,12 @@ public partial class UsersClient : IUsersClient
                     .Add("starting_after", request.StartingAfter)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -975,6 +1058,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -1047,6 +1131,12 @@ public partial class UsersClient : IUsersClient
                     .Add("starting_after", request.StartingAfter)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -1055,6 +1145,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -1125,6 +1216,12 @@ public partial class UsersClient : IUsersClient
                     .Add("offset", request.Offset)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -1133,6 +1230,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -1205,6 +1303,12 @@ public partial class UsersClient : IUsersClient
                     .Add("page", request.Page)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -1213,6 +1317,7 @@ public partial class UsersClient : IUsersClient
                             Method = HttpMethod.Get,
                             Path = "/users/optional-data",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -1498,7 +1603,7 @@ public partial class UsersClient : IUsersClient
                     ListUsersOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >
@@ -1552,7 +1657,7 @@ public partial class UsersClient : IUsersClient
                     ListUsersDoubleOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    double?,
+                    double,
                     object,
                     User
                 >
@@ -1603,7 +1708,7 @@ public partial class UsersClient : IUsersClient
                     ListUsersBodyOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >
@@ -1657,8 +1762,8 @@ public partial class UsersClient : IUsersClient
                     ListUsersOffsetStepPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
-                    int?,
+                    int,
+                    int,
                     User
                 >
                     .CreateInstanceAsync(
@@ -1710,8 +1815,8 @@ public partial class UsersClient : IUsersClient
                     ListWithOffsetPaginationHasNextPageRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
-                    int?,
+                    int,
+                    int,
                     User
                 >
                     .CreateInstanceAsync(
@@ -1949,7 +2054,7 @@ public partial class UsersClient : IUsersClient
                     ListWithGlobalConfigRequest,
                     RequestOptions?,
                     UsernameContainer,
-                    int?,
+                    int,
                     object,
                     string
                 >
@@ -1995,7 +2100,7 @@ public partial class UsersClient : IUsersClient
                     ListUsersOptionalDataRequest,
                     RequestOptions?,
                     ListUsersOptionalDataPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >

@@ -5,6 +5,7 @@ import { addAuthCommand } from "./commands/auth";
 import { addCheckCommand } from "./commands/check";
 import { addSdkCommand } from "./commands/sdk";
 import { GlobalArgs } from "./context/GlobalArgs";
+import { Version } from "./version";
 
 export async function runCliV2(argv?: string[]): Promise<void> {
     const cli = createCliV2(argv);
@@ -12,9 +13,11 @@ export async function runCliV2(argv?: string[]): Promise<void> {
 }
 
 function createCliV2(argv?: string[]): Argv<GlobalArgs> {
+    const terminalWidth = process.stdout.columns ?? 80;
     const cli: Argv<GlobalArgs> = yargs(argv ?? hideBin(process.argv))
         .scriptName("fern")
-        .version("0.0.1")
+        .version(Version)
+        .wrap(Math.min(120, terminalWidth))
         .option("log-level", {
             type: "string",
             description: "Set log level",
