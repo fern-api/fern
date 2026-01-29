@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.54.2
+  changelogEntry:
+    - summary: |
+        Generate CI workflow Python versions and PyPI trove classifiers dynamically based on the
+        `pyproject_python_version` constraint.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
 - version: 4.54.1
   changelogEntry:
     - summary: |
