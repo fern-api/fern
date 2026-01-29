@@ -714,7 +714,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             },
                             "queryParameters": {},
                             "headers": {},
-                            "responseStatusCode": 204,
+                            "responseStatusCode": 200,
+                            "responseBodyV3": {
+                                "type": "json"
+                            },
                             "codeSamples": []
                         }
                     ]
@@ -1557,7 +1560,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             },
                             "queryParameters": {},
                             "headers": {},
-                            "responseStatusCode": 204,
+                            "responseStatusCode": 200,
+                            "responseBodyV3": {
+                                "type": "json"
+                            },
                             "codeSamples": []
                         }
                     ]
