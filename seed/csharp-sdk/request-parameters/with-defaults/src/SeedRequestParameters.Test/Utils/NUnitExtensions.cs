@@ -23,7 +23,6 @@ public static class NUnitExtensions
             .UsingReadOnlyMemoryComparer<bool>()
             .UsingReadOnlyMemoryComparer<float>()
             .UsingReadOnlyMemoryComparer<double>()
-            .UsingOneOfComparer()
             .UsingJsonElementComparer()
             .UsingOptionalComparer()
             .UsingAdditionalPropertiesComparer();

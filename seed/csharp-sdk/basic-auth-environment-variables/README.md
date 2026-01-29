@@ -39,7 +39,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedBasicAuthEnvironmentVariables;
 
-var client = new SeedBasicAuthEnvironmentVariablesClient();
+var client = new SeedBasicAuthEnvironmentVariablesClient("USERNAME", "ACCESS_TOKEN");
 await client.BasicAuth.PostWithBasicAuthAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );

@@ -2,5 +2,5 @@ namespace SeedApi;
 
 public partial interface ISeedApiClient
 {
-    public ImdbClient Imdb { get; }
+    public IImdbClient Imdb { get; }
 }

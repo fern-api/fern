@@ -31,6 +31,12 @@ public partial class ApiClient : IApiClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -38,6 +44,7 @@ public partial class ApiClient : IApiClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/nested/get-something",
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

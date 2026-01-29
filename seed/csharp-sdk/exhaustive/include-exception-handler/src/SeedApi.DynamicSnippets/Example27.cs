@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -12,9 +13,11 @@ public class Example27
             }
         );
 
-        await client.Endpoints.Params.ModifyWithPathAsync(
+        await client.Endpoints.Params.GetWithPathAndQueryAsync(
             "param",
-            "string"
+            new GetWithPathAndQuery {
+                Query = "query"
+            }
         );
     }
 

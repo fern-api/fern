@@ -144,6 +144,8 @@ func (m *MyRequest) require(field *big.Int) {
 
 type Id = string
 
+type ModelType = string
+
 type MyAliasObject = *MyObject
 
 type MyCollectionAliasObject = []*MyObject
@@ -420,6 +422,31 @@ func (o ObjectType) Ptr() *ObjectType {
 	return &o
 }
 
+type OpenEnumType string
+
+const (
+	OpenEnumTypeOptionA OpenEnumType = "OPTION_A"
+	OpenEnumTypeOptionB OpenEnumType = "OPTION_B"
+	OpenEnumTypeOptionC OpenEnumType = "OPTION_C"
+)
+
+func NewOpenEnumTypeFromString(s string) (OpenEnumType, error) {
+	switch s {
+	case "OPTION_A":
+		return OpenEnumTypeOptionA, nil
+	case "OPTION_B":
+		return OpenEnumTypeOptionB, nil
+	case "OPTION_C":
+		return OpenEnumTypeOptionC, nil
+	}
+	var t OpenEnumType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OpenEnumType) Ptr() *OpenEnumType {
+	return &o
+}
+
 type WithContentTypeRequest struct {
 	Foo    string    `json:"foo" url:"-"`
 	Bar    *MyObject `json:"bar,omitempty" url:"-"`
@@ -488,4 +515,20 @@ func (i *InlineTypeRequest) require(field *big.Int) {
 		i.explicitFields = big.NewInt(0)
 	}
 	i.explicitFields.Or(i.explicitFields, field)
+}
+
+type LiteralEnumRequest struct {
+	ModelType *ModelType    `json:"model_type,omitempty" url:"-"`
+	OpenEnum  *OpenEnumType `json:"open_enum,omitempty" url:"-"`
+	MaybeName *string       `json:"maybe_name,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *LiteralEnumRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
 }

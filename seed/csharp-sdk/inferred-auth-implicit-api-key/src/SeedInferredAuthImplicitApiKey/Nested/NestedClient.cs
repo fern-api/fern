@@ -12,5 +12,5 @@ public partial class NestedClient : INestedClient
         Api = new ApiClient(_client);
     }
 
-    public ApiClient Api { get; }
+    public IApiClient Api { get; }
 }

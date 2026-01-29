@@ -4,7 +4,8 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "use-default-request-parameter-values": true,
-    "experimental-explicit-nullable-optional": true
+    "experimental-explicit-nullable-optional": true,
+    "use-undiscriminated-unions": true
   },
   "sdkVersion": "0.0.1"
 }

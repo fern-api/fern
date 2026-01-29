@@ -328,3 +328,40 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list
     .await
     .unwrap();
 }
+
+#[tokio::test]
+#[allow(unused_variables, unreachable_code)]
+async fn test_endpoints_object_get_and_return_with_datetime_like_string_with_wiremock() {
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+
+    let mut config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    config.base_url = wiremock_base_url.to_string();
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+
+    let result = client
+        .endpoints
+        .object
+        .get_and_return_with_datetime_like_string(
+            &ObjectWithDatetimeLikeString {
+                datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
+                actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+            },
+            None,
+        )
+        .await;
+
+    assert!(result.is_ok(), "Client method call should succeed");
+
+    wire_test_utils::verify_request_count(
+        "POST",
+        "/object/get-and-return-with-datetime-like-string",
+        None,
+        1,
+    )
+    .await
+    .unwrap();
+}

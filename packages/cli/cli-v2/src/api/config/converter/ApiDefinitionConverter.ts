@@ -169,6 +169,9 @@ export class ApiDefinitionConverter {
         specs: schemas.ApiSpecSchema[];
         sourced: Sourced<schemas.ApiSpecSchema[]>;
     }): Promise<ApiSpec[]> {
+        // Validate spec combinations before conversion.
+        this.validateSpecCombinations({ specs, sourced });
+
         const results: ApiSpec[] = [];
         for (let i = 0; i < specs.length; i++) {
             const spec = specs[i];
@@ -435,5 +438,88 @@ export class ApiDefinitionConverter {
             );
         }
         return absoluteFilePath;
+    }
+
+    /**
+     * Validates that the spec combinations in an API definition are valid.
+     *
+     * Rules:
+     *  - At most one Fern spec is allowed
+     *  - At most one Conjure spec is allowed
+     *  - Fern specs cannot be mixed with other spec types
+     *  - Conjure specs cannot be mixed with other spec types
+     *  - OpenAPI/AsyncAPI/Protobuf/OpenRPC specs can be mixed together
+     */
+    private validateSpecCombinations({
+        specs,
+        sourced
+    }: {
+        specs: schemas.ApiSpecSchema[];
+        sourced: Sourced<schemas.ApiSpecSchema[]>;
+    }): void {
+        const fernSpecs: Sourced<schemas.FernSpecSchema>[] = [];
+        const conjureSpecs: Sourced<schemas.ConjureSpecSchema>[] = [];
+        const ossSpecs: Sourced<schemas.ApiSpecSchema>[] = [];
+
+        for (let i = 0; i < specs.length; i++) {
+            const spec = specs[i];
+            const sourcedSpec = sourced[i];
+            if (spec == null || isNullish(sourcedSpec)) {
+                continue;
+            }
+            if ("fern" in spec) {
+                fernSpecs.push(sourcedSpec as Sourced<schemas.FernSpecSchema>);
+                continue;
+            }
+            if ("conjure" in spec) {
+                conjureSpecs.push(sourcedSpec as Sourced<schemas.ConjureSpecSchema>);
+                continue;
+            }
+            ossSpecs.push(sourcedSpec);
+        }
+
+        if (fernSpecs.length > 1) {
+            for (const sourced of fernSpecs) {
+                this.issues.push(
+                    new ValidationIssue({
+                        message:
+                            "Multiple Fern specs are not allowed. Use multiple definition files within a single Fern definition directory instead.",
+                        location: sourced.fern.$loc
+                    })
+                );
+            }
+        }
+        if (conjureSpecs.length > 1) {
+            for (const sourced of conjureSpecs) {
+                this.issues.push(
+                    new ValidationIssue({
+                        message: "Multiple Conjure specs are not allowed.",
+                        location: sourced.conjure.$loc
+                    })
+                );
+            }
+        }
+        if (fernSpecs.length > 0 && (conjureSpecs.length > 0 || ossSpecs.length > 0)) {
+            for (const sourced of fernSpecs) {
+                this.issues.push(
+                    new ValidationIssue({
+                        message:
+                            "Fern specs cannot be mixed with other spec types. Fern definitions are a standalone definition type.",
+                        location: sourced.fern.$loc
+                    })
+                );
+            }
+        }
+        if (conjureSpecs.length > 0 && (ossSpecs.length > 0 || fernSpecs.length > 0)) {
+            for (const sourced of conjureSpecs) {
+                this.issues.push(
+                    new ValidationIssue({
+                        message:
+                            "Conjure specs cannot be mixed with other spec types. Conjure definitions are a standalone definition type.",
+                        location: sourced.conjure.$loc
+                    })
+                );
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ import { SdkTargetLanguageSchema } from "./SdkTargetLanguageSchema";
 export const SdkTargetSchema = z.object({
     api: z.string().optional(),
     lang: SdkTargetLanguageSchema.optional(),
+    image: z.string().optional(),
     version: z.string().optional(),
     config: z.record(z.string(), z.unknown()).optional(),
     publish: PublishSchema.optional(),

@@ -185,29 +185,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     const defaultValue = this.getDefaultIfEnabled(property.valueType, useDefaults);
 
-                    let field: ast.Field;
-                    if (defaultValue != null) {
-                        // Generate field with direct default assignment
-                        const type = this.context.csharpTypeMapper.convert({ reference: property.valueType });
-                        field = class_.addField({
-                            origin: property,
-                            type, // Keep original type, don't make optional for defaults
-                            access: ast.Access.Public,
-                            get: true,
-                            set: true,
-                            summary: property.docs,
-                            useRequired: false, // Remove required when there's a default
-                            initializer: this.csharp.codeblock(defaultValue.value), // Use direct default assignment
-                            annotations: [this.context.createJsonPropertyNameAttribute(property.name.wireValue)]
-                        });
-                    } else {
-                        // Use standard field generation
-                        field = generateField(class_, {
-                            property,
-                            className: this.classReference.name,
-                            context: this.context
-                        });
-                    }
+                    const field = generateField(class_, {
+                        property,
+                        className: this.classReference.name,
+                        context: this.context,
+                        initializerOverride:
+                            defaultValue != null ? this.csharp.codeblock(defaultValue.value) : undefined,
+                        useRequiredOverride: defaultValue != null ? false : undefined
+                    });
 
                     if (isProtoRequest) {
                         protobufProperties.push({

@@ -1,6 +1,8 @@
 import type { FernToken } from "@fern-api/auth";
 import type { Audiences } from "@fern-api/configuration";
+import type { ContainerRunner } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import type { AiConfig } from "../../ai/config/AiConfig";
 import type { ApiDefinition } from "../../api/config/ApiDefinition";
 import type { Context } from "../../context/Context";
 import { CliError } from "../../errors/CliError";
@@ -44,6 +46,12 @@ export namespace GeneratorPipeline {
 
         /** Execution runtime */
         runtime: "local" | "remote";
+
+        /** AI services configuration */
+        ai?: AiConfig;
+
+        /** Container engine to use for local generation */
+        containerEngine?: ContainerRunner;
 
         /** Whether to keep containers after completion */
         keepContainer?: boolean;
@@ -114,20 +122,22 @@ export class GeneratorPipeline {
     }
 
     private async runLocalGeneration(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
-        const runner = new LegacyGenerationRunner({
+        const generationRunner = new LegacyGenerationRunner({
             context: this.context,
             cliVersion: this.cliVersion
         });
-        const result = await runner.run({
+        const result = await generationRunner.run({
             target: args.target,
             apiDefinition: args.apiDefinition,
             organization: args.organization,
+            ai: args.ai,
             audiences: args.audiences,
             version: args.version,
             keepContainer: args.keepContainer,
             preview: args.preview,
             outputPath: args.outputPath,
-            task: args.task
+            task: args.task,
+            containerEngine: args.containerEngine
         });
         if (!result.success) {
             return {
@@ -156,6 +166,7 @@ export class GeneratorPipeline {
             apiDefinition: args.apiDefinition,
             organization: args.organization,
             token: args.token,
+            ai: args.ai,
             audiences: args.audiences,
             version: args.version,
             shouldLogS3Url: args.shouldLogS3Url,

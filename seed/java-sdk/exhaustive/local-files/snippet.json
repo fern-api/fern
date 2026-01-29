@@ -274,6 +274,32 @@
             }
         },
         {
+            "example_identifier": "DatetimeLikeStringExample",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-datetime-like-string",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDatetimeLikeString(\n            ObjectWithDatetimeLikeString\n                .builder()\n                .datetimeLikeString(\"2023-08-31T14:15:22Z\")\n                .actualDatetime(OffsetDateTime.parse(\"2023-08-31T14:15:22Z\"))\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDatetimeLikeString(\n            ObjectWithDatetimeLikeString\n                .builder()\n                .datetimeLikeString(\"2023-08-31T14:15:22Z\")\n                .actualDatetime(OffsetDateTime.parse(\"2023-08-31T14:15:22Z\"))\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "be54bb21",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-datetime-like-string",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDatetimeLikeString(\n            ObjectWithDatetimeLikeString\n                .builder()\n                .datetimeLikeString(\"datetimeLikeString\")\n                .actualDatetime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDatetimeLikeString(\n            ObjectWithDatetimeLikeString\n                .builder()\n                .datetimeLikeString(\"datetimeLikeString\")\n                .actualDatetime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "88011d74",
             "id": {
                 "method": "GET",

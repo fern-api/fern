@@ -1,10 +1,13 @@
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Container;
 using SeedExhaustive.Endpoints.ContentType;
+using SeedExhaustive.Endpoints.Enum;
 using SeedExhaustive.Endpoints.HttpMethods;
+using SeedExhaustive.Endpoints.Object;
 using SeedExhaustive.Endpoints.Params;
 using SeedExhaustive.Endpoints.Primitive;
 using SeedExhaustive.Endpoints.Put;
+using SeedExhaustive.Endpoints.Union;
 using SeedExhaustive.Endpoints.Urls;
 
 namespace SeedExhaustive.Endpoints;
@@ -28,23 +31,23 @@ public partial class EndpointsClient : IEndpointsClient
         Urls = new UrlsClient(_client);
     }
 
-    public ContainerClient Container { get; }
+    public IContainerClient Container { get; }
 
-    public ContentTypeClient ContentType { get; }
+    public IContentTypeClient ContentType { get; }
 
-    public SeedExhaustive.Endpoints.Enum.EnumClient Enum { get; }
+    public IEnumClient Enum { get; }
 
-    public HttpMethodsClient HttpMethods { get; }
+    public IHttpMethodsClient HttpMethods { get; }
 
-    public SeedExhaustive.Endpoints.Object.ObjectClient Object { get; }
+    public IObjectClient Object { get; }
 
-    public ParamsClient Params { get; }
+    public IParamsClient Params { get; }
 
-    public PrimitiveClient Primitive { get; }
+    public IPrimitiveClient Primitive { get; }
 
-    public PutClient Put { get; }
+    public IPutClient Put { get; }
 
-    public SeedExhaustive.Endpoints.Union.UnionClient Union { get; }
+    public IUnionClient Union { get; }
 
-    public UrlsClient Urls { get; }
+    public IUrlsClient Urls { get; }
 }

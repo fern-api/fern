@@ -39,6 +39,12 @@ public partial class ContentTypeClient : IContentTypeClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -47,6 +53,7 @@ public partial class ContentTypeClient : IContentTypeClient
                     Method = HttpMethod.Post,
                     Path = "/foo/bar",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/json-patch+json",
                     Options = options,
                 },
@@ -93,6 +100,12 @@ public partial class ContentTypeClient : IContentTypeClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -101,6 +114,7 @@ public partial class ContentTypeClient : IContentTypeClient
                     Method = HttpMethod.Post,
                     Path = "/foo/baz",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/json-patch+json; charset=utf-8",
                     Options = options,
                 },

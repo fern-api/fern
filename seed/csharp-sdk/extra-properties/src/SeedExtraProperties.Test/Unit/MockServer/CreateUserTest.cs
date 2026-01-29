@@ -68,9 +68,7 @@ public class CreateUserTest : BaseMockServerTest
 
         const string mockResponse = """
             {
-              "name": "Alice",
-              "age": 30,
-              "location": "Wonderland"
+              "name": "Alice"
             }
             """;
 

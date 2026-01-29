@@ -20,5 +20,5 @@ public partial class InlineUsersClient : IInlineUsersClient
         }
     }
 
-    public InlineUsersClient_ InlineUsers { get; }
+    public IInlineUsersClient_ InlineUsers { get; }
 }

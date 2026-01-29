@@ -11,9 +11,9 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
+              "unique": "unique",
               "name": "name",
-              "docs": "docs",
-              "unique": "unique"
+              "docs": "docs"
             }
             """;
 

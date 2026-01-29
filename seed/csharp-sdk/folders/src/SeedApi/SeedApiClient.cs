@@ -10,7 +10,8 @@ public partial class SeedApiClient : ISeedApiClient
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -19,8 +20,7 @@ public partial class SeedApiClient : ISeedApiClient
                 { "User-Agent", "Fernfolders/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -32,9 +32,9 @@ public partial class SeedApiClient : ISeedApiClient
         Folder = new FolderClient(_client);
     }
 
-    public AClient A { get; }
+    public IAClient A { get; }
 
-    public FolderClient Folder { get; }
+    public IFolderClient Folder { get; }
 
     /// <example><code>
     /// await client.FooAsync();
@@ -44,6 +44,12 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -51,6 +57,7 @@ public partial class SeedApiClient : ISeedApiClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

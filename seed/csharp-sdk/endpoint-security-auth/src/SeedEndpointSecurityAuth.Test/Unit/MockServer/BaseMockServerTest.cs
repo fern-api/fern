@@ -62,10 +62,10 @@ public class BaseMockServerTest
         Client = new SeedEndpointSecurityAuthClient(
             "TOKEN",
             "API_KEY",
-            "USERNAME",
-            "PASSWORD",
             "client_id",
             "client_secret",
+            "USERNAME",
+            "PASSWORD",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
         MockInferredAuthEndpoint();
