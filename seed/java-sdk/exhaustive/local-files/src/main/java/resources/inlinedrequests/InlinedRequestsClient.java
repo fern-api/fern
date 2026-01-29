@@ -7,7 +7,9 @@ package com.fern.sdk.resources.inlinedrequests;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.fern.sdk.resources.inlinedrequests.requests.RequiredAndOptionalRequest;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import java.lang.String;
 
 public class InlinedRequestsClient {
   protected final ClientOptions clientOptions;
@@ -39,5 +41,24 @@ public class InlinedRequestsClient {
   public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request,
       RequestOptions requestOptions) {
     return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).body();
+  }
+
+  /**
+   * POST with required and optional fields in request body.
+   * Tests that snippets correctly order required fields before optional fields
+   * for staged builders (Java).
+   */
+  public String postWithRequiredAndOptionalFields(RequiredAndOptionalRequest request) {
+    return this.rawClient.postWithRequiredAndOptionalFields(request).body();
+  }
+
+  /**
+   * POST with required and optional fields in request body.
+   * Tests that snippets correctly order required fields before optional fields
+   * for staged builders (Java).
+   */
+  public String postWithRequiredAndOptionalFields(RequiredAndOptionalRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.postWithRequiredAndOptionalFields(request, requestOptions).body();
   }
 }

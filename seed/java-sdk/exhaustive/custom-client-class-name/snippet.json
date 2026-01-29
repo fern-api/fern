@@ -599,6 +599,32 @@
             }
         },
         {
+            "example_identifier": "OnlyOptionalProvided",
+            "id": {
+                "method": "POST",
+                "path": "/req-bodies/required-and-optional",
+                "identifier_override": "endpoint_inlined-requests.postWithRequiredAndOptionalFields"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\nimport com.seed.exhaustive.resources.inlinedrequests.requests.RequiredAndOptionalRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlinedRequests().postWithRequiredAndOptionalFields(\n            RequiredAndOptionalRequest\n                .builder()\n                .optionalString(\"optional_value\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\nimport com.seed.exhaustive.resources.inlinedrequests.requests.RequiredAndOptionalRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlinedRequests().postWithRequiredAndOptionalFields(\n            RequiredAndOptionalRequest\n                .builder()\n                .optionalString(\"optional_value\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "940716dc",
+            "id": {
+                "method": "POST",
+                "path": "/req-bodies/required-and-optional",
+                "identifier_override": "endpoint_inlined-requests.postWithRequiredAndOptionalFields"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\nimport com.seed.exhaustive.resources.inlinedrequests.requests.RequiredAndOptionalRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlinedRequests().postWithRequiredAndOptionalFields(\n            RequiredAndOptionalRequest\n                .builder()\n                .requiredString(\"requiredString\")\n                .optionalString(\"optionalString\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\nimport com.seed.exhaustive.resources.inlinedrequests.requests.RequiredAndOptionalRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlinedRequests().postWithRequiredAndOptionalFields(\n            RequiredAndOptionalRequest\n                .builder()\n                .requiredString(\"requiredString\")\n                .optionalString(\"optionalString\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "91843eb7",
             "id": {
                 "method": "POST",

@@ -23,3 +23,28 @@ service:
       response: objects.ObjectWithOptionalField
       errors:
         - errors.BadRequestBody
+
+    postWithRequiredAndOptionalFields:
+      docs: |
+        POST with required and optional fields in request body.
+        Tests that snippets correctly order required fields before optional fields
+        for staged builders (Java).
+      path: /required-and-optional
+      method: POST
+      request:
+        name: RequiredAndOptionalRequest
+        body:
+          properties:
+            requiredString: string
+            optionalString: optional<string>
+      response: string
+      examples:
+        - name: OnlyOptionalProvided
+          docs: |
+            This example only provides the optional field, not the required field.
+            For Java staged builders, this should still generate valid code by
+            including a placeholder for the required field.
+          request:
+            optionalString: "optional_value"
+          response:
+            body: "ok"

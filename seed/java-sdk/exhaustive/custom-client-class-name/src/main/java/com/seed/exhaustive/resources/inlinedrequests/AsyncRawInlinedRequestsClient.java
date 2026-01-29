@@ -14,6 +14,7 @@ import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.seed.exhaustive.resources.inlinedrequests.requests.RequiredAndOptionalRequest;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -96,6 +97,78 @@ public class AsyncRawInlinedRequestsClient {
                         }
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new BestApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new BestException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new BestException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * POST with required and optional fields in request body.
+     * Tests that snippets correctly order required fields before optional fields
+     * for staged builders (Java).
+     */
+    public CompletableFuture<BestHttpResponse<String>> postWithRequiredAndOptionalFields(
+            RequiredAndOptionalRequest request) {
+        return postWithRequiredAndOptionalFields(request, null);
+    }
+
+    /**
+     * POST with required and optional fields in request body.
+     * Tests that snippets correctly order required fields before optional fields
+     * for staged builders (Java).
+     */
+    public CompletableFuture<BestHttpResponse<String>> postWithRequiredAndOptionalFields(
+            RequiredAndOptionalRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("req-bodies")
+                .addPathSegments("required-and-optional");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<BestHttpResponse<String>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new BestHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                        return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new BestApiException(

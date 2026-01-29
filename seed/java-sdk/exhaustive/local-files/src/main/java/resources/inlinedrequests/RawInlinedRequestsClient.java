@@ -15,6 +15,7 @@ import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
 import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
 import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.fern.sdk.resources.inlinedrequests.requests.RequiredAndOptionalRequest;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.lang.Object;
@@ -93,4 +94,60 @@ public class RawInlinedRequestsClient {
         throw new SeedExhaustiveException("Network error executing HTTP request", e);
       }
     }
-  }
+
+    /**
+     * POST with required and optional fields in request body.
+     * Tests that snippets correctly order required fields before optional fields
+     * for staged builders (Java).
+     */
+    public SeedExhaustiveHttpResponse<String> postWithRequiredAndOptionalFields(
+        RequiredAndOptionalRequest request) {
+      return postWithRequiredAndOptionalFields(request,null);
+    }
+
+    /**
+     * POST with required and optional fields in request body.
+     * Tests that snippets correctly order required fields before optional fields
+     * for staged builders (Java).
+     */
+    public SeedExhaustiveHttpResponse<String> postWithRequiredAndOptionalFields(
+        RequiredAndOptionalRequest request, RequestOptions requestOptions) {
+      HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+        .addPathSegments("req-bodies")
+        .addPathSegments("required-and-optional");if (requestOptions != null) {
+          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+            httpUrl.addQueryParameter(_key, _value);
+          } );
+        }
+        RequestBody body;
+        try {
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        }
+        catch(JsonProcessingException e) {
+          throw new SeedExhaustiveException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+          .url(httpUrl.build())
+          .method("POST", body)
+          .headers(Headers.of(clientOptions.headers(requestOptions)))
+          .addHeader("Content-Type", "application/json")
+          .addHeader("Accept", "application/json")
+          .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+          client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+          ResponseBody responseBody = response.body();
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          if (response.isSuccessful()) {
+            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+          }
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        }
+        catch (IOException e) {
+          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        }
+      }
+    }

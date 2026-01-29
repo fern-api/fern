@@ -7,7 +7,9 @@ package com.fern.sdk.resources.inlinedrequests;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.fern.sdk.resources.inlinedrequests.requests.RequiredAndOptionalRequest;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncInlinedRequestsClient {
@@ -41,5 +43,25 @@ public class AsyncInlinedRequestsClient {
   public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
       PostWithObjectBody request, RequestOptions requestOptions) {
     return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with required and optional fields in request body.
+   * Tests that snippets correctly order required fields before optional fields
+   * for staged builders (Java).
+   */
+  public CompletableFuture<String> postWithRequiredAndOptionalFields(
+      RequiredAndOptionalRequest request) {
+    return this.rawClient.postWithRequiredAndOptionalFields(request).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with required and optional fields in request body.
+   * Tests that snippets correctly order required fields before optional fields
+   * for staged builders (Java).
+   */
+  public CompletableFuture<String> postWithRequiredAndOptionalFields(
+      RequiredAndOptionalRequest request, RequestOptions requestOptions) {
+    return this.rawClient.postWithRequiredAndOptionalFields(request, requestOptions).thenApply(response -> response.body());
   }
 }
