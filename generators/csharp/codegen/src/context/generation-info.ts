@@ -158,6 +158,8 @@ export class Generation {
         baseExceptionClassName: () => this.customConfig["base-exception-class-name"] ?? "",
         /** When true, generates discriminated unions with type discriminators. Default: true. */
         shouldGeneratedDiscriminatedUnions: () => this.customConfig["use-discriminated-unions"] ?? true,
+        /** When true, generates undiscriminated unions with runtime type detection. Default: false. */
+        shouldGenerateUndiscriminatedUnions: () => this.customConfig["use-undiscriminated-unions"] ?? false,
         /** Custom name for the exported public client class. Default: "" (uses clientClassName or computed name). */
         exportedClientClassName: () => this.customConfig["exported-client-class-name"] ?? "",
         /** Custom name for the internal client class. Default: "" (auto-generated from organization/workspace). */
@@ -173,11 +175,6 @@ export class Generation {
             true,
         /** Mapping of websocket environment configurations. Default: {}. */
         websocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
-        /** When true, generates additional properties support for objects to handle extra fields. Default: true. */
-        generateNewAdditionalProperties: () =>
-            this.customConfig["additional-properties"] ??
-            this.customConfig["experimental-additional-properties"] ??
-            true,
         /** Custom name for the pagination class. Default: "" (auto-generated). */
         customPagerName: () => this.customConfig["custom-pager-name"] ?? "",
         /** Custom name for the environment configuration class. Default: "" (auto-generated). */
@@ -491,6 +488,12 @@ export class Generation {
                 namespace: this.namespaces.core,
                 origin: this.model.staticExplicit("FormRequest")
             }),
+        /** Optional<T> wrapper type for explicit undefined/null semantics */
+        Optional: () =>
+            this.csharp.classReference({
+                namespace: this.namespaces.core,
+                origin: this.model.staticExplicit("Optional")
+            }),
         /** Configuration options for the SDK client (base URL, headers, timeout, etc.) */
         ClientOptions: () =>
             this.csharp.classReference({
@@ -680,11 +683,23 @@ export class Generation {
                 origin: this.model.staticExplicit("WebSocketClient"),
                 namespace: this.namespaces.webSocketsCore
             }),
-        /** Query string builder utility for WebSocket URLs */
+        /** Query string builder utility for WebSocket URLs (legacy) */
         QueryBuilder: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("Query"),
                 namespace: this.namespaces.webSocketsCore
+            }),
+        /** High-performance query string builder with fluent API */
+        QueryStringBuilder: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("QueryStringBuilder"),
+                namespace: this.namespaces.core
+            }),
+        /** Fluent builder for constructing query strings */
+        QueryStringBuilderBuilder: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("QueryStringBuilder.Builder"),
+                namespace: this.namespaces.core
             }),
         /** OAuth token provider for authentication */
         OAuthTokenProvider: () =>

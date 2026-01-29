@@ -5,7 +5,7 @@
 //! - **Organization**
 //! - **User**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod organization;
 pub mod user;
@@ -20,9 +20,10 @@ impl MixedFileDirectoryClient {
         Ok(Self {
             config: config.clone(),
             organization: OrganizationClient::new(config.clone())?,
-            user: UserClient::new(config.clone())?,
+            user: UserClient::new(config.clone())?
         })
     }
+
 }
 
 pub use organization::OrganizationClient;

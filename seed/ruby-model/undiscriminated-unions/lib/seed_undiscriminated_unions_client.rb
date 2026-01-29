@@ -18,3 +18,4 @@ require_relative "seed_undiscriminated_unions_client/union/types/union_with_iden
 require_relative "seed_undiscriminated_unions_client/union/types/tokenize_card"
 require_relative "seed_undiscriminated_unions_client/union/types/convert_token"
 require_relative "seed_undiscriminated_unions_client/union/types/payment_method_union"
+require_relative "seed_undiscriminated_unions_client/union/types/union_with_reserved_names"

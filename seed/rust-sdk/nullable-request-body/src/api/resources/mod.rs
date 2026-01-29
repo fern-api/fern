@@ -4,7 +4,7 @@
 //!
 //! - **TestGroup**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod test_group;
 pub struct ApiClient {
@@ -16,9 +16,10 @@ impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            test_group: TestGroupClient::new(config.clone())?,
+            test_group: TestGroupClient::new(config.clone())?
         })
     }
+
 }
 
 pub use test_group::TestGroupClient;

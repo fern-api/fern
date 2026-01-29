@@ -3,56 +3,69 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum DebugVariableValue {
-    IntegerValue {
-        value: i64,
-    },
+        #[serde(rename = "integerValue")]
+        IntegerValue {
+            value: i64,
+        },
 
-    BooleanValue {
-        value: bool,
-    },
+        #[serde(rename = "booleanValue")]
+        BooleanValue {
+            value: bool,
+        },
 
-    DoubleValue {
-        value: f64,
-    },
+        #[serde(rename = "doubleValue")]
+        DoubleValue {
+            value: f64,
+        },
 
-    StringValue {
-        value: String,
-    },
+        #[serde(rename = "stringValue")]
+        StringValue {
+            value: String,
+        },
 
-    CharValue {
-        value: String,
-    },
+        #[serde(rename = "charValue")]
+        CharValue {
+            value: String,
+        },
 
-    MapValue {
-        #[serde(flatten)]
-        data: Box<DebugMapValue>,
-    },
+        #[serde(rename = "mapValue")]
+        MapValue {
+            #[serde(flatten)]
+            data: Box<DebugMapValue>,
+        },
 
-    ListValue {
-        value: Vec<Box<DebugVariableValue>>,
-    },
+        #[serde(rename = "listValue")]
+        ListValue {
+            value: Vec<Box<DebugVariableValue>>,
+        },
 
-    BinaryTreeNodeValue {
-        #[serde(flatten)]
-        data: BinaryTreeNodeAndTreeValue,
-    },
+        #[serde(rename = "binaryTreeNodeValue")]
+        BinaryTreeNodeValue {
+            #[serde(flatten)]
+            data: BinaryTreeNodeAndTreeValue,
+        },
 
-    SinglyLinkedListNodeValue {
-        #[serde(flatten)]
-        data: SinglyLinkedListNodeAndListValue,
-    },
+        #[serde(rename = "singlyLinkedListNodeValue")]
+        SinglyLinkedListNodeValue {
+            #[serde(flatten)]
+            data: SinglyLinkedListNodeAndListValue,
+        },
 
-    DoublyLinkedListNodeValue {
-        #[serde(flatten)]
-        data: DoublyLinkedListNodeAndListValue,
-    },
+        #[serde(rename = "doublyLinkedListNodeValue")]
+        DoublyLinkedListNodeValue {
+            #[serde(flatten)]
+            data: DoublyLinkedListNodeAndListValue,
+        },
 
-    UndefinedValue,
+        #[serde(rename = "undefinedValue")]
+        UndefinedValue,
 
-    NullValue,
+        #[serde(rename = "nullValue")]
+        NullValue,
 
-    GenericValue {
-        #[serde(flatten)]
-        data: GenericValue,
-    },
+        #[serde(rename = "genericValue")]
+        GenericValue {
+            #[serde(flatten)]
+            data: GenericValue,
+        },
 }

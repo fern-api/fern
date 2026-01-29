@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawFileClient, RawFileClient
 
 if typing.TYPE_CHECKING:
     from .notification.client import AsyncNotificationClient, NotificationClient
@@ -14,21 +13,9 @@ if typing.TYPE_CHECKING:
 
 class FileClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawFileClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._notification: typing.Optional[NotificationClient] = None
         self._service: typing.Optional[ServiceClient] = None
-
-    @property
-    def with_raw_response(self) -> RawFileClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawFileClient
-        """
-        return self._raw_client
 
     @property
     def notification(self):
@@ -49,21 +36,9 @@ class FileClient:
 
 class AsyncFileClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawFileClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._notification: typing.Optional[AsyncNotificationClient] = None
         self._service: typing.Optional[AsyncServiceClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawFileClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawFileClient
-        """
-        return self._raw_client
 
     @property
     def notification(self):

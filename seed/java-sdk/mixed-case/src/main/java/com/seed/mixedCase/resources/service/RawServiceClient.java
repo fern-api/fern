@@ -39,8 +39,8 @@ public class RawServiceClient {
                 .addPathSegments("resource")
                 .addPathSegment(resourceId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -80,8 +80,8 @@ public class RawServiceClient {
         QueryStringMapper.addQueryParameter(httpUrl, "page_limit", request.getPageLimit(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "beforeDate", request.getBeforeDate(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()

@@ -1098,6 +1098,12 @@ public abstract class AbstractEndpointWriter {
     }
 
     public static Optional<CodeBlock> maybeAcceptsHeader(HttpEndpoint httpEndpoint) {
+        // Don't set Accept header for streaming responses - the streaming format
+        // (SSE, NDJSON, etc.) should be negotiated differently
+        if (isStreamingResponse(httpEndpoint.getResponse())) {
+            return Optional.empty();
+        }
+
         Set<String> contentTypes = new HashSet<>();
 
         // TODO: We'll need to get error content types from the IR once they're available.
@@ -1113,6 +1119,55 @@ public abstract class AbstractEndpointWriter {
 
         String headerValue = String.join("; ", contentTypes);
         return Optional.of(CodeBlock.of(".addHeader($S, $S)", ACCEPT_HEADER, headerValue));
+    }
+
+    public static boolean isStreamingResponse(Optional<HttpResponse> response) {
+        if (response.isEmpty()) {
+            return false;
+        }
+
+        Optional<HttpResponseBody> body = response.get().getBody();
+
+        if (body.isEmpty()) {
+            return false;
+        }
+
+        return body.get().visit(new HttpResponseBody.Visitor<Boolean>() {
+            @Override
+            public Boolean visitJson(JsonResponse jsonResponse) {
+                return false;
+            }
+
+            @Override
+            public Boolean visitFileDownload(FileDownloadResponse fileDownloadResponse) {
+                return false;
+            }
+
+            @Override
+            public Boolean visitText(TextResponse textResponse) {
+                return false;
+            }
+
+            @Override
+            public Boolean visitBytes(BytesResponse bytesResponse) {
+                return false;
+            }
+
+            @Override
+            public Boolean visitStreaming(StreamingResponse streamingResponse) {
+                return true;
+            }
+
+            @Override
+            public Boolean visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                return true;
+            }
+
+            @Override
+            public Boolean _visitUnknown(Object o) {
+                return false;
+            }
+        });
     }
 
     public static Optional<String> responseContentType(Optional<HttpResponse> response) {

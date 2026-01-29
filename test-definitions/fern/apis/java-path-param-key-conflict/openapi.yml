@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Path Parameter Key Conflict Test API
+  version: 1.0.0
+  description: Tests that path parameters named 'key' and 'value' don't conflict with lambda variables in generated Java code
+paths:
+  /{key}/{value}:
+    post:
+      operationId: createItem
+      summary: Create an item with key and value path parameters
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The key path parameter
+        - name: value
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The value path parameter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemData"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        data:
+          type: string
+      required:
+        - id
+        - data
+    ItemData:
+      type: object
+      properties:
+        data:
+          type: string
+      required:
+        - data

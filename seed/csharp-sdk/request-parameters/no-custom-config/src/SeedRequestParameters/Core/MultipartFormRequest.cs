@@ -1,5 +1,5 @@
-using System.Net.Http;
-using System.Net.Http.Headers;
+using global::System.Net.Http;
+using global::System.Net.Http.Headers;
 
 namespace SeedRequestParameters.Core;
 

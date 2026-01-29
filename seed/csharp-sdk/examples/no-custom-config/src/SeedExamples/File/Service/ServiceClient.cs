@@ -20,9 +20,13 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>() { { "X-File-API-Version", request.XFileApiVersion } }
-        );
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add("X-File-API-Version", request.XFileApiVersion)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest

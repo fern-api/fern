@@ -4,7 +4,7 @@
 //!
 //! - **User**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod user;
 pub struct QueryParametersClient {
@@ -16,9 +16,10 @@ impl QueryParametersClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            user: UserClient::new(config.clone())?,
+            user: UserClient::new(config.clone())?
         })
     }
+
 }
 
 pub use user::UserClient;

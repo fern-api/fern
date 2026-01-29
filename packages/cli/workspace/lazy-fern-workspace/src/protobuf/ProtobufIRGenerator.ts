@@ -6,7 +6,7 @@ import path from "path";
 import tmp from "tmp-promise";
 
 import {
-    detectAirGappedMode,
+    detectAirGappedModeForProtobuf,
     getProtobufYamlV1,
     PROTOBUF_EXPORT_CONFIG_V1,
     PROTOBUF_EXPORT_CONFIG_V2,
@@ -58,7 +58,10 @@ export class ProtobufIRGenerator {
     }): Promise<AbsoluteFilePath> {
         // Detect air-gapped mode once at the start if we have dependencies
         if (deps.length > 0 && this.isAirGapped === undefined) {
-            this.isAirGapped = await detectAirGappedMode(absoluteFilepathToProtobufRoot, this.context.logger);
+            this.isAirGapped = await detectAirGappedModeForProtobuf(
+                absoluteFilepathToProtobufRoot,
+                this.context.logger
+            );
         }
 
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({

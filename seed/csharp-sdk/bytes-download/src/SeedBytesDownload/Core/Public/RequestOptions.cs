@@ -6,11 +6,6 @@ namespace SeedBytesDownload;
 public partial class RequestOptions : IRequestOptions
 {
     /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
-
-    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string? BaseUrl { get;

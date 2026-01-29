@@ -1,6 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -14,17 +13,8 @@ public class Example24
             }
         );
 
-        await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-            new GetWithMultipleQuery {
-                Query = new List<string>(){
-                    "query",
-                }
-                ,
-                Number = new List<int>(){
-                    1,
-                }
-
-            }
+        await client.Endpoints.Params.GetWithPathAsync(
+            "param"
         );
     }
 

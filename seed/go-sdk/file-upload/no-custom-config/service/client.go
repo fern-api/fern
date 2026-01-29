@@ -189,3 +189,19 @@ func (c *Client) Simple(
 	}
 	return nil
 }
+
+func (c *Client) WithLiteralAndEnumTypes(
+	ctx context.Context,
+	request *fern.LiteralEnumRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithLiteralAndEnumTypes(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}

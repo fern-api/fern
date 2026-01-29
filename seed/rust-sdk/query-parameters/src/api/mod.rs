@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{QueryParametersClient, UserClient};
-pub use types::*;
+pub use resources::{UserClient, QueryParametersClient};
+pub use types::{*};
+

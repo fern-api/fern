@@ -17,6 +17,12 @@ public partial class BasicAuthClient : IBasicAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedBasicAuth.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -24,6 +30,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "basic-auth",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -86,6 +93,12 @@ public partial class BasicAuthClient : IBasicAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedBasicAuth.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -94,6 +107,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                     Method = HttpMethod.Post,
                     Path = "basic-auth",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

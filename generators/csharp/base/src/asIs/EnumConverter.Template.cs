@@ -28,7 +28,7 @@ internal class TolerantEnumConverter : JsonConverter
                     .Where(n => string.Equals(n, enumText, StringComparison.OrdinalIgnoreCase))
                     .FirstOrDefault();
 
-                if (match != null)
+                if (match is not null)
                 {
                     return Enum.Parse(enumType, match);
                 }
@@ -50,7 +50,7 @@ internal class TolerantEnumConverter : JsonConverter
                 .Where(n => string.Equals(n, "Unknown", StringComparison.OrdinalIgnoreCase))
                 .FirstOrDefault();
 
-            if (defaultName == null)
+            if (defaultName is null)
             {
                 defaultName = names.First();
             }

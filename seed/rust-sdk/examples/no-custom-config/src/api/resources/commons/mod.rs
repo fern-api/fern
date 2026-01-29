@@ -7,8 +7,8 @@ pub struct CommonsClient {
 }
 impl CommonsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
-        Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
-    }
+    Ok(Self {
+        http_client: HttpClient::new(config.clone())?
+    })
+}
 }

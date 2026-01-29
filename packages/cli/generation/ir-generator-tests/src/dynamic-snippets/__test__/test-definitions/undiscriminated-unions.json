@@ -1727,6 +1727,93 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_union:UnionWithReservedNames": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "UnionWithReservedNames",
+                    "camelCase": {
+                        "unsafeName": "unionWithReservedNames",
+                        "safeName": "unionWithReservedNames"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_reserved_names",
+                        "safeName": "union_with_reserved_names"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_RESERVED_NAMES",
+                        "safeName": "UNION_WITH_RESERVED_NAMES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithReservedNames",
+                        "safeName": "UnionWithReservedNames"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "literal",
+                    "value": {
+                        "type": "string",
+                        "value": "type"
+                    }
+                },
+                {
+                    "type": "literal",
+                    "value": {
+                        "type": "string",
+                        "value": "value"
+                    }
+                },
+                {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            ]
         }
     },
     "headers": [],

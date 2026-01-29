@@ -9,4 +9,5 @@
 
 pub mod resources;
 
-pub use resources::{PublicObjectClient, ServiceClient};
+pub use resources::{ServiceClient, PublicObjectClient};
+

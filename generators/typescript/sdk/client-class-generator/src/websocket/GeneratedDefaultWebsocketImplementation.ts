@@ -52,6 +52,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
+    private static readonly ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME = "queryParams";
 
     private readonly intermediateRepresentation: IntermediateRepresentation;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -193,6 +194,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     };
                 }),
                 {
+                    name: GeneratedDefaultWebsocketImplementation.ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                        ])
+                    ),
+                    hasQuestionToken: true,
+                    docs: ["Additional query parameters to send with the websocket connect request."]
+                },
+                {
                     name: GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
@@ -282,6 +294,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
         }
+
+        // Add additional query parameters binding
+        bindingElements.push(
+            ts.factory.createBindingElement(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(
+                    GeneratedDefaultWebsocketImplementation.ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME
+                )
+            )
+        );
 
         // Add headers binding
         bindingElements.push(
@@ -518,10 +541,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
-            queryParameters:
-                this.channel.queryParameters.length > 0
-                    ? ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
-                    : ts.factory.createObjectLiteralExpression([], false)
+            queryParameters: this.getMergedQueryParameters()
         });
     }
 
@@ -608,6 +628,34 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             referenceToBaseUrl,
             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
             environment
+        );
+    }
+
+    private getMergedQueryParameters(): ts.Expression {
+        const additionalQueryParamsRef = ts.factory.createIdentifier(
+            GeneratedDefaultWebsocketImplementation.ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME
+        );
+
+        if (this.channel.queryParameters.length > 0) {
+            // Merge channel query params with user-provided additional query params:
+            // { ..._queryParams, ...queryParams }
+            return ts.factory.createObjectLiteralExpression(
+                [
+                    ts.factory.createSpreadAssignment(
+                        ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
+                    ),
+                    ts.factory.createSpreadAssignment(additionalQueryParamsRef)
+                ],
+                false
+            );
+        }
+
+        // No channel query params, just use the additional query params (or empty object if undefined):
+        // queryParams ?? {}
+        return ts.factory.createBinaryExpression(
+            additionalQueryParamsRef,
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createObjectLiteralExpression([], false)
         );
     }
 

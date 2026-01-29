@@ -9,7 +9,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.http_sse._api import EventSource
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.pydantic_utilities import parse_sse_obj
 from ..core.request_options import RequestOptions
 from .types.streamed_completion import StreamedCompletion
 
@@ -59,9 +59,9 @@ class RawCompletionsClient:
                                 try:
                                     yield typing.cast(
                                         StreamedCompletion,
-                                        parse_obj_as(
+                                        parse_sse_obj(
+                                            sse=_sse,
                                             type_=StreamedCompletion,  # type: ignore
-                                            object_=_sse.json(),
                                         ),
                                     )
                                 except JSONDecodeError as e:
@@ -130,9 +130,9 @@ class AsyncRawCompletionsClient:
                                 try:
                                     yield typing.cast(
                                         StreamedCompletion,
-                                        parse_obj_as(
+                                        parse_sse_obj(
+                                            sse=_sse,
                                             type_=StreamedCompletion,  # type: ignore
-                                            object_=_sse.json(),
                                         ),
                                     )
                                 except JSONDecodeError as e:

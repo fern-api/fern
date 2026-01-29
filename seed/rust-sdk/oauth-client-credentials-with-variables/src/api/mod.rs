@@ -11,8 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{
-    AuthClient, NestedClient, NestedNoAuthClient, OauthClientCredentialsWithVariablesClient,
-    ServiceClient, SimpleClient,
-};
-pub use types::*;
+pub use resources::{AuthClient, NestedNoAuthClient, NestedClient, ServiceClient, SimpleClient, OauthClientCredentialsWithVariablesClient};
+pub use types::{*};
+

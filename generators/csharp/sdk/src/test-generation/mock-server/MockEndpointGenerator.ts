@@ -1,4 +1,4 @@
-import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import {
     ExampleEndpointCall,
     ExampleRequestBody,
@@ -7,6 +7,7 @@ import {
     ObjectPropertyAccess,
     TypeId
 } from "@fern-fern/ir-sdk/api";
+import { DefaultValueExtractor, ExtractedDefault } from "../../DefaultValueExtractor";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -18,15 +19,22 @@ export declare namespace TestClass {
 }
 
 export class MockEndpointGenerator extends WithGeneration {
+    private readonly defaultValueExtractor: DefaultValueExtractor;
+
     constructor(private readonly context: SdkGeneratorContext) {
         super(context.generation);
+        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
         return this.generateForExamples(endpoint, [example]);
     }
 
-    public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): ast.CodeBlock {
+    public generateForExamples(
+        endpoint: HttpEndpoint,
+        examples: ExampleEndpointCall[],
+        options?: { skipBodyMatch?: boolean }
+    ): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
             examples.forEach((example, index) => {
                 const suffix = examples.length === 1 ? "" : `_${index}`;
@@ -36,7 +44,10 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (example.response.type !== "ok" || example.response.value.type !== "body") {
                         throw new Error("Unexpected error response type");
                     }
-                    jsonExampleResponse = example.response.value.value?.jsonExample;
+                    // Filter the response body to normalize datetime values to ISO 8601 format
+                    const responseValue = example.response.value.value;
+                    jsonExampleResponse =
+                        responseValue != null ? this.filterExampleTypeReference(responseValue) : undefined;
                 }
                 const responseBodyType = endpoint.response?.body?.type;
                 // whether or not we support this response type in this generator; the example json may
@@ -44,18 +55,18 @@ export class MockEndpointGenerator extends WithGeneration {
                 responseSupported =
                     jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
 
-                if (example.request != null) {
-                    // Filter out read-only properties from the request JSON
+                const requestContentType = getContentTypeFromRequestBody(endpoint);
+                // For form-urlencoded requests, we don't need the requestJson variable
+                // since we use FormUrlEncodedMatcher directly with key=value pairs
+                if (example.request != null && requestContentType !== "application/x-www-form-urlencoded") {
+                    // Filter out read-only properties from the request JSON and add defaults when enabled
                     // Read-only properties are not serialized by the SDK, so they should not be
                     // included in the mock server's expected request body
-                    const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request);
+                    const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request, endpoint);
 
                     writer.writeLine(`const string requestJson${suffix} = """`);
                     writer.writeLine(
-                        JSON.stringify(filteredRequestJson, text.normalizeDates, 2).replace(
-                            /"\\{1,2}\$ref"/g,
-                            '"$ref\"'
-                        )
+                        JSON.stringify(filteredRequestJson, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref\"')
                     );
                     writer.writeTextStatement('"""');
                 }
@@ -65,10 +76,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (responseBodyType === "json") {
                         writer.writeLine(`const string mockResponse${suffix} = """`);
                         writer.writeLine(
-                            JSON.stringify(jsonExampleResponse, text.normalizeDates, 2).replace(
-                                /"\\{1,2}\$ref"/g,
-                                '"$ref\"'
-                            )
+                            JSON.stringify(jsonExampleResponse, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref\"')
                         );
                         writer.writeTextStatement('"""');
                     } else if (responseBodyType === "text") {
@@ -95,7 +103,6 @@ export class MockEndpointGenerator extends WithGeneration {
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
-                const requestContentType = getContentTypeFromRequestBody(endpoint);
                 if (requestContentType) {
                     writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
                 }
@@ -103,8 +110,14 @@ export class MockEndpointGenerator extends WithGeneration {
                 writer.write(
                     `.Using${endpoint.method.charAt(0).toUpperCase()}${endpoint.method.slice(1).toLowerCase()}()`
                 );
-                if (example.request != null) {
-                    if (typeof example.request.jsonExample !== "object") {
+                // Skip body matching for OAuth endpoints where the actual request may not include all optional fields
+                if (example.request != null && !options?.skipBodyMatch) {
+                    if (requestContentType === "application/x-www-form-urlencoded") {
+                        // For form-urlencoded requests, use FormUrlEncodedMatcher
+                        const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request, endpoint);
+                        const formPairs = this.convertToFormUrlEncodedPairs(filteredRequestJson);
+                        writer.write(`.WithBody(new WireMock.Matchers.FormUrlEncodedMatcher([${formPairs}]))`);
+                    } else if (typeof example.request.jsonExample !== "object") {
                         // Not entirely sure why we can't use BodyAsJson here, but it causes test failure
                         writer.write(`.WithBody(requestJson${suffix})`);
                     } else {
@@ -164,14 +177,14 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters out read-only properties from an example request body.
+     * Filters out read-only properties from an example request body and adds default values when enabled.
      * Uses the jsonExample directly to preserve any modifications made by other code
      * (e.g., OAuth credential placeholders set by deepSetProperty).
      * Only filters out read-only properties when necessary.
      */
-    private filterReadOnlyPropertiesFromExample(exampleRequest: ExampleRequestBody): unknown {
+    private filterReadOnlyPropertiesFromExample(exampleRequest: ExampleRequestBody, endpoint: HttpEndpoint): unknown {
         if (exampleRequest.type === "inlinedRequestBody") {
-            return this.filterInlinedRequestBody(exampleRequest);
+            return this.filterInlinedRequestBody(exampleRequest, endpoint);
         } else {
             // exampleRequest.type === "reference"
             // For reference request bodies, use the jsonExample directly to preserve
@@ -182,18 +195,13 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from a reference request body.
-     * For types with read-only properties (directly or in nested types), uses recursive filtering.
-     * For types without read-only properties, returns jsonExample directly to preserve any modifications.
+     * Filters read-only properties from a reference request body and normalizes datetime values.
+     * Always uses recursive filtering to ensure datetime values are normalized to ISO 8601 format.
      */
     private filterReferenceRequestBody(exampleRequest: ExampleRequestBody.Reference): unknown {
-        // Check if this type or any nested types have read-only properties
-        // If not, return the jsonExample directly to preserve any modifications (e.g., OAuth credentials)
-        if (!this.typeHasReadOnlyProperties(exampleRequest.shape)) {
-            return exampleRequest.jsonExample;
-        }
-
-        // Otherwise, use recursive filtering to remove read-only properties
+        // Always use recursive filtering to:
+        // 1. Remove read-only properties if any exist
+        // 2. Normalize datetime values to ISO 8601 format for wire test matching
         return this.filterExampleTypeReference(exampleRequest);
     }
 
@@ -289,25 +297,20 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from an inlined request body.
-     * For types with read-only properties (directly or in nested types), uses recursive filtering.
-     * For types without read-only properties, returns jsonExample directly to preserve any modifications.
+     * Filters read-only properties from an inlined request body, normalizes datetime values,
+     * and adds default values when enabled.
+     * Always uses recursive filtering to ensure datetime values are normalized to ISO 8601 format.
      */
-    private filterInlinedRequestBody(exampleRequest: ExampleRequestBody.InlinedRequestBody): Record<string, unknown> {
-        // Check if any properties are read-only or have nested read-only properties
-        const hasReadOnlyProperties = exampleRequest.properties.some(
-            (prop) =>
-                this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration) ||
-                this.typeHasReadOnlyProperties(prop.value.shape)
-        );
+    private filterInlinedRequestBody(
+        exampleRequest: ExampleRequestBody.InlinedRequestBody,
+        endpoint: HttpEndpoint
+    ): Record<string, unknown> {
+        const useDefaults = this.generation.settings.useDefaultRequestParameterValues;
 
-        // If no read-only properties, return the jsonExample directly to preserve any modifications
-        // (e.g., OAuth credential placeholders set by deepSetProperty)
-        if (!hasReadOnlyProperties) {
-            return (exampleRequest.jsonExample as Record<string, unknown>) ?? {};
-        }
+        // Get the set of wire values present in the example
+        const exampleWireValues = new Set(exampleRequest.properties.map((prop) => prop.name.wireValue));
 
-        // Otherwise, use recursive filtering to remove read-only properties
+        // Build the result with filtering and datetime normalization
         const result: Record<string, unknown> = {};
 
         for (const prop of exampleRequest.properties) {
@@ -315,7 +318,7 @@ export class MockEndpointGenerator extends WithGeneration {
             if (this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration)) {
                 continue;
             }
-            // Recursively filter the property value
+            // Recursively filter the property value (also normalizes datetime values)
             result[prop.name.wireValue] = this.filterExampleTypeReference(prop.value);
         }
 
@@ -326,7 +329,61 @@ export class MockEndpointGenerator extends WithGeneration {
             }
         }
 
+        // Add default values for properties not present in the example when useDefaults is enabled
+        if (useDefaults && endpoint.requestBody?.type === "inlinedRequestBody") {
+            const allProperties = [
+                ...endpoint.requestBody.properties,
+                ...(endpoint.requestBody.extendedProperties ?? [])
+            ];
+            for (const prop of allProperties) {
+                // Skip if already in the example
+                if (exampleWireValues.has(prop.name.wireValue)) {
+                    continue;
+                }
+                // Skip read-only properties
+                if (prop.propertyAccess === "READ_ONLY") {
+                    continue;
+                }
+                // Get the default value for this property
+                const defaultValue = this.defaultValueExtractor.extractDefault(prop.valueType);
+                if (defaultValue != null) {
+                    result[prop.name.wireValue] = this.parseDefaultValue(defaultValue);
+                }
+            }
+        }
+
         return result;
+    }
+
+    /**
+     * Parses a default value string into its JSON representation.
+     */
+    private parseDefaultValue(defaultValue: ExtractedDefault): unknown {
+        switch (defaultValue.csharpType) {
+            case "string":
+                return defaultValue.value
+                    .slice(1, -1)
+                    .replace(/\\"/g, '"')
+                    .replace(/\\r/g, "\r")
+                    .replace(/\\n/g, "\n")
+                    .replace(/\\t/g, "\t")
+                    .replace(/\\\\/g, "\\"); // Must be last to avoid double-unescaping
+            case "int":
+            case "long":
+            case "uint":
+            case "ulong":
+            case "float":
+            case "double":
+                return parseFloat(defaultValue.value.replace(/[LlFfDd]$/, ""));
+            case "bool":
+                return defaultValue.value === "true";
+            case "BigInteger": {
+                const match = defaultValue.value.match(/BigInteger\.Parse\("(.+)"\)/);
+                return match ? match[1] : defaultValue.value;
+            }
+            default:
+                return defaultValue.value;
+        }
     }
 
     /**
@@ -364,12 +421,23 @@ export class MockEndpointGenerator extends WithGeneration {
     /**
      * Filters read-only properties from an example type reference.
      * Recursively handles containers (optional, list, map, etc.) and named types.
+     * Also normalizes datetime/date values to ISO 8601 format for wire test matching.
      */
     private filterExampleTypeReference(exampleTypeRef: ExampleTypeReference): unknown {
         const shape = exampleTypeRef.shape;
 
         switch (shape.type) {
             case "primitive":
+                // Normalize datetime/date values to ISO 8601 format for wire test matching
+                // Only normalize actual datetime/date types, NOT string fields that happen to contain datetime-like values
+                if (shape.primitive.type === "datetime" && typeof exampleTypeRef.jsonExample === "string") {
+                    return new Date(exampleTypeRef.jsonExample).toISOString();
+                }
+                if (shape.primitive.type === "date" && typeof exampleTypeRef.jsonExample === "string") {
+                    return new Date(exampleTypeRef.jsonExample).toISOString().slice(0, 10);
+                }
+                return exampleTypeRef.jsonExample;
+
             case "unknown":
                 return exampleTypeRef.jsonExample;
 
@@ -577,5 +645,22 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         return readOnlyNames;
+    }
+
+    /**
+     * Converts a JSON object to form-urlencoded key=value pairs for use with FormUrlEncodedMatcher.
+     * Returns a string like: "key1=value1", "key2=value2"
+     */
+    private convertToFormUrlEncodedPairs(json: unknown): string {
+        if (typeof json !== "object" || json === null) {
+            return "";
+        }
+        const pairs: string[] = [];
+        for (const [key, value] of Object.entries(json)) {
+            if (value !== undefined && value !== null) {
+                pairs.push(`"${key}=${String(value)}"`);
+            }
+        }
+        return pairs.join(", ");
     }
 }

@@ -6,7 +6,7 @@
 //! ## Type Categories
 //!
 //! - **Request/Response Types**: 2 types for API operations
-//! - **Model Types**: 17 types for data representation
+//! - **Model Types**: 18 types for data representation
 
 pub mod union_request;
 pub mod union_type_with_optional_union;
@@ -26,6 +26,7 @@ pub mod union_union_with_identical_primitives;
 pub mod union_payment_method_union;
 pub mod union_tokenize_card;
 pub mod union_convert_token;
+pub mod union_union_with_reserved_names;
 pub mod payment_request;
 
 pub use union_request::Request;
@@ -46,5 +47,6 @@ pub use union_union_with_identical_primitives::UnionWithIdenticalPrimitives;
 pub use union_payment_method_union::PaymentMethodUnion;
 pub use union_tokenize_card::TokenizeCard;
 pub use union_convert_token::ConvertToken;
+pub use union_union_with_reserved_names::UnionWithReservedNames;
 pub use payment_request::PaymentRequest;
 

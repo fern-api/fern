@@ -24,6 +24,12 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
         self._subpackage_id = subpackage_id
         self._generated_root_client = generated_root_client
 
+    def _has_direct_endpoints_or_websocket(self) -> bool:
+        """Check if this client has direct endpoints or websocket (not just nested clients with endpoints)."""
+        has_service = self._package.service is not None
+        has_websocket = self._websocket is not None and self._context.custom_config.should_generate_websocket_clients
+        return has_service or has_websocket
+
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
         async_class_declaration = self._create_class_declaration(is_async=True)
@@ -44,8 +50,9 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
         # Use the base implementation to create the class declaration
         class_declaration = self._create_class_declaration_base(is_async=is_async)
 
-        # Add with_raw_response property (method with @property decorator)
-        class_declaration.add_method(self._create_with_raw_response_method(is_async=is_async))
+        # Add with_raw_response property only if this client has direct endpoints or websocket
+        if self._has_direct_endpoints_or_websocket():
+            class_declaration.add_method(self._create_with_raw_response_method(is_async=is_async))
 
         if self._package.service is not None:
             service = self._context.ir.services[self._package.service]
@@ -98,35 +105,42 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
-            # Avoid repeating parameters by tracking names
-            seen_param_names = set()
-            kwargs = []
-            for param in self._get_constructor_parameters(is_async=is_async):
-                if param.constructor_parameter_name not in seen_param_names:
-                    kwargs.append((param.constructor_parameter_name, AST.Expression(param.constructor_parameter_name)))
-                    seen_param_names.add(param.constructor_parameter_name)
-
-            # Initialize the raw client with the client_wrapper
-            writer.write_node(
-                AST.VariableDeclaration(
-                    name=f"self.{self._get_raw_client_member_name()}",
-                    initializer=AST.Expression(
-                        AST.ClassInstantiation(
-                            class_=(
-                                self._context.get_async_raw_client_class_reference_for_subpackage_service(
-                                    self._subpackage_id
-                                )
-                                if is_async
-                                else self._context.get_raw_client_class_reference_for_subpackage_service(
-                                    self._subpackage_id
-                                )
-                            ),
-                            kwargs=kwargs,
+            # Only initialize raw client if this client has direct endpoints or websocket
+            if self._has_direct_endpoints_or_websocket():
+                # Avoid repeating parameters by tracking names
+                seen_param_names = set()
+                kwargs = []
+                for param in self._get_constructor_parameters(is_async=is_async):
+                    if param.constructor_parameter_name not in seen_param_names:
+                        kwargs.append(
+                            (param.constructor_parameter_name, AST.Expression(param.constructor_parameter_name))
                         )
-                    ),
-                )
-            )
+                        seen_param_names.add(param.constructor_parameter_name)
 
-            self._initialize_nested_clients(writer=writer, is_async=is_async, declare_client_wrapper=True)
+                # Initialize the raw client with the client_wrapper
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name=f"self.{self._get_raw_client_member_name()}",
+                        initializer=AST.Expression(
+                            AST.ClassInstantiation(
+                                class_=(
+                                    self._context.get_async_raw_client_class_reference_for_subpackage_service(
+                                        self._subpackage_id
+                                    )
+                                    if is_async
+                                    else self._context.get_raw_client_class_reference_for_subpackage_service(
+                                        self._subpackage_id
+                                    )
+                                ),
+                                kwargs=kwargs,
+                            )
+                        ),
+                    )
+                )
+                self._initialize_nested_clients(writer=writer, is_async=is_async, declare_client_wrapper=True)
+            else:
+                # For intermediate clients without direct endpoints, just store client_wrapper directly
+                writer.write_line(f"self.{self._get_client_wrapper_member_name()} = client_wrapper")
+                self._initialize_nested_clients(writer=writer, is_async=is_async, declare_client_wrapper=False)
 
         return _write_constructor_body

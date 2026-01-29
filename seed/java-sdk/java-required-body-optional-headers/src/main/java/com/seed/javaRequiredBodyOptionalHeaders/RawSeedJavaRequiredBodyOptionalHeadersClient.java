@@ -70,8 +70,8 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
                 .addPathSegments("api")
                 .addPathSegments("users");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -148,8 +148,8 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
                     httpUrl, "dryRun", request.getDryRun().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -224,8 +224,8 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
                     httpUrl, "validate", request.getValidate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -282,8 +282,8 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
                 .addPathSegments("api")
                 .addPathSegments("users/required-header");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -339,8 +339,8 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
                 .addPathSegments("users/required-query");
         QueryStringMapper.addQueryParameter(httpUrl, "tenantId", request.getTenantId(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -411,8 +411,8 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
                     httpUrl, "limit", request.getLimit().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -458,8 +458,8 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
                 .addPathSegments("api")
                 .addPathSegments("users/inlined");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;

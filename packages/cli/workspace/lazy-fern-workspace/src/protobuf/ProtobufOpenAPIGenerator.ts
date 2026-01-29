@@ -3,7 +3,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { access, cp, readFile, unlink, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { detectAirGappedMode, getProtobufYamlV1 } from "./utils";
+import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
@@ -59,7 +59,10 @@ export class ProtobufOpenAPIGenerator {
     }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
         // Detect air-gapped mode once at the start if we have dependencies
         if (deps.length > 0 && this.isAirGapped === undefined) {
-            this.isAirGapped = await detectAirGappedMode(absoluteFilepathToProtobufRoot, this.context.logger);
+            this.isAirGapped = await detectAirGappedModeForProtobuf(
+                absoluteFilepathToProtobufRoot,
+                this.context.logger
+            );
         }
 
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({

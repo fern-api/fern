@@ -99,7 +99,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
 
         if (this.isPaginationEnabled) {
-            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+            const paginationSnippets = this.buildPaginationSnippets();
+            if (paginationSnippets.length > 0) {
+                snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = paginationSnippets;
+            }
         }
 
         const requestAndResponseTypesSnippets = this.buildRequestAndResponseTypesSnippets();

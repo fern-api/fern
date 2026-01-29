@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawInlineUsersClient, RawInlineUsersClient
 
 if typing.TYPE_CHECKING:
     from .inline_users.client import AsyncInlineUsersClient as inline_users_inline_users_client_AsyncInlineUsersClient
@@ -14,20 +13,8 @@ if typing.TYPE_CHECKING:
 
 class InlineUsersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawInlineUsersClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._inline_users: typing.Optional[inline_users_inline_users_client_InlineUsersClient] = None
-
-    @property
-    def with_raw_response(self) -> RawInlineUsersClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawInlineUsersClient
-        """
-        return self._raw_client
 
     @property
     def inline_users(self):
@@ -42,20 +29,8 @@ class InlineUsersClient:
 
 class AsyncInlineUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawInlineUsersClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._inline_users: typing.Optional[inline_users_inline_users_client_AsyncInlineUsersClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawInlineUsersClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawInlineUsersClient
-        """
-        return self._raw_client
 
     @property
     def inline_users(self):

@@ -6,7 +6,7 @@
 //! - **InlineUsers**
 //! - **Users**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod complex;
 pub mod inline_users;
@@ -24,9 +24,10 @@ impl PaginationClient {
             config: config.clone(),
             complex: ComplexClient::new(config.clone())?,
             inline_users: InlineUsersClient::new(config.clone())?,
-            users: UsersClient::new(config.clone())?,
+            users: UsersClient::new(config.clone())?
         })
     }
+
 }
 
 pub use complex::ComplexClient;

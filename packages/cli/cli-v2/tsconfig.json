@@ -12,6 +12,9 @@
     },
     {
       "path": "../logger"
+    },
+    {
+      "path": "../../commons/core-utils"
     }
   ]
 }

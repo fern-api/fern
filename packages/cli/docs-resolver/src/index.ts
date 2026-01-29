@@ -1,4 +1,10 @@
-export { DocsDefinitionResolver, type UploadedFile } from "./DocsDefinitionResolver";
+export {
+    createPythonDocsSectionPlaceholder,
+    DocsDefinitionResolver,
+    type PythonDocsSectionContext,
+    type PythonDocsSectionHandler,
+    type UploadedFile
+} from "./DocsDefinitionResolver";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 export { filterOssWorkspaces } from "./utils/filterOssWorkspaces";
 export { generateFdrFromOpenApiWorkspaceV3 } from "./utils/generateFdrFromOpenAPIWorkspaceV3";

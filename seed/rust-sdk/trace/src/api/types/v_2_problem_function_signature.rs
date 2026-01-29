@@ -3,18 +3,21 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum FunctionSignature {
-    Void {
-        #[serde(flatten)]
-        data: VoidFunctionSignature,
-    },
+        #[serde(rename = "void")]
+        Void {
+            #[serde(flatten)]
+            data: VoidFunctionSignature,
+        },
 
-    NonVoid {
-        #[serde(flatten)]
-        data: NonVoidFunctionSignature,
-    },
+        #[serde(rename = "nonVoid")]
+        NonVoid {
+            #[serde(flatten)]
+            data: NonVoidFunctionSignature,
+        },
 
-    VoidThatTakesActualResult {
-        #[serde(flatten)]
-        data: VoidFunctionSignatureThatTakesActualResult,
-    },
+        #[serde(rename = "voidThatTakesActualResult")]
+        VoidThatTakesActualResult {
+            #[serde(flatten)]
+            data: VoidFunctionSignatureThatTakesActualResult,
+        },
 }

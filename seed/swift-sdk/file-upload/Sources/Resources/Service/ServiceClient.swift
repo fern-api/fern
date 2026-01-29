@@ -117,4 +117,15 @@ public final class ServiceClient: Sendable {
             requestOptions: requestOptions
         )
     }
+
+    public func withLiteralAndEnumTypes(request: Requests.LiteralEnumRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/with-literal-enum",
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
 }

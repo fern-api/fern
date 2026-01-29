@@ -1,4 +1,5 @@
 using global::System.Reflection;
+using global::System.Text.Encodings.Web;
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
@@ -9,20 +10,17 @@ namespace SeedRequestParameters.Core;
 internal static partial class JsonOptions
 {
     internal static readonly JsonSerializerOptions JsonSerializerOptions;
+    internal static readonly JsonSerializerOptions JsonSerializerOptionsRelaxedEscaping;
 
     static JsonOptions()
     {
         var options = new JsonSerializerOptions
         {
-            Converters =
-            {
-                new DateTimeSerializer(),
+            Converters = { new DateTimeSerializer(),
 #if USE_PORTABLE_DATE_ONLY
                 new DateOnlyConverter(),
 #endif
-                new OneOfSerializer(),
-                new OptionalJsonConverterFactory(),
-            },
+                new OptionalJsonConverterFactory() },
 #if DEBUG
             WriteIndented = true,
 #endif
@@ -39,6 +37,12 @@ internal static partial class JsonOptions
         };
         ConfigureJsonSerializerOptions(options);
         JsonSerializerOptions = options;
+
+        var relaxedOptions = new JsonSerializerOptions(options)
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        };
+        JsonSerializerOptionsRelaxedEscaping = relaxedOptions;
     }
 
     private static void NullableOptionalModifier(JsonTypeInfo typeInfo)
@@ -50,7 +54,7 @@ internal static partial class JsonOptions
         {
             var propertyInfo = property.AttributeProvider as global::System.Reflection.PropertyInfo;
 
-            if (propertyInfo == null)
+            if (propertyInfo is null)
                 continue;
 
             // Check for ReadOnly JsonAccessAttribute - it overrides Optional/Nullable behavior
@@ -69,13 +73,15 @@ internal static partial class JsonOptions
                 property.PropertyType.IsGenericType
                 && property.PropertyType.GetGenericTypeDefinition() == typeof(Optional<>);
 
-            var hasOptionalAttribute = propertyInfo.GetCustomAttribute<OptionalAttribute>() != null;
-            var hasNullableAttribute = propertyInfo.GetCustomAttribute<NullableAttribute>() != null;
+            var hasOptionalAttribute =
+                propertyInfo.GetCustomAttribute<OptionalAttribute>() is not null;
+            var hasNullableAttribute =
+                propertyInfo.GetCustomAttribute<NullableAttribute>() is not null;
 
             if (isOptionalType && hasOptionalAttribute)
             {
                 var originalGetter = property.Get;
-                if (originalGetter != null)
+                if (originalGetter is not null)
                 {
                     var capturedIsNullable = hasNullableAttribute;
 
@@ -91,7 +97,7 @@ internal static partial class JsonOptions
                         if (!capturedIsNullable)
                         {
                             var innerValue = optional.GetBoxedValue();
-                            if (innerValue == null)
+                            if (innerValue is null)
                                 return false;
                         }
 
@@ -119,7 +125,7 @@ internal static partial class JsonOptions
                 .OfType<JsonAccessAttribute>()
                 .FirstOrDefault();
 
-            if (jsonAccessAttribute != null)
+            if (jsonAccessAttribute is not null)
             {
                 propertyInfo.IsRequired = false;
                 switch (jsonAccessAttribute.AccessType)
@@ -157,7 +163,7 @@ internal static partial class JsonOptions
             var extensionProp = typeInfo
                 .Type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
                 .FirstOrDefault(prop =>
-                    prop.GetCustomAttribute<JsonExtensionDataAttribute>() != null
+                    prop.GetCustomAttribute<JsonExtensionDataAttribute>() is not null
                 );
 
             if (extensionProp is not null)
@@ -182,8 +188,20 @@ internal static class JsonUtils
     internal static string Serialize<T>(T obj) =>
         JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
 
+    internal static string Serialize(object obj, global::System.Type type) =>
+        JsonSerializer.Serialize(obj, type, JsonOptions.JsonSerializerOptions);
+
+    internal static string SerializeRelaxedEscaping<T>(T obj) =>
+        JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptionsRelaxedEscaping);
+
+    internal static string SerializeRelaxedEscaping(object obj, global::System.Type type) =>
+        JsonSerializer.Serialize(obj, type, JsonOptions.JsonSerializerOptionsRelaxedEscaping);
+
     internal static JsonElement SerializeToElement<T>(T obj) =>
         JsonSerializer.SerializeToElement(obj, JsonOptions.JsonSerializerOptions);
+
+    internal static JsonElement SerializeToElement(object obj, global::System.Type type) =>
+        JsonSerializer.SerializeToElement(obj, type, JsonOptions.JsonSerializerOptions);
 
     internal static JsonDocument SerializeToDocument<T>(T obj) =>
         JsonSerializer.SerializeToDocument(obj, JsonOptions.JsonSerializerOptions);
@@ -199,7 +217,7 @@ internal static class JsonUtils
         object? additionalProperties = null
     )
     {
-        if (additionalProperties == null)
+        if (additionalProperties is null)
         {
             return Serialize(obj);
         }
@@ -227,8 +245,9 @@ internal static class JsonUtils
         {
             if (!baseObject.TryGetPropertyValue(property.Key, out JsonNode? existingValue))
             {
-                baseObject[property.Key] =
-                    property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
+                baseObject[property.Key] = property.Value is not null
+                    ? JsonNode.Parse(property.Value.ToJsonString())
+                    : null;
                 continue;
             }
             if (
@@ -241,8 +260,9 @@ internal static class JsonUtils
                 continue;
             }
             // Otherwise, the overrideObject takes precedence.
-            baseObject[property.Key] =
-                property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
+            baseObject[property.Key] = property.Value is not null
+                ? JsonNode.Parse(property.Value.ToJsonString())
+                : null;
         }
     }
 

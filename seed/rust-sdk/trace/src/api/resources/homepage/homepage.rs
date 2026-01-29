@@ -1,6 +1,6 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::api::{*};
 
 pub struct HomepageClient {
     pub http_client: HttpClient,
@@ -9,32 +9,29 @@ pub struct HomepageClient {
 impl HomepageClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?
+})
     }
 
-    pub async fn get_homepage_problems(
-        &self,
-        options: Option<RequestOptions>,
-    ) -> Result<Vec<ProblemId>, ApiError> {
-        self.http_client
-            .execute_request(Method::GET, "/homepage-problems", None, None, options)
-            .await
+    pub async fn get_homepage_problems(&self, options: Option<RequestOptions>) -> Result<Vec<ProblemId>, ApiError> {
+        self.http_client.execute_request(
+            Method::GET,
+            "/homepage-problems",
+            None,
+            None,
+            options,
+        ).await
     }
 
-    pub async fn set_homepage_problems(
-        &self,
-        request: &Vec<ProblemId>,
-        options: Option<RequestOptions>,
-    ) -> Result<(), ApiError> {
-        self.http_client
-            .execute_request(
-                Method::POST,
-                "/homepage-problems",
-                Some(serde_json::to_value(request).unwrap_or_default()),
-                None,
-                options,
-            )
-            .await
+    pub async fn set_homepage_problems(&self, request: &Vec<ProblemId>, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/homepage-problems",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
     }
+
 }
+

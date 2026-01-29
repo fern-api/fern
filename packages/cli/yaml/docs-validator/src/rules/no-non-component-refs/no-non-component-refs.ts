@@ -38,7 +38,9 @@ export const NoNonComponentRefsRule: Rule = {
                                     }
 
                                     // Skip AsyncAPI files - they have different reference patterns than OpenAPI
-                                    const isAsyncAPI = contents.includes("asyncapi:");
+                                    // Check for both YAML format (asyncapi:) and JSON format ("asyncapi":)
+                                    const isAsyncAPI =
+                                        contents.includes("asyncapi:") || contents.includes('"asyncapi":');
                                     if (isAsyncAPI) {
                                         continue; // Skip AsyncAPI files
                                     }
