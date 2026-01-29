@@ -1,0 +1,22 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "latest",
+    "generatorConfig": {
+        "customSubpathExports": {
+            "./aws": {
+                "types": "./dist/cjs/aws/index.d.ts",
+                "import": {
+                    "types": "./dist/esm/aws/index.d.mts",
+                    "default": "./dist/esm/aws/index.mjs"
+                },
+                "require": {
+                    "types": "./dist/cjs/aws/index.d.ts",
+                    "default": "./dist/cjs/aws/index.js"
+                },
+                "default": "./dist/cjs/aws/index.js"
+            }
+        }
+    },
+    "sdkVersion": "0.0.1"
+}

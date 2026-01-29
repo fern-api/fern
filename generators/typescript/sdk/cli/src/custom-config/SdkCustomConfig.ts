@@ -62,4 +62,14 @@ export interface SdkCustomConfig {
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
     customPagerName: string | undefined;
+    customSubpathExports?: Record<
+        string,
+        | string
+        | {
+              types?: string;
+              import?: string | { types?: string; default?: string };
+              require?: string | { types?: string; default?: string };
+              default?: string;
+          }
+    >;
 }

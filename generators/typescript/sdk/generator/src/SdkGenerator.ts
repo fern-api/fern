@@ -160,6 +160,16 @@ export declare namespace SdkGenerator {
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
         customPagerName: string;
+        customSubpathExports?: Record<
+            string,
+            | string
+            | {
+                  types?: string;
+                  import?: string | { types?: string; default?: string };
+                  require?: string | { types?: string; default?: string };
+                  default?: string;
+              }
+        >;
     }
 }
 
@@ -727,7 +737,8 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  customSubpathExports: this.config.customSubpathExports
               });
     }
 
