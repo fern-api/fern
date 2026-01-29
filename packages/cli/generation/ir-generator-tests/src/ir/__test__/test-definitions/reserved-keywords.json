@@ -281,7 +281,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,

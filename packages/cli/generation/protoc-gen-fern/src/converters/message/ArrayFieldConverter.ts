@@ -21,7 +21,9 @@ export declare namespace ArrayFieldConverter {
 }
 
 export class ArrayFieldConverter extends AbstractConverter<ProtofileConverterContext, ArrayFieldConverter.Output> {
-    private static LIST_UNKNOWN = TypeReference.container(ContainerType.list(TypeReference.unknown()));
+    private static LIST_UNKNOWN = TypeReference.container(
+        ContainerType.list({ list: TypeReference.unknown(), minItems: undefined, maxItems: undefined })
+    );
 
     private readonly field: FieldDescriptorProto;
     private readonly sourceCodeInfoPath: number[];
@@ -48,7 +50,13 @@ export class ArrayFieldConverter extends AbstractConverter<ProtofileConverterCon
             if (convertedField != null) {
                 const referencedTypes = new Set<TypeId>();
                 return {
-                    typeReference: TypeReference.container(ContainerType.list(convertedField.type)),
+                    typeReference: TypeReference.container(
+                        ContainerType.list({
+                            list: convertedField.type,
+                            minItems: undefined,
+                            maxItems: undefined
+                        })
+                    ),
                     referencedTypes,
                     inlinedTypes: convertedField.inlinedTypes
                 };

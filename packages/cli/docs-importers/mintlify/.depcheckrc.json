@@ -1,4 +1,4 @@
 {
   "ignores": [],
-  "ignore-patterns": ["lib", "dist"]
+  "ignore-patterns": ["lib", "dist", "*.timestamp-*"]
 }

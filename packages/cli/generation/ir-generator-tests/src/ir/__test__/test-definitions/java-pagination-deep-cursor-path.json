@@ -909,7 +909,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -1093,7 +1095,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -3442,7 +3446,9 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "propertyAccess": null,
@@ -4882,7 +4888,9 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "propertyAccess": null,
@@ -6251,7 +6259,9 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "propertyAccess": null,

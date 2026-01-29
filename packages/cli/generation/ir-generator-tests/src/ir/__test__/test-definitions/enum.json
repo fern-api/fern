@@ -4019,7 +4019,9 @@
                                             "typeId": "type_:Color",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4094,7 +4096,9 @@
                                                     "typeId": "type_:Color",
                                                     "default": null,
                                                     "inline": null
-                                                }
+                                                },
+                                                "minItems": null,
+                                                "maxItems": null
                                             }
                                         }
                                     }

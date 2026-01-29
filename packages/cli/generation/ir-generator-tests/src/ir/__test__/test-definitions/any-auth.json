@@ -2208,7 +2208,9 @@
                                             "typeId": "type_user:User",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,
@@ -3046,7 +3048,9 @@
                                             "typeId": "type_user:User",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,

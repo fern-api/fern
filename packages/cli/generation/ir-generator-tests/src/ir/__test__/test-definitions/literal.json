@@ -2169,7 +2169,9 @@
                                     "typeId": "type_reference:NestedObjectWithLiterals",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,

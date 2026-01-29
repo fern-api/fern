@@ -368,7 +368,9 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 },
                                 "docs": "getFooResponse",
@@ -946,7 +948,9 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "docs": null,
@@ -976,7 +980,9 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 },
                                 "docs": null,
@@ -1027,7 +1033,9 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 },
                                 "docs": "Foo created.",

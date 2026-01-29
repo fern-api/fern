@@ -1090,6 +1090,8 @@
                       "type": "named",
                       "typeId": "Payment",
                     },
+                    "maxItems": undefined,
+                    "minItems": undefined,
                     "type": "list",
                   },
                   "type": "container",

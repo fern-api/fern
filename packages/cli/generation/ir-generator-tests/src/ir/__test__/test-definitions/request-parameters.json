@@ -182,7 +182,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "propertyAccess": null,
@@ -1029,7 +1031,9 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "minItems": null,
+                                    "maxItems": null
                                 }
                             },
                             "allowMultiple": false,
@@ -1584,7 +1588,9 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "minItems": null,
+                                    "maxItems": null
                                 }
                             },
                             "allowMultiple": false,
@@ -3336,7 +3342,9 @@
                                         "typeId": "type_user:User",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "minItems": null,
+                                    "maxItems": null
                                 }
                             },
                             "allowMultiple": false,
@@ -3441,7 +3449,9 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "minProperties": null,
+                                    "maxProperties": null
                                 }
                             },
                             "allowMultiple": false,

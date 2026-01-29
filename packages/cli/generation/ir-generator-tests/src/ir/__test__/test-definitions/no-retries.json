@@ -389,7 +389,9 @@
                                             "typeId": "type_retries:User",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,

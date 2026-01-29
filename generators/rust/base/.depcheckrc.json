@@ -1,3 +1,7 @@
 {
-  "ignores": []
+  "ignores": [],
+  "ignore-patterns": [
+    "lib",
+    "dist"
+  ]
 }

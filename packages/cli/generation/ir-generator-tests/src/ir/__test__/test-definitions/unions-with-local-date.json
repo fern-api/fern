@@ -22256,7 +22256,9 @@
                                     "typeId": "type_bigunion:BigUnion",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null,
@@ -22341,7 +22343,9 @@
                                             "typeId": "type_bigunion:BigUnion",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,
@@ -22399,7 +22403,9 @@
                                                     "default": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 },
                                 "docs": null,

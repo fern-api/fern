@@ -113,7 +113,9 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 return FernIr.TypeReference.container(
                     FernIr.ContainerType.map({
                         keyType,
-                        valueType
+                        valueType,
+                        minProperties: undefined,
+                        maxProperties: undefined
                     })
                 );
             },
@@ -121,7 +123,9 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 if (itemType == null) {
                     return undefined;
                 }
-                return FernIr.TypeReference.container(FernIr.ContainerType.list(itemType));
+                return FernIr.TypeReference.container(
+                    FernIr.ContainerType.list({ list: itemType, minItems: undefined, maxItems: undefined })
+                );
             },
             optional: (itemType) => {
                 if (itemType == null) {
@@ -139,7 +143,9 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 if (itemType == null) {
                     return undefined;
                 }
-                return FernIr.TypeReference.container(FernIr.ContainerType.set(itemType));
+                return FernIr.TypeReference.container(
+                    FernIr.ContainerType.set({ set: itemType, minItems: undefined, maxItems: undefined })
+                );
             },
             literal: (literal) => {
                 return FernIr.TypeReference.container(

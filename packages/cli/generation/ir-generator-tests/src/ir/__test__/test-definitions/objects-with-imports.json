@@ -908,7 +908,9 @@
                                                                                                 "validation": null
                                                                                             }
                                                                                         }
-                                                                                    }
+                                                                                    },
+                                                                                    "minProperties": null,
+                                                                                    "maxProperties": null
                                                                                 }
                                                                             }
                                                                         }
@@ -1796,7 +1798,9 @@
                                                                                                 "validation": null
                                                                                             }
                                                                                         }
-                                                                                    }
+                                                                                    },
+                                                                                    "minProperties": null,
+                                                                                    "maxProperties": null
                                                                                 }
                                                                             }
                                                                         }
@@ -2190,7 +2194,9 @@
                                             "typeId": "type_:Node",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -2880,7 +2886,9 @@
                                                                                                                                                 "validation": null
                                                                                                                                             }
                                                                                                                                         }
-                                                                                                                                    }
+                                                                                                                                    },
+                                                                                                                                    "minProperties": null,
+                                                                                                                                    "maxProperties": null
                                                                                                                                 }
                                                                                                                             }
                                                                                                                         }
@@ -3779,7 +3787,9 @@
                                                                                                                                                 "validation": null
                                                                                                                                             }
                                                                                                                                         }
-                                                                                                                                    }
+                                                                                                                                    },
+                                                                                                                                    "minProperties": null,
+                                                                                                                                    "maxProperties": null
                                                                                                                                 }
                                                                                                                             }
                                                                                                                         }
@@ -4165,7 +4175,9 @@
                                                         "typeId": "type_:Node",
                                                         "default": null,
                                                         "inline": null
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }
@@ -4467,7 +4479,9 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minProperties": null,
+                                        "maxProperties": null
                                     }
                                 }
                             }
@@ -4797,7 +4811,9 @@
                                                                 "validation": null
                                                             }
                                                         }
-                                                    }
+                                                    },
+                                                    "minProperties": null,
+                                                    "maxProperties": null
                                                 }
                                             }
                                         }
@@ -6548,7 +6564,9 @@
                                             "typeId": "type_file:File",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -6699,7 +6717,9 @@
                                             "typeId": "type_file/directory:Directory",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 }
                             }
@@ -7554,7 +7574,9 @@
                                                         "typeId": "type_file:File",
                                                         "default": null,
                                                         "inline": null
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }
@@ -8623,7 +8645,9 @@
                                                                                                         "typeId": "type_file:File",
                                                                                                         "default": null,
                                                                                                         "inline": null
-                                                                                                    }
+                                                                                                    },
+                                                                                                    "minItems": null,
+                                                                                                    "maxItems": null
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -8993,7 +9017,9 @@
                                                         "typeId": "type_file/directory:Directory",
                                                         "default": null,
                                                         "inline": null
-                                                    }
+                                                    },
+                                                    "minItems": null,
+                                                    "maxItems": null
                                                 }
                                             }
                                         }

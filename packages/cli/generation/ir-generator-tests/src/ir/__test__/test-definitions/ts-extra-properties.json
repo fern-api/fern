@@ -1210,7 +1210,9 @@
                                                 },
                                                 "valueType": {
                                                     "_type": "unknown"
-                                                }
+                                                },
+                                                "minProperties": null,
+                                                "maxProperties": null
                                             }
                                         }
                                     }
@@ -1829,7 +1831,9 @@
                                                                 },
                                                                 "valueType": {
                                                                     "_type": "unknown"
-                                                                }
+                                                                },
+                                                                "minProperties": null,
+                                                                "maxProperties": null
                                                             }
                                                         }
                                                     }

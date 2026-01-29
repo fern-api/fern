@@ -1724,7 +1724,9 @@
                                         "typeId": "type_ast:FieldValue",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "minItems": null,
+                                    "maxItems": null
                                 }
                             }
                         },
@@ -2247,7 +2249,9 @@
                                     "typeId": "type_ast:JsonLike",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -2336,7 +2340,9 @@
                                     "typeId": "type_ast:JsonLike",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "docs": null
@@ -2554,7 +2560,9 @@
                                             }
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -2655,7 +2663,9 @@
                                             }
                                         }
                                     }
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "docs": null

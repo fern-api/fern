@@ -525,7 +525,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -559,7 +561,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -583,9 +587,13 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -605,7 +613,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -723,7 +733,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -743,7 +755,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -862,7 +876,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -882,7 +898,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -1075,7 +1093,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -1269,7 +1289,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -1303,7 +1325,9 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "minItems": null,
+                                "maxItems": null
                             }
                         },
                         "docs": null
@@ -1708,7 +1732,9 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         },
                         "propertyAccess": null,
@@ -1826,7 +1852,9 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         }
                     }
@@ -1852,7 +1880,9 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "minProperties": null,
+                                "maxProperties": null
                             }
                         }
                     }
@@ -2023,7 +2053,9 @@
                                     "validation": null
                                 }
                             }
-                        }
+                        },
+                        "minProperties": null,
+                        "maxProperties": null
                     }
                 },
                 "resolvedType": {
@@ -2109,7 +2141,9 @@
                                     "validation": null
                                 }
                             }
-                        }
+                        },
+                        "minProperties": null,
+                        "maxProperties": null
                     }
                 }
             },
@@ -6199,7 +6233,9 @@
                                                                             },
                                                                             "valueType": {
                                                                                 "_type": "unknown"
-                                                                            }
+                                                                            },
+                                                                            "minProperties": null,
+                                                                            "maxProperties": null
                                                                         }
                                                                     }
                                                                 }
@@ -6250,7 +6286,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "54217059",
+                                "id": "32544c23",
                                 "url": "/metadata",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -6294,7 +6330,9 @@
                                                                             },
                                                                             "valueType": {
                                                                                 "_type": "unknown"
-                                                                            }
+                                                                            },
+                                                                            "minProperties": null,
+                                                                            "maxProperties": null
                                                                         }
                                                                     }
                                                                 }
@@ -7043,7 +7081,9 @@
                                                                                                             },
                                                                                                             "valueType": {
                                                                                                                 "_type": "unknown"
-                                                                                                            }
+                                                                                                            },
+                                                                                                            "minProperties": null,
+                                                                                                            "maxProperties": null
                                                                                                         }
                                                                                                     }
                                                                                                 }

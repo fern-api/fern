@@ -542,7 +542,9 @@
                                         "_type": "list",
                                         "list": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,
@@ -872,7 +874,9 @@
                                         "_type": "list",
                                         "list": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,

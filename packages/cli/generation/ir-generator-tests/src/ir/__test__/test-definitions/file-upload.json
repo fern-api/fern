@@ -680,7 +680,9 @@
                             "typeId": "type_service:MyObject",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "minItems": null,
+                        "maxItems": null
                     }
                 },
                 "resolvedType": {
@@ -755,7 +757,9 @@
                             "typeId": "type_service:MyObject",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "minItems": null,
+                        "maxItems": null
                     }
                 }
             },
@@ -1613,7 +1617,9 @@
                                                             "validation": null
                                                         }
                                                     }
-                                                }
+                                                },
+                                                "minItems": null,
+                                                "maxItems": null
                                             }
                                         }
                                     }
@@ -1724,7 +1730,9 @@
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "v2Examples": {
@@ -2197,7 +2205,9 @@
                                             "typeId": "type_service:MyAliasObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4478,7 +4488,9 @@
                                                             "validation": null
                                                         }
                                                     }
-                                                }
+                                                },
+                                                "minItems": null,
+                                                "maxItems": null
                                             }
                                         }
                                     }
@@ -4589,7 +4601,9 @@
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4959,7 +4973,9 @@
                                             "typeId": "type_service:MyObjectWithOptional",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "v2Examples": {
@@ -5171,7 +5187,9 @@
                                             "typeId": "type_service:MyAliasObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "v2Examples": {

@@ -1578,7 +1578,9 @@
                                             "typeId": "type_:InsurancePolicy",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,
@@ -2634,7 +2636,9 @@
                                             "typeId": "type_:InsurancePolicy",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "minItems": null,
+                                        "maxItems": null
                                     }
                                 },
                                 "docs": null,
