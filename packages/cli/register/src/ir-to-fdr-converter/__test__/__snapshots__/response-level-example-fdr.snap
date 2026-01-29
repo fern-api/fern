@@ -69,42 +69,6 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": "plant_addPlant_example",
-              "path": "/plant",
-              "pathParameters": {},
-              "queryParameters": {},
-              "requestBody": undefined,
-              "requestBodyV3": {
-                "type": "json",
-                "value": undefined,
-              },
-              "responseBody": {
-                "id": 12345,
-                "name": "Snake Plant",
-                "status": "available",
-                "tags": [
-                  "low-maintenance",
-                  "air-purifying",
-                ],
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "id": 12345,
-                  "name": "Snake Plant",
-                  "status": "available",
-                  "tags": [
-                    "low-maintenance",
-                    "air-purifying",
-                  ],
-                },
-              },
-              "responseStatusCode": 200,
-            },
-            {
-              "codeSamples": undefined,
-              "description": "",
-              "headers": {},
               "name": "Add a Fern Plant",
               "path": "/plant",
               "pathParameters": {},

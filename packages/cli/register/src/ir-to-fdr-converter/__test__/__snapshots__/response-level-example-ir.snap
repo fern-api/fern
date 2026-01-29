@@ -1998,41 +1998,6 @@
                   "statusCode": 200,
                 },
               },
-              "base_plant_addPlant_example_200": {
-                "codeSamples": undefined,
-                "displayName": "plant_addPlant_example",
-                "request": {
-                  "auth": undefined,
-                  "baseUrl": undefined,
-                  "docs": undefined,
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/plant",
-                  },
-                  "environment": "Demo server",
-                  "headers": {},
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "requestBody": undefined,
-                },
-                "response": {
-                  "body": {
-                    "_visit": [Function],
-                    "type": "json",
-                    "value": {
-                      "id": 12345,
-                      "name": "Snake Plant",
-                      "status": "available",
-                      "tags": [
-                        "low-maintenance",
-                        "air-purifying",
-                      ],
-                    },
-                  },
-                  "docs": undefined,
-                  "statusCode": 200,
-                },
-              },
             },
           },
           "v2RequestBodies": {

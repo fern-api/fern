@@ -579,37 +579,6 @@
                   "statusCode": 200,
                 },
               },
-              "base_Payment Response_200": {
-                "codeSamples": undefined,
-                "displayName": "Payment Response",
-                "request": {
-                  "auth": undefined,
-                  "baseUrl": undefined,
-                  "docs": undefined,
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/payments",
-                  },
-                  "environment": undefined,
-                  "headers": {},
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "requestBody": undefined,
-                },
-                "response": {
-                  "body": {
-                    "_visit": [Function],
-                    "type": "json",
-                    "value": {
-                      "amount": 4999,
-                      "currency": "USD",
-                      "id": "PAY123",
-                    },
-                  },
-                  "docs": undefined,
-                  "statusCode": 200,
-                },
-              },
             },
           },
           "v2RequestBodies": {

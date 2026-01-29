@@ -206,22 +206,33 @@ function createExamplesForResponseStatusCodes({
         for (const [name, responseExample] of Object.entries(userResponseExamples)) {
             let key: string;
             let requestExampleToUse: V2HttpEndpointRequest;
+            let displayName: string;
             if (userRequestExamples[name]) {
                 requestExampleToUse = userRequestExamples[name];
                 requestExamplesUsed.add(name);
                 key = createExampleKey(name, name, response?.statusCode);
+                displayName = name;
+            } else if (firstUserRequestExample && firstUserRequestName) {
+                // When response example doesn't match any request example name,
+                // use the first user request example and name the example after the request
+                requestExampleToUse = firstUserRequestExample;
+                requestExamplesUsed.add(firstUserRequestName);
+                key = createExampleKey(firstUserRequestName, name, response?.statusCode);
+                displayName = firstUserRequestName;
             } else if (firstAutoRequestExample && firstAutoRequestName) {
                 requestExampleToUse = firstAutoRequestExample;
                 key = createExampleKey(firstAutoRequestName, name, response?.statusCode);
+                displayName = name;
             } else {
                 requestExampleToUse = baseRequestExample;
                 key = createExampleKey("base", name, response?.statusCode);
+                displayName = name;
             }
 
             if (
                 maybeCreateAndStoreExample({
                     key,
-                    displayName: name,
+                    displayName,
                     request: requestExampleToUse,
                     response: responseExample,
                     exampleStore,
