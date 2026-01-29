@@ -1,4 +1,4 @@
-import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import {
     ExampleEndpointCall,
     ExampleRequestBody,
@@ -59,10 +59,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
                     writer.writeLine(`const string requestJson${suffix} = """`);
                     writer.writeLine(
-                        JSON.stringify(filteredRequestJson, text.normalizeDates, 2).replace(
-                            /"\\{1,2}\$ref"/g,
-                            '"$ref\"'
-                        )
+                        JSON.stringify(filteredRequestJson, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref\"')
                     );
                     writer.writeTextStatement('"""');
                 }
@@ -72,10 +69,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (responseBodyType === "json") {
                         writer.writeLine(`const string mockResponse${suffix} = """`);
                         writer.writeLine(
-                            JSON.stringify(jsonExampleResponse, text.normalizeDates, 2).replace(
-                                /"\\{1,2}\$ref"/g,
-                                '"$ref\"'
-                            )
+                            JSON.stringify(jsonExampleResponse, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref\"')
                         );
                         writer.writeTextStatement('"""');
                     } else if (responseBodyType === "text") {
@@ -437,12 +431,23 @@ export class MockEndpointGenerator extends WithGeneration {
     /**
      * Filters read-only properties from an example type reference.
      * Recursively handles containers (optional, list, map, etc.) and named types.
+     * Also normalizes datetime/date values to ISO 8601 format for wire test matching.
      */
     private filterExampleTypeReference(exampleTypeRef: ExampleTypeReference): unknown {
         const shape = exampleTypeRef.shape;
 
         switch (shape.type) {
             case "primitive":
+                // Normalize datetime/date values to ISO 8601 format for wire test matching
+                // Only normalize actual datetime/date types, NOT string fields that happen to contain datetime-like values
+                if (shape.primitive.type === "datetime" && typeof exampleTypeRef.jsonExample === "string") {
+                    return new Date(exampleTypeRef.jsonExample).toISOString();
+                }
+                if (shape.primitive.type === "date" && typeof exampleTypeRef.jsonExample === "string") {
+                    return new Date(exampleTypeRef.jsonExample).toISOString().slice(0, 10);
+                }
+                return exampleTypeRef.jsonExample;
+
             case "unknown":
                 return exampleTypeRef.jsonExample;
 
