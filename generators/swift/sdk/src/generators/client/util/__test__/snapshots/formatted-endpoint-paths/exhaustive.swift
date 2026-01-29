@@ -29,6 +29,7 @@
 "/object/get-and-return-nested-with-required-field/\(string)"
 "/object/get-and-return-nested-with-required-field-list"
 "/object/get-and-return-with-datetime-like-string"
+"/object/get-and-return-with-required-and-optional-fields"
 
 // service_endpoints/params
 "/params/path/\(param)"
