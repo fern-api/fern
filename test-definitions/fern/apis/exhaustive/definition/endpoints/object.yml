@@ -80,22 +80,23 @@ service:
 
     getAndReturnWithRequiredAndOptionalFields:
       docs: |
-        Tests that Java staged builders correctly handle examples that only provide
-        optional fields. The generated snippet must include the required field with
-        a placeholder value before calling optional field methods.
+        Tests that Java staged builders correctly handle objects with both required
+        and optional fields. The generated snippet must call required field methods
+        before optional field methods to satisfy the staged builder pattern.
       path: /get-and-return-with-required-and-optional-fields
       method: POST
       request: objects.ObjectWithRequiredAndOptionalFields
       response: objects.ObjectWithRequiredAndOptionalFields
       examples:
-        - name: OnlyOptionalFieldProvided
+        - name: RequiredAndOptionalFields
           docs: |
-            This example only provides the optional field, which tests that the
-            Java SDK generator correctly synthesizes a placeholder for the required
-            field in the staged builder pattern.
+            This example provides both required and optional fields, testing that
+            the Java SDK generator correctly orders the builder method calls with
+            required fields first.
           request:
+            requiredString: "required value"
             optionalString: "optional value"
           response:
             body:
-              requiredString: "required"
+              requiredString: "required value"
               optionalString: "optional value"
