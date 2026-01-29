@@ -15,7 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithUnderscores(
+    client.NoReqBody.PostWithNoRequestBody(
         context.TODO(),
     )
 }
