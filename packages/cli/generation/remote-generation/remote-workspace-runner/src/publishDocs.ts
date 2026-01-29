@@ -3,8 +3,15 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
-import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
+import { DocsDefinitionResolver, PythonDocsSectionContext, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import {
+    APIV1Write,
+    FdrAPI as CjsFdrSdk,
+    DocsV1Write,
+    DocsV2Write,
+    FdrClient,
+    FernNavigation
+} from "@fern-api/fdr-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIrUpload = APIV1Write.DynamicIrUpload;
@@ -394,7 +401,35 @@ export async function publishDocs({
                 }
             }
         },
-        targetAudiences
+        targetAudiences,
+        pythonDocsSectionHandler: (
+            item: docsYml.DocsNavigationItem.PythonDocsSection,
+            parentSlug: FernNavigation.V1.SlugGenerator,
+            ctx: PythonDocsSectionContext
+        ): FernNavigation.V1.SectionNode | null => {
+            const title = item.title ?? "Library Reference";
+            const urlSlug = item.slug ?? "library-docs";
+            const slug = parentSlug.apply({ urlSlug });
+
+            return {
+                id: ctx.generateId(`__libdocs_placeholder_${urlSlug}__`),
+                type: "section",
+                overviewPageId: undefined,
+                slug: slug.get(),
+                title,
+                icon: undefined,
+                collapsed: undefined,
+                hidden: false,
+                viewers: undefined,
+                orphaned: undefined,
+                children: [],
+                authed: undefined,
+                pointsTo: undefined,
+                noindex: undefined,
+                featureFlags: undefined,
+                availability: undefined
+            };
+        }
     });
 
     context.logger.info("Resolving docs definition...");
