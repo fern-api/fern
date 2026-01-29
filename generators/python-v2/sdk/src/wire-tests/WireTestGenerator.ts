@@ -532,11 +532,11 @@ export class WireTestGenerator {
             this.addPlaceholderFileUploadFields({ endpoint, snippetRequest });
 
             // Generate just the method call AST using DynamicSnippetsGenerator
-            // Use the endpoint ID directly to avoid path collision issues when multiple
+            // Pass endpointId to avoid path collision issues when multiple
             // namespaces have endpoints with the same HTTP method and path pattern
-            return this.snippetGenerator.generateMethodCallSnippetAstById({
-                endpointId: endpoint.id,
-                request: snippetRequest
+            return this.snippetGenerator.generateMethodCallSnippetAst({
+                request: snippetRequest,
+                options: { endpointId: endpoint.id }
             });
         } catch (error) {
             // Fallback: log error and generate a placeholder

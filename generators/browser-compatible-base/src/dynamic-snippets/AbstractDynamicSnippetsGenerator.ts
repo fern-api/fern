@@ -17,7 +17,7 @@ export abstract class AbstractDynamicSnippetsGenerator<
         request: FernIr.dynamic.EndpointSnippetRequest,
         options: Options = {}
     ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
-        const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
+        const endpoints = this.resolveEndpoints({ request, options });
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
@@ -47,7 +47,7 @@ export abstract class AbstractDynamicSnippetsGenerator<
         request: FernIr.dynamic.EndpointSnippetRequest,
         options: Options = {}
     ): Promise<AbstractAstNode> {
-        const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
+        const endpoints = this.resolveEndpoints({ request, options });
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
@@ -74,7 +74,7 @@ export abstract class AbstractDynamicSnippetsGenerator<
         request: FernIr.dynamic.EndpointSnippetRequest,
         options: Options = {}
     ): FernIr.dynamic.EndpointSnippetResponse {
-        const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
+        const endpoints = this.resolveEndpoints({ request, options });
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
@@ -98,5 +98,27 @@ export abstract class AbstractDynamicSnippetsGenerator<
             }
         }
         return result.getResponseOrThrow({ endpoint: request.endpoint });
+    }
+
+    /**
+     * Resolves endpoints based on the request and options.
+     * If an endpointId is specified in options, returns only that specific endpoint.
+     * Otherwise, resolves all endpoints matching the endpoint location (method + path).
+     */
+    private resolveEndpoints({
+        request,
+        options
+    }: {
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options: Options;
+    }): FernIr.dynamic.Endpoint[] {
+        if (options.endpointId != null) {
+            const endpoint = this.context.resolveEndpointById(options.endpointId);
+            if (endpoint == null) {
+                throw new Error(`No endpoint found with ID "${options.endpointId}"`);
+            }
+            return [endpoint];
+        }
+        return this.context.resolveEndpointLocationOrThrow(request.endpoint);
     }
 }
