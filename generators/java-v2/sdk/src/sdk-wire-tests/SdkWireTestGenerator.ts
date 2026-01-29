@@ -449,7 +449,11 @@ export class SdkWireTestGenerator {
 
             try {
                 dynamicIr.endpoints[endpoint.id] = correctedDynamicEndpoint;
-                const snippet = await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator, endpoint.id);
+                const snippet = await this.generateSnippetForExample(
+                    firstDynamicExample,
+                    dynamicSnippetsGenerator,
+                    endpoint.id
+                );
                 this.context.logger.debug(`Service correction succeeded for endpoint ${endpoint.id}`);
                 return snippet;
             } catch (error) {
