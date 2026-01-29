@@ -5,7 +5,7 @@
         Fix ambiguous type references (CS0104) for sub-client interfaces when multiple sub-clients share the same name in different namespaces.
       type: fix
     - summary: |
-        Fix duplicate implicit conversion operators (CS0557) for undiscriminated unions with multiple variants that resolve to the same C# type.
+        Fix duplicate implicit conversion operators (CS0557) for undiscriminated unions with multiple variants that resolve to the same type.
       type: fix
     - summary: |
         Add transitive implicit conversion operators for nested undiscriminated unions.
