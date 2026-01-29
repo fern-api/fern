@@ -65,7 +65,7 @@ export interface LayoutConfig {
     /**
      * Set the placement of the version and language switcher
      *
-     * @default: `sidebar`
+     * @default: `header`
      *
      * Note: this setting is ignored when `disable-header` is set to true.
      */
