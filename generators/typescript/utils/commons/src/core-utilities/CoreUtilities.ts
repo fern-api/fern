@@ -10,6 +10,7 @@ import { Runtime } from "./Runtime";
 import { Stream } from "./Stream";
 import { UrlUtils } from "./UrlUtils";
 import { Utils } from "./Utils";
+import { Webhooks } from "./Webhooks";
 import { Websocket } from "./Websocket";
 import { Zurg } from "./Zurg";
 
@@ -24,6 +25,7 @@ export interface CoreUtilities {
     pagination: Pagination;
     customPagination: CustomPagination;
     utils: Utils;
+    webhooks: Webhooks;
     websocket: Websocket;
     fileUtils: FileUtils;
     urlUtils: UrlUtils;

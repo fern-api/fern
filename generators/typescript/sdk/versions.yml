@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.46.0
+  changelogEntry:
+    - summary: |
+        Add `WebhooksHelper` utility class for verifying webhook signatures. The helper provides a
+        `verifySignature` method that validates HMAC-SHA256 signatures, supporting both Node.js and
+        browser environments. This enables SDK users to securely verify that incoming webhook requests
+        originated from the expected source.
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.45.1
   changelogEntry:
     - summary: Remove check if body is `null` or `undefined`. If `null`, it is valid JSON `null`, and if `undefined`, it handles correctly to not have a body.

@@ -22,6 +22,7 @@ import { RuntimeImpl } from "./Runtime";
 import { StreamImpl } from "./Stream";
 import { UrlUtilsImpl } from "./UrlUtils";
 import { UtilsImpl } from "./Utils";
+import { WebhooksImpl } from "./Webhooks";
 import { WebsocketImpl } from "./Websocket";
 import { ZurgImpl } from "./Zurg";
 
@@ -119,6 +120,10 @@ export class CoreUtilitiesManager {
                 customPagerName: this.customPagerName
             }),
             utils: new UtilsImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            webhooks: new WebhooksImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
             websocket: new WebsocketImpl({
                 getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata
