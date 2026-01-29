@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.19.5
+  changelogEntry:
+    - summary: |
+        Fix wire test issue for examples that contained string fields that looked like datetimes.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
 - version: 2.19.4
   changelogEntry:
     - summary: |

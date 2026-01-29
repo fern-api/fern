@@ -1,4 +1,4 @@
-import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import {
     ExampleEndpointCall,
     ExampleRequestBody,
@@ -58,12 +58,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request, endpoint);
 
                     writer.writeLine(`const string requestJson${suffix} = """`);
-                    writer.writeLine(
-                        JSON.stringify(filteredRequestJson, text.normalizeDates, 2).replace(
-                            /"\\{1,2}\$ref"/g,
-                            '"$ref\"'
-                        )
-                    );
+                    writer.writeLine(JSON.stringify(filteredRequestJson, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref"'));
                     writer.writeTextStatement('"""');
                 }
                 writer.newLine();
@@ -72,10 +67,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (responseBodyType === "json") {
                         writer.writeLine(`const string mockResponse${suffix} = """`);
                         writer.writeLine(
-                            JSON.stringify(jsonExampleResponse, text.normalizeDates, 2).replace(
-                                /"\\{1,2}\$ref"/g,
-                                '"$ref\"'
-                            )
+                            JSON.stringify(jsonExampleResponse, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref"')
                         );
                         writer.writeTextStatement('"""');
                     } else if (responseBodyType === "text") {
@@ -435,14 +427,26 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from an example type reference.
-     * Recursively handles containers (optional, list, map, etc.) and named types.
+     * Processes an example type reference for mock server tests.
+     *
+     * This function:
+     * - Filters out read-only properties from objects
+     * - Normalizes datetime primitives to ISO 8601 format with milliseconds (.000Z)
+     *   to match what the SDK serializes for DateTime types
+     * - Recursively handles containers (optional, list, map, etc.) and named types
      */
     private filterExampleTypeReference(exampleTypeRef: ExampleTypeReference): unknown {
         const shape = exampleTypeRef.shape;
 
         switch (shape.type) {
             case "primitive":
+                // Normalize datetime values to ISO 8601 format with milliseconds
+                // This ensures the expected JSON matches what the SDK serializes for DateTime types
+                if (shape.primitive.type === "datetime") {
+                    return new Date(shape.primitive.datetime).toISOString();
+                }
+                return exampleTypeRef.jsonExample;
+
             case "unknown":
                 return exampleTypeRef.jsonExample;
 
