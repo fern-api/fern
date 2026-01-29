@@ -41,6 +41,19 @@ types:
 
   OptionalAlias: optional<string>
 
+  ObjectWithDatetimeLikeString:
+    docs: |
+      This type tests that string fields containing datetime-like values
+      are NOT reformatted by the wire test generator. The string field
+      should preserve its exact value even if it looks like a datetime.
+    properties:
+      datetimeLikeString:
+        type: string
+        docs: A string field that happens to contain a datetime-like value
+      actualDatetime:
+        type: datetime
+        docs: An actual datetime field for comparison
+
 errors:
   ObjectWithOptionalFieldError:
     status-code: 400

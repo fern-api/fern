@@ -12,7 +12,8 @@ public class Example29
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnStringAsync(
+        await client.Endpoints.Params.ModifyWithPathAsync(
+            "param",
             "string"
         );
     }

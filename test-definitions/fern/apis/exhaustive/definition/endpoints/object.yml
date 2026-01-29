@@ -58,3 +58,22 @@ service:
       method: POST
       request: list<objects.NestedObjectWithRequiredField>
       response: objects.NestedObjectWithRequiredField
+
+    getAndReturnWithDatetimeLikeString:
+      docs: |
+        Tests that string fields containing datetime-like values are NOT reformatted.
+        The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+        without being converted to "2023-08-31T14:15:22.000Z".
+      path: /get-and-return-with-datetime-like-string
+      method: POST
+      request: objects.ObjectWithDatetimeLikeString
+      response: objects.ObjectWithDatetimeLikeString
+      examples:
+        - name: DatetimeLikeStringExample
+          request:
+            datetimeLikeString: "2023-08-31T14:15:22Z"
+            actualDatetime: "2023-08-31T14:15:22Z"
+          response:
+            body:
+              datetimeLikeString: "2023-08-31T14:15:22Z"
+              actualDatetime: "2023-08-31T14:15:22Z"

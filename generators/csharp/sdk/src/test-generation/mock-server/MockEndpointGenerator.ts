@@ -1,4 +1,4 @@
-import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import {
     ExampleEndpointCall,
     ExampleRequestBody,
@@ -40,7 +40,10 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (example.response.type !== "ok" || example.response.value.type !== "body") {
                         throw new Error("Unexpected error response type");
                     }
-                    jsonExampleResponse = example.response.value.value?.jsonExample;
+                    // Filter the response body to normalize datetime values to ISO 8601 format
+                    const responseValue = example.response.value.value;
+                    jsonExampleResponse =
+                        responseValue != null ? this.filterExampleTypeReference(responseValue) : undefined;
                 }
                 const responseBodyType = endpoint.response?.body?.type;
                 // whether or not we support this response type in this generator; the example json may
@@ -59,10 +62,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
                     writer.writeLine(`const string requestJson${suffix} = """`);
                     writer.writeLine(
-                        JSON.stringify(filteredRequestJson, text.normalizeDates, 2).replace(
-                            /"\\{1,2}\$ref"/g,
-                            '"$ref\"'
-                        )
+                        JSON.stringify(filteredRequestJson, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref\"')
                     );
                     writer.writeTextStatement('"""');
                 }
@@ -72,10 +72,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (responseBodyType === "json") {
                         writer.writeLine(`const string mockResponse${suffix} = """`);
                         writer.writeLine(
-                            JSON.stringify(jsonExampleResponse, text.normalizeDates, 2).replace(
-                                /"\\{1,2}\$ref"/g,
-                                '"$ref\"'
-                            )
+                            JSON.stringify(jsonExampleResponse, null, 2).replace(/"\\{1,2}\$ref"/g, '"$ref\"')
                         );
                         writer.writeTextStatement('"""');
                     } else if (responseBodyType === "text") {
@@ -193,18 +190,13 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from a reference request body.
-     * For types with read-only properties (directly or in nested types), uses recursive filtering.
-     * For types without read-only properties, returns jsonExample directly to preserve any modifications.
+     * Filters read-only properties from a reference request body and normalizes datetime values.
+     * Always uses recursive filtering to ensure datetime values are normalized to ISO 8601 format.
      */
     private filterReferenceRequestBody(exampleRequest: ExampleRequestBody.Reference): unknown {
-        // Check if this type or any nested types have read-only properties
-        // If not, return the jsonExample directly to preserve any modifications (e.g., OAuth credentials)
-        if (!this.typeHasReadOnlyProperties(exampleRequest.shape)) {
-            return exampleRequest.jsonExample;
-        }
-
-        // Otherwise, use recursive filtering to remove read-only properties
+        // Always use recursive filtering to:
+        // 1. Remove read-only properties if any exist
+        // 2. Normalize datetime values to ISO 8601 format for wire test matching
         return this.filterExampleTypeReference(exampleRequest);
     }
 
@@ -300,9 +292,9 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from an inlined request body and adds default values when enabled.
-     * For types with read-only properties (directly or in nested types), uses recursive filtering.
-     * For types without read-only properties, returns jsonExample directly to preserve any modifications.
+     * Filters read-only properties from an inlined request body, normalizes datetime values,
+     * and adds default values when enabled.
+     * Always uses recursive filtering to ensure datetime values are normalized to ISO 8601 format.
      */
     private filterInlinedRequestBody(
         exampleRequest: ExampleRequestBody.InlinedRequestBody,
@@ -310,23 +302,10 @@ export class MockEndpointGenerator extends WithGeneration {
     ): Record<string, unknown> {
         const useDefaults = this.generation.settings.useDefaultRequestParameterValues;
 
-        // Check if any properties are read-only or have nested read-only properties
-        const hasReadOnlyProperties = exampleRequest.properties.some(
-            (prop) =>
-                this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration) ||
-                this.typeHasReadOnlyProperties(prop.value.shape)
-        );
-
         // Get the set of wire values present in the example
         const exampleWireValues = new Set(exampleRequest.properties.map((prop) => prop.name.wireValue));
 
-        // If no read-only properties and no defaults to add, return the jsonExample directly
-        // to preserve any modifications (e.g., OAuth credential placeholders set by deepSetProperty)
-        if (!hasReadOnlyProperties && !useDefaults) {
-            return (exampleRequest.jsonExample as Record<string, unknown>) ?? {};
-        }
-
-        // Build the result with filtering and defaults
+        // Build the result with filtering and datetime normalization
         const result: Record<string, unknown> = {};
 
         for (const prop of exampleRequest.properties) {
@@ -334,7 +313,7 @@ export class MockEndpointGenerator extends WithGeneration {
             if (this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration)) {
                 continue;
             }
-            // Recursively filter the property value
+            // Recursively filter the property value (also normalizes datetime values)
             result[prop.name.wireValue] = this.filterExampleTypeReference(prop.value);
         }
 
@@ -437,12 +416,23 @@ export class MockEndpointGenerator extends WithGeneration {
     /**
      * Filters read-only properties from an example type reference.
      * Recursively handles containers (optional, list, map, etc.) and named types.
+     * Also normalizes datetime/date values to ISO 8601 format for wire test matching.
      */
     private filterExampleTypeReference(exampleTypeRef: ExampleTypeReference): unknown {
         const shape = exampleTypeRef.shape;
 
         switch (shape.type) {
             case "primitive":
+                // Normalize datetime/date values to ISO 8601 format for wire test matching
+                // Only normalize actual datetime/date types, NOT string fields that happen to contain datetime-like values
+                if (shape.primitive.type === "datetime" && typeof exampleTypeRef.jsonExample === "string") {
+                    return new Date(exampleTypeRef.jsonExample).toISOString();
+                }
+                if (shape.primitive.type === "date" && typeof exampleTypeRef.jsonExample === "string") {
+                    return new Date(exampleTypeRef.jsonExample).toISOString().slice(0, 10);
+                }
+                return exampleTypeRef.jsonExample;
+
             case "unknown":
                 return exampleTypeRef.jsonExample;
 

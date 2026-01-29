@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.19.5
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to preserve string field values that contain datetime-like strings.
+
+        Previously, the wire test generator would reformat any string value that looked like a datetime
+        (e.g., `"2023-08-31T14:15:22Z"` → `"2023-08-31T14:15:22.000Z"`), even for string fields.
+        This caused wire test failures when APIs used datetime-formatted strings in non-datetime fields.
+
+        Now, datetime normalization only applies to actual `datetime` and `date` typed fields,
+        preserving the original values for string fields.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
 - version: 2.19.4
   changelogEntry:
     - summary: |
