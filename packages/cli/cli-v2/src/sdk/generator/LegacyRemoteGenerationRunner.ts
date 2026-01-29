@@ -5,6 +5,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskResult } from "@fern-api/task-context";
+import type { AiConfig } from "../../ai/config/AiConfig";
 import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter";
 import type { ApiDefinition } from "../../api/config/ApiDefinition";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
@@ -40,11 +41,11 @@ export namespace LegacyRemoteGenerationRunner {
         /** Fern authentication token */
         token: FernToken;
 
+        /** AI services configuration (not used for remote generation) */
+        ai?: AiConfig;
+
         /** Audiences to filter by */
         audiences?: Audiences;
-
-        /** Version override for the generated SDK */
-        version?: string;
 
         /** Whether to log S3 URLs */
         shouldLogS3Url?: boolean;
@@ -57,6 +58,9 @@ export namespace LegacyRemoteGenerationRunner {
 
         /** Path to .fernignore file */
         fernignorePath?: string;
+
+        /** Version override for the generated SDK */
+        version?: string;
     }
 
     export interface Result {
@@ -85,7 +89,7 @@ export class LegacyRemoteGenerationRunner {
     public async run(args: LegacyRemoteGenerationRunner.RunArgs): Promise<LegacyRemoteGenerationRunner.Result> {
         const taskContext = new TaskContextAdapter({ task: args.task, context: this.context });
         try {
-            const generatorInvocation = this.invocationAdapter.adapt(args.target);
+            const generatorInvocation = await this.invocationAdapter.adapt(args.target);
             const generatorGroup: generatorsYml.GeneratorGroup = {
                 groupName: args.target.name,
                 audiences: args.audiences ?? { type: "all" },

@@ -39,7 +39,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedBearerTokenEnvironmentVariable;
 
-var client = new SeedBearerTokenEnvironmentVariableClient();
+var client = new SeedBearerTokenEnvironmentVariableClient("API_KEY");
 await client.Service.GetWithBearerTokenAsync();
 ```
 

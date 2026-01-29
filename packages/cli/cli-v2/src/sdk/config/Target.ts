@@ -1,3 +1,4 @@
+import { schemas } from "@fern-api/config";
 import type { Language } from "./Language";
 import type { OutputConfig } from "./OutputConfig";
 import type { PublishConfig } from "./PublishConfig";
@@ -21,4 +22,8 @@ export interface Target {
     publish?: PublishConfig;
     /** Groups this target belongs to */
     groups?: string[];
+    /** README.md configuration */
+    readme?: schemas.ReadmeSchema;
+    /** Configure smart casing for generated code (default: true) */
+    smartCasing?: boolean;
 }

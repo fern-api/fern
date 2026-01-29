@@ -39,7 +39,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedOauthClientCredentialsMandatoryAuth;
 
-var client = new SeedOauthClientCredentialsMandatoryAuthClient("CLIENT_ID", "CLIENT_SECRET");
+var client = new SeedOauthClientCredentialsMandatoryAuthClient("client_id", "client_secret");
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
     {

@@ -100,6 +100,35 @@ internal static class HeadersBuilder
         }
 
         /// <summary>
+        /// Adds multiple headers from a Headers dictionary, excluding the Authorization header.
+        /// This is useful for endpoints that don't require authentication, to avoid triggering
+        /// lazy auth token resolution.
+        /// HeaderValue instances are stored and will be resolved when BuildAsync() is called.
+        /// Overwrites any existing headers with the same key.
+        /// Null entries are ignored.
+        /// </summary>
+        /// <param name="headers">The headers to add. Null is treated as empty.</param>
+        /// <returns>This builder instance for method chaining.</returns>
+        public Builder AddWithoutAuth(Headers? headers)
+        {
+            if (headers is null)
+            {
+                return this;
+            }
+
+            foreach (var header in headers)
+            {
+                if (header.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                _headers[header.Key] = header.Value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Adds multiple headers from a key-value pair collection.
         /// Overwrites any existing headers with the same key.
         /// Null values are ignored.

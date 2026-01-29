@@ -101,6 +101,7 @@ response = client.endpoints.container.with_raw_response.get_and_return_list_of_p
     ...
 )
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

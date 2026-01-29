@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+module Seed
+  module V2
+    module V3
+      module Problem
+        module Types
+          class TestCaseWithActualResultImplementation < Internal::Types::Model
+            field :get_actual_result, -> { Seed::V2::V3::Problem::Types::NonVoidFunctionDefinition }, optional: false, nullable: false, api_name: "getActualResult"
+            field :assert_correctness_check, -> { Seed::V2::V3::Problem::Types::AssertCorrectnessCheck }, optional: false, nullable: false, api_name: "assertCorrectnessCheck"
+          end
+        end
+      end
+    end
+  end
+end

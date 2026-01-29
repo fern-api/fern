@@ -115,5 +115,15 @@ impl ServiceClient {
         ).await
     }
 
+    pub async fn with_literal_and_enum_types(&self, request: &WithLiteralAndEnumTypesRequest, options: Option<RequestOptions>) -> Result<String, ApiError> {
+        self.http_client.execute_multipart_request(
+            Method::POST,
+            "/with-literal-enum",
+            request.clone().to_multipart(),
+            None,
+            options,
+        ).await
+    }
+
 }
 

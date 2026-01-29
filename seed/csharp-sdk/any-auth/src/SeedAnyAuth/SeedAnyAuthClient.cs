@@ -40,37 +40,47 @@ public partial class SeedAnyAuthClient : ISeedAnyAuthClient
             "MY_PASSWORD",
             "Please pass in password or set the environment variable MY_PASSWORD."
         );
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
-                { "X-API-Key", apiKey },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAnyAuth" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernany-auth/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "Authorization", $"Bearer {token}" },
+                { "X-API-Key", apiKey },
+            }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
         var inferredAuthProvider = new InferredAuthTokenProvider(
             clientId,
             clientSecret,
-            new AuthClient(new RawClient(clientOptions.Clone()))
+            new AuthClient(new RawClient(clientOptions))
         );
-        clientOptions.Headers["Authorization"] =
+        clientOptionsWithAuth.Headers["Authorization"] =
             new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
                 (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
                     .First()
                     .Value
             );
-        _client = new RawClient(clientOptions);
+        _client = new RawClient(clientOptionsWithAuth);
         Auth = new AuthClient(_client);
         User = new UserClient(_client);
     }

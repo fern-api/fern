@@ -7,20 +7,24 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .id import Id
+    from .model_type import ModelType
     from .my_alias_object import MyAliasObject
     from .my_collection_alias_object import MyCollectionAliasObject
     from .my_inline_type import MyInlineType
     from .my_object import MyObject
     from .my_object_with_optional import MyObjectWithOptional
     from .object_type import ObjectType
+    from .open_enum_type import OpenEnumType
 _dynamic_imports: typing.Dict[str, str] = {
     "Id": ".id",
+    "ModelType": ".model_type",
     "MyAliasObject": ".my_alias_object",
     "MyCollectionAliasObject": ".my_collection_alias_object",
     "MyInlineType": ".my_inline_type",
     "MyObject": ".my_object",
     "MyObjectWithOptional": ".my_object_with_optional",
     "ObjectType": ".object_type",
+    "OpenEnumType": ".open_enum_type",
 }
 
 
@@ -47,10 +51,12 @@ def __dir__():
 
 __all__ = [
     "Id",
+    "ModelType",
     "MyAliasObject",
     "MyCollectionAliasObject",
     "MyInlineType",
     "MyObject",
     "MyObjectWithOptional",
     "ObjectType",
+    "OpenEnumType",
 ]

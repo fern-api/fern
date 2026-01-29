@@ -16,30 +16,40 @@ public partial class SeedBearerTokenEnvironmentVariableClient
             "COURIER_API_KEY",
             "Please pass in apiKey or set the environment variable COURIER_API_KEY."
         );
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {apiKey ?? ""}" },
-                { "X-API-Version", "1.0.0" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedBearerTokenEnvironmentVariable" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernbearer-token-environment-variable/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
         if (clientOptions.Version != null)
         {
-            defaultHeaders["X-API-Version"] = clientOptions.Version;
+            platformHeaders["X-API-Version"] = clientOptions.Version;
         }
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "Authorization", $"Bearer {apiKey ?? ""}" },
+                { "X-API-Version", "1.0.0" },
+            }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
+        _client = new RawClient(clientOptionsWithAuth);
         Service = new ServiceClient(_client);
     }
 
