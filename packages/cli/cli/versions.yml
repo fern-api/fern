@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.1
+  changelogEntry:
+    - summary: |
+        Fix primitive example generation to handle zero-length strings correctly.
+      type: chore
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.53.0
   changelogEntry:
     - summary: |
