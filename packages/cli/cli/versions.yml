@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI oneOf with discriminator to be parsed as discriminated union. Previously, when the discriminant property was defined in each variant schema (which is the standard OpenAPI pattern), the union was incorrectly parsed as an undiscriminated union. Now, any oneOf with a discriminator is correctly parsed as a discriminated union, and the discriminant property is filtered out from variant schemas to avoid duplication.
+      type: fix
+  createdAt: "2026-01-28"
 - version: 3.52.0
   changelogEntry:
     - summary: |
