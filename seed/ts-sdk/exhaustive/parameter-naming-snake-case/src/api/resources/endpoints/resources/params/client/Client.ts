@@ -513,4 +513,68 @@ export class ParamsClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/params/path/{param}");
     }
+
+    /**
+     * POST with path param that has same name as body property (path param inlined)
+     *
+     * @param {SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam} request
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.postWithBodyAndDuplicatePathParam({
+     *         account_id: "accountId",
+     *         accountId: "accountId",
+     *         otherProperty: "otherProperty"
+     *     })
+     */
+    public postWithBodyAndDuplicatePathParam(
+        request: SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithBodyAndDuplicatePathParam(request, requestOptions));
+    }
+
+    private async __postWithBodyAndDuplicatePathParam(
+        request: SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const { account_id: accountId, ..._body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(accountId)}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/params/path/{accountId}");
+    }
 }

@@ -584,4 +584,83 @@ export class ParamsClient {
             rawResponse: _response.rawResponse,
         };
     }
+
+    /**
+     * POST with path param that has same name as body property (path param inlined)
+     *
+     * @param {SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam} request
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.postWithBodyAndDuplicatePathParam({
+     *         accountId: "accountId",
+     *         accountId: "accountId",
+     *         otherProperty: "otherProperty"
+     *     })
+     */
+    public postWithBodyAndDuplicatePathParam(
+        request: SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<string, SeedExhaustive.endpoints.params.postWithBodyAndDuplicatePathParam.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__postWithBodyAndDuplicatePathParam(request, requestOptions));
+    }
+
+    private async __postWithBodyAndDuplicatePathParam(
+        request: SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<string, SeedExhaustive.endpoints.params.postWithBodyAndDuplicatePathParam.Error>
+        >
+    > {
+        const { accountId, ..._body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(accountId)}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as string,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedExhaustive.endpoints.params.postWithBodyAndDuplicatePathParam.Error._unknown(
+                    _response.error,
+                ),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
 }

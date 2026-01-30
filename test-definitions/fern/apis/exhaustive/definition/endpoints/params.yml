@@ -87,3 +87,19 @@ service:
         path-parameters:
           param: string
       response: string
+
+    postWithBodyAndDuplicatePathParam:
+      docs: POST with path param that has same name as body property (path param inlined)
+      path: /path/{accountId}
+      method: POST
+      request:
+        name: PostWithBodyAndDuplicatePathParam
+        path-parameters:
+          accountId: string
+        body:
+          properties:
+            accountId:
+              type: optional<string>
+              docs: This should be excluded from the request wrapper since it duplicates the path param
+            otherProperty: string
+      response: string

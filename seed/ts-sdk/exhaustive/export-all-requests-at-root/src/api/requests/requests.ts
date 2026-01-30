@@ -73,6 +73,21 @@ export interface ModifyResourceAtInlinedPath {
 /**
  * @example
  *     {
+ *         accountId: "accountId",
+ *         accountId: "accountId",
+ *         otherProperty: "otherProperty"
+ *     }
+ */
+export interface PostWithBodyAndDuplicatePathParam {
+    accountId: string;
+    /** This should be excluded from the request wrapper since it duplicates the path param */
+    accountId?: string;
+    otherProperty: string;
+}
+
+/**
+ * @example
+ *     {
  *         id: "id"
  *     }
  */

@@ -4,3 +4,4 @@ export type { GetWithMultipleQuery } from "./GetWithMultipleQuery.js";
 export type { GetWithPathAndQuery } from "./GetWithPathAndQuery.js";
 export type { GetWithQuery } from "./GetWithQuery.js";
 export type { ModifyResourceAtInlinedPath } from "./ModifyResourceAtInlinedPath.js";
+export type { PostWithBodyAndDuplicatePathParam } from "./PostWithBodyAndDuplicatePathParam.js";

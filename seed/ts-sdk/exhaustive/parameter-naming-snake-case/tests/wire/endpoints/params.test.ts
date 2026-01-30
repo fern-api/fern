@@ -117,4 +117,26 @@ describe("ParamsClient", () => {
         });
         expect(response).toEqual("string");
     });
+
+    test("postWithBodyAndDuplicatePathParam", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { accountId: "accountId", otherProperty: "otherProperty" };
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .post("/params/path/accountId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.params.postWithBodyAndDuplicatePathParam({
+            account_id: "accountId",
+            accountId: "accountId",
+            otherProperty: "otherProperty",
+        });
+        expect(response).toEqual("string");
+    });
 });

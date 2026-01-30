@@ -333,6 +333,17 @@
         },
         {
             "id": {
+                "path": "/params/path/{accountId}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.postWithBodyAndDuplicatePathParam"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.postWithBodyAndDuplicatePathParam({\n    accountId: \"accountId\",\n    accountId: \"accountId\",\n    otherProperty: \"otherProperty\"\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/primitive/string",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"
