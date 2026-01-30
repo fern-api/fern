@@ -395,7 +395,14 @@ async function generateComparisons({
     return results;
 }
 
-function getProductionUrl(docsConfig: { instances: Array<{ url: string }> | undefined }): string {
+interface ProductionUrlInfo {
+    baseUrl: string;
+    basePath: string | null;
+}
+
+function getProductionUrlInfo(docsConfig: {
+    instances: Array<{ url: string; "custom-domain"?: string }> | undefined;
+}): ProductionUrlInfo {
     if (docsConfig.instances == null || docsConfig.instances.length === 0) {
         throw new Error("No docs instances configured in docs.yml");
     }
@@ -405,13 +412,24 @@ function getProductionUrl(docsConfig: { instances: Array<{ url: string }> | unde
         throw new Error("No docs instances configured in docs.yml");
     }
 
-    const instanceUrl = firstInstance.url;
+    // Prefer custom-domain if available, otherwise use url
+    const instanceUrl = firstInstance["custom-domain"] ?? firstInstance.url;
 
-    if (instanceUrl.startsWith("https://") || instanceUrl.startsWith("http://")) {
-        return instanceUrl;
+    let normalizedUrl = instanceUrl;
+    if (!normalizedUrl.startsWith("https://") && !normalizedUrl.startsWith("http://")) {
+        normalizedUrl = `https://${normalizedUrl}`;
     }
 
-    return `https://${instanceUrl}`;
+    // Parse the URL to extract base path
+    try {
+        const url = new URL(normalizedUrl);
+        const basePath = url.pathname !== "/" ? url.pathname.replace(/\/$/, "") : null;
+        const baseUrl = `${url.protocol}//${url.host}`;
+        return { baseUrl, basePath };
+    } catch {
+        // If URL parsing fails, return as-is with no base path
+        return { baseUrl: normalizedUrl, basePath: null };
+    }
 }
 
 export async function docsDiff({
@@ -444,7 +462,7 @@ export async function docsDiff({
 
     const fernToken = process.env.FERN_TOKEN ?? token.value;
 
-    const productionBaseUrl = getProductionUrl(docsWorkspace.config);
+    const productionUrlInfo = getProductionUrlInfo(docsWorkspace.config);
 
     let normalizedPreviewUrl = previewUrl;
     if (normalizedPreviewUrl.startsWith("https://")) {
@@ -504,7 +522,10 @@ export async function docsDiff({
                 const afterPath = join(outputPath, RelativeFilePath.of(`${filename}-after.png`));
                 const comparisonBasePath = join(outputPath, RelativeFilePath.of(`${filename}-comparison.png`));
 
-                const productionUrl = `${productionBaseUrl}/${slug}`;
+                // Construct production URL, handling base path correctly
+                // If the production URL has a base path (e.g., /learn), the slug already includes it
+                // So we use just the base URL (without path) and append the full slug
+                const productionUrl = `${productionUrlInfo.baseUrl}/${slug}`;
                 const previewPageUrl = `https://${normalizedPreviewUrl}/${slug}`;
 
                 context.logger.info(`Capturing screenshots for: ${slug}`);
