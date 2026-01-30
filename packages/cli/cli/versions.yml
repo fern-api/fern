@@ -1,16 +1,9 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.56.0
-  changelogEntry:
-    - summary: |
-        Improve `fern docs diff` output to split long pages into multiple cropped comparisons when changes occur far apart (e.g., top and bottom). Each region is saved as its own side-by-side Before|After image with a subtle highlight border. JSON output now includes one entry per region.
-      type: feat
-  createdAt: "2026-01-30"
-  irVersion: 63
 
 - version: 3.55.0
   changelogEntry:
     - summary: |
-        Add `fern docs diff` command for visual regression testing of docs. This command captures screenshots of preview and production docs pages, generates visual diffs using pixelmatch, and outputs JSON with change percentages. Useful for CI workflows to detect unintended visual changes before merging docs updates.
+        Add `fern docs diff` command for visual regression testing of docs. This command captures screenshots of preview and production docs pages, generates visual diffs using pixelmatch, and outputs JSON with change percentages.
       type: feat
   createdAt: "2026-01-30"
   irVersion: 63
