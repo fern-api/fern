@@ -644,6 +644,8 @@ function addListTestFixturesCommand(cli: Argv) {
                         : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-file"]));
                     await writeFile(outputPath, output);
                     console.log(`Output written to ${outputPath}`);
+                    // Exit immediately after writing to avoid any async cleanup issues
+                    process.exit(0);
                 } else {
                     console.log(output);
                 }
@@ -664,6 +666,8 @@ function addListTestFixturesCommand(cli: Argv) {
                         : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-file"]));
                     await writeFile(outputPath, output);
                     console.log(`Output written to ${outputPath}`);
+                    // Exit immediately after writing to avoid any async cleanup issues
+                    process.exit(0);
                 } else {
                     console.log(output);
                 }
