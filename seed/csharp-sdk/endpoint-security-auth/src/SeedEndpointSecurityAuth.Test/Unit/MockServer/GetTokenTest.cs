@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedEndpointSecurityAuth;
-using SeedEndpointSecurityAuth.Core;
+using SeedEndpointSecurityAuth.Test.Utils;
 
 namespace SeedEndpointSecurityAuth.Test.Unit.MockServer;
 
@@ -51,9 +51,6 @@ public class GetTokenTest : BaseMockServerTest
                 GrantType = "client_credentials",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -314,7 +314,7 @@ public class NestedUnionRoot
             );
         }
 
-        public override NestedUnionRoot? ReadAsPropertyName(
+        public override NestedUnionRoot ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

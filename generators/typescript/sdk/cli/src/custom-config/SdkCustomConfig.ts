@@ -7,6 +7,7 @@ export interface SdkCustomConfig {
     namespaceExport: string | undefined;
     outputEsm: boolean;
     outputSourceFiles: boolean;
+    outputSrcOnly: boolean;
     includeCredentialsOnCrossOriginRequests: boolean;
     shouldBundle: boolean;
     allowCustomFetcher: boolean;

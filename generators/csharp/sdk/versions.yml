@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.2
+  changelogEntry:
+    - summary: |
+        Wire test assertions now use JSON element comparison instead of object equality, resolving false failures when comparing collections inside undiscriminated union types.
+      type: fix
+    - summary: |
+        Fix mock response data generation to omit null values for optional-but-not-nullable properties, matching SDK serialization behavior.
+      type: fix
+    - summary: |
+        Fix nullability warning (CS8764) in undiscriminated union JsonConverter by using non-optional return type for ReadAsPropertyName method.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
 - version: 2.20.1
   changelogEntry:
     - summary: |

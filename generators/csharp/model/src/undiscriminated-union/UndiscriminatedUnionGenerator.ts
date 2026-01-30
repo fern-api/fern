@@ -785,7 +785,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
         converterClass.addMethod({
             access: ast.Access.Public,
             override: true,
-            return_: unionReference.asOptional(),
+            return_: unionReference,
             name: "ReadAsPropertyName",
             parameters: [
                 this.csharp.parameter({

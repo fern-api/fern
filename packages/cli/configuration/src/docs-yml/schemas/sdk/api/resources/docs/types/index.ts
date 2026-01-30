@@ -56,6 +56,7 @@ export * from "./HttpSnippetsConfig";
 export * from "./HttpSnippetLanguage";
 export * from "./SearchbarPlacement";
 export * from "./TabsPlacement";
+export * from "./SwitcherPlacement";
 export * from "./ContentAlignment";
 export * from "./HeaderPosition";
 export * from "./AudienceId";

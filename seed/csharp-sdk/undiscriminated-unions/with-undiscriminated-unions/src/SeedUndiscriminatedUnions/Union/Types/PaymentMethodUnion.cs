@@ -242,7 +242,7 @@ public class PaymentMethodUnion
             );
         }
 
-        public override PaymentMethodUnion? ReadAsPropertyName(
+        public override PaymentMethodUnion ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

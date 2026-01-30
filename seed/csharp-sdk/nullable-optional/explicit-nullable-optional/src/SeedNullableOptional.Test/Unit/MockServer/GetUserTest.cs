@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedNullableOptional;
-using SeedNullableOptional.Core;
+using SeedNullableOptional.Test.Utils;
 
 namespace SeedNullableOptional.Test.Unit.MockServer;
 
@@ -42,9 +41,6 @@ public class GetUserTest : BaseMockServerTest
             );
 
         var response = await Client.NullableOptional.GetUserAsync("userId");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<UserResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

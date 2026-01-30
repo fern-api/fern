@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedVersion;
-using SeedVersion.Core;
+using SeedVersion.Test.Utils;
 
 namespace SeedVersion.Test.Unit.MockServer;
 
@@ -27,9 +26,6 @@ public class GetUserTest : BaseMockServerTest
             );
 
         var response = await Client.User.GetUserAsync("userId");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }
