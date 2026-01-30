@@ -275,6 +275,9 @@ jobs:
         id: create-dynamic-matrix
         shell: bash
         run: |
+          # Enable debug mode to see exactly which command fails
+          set -x
+          
           NUM_GROUPS=${{ matrix.number-of-groups || 0 }}
           
           # Query fixtures and split into groups using the seed CLI
@@ -293,7 +296,10 @@ jobs:
             exit 1
           fi
           
+          echo "File exists, reading with jq..."
           GROUPS=$(jq -c '.generators["${{ matrix.sdk-name }}"]' /tmp/fixtures.json)
+          JQ_EXIT=$?
+          echo "jq exit code: $JQ_EXIT"
           
           if [ -z "$GROUPS" ] || [ "$GROUPS" = "null" ]; then
             echo "Error: Failed to parse fixtures from output file"
