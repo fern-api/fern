@@ -42,6 +42,12 @@ export async function tryRunCli(): Promise<void> {
                 argv.showHelp();
                 // biome-ignore lint: ignore next line
                 console.error(message);
+            } else {
+                // Log the actual error for debugging
+                console.error("Error:", error);
+                if (error instanceof Error) {
+                    console.error("Stack:", error.stack);
+                }
             }
         });
 
