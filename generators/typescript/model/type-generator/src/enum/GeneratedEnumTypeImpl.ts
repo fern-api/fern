@@ -182,7 +182,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                         )
                     )
                 ],
-                undefined,
+                ts.factory.createTypeReferenceNode(GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER, undefined),
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                 ts.factory.createBlock(
                     [
@@ -233,6 +233,59 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             )
         );
 
+        // Build the explicit type annotation for isolatedDeclarations compatibility:
+        // typeof ValuesConst & { _visit: <R>(value: EnumName, visitor: EnumName.Visitor<R>) => R }
+        const visitMethodType = ts.factory.createFunctionTypeNode(
+            [
+                ts.factory.createTypeParameterDeclaration(
+                    undefined,
+                    GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
+                    undefined,
+                    undefined
+                )
+            ],
+            [
+                ts.factory.createParameterDeclaration(
+                    undefined,
+                    undefined,
+                    GeneratedEnumTypeImpl.VISIT_VALUE_PARAMETER_NAME,
+                    undefined,
+                    ts.factory.createTypeReferenceNode(this.typeName, undefined)
+                ),
+                ts.factory.createParameterDeclaration(
+                    undefined,
+                    undefined,
+                    GeneratedEnumTypeImpl.VISITOR_PARAMETER_NAME,
+                    undefined,
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier(this.typeName),
+                            GeneratedEnumTypeImpl.VISITOR_INTERFACE_NAME
+                        ),
+                        [
+                            ts.factory.createTypeReferenceNode(
+                                GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
+                                undefined
+                            )
+                        ]
+                    )
+                )
+            ],
+            ts.factory.createTypeReferenceNode(GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER, undefined)
+        );
+
+        const constTypeAnnotation = ts.factory.createIntersectionTypeNode([
+            ts.factory.createTypeQueryNode(ts.factory.createIdentifier(this.getValuesConstName())),
+            ts.factory.createTypeLiteralNode([
+                ts.factory.createPropertySignature(
+                    undefined,
+                    GeneratedEnumTypeImpl.VISIT_PROPERTTY_NAME,
+                    undefined,
+                    visitMethodType
+                )
+            ])
+        ]);
+
         return {
             kind: StructureKind.VariableStatement,
             declarationKind: VariableDeclarationKind.Const,
@@ -240,18 +293,16 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             declarations: [
                 {
                     name: this.typeName,
+                    type: getTextOfTsNode(constTypeAnnotation),
                     initializer: getTextOfTsNode(
-                        ts.factory.createAsExpression(
-                            ts.factory.createObjectLiteralExpression(
-                                [
-                                    ts.factory.createSpreadAssignment(
-                                        ts.factory.createIdentifier(this.getValuesConstName())
-                                    ),
-                                    visitProperty
-                                ],
-                                true
-                            ),
-                            ts.factory.createTypeReferenceNode("const")
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createSpreadAssignment(
+                                    ts.factory.createIdentifier(this.getValuesConstName())
+                                ),
+                                visitProperty
+                            ],
+                            true
                         )
                     )
                 }

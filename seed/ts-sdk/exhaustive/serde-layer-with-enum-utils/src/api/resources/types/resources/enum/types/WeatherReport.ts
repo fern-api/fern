@@ -7,9 +7,11 @@ const WeatherReportValues = {
     Snowing: "SNOWING",
 } as const;
 export type WeatherReport = (typeof WeatherReportValues)[keyof typeof WeatherReportValues];
-export const WeatherReport = {
+export const WeatherReport: typeof WeatherReportValues & {
+    _visit: <R>(value: WeatherReport, visitor: WeatherReport.Visitor<R>) => R;
+} = {
     ...WeatherReportValues,
-    _visit: <R>(value: WeatherReport, visitor: WeatherReport.Visitor<R>) => {
+    _visit: <R>(value: WeatherReport, visitor: WeatherReport.Visitor<R>): R => {
         switch (value) {
             case WeatherReport.Sunny:
                 return visitor.sunny();
@@ -23,7 +25,7 @@ export const WeatherReport = {
                 return visitor._other();
         }
     },
-} as const;
+};
 
 export namespace WeatherReport {
     export interface Visitor<R> {

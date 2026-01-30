@@ -14,9 +14,11 @@ const ErrorCodeValues = {
     Unknown: "Unknown",
 } as const;
 export type ErrorCode = (typeof ErrorCodeValues)[keyof typeof ErrorCodeValues];
-export const ErrorCode = {
+export const ErrorCode: typeof ErrorCodeValues & {
+    _visit: <R>(value: ErrorCode, visitor: ErrorCode.Visitor<R>) => R;
+} = {
     ...ErrorCodeValues,
-    _visit: <R>(value: ErrorCode, visitor: ErrorCode.Visitor<R>) => {
+    _visit: <R>(value: ErrorCode, visitor: ErrorCode.Visitor<R>): R => {
         switch (value) {
             case ErrorCode.InternalServerError:
                 return visitor.internalServerError();
@@ -44,7 +46,7 @@ export const ErrorCode = {
                 return visitor._other();
         }
     },
-} as const;
+};
 
 export namespace ErrorCode {
     export interface Visitor<R> {

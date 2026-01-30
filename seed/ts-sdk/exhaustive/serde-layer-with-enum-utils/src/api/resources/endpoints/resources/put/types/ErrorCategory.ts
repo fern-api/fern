@@ -6,9 +6,11 @@ const ErrorCategoryValues = {
     InvalidRequestError: "INVALID_REQUEST_ERROR",
 } as const;
 export type ErrorCategory = (typeof ErrorCategoryValues)[keyof typeof ErrorCategoryValues];
-export const ErrorCategory = {
+export const ErrorCategory: typeof ErrorCategoryValues & {
+    _visit: <R>(value: ErrorCategory, visitor: ErrorCategory.Visitor<R>) => R;
+} = {
     ...ErrorCategoryValues,
-    _visit: <R>(value: ErrorCategory, visitor: ErrorCategory.Visitor<R>) => {
+    _visit: <R>(value: ErrorCategory, visitor: ErrorCategory.Visitor<R>): R => {
         switch (value) {
             case ErrorCategory.ApiError:
                 return visitor.apiError();
@@ -20,7 +22,7 @@ export const ErrorCategory = {
                 return visitor._other();
         }
     },
-} as const;
+};
 
 export namespace ErrorCategory {
     export interface Visitor<R> {
