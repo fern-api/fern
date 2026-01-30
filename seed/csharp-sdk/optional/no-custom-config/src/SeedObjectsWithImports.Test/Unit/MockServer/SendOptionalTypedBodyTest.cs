@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedObjectsWithImports;
-using SeedObjectsWithImports.Core;
+using SeedObjectsWithImports.Test.Utils;
 
 namespace SeedObjectsWithImports.Test.Unit.MockServer;
 
@@ -38,6 +38,6 @@ public class SendOptionalTypedBodyTest : BaseMockServerTest
         var response = await Client.Optional.SendOptionalTypedBodyAsync(
             new SendOptionalBodyRequest { Message = "message" }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

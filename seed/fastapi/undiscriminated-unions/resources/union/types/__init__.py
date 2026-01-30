@@ -8,6 +8,7 @@ from .key_type import KeyType
 from .metadata import Metadata
 from .metadata_union import MetadataUnion
 from .my_union import MyUnion
+from .name import Name
 from .named_metadata import NamedMetadata
 from .nested_union_l_1 import NestedUnionL1
 from .nested_union_l_2 import NestedUnionL2
@@ -21,6 +22,8 @@ from .union_with_duplicate_types import UnionWithDuplicateTypes
 from .union_with_identical_primitives import UnionWithIdenticalPrimitives
 from .union_with_identical_strings import UnionWithIdenticalStrings
 from .union_with_reserved_names import UnionWithReservedNames
+from .union_with_type_aliases import UnionWithTypeAliases
+from .user_id import UserId
 
 __all__ = [
     "ConvertToken",
@@ -29,6 +32,7 @@ __all__ = [
     "Metadata",
     "MetadataUnion",
     "MyUnion",
+    "Name",
     "NamedMetadata",
     "NestedUnionL1",
     "NestedUnionL2",
@@ -42,4 +46,6 @@ __all__ = [
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
     "UnionWithReservedNames",
+    "UnionWithTypeAliases",
+    "UserId",
 ]

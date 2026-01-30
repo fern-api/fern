@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -39,6 +39,6 @@ public class CreateMovieTest : BaseMockServerTest
         var response = await Client.Imdb.CreateMovieAsync(
             new CreateMovieRequest { Title = "title", Rating = 1.1 }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

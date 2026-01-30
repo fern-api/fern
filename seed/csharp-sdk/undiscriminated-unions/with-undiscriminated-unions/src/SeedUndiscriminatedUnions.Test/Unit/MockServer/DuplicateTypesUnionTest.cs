@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedUndiscriminatedUnions;
-using SeedUndiscriminatedUnions.Core;
+using SeedUndiscriminatedUnions.Test.Utils;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 
@@ -34,9 +33,6 @@ public class DuplicateTypesUnionTest : BaseMockServerTest
             );
 
         var response = await Client.Union.DuplicateTypesUnionAsync("string");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<UnionWithDuplicateTypes>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -9,7 +9,8 @@ export interface SingleUnionTypeDetailedSchema
         FernDefinition.WithDocsSchema,
         FernDefinition.WithName,
         FernDefinition.WithAvailability,
-        FernDefinition.WithDisplayName {
+        FernDefinition.WithDisplayName,
+        FernDefinition.WithValidation {
     type?: string;
     key?: FernDefinition.SingleUnionTypeKey;
 }

@@ -913,13 +913,23 @@ export class DocsDefinitionResolver {
             );
         }
 
+        // Process versions in batches to reduce memory usage for customers with many API versions.
+        // Each version generates a large IR and API definition, so processing all in parallel
+        // can cause memory issues (e.g., 35 versions * ~100-200MB each = 3.5-7GB).
+        const BATCH_SIZE = 5;
+        const children: FernNavigation.V1.VersionNode[] = [];
+        for (let i = 0; i < versioned.versions.length; i += BATCH_SIZE) {
+            const batch = versioned.versions.slice(i, i + BATCH_SIZE);
+            const batchResults = await Promise.all(
+                batch.map((item, batchIdx) => this.toVersionNode(item, parentSlug, i + batchIdx === 0))
+            );
+            children.push(...batchResults);
+        }
+
         return {
             id,
             type: "versioned",
-            // TODO: should the first version always be default? We should make this configurable.
-            children: await Promise.all(
-                versioned.versions.map((item, idx) => this.toVersionNode(item, parentSlug, idx === 0))
-            )
+            children
         };
     }
 

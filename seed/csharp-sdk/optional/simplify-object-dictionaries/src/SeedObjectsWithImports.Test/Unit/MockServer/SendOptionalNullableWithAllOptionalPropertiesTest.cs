@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedObjectsWithImports;
-using SeedObjectsWithImports.Core;
+using SeedObjectsWithImports.Test.Utils;
 
 namespace SeedObjectsWithImports.Test.Unit.MockServer;
 
@@ -42,9 +42,6 @@ public class SendOptionalNullableWithAllOptionalPropertiesTest : BaseMockServerT
             "id",
             new DeployParams { UpdateDraft = true }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<DeployResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

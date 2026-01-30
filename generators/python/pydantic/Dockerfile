@@ -4,6 +4,7 @@ FROM python:3.11.13 AS base
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 
+# Keep in sync with the poetry-core version in pyproject.toml
 RUN pip3 install poetry==1.8.5
 RUN poetry config virtualenvs.create false
 

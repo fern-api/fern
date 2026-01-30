@@ -230,7 +230,7 @@ public class Key
             );
         }
 
-        public override Key? ReadAsPropertyName(
+        public override Key ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

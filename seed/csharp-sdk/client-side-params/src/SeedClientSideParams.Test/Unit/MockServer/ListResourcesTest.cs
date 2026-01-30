@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedClientSideParams;
-using SeedClientSideParams.Core;
+using SeedClientSideParams.Test.Utils;
 
 namespace SeedClientSideParams.Test.Unit.MockServer;
 
@@ -71,9 +71,6 @@ public class ListResourcesTest : BaseMockServerTest
                 Search = "search",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Resource>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }
