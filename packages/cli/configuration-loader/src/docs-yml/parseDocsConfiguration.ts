@@ -441,7 +441,7 @@ function convertLayoutConfig(
                   ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
                   : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         switcherPlacement:
-            layout.switcherPlacement === "header"
+            !layout.switcherPlacement || layout.switcherPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Header
                 : CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Sidebar,
         tabsPlacement:
