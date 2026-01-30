@@ -1528,8 +1528,8 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "diff <preview-url> <files..>",
-        "Generate visual diffs between preview and production docs pages",
+        "diff <preview-url> [files..]",
+        "Generate visual diffs between preview and production docs pages. If no files are provided and not in CI/CD, automatically detects changed MDX files via git diff and opens results in browser.",
         (yargs) =>
             yargs
                 .positional("preview-url", {
@@ -1540,13 +1540,17 @@ function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .positional("files", {
                     type: "string",
                     array: true,
-                    description: "File paths to generate diffs for (e.g. fern/pages/intro.mdx)",
-                    demandOption: true
+                    description:
+                        "File paths to generate diffs for (e.g. fern/pages/intro.mdx). If not provided and not in CI/CD, changed files are auto-detected via git diff."
                 })
                 .option("output", {
                     type: "string",
                     default: ".fern/diff",
                     description: "Output directory for diff images"
+                })
+                .option("open", {
+                    type: "boolean",
+                    description: "Open the diff report in a browser (default: true when files are auto-detected)"
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -1562,8 +1566,9 @@ function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 project,
                 previewUrl: argv.previewUrl,
-                files: argv.files ?? [],
-                outputDir: argv.output
+                files: argv.files,
+                outputDir: argv.output,
+                openInBrowser: argv.open
             });
 
             cliContext.logger.info(JSON.stringify(result, null, 2));

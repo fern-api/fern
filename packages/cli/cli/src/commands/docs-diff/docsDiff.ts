@@ -2,11 +2,32 @@ import { FernToken } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
+import { exec } from "child_process";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { PNG } from "pngjs";
 import { Browser, launch } from "puppeteer";
+import { promisify } from "util";
 
 import { CliContext } from "../../cli-context/CliContext";
+import { isCI } from "../../utils/environment";
+
+const execAsync = promisify(exec);
+
+async function openUrlInBrowser(url: string): Promise<void> {
+    const platform = process.platform;
+    let command: string;
+
+    if (platform === "darwin") {
+        command = `open "${url}"`;
+    } else if (platform === "win32") {
+        command = `start "" "${url}"`;
+    } else {
+        // Linux and other Unix-like systems
+        command = `xdg-open "${url}" || sensible-browser "${url}" || x-www-browser "${url}"`;
+    }
+
+    await execAsync(command);
+}
 
 interface FileSlugMapping {
     filePath: string;
@@ -395,6 +416,211 @@ async function generateComparisons({
     return results;
 }
 
+async function getChangedMdxFilesFromGit(): Promise<string[]> {
+    try {
+        // Try to get the default branch name
+        let defaultBranch = "main";
+        try {
+            const { stdout: remoteBranch } = await execAsync("git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null");
+            defaultBranch = remoteBranch.trim().replace("refs/remotes/origin/", "");
+        } catch {
+            // If that fails, try to detect main vs master
+            try {
+                await execAsync("git rev-parse --verify origin/main 2>/dev/null");
+                defaultBranch = "main";
+            } catch {
+                defaultBranch = "master";
+            }
+        }
+
+        // Get changed files compared to the default branch
+        const { stdout } = await execAsync(`git diff --name-only origin/${defaultBranch}...HEAD -- '*.mdx'`);
+        const files = stdout
+            .trim()
+            .split("\n")
+            .filter((file) => file.length > 0);
+
+        // Also include staged and unstaged changes
+        const { stdout: stagedStdout } = await execAsync("git diff --name-only --cached -- '*.mdx'");
+        const stagedFiles = stagedStdout
+            .trim()
+            .split("\n")
+            .filter((file) => file.length > 0);
+
+        const { stdout: unstagedStdout } = await execAsync("git diff --name-only -- '*.mdx'");
+        const unstagedFiles = unstagedStdout
+            .trim()
+            .split("\n")
+            .filter((file) => file.length > 0);
+
+        // Combine and deduplicate
+        const allFiles = [...new Set([...files, ...stagedFiles, ...unstagedFiles])];
+        return allFiles;
+    } catch (error) {
+        throw new Error(
+            `Failed to get changed files from git: ${error instanceof Error ? error.message : String(error)}`
+        );
+    }
+}
+
+function generateDiffHtmlPage({
+    diffs,
+    outputDir,
+    previewUrl,
+    productionUrl
+}: {
+    diffs: DocsDiffResult[];
+    outputDir: string;
+    previewUrl: string;
+    productionUrl: string;
+}): string {
+    const changedDiffs = diffs.filter((diff) => diff.comparison != null || diff.isNewPage);
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fern Docs Diff</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .summary {
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .summary p {
+            margin: 5px 0;
+        }
+        .diff-section {
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .diff-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .diff-header h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.1em;
+        }
+        .diff-header .file-path {
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .diff-links {
+            margin-top: 10px;
+        }
+        .diff-links a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .diff-links a:hover {
+            text-decoration: underline;
+        }
+        .diff-body {
+            padding: 20px;
+        }
+        .diff-image {
+            max-width: 100%;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+        .new-page-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .no-changes {
+            color: #666;
+            font-style: italic;
+        }
+        .change-percent {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fern Docs Visual Diff</h1>
+        <div class="summary">
+            <p><strong>Preview URL:</strong> <a href="https://${previewUrl}" target="_blank">${previewUrl}</a></p>
+            <p><strong>Production URL:</strong> <a href="${productionUrl}" target="_blank">${productionUrl}</a></p>
+            <p><strong>Total pages with changes:</strong> ${changedDiffs.length}</p>
+            <p><strong>Total pages checked:</strong> ${diffs.length}</p>
+        </div>
+        ${
+            changedDiffs.length === 0
+                ? '<p class="no-changes">No visual changes detected.</p>'
+                : changedDiffs
+                      .map(
+                          (diff) => `
+        <div class="diff-section">
+            <div class="diff-header">
+                <h2>
+                    /${diff.slug}
+                    ${diff.isNewPage ? '<span class="new-page-badge">New Page</span>' : ""}
+                </h2>
+                <div class="file-path">${diff.file}</div>
+                <div class="diff-links">
+                    <a href="https://${previewUrl}/${diff.slug}" target="_blank">View Preview</a>
+                    <a href="${productionUrl}/${diff.slug}" target="_blank">View Production</a>
+                </div>
+                ${diff.changePercent != null ? `<div class="change-percent">Change: ${diff.changePercent.toFixed(2)}%</div>` : ""}
+            </div>
+            <div class="diff-body">
+                ${
+                    diff.comparison != null
+                        ? `<img class="diff-image" src="file://${diff.comparison}" alt="Visual diff for ${diff.slug}" />`
+                        : diff.isNewPage
+                          ? '<p class="no-changes">New page - no production version to compare against.</p>'
+                          : '<p class="no-changes">No visual changes detected.</p>'
+                }
+            </div>
+        </div>`
+                      )
+                      .join("\n")
+        }
+    </div>
+</body>
+</html>`;
+
+    return html;
+}
+
 function getProductionUrl(docsConfig: { instances: Array<{ url: string }> | undefined }): string {
     if (docsConfig.instances == null || docsConfig.instances.length === 0) {
         throw new Error("No docs instances configured in docs.yml");
@@ -419,18 +645,41 @@ export async function docsDiff({
     project,
     previewUrl,
     files,
-    outputDir
+    outputDir,
+    openInBrowser
 }: {
     cliContext: CliContext;
     project: Project;
     previewUrl: string;
-    files: string[];
+    files: string[] | undefined;
     outputDir: string;
+    openInBrowser?: boolean;
 }): Promise<DocsDiffOutput> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
         cliContext.failAndThrow("No docs workspace found. Make sure you have a docs.yml file.");
         return { diffs: [] };
+    }
+
+    // Determine if we should auto-detect files and open in browser
+    const shouldAutoDetect = (files == null || files.length === 0) && !isCI();
+    const shouldOpenInBrowser = openInBrowser ?? shouldAutoDetect;
+
+    // Get files from git diff if not provided and not in CI
+    let filesToDiff: string[];
+    if (shouldAutoDetect) {
+        cliContext.logger.info("No files provided, detecting changed MDX files from git...");
+        filesToDiff = await getChangedMdxFilesFromGit();
+        if (filesToDiff.length === 0) {
+            cliContext.logger.info("No changed MDX files detected.");
+            return { diffs: [] };
+        }
+        cliContext.logger.info(`Found ${filesToDiff.length} changed MDX file(s): ${filesToDiff.join(", ")}`);
+    } else if (files == null || files.length === 0) {
+        cliContext.failAndThrow("No files provided. In CI/CD environments, you must specify files explicitly.");
+        return { diffs: [] };
+    } else {
+        filesToDiff = files;
     }
 
     const token: FernToken | null = await cliContext.runTask(async (context) => {
@@ -458,10 +707,10 @@ export async function docsDiff({
     }
 
     const slugResponse = await cliContext.runTask(async (context) => {
-        context.logger.info(`Resolving slugs for ${files.length} file(s)...`);
+        context.logger.info(`Resolving slugs for ${filesToDiff.length} file(s)...`);
         return getSlugForFiles({
             previewUrl: normalizedPreviewUrl,
-            files,
+            files: filesToDiff,
             token: fernToken
         });
     });
@@ -575,6 +824,29 @@ export async function docsDiff({
             await browser.close();
         }
     });
+
+    // Generate HTML page and open in browser if requested
+    if (shouldOpenInBrowser && results.length > 0) {
+        const htmlContent = generateDiffHtmlPage({
+            diffs: results,
+            outputDir,
+            previewUrl: normalizedPreviewUrl,
+            productionUrl: productionBaseUrl
+        });
+
+        const htmlPath = join(outputPath, RelativeFilePath.of("diff-report.html"));
+        await writeFile(htmlPath, htmlContent);
+        cliContext.logger.info(`Diff report generated: ${htmlPath}`);
+
+        try {
+            await openUrlInBrowser(htmlPath);
+            cliContext.logger.info("Opened diff report in browser.");
+        } catch (error) {
+            cliContext.logger.warn(
+                `Could not open browser automatically. Please open the report manually: ${htmlPath}`
+            );
+        }
+    }
 
     return { diffs: results };
 }
