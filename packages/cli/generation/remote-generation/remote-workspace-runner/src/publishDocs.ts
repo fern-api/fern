@@ -349,8 +349,7 @@ export async function publishDocs({
                 definition: apiDefinition,
                 definitionV2: undefined,
                 dynamicIRs: dynamicIRsByLanguage,
-                // @ts-expect-error docsUrl parameter will be added in FDR schema update (task 3)
-                docsUrl
+                ...(docsUrl && { docsUrl })
             });
 
             if (response.ok) {
