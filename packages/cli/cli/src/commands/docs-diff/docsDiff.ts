@@ -21,10 +21,9 @@ interface GetSlugForFileResponse {
 export interface DocsDiffResult {
     file: string;
     slug: string;
-    before: string | null;
-    after: string;
-    diff: string | null;
+    comparison: string | null;
     changePercent: number | null;
+    isNewPage: boolean;
 }
 
 export interface DocsDiffOutput {
@@ -111,26 +110,97 @@ function slugToFilename(slug: string): string {
     return slug.replace(/\//g, "-");
 }
 
-async function generateDiff({
+interface BoundingBox {
+    minX: number;
+    minY: number;
+    maxX: number;
+    maxY: number;
+}
+
+function findChangedRegionBoundingBox(
+    beforeData: Uint8Array,
+    afterData: Uint8Array,
+    width: number,
+    height: number,
+    threshold: number = 0.1
+): BoundingBox | null {
+    let minX = width;
+    let minY = height;
+    let maxX = 0;
+    let maxY = 0;
+    let hasChanges = false;
+
+    const thresholdValue = Math.floor(threshold * 255);
+
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4;
+
+            const rDiff = Math.abs(beforeData[idx] - afterData[idx]);
+            const gDiff = Math.abs(beforeData[idx + 1] - afterData[idx + 1]);
+            const bDiff = Math.abs(beforeData[idx + 2] - afterData[idx + 2]);
+
+            if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
+                hasChanges = true;
+                minX = Math.min(minX, x);
+                minY = Math.min(minY, y);
+                maxX = Math.max(maxX, x);
+                maxY = Math.max(maxY, y);
+            }
+        }
+    }
+
+    if (!hasChanges) {
+        return null;
+    }
+
+    return { minX, minY, maxX, maxY };
+}
+
+function cropPng(png: PNG, box: BoundingBox, padding: number = 50): PNG {
+    const x1 = Math.max(0, box.minX - padding);
+    const y1 = Math.max(0, box.minY - padding);
+    const x2 = Math.min(png.width, box.maxX + padding);
+    const y2 = Math.min(png.height, box.maxY + padding);
+
+    const croppedWidth = x2 - x1;
+    const croppedHeight = y2 - y1;
+
+    const cropped = new PNG({ width: croppedWidth, height: croppedHeight });
+    PNG.bitblt(png, cropped, x1, y1, croppedWidth, croppedHeight, 0, 0);
+
+    return cropped;
+}
+
+function createSideBySideComparison(beforePng: PNG, afterPng: PNG, gap: number = 20): PNG {
+    const totalWidth = beforePng.width + gap + afterPng.width;
+    const totalHeight = Math.max(beforePng.height, afterPng.height);
+
+    const combined = new PNG({ width: totalWidth, height: totalHeight });
+
+    combined.data.fill(255);
+
+    PNG.bitblt(beforePng, combined, 0, 0, beforePng.width, beforePng.height, 0, 0);
+
+    PNG.bitblt(afterPng, combined, 0, 0, afterPng.width, afterPng.height, beforePng.width + gap, 0);
+
+    return combined;
+}
+
+interface DiffResult {
+    changePercent: number;
+    boundingBox: BoundingBox | null;
+}
+
+async function generateComparison({
     beforePath,
     afterPath,
-    diffPath
+    comparisonPath
 }: {
     beforePath: string;
     afterPath: string;
-    diffPath: string;
-}): Promise<number> {
-    // pixelmatch v6 is ESM-only, so we need to use dynamic import
-    const pixelmatchModule = await import("pixelmatch");
-    const pixelmatch = pixelmatchModule.default as (
-        img1: Uint8Array,
-        img2: Uint8Array,
-        output: Uint8Array,
-        width: number,
-        height: number,
-        options?: { threshold?: number }
-    ) => number;
-
+    comparisonPath: string;
+}): Promise<DiffResult> {
     const beforePng = PNG.sync.read(await readFile(beforePath));
     const afterPng = PNG.sync.read(await readFile(afterPath));
 
@@ -146,26 +216,34 @@ async function generateDiff({
     PNG.bitblt(beforePng, resizedBefore, 0, 0, beforePng.width, beforePng.height, 0, 0);
     PNG.bitblt(afterPng, resizedAfter, 0, 0, afterPng.width, afterPng.height, 0, 0);
 
-    const diffPng = new PNG({ width, height });
-
-    // Convert Buffer to Uint8Array for pixelmatch compatibility
     const beforeData = new Uint8Array(
         resizedBefore.data.buffer,
         resizedBefore.data.byteOffset,
         resizedBefore.data.length
     );
     const afterData = new Uint8Array(resizedAfter.data.buffer, resizedAfter.data.byteOffset, resizedAfter.data.length);
-    const diffData = new Uint8Array(diffPng.data.buffer, diffPng.data.byteOffset, diffPng.data.length);
 
-    const numDiffPixels = pixelmatch(beforeData, afterData, diffData, width, height, {
-        threshold: 0.1
-    });
+    const boundingBox = findChangedRegionBoundingBox(beforeData, afterData, width, height);
 
-    const pngBuffer = PNG.sync.write(diffPng);
-    await writeFile(diffPath, new Uint8Array(pngBuffer));
+    if (boundingBox == null) {
+        return { changePercent: 0, boundingBox: null };
+    }
 
+    const boxWidth = boundingBox.maxX - boundingBox.minX;
+    const boxHeight = boundingBox.maxY - boundingBox.minY;
+    const changedPixels = boxWidth * boxHeight;
     const totalPixels = width * height;
-    return (numDiffPixels / totalPixels) * 100;
+    const changePercent = (changedPixels / totalPixels) * 100;
+
+    const croppedBefore = cropPng(resizedBefore, boundingBox);
+    const croppedAfter = cropPng(resizedAfter, boundingBox);
+
+    const sideBySide = createSideBySideComparison(croppedBefore, croppedAfter);
+
+    const pngBuffer = PNG.sync.write(sideBySide);
+    await writeFile(comparisonPath, new Uint8Array(pngBuffer));
+
+    return { changePercent, boundingBox };
 }
 
 function getProductionUrl(docsConfig: { instances: Array<{ url: string }> | undefined }): string {
@@ -275,7 +353,7 @@ export async function docsDiff({
 
                 const beforePath = join(outputPath, RelativeFilePath.of(`${filename}-before.png`));
                 const afterPath = join(outputPath, RelativeFilePath.of(`${filename}-after.png`));
-                const diffPath = join(outputPath, RelativeFilePath.of(`${filename}-diff.png`));
+                const comparisonPath = join(outputPath, RelativeFilePath.of(`${filename}-comparison.png`));
 
                 const productionUrl = `${productionBaseUrl}/${slug}`;
                 const previewPageUrl = `https://${normalizedPreviewUrl}/${slug}`;
@@ -302,16 +380,22 @@ export async function docsDiff({
                 }
 
                 let changePercent: number | null = null;
-                let diffPathResult: string | null = null;
+                let comparisonPathResult: string | null = null;
+                const isNewPage = !beforeExists;
 
                 if (beforeExists) {
-                    changePercent = await generateDiff({
+                    const diffResult = await generateComparison({
                         beforePath,
                         afterPath,
-                        diffPath
+                        comparisonPath
                     });
-                    diffPathResult = diffPath;
-                    context.logger.info(`  Change: ${changePercent.toFixed(2)}%`);
+                    changePercent = diffResult.changePercent;
+                    if (diffResult.boundingBox != null) {
+                        comparisonPathResult = comparisonPath;
+                        context.logger.info(`  Change: ${changePercent.toFixed(2)}% (cropped to changed region)`);
+                    } else {
+                        context.logger.info(`  No visual changes detected`);
+                    }
                 } else {
                     context.logger.info(`  New page (no production version)`);
                 }
@@ -319,10 +403,9 @@ export async function docsDiff({
                 results.push({
                     file: mapping.filePath,
                     slug,
-                    before: beforeExists ? beforePath : null,
-                    after: afterPath,
-                    diff: diffPathResult,
-                    changePercent
+                    comparison: comparisonPathResult,
+                    changePercent,
+                    isNewPage
                 });
             }
         } finally {
