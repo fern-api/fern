@@ -8,8 +8,9 @@ export type ExampleEndpointSuccessResponse =
     | FernIr.ExampleEndpointSuccessResponse.Sse;
 
 export namespace ExampleEndpointSuccessResponse {
-    export interface Body extends FernIr.ExampleTypeReference, _Utils {
+    export interface Body extends _Utils {
         type: "body";
+        value: FernIr.ExampleTypeReference | undefined;
     }
 
     export interface Stream extends _Utils {
@@ -27,7 +28,7 @@ export namespace ExampleEndpointSuccessResponse {
     }
 
     export interface _Visitor<_Result> {
-        body: (value: FernIr.ExampleTypeReference) => _Result;
+        body: (value: FernIr.ExampleTypeReference | undefined) => _Result;
         stream: (value: FernIr.ExampleTypeReference[]) => _Result;
         sse: (value: FernIr.ExampleServerSideEvent[]) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -35,9 +36,9 @@ export namespace ExampleEndpointSuccessResponse {
 }
 
 export const ExampleEndpointSuccessResponse = {
-    body: (value: FernIr.ExampleTypeReference): FernIr.ExampleEndpointSuccessResponse.Body => {
+    body: (value?: FernIr.ExampleTypeReference): FernIr.ExampleEndpointSuccessResponse.Body => {
         return {
-            ...value,
+            value: value,
             type: "body",
             _visit: function <_Result>(
                 this: FernIr.ExampleEndpointSuccessResponse.Body,
@@ -80,7 +81,7 @@ export const ExampleEndpointSuccessResponse = {
     ): _Result => {
         switch (value.type) {
             case "body":
-                return visitor.body(value);
+                return visitor.body(value.value);
             case "stream":
                 return visitor.stream(value.value);
             case "sse":
