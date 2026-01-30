@@ -157,6 +157,96 @@ function findChangedRegionBoundingBox(
     return { minX, minY, maxX, maxY };
 }
 
+function findChangedRegions(
+    beforeData: Uint8Array,
+    afterData: Uint8Array,
+    width: number,
+    height: number,
+    threshold: number = 0.1,
+    minArea: number = 5000,
+    gapRows: number = 200
+): BoundingBox[] {
+    const thresholdValue = Math.floor(threshold * 255);
+    const rowHasDiff: boolean[] = new Array(height).fill(false);
+
+    for (let y = 0; y < height; y++) {
+        let has = false;
+        for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4;
+            const rDiff = Math.abs(beforeData[idx] - afterData[idx]);
+            const gDiff = Math.abs(beforeData[idx + 1] - afterData[idx + 1]);
+            const bDiff = Math.abs(beforeData[idx + 2] - afterData[idx + 2]);
+            if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
+                has = true;
+                break;
+            }
+        }
+        rowHasDiff[y] = has;
+    }
+
+    const boxes: BoundingBox[] = [];
+    let y = 0;
+    while (y < height) {
+        while (y < height && !rowHasDiff[y]) {
+            y++;
+        }
+        if (y >= height) {
+            break;
+        }
+        let startY = y;
+        let lastDiffY = y;
+        y++;
+        while (y < height) {
+            if (rowHasDiff[y]) {
+                lastDiffY = y;
+                y++;
+            } else {
+                // allow small gaps within a region up to gapRows
+                let gap = 0;
+                while (y < height && !rowHasDiff[y] && gap < gapRows) {
+                    gap++;
+                    y++;
+                }
+                if (y < height && rowHasDiff[y]) {
+                    lastDiffY = y;
+                    y++;
+                } else {
+                    break;
+                }
+            }
+        }
+        const endY = lastDiffY;
+
+        let minX = width;
+        let maxX = 0;
+        for (let yy = startY; yy <= endY; yy++) {
+            for (let xx = 0; xx < width; xx++) {
+                const idx = (yy * width + xx) * 4;
+                const rDiff = Math.abs(beforeData[idx] - afterData[idx]);
+                const gDiff = Math.abs(beforeData[idx + 1] - afterData[idx + 1]);
+                const bDiff = Math.abs(beforeData[idx + 2] - afterData[idx + 2]);
+                if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
+                    if (xx < minX) {
+                        minX = xx;
+                    }
+                    if (xx > maxX) {
+                        maxX = xx;
+                    }
+                }
+            }
+        }
+        if (minX <= maxX) {
+            const box: BoundingBox = { minX, minY: startY, maxX, maxY: endY };
+            const area = (box.maxX - box.minX) * (box.maxY - box.minY);
+            if (area >= minArea) {
+                boxes.push(box);
+            }
+        }
+    }
+
+    return boxes;
+}
+
 function cropPng(png: PNG, box: BoundingBox, padding: number = 50): PNG {
     const x1 = Math.max(0, box.minX - padding);
     const y1 = Math.max(0, box.minY - padding);
@@ -172,7 +262,45 @@ function cropPng(png: PNG, box: BoundingBox, padding: number = 50): PNG {
     return cropped;
 }
 
-function createSideBySideComparison(beforePng: PNG, afterPng: PNG, gap: number = 20): PNG {
+function drawBorder(
+    png: PNG,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    color: [number, number, number, number],
+    thickness: number
+) {
+    const [r, g, b, a] = color;
+    for (let t = 0; t < thickness; t++) {
+        for (let xx = x; xx < x + w; xx++) {
+            const topIdx = ((y + t) * png.width + xx) * 4;
+            const botIdx = ((y + h - 1 - t) * png.width + xx) * 4;
+            png.data[topIdx] = r;
+            png.data[topIdx + 1] = g;
+            png.data[topIdx + 2] = b;
+            png.data[topIdx + 3] = a;
+            png.data[botIdx] = r;
+            png.data[botIdx + 1] = g;
+            png.data[botIdx + 2] = b;
+            png.data[botIdx + 3] = a;
+        }
+        for (let yy = y; yy < y + h; yy++) {
+            const leftIdx = (yy * png.width + (x + t)) * 4;
+            const rightIdx = (yy * png.width + (x + w - 1 - t)) * 4;
+            png.data[leftIdx] = r;
+            png.data[leftIdx + 1] = g;
+            png.data[leftIdx + 2] = b;
+            png.data[leftIdx + 3] = a;
+            png.data[rightIdx] = r;
+            png.data[rightIdx + 1] = g;
+            png.data[rightIdx + 2] = b;
+            png.data[rightIdx + 3] = a;
+        }
+    }
+}
+
+function createSideBySideComparison(beforePng: PNG, afterPng: PNG, gap: number = 20, highlight: boolean = true): PNG {
     const totalWidth = beforePng.width + gap + afterPng.width;
     const totalHeight = Math.max(beforePng.height, afterPng.height);
 
@@ -184,23 +312,31 @@ function createSideBySideComparison(beforePng: PNG, afterPng: PNG, gap: number =
 
     PNG.bitblt(afterPng, combined, 0, 0, afterPng.width, afterPng.height, beforePng.width + gap, 0);
 
+    if (highlight) {
+        const color: [number, number, number, number] = [255, 196, 0, 255]; // subtle amber
+        const thickness = 3;
+        drawBorder(combined, 0, 0, beforePng.width, beforePng.height, color, thickness);
+        drawBorder(combined, beforePng.width + gap, 0, afterPng.width, afterPng.height, color, thickness);
+    }
+
     return combined;
 }
 
-interface DiffResult {
+interface DiffRegionResult {
     changePercent: number;
-    boundingBox: BoundingBox | null;
+    boundingBox: BoundingBox;
+    comparisonPath: string;
 }
 
-async function generateComparison({
+async function generateComparisons({
     beforePath,
     afterPath,
-    comparisonPath
+    comparisonBasePath
 }: {
     beforePath: string;
     afterPath: string;
-    comparisonPath: string;
-}): Promise<DiffResult> {
+    comparisonBasePath: string;
+}): Promise<DiffRegionResult[]> {
     const beforePng = PNG.sync.read(await readFile(beforePath));
     const afterPng = PNG.sync.read(await readFile(afterPath));
 
@@ -223,27 +359,37 @@ async function generateComparison({
     );
     const afterData = new Uint8Array(resizedAfter.data.buffer, resizedAfter.data.byteOffset, resizedAfter.data.length);
 
-    const boundingBox = findChangedRegionBoundingBox(beforeData, afterData, width, height);
+    const regions = findChangedRegions(beforeData, afterData, width, height);
 
-    if (boundingBox == null) {
-        return { changePercent: 0, boundingBox: null };
+    const results: DiffRegionResult[] = [];
+    if (regions.length === 0) {
+        return results;
     }
 
-    const boxWidth = boundingBox.maxX - boundingBox.minX;
-    const boxHeight = boundingBox.maxY - boundingBox.minY;
-    const changedPixels = boxWidth * boxHeight;
-    const totalPixels = width * height;
-    const changePercent = (changedPixels / totalPixels) * 100;
+    const base = comparisonBasePath.endsWith(".png")
+        ? comparisonBasePath.slice(0, comparisonBasePath.length - 4)
+        : comparisonBasePath;
 
-    const croppedBefore = cropPng(resizedBefore, boundingBox);
-    const croppedAfter = cropPng(resizedAfter, boundingBox);
+    for (let i = 0; i < regions.length; i++) {
+        const boundingBox = regions[i];
+        const boxWidth = boundingBox.maxX - boundingBox.minX;
+        const boxHeight = boundingBox.maxY - boundingBox.minY;
+        const changedPixels = boxWidth * boxHeight;
+        const totalPixels = width * height;
+        const changePercent = (changedPixels / totalPixels) * 100;
 
-    const sideBySide = createSideBySideComparison(croppedBefore, croppedAfter);
+        const croppedBefore = cropPng(resizedBefore, boundingBox);
+        const croppedAfter = cropPng(resizedAfter, boundingBox);
+        const sideBySide = createSideBySideComparison(croppedBefore, croppedAfter, 20, true);
 
-    const pngBuffer = PNG.sync.write(sideBySide);
-    await writeFile(comparisonPath, new Uint8Array(pngBuffer));
+        const outPath = `${base}-region-${i + 1}.png`;
+        const pngBuffer = PNG.sync.write(sideBySide);
+        await writeFile(outPath, new Uint8Array(pngBuffer));
 
-    return { changePercent, boundingBox };
+        results.push({ changePercent, boundingBox, comparisonPath: outPath });
+    }
+
+    return results;
 }
 
 function getProductionUrl(docsConfig: { instances: Array<{ url: string }> | undefined }): string {
@@ -353,7 +499,7 @@ export async function docsDiff({
 
                 const beforePath = join(outputPath, RelativeFilePath.of(`${filename}-before.png`));
                 const afterPath = join(outputPath, RelativeFilePath.of(`${filename}-after.png`));
-                const comparisonPath = join(outputPath, RelativeFilePath.of(`${filename}-comparison.png`));
+                const comparisonBasePath = join(outputPath, RelativeFilePath.of(`${filename}-comparison.png`));
 
                 const productionUrl = `${productionBaseUrl}/${slug}`;
                 const previewPageUrl = `https://${normalizedPreviewUrl}/${slug}`;
@@ -379,34 +525,48 @@ export async function docsDiff({
                     continue;
                 }
 
-                let changePercent: number | null = null;
-                let comparisonPathResult: string | null = null;
                 const isNewPage = !beforeExists;
 
                 if (beforeExists) {
-                    const diffResult = await generateComparison({
+                    const regions = await generateComparisons({
                         beforePath,
                         afterPath,
-                        comparisonPath
+                        comparisonBasePath
                     });
-                    changePercent = diffResult.changePercent;
-                    if (diffResult.boundingBox != null) {
-                        comparisonPathResult = comparisonPath;
-                        context.logger.info(`  Change: ${changePercent.toFixed(2)}% (cropped to changed region)`);
-                    } else {
+
+                    if (regions.length === 0) {
                         context.logger.info(`  No visual changes detected`);
+                        results.push({
+                            file: mapping.filePath,
+                            slug,
+                            comparison: null,
+                            changePercent: 0,
+                            isNewPage
+                        });
+                    } else {
+                        regions.forEach((region, idx) => {
+                            context.logger.info(
+                                `  Region ${idx + 1}: ${region.changePercent.toFixed(2)}% (split & cropped)`
+                            );
+                            results.push({
+                                file: mapping.filePath,
+                                slug,
+                                comparison: region.comparisonPath,
+                                changePercent: region.changePercent,
+                                isNewPage
+                            });
+                        });
                     }
                 } else {
                     context.logger.info(`  New page (no production version)`);
+                    results.push({
+                        file: mapping.filePath,
+                        slug,
+                        comparison: null,
+                        changePercent: null,
+                        isNewPage
+                    });
                 }
-
-                results.push({
-                    file: mapping.filePath,
-                    slug,
-                    comparison: comparisonPathResult,
-                    changePercent,
-                    isNewPage
-                });
             }
         } finally {
             await browser.close();
