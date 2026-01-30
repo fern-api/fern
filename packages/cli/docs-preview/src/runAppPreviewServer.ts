@@ -1,5 +1,5 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
@@ -703,6 +703,19 @@ export async function runAppPreviewServer({
 
     app.get(/^\/_local\/(.*)/, (req, res) => {
         return res.sendFile(`/${req.params[0]}`);
+    });
+
+    // Endpoint to load API definition by ID (used by getEndpointByLocator in the docs bundle)
+    // This enables EndpointRequestSnippet and other components that need to look up API definitions
+    app.get("/registry/api/load/:apiDefinitionId", (req, res) => {
+        const { apiDefinitionId } = req.params;
+        const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
+        const api = definition.apis[FdrAPI.ApiDefinitionId(apiDefinitionId)];
+        if (api != null) {
+            res.json(api);
+        } else {
+            res.status(404).json({ error: "ApiDoesNotExistError" });
+        }
     });
 
     // Start backend server first and wait for it to be ready
