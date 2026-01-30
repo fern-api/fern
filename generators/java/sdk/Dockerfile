@@ -1,7 +1,7 @@
 # Stage 1: Java V2
 # Updated: WebSocket feature support added
-# Updated Node.js to 22.22.0 to fix CVE-2025-59465, CVE-2025-55131, CVE-2025-55130, CVE-2026-21637, CVE-2025-59466, CVE-2025-55132
-FROM node:22.22.0-bookworm AS node
+# Updated Node.js to 24.13.0 to fix CVE-2025-59465, CVE-2025-55131, CVE-2025-55130, CVE-2026-21637, CVE-2025-59466, CVE-2025-55132
+FROM node:24.13.0-bookworm AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
