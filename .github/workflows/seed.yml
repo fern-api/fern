@@ -279,9 +279,21 @@ jobs:
           
           # Query fixtures and split into groups using the seed CLI
           # The --groups flag handles all the grouping logic (returns single group with ["all"] if <= 20 fixtures or numGroups is 0)
-          pnpm seed list-test-fixtures --generator ${{ matrix.sdk-name }} --groups $NUM_GROUPS --output-file /tmp/fixtures.json
+          # Use || true to ignore exit code since the CLI has an issue with exit codes in CI
+          node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator ${{ matrix.sdk-name }} --groups $NUM_GROUPS --output-file /tmp/fixtures.json || true
+          
+          # Verify the output file was created successfully
+          if [ ! -f /tmp/fixtures.json ]; then
+            echo "Error: Output file /tmp/fixtures.json was not created"
+            exit 1
+          fi
           
           GROUPS=$(jq -c '.generators["${{ matrix.sdk-name }}"]' /tmp/fixtures.json)
+          
+          if [ -z "$GROUPS" ] || [ "$GROUPS" = "null" ]; then
+            echo "Error: Failed to parse fixtures from output file"
+            exit 1
+          fi
           
           echo "${{ matrix.sdk-name }}-test-matrix=$GROUPS" >> $GITHUB_OUTPUT
           echo "Groups for ${{ matrix.sdk-name }}: $GROUPS"
