@@ -120,8 +120,9 @@ async function generateDiff({
     afterPath: string;
     diffPath: string;
 }): Promise<number> {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const pixelmatch = require("pixelmatch") as (
+    // pixelmatch v6 is ESM-only, so we need to use dynamic import
+    const pixelmatchModule = await import("pixelmatch");
+    const pixelmatch = pixelmatchModule.default as (
         img1: Uint8Array,
         img2: Uint8Array,
         output: Uint8Array,
