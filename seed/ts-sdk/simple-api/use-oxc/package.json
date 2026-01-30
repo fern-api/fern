@@ -8,9 +8,9 @@
     },
     "files": [
         "dist",
-        "LICENSE",
+        "reference.md",
         "README.md",
-        "reference.md"
+        "LICENSE"
     ],
     "type": "commonjs",
     "sideEffects": false,
