@@ -1857,6 +1857,7 @@ POST with path param that has same name as body property (path param inlined)
 ```typescript
 await client.endpoints.params.postWithBodyAndDuplicatePathParam({
     account_id: "accountId",
+    accountIdBody: "accountId",
     otherProperty: "otherProperty"
 });
 

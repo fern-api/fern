@@ -121,7 +121,7 @@ describe("ParamsClient", () => {
     test("postWithBodyAndDuplicatePathParam", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = { otherProperty: "otherProperty" };
+        const rawRequestBody = { accountId: "accountId", otherProperty: "otherProperty" };
         const rawResponseBody = "string";
         server
             .mockEndpoint()
@@ -134,6 +134,7 @@ describe("ParamsClient", () => {
 
         const response = await client.endpoints.params.postWithBodyAndDuplicatePathParam({
             accountId: "accountId",
+            accountIdBody: "accountId",
             otherProperty: "otherProperty",
         });
         expect(response).toEqual("string");

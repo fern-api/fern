@@ -339,7 +339,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.postWithBodyAndDuplicatePathParam({\n    account_id: \"accountId\",\n    otherProperty: \"otherProperty\"\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.postWithBodyAndDuplicatePathParam({\n    account_id: \"accountId\",\n    accountIdBody: \"accountId\",\n    otherProperty: \"otherProperty\"\n});\n"
             }
         },
         {
