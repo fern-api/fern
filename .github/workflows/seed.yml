@@ -279,8 +279,8 @@ jobs:
           
           # Query fixtures and split into groups using the seed CLI
           # The --groups flag handles all the grouping logic (returns single group with ["all"] if <= 20 fixtures or numGroups is 0)
-          FIXTURES_JSON=$(pnpm seed list-test-fixtures --generator ${{ matrix.sdk-name }} --groups $NUM_GROUPS 2>/dev/null | sed -n '/^{/,/^}/p')
-          GROUPS=$(echo "$FIXTURES_JSON" | jq -c '.generators["${{ matrix.sdk-name }}"]')
+          pnpm seed list-test-fixtures --generator ${{ matrix.sdk-name }} --groups $NUM_GROUPS --output-file /tmp/fixtures.json
+          GROUPS=$(jq -c '.generators["${{ matrix.sdk-name }}"]' /tmp/fixtures.json)
           
           echo "${{ matrix.sdk-name }}-test-matrix=$GROUPS" >> $GITHUB_OUTPUT
           echo "Groups for ${{ matrix.sdk-name }}:"
