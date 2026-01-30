@@ -428,6 +428,60 @@ export function convertSchemaObject(
             schema.enum = [schema.const];
         }
 
+        // numeric enums (integer or number type with enum values)
+        if (
+            schema.enum != null &&
+            (schema.type === "integer" || schema.type === "number") &&
+            context.options.enableNumericEnums
+        ) {
+            // Cut 'null' from enum since functionality is achieved by 'nullable'
+            schema.enum = schema.enum.filter((value) => value !== null);
+
+            // Convert numeric values to strings for enum representation
+            const stringEnumValues = schema.enum.map((value) => String(value));
+
+            const fernEnum = getFernEnum(schema);
+
+            if (
+                context.options.coerceEnumsToLiterals &&
+                stringEnumValues.length === 1 &&
+                stringEnumValues[0] != null &&
+                fernEnum == null
+            ) {
+                return convertLiteral({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    value: stringEnumValues[0],
+                    description,
+                    availability,
+                    namespace,
+                    groupName
+                });
+            }
+
+            return convertEnum({
+                nameOverride,
+                generatedName,
+                title,
+                fernEnum,
+                enumVarNames: getExtension<string[]>(schema, [OpenAPIExtension.ENUM_VAR_NAMES]),
+                enumValues: stringEnumValues,
+                _default: schema.default != null ? String(schema.default) : undefined,
+                description,
+                availability,
+                wrapAsOptional,
+                wrapAsNullable,
+                namespace,
+                groupName,
+                context,
+                source,
+                inline: undefined
+            });
+        }
+
         // enums
         if (
             schema.enum != null &&

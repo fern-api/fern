@@ -25,6 +25,7 @@ export declare namespace BaseOpenAPIWorkspace {
         removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
         defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
         pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
+        enableNumericEnums: boolean | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -48,6 +49,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
     public readonly defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public readonly pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
+    public readonly enableNumericEnums: boolean | undefined;
     private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -69,6 +71,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.removeDiscriminantsFromSchemas = args.removeDiscriminantsFromSchemas;
         this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.pathParameterOrder = args.pathParameterOrder;
+        this.enableNumericEnums = args.enableNumericEnums;
         this.converter = new FernDefinitionConverter(args);
     }
 

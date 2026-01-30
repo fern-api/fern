@@ -60,7 +60,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost,
             removeDiscriminantsFromSchemas: spec.settings?.removeDiscriminantsFromSchemas,
             defaultIntegerFormat: spec.settings?.defaultIntegerFormat,
-            pathParameterOrder: spec.settings?.pathParameterOrder
+            pathParameterOrder: spec.settings?.pathParameterOrder,
+            enableNumericEnums: spec.settings?.enableNumericEnums
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();

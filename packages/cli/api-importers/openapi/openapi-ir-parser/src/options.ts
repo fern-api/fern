@@ -102,6 +102,12 @@ export interface ParseOpenAPIOptions {
      * The order to use for path parameters in generated code.
      */
     pathParameterOrder: generatorsYml.PathParameterOrder;
+
+    /**
+     * If true, integer and number enums in OpenAPI specs will be converted to enum types
+     * with string representations of the numeric values. Defaults to false.
+     */
+    enableNumericEnums: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -136,7 +142,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     coerceOptionalSchemasToNullable: false,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
-    pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder
+    pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
+    enableNumericEnums: false
 };
 
 function mergeOptions<T extends object>(params: {

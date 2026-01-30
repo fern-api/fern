@@ -106,7 +106,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
             groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
-            pathParameterOrder: specs[0]?.settings?.pathParameterOrder
+            pathParameterOrder: specs[0]?.settings?.pathParameterOrder,
+            enableNumericEnums: specs.some((spec) => spec.settings?.enableNumericEnums)
         });
         this.specs = specs;
         this.allSpecs = allSpecs;
@@ -131,7 +132,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             groupMultiApiEnvironments: this.groupMultiApiEnvironments,
             groupEnvironmentsByHost: this.groupEnvironmentsByHost,
             defaultIntegerFormat: this.defaultIntegerFormat,
-            pathParameterOrder: this.pathParameterOrder
+            pathParameterOrder: this.pathParameterOrder,
+            enableNumericEnums: this.enableNumericEnums
         };
     }
 

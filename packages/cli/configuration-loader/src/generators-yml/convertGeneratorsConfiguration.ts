@@ -47,7 +47,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
-    defaultIntegerFormat: undefined
+    defaultIntegerFormat: undefined,
+    enableNumericEnums: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -140,7 +141,8 @@ function parseOpenApiDefinitionSettingsSchema(
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
         defaultIntegerFormat: settings?.["default-integer-format"],
-        pathParameterOrder: settings?.["path-parameter-order"]
+        pathParameterOrder: settings?.["path-parameter-order"],
+        enableNumericEnums: settings?.["enable-numeric-enums"]
     };
 }
 

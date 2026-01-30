@@ -92,6 +92,7 @@ export interface APIDefinitionSettings {
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
+    enableNumericEnums: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

@@ -60,4 +60,11 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to int32.
      */
     "default-integer-format"?: GeneratorsYml.DefaultIntegerFormat;
+    /**
+     * If true, integer and number enums in OpenAPI specs will be converted to enum types
+     * with string representations of the numeric values (e.g., enum: [8000, 16000] becomes
+     * an enum with values "8000" and "16000"). If false, numeric enums are treated as
+     * plain integer/number types. Defaults to false.
+     */
+    "enable-numeric-enums"?: boolean;
 }

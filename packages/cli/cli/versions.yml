@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add `enable-numeric-enums` setting for OpenAPI specs. When enabled, integer and number enums in OpenAPI specs are converted to enum types with string representations of the numeric values (e.g., `enum: [8000, 16000]` becomes an enum with values "8000" and "16000"). This is useful for APIs that use numeric enums for values like sample rates or port numbers. Defaults to false.
+      type: feat
+  createdAt: "2026-01-30"
+  irVersion: 63
+
 - version: 3.55.0
   changelogEntry:
     - summary: |
