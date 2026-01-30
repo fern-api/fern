@@ -36,6 +36,7 @@ void tryRunCli();
 export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv))
         .strict()
+        .exitProcess(false)
         .fail((message, error: unknown, argv) => {
             // if error is null, it's a yargs validation error
             if (error == null) {
