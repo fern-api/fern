@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedHeaderTokenEnvironmentVariable.Core;
+using SeedHeaderTokenEnvironmentVariable.Test.Utils;
 
 namespace SeedHeaderTokenEnvironmentVariable.Test.Unit.MockServer;
 
@@ -23,6 +23,6 @@ public class GetWithBearerTokenTest : BaseMockServerTest
             );
 
         var response = await Client.Service.GetWithBearerTokenAsync();
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

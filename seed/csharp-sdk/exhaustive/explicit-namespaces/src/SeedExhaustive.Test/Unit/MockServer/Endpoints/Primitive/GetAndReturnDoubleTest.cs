@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
@@ -34,6 +34,6 @@ public class GetAndReturnDoubleTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<double>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

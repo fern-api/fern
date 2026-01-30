@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedLiteral;
-using SeedLiteral.Core;
+using SeedLiteral.Test.Utils;
 
 namespace SeedLiteral.Test.Unit.MockServer;
 
@@ -87,10 +87,7 @@ public class SendTest_ : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -158,9 +155,6 @@ public class SendTest_ : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

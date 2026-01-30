@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedMixedFileDirectory;
-using SeedMixedFileDirectory.Core;
+using SeedMixedFileDirectory.Test.Utils;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 
@@ -41,12 +41,6 @@ public class ListTest : BaseMockServerTest
             );
 
         var response = await Client.User.ListAsync(new ListUsersRequest { Limit = 1 });
-        Assert.That(
-            response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<IEnumerable<SeedMixedFileDirectory.User>>(mockResponse)
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }
