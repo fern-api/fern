@@ -136,9 +136,9 @@ function findChangedRegionBoundingBox(
         for (let x = 0; x < width; x++) {
             const idx = (y * width + x) * 4;
 
-            const rDiff = Math.abs(beforeData[idx] - afterData[idx]);
-            const gDiff = Math.abs(beforeData[idx + 1] - afterData[idx + 1]);
-            const bDiff = Math.abs(beforeData[idx + 2] - afterData[idx + 2]);
+            const rDiff = Math.abs((beforeData[idx] ?? 0) - (afterData[idx] ?? 0));
+            const gDiff = Math.abs((beforeData[idx + 1] ?? 0) - (afterData[idx + 1] ?? 0));
+            const bDiff = Math.abs((beforeData[idx + 2] ?? 0) - (afterData[idx + 2] ?? 0));
 
             if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
                 hasChanges = true;
@@ -173,9 +173,9 @@ function findChangedRegions(
         let has = false;
         for (let x = 0; x < width; x++) {
             const idx = (y * width + x) * 4;
-            const rDiff = Math.abs(beforeData[idx] - afterData[idx]);
-            const gDiff = Math.abs(beforeData[idx + 1] - afterData[idx + 1]);
-            const bDiff = Math.abs(beforeData[idx + 2] - afterData[idx + 2]);
+            const rDiff = Math.abs((beforeData[idx] ?? 0) - (afterData[idx] ?? 0));
+            const gDiff = Math.abs((beforeData[idx + 1] ?? 0) - (afterData[idx + 1] ?? 0));
+            const bDiff = Math.abs((beforeData[idx + 2] ?? 0) - (afterData[idx + 2] ?? 0));
             if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
                 has = true;
                 break;
@@ -222,9 +222,9 @@ function findChangedRegions(
         for (let yy = startY; yy <= endY; yy++) {
             for (let xx = 0; xx < width; xx++) {
                 const idx = (yy * width + xx) * 4;
-                const rDiff = Math.abs(beforeData[idx] - afterData[idx]);
-                const gDiff = Math.abs(beforeData[idx + 1] - afterData[idx + 1]);
-                const bDiff = Math.abs(beforeData[idx + 2] - afterData[idx + 2]);
+                const rDiff = Math.abs((beforeData[idx] ?? 0) - (afterData[idx] ?? 0));
+                const gDiff = Math.abs((beforeData[idx + 1] ?? 0) - (afterData[idx + 1] ?? 0));
+                const bDiff = Math.abs((beforeData[idx + 2] ?? 0) - (afterData[idx + 2] ?? 0));
                 if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
                     if (xx < minX) {
                         minX = xx;
@@ -372,6 +372,9 @@ async function generateComparisons({
 
     for (let i = 0; i < regions.length; i++) {
         const boundingBox = regions[i];
+        if (boundingBox == null) {
+            continue;
+        }
         const boxWidth = boundingBox.maxX - boundingBox.minX;
         const boxHeight = boundingBox.maxY - boundingBox.minY;
         const changedPixels = boxWidth * boxHeight;
