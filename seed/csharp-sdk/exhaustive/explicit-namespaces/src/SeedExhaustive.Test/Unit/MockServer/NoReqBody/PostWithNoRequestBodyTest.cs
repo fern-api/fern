@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.NoReqBody;
 
@@ -24,6 +24,6 @@ public class PostWithNoRequestBodyTest : BaseMockServerTest
             );
 
         var response = await Client.NoReqBody.PostWithNoRequestBodyAsync();
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

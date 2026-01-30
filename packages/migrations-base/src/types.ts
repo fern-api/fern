@@ -106,7 +106,7 @@ export interface MigrationModule {
 /**
  * Result of applying migrations to a generator configuration.
  */
-export interface MigrationResult {
+export interface MigratorResult {
     /**
      * The migrated generator configuration.
      */

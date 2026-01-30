@@ -263,7 +263,7 @@ public class UnionWithReservedNames
             );
         }
 
-        public override UnionWithReservedNames? ReadAsPropertyName(
+        public override UnionWithReservedNames ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

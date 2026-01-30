@@ -101,6 +101,7 @@ export * from "./SegmentConfig.js";
 export * from "./SidebarThemeConfig.js";
 export * from "./SnippetLanguageConfiguration.js";
 export * from "./SnippetsConfiguration.js";
+export * from "./SwitcherPlacement.js";
 export * from "./TabbedNavigationConfig.js";
 export * from "./TabbedNavigationItem.js";
 export * from "./TabbedNavigationItemWithLayout.js";

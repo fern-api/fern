@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedCsharpSystemCollision;
-using SeedCsharpSystemCollision.Core;
+using SeedCsharpSystemCollision.Test.Utils;
 
 namespace SeedCsharpSystemCollision.Test.Unit.MockServer;
 
@@ -68,10 +68,6 @@ public class CreateTaskTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedCsharpSystemCollision.Task>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

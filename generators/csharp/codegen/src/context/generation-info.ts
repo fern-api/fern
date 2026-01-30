@@ -629,6 +629,12 @@ export class Generation {
                 origin: this.model.staticExplicit("JsonUtils"),
                 namespace: this.namespaces.core
             }),
+        /** Test assertion helper for JSON comparison */
+        JsonAssert: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("JsonAssert"),
+                namespace: this.namespaces.testUtils
+            }),
         /** Factory for creating custom pagination instances */
         CustomPagerFactory: () =>
             this.csharp.classReference({

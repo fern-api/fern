@@ -3,6 +3,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { addAuthCommand } from "./commands/auth";
 import { addCheckCommand } from "./commands/check";
+import { addConfigCommand } from "./commands/config";
 import { addSdkCommand } from "./commands/sdk";
 import { GlobalArgs } from "./context/GlobalArgs";
 import { Version } from "./version";
@@ -41,6 +42,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
 
     addAuthCommand(cli);
     addCheckCommand(cli);
+    addConfigCommand(cli);
     addSdkCommand(cli);
 
     return cli;

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -37,6 +37,6 @@ public class PostWithNoAuthTest : BaseMockServerTest
         var response = await Client.NoAuth.PostWithNoAuthAsync(
             new Dictionary<object, object?>() { { "key", "value" } }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }
