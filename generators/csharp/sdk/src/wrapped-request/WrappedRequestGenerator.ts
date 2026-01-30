@@ -183,15 +183,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    const defaultValue = this.getDefaultIfEnabled(property.valueType, useDefaults);
-
                     const field = generateField(class_, {
                         property,
                         className: this.classReference.name,
-                        context: this.context,
-                        initializerOverride:
-                            defaultValue != null ? this.csharp.codeblock(defaultValue.value) : undefined,
-                        useRequiredOverride: defaultValue != null ? false : undefined
+                        context: this.context
                     });
 
                     if (isProtoRequest) {
