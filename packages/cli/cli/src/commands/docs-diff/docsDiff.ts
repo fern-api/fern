@@ -147,7 +147,16 @@ async function generateDiff({
 
     const diffPng = new PNG({ width, height });
 
-    const numDiffPixels = pixelmatch(resizedBefore.data, resizedAfter.data, diffPng.data, width, height, {
+    // Convert Buffer to Uint8Array for pixelmatch compatibility
+    const beforeData = new Uint8Array(
+        resizedBefore.data.buffer,
+        resizedBefore.data.byteOffset,
+        resizedBefore.data.length
+    );
+    const afterData = new Uint8Array(resizedAfter.data.buffer, resizedAfter.data.byteOffset, resizedAfter.data.length);
+    const diffData = new Uint8Array(diffPng.data.buffer, diffPng.data.byteOffset, diffPng.data.length);
+
+    const numDiffPixels = pixelmatch(beforeData, afterData, diffData, width, height, {
         threshold: 0.1
     });
 
