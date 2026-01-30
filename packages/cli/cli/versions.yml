@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.55.5
+  changelogEntry:
+    - summary: |
+        Fix default value for `switcher-placement` in docs.yml layout configuration.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
 - version: 3.55.4
   changelogEntry:
     - summary: |
