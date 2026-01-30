@@ -275,20 +275,17 @@ jobs:
         id: create-dynamic-matrix
         shell: bash
         run: |
-          # Enable debug mode to see exactly which command fails
-          set -x
+          # Disable exit on error for the entire script to handle errors manually
+          set +e
           
           NUM_GROUPS=${{ matrix.number-of-groups || 0 }}
           
           # Query fixtures and split into groups using the seed CLI
           # The --groups flag handles all the grouping logic (returns single group with ["all"] if <= 20 fixtures or numGroups is 0)
-          # Disable exit on error for the node command since it may exit with code 1 due to async cleanup
-          set +e
           node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator ${{ matrix.sdk-name }} --groups $NUM_GROUPS --output-file /tmp/fixtures.json
-          EXIT_CODE=$?
-          set -e
+          CLI_EXIT=$?
           
-          echo "Seed CLI exit code: $EXIT_CODE"
+          echo "Seed CLI exit code: $CLI_EXIT"
           
           # Verify the output file was created successfully
           if [ ! -f /tmp/fixtures.json ]; then
