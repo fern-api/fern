@@ -623,6 +623,27 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
     }
 
+    public getActualInlinedRequestBodyPropertyKey(
+        property: InlinedRequestBodyProperty,
+        context: SdkContext
+    ): RequestWrapperBodyProperty {
+        const baseName = this.getInlinedRequestBodyPropertyKey(property);
+
+        // Check if this body property conflicts with a path parameter
+        if (this.shouldInlinePathParameters(context)) {
+            const pathParameterOriginalNames = this.getPathParameterOriginalNames(context);
+            if (pathParameterOriginalNames.has(property.name.name.originalName)) {
+                // Rename with "Body" suffix to avoid conflict
+                return {
+                    propertyName: baseName.propertyName + "Body",
+                    safeName: baseName.safeName + "Body"
+                };
+            }
+        }
+
+        return baseName;
+    }
+
     private expensivelyComputeIfAllPropertiesAreOptional(context: SdkContext): boolean {
         for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
             if (!this.isTypeOptional(pathParameter.valueType, context)) {

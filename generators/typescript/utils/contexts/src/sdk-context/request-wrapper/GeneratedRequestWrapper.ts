@@ -39,6 +39,10 @@ export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
     getNonBodyKeysWithData: (context: SdkContext) => RequestWrapperNonBodyPropertyWithData[];
     getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => RequestWrapperBodyProperty;
     getInlinedRequestBodyPropertyKeyFromName: (name: NameAndWireValue) => RequestWrapperBodyProperty;
+    getActualInlinedRequestBodyPropertyKey: (
+        property: InlinedRequestBodyProperty,
+        context: SdkContext
+    ) => RequestWrapperBodyProperty;
     shouldInlinePathParameters: (context: SdkContext) => boolean;
     getPropertyNameOfFileParameter: (fileProperty: FileProperty) => RequestWrapperNonBodyProperty;
     getPropertyNameOfFileParameterFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
