@@ -39,6 +39,7 @@
 "/params/path-query/\(param)"
 "/params/path/\(param)"
 "/params/path/\(param)"
+"/params/path/\(accountID)"
 
 // service_endpoints/primitive
 "/primitive/string"
