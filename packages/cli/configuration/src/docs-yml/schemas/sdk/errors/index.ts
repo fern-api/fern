@@ -1,2 +1,2 @@
-export { FernDocsConfigError } from "./FernDocsConfigError";
-export { FernDocsConfigTimeoutError } from "./FernDocsConfigTimeoutError";
+export { FernDocsConfigError } from "./FernDocsConfigError.js";
+export { FernDocsConfigTimeoutError } from "./FernDocsConfigTimeoutError.js";

@@ -2,7 +2,7 @@
 - version: 3.53.2
   changelogEntry:
     - summary: |
-        Upgrade the TypeScript SDK generator to latest for generating Fern Definition schemas.
+        Upgrade the TypeScript SDK generator to latest for generating Fern Definition and Docs Yml schemas.
       type: internal
   createdAt: "2026-01-29"
   irVersion: 63

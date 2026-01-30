@@ -5009,15 +5009,6 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.775
         version: 0.0.775
-      node-fetch:
-        specifier: '2'
-        version: 2.7.0
-      qs:
-        specifier: 6.14.1
-        version: 6.14.1
-      readable-stream:
-        specifier: ^4.7.0
-        version: 4.7.0
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -5026,17 +5017,8 @@ importers:
         specifier: workspace:*
         version: link:../../configs
       '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      '@types/node-fetch':
-        specifier: '2'
-        version: 2.6.9
-      '@types/qs':
-        specifier: 6.9.15
-        version: 6.9.15
-      '@types/readable-stream':
-        specifier: ^4.0.22
-        version: 4.0.22
+        specifier: ^18.19.70
+        version: 18.19.130
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -5045,7 +5027,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.8
-        version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
+        version: 4.0.8(@types/debug@4.1.12)(@types/node@18.19.130)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.19.130)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
 
   packages/cli/configuration-loader:
     dependencies:
