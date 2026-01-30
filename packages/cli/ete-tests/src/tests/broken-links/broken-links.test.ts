@@ -40,4 +40,14 @@ describe("fern docs broken-links", () => {
         // should NOT be flagged as broken links
         expect(stripAnsi(stdout)).toContain("All checks passed");
     }, 20_000);
+
+    it("markdown snippets inside link syntax should not be flagged as broken links", async () => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("markdown-snippet-in-link")),
+            reject: false
+        });
+        // This fixture tests that Markdown components used inside link syntax
+        // (e.g., [text](<Markdown src="..." />)) should NOT be flagged as broken links
+        expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 20_000);
 });

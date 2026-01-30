@@ -1,0 +1,6 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
+navigation:
+  - page: Test Page
+    path: test.mdx

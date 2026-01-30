@@ -118,7 +118,34 @@ export function collectLinksAndSources({
             if (node.type === "element") {
                 const href = node.properties.href;
                 if (typeof href === "string") {
-                    links.push({ href, sourceFilepath: absoluteFilepath, position: node.position });
+                    // Check if the href looks like a Markdown component that was parsed as a link
+                    // This happens when using syntax like [text](<Markdown src="..." />)
+                    // The angle brackets are stripped, leaving "Markdown src=..." as the href
+                    // The href may be URL-encoded (e.g., %20 for space, %22 for quote), so we decode it first
+                    let decodedHref: string;
+                    try {
+                        decodedHref = decodeURIComponent(href);
+                    } catch {
+                        // If decoding fails, use the original href
+                        decodedHref = href;
+                    }
+                    const markdownComponentMatch = decodedHref.match(/^Markdown\s+src=["']([^"']+)["']\s*\/$/);
+                    if (markdownComponentMatch != null) {
+                        // Extract the src and add it to the content queue as a markdown file
+                        if (absoluteFilepath != null) {
+                            const src = markdownComponentMatch[1];
+                            if (src != null) {
+                                const resolvedImportPath = resolve(dirname(absoluteFilepath), src);
+                                contentQueue.push({
+                                    content: readFile(resolvedImportPath),
+                                    absoluteFilepath: resolvedImportPath
+                                });
+                            }
+                        }
+                        // Don't add this as a link since it's not a real URL
+                    } else {
+                        links.push({ href, sourceFilepath: absoluteFilepath, position: node.position });
+                    }
                 }
 
                 const src = node.properties.src;
