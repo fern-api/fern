@@ -78,10 +78,6 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
-    - outputFolder: serde-layer-with-enum-utils
-      customConfig:
-        noSerdeLayer: false
-        includeUtilsOnUnionMembers: true
     - outputFolder: retain-original-casing
       customConfig:
         retainOriginalCasing: true
