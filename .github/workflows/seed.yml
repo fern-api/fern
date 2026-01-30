@@ -279,8 +279,13 @@ jobs:
           
           # Query fixtures and split into groups using the seed CLI
           # The --groups flag handles all the grouping logic (returns single group with ["all"] if <= 20 fixtures or numGroups is 0)
-          # Use || true to ignore exit code since the CLI has an issue with exit codes in CI
-          node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator ${{ matrix.sdk-name }} --groups $NUM_GROUPS --output-file /tmp/fixtures.json || true
+          # Disable exit on error for the node command since it may exit with code 1 due to async cleanup
+          set +e
+          node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator ${{ matrix.sdk-name }} --groups $NUM_GROUPS --output-file /tmp/fixtures.json
+          EXIT_CODE=$?
+          set -e
+          
+          echo "Seed CLI exit code: $EXIT_CODE"
           
           # Verify the output file was created successfully
           if [ ! -f /tmp/fixtures.json ]; then
@@ -292,6 +297,7 @@ jobs:
           
           if [ -z "$GROUPS" ] || [ "$GROUPS" = "null" ]; then
             echo "Error: Failed to parse fixtures from output file"
+            cat /tmp/fixtures.json
             exit 1
           fi
           
