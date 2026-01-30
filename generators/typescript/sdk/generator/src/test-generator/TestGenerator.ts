@@ -1485,7 +1485,8 @@ describe("${serviceName}", () => {
                 return code`${literalOf(
                     Object.fromEntries([
                         ...getUnusedPropertiesFromJsonExample(value.jsonExample, value),
-                        ...value.properties.map<[string, Code]>((p) => {
+                        ...value.properties
+                            .map<[string, Code]>((p) => {
                                 return [
                                     p.name.wireValue,
                                     this.createRawJsonExample({

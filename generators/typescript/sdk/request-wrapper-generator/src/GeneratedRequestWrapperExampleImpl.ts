@@ -218,8 +218,9 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                         if (isExpressionUndefined(value)) {
                             return undefined;
                         }
-                        const baseName =
-                            generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name).propertyName;
+                        const baseName = generatedType.getInlinedRequestBodyPropertyKeyFromName(
+                            property.name
+                        ).propertyName;
                         // Add "Body" suffix if this body property conflicts with a path parameter
                         const propertyName = conflictsWithPathParam ? baseName + "Body" : baseName;
                         return ts.factory.createPropertyAssignment(getPropertyKey(propertyName), value);

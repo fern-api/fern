@@ -372,8 +372,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         // If this body property has the same original name as a path parameter, rename it with "Body" suffix
         const conflictsWithPathParam =
-            pathParameterOriginalNames != null &&
-            pathParameterOriginalNames.has(property.name.name.originalName);
+            pathParameterOriginalNames != null && pathParameterOriginalNames.has(property.name.name.originalName);
 
         const name = conflictsWithPathParam
             ? {
