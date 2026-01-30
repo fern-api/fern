@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.46.2
+  changelogEntry:
+    - summary: |
+        Fix TypeScript circular reference error (TS7022/TS2456) when generating enums with visitor utilities enabled.
+        The enum type alias now references an intermediate `Values` const instead of using `Omit<typeof EnumName, "_visit">`,
+        which avoids the circular reference in the type's own initializer.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
 - version: 3.46.1
   changelogEntry:
     - summary: |
