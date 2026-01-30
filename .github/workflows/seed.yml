@@ -309,7 +309,8 @@ jobs:
             GROUPS="[]"
             for ((i=0; i<NUM_GROUPS; i++)); do
               START=$((i * FIXTURES_PER_GROUP))
-              GROUP_FIXTURES=$(echo "$FIXTURES" | jq -c ".[$START:$START+$FIXTURES_PER_GROUP]")
+              END=$((START + FIXTURES_PER_GROUP))
+              GROUP_FIXTURES=$(echo "$FIXTURES" | jq -c ".[$START:$END]")
               
               # Skip empty groups
               if [[ $(echo "$GROUP_FIXTURES" | jq 'length') -gt 0 ]]; then
