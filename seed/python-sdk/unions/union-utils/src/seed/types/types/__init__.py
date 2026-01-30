@@ -20,6 +20,8 @@ if typing.TYPE_CHECKING:
     from .union_with_literal import UnionWithLiteral
     from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
     from .union_with_no_properties import UnionWithNoProperties
+    from .union_with_nullable_reference import UnionWithNullableReference
+    from .union_with_optional_reference import UnionWithOptionalReference
     from .union_with_optional_time import UnionWithOptionalTime
     from .union_with_primitive import UnionWithPrimitive
     from .union_with_same_number_types import UnionWithSameNumberTypes
@@ -43,6 +45,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithLiteral": ".union_with_literal",
     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "UnionWithNoProperties": ".union_with_no_properties",
+    "UnionWithNullableReference": ".union_with_nullable_reference",
+    "UnionWithOptionalReference": ".union_with_optional_reference",
     "UnionWithOptionalTime": ".union_with_optional_time",
     "UnionWithPrimitive": ".union_with_primitive",
     "UnionWithSameNumberTypes": ".union_with_same_number_types",
@@ -90,6 +94,8 @@ __all__ = [
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",
+    "UnionWithNullableReference",
+    "UnionWithOptionalReference",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
     "UnionWithSameNumberTypes",
