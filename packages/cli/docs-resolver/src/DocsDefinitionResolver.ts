@@ -16,7 +16,6 @@ import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { convertIrToFdrApi, registerApiFromFdr } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
@@ -29,7 +28,7 @@ import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
-import { convertFdrToApiDefinition, convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
+import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
@@ -55,12 +54,10 @@ type RegisterApiFn = (opts: {
     ir: IntermediateRepresentation;
     snippetsConfig: APIV1Write.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
-    graphqlOperations?: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
-    graphqlTypes?: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
     apiName?: string;
     workspace?: FernWorkspace;
-    // OPTIMIZATION: Pre-converted FDR definition to eliminate duplicate convertIrToFdrApi() calls
-    preConvertedFdrApiDefinition?: FdrAPI.api.v1.register.ApiDefinition;
+    graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
+    graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }) => AsyncOrSync<string>;
 
 type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AiChatConfig | undefined }) => AsyncOrSync<void>;
@@ -1317,58 +1314,27 @@ export class DocsDefinitionResolver {
         // Extract GraphQL operations and types from the workspace
         const graphqlData = await this.extractGraphQLData();
 
-        // Log GraphQL data being passed to processing
-        const graphqlOperationCount = Object.keys(graphqlData.operations).length;
-        const graphqlTypeCount = Object.keys(graphqlData.types).length;
-        this.taskContext.logger.debug(
-            `Processing ${graphqlOperationCount} GraphQL operations and ${graphqlTypeCount} GraphQL types`
-        );
-        if (graphqlOperationCount > 0) {
-            this.taskContext.logger.debug(
-                `GraphQL operations being processed: ${JSON.stringify(Object.keys(graphqlData.operations))}`
-            );
-        }
-        if (graphqlTypeCount > 0) {
-            this.taskContext.logger.debug(
-                `GraphQL types being processed: ${JSON.stringify(Object.keys(graphqlData.types))}`
-            );
-        }
-
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
         // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
         const apiNameForRegistration = item.apiName ?? workspace?.workspaceName ?? openapiWorkspace?.workspaceName;
 
-        // OPTIMIZATION: Create FDR API definition once and reuse for both registration and docs conversion
-        // This eliminates duplicate convertIrToFdrApi() calls with identical GraphQL operations
-        const fdrApiDefinition = convertIrToFdrApi({
-            ir,
-            snippetsConfig,
-            playgroundConfig: { oauth: item.playground?.oauth },
-            graphqlOperations: graphqlData.operations,
-            graphqlTypes: graphqlData.types,
-            context: this.taskContext
-        });
-
-        // Register the API using the pre-converted FDR definition
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
-            graphqlOperations: graphqlData.operations,
-            graphqlTypes: graphqlData.types,
             apiName: apiNameForRegistration,
-            workspace,
-            preConvertedFdrApiDefinition: fdrApiDefinition
+            workspace
         });
 
-        this.taskContext.logger.debug(`registerApi completed, returned API definition ID: ${apiDefinitionId}`);
-
-        // Convert FDR definition to API definition for docs (reusing the same FDR result)
-        const api = convertFdrToApiDefinition({
-            fdrApiDefinition,
+        // Create API definition WITH GraphQL operations (single full conversion)
+        const api = convertIrToApiDefinition({
+            ir,
             apiDefinitionId,
-            context: this.taskContext
+            playgroundConfig: { oauth: item.playground?.oauth },
+            context: this.taskContext,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types
         });
 
         const node = new ApiReferenceNodeConverter(
