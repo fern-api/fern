@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.2
+  changelogEntry:
+    - summary: |
+        Reduce memory usage when generating docs for customers with many API versions by processing versions in batches of 5 instead of all in parallel.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
 - version: 3.53.1
   changelogEntry:
     - summary: |
