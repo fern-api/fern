@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -109,9 +109,6 @@ public class SearchTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SearchResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

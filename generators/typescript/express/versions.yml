@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Add `outputSrcOnly` configuration option that outputs only the contents of the `src/` directory
+        directly to the destination path, without the `src/` wrapper directory. This is useful when you
+        want to integrate the generated source files directly into another project without the extra
+        directory nesting. The option takes priority over `outputSourceFiles` when both are enabled.
+      type: feat
+  irVersion: 61
+  createdAt: "2026-01-29"
+  version: 0.19.0
+
+- changelogEntry:
     - summary: Bump generator CLI version to publish new Docker image.
       type: chore
   irVersion: 61

@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
@@ -34,6 +34,6 @@ public class GetAndReturnBase64Test : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

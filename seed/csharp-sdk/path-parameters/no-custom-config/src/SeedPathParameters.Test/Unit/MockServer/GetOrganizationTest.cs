@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedPathParameters;
-using SeedPathParameters.Core;
+using SeedPathParameters.Test.Utils;
 
 namespace SeedPathParameters.Test.Unit.MockServer;
 
@@ -38,9 +37,6 @@ public class GetOrganizationTest : BaseMockServerTest
             "tenant_id",
             "organization_id"
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

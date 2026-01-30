@@ -419,7 +419,7 @@ public class MyUnion
             );
         }
 
-        public override MyUnion? ReadAsPropertyName(
+        public override MyUnion ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

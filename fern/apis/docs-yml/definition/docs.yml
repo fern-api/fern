@@ -677,6 +677,15 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      switcher-placement:
+        type: optional<SwitcherPlacement>
+        docs: |
+          Set the placement of the version and language switcher
+
+          @default: `header`
+
+          Note: this setting is ignored when `disable-header` is set to true.
+
       content-alignment:
         type: optional<ContentAlignment>
         docs: |
@@ -858,6 +867,11 @@ types:
       - sidebar
 
   TabsPlacement:
+    enum:
+      - header
+      - sidebar
+
+  SwitcherPlacement:
     enum:
       - header
       - sidebar

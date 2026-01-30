@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedStreaming;
-using SeedStreaming.Core;
+using SeedStreaming.Test.Utils;
 
 namespace SeedStreaming.Test.Unit.MockServer;
 
@@ -42,10 +42,7 @@ public class GenerateTest : BaseMockServerTest
         var response = await Client.Dummy.GenerateAsync(
             new Generateequest { Stream = false, NumEvents = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<StreamResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -83,9 +80,6 @@ public class GenerateTest : BaseMockServerTest
         var response = await Client.Dummy.GenerateAsync(
             new Generateequest { Stream = false, NumEvents = 5 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<StreamResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedInferredAuthImplicitApiKey;
-using SeedInferredAuthImplicitApiKey.Core;
+using SeedInferredAuthImplicitApiKey.Test.Utils;
 
 namespace SeedInferredAuthImplicitApiKey.Test.Unit.MockServer;
 
@@ -35,9 +35,6 @@ public class GetTokenTest : BaseMockServerTest
             );
 
         var response = await Client.Auth.GetTokenAsync(new GetTokenRequest { ApiKey = "api_key" });
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }
