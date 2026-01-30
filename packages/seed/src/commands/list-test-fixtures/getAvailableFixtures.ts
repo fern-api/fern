@@ -61,3 +61,43 @@ export function getAvailableFixturesFromList(
     // Don't include subfolders, return the original fixtures
     return availableFixtures;
 }
+
+/**
+ * A group of fixtures for parallel test execution.
+ */
+export interface FixtureGroup {
+    fixtures: string[];
+}
+
+/**
+ * Split fixtures into groups for parallel test execution.
+ * If numGroups is 0 or fixtures.length <= 20, returns a single group with ["all"].
+ *
+ * @param fixtures - Array of fixture names to split
+ * @param numGroups - Number of groups to split into (0 means single group)
+ * @returns Array of fixture groups
+ */
+export function splitFixturesIntoGroups(fixtures: string[], numGroups: number): FixtureGroup[] {
+    // If number-of-groups is not set or is 0, or fixture count is small, run all tests in a single runner
+    if (numGroups === 0 || fixtures.length <= 20) {
+        return [{ fixtures: ["all"] }];
+    }
+
+    // Calculate fixtures per group (ceiling division)
+    const fixturesPerGroup = Math.ceil(fixtures.length / numGroups);
+
+    // Create groups by splitting fixtures evenly
+    const groups: FixtureGroup[] = [];
+    for (let i = 0; i < numGroups; i++) {
+        const start = i * fixturesPerGroup;
+        const end = start + fixturesPerGroup;
+        const groupFixtures = fixtures.slice(start, end);
+
+        // Skip empty groups
+        if (groupFixtures.length > 0) {
+            groups.push({ fixtures: groupFixtures });
+        }
+    }
+
+    return groups;
+}

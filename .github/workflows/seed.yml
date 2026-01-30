@@ -271,57 +271,20 @@ jobs:
           FORCE_COLOR: "2"
         run: pnpm seed:build
 
-      - name: Query fixtures dynamically
-        id: query-fixtures
-        shell: bash
-        run: |
-          # Query all fixtures for this generator using the new list-test-fixtures command
-          FIXTURES_JSON=$(pnpm seed list-test-fixtures --generator ${{ matrix.sdk-name }} 2>/dev/null | sed -n '/^{/,/^}/p')
-          FIXTURES=$(echo "$FIXTURES_JSON" | jq -c '.generators["${{ matrix.sdk-name }}"].fixtures')
-          echo "fixtures=$FIXTURES" >> $GITHUB_OUTPUT
-          echo "Found $(echo "$FIXTURES" | jq 'length') fixtures for ${{ matrix.sdk-name }}"
-
       - name: Create Dynamic Matrix
         id: create-dynamic-matrix
         shell: bash
         run: |
-          FIXTURES='${{ steps.query-fixtures.outputs.fixtures }}'
-          FIXTURE_COUNT=$(echo "$FIXTURES" | jq 'length')
           NUM_GROUPS=${{ matrix.number-of-groups || 0 }}
           
-          echo "Total fixtures: $FIXTURE_COUNT"
-          echo "Configured number of groups: $NUM_GROUPS"
+          # Query fixtures and split into groups using the seed CLI
+          # The --groups flag handles all the grouping logic (returns single group with ["all"] if <= 20 fixtures or numGroups is 0)
+          FIXTURES_JSON=$(pnpm seed list-test-fixtures --generator ${{ matrix.sdk-name }} --groups $NUM_GROUPS 2>/dev/null | sed -n '/^{/,/^}/p')
+          GROUPS=$(echo "$FIXTURES_JSON" | jq -c '.generators["${{ matrix.sdk-name }}"]')
           
-          # If number-of-groups is not set or is 0, run all tests in a single runner
-          if [[ "$NUM_GROUPS" -eq 0 || "$FIXTURE_COUNT" -le 20 ]]; then
-            echo "Running ${{ matrix.sdk-name }} tests in a single runner"
-            MATRIX='[{"fixtures":["all"]}]'
-            echo "${{ matrix.sdk-name }}-test-matrix=$MATRIX" >> $GITHUB_OUTPUT
-            echo "Single group matrix:"
-            echo "$MATRIX" | jq .
-          else
-            echo "Splitting ${{ matrix.sdk-name }} tests into $NUM_GROUPS groups"
-            
-            # Calculate fixtures per group (ceiling division)
-            FIXTURES_PER_GROUP=$(( (FIXTURE_COUNT + NUM_GROUPS - 1) / NUM_GROUPS ))
-            
-            # Create groups by splitting fixtures evenly
-            GROUPS="[]"
-            for ((i=0; i<NUM_GROUPS; i++)); do
-              START=$((i * FIXTURES_PER_GROUP))
-              END=$((START + FIXTURES_PER_GROUP))
-              GROUP_FIXTURES=$(echo "$FIXTURES" | jq -c ".[$START:$END]")
-              
-              # Skip empty groups
-              if [[ $(echo "$GROUP_FIXTURES" | jq 'length') -gt 0 ]]; then
-                GROUPS=$(echo "$GROUPS" | jq -c ". += [{\"fixtures\": $GROUP_FIXTURES}]")
-              fi
-            done
-            
-            echo "${{ matrix.sdk-name }}-test-matrix=$GROUPS" >> $GITHUB_OUTPUT
-            echo "Groups for ${{ matrix.sdk-name }}-test-matrix:"
-            echo "$GROUPS" | jq .
-          fi
+          echo "${{ matrix.sdk-name }}-test-matrix=$GROUPS" >> $GITHUB_OUTPUT
+          echo "Groups for ${{ matrix.sdk-name }}:"
+          echo "$GROUPS" | jq .
 
   ruby-model:
     runs-on: ubuntu-latest

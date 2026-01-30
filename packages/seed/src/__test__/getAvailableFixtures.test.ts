@@ -1,7 +1,10 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 
-import { getAvailableFixturesFromList } from "../commands/list-test-fixtures/getAvailableFixtures";
+import {
+    getAvailableFixturesFromList,
+    splitFixturesIntoGroups
+} from "../commands/list-test-fixtures/getAvailableFixtures";
 import { GeneratorWorkspace } from "../loadGeneratorWorkspaces";
 
 describe("getAvailableFixtures", () => {
@@ -190,6 +193,163 @@ describe("getAvailableFixtures", () => {
             const result = getAvailableFixturesFromList(generator, allFixtures, false);
 
             expect(result).toEqual(["alias", "python-special"]);
+        });
+    });
+});
+
+describe("splitFixturesIntoGroups", () => {
+    describe("single group scenarios", () => {
+        it("returns single group with 'all' when numGroups is 0", () => {
+            const fixtures = ["fixture1", "fixture2", "fixture3"];
+
+            const result = splitFixturesIntoGroups(fixtures, 0);
+
+            expect(result).toEqual([{ fixtures: ["all"] }]);
+        });
+
+        it("returns single group with 'all' when fixture count is 20 or less", () => {
+            const fixtures = Array.from({ length: 20 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, 5);
+
+            expect(result).toEqual([{ fixtures: ["all"] }]);
+        });
+
+        it("returns single group with 'all' when fixture count is less than 20", () => {
+            const fixtures = Array.from({ length: 15 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            expect(result).toEqual([{ fixtures: ["all"] }]);
+        });
+    });
+
+    describe("multiple group scenarios", () => {
+        it("splits fixtures evenly into groups", () => {
+            const fixtures = Array.from({ length: 30 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            expect(result).toHaveLength(3);
+            expect(result[0]?.fixtures).toHaveLength(10);
+            expect(result[1]?.fixtures).toHaveLength(10);
+            expect(result[2]?.fixtures).toHaveLength(10);
+        });
+
+        it("handles uneven splits with ceiling division", () => {
+            const fixtures = Array.from({ length: 25 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            // 25 / 3 = 8.33, ceiling = 9
+            // Group 1: 0-8 (9 fixtures)
+            // Group 2: 9-17 (9 fixtures)
+            // Group 3: 18-24 (7 fixtures)
+            expect(result).toHaveLength(3);
+            expect(result[0]?.fixtures).toHaveLength(9);
+            expect(result[1]?.fixtures).toHaveLength(9);
+            expect(result[2]?.fixtures).toHaveLength(7);
+        });
+
+        it("preserves fixture order within groups", () => {
+            const fixtures = [
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f",
+                "g",
+                "h",
+                "i",
+                "j",
+                "k",
+                "l",
+                "m",
+                "n",
+                "o",
+                "p",
+                "q",
+                "r",
+                "s",
+                "t",
+                "u"
+            ];
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            // 21 fixtures / 3 groups = 7 per group
+            expect(result[0]?.fixtures).toEqual(["a", "b", "c", "d", "e", "f", "g"]);
+            expect(result[1]?.fixtures).toEqual(["h", "i", "j", "k", "l", "m", "n"]);
+            expect(result[2]?.fixtures).toEqual(["o", "p", "q", "r", "s", "t", "u"]);
+        });
+
+        it("handles more groups than fixtures", () => {
+            const fixtures = Array.from({ length: 25 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, 10);
+
+            // 25 / 10 = 2.5, ceiling = 3
+            // Should create groups with 3 fixtures each, some groups may be empty
+            const totalFixtures = result.reduce((sum, g) => sum + g.fixtures.length, 0);
+            expect(totalFixtures).toBe(25);
+            // All groups should have fixtures (no empty groups)
+            result.forEach((group) => {
+                expect(group.fixtures.length).toBeGreaterThan(0);
+            });
+        });
+
+        it("handles exactly 21 fixtures (just over threshold)", () => {
+            const fixtures = Array.from({ length: 21 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            expect(result).toHaveLength(3);
+            // 21 / 3 = 7 per group
+            expect(result[0]?.fixtures).toHaveLength(7);
+            expect(result[1]?.fixtures).toHaveLength(7);
+            expect(result[2]?.fixtures).toHaveLength(7);
+        });
+    });
+
+    describe("edge cases", () => {
+        it("handles empty fixtures array with numGroups > 0", () => {
+            const fixtures: string[] = [];
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            // Empty array has 0 fixtures, which is <= 20, so returns single group with 'all'
+            expect(result).toEqual([{ fixtures: ["all"] }]);
+        });
+
+        it("handles single fixture with numGroups > 0", () => {
+            const fixtures = ["single"];
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            // 1 fixture is <= 20, so returns single group with 'all'
+            expect(result).toEqual([{ fixtures: ["all"] }]);
+        });
+
+        it("handles large number of fixtures", () => {
+            const fixtures = Array.from({ length: 200 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, 10);
+
+            // 200 / 10 = 20 per group
+            expect(result).toHaveLength(10);
+            result.forEach((group) => {
+                expect(group.fixtures).toHaveLength(20);
+            });
+        });
+
+        it("handles numGroups of 1 with many fixtures", () => {
+            const fixtures = Array.from({ length: 50 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, 1);
+
+            expect(result).toHaveLength(1);
+            expect(result[0]?.fixtures).toHaveLength(50);
         });
     });
 });

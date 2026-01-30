@@ -13,7 +13,7 @@ import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
-import { getAvailableFixtures } from "./commands/list-test-fixtures";
+import { getAvailableFixtures, splitFixturesIntoGroups } from "./commands/list-test-fixtures";
 import { publishCli } from "./commands/publish/publishCli";
 import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
@@ -591,6 +591,13 @@ function addListTestFixturesCommand(cli: Argv) {
                     string: true,
                     demandOption: false,
                     description: "Path to write the JSON output to (prints to stdout if not provided)"
+                })
+                .option("groups", {
+                    type: "number",
+                    demandOption: false,
+                    default: 0,
+                    description:
+                        "Number of groups to split fixtures into for parallel CI execution. If 0 or fixture count <= 20, outputs a single group with ['all']."
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -603,23 +610,49 @@ function addListTestFixturesCommand(cli: Argv) {
                     ? generators.filter((g) => argv.generator?.includes(g.workspaceName))
                     : generators;
 
-            const result: Record<string, { fixtures: string[] }> = {};
+            const numGroups = argv.groups ?? 0;
 
-            for (const generator of targetGenerators) {
-                const fixtures = await getAvailableFixtures(generator, true);
-                result[generator.workspaceName] = { fixtures };
-            }
+            // If groups flag is set, output grouped fixtures for CI matrix
+            if (numGroups > 0 || argv.groups !== undefined) {
+                const result: Record<string, { fixtures: string[] }[]> = {};
 
-            const output = JSON.stringify({ generators: result }, null, 2);
+                for (const generator of targetGenerators) {
+                    const fixtures = await getAvailableFixtures(generator, true);
+                    const groups = splitFixturesIntoGroups(fixtures, numGroups);
+                    result[generator.workspaceName] = groups;
+                }
 
-            if (argv["output-file"] != null) {
-                const outputPath = argv["output-file"].startsWith("/")
-                    ? AbsoluteFilePath.of(argv["output-file"])
-                    : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-file"]));
-                await writeFile(outputPath, output);
-                console.log(`Output written to ${outputPath}`);
+                const output = JSON.stringify({ generators: result }, null, 2);
+
+                if (argv["output-file"] != null) {
+                    const outputPath = argv["output-file"].startsWith("/")
+                        ? AbsoluteFilePath.of(argv["output-file"])
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-file"]));
+                    await writeFile(outputPath, output);
+                    console.log(`Output written to ${outputPath}`);
+                } else {
+                    console.log(output);
+                }
             } else {
-                console.log(output);
+                // Original behavior: output flat list of fixtures
+                const result: Record<string, { fixtures: string[] }> = {};
+
+                for (const generator of targetGenerators) {
+                    const fixtures = await getAvailableFixtures(generator, true);
+                    result[generator.workspaceName] = { fixtures };
+                }
+
+                const output = JSON.stringify({ generators: result }, null, 2);
+
+                if (argv["output-file"] != null) {
+                    const outputPath = argv["output-file"].startsWith("/")
+                        ? AbsoluteFilePath.of(argv["output-file"])
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-file"]));
+                    await writeFile(outputPath, output);
+                    console.log(`Output written to ${outputPath}`);
+                } else {
+                    console.log(output);
+                }
             }
         }
     );

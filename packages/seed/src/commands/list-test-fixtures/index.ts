@@ -1,1 +1,2 @@
-export { getAvailableFixtures, getAvailableFixturesFromList } from "./getAvailableFixtures";
+export type { FixtureGroup } from "./getAvailableFixtures";
+export { getAvailableFixtures, getAvailableFixturesFromList, splitFixturesIntoGroups } from "./getAvailableFixtures";
