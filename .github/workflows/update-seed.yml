@@ -35,7 +35,7 @@ on:
         default: false
         type: boolean
       fixture:
-        description: 'Specific fixture/test definition to run (leave as "all" to run all fixtures)'
+        description: 'Specific fixture to run'
         required: false
         default: "all"
         type: string
