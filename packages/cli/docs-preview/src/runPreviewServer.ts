@@ -52,7 +52,8 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         editThisPageLaunch: undefined
     },
     jsFiles: undefined,
-    id: undefined
+    id: undefined,
+    apiNameToId: {}
 };
 
 export async function runPreviewServer({

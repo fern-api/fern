@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedClientSideParams;
-using SeedClientSideParams.Core;
+using SeedClientSideParams.Test.Utils;
 
 namespace SeedClientSideParams.Test.Unit.MockServer;
 
@@ -157,9 +157,6 @@ public class ListUsersTest : BaseMockServerTest
                 Fields = "fields",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PaginatedUserResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedClientSideParams;
-using SeedClientSideParams.Core;
+using SeedClientSideParams.Test.Utils;
 
 namespace SeedClientSideParams.Test.Unit.MockServer;
 
@@ -127,9 +127,6 @@ public class CreateUserTest : BaseMockServerTest
                 Connection = "connection",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

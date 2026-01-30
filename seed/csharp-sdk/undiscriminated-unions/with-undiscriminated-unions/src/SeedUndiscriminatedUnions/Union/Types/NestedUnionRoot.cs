@@ -211,6 +211,9 @@ public class NestedUnionRoot
         SeedUndiscriminatedUnions.NestedUnionL1 value
     ) => new("nestedUnionL1", value);
 
+    public static implicit operator NestedUnionRoot(int value) =>
+        new("nestedUnionL1", (NestedUnionL1)value);
+
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<NestedUnionRoot>
     {
@@ -311,7 +314,7 @@ public class NestedUnionRoot
             );
         }
 
-        public override NestedUnionRoot? ReadAsPropertyName(
+        public override NestedUnionRoot ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

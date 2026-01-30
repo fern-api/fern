@@ -394,3 +394,23 @@ type UnionWithReservedNames struct {
 	typeStringLiteral  string
 	valueStringLiteral string
 }
+
+// A user identifier (alias for string)
+type UserId = string
+
+// A name (alias for string)
+type Name = string
+
+// Union with multiple named type aliases that all resolve to the same C# type (string).
+// Without the fix, this would generate duplicate implicit operators:
+//
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//
+// causing CS0557 compiler error.
+type UnionWithTypeAliases struct {
+	String string
+	UserId UserId
+	Name   Name
+}
