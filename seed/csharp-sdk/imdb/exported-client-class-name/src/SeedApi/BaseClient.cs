@@ -37,5 +37,5 @@ public partial class BaseClient : IBaseClient
         Imdb = new ImdbClient(_client);
     }
 
-    public ImdbClient Imdb { get; }
+    public IImdbClient Imdb { get; }
 }

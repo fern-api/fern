@@ -1,5 +1,4 @@
 name: ci
-
 on: [push]
 jobs:
   compile:
@@ -10,7 +9,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -26,7 +25,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -34,7 +33,7 @@ jobs:
         run: poetry install
 
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 
   publish:
     needs: [compile, test]
@@ -46,7 +45,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -55,7 +54,7 @@ jobs:
       - name: Publish to pypi
         run: |
           poetry config repositories.remote 
-          poetry --no-interaction -v publish --build --repository remote --username "$" --password "$"
+          poetry --no-interaction -v publish --build --repository remote --username "$PYPI_USERNAME" --password "$PYPI_PASSWORD"
         env:
-          : ${{ secrets. }}
-          : ${{ secrets. }}
+          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}

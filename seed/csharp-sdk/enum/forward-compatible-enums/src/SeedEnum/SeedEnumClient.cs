@@ -33,13 +33,13 @@ public partial class SeedEnumClient : ISeedEnumClient
         QueryParam = new QueryParamClient(_client);
     }
 
-    public HeadersClient Headers { get; }
+    public IHeadersClient Headers { get; }
 
-    public InlinedRequestClient InlinedRequest { get; }
+    public IInlinedRequestClient InlinedRequest { get; }
 
-    public MultipartFormClient MultipartForm { get; }
+    public IMultipartFormClient MultipartForm { get; }
 
-    public PathParamClient PathParam { get; }
+    public IPathParamClient PathParam { get; }
 
-    public QueryParamClient QueryParam { get; }
+    public IQueryParamClient QueryParam { get; }
 }

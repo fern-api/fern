@@ -29,5 +29,5 @@ public partial class SeedErrorsClient : ISeedErrorsClient
         Simple = new SimpleClient(_client);
     }
 
-    public SimpleClient Simple { get; }
+    public ISimpleClient Simple { get; }
 }

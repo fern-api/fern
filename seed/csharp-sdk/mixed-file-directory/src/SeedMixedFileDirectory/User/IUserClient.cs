@@ -4,7 +4,7 @@ namespace SeedMixedFileDirectory;
 
 public partial interface IUserClient
 {
-    public EventsClient Events { get; }
+    public IEventsClient Events { get; }
 
     /// <summary>
     /// List all users.

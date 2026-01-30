@@ -37,5 +37,5 @@ public partial class SeedNoEnvironmentClient : ISeedNoEnvironmentClient
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; }
+    public IDummyClient Dummy { get; }
 }

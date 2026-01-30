@@ -37,5 +37,5 @@ public partial class SeedPaginationClient : ISeedPaginationClient
         Users = new UsersClient(_client);
     }
 
-    public UsersClient Users { get; }
+    public IUsersClient Users { get; }
 }

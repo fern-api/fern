@@ -31,9 +31,9 @@ public partial class SeedUnionsClient : ISeedUnionsClient
         Union = new UnionClient(_client);
     }
 
-    public BigunionClient Bigunion { get; }
+    public IBigunionClient Bigunion { get; }
 
-    public TypesClient Types { get; }
+    public ITypesClient Types { get; }
 
-    public UnionClient Union { get; }
+    public IUnionClient Union { get; }
 }

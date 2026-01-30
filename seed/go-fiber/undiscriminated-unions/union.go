@@ -398,6 +398,9 @@ func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
+// A name (alias for string)
+type Name = string
+
 var (
 	namedMetadataFieldName  = big.NewInt(1 << 0)
 	namedMetadataFieldValue = big.NewInt(1 << 1)
@@ -1368,3 +1371,97 @@ func (u *UnionWithReservedNames) Accept(visitor UnionWithReservedNamesVisitor) e
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
+
+// Union with multiple named type aliases that all resolve to the same C# type (string).
+// Without the fix, this would generate duplicate implicit operators:
+//
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//
+// causing CS0557 compiler error.
+type UnionWithTypeAliases struct {
+	String string
+	UserId UserId
+	Name   Name
+
+	typ string
+}
+
+func (u *UnionWithTypeAliases) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithTypeAliases) GetUserId() UserId {
+	if u == nil {
+		return ""
+	}
+	return u.UserId
+}
+
+func (u *UnionWithTypeAliases) GetName() Name {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UnionWithTypeAliases) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	var valueUserId UserId
+	if err := json.Unmarshal(data, &valueUserId); err == nil {
+		u.typ = "UserId"
+		u.UserId = valueUserId
+		return nil
+	}
+	var valueName Name
+	if err := json.Unmarshal(data, &valueName); err == nil {
+		u.typ = "Name"
+		u.Name = valueName
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithTypeAliases) MarshalJSON() ([]byte, error) {
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	if u.typ == "UserId" || u.UserId != "" {
+		return json.Marshal(u.UserId)
+	}
+	if u.typ == "Name" || u.Name != "" {
+		return json.Marshal(u.Name)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithTypeAliasesVisitor interface {
+	VisitString(string) error
+	VisitUserId(UserId) error
+	VisitName(Name) error
+}
+
+func (u *UnionWithTypeAliases) Accept(visitor UnionWithTypeAliasesVisitor) error {
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	if u.typ == "UserId" || u.UserId != "" {
+		return visitor.VisitUserId(u.UserId)
+	}
+	if u.typ == "Name" || u.Name != "" {
+		return visitor.VisitName(u.Name)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// A user identifier (alias for string)
+type UserId = string

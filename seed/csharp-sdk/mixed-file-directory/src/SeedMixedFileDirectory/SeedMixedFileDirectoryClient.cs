@@ -30,7 +30,7 @@ public partial class SeedMixedFileDirectoryClient : ISeedMixedFileDirectoryClien
         User = new UserClient(_client);
     }
 
-    public OrganizationClient Organization { get; }
+    public IOrganizationClient Organization { get; }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

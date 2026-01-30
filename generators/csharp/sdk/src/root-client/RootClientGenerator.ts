@@ -149,7 +149,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     access: ast.Access.Public,
                     get: true,
                     origin: subpackage,
-                    type: this.context.getSubpackageClassReference(subpackage)
+                    type: this.context.getSubpackageInterfaceReference(subpackage)
                 });
             }
         }

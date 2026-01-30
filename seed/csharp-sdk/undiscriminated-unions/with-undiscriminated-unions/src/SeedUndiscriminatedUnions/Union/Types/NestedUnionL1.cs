@@ -248,6 +248,9 @@ public class NestedUnionL1
     public static implicit operator NestedUnionL1(SeedUndiscriminatedUnions.NestedUnionL2 value) =>
         new("nestedUnionL2", value);
 
+    public static implicit operator NestedUnionL1(bool value) =>
+        new("nestedUnionL2", (NestedUnionL2)value);
+
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<NestedUnionL1>
     {

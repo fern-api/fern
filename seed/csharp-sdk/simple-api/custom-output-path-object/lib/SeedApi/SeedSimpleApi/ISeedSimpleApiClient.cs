@@ -2,5 +2,5 @@ namespace SeedSimpleApi;
 
 public partial interface ISeedSimpleApiClient
 {
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

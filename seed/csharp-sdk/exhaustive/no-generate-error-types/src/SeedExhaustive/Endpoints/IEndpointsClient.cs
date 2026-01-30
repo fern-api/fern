@@ -2,14 +2,14 @@ namespace SeedExhaustive.Endpoints;
 
 public partial interface IEndpointsClient
 {
-    public ContainerClient Container { get; }
-    public ContentTypeClient ContentType { get; }
-    public EnumClient Enum { get; }
-    public HttpMethodsClient HttpMethods { get; }
-    public ObjectClient Object { get; }
-    public ParamsClient Params { get; }
-    public PrimitiveClient Primitive { get; }
-    public PutClient Put { get; }
-    public UnionClient Union { get; }
-    public UrlsClient Urls { get; }
+    public IContainerClient Container { get; }
+    public IContentTypeClient ContentType { get; }
+    public IEnumClient Enum { get; }
+    public IHttpMethodsClient HttpMethods { get; }
+    public IObjectClient Object { get; }
+    public IParamsClient Params { get; }
+    public IPrimitiveClient Primitive { get; }
+    public IPutClient Put { get; }
+    public IUnionClient Union { get; }
+    public IUrlsClient Urls { get; }
 }

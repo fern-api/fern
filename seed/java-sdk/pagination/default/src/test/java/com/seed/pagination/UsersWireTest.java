@@ -5,15 +5,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
+import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersDoubleOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
+import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForOptionalData;
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
 import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
+import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.Order;
 import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.WithCursor;
@@ -201,7 +206,7 @@ public class UsersWireTest {
                         .setBody(
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
         SyncPagingIterable<User> response = client.users()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                .listWithOffsetPagination(ListUsersOffsetPaginationRequest.builder()
                         .page(1)
                         .perPage(1)
                         .order(Order.ASC)
@@ -225,9 +230,9 @@ public class UsersWireTest {
                         .setBody(
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
         SyncPagingIterable<User> response = client.users()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
-                        .page(1)
-                        .perPage(1)
+                .listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest.builder()
+                        .page(1.1)
+                        .perPage(1.1)
                         .order(Order.ASC)
                         .startingAfter("starting_after")
                         .build());
@@ -322,7 +327,7 @@ public class UsersWireTest {
                         .setBody(
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
         SyncPagingIterable<User> response = client.users()
-                .listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest.builder()
+                .listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest.builder()
                         .page(1)
                         .limit(1)
                         .order(Order.ASC)
@@ -366,7 +371,7 @@ public class UsersWireTest {
                         .setBody(
                                 "{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
         SyncPagingIterable<User> response = client.users()
-                .listWithExtendedResults(ListUsersExtendedRequest.builder()
+                .listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData.builder()
                         .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                         .build());
         RecordedRequest request = server.takeRequest();
@@ -404,7 +409,7 @@ public class UsersWireTest {
                 .setResponseCode(200)
                 .setBody("{\"cursor\":{\"after\":\"after\",\"data\":[\"data\",\"data\"]}}"));
         SyncPagingIterable<String> response = client.users()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                .listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest.builder()
                         .startingAfter("starting_after")
                         .build());
         RecordedRequest request = server.takeRequest();

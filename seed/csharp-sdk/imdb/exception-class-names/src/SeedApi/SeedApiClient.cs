@@ -37,5 +37,5 @@ public partial class SeedApiClient : ISeedApiClient
         Imdb = new ImdbClient(_client);
     }
 
-    public ImdbClient Imdb { get; }
+    public IImdbClient Imdb { get; }
 }

@@ -42,7 +42,7 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
         BasicAuth = new BasicAuthClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; }
+    public IBasicAuthClient BasicAuth { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

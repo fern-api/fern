@@ -29,5 +29,5 @@ public partial class SeedCsharpNamespaceConflictClient : ISeedCsharpNamespaceCon
         Tasktest = new TasktestClient(_client);
     }
 
-    public TasktestClient Tasktest { get; }
+    public ITasktestClient Tasktest { get; }
 }
