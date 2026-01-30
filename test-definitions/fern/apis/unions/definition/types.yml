@@ -20,6 +20,16 @@ types:
     #     bar:
     #       name: example2
 
+  UnionWithOptionalReference:
+    union:
+      foo: optional<Foo>
+      bar: optional<Bar>
+
+  UnionWithNullableReference:
+    union:
+      foo: nullable<Foo>
+      bar: nullable<Bar>
+
   UnionWithDiscriminant:
     discriminant:
       value: _type
