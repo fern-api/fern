@@ -34,6 +34,11 @@ on:
         required: false
         default: false
         type: boolean
+      fixture:
+        description: 'Specific fixture/test definition to run (leave as "all" to run all fixtures)'
+        required: false
+        default: "all"
+        type: string
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -59,6 +64,7 @@ jobs:
       update-by-pr: ${{ steps.set-update-options.outputs.update-by-pr }}
       selected-language: ${{ steps.set-language-filter.outputs.selected-language }}
       commit-on-failure: ${{ steps.set-commit-on-failure.outputs.commit-on-failure }}
+      selected-fixture: ${{ steps.set-fixture-filter.outputs.selected-fixture }}
     steps:
       # Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
       - name: Set update options
@@ -110,6 +116,21 @@ jobs:
             echo "Push event detected, defaulting commit-on-failure to false"
           fi
           echo "commit-on-failure=$COMMIT_ON_FAILURE" >> $GITHUB_OUTPUT
+
+      - name: Set fixture filter
+        id: set-fixture-filter
+        shell: bash
+        run: |
+          # For workflow_dispatch events, use the input fixture filter
+          # For push events, default to 'all' to maintain existing behavior
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            SELECTED_FIXTURE="${{ github.event.inputs.fixture }}"
+            echo "Fixture filter from workflow_dispatch input: $SELECTED_FIXTURE"
+          else
+            SELECTED_FIXTURE="all"
+            echo "Push event detected, running all fixtures"
+          fi
+          echo "selected-fixture=$SELECTED_FIXTURE" >> $GITHUB_OUTPUT
 
   changes:
     if: github.repository == 'fern-api/fern'
@@ -410,7 +431,7 @@ jobs:
           generator-name: ruby-model
           generator-path: generators/ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -444,7 +465,7 @@ jobs:
           generator-name: ruby-sdk
           generator-path: generators/ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -478,7 +499,7 @@ jobs:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -512,7 +533,7 @@ jobs:
           generator-name: pydantic
           generator-path: generators/python generators/python-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -546,7 +567,7 @@ jobs:
           generator-name: python-sdk
           generator-path: generators/python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -580,7 +601,7 @@ jobs:
           generator-name: fastapi
           generator-path: generators/python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -614,7 +635,7 @@ jobs:
           generator-name: openapi
           generator-path: generators/openapi
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -648,7 +669,7 @@ jobs:
           generator-name: postman
           generator-path: generators/postman
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -682,7 +703,7 @@ jobs:
           generator-name: java-sdk
           generator-path: generators/java generators/java-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -716,7 +737,7 @@ jobs:
           generator-name: java-model
           generator-path: generators/java generators/java-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -750,7 +771,7 @@ jobs:
           generator-name: java-spring
           generator-path: generators/java generators/java-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -784,7 +805,7 @@ jobs:
           generator-name: ts-sdk
           generator-path: generators/typescript generators/typescript-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -818,7 +839,7 @@ jobs:
           generator-name: ts-express
           generator-path: generators/typescript generators/typescript-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -852,7 +873,7 @@ jobs:
           generator-name: go-fiber
           generator-path: generators/go generators/go-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -886,7 +907,7 @@ jobs:
           generator-name: go-model
           generator-path: generators/go generators/go-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -920,7 +941,7 @@ jobs:
           generator-name: go-sdk
           generator-path: generators/go generators/go-v2
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -954,7 +975,7 @@ jobs:
           generator-name: csharp-model
           generator-path: generators/csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -988,7 +1009,7 @@ jobs:
           generator-name: csharp-sdk
           generator-path: generators/csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -1022,7 +1043,7 @@ jobs:
           generator-name: php-model
           generator-path: generators/php
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -1056,7 +1077,7 @@ jobs:
           generator-name: php-sdk
           generator-path: generators/php
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -1090,7 +1111,7 @@ jobs:
           generator-name: swift-sdk
           generator-path: generators/swift
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -1124,7 +1145,7 @@ jobs:
           generator-name: rust-model
           generator-path: generators/rust
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
@@ -1158,7 +1179,7 @@ jobs:
           generator-name: rust-sdk
           generator-path: generators/rust
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ needs.setup.outputs.selected-fixture != 'all' && format('["{0}"]', needs.setup.outputs.selected-fixture) || toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
