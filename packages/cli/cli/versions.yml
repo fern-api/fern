@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.2
+  changelogEntry:
+    - summary: |
+        Upgrade the TypeScript SDK generator to latest for generating Fern Definition schemas.
+      type: internal
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.53.1
   changelogEntry:
     - summary: |
