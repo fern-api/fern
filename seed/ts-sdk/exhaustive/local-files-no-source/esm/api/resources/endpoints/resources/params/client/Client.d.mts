@@ -117,18 +117,17 @@ export declare class ParamsClient {
     modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __modifyWithInlinePath;
     /**
-     * POST with path param that has same name as body property
+     * POST with path param that has same name as body property (path param inlined)
      *
-     * @param {string} accountId
      * @param {SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.params.postWithBodyAndDuplicatePathParam("accountId", {
+     *     await client.endpoints.params.postWithBodyAndDuplicatePathParam({
      *         accountId: "accountId",
      *         otherProperty: "otherProperty"
      *     })
      */
-    postWithBodyAndDuplicatePathParam(accountId: string, request: SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
+    postWithBodyAndDuplicatePathParam(request: SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __postWithBodyAndDuplicatePathParam;
 }

@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 import { normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
 import { mergeHeaders } from "../../../../../../core/headers.mjs";
 import * as core from "../../../../../../core/index.mjs";
@@ -390,24 +401,24 @@ export class ParamsClient {
         });
     }
     /**
-     * POST with path param that has same name as body property
+     * POST with path param that has same name as body property (path param inlined)
      *
-     * @param {string} accountId
      * @param {SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.params.postWithBodyAndDuplicatePathParam("accountId", {
+     *     await client.endpoints.params.postWithBodyAndDuplicatePathParam({
      *         accountId: "accountId",
      *         otherProperty: "otherProperty"
      *     })
      */
-    postWithBodyAndDuplicatePathParam(accountId, request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__postWithBodyAndDuplicatePathParam(accountId, request, requestOptions));
+    postWithBodyAndDuplicatePathParam(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__postWithBodyAndDuplicatePathParam(request, requestOptions));
     }
-    __postWithBodyAndDuplicatePathParam(accountId, request, requestOptions) {
+    __postWithBodyAndDuplicatePathParam(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
+            const { accountId } = request, _body = __rest(request, ["accountId"]);
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
@@ -417,7 +428,7 @@ export class ParamsClient {
                 contentType: "application/json",
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
                 requestType: "json",
-                body: request,
+                body: _body,
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
