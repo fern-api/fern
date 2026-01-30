@@ -523,7 +523,6 @@ export class ParamsClient {
      * @example
      *     await client.endpoints.params.postWithBodyAndDuplicatePathParam({
      *         account_id: "accountId",
-     *         accountId: "accountId",
      *         otherProperty: "otherProperty"
      *     })
      */

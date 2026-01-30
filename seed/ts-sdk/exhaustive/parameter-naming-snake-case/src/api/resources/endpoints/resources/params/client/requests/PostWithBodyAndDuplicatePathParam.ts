@@ -4,13 +4,10 @@
  * @example
  *     {
  *         account_id: "accountId",
- *         accountId: "accountId",
  *         otherProperty: "otherProperty"
  *     }
  */
 export interface PostWithBodyAndDuplicatePathParam {
     account_id: string;
-    /** This should be excluded from the request wrapper since it duplicates the path param */
-    accountId?: string;
     otherProperty: string;
 }
