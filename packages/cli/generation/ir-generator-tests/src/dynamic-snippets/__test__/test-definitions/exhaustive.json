@@ -9060,6 +9060,353 @@
             },
             "examples": null
         },
+        "endpoint_endpoints/params.postWithBodyAndDuplicatePathParam": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "postWithBodyAndDuplicatePathParam",
+                    "camelCase": {
+                        "unsafeName": "postWithBodyAndDuplicatePathParam",
+                        "safeName": "postWithBodyAndDuplicatePathParam"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_with_body_and_duplicate_path_param",
+                        "safeName": "post_with_body_and_duplicate_path_param"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_WITH_BODY_AND_DUPLICATE_PATH_PARAM",
+                        "safeName": "POST_WITH_BODY_AND_DUPLICATE_PATH_PARAM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostWithBodyAndDuplicatePathParam",
+                        "safeName": "PostWithBodyAndDuplicatePathParam"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "params",
+                        "camelCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PARAMS",
+                            "safeName": "PARAMS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Params",
+                            "safeName": "Params"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/params/path/{accountId}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostWithBodyAndDuplicatePathParam",
+                        "camelCase": {
+                            "unsafeName": "postWithBodyAndDuplicatePathParam",
+                            "safeName": "postWithBodyAndDuplicatePathParam"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_with_body_and_duplicate_path_param",
+                            "safeName": "post_with_body_and_duplicate_path_param"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_WITH_BODY_AND_DUPLICATE_PATH_PARAM",
+                            "safeName": "POST_WITH_BODY_AND_DUPLICATE_PATH_PARAM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostWithBodyAndDuplicatePathParam",
+                            "safeName": "PostWithBodyAndDuplicatePathParam"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "endpoints",
+                                "camelCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINTS",
+                                    "safeName": "ENDPOINTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Endpoints",
+                                    "safeName": "Endpoints"
+                                }
+                            },
+                            {
+                                "originalName": "params",
+                                "camelCase": {
+                                    "unsafeName": "params",
+                                    "safeName": "params"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "params",
+                                    "safeName": "params"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PARAMS",
+                                    "safeName": "PARAMS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Params",
+                                    "safeName": "Params"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "endpoints",
+                                "camelCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINTS",
+                                    "safeName": "ENDPOINTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Endpoints",
+                                    "safeName": "Endpoints"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "accountId",
+                                "camelCase": {
+                                    "unsafeName": "accountID",
+                                    "safeName": "accountID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "account_id",
+                                    "safeName": "account_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACCOUNT_ID",
+                                    "safeName": "ACCOUNT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AccountID",
+                                    "safeName": "AccountID"
+                                }
+                            },
+                            "wireValue": "accountId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "accountId",
+                                    "camelCase": {
+                                        "unsafeName": "accountID",
+                                        "safeName": "accountID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "account_id",
+                                        "safeName": "account_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ACCOUNT_ID",
+                                        "safeName": "ACCOUNT_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "AccountID",
+                                        "safeName": "AccountID"
+                                    }
+                                },
+                                "wireValue": "accountId"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "otherProperty",
+                                    "camelCase": {
+                                        "unsafeName": "otherProperty",
+                                        "safeName": "otherProperty"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "other_property",
+                                        "safeName": "other_property"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "OTHER_PROPERTY",
+                                        "safeName": "OTHER_PROPERTY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "OtherProperty",
+                                        "safeName": "OtherProperty"
+                                    }
+                                },
+                                "wireValue": "otherProperty"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_endpoints/primitive.getAndReturnString": {
             "auth": {
                 "type": "bearer",
