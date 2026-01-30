@@ -49,6 +49,7 @@ export async function tryRunCli(): Promise<void> {
     addRunCommand(cli);
     addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
+    addListTestFixturesCommand(cli);
     addCleanCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
@@ -568,6 +569,57 @@ function addGetAvailableFixturesCommand(cli: Argv) {
 
             // Note: HAVE to log the output for CI to pick it up
             console.log(JSON.stringify({ fixtures: availableFixtures }, null, 2));
+        }
+    );
+}
+
+function addListTestFixturesCommand(cli: Argv) {
+    cli.command(
+        "list-test-fixtures",
+        "List all test fixtures for all generators or a specific generator, with output folders, in JSON format for CI consumption",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "g",
+                    description: "The generators to list fixtures for (lists all if not provided)"
+                })
+                .option("output-file", {
+                    string: true,
+                    demandOption: false,
+                    description: "Path to write the JSON output to (prints to stdout if not provided)"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            if (argv.generator != null) {
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
+            }
+
+            const targetGenerators =
+                argv.generator != null
+                    ? generators.filter((g) => argv.generator?.includes(g.workspaceName))
+                    : generators;
+
+            const result: Record<string, { fixtures: string[] }> = {};
+
+            for (const generator of targetGenerators) {
+                const fixtures = await getAvailableFixtures(generator, true);
+                result[generator.workspaceName] = { fixtures };
+            }
+
+            const output = JSON.stringify({ generators: result }, null, 2);
+
+            if (argv["output-file"] != null) {
+                const outputPath = argv["output-file"].startsWith("/")
+                    ? AbsoluteFilePath.of(argv["output-file"])
+                    : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-file"]));
+                await writeFile(outputPath, output);
+                console.log(`Output written to ${outputPath}`);
+            } else {
+                console.log(output);
+            }
         }
     );
 }
