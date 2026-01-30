@@ -293,10 +293,22 @@ jobs:
             exit 1
           fi
           
-          echo "File exists, reading with jq..."
-          GROUPS=$(jq -c '.generators["${{ matrix.sdk-name }}"]' /tmp/fixtures.json)
+          echo "File exists, checking file size..."
+          ls -la /tmp/fixtures.json
+          echo "First 500 chars of file:"
+          head -c 500 /tmp/fixtures.json
+          echo ""
+          echo "Running jq..."
+          GROUPS=$(jq -c '.generators["${{ matrix.sdk-name }}"]' /tmp/fixtures.json 2>&1)
           JQ_EXIT=$?
           echo "jq exit code: $JQ_EXIT"
+          echo "GROUPS length: ${#GROUPS}"
+          echo "GROUPS first 200 chars: ${GROUPS:0:200}"
+          
+          if [ "$JQ_EXIT" -ne 0 ]; then
+            echo "jq failed, full output: $GROUPS"
+            exit 1
+          fi
           
           if [ -z "$GROUPS" ] || [ "$GROUPS" = "null" ]; then
             echo "Error: Failed to parse fixtures from output file"
@@ -305,7 +317,7 @@ jobs:
           fi
           
           echo "${{ matrix.sdk-name }}-test-matrix=$GROUPS" >> $GITHUB_OUTPUT
-          echo "Groups for ${{ matrix.sdk-name }}: $GROUPS"
+          echo "Matrix set successfully"
 
   ruby-model:
     runs-on: ubuntu-latest
