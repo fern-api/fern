@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -37,9 +39,9 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "@types/node": "^18.19.70"
   }
 }

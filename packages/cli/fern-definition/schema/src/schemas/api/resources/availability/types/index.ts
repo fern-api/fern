@@ -1,3 +1,3 @@
-export * from "./AvailabilityUnionSchema";
-export * from "./AvailabilitySchema";
-export * from "./AvailabilityStatusSchema";
+export * from "./AvailabilitySchema.js";
+export * from "./AvailabilityStatusSchema.js";
+export * from "./AvailabilityUnionSchema.js";

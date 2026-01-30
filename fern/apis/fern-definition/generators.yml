@@ -4,13 +4,15 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.45.1
+      - name: fernapi/fern-typescript-sdk
+        version: 3.46.1
         output:
           location: local-file-system
           path: ../../../packages/cli/fern-definition/schema/src/schemas
         config:
           outputSourceFiles: true
+          outputSrcOnly: true
+          noSerdeLayer: false
           namespaceExport: FernDefinition
           retainOriginalCasing: true
 
@@ -18,7 +20,7 @@ groups:
     audiences:
       - docs-parsers
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.39.3
         output:
           location: npm

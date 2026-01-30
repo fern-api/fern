@@ -2,7 +2,14 @@ import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-
 import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
-export const FernContainerRegex = {
+export const FernContainerRegex: {
+    readonly MAP: RegExp;
+    readonly LIST: RegExp;
+    readonly SET: RegExp;
+    readonly OPTIONAL: RegExp;
+    readonly NULLABLE: RegExp;
+    readonly LITERAL: RegExp;
+} = {
     MAP: /^map<\s*([^,]*)\s*,\s*(.*)\s*>$/,
     LIST: /^list<\s*(.*)\s*>$/,
     SET: /^set<\s*(.*)\s*>$/,
