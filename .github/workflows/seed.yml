@@ -320,6 +320,7 @@ jobs:
             echo "${{ matrix.sdk-name }}-test-matrix=$GROUPS" >> $GITHUB_OUTPUT
             echo "Groups for ${{ matrix.sdk-name }}-test-matrix:"
             echo "$GROUPS" | jq .
+          fi
 
   ruby-model:
     runs-on: ubuntu-latest

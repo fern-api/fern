@@ -13,6 +13,7 @@ import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
+import { getAvailableFixtures } from "./commands/list-test-fixtures";
 import { publishCli } from "./commands/publish/publishCli";
 import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
@@ -661,37 +662,6 @@ function addCleanCommand(cli: Argv) {
             }
         }
     );
-}
-
-async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFolders: boolean) {
-    // Get all available fixtures
-    const availableFixtures = FIXTURES.filter((fixture) => {
-        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
-        return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
-    });
-
-    // Optionally, include output folders in format fixture:outputFolder (note: this will replace the fixture name without the output folder)
-    if (withOutputFolders) {
-        // Add fixtures that have subfolders with their subfolder version
-        const allOptions: string[] = [];
-        for (const fixture of availableFixtures) {
-            const config = generator.workspaceConfig.fixtures?.[fixture];
-            if (config != null && config.length > 0) {
-                // This fixture has subfolders, add to map as fixture:outputFolder
-                for (const outputFolder of config.map((c) => c.outputFolder)) {
-                    allOptions.push(`${fixture}:${outputFolder}`);
-                }
-            } else {
-                // This fixture has no subfolders, keep as is
-                allOptions.push(fixture);
-            }
-        }
-        // Return map with output folders
-        return allOptions;
-    }
-
-    // Don't include subfolders, return the original fixtures
-    return availableFixtures;
 }
 
 function expandFixtureGlobs(fixturePatterns: string[], availableFixtures: string[]): string[] {
