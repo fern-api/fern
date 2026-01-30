@@ -7,6 +7,14 @@
   createdAt: "2026-01-30"
   irVersion: 63
 
+- version: 3.55.4
+  changelogEntry:
+    - summary: |
+        Fix discriminated union variants with optional or nullable object types incorrectly using `samePropertiesAsObject`. When a union variant has a type like `body: optional<SomeObjectType>`, the IR generator now correctly uses `singleProperty` instead of `samePropertiesAsObject`, which ensures the generated TypeScript code has a `value` property with the optional type instead of extending the object type directly.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
 - version: 3.55.3
   changelogEntry:
     - summary: Fix schema namespace resolution to OpenAPI importers for proper type reference targeting
@@ -21,7 +29,6 @@
       type: fix
   createdAt: "2026-01-30"
   irVersion: 63
-
 
 - version: 3.55.1
   changelogEntry:

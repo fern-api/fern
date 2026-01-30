@@ -74,6 +74,14 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        additional_init_exports:
+          - from: types.types
+            imports:
+              - Movie
+              - Actor
+              - Actress
+      outputFolder: additional_init_exports_with_duplicates
+    - customConfig:
         include_legacy_wire_tests: true
         use_inheritance_for_extended_models: false
       outputFolder: legacy-wire-tests
