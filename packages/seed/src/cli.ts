@@ -31,7 +31,14 @@ import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
 
-void tryRunCli();
+tryRunCli()
+    .then(() => {
+        process.exit(0);
+    })
+    .catch((error) => {
+        console.error("Unhandled error:", error);
+        process.exit(1);
+    });
 
 export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv))
