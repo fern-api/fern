@@ -2,5 +2,5 @@ namespace SeedUndiscriminatedUnions;
 
 public partial interface ISeedUndiscriminatedUnionsClient
 {
-    public UnionClient Union { get; }
+    public IUnionClient Union { get; }
 }

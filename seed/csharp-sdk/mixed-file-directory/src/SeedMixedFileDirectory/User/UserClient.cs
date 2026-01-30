@@ -14,7 +14,7 @@ public partial class UserClient : IUserClient
         Events = new EventsClient(_client);
     }
 
-    public EventsClient Events { get; }
+    public IEventsClient Events { get; }
 
     private async Task<WithRawResponse<IEnumerable<User>>> ListAsyncCore(
         ListUsersRequest request,

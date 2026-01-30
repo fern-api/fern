@@ -32,9 +32,9 @@ public partial class SeedApiClient : ISeedApiClient
         Folder = new FolderClient(_client);
     }
 
-    public AClient A { get; }
+    public IAClient A { get; }
 
-    public FolderClient Folder { get; }
+    public IFolderClient Folder { get; }
 
     /// <example><code>
     /// await client.FooAsync();

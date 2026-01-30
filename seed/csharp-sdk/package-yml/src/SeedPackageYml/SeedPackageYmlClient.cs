@@ -30,7 +30,7 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 
     private async Task<WithRawResponse<string>> EchoAsyncCore(
         string id,

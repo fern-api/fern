@@ -1,0 +1,1 @@
+export { FernConfigJsonMigrator } from "./FernConfigJsonMigrator";

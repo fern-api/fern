@@ -12,6 +12,6 @@ export type {
     Migration,
     MigrationContext,
     MigrationModule,
-    MigrationResult
+    MigratorResult
 } from "./types.js";
 export { migrateConfig } from "./utils.js";

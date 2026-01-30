@@ -4943,6 +4943,9 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.775
         version: 0.0.775
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.9
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -4958,6 +4961,9 @@ importers:
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(@microsoft/api-extractor@7.55.2(@types/node@18.15.3))(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)

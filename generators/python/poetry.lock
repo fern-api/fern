@@ -597,6 +597,18 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "poetry-core"
+version = "1.9.1"
+description = "Poetry PEP 517 Build Backend"
+optional = false
+python-versions = "<4.0,>=3.8"
+groups = ["main"]
+files = [
+    {file = "poetry_core-1.9.1-py3-none-any.whl", hash = "sha256:6f45dd3598e0de8d9b0367360253d4c5d4d0110c8f5c71120a14f0e0f116c1a0"},
+    {file = "poetry_core-1.9.1.tar.gz", hash = "sha256:7a2d49214bf58b4f17f99d6891d947a9836c9899a67a5069f52d7b67217f61b8"},
+]
+
+[[package]]
 name = "pre-commit"
 version = "2.21.0"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
@@ -1192,4 +1204,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "107f2aa22d8c46dc36ce995aac36014eb0ac24f6d493abfaebd7cf9b42d9c791"
+content-hash = "044e00f33a1022b2b05a91e0d6f6ad8e6f0aa83e04a9cfad1fa1cc7c900e6af0"

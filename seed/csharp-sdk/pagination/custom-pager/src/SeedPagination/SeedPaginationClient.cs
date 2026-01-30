@@ -40,9 +40,9 @@ public partial class SeedPaginationClient : ISeedPaginationClient
         Users = new UsersClient(_client);
     }
 
-    public ComplexClient Complex { get; }
+    public IComplexClient Complex { get; }
 
-    public InlineUsersClient InlineUsers { get; }
+    public IInlineUsersClient InlineUsers { get; }
 
-    public UsersClient Users { get; }
+    public IUsersClient Users { get; }
 }

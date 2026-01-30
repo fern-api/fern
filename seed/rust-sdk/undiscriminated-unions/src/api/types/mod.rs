@@ -17,6 +17,9 @@ pub mod union_payment_method_union;
 pub mod union_tokenize_card;
 pub mod union_convert_token;
 pub mod union_union_with_reserved_names;
+pub mod union_user_id;
+pub mod union_name;
+pub mod union_union_with_type_aliases;
 pub mod payment_request;
 
 pub use union_request::{Request};
@@ -38,5 +41,8 @@ pub use union_payment_method_union::{PaymentMethodUnion};
 pub use union_tokenize_card::{TokenizeCard};
 pub use union_convert_token::{ConvertToken};
 pub use union_union_with_reserved_names::{UnionWithReservedNames};
+pub use union_user_id::{UserId};
+pub use union_name::{Name};
+pub use union_union_with_type_aliases::{UnionWithTypeAliases};
 pub use payment_request::{PaymentRequest};
 
