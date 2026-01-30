@@ -791,11 +791,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         context: SdkContext;
         inlinedRequestBody: InlinedRequestBody;
     }): InlinedRequestBodyProperty[] {
-        const pathParameterNames = new Set(
-            this.getPathParamsForRequestWrapper(context).map((param) => {
-                const propertyName = this.getPropertyNameOfPathParameter(param);
-                return propertyName.propertyName;
-            })
+        const pathParameterOriginalNames = new Set(
+            this.getPathParamsForRequestWrapper(context).map((param) => param.name.originalName)
         );
 
         return inlinedRequestBody.properties.filter((property) => {
@@ -803,8 +800,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
                 return false;
             }
-            const bodyPropertyName = this.getInlinedRequestBodyPropertyKeyFromName(property.name);
-            if (pathParameterNames.has(bodyPropertyName.propertyName)) {
+            if (pathParameterOriginalNames.has(property.name.name.originalName)) {
                 return false;
             }
             return true;

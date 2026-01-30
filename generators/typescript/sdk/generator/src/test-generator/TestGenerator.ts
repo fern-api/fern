@@ -1113,7 +1113,11 @@ describe("${serviceName}", () => {
             return;
         }
 
-        const rawRequestBody = this.getRequestExample(example.request);
+        const pathParameterNames = new Set([
+            ...example.servicePathParameters.map((p) => p.name.originalName),
+            ...example.endpointPathParameters.map((p) => p.name.originalName)
+        ]);
+        const rawRequestBody = this.getRequestExample(example.request, pathParameterNames);
         const rawResponseBody = this.getResponseExample(example.response);
         const responseStatusCode = getExampleResponseStatusCode({
             response: example.response,
@@ -1476,7 +1480,10 @@ describe("${serviceName}", () => {
         return true;
     }
 
-    getRequestExample(request: ExampleRequestBody | undefined): Code | undefined {
+    getRequestExample(
+        request: ExampleRequestBody | undefined,
+        pathParameterNames: Set<string> = new Set()
+    ): Code | undefined {
         if (!request) {
             return undefined;
         }
@@ -1486,6 +1493,7 @@ describe("${serviceName}", () => {
                     Object.fromEntries([
                         ...getUnusedPropertiesFromJsonExample(value.jsonExample, value),
                         ...value.properties
+                            .filter((p) => !pathParameterNames.has(p.name.name.originalName))
                             .map<[string, Code]>((p) => {
                                 return [
                                     p.name.wireValue,
