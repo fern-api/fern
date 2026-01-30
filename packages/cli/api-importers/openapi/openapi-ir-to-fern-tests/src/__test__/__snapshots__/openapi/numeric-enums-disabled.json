@@ -1,0 +1,154 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "configureAudioSettings": {
+              "auth": undefined,
+              "display-name": "Configure audio settings",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "sample_rate": 1,
+                  },
+                  "response": {
+                    "body": {
+                      "format": "wav",
+                      "priority": 1,
+                      "sample_rate": 1,
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/audio/settings",
+              "request": {
+                "body": "AudioSettings",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Successful response",
+                "status-code": 200,
+                "type": "AudioSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "AudioFormat": {
+            "docs": "Audio output format",
+            "enum": [
+              "wav",
+              "mp3",
+              "aac",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AudioSettings": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "format": "optional<AudioFormat>",
+              "priority": "optional<Priority>",
+              "sample_rate": "SampleRate",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Priority": {
+            "docs": "Priority level (1=Low, 2=Medium, 3=High)",
+            "type": "integer",
+          },
+          "SampleRate": {
+            "docs": "Audio sample rate in Hz",
+            "type": "integer",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    configureAudioSettings:
+      path: /audio/settings
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Configure audio settings
+      request:
+        body: AudioSettings
+        content-type: application/json
+      response:
+        docs: Successful response
+        type: AudioSettings
+        status-code: 200
+      examples:
+        - request:
+            sample_rate: 1
+          response:
+            body:
+              sample_rate: 1
+              priority: 1
+              format: wav
+  source:
+    openapi: ../openapi.yml
+types:
+  AudioSettings:
+    properties:
+      sample_rate: SampleRate
+      priority: optional<Priority>
+      format: optional<AudioFormat>
+    source:
+      openapi: ../openapi.yml
+  SampleRate:
+    type: integer
+    docs: Audio sample rate in Hz
+  Priority:
+    type: integer
+    docs: Priority level (1=Low, 2=Medium, 3=High)
+  AudioFormat:
+    enum:
+      - wav
+      - mp3
+      - aac
+    docs: Audio output format
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Numeric Enums Test API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Numeric Enums Test API
+",
+  },
+}

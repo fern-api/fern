@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Numeric Enums Test API
+  version: 1.0.0
+paths:
+  /audio/settings:
+    post:
+      summary: Configure audio settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AudioSettings"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AudioSettings"
+components:
+  schemas:
+    AudioSettings:
+      type: object
+      properties:
+        sample_rate:
+          $ref: "#/components/schemas/SampleRate"
+        priority:
+          $ref: "#/components/schemas/Priority"
+        format:
+          $ref: "#/components/schemas/AudioFormat"
+      required:
+        - sample_rate
+    SampleRate:
+      type: integer
+      enum:
+        - 8000
+        - 16000
+        - 24000
+      description: Audio sample rate in Hz
+    Priority:
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+      description: Priority level (1=Low, 2=Medium, 3=High)
+    AudioFormat:
+      type: string
+      enum:
+        - wav
+        - mp3
+        - aac
+      description: Audio output format

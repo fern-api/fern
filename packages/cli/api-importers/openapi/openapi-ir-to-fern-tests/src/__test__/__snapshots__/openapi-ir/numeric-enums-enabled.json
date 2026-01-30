@@ -1,0 +1,272 @@
+{
+  "title": "Numeric Enums Test API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Configure audio settings",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostAudioSettingsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostAudioSettingsRequest",
+          "schema": "AudioSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "PostAudioSettingsResponse",
+          "schema": "AudioSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/audio/settings",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "sample_rate": {
+                "value": "8000",
+                "type": "enum"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "sample_rate": {
+                  "value": "8000",
+                  "type": "enum"
+                },
+                "priority": {
+                  "value": "1",
+                  "type": "enum"
+                },
+                "format": {
+                  "value": "wav",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "AudioSettings": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "audioSettingsSampleRate",
+            "key": "sample_rate",
+            "schema": {
+              "generatedName": "AudioSettingsSampleRate",
+              "schema": "SampleRate",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "audioSettingsPriority",
+            "key": "priority",
+            "schema": {
+              "generatedName": "AudioSettingsPriority",
+              "value": {
+                "generatedName": "AudioSettingsPriority",
+                "schema": "Priority",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "audioSettingsFormat",
+            "key": "format",
+            "schema": {
+              "generatedName": "AudioSettingsFormat",
+              "value": {
+                "generatedName": "AudioSettingsFormat",
+                "schema": "AudioFormat",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AudioSettings",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SampleRate": {
+        "description": "Audio sample rate in Hz",
+        "generatedName": "SampleRate",
+        "values": [
+          {
+            "generatedName": "EightThousand",
+            "value": "8000",
+            "casing": {}
+          },
+          {
+            "generatedName": "16000",
+            "value": "16000",
+            "casing": {}
+          },
+          {
+            "generatedName": "24000",
+            "value": "24000",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "Priority": {
+        "description": "Priority level (1=Low, 2=Medium, 3=High)",
+        "generatedName": "Priority",
+        "values": [
+          {
+            "generatedName": "One",
+            "value": "1",
+            "casing": {}
+          },
+          {
+            "generatedName": "Two",
+            "value": "2",
+            "casing": {}
+          },
+          {
+            "generatedName": "Three",
+            "value": "3",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "AudioFormat": {
+        "description": "Audio output format",
+        "generatedName": "AudioFormat",
+        "values": [
+          {
+            "generatedName": "wav",
+            "value": "wav",
+            "casing": {}
+          },
+          {
+            "generatedName": "mp3",
+            "value": "mp3",
+            "casing": {}
+          },
+          {
+            "generatedName": "aac",
+            "value": "aac",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
