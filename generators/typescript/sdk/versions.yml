@@ -9,6 +9,7 @@
         before the "./package.json" export.
       type: feat
   createdAt: "2026-01-30"
+  irVersion: 63
 
 - version: 3.46.2
   changelogEntry:
