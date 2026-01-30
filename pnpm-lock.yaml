@@ -4041,8 +4041,8 @@ importers:
   packages/cli/api-importers/graphql:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.144.7-efc9f5ccf
-        version: 0.144.7-efc9f5ccf(typescript@5.9.3)
+        specifier: 0.145.2-f567255d0
+        version: 0.145.2-f567255d0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -9636,14 +9636,8 @@ packages:
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
 
-  '@fern-api/ui-core-utils@0.0.0':
-    resolution: {integrity: sha512-8T3YLd+n8z5Vs+WNRIwH6PUW31ZC4/lkRD5G2+qyBcdePfOVYV3CHp3eiUrSSArOr0SJmzN/mQwPm3iAaey7nw==}
-
-  '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
-    resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
-
-  '@fern-api/ui-core-utils@0.145.2-f567255d0':
-    resolution: {integrity: sha512-p5bCEG98dHuQ3qRc8cdDSZz2EahuT0Ld3GM30/ZIXngwsbo7y8PIYUzhKOcV7JDu6ePlQQgXO87DuFyoCXh4Yg==}
+  '@fern-api/ui-core-utils@0.144.7-efc9f5ccf':
+    resolution: {integrity: sha512-Ax6iLWFFbqUXGo6YgPf+1Wa0GjoDZVihdH+Eihf3pp90Y7MNuPDppubafoGAMmS2zJA9nNiViSN7s4jQ9rSNHA==}
 
   '@fern-api/venus-api-sdk@0.17.3-3-gf696595':
     resolution: {integrity: sha512-JwtEDPtlrayTOTc4NR9opF4bD1LQtz222h1UnKseAv6Saopg2iHvxoGSf0SQfHA8i8atw+eJMNbHBWWTPdbBrA==}
@@ -17517,7 +17511,7 @@ snapshots:
 
   '@fern-api/fdr-sdk@0.145.2-f567255d0(typescript@5.9.3)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.145.2-f567255d0
+      '@fern-api/ui-core-utils': 0.144.7-efc9f5ccf
       '@types/readable-stream': 4.0.22
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.19
@@ -17547,21 +17541,7 @@ snapshots:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.4.1
 
-  '@fern-api/ui-core-utils@0.0.0':
-    dependencies:
-      strip-ansi: 7.1.2
-      title: 3.5.3
-      ua-parser-js: 1.0.41
-
-  '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
-    dependencies:
-      date-fns: 4.1.0
-      date-fns-tz: 3.2.0(date-fns@4.1.0)
-      strip-ansi: 7.1.2
-      title: 3.5.3
-      ua-parser-js: 1.0.41
-
-  '@fern-api/ui-core-utils@0.145.2-f567255d0':
+  '@fern-api/ui-core-utils@0.144.7-efc9f5ccf':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
@@ -21676,8 +21656,6 @@ snapshots:
   graceful-fs@4.2.10: {}
 
   graceful-fs@4.2.11: {}
-
-  graphemer@1.4.0: {}
 
   graphql@16.12.0: {}
 
