@@ -8,7 +8,7 @@
  */
 export interface PostWithBodyAndDuplicatePathParam {
     accountId: string;
-    /** This should be excluded from the request wrapper since it duplicates the path param */
+    /** This body property is renamed to accountIdBody in the SDK since it duplicates the path param name */
     accountIdBody?: string;
     otherProperty: string;
 }

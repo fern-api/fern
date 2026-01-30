@@ -8,7 +8,7 @@ export const PostWithBodyAndDuplicatePathParam: core.serialization.Schema<
     serializers.endpoints.PostWithBodyAndDuplicatePathParam.Raw,
     Omit<SeedExhaustive.endpoints.PostWithBodyAndDuplicatePathParam, "accountId">
 > = core.serialization.object({
-    accountId: core.serialization.string().optional(),
+    accountIdBody: core.serialization.property("accountId", core.serialization.string().optional()),
     otherProperty: core.serialization.string(),
 });
 
