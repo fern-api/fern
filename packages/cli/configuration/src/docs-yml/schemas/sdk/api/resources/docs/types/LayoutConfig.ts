@@ -63,6 +63,14 @@ export interface LayoutConfig {
      */
     tabsPlacement?: FernDocsConfig.TabsPlacement;
     /**
+     * Set the placement of the version and language switcher
+     *
+     * @default: `header`
+     *
+     * Note: this setting is ignored when `disable-header` is set to true.
+     */
+    switcherPlacement?: FernDocsConfig.SwitcherPlacement;
+    /**
      * Set the alignment of the mardown content.
      *
      * @default: `center`

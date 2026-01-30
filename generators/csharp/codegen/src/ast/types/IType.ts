@@ -34,10 +34,17 @@ export interface Type extends AstNode {
     readonly isOptional: boolean;
 
     /**
-     * Returns a new type that is the optional version of this type.
+     * Returns a new type that is the optional version of this type (field can be omitted).
      * If the type is already optional, returns the same type unchanged.
      */
     asOptional(): Type;
+
+    /**
+     * Returns a new type that is the nullable version of this type (value can be null).
+     * If the type is already nullable, returns the same type unchanged.
+     * Note: In C#, both optional and nullable are represented with ?, but semantically they differ.
+     */
+    asNullable(): Type;
 
     /**
      * Returns a new type that is the non-optional version of this type.

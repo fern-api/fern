@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedMultiUrlEnvironment;
-using SeedMultiUrlEnvironment.Core;
+using SeedMultiUrlEnvironment.Test.Utils;
 
 namespace SeedMultiUrlEnvironment.Test.Unit.MockServer;
 
@@ -38,6 +38,6 @@ public class GetPresignedUrlTest : BaseMockServerTest
         var response = await Client.S3.GetPresignedUrlAsync(
             new GetPresignedUrlRequest { S3Key = "s3Key" }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

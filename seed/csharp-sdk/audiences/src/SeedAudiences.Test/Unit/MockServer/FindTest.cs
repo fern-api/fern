@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedAudiences;
-using SeedAudiences.Core;
+using SeedAudiences.Test.Utils;
 
 namespace SeedAudiences.Test.Unit.MockServer;
 
@@ -47,9 +47,6 @@ public class FindTest : BaseMockServerTest
                 PrivateProperty = 1,
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ImportingType>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

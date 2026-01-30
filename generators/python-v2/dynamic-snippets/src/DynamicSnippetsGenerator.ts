@@ -1,7 +1,8 @@
 import {
     AbstractAstNode,
     AbstractDynamicSnippetsGenerator,
-    FernGeneratorExec
+    FernGeneratorExec,
+    Options
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
@@ -23,26 +24,43 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
     }
 
     public async generate(
-        request: FernIr.dynamic.EndpointSnippetRequest
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
     ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
-        return super.generate(request);
+        return super.generate(request, options);
     }
 
-    public generateSync(request: FernIr.dynamic.EndpointSnippetRequest): FernIr.dynamic.EndpointSnippetResponse {
-        return super.generateSync(request);
+    public generateSync(
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
+    ): FernIr.dynamic.EndpointSnippetResponse {
+        return super.generateSync(request, options);
     }
 
-    public async generateSnippetAst(request: FernIr.dynamic.EndpointSnippetRequest): Promise<AbstractAstNode> {
-        return super.generateSnippetAst(request);
+    public async generateSnippetAst(
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
+    ): Promise<AbstractAstNode> {
+        return super.generateSnippetAst(request, options);
     }
 
     /**
      * Generates just the method call AST without the client instantiation.
      * This is useful for wire tests where the client is created separately
      * with test-specific configuration.
+     *
+     * @param request - The snippet request
+     * @param options - Optional options, including endpointId to resolve a specific endpoint
+     *                  when multiple endpoints share the same HTTP method and path
      */
-    public generateMethodCallSnippetAst(request: FernIr.dynamic.EndpointSnippetRequest): python.AstNode {
-        const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
+    public generateMethodCallSnippetAst({
+        request,
+        options = {}
+    }: {
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): python.AstNode {
+        const endpoints = this.resolveEndpointsForMethodCall({ request, options });
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
@@ -64,22 +82,21 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         );
     }
 
-    /**
-     * Generates just the method call AST without the client instantiation, using the endpoint ID directly.
-     * This is useful for wire tests where the client is created separately with test-specific configuration,
-     * and when there are multiple endpoints with the same HTTP method and path pattern across different namespaces.
-     */
-    public generateMethodCallSnippetAstById({
-        endpointId,
-        request
+    private resolveEndpointsForMethodCall({
+        request,
+        options
     }: {
-        endpointId: FernIr.dynamic.EndpointId;
         request: FernIr.dynamic.EndpointSnippetRequest;
-    }): python.AstNode {
-        const endpoint = this.context.resolveEndpointByIdOrThrow(endpointId);
-        const context = this.context.clone() as DynamicSnippetsGeneratorContext;
-        const snippetGenerator = this.createSnippetGenerator(context);
-        return snippetGenerator.generateMethodCallSnippetAst({ endpoint, request });
+        options: Options;
+    }): FernIr.dynamic.Endpoint[] {
+        if (options.endpointId != null) {
+            const endpoint = this.context.resolveEndpointById(options.endpointId);
+            if (endpoint == null) {
+                throw new Error(`No endpoint found with ID "${options.endpointId}"`);
+            }
+            return [endpoint];
+        }
+        return this.context.resolveEndpointLocationOrThrow(request.endpoint);
     }
 
     protected createSnippetGenerator(context: DynamicSnippetsGeneratorContext): EndpointSnippetGenerator {

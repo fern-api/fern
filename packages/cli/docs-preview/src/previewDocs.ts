@@ -312,6 +312,7 @@ export async function getPreviewDocsDefinition({
         filesV2,
         pages: dbDocsDefinition.pages,
         jsFiles: dbDocsDefinition.jsFiles,
+        apiNameToId: {},
         id: undefined
     };
 

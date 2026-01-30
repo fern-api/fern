@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedNoRetries;
-using SeedNoRetries.Core;
+using SeedNoRetries.Test.Utils;
 
 namespace SeedNoRetries.Test.Unit.MockServer;
 
@@ -33,9 +32,6 @@ public class GetUsersTest : BaseMockServerTest
             );
 
         var response = await Client.Retries.GetUsersAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

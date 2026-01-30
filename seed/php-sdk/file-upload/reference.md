@@ -327,3 +327,28 @@ $client->service->simple();
 </dd>
 </dl>
 </details>
+
+<details><summary><code>$client-&gt;service-&gt;withLiteralAndEnumTypes($request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->withLiteralAndEnumTypes($request): string;
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

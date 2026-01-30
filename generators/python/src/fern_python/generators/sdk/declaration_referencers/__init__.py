@@ -2,6 +2,9 @@ from .environments_enum_declaration_referencer import (
     EnvironmentsEnumDeclarationReferencer,
 )
 from .error_declaration_referencer import ErrorDeclarationReferencer
+from .inferred_auth_token_provider_declaration_referencer import (
+    InferredAuthTokenProviderDeclarationReferencer,
+)
 from .oauth_token_provider_declaration_referencer import (
     OAuthTokenProviderDeclarationReferencer,
 )
@@ -27,6 +30,7 @@ from .type_declaration_referencer import TypeDeclarationReferencer
 __all__ = [
     "EnvironmentsEnumDeclarationReferencer",
     "ErrorDeclarationReferencer",
+    "InferredAuthTokenProviderDeclarationReferencer",
     "SubpackageClientDeclarationReferencer",
     "TypeDeclarationReferencer",
     "RootClientDeclarationReferencer",

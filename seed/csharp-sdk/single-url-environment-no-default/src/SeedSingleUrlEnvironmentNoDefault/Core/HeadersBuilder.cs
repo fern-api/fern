@@ -46,7 +46,7 @@ internal static class HeadersBuilder
         {
             if (value is not null)
             {
-                _headers[key] = new HeaderValue(value);
+                _headers[key] = (value);
             }
             return this;
         }
@@ -71,7 +71,7 @@ internal static class HeadersBuilder
             var stringValue = ValueConvert.ToString(value);
             if (stringValue is not null)
             {
-                _headers[key] = new HeaderValue(stringValue);
+                _headers[key] = (stringValue);
             }
             return this;
         }
@@ -100,6 +100,35 @@ internal static class HeadersBuilder
         }
 
         /// <summary>
+        /// Adds multiple headers from a Headers dictionary, excluding the Authorization header.
+        /// This is useful for endpoints that don't require authentication, to avoid triggering
+        /// lazy auth token resolution.
+        /// HeaderValue instances are stored and will be resolved when BuildAsync() is called.
+        /// Overwrites any existing headers with the same key.
+        /// Null entries are ignored.
+        /// </summary>
+        /// <param name="headers">The headers to add. Null is treated as empty.</param>
+        /// <returns>This builder instance for method chaining.</returns>
+        public Builder AddWithoutAuth(Headers? headers)
+        {
+            if (headers is null)
+            {
+                return this;
+            }
+
+            foreach (var header in headers)
+            {
+                if (header.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                _headers[header.Key] = header.Value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Adds multiple headers from a key-value pair collection.
         /// Overwrites any existing headers with the same key.
         /// Null values are ignored.
@@ -117,7 +146,7 @@ internal static class HeadersBuilder
             {
                 if (header.Value is not null)
                 {
-                    _headers[header.Key] = new HeaderValue(header.Value);
+                    _headers[header.Key] = (header.Value);
                 }
             }
 
@@ -139,7 +168,7 @@ internal static class HeadersBuilder
 
             foreach (var header in headers)
             {
-                _headers[header.Key] = new HeaderValue(header.Value);
+                _headers[header.Key] = (header.Value);
             }
 
             return this;

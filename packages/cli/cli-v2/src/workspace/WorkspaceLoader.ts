@@ -2,11 +2,13 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, SourceLocation } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
+import type { AiConfig } from "../ai/config/AiConfig";
 import type { ApiDefinition } from "../api/config/ApiDefinition";
-import { ApiDefinitionConverter } from "../api/converter/ApiDefinitionConverter";
+import { ApiDefinitionConverter } from "../api/config/converter/ApiDefinitionConverter";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader";
+import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter";
 import { SdkConfig } from "../sdk/config/SdkConfig";
-import { SdkConfigConverter } from "../sdk/converter/SdkConfigConverter";
+import { Version } from "../version";
 import type { Workspace } from "./Workspace";
 
 export namespace WorkspaceLoader {
@@ -52,7 +54,9 @@ export class WorkspaceLoader {
             };
         }
 
+        const ai = this.convertAi({ fernYml });
         const apis = await this.convertApis({ fernYml });
+        const cliVersion = await this.convertCliVersion({ fernYml });
         const sdks = await this.convertSdks({ fernYml });
         if (this.issues.length > 0) {
             return {
@@ -62,7 +66,10 @@ export class WorkspaceLoader {
         }
 
         const workspace: Workspace = {
+            ai,
             apis,
+            org: fernYml.data.org,
+            cliVersion,
             sdks
         };
 
@@ -80,6 +87,17 @@ export class WorkspaceLoader {
         };
     }
 
+    private convertAi({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): AiConfig | undefined {
+        const ai = fernYml.data.ai;
+        if (ai == null) {
+            return undefined;
+        }
+        return {
+            provider: ai.provider,
+            model: ai.model
+        };
+    }
+
     private async convertApis({
         fernYml
     }: {
@@ -92,6 +110,10 @@ export class WorkspaceLoader {
             return {};
         }
         return apiResult.apis;
+    }
+
+    private async convertCliVersion({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<string> {
+        return fernYml.data.cli?.version ?? Version;
     }
 
     private async convertSdks({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<SdkConfig | undefined> {

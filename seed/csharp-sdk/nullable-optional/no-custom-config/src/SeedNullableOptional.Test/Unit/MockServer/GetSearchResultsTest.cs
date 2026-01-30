@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedNullableOptional;
-using SeedNullableOptional.Core;
+using SeedNullableOptional.Test.Utils;
 
 namespace SeedNullableOptional.Test.Unit.MockServer;
 
@@ -83,14 +83,10 @@ public class GetSearchResultsTest : BaseMockServerTest
             new SearchRequest
             {
                 Query = "query",
-                Filters = new Dictionary<string, string>() { { "filters", "filters" } },
+                Filters = new Dictionary<string, string?>() { { "filters", "filters" } },
                 IncludeTypes = new List<string>() { "includeTypes", "includeTypes" },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<SearchResult>?>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

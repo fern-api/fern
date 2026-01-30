@@ -105,6 +105,10 @@ fixtures:
       outputMode: local_files
       customConfig:
         outputSourceFiles: false
+    - outputFolder: output-src-only
+      outputMode: local_files
+      customConfig:
+        outputSrcOnly: true
     - outputFolder: never-throw-errors
       customConfig:
         neverThrowErrors: true

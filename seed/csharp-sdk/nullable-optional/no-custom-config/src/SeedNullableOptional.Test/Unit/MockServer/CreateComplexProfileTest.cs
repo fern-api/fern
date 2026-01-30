@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using SeedNullableOptional;
-using SeedNullableOptional.Core;
+using SeedNullableOptional.Test.Utils;
 
 namespace SeedNullableOptional.Test.Unit.MockServer;
 
@@ -355,12 +355,12 @@ public class CreateComplexProfileTest : BaseMockServerTest
                     "optionalNullableArray",
                     "optionalNullableArray",
                 },
-                NullableListOfNullables = new List<string>()
+                NullableListOfNullables = new List<string?>()
                 {
                     "nullableListOfNullables",
                     "nullableListOfNullables",
                 },
-                NullableMapOfNullables = new Dictionary<string, Address>()
+                NullableMapOfNullables = new Dictionary<string, Address?>()
                 {
                     {
                         "nullableMapOfNullables",
@@ -405,9 +405,6 @@ public class CreateComplexProfileTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ComplexProfile>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -6,6 +6,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     neverThrowErrors: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
     outputSourceFiles: z.optional(z.boolean()),
+    outputSrcOnly: z.optional(z.boolean()),
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),

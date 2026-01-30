@@ -2720,7 +2720,7 @@ exports[`validate namespaced API with multiple namespaces > namespaced-asyncapi 
       tag: optional<string>
     source:
       openapi: alpha_one.yml
-  Pets: list<Pet>
+  Pets: list<unknown>
 ",
         "name": "__package__.yml",
         "type": "file",

@@ -118,7 +118,9 @@ client = SeedServerSentEvents(
     ...,
 )
 with client.completions.with_raw_response.stream() as response:
-    print(response.headers)  # access the response headers
+    print(
+        response.headers
+    )  # access the response headersprint(response.status_code)  # access the response status code
     for chunk in response.data:
         print(chunk)  # access the underlying object(s)
 ```

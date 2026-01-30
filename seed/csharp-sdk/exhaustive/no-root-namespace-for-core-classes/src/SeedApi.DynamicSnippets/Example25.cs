@@ -14,10 +14,10 @@ public class Example25
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndQueryAsync(
-            "param",
-            new GetWithPathAndQuery {
-                Query = "query"
+        await client.Endpoints.Params.GetWithQueryAsync(
+            new GetWithQuery {
+                Query = "query",
+                Number = 1
             }
         );
     }
