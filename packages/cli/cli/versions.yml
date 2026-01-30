@@ -7,6 +7,53 @@
   createdAt: "2026-01-29"
   irVersion: 63
 
+- version: 3.55.4
+  changelogEntry:
+    - summary: |
+        Fix discriminated union variants with optional or nullable object types incorrectly using `samePropertiesAsObject`. When a union variant has a type like `body: optional<SomeObjectType>`, the IR generator now correctly uses `singleProperty` instead of `samePropertiesAsObject`, which ensures the generated TypeScript code has a `value` property with the optional type instead of extending the object type directly.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.3
+  changelogEntry:
+    - summary: Fix schema namespace resolution to OpenAPI importers for proper type reference targeting
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs diff` production URL construction when docs instance URL has a base path (e.g., `/learn`).
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.1
+  changelogEntry:
+    - summary: |
+        Add docs param when publishing a doc site to support fine grain access controlls
+      type: chore
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs diff` command for visual regression testing of docs. This command captures screenshots of preview and production docs pages, generates visual diffs using pixelmatch, and outputs JSON with change percentages.
+      type: feat
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.54.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets not being generated when using the v3 OpenAPI parser. The workspace is now loaded for dynamic snippet generation even when the v3 parser successfully generates the IR, ensuring that generators.yml configuration is available for snippet generation.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
 - version: 3.54.0
   changelogEntry:
     - summary: |

@@ -8,7 +8,6 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { DefaultValueExtractor, ExtractedDefault } from "../../DefaultValueExtractor";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -20,11 +19,8 @@ export declare namespace TestClass {
 }
 
 export class MockEndpointGenerator extends WithGeneration {
-    private readonly defaultValueExtractor: DefaultValueExtractor;
-
     constructor(private readonly context: SdkGeneratorContext) {
         super(context.generation);
-        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
@@ -305,13 +301,8 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterInlinedRequestBody(
         exampleRequest: ExampleRequestBody.InlinedRequestBody,
-        endpoint: HttpEndpoint
+        _endpoint: HttpEndpoint
     ): Record<string, unknown> {
-        const useDefaults = this.generation.settings.useDefaultRequestParameterValues;
-
-        // Get the set of wire values present in the example
-        const exampleWireValues = new Set(exampleRequest.properties.map((prop) => prop.name.wireValue));
-
         // Build the result with filtering and datetime normalization
         const result: Record<string, unknown> = {};
 
@@ -331,61 +322,7 @@ export class MockEndpointGenerator extends WithGeneration {
             }
         }
 
-        // Add default values for properties not present in the example when useDefaults is enabled
-        if (useDefaults && endpoint.requestBody?.type === "inlinedRequestBody") {
-            const allProperties = [
-                ...endpoint.requestBody.properties,
-                ...(endpoint.requestBody.extendedProperties ?? [])
-            ];
-            for (const prop of allProperties) {
-                // Skip if already in the example
-                if (exampleWireValues.has(prop.name.wireValue)) {
-                    continue;
-                }
-                // Skip read-only properties
-                if (prop.propertyAccess === "READ_ONLY") {
-                    continue;
-                }
-                // Get the default value for this property
-                const defaultValue = this.defaultValueExtractor.extractDefault(prop.valueType);
-                if (defaultValue != null) {
-                    result[prop.name.wireValue] = this.parseDefaultValue(defaultValue);
-                }
-            }
-        }
-
         return result;
-    }
-
-    /**
-     * Parses a default value string into its JSON representation.
-     */
-    private parseDefaultValue(defaultValue: ExtractedDefault): unknown {
-        switch (defaultValue.csharpType) {
-            case "string":
-                return defaultValue.value
-                    .slice(1, -1)
-                    .replace(/\\"/g, '"')
-                    .replace(/\\r/g, "\r")
-                    .replace(/\\n/g, "\n")
-                    .replace(/\\t/g, "\t")
-                    .replace(/\\\\/g, "\\"); // Must be last to avoid double-unescaping
-            case "int":
-            case "long":
-            case "uint":
-            case "ulong":
-            case "float":
-            case "double":
-                return parseFloat(defaultValue.value.replace(/[LlFfDd]$/, ""));
-            case "bool":
-                return defaultValue.value === "true";
-            case "BigInteger": {
-                const match = defaultValue.value.match(/BigInteger\.Parse\("(.+)"\)/);
-                return match ? match[1] : defaultValue.value;
-            }
-            default:
-                return defaultValue.value;
-        }
     }
 
     /**

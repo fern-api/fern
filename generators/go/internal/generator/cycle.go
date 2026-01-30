@@ -362,7 +362,7 @@ func replaceFilepathForTypeInIR(
 			if irEndpoint.RequestBody != nil {
 				replaceFilepathForTypeInHttpRequestBody(irEndpoint.RequestBody, typeId, fernFilepath)
 			}
-			if irEndpoint.SdkRequest != nil && irEndpoint.SdkRequest.Shape != nil && irEndpoint.SdkRequest.Shape.JustRequestBody != nil {
+			if irEndpoint.SdkRequest != nil && irEndpoint.SdkRequest.Shape != nil && irEndpoint.SdkRequest.Shape.JustRequestBody != nil && irEndpoint.SdkRequest.Shape.JustRequestBody.TypeReference != nil {
 				replaceFilepathForTypeInTypeReference(irEndpoint.SdkRequest.Shape.JustRequestBody.TypeReference.RequestBodyType, typeId, fernFilepath)
 			}
 			if irEndpoint.Response != nil {

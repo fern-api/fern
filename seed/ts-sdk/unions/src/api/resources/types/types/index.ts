@@ -12,6 +12,8 @@ export * from "./UnionWithDuplicativeDiscriminants.js";
 export * from "./UnionWithLiteral.js";
 export * from "./UnionWithMultipleNoProperties.js";
 export * from "./UnionWithNoProperties.js";
+export * from "./UnionWithNullableReference.js";
+export * from "./UnionWithOptionalReference.js";
 export * from "./UnionWithOptionalTime.js";
 export * from "./UnionWithoutKey.js";
 export * from "./UnionWithPrimitive.js";
