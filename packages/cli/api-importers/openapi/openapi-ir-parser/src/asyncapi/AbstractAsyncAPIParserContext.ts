@@ -1,15 +1,15 @@
-import { Logger } from "@fern-api/logger";
-import { Namespace, SdkGroup, SdkGroupName } from "@fern-api/openapi-ir";
-import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+import type { Logger } from "@fern-api/logger";
+import type { Namespace, SchemaId, SdkGroup, SdkGroupName } from "@fern-api/openapi-ir";
+import type { TaskContext } from "@fern-api/task-context";
+import type { OpenAPIV3 } from "openapi-types";
 
-import { ParseOpenAPIOptions } from "../options";
+import type { ParseOpenAPIOptions } from "../options";
 import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
-import { SchemaParserContext } from "../schema/SchemaParserContext";
+import type { SchemaParserContext } from "../schema/SchemaParserContext";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
-import { WebsocketSessionExampleMessage } from "./getFernExamples";
-import { AsyncAPIV2 } from "./v2";
-import { AsyncAPIV3 } from "./v3";
+import type { WebsocketSessionExampleMessage } from "./getFernExamples";
+import type { AsyncAPIV2 } from "./v2";
+import type { AsyncAPIV3 } from "./v3";
 
 export abstract class AbstractAsyncAPIParserContext<TDocument extends object> implements SchemaParserContext {
     public readonly document: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
@@ -171,5 +171,9 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         discriminantValue: string
     ): void {
         return;
+    }
+
+    public getNamespace(schemaId: SchemaId): string | undefined {
+        return this.namespace;
     }
 }
