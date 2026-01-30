@@ -1,5 +1,4 @@
 import { FernToken } from "@fern-api/auth";
-import { loadDocsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -96,7 +95,7 @@ async function captureScreenshot({
         }
 
         await page.screenshot({
-            path: outputPath,
+            path: outputPath as `${string}.png`,
             fullPage: true
         });
 
@@ -121,7 +120,15 @@ async function generateDiff({
     afterPath: string;
     diffPath: string;
 }): Promise<number> {
-    const pixelmatch = (await import("pixelmatch")).default;
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const pixelmatch = require("pixelmatch") as (
+        img1: Uint8Array,
+        img2: Uint8Array,
+        output: Uint8Array,
+        width: number,
+        height: number,
+        options?: { threshold?: number }
+    ) => number;
 
     const beforePng = PNG.sync.read(await readFile(beforePath));
     const afterPng = PNG.sync.read(await readFile(afterPath));
@@ -144,18 +151,24 @@ async function generateDiff({
         threshold: 0.1
     });
 
-    await writeFile(diffPath, PNG.sync.write(diffPng));
+    const pngBuffer = PNG.sync.write(diffPng);
+    await writeFile(diffPath, new Uint8Array(pngBuffer));
 
     const totalPixels = width * height;
     return (numDiffPixels / totalPixels) * 100;
 }
 
-function getProductionUrl(docsConfig: { instances: Array<{ url: string }> }): string {
-    if (docsConfig.instances.length === 0) {
+function getProductionUrl(docsConfig: { instances: Array<{ url: string }> | undefined }): string {
+    if (docsConfig.instances == null || docsConfig.instances.length === 0) {
         throw new Error("No docs instances configured in docs.yml");
     }
 
-    const instanceUrl = docsConfig.instances[0].url;
+    const firstInstance = docsConfig.instances[0];
+    if (firstInstance == null) {
+        throw new Error("No docs instances configured in docs.yml");
+    }
+
+    const instanceUrl = firstInstance.url;
 
     if (instanceUrl.startsWith("https://") || instanceUrl.startsWith("http://")) {
         return instanceUrl;
@@ -194,16 +207,7 @@ export async function docsDiff({
 
     const fernToken = process.env.FERN_TOKEN ?? token.value;
 
-    const docsConfig = await cliContext.runTask(async (context) => {
-        return loadDocsConfiguration({
-            rawDocsConfiguration: docsWorkspace.config,
-            context,
-            absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-            absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
-        });
-    });
-
-    const productionBaseUrl = getProductionUrl(docsConfig);
+    const productionBaseUrl = getProductionUrl(docsWorkspace.config);
 
     let normalizedPreviewUrl = previewUrl;
     if (normalizedPreviewUrl.startsWith("https://")) {
