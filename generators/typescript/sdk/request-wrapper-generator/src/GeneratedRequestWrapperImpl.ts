@@ -244,10 +244,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (requestBody != null) {
             HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
+                    const pathParamNames = this.getPathParameterOriginalNames(context);
                     if (this.flattenRequestParameters) {
                         const inlinedProperties = this.getFlattenedInlinedRequestBodyProperties(
                             inlinedRequestBody,
-                            context
+                            context,
+                            pathParamNames
                         );
                         properties.push(...inlinedProperties);
                     } else {
@@ -255,7 +257,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             inlinedRequestBody,
                             context
                         })) {
-                            const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
+                            const requestProperty = this.getInlineProperty(
+                                inlinedRequestBody,
+                                property,
+                                context,
+                                pathParamNames
+                            );
                             properties.push(requestProperty);
                         }
                     }
@@ -281,6 +288,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     }
                 },
                 fileUpload: (fileUploadRequest) => {
+                    const pathParamNamesForFileUpload = this.getPathParameterOriginalNames(context);
                     for (const property of fileUploadRequest.properties) {
                         FileUploadRequestProperty._visit(property, {
                             file: (fileProperty) => {
@@ -297,7 +305,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                 });
                             },
                             bodyProperty: (inlinedProperty) => {
-                                properties.push(this.getInlineProperty(fileUploadRequest, inlinedProperty, context));
+                                properties.push(
+                                    this.getInlineProperty(
+                                        fileUploadRequest,
+                                        inlinedProperty,
+                                        context,
+                                        pathParamNamesForFileUpload
+                                    )
+                                );
                             },
                             _other: () => {
                                 throw new Error("Unknown FileUploadRequestProperty: " + property.type);
@@ -349,10 +364,24 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private getInlineProperty(
         requestBody: InlinedRequestBody | FileUploadRequest,
         property: InlinedRequestBodyProperty,
-        context: SdkContext
+        context: SdkContext,
+        pathParameterOriginalNames?: Set<string>
     ): GeneratedRequestWrapper.Property {
         const type = this.getTypeForBodyProperty(requestBody, property, context);
-        const name = this.getInlinedRequestBodyPropertyKey(property);
+        const baseName = this.getInlinedRequestBodyPropertyKey(property);
+
+        // If this body property has the same original name as a path parameter, rename it with "Body" suffix
+        const conflictsWithPathParam =
+            pathParameterOriginalNames != null &&
+            pathParameterOriginalNames.has(property.name.name.originalName);
+
+        const name = conflictsWithPathParam
+            ? {
+                  propertyName: baseName.propertyName + "Body",
+                  safeName: baseName.safeName + "Body"
+              }
+            : baseName;
+
         return {
             name: getPropertyKey(name.propertyName),
             safeName: getPropertyKey(name.safeName),
@@ -791,20 +820,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         context: SdkContext;
         inlinedRequestBody: InlinedRequestBody;
     }): InlinedRequestBodyProperty[] {
-        const pathParameterOriginalNames = new Set(
-            this.getPathParamsForRequestWrapper(context).map((param) => param.name.originalName)
-        );
-
         return inlinedRequestBody.properties.filter((property) => {
             const resolvedType = context.type.resolveTypeReference(property.valueType);
             if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
                 return false;
             }
-            if (pathParameterOriginalNames.has(property.name.name.originalName)) {
-                return false;
-            }
             return true;
         });
+    }
+
+    private getPathParameterOriginalNames(context: SdkContext): Set<string> {
+        return new Set(this.getPathParamsForRequestWrapper(context).map((param) => param.name.originalName));
     }
 
     private getAllNonLiteralHeaders(context: SdkContext): HttpHeader[] {
@@ -887,14 +913,20 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private getFlattenedInlinedRequestBodyProperties(
         inlinedRequestBody: InlinedRequestBody,
-        context: SdkContext
+        context: SdkContext,
+        pathParameterOriginalNames?: Set<string>
     ): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
         for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
             inlinedRequestBody,
             context
         })) {
-            const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
+            const requestProperty = this.getInlineProperty(
+                inlinedRequestBody,
+                property,
+                context,
+                pathParameterOriginalNames
+            );
             properties.push(requestProperty);
         }
         return properties;

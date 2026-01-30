@@ -172,8 +172,9 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         return [
             ...body.properties
                 .filter((property) => this.isNotLiteral(property.value.shape))
-                .filter((property) => !pathParamOriginalNames.has(property.name.name.originalName))
                 .map((property) => {
+                    // Check if this body property conflicts with a path parameter
+                    const conflictsWithPathParam = pathParamOriginalNames.has(property.name.name.originalName);
                     if (property.originalTypeDeclaration != null) {
                         const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
                         if (originalTypeForProperty.type === "union") {
@@ -217,12 +218,11 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                         if (isExpressionUndefined(value)) {
                             return undefined;
                         }
-                        return ts.factory.createPropertyAssignment(
-                            getPropertyKey(
-                                generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name).propertyName
-                            ),
-                            value
-                        );
+                        const baseName =
+                            generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name).propertyName;
+                        // Add "Body" suffix if this body property conflicts with a path parameter
+                        const propertyName = conflictsWithPathParam ? baseName + "Body" : baseName;
+                        return ts.factory.createPropertyAssignment(getPropertyKey(propertyName), value);
                     }
                 })
                 .filter((property) => property != null),
