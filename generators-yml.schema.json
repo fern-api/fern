@@ -2006,6 +2006,16 @@
               "type": "null"
             }
           ]
+        },
+        "enable-numeric-enums": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2492,6 +2502,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.DefaultIntegerFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enable-numeric-enums": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
