@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.55.1
+- version: 3.55.3
   changelogEntry:
     - summary: Fix schema namespace resolution to OpenAPI importers for proper type reference targeting
       type: fix
   createdAt: "2026-01-30"
   irVersion: 63
 
-- version: 3.55.1
+- version: 3.55.2
   changelogEntry:
     - summary: |
         Fix `fern docs diff` production URL construction when docs instance URL has a base path (e.g., `/learn`).
