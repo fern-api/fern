@@ -4,8 +4,9 @@
     - summary: |
         Fix duplicate identifier error when a body property has the same name as an inlined path parameter.
         When `inline-path-parameters` is enabled and a request body property shares a name with a path parameter,
-        the generator now correctly excludes the body property from the request wrapper interface to avoid
-        TypeScript compilation errors (TS2300: Duplicate identifier, TS2687: All declarations must have identical modifiers).
+        the generator now renames the body property with a "Body" suffix (e.g., `accountId` becomes `accountIdBody`)
+        to avoid TypeScript compilation errors while preserving both parameters. The wire value remains unchanged
+        for correct serialization.
       type: fix
   createdAt: "2026-01-30"
   irVersion: 63

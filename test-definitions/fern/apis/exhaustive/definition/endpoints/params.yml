@@ -100,6 +100,6 @@ service:
           properties:
             accountId:
               type: optional<string>
-              docs: This should be excluded from the request wrapper since it duplicates the path param
+              docs: This body property is renamed to accountIdBody in the SDK since it duplicates the path param name
             otherProperty: string
       response: string
