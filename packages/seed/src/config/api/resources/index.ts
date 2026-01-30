@@ -1,4 +1,4 @@
-export * as config from "./config";
-export * from "./config/types";
-export * as features from "./features";
-export * from "./features/types";
+export * as config from "./config/index.js";
+export * from "./config/types/index.js";
+export * as features from "./features/index.js";
+export * from "./features/types/index.js";
