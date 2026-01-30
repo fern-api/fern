@@ -59,3 +59,17 @@ export function convertIrToApiDefinition({
         )
     );
 }
+
+export function convertFdrToApiDefinition({
+    fdrApiDefinition,
+    apiDefinitionId,
+    context
+}: {
+    fdrApiDefinition: FdrAPI.api.v1.register.ApiDefinition;
+    apiDefinitionId: string;
+    context: TaskContext;
+}): APIV1Read.ApiDefinition {
+    return convertDbAPIDefinitionToRead(
+        convertAPIDefinitionToDb(fdrApiDefinition, APIV1Read.ApiDefinitionId(apiDefinitionId), EMPTY_SNIPPET_HOLDER)
+    );
+}

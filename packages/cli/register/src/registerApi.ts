@@ -100,3 +100,43 @@ export async function registerApi({
         }
     }
 }
+
+export async function registerApiFromFdr({
+    fdrApiDefinition,
+    organization,
+    token,
+    apiName,
+    context
+}: {
+    fdrApiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition;
+    organization: string;
+    token: FernToken;
+    apiName: string;
+    context: TaskContext;
+}): Promise<FdrCjsSdk.ApiDefinitionId> {
+    const fdrService = createFdrService({
+        token: token.value
+    });
+
+    const response = await fdrService.api.v1.register.registerApiDefinition({
+        orgId: FdrCjsSdk.OrgId(organization),
+        apiId: FdrCjsSdk.ApiId(apiName),
+        definition: fdrApiDefinition
+    });
+
+    if (response.ok) {
+        context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
+        return response.body.apiDefinitionId;
+    } else {
+        switch (response.error.error) {
+            case "UnauthorizedError":
+            case "UserNotInOrgError": {
+                return context.failAndThrow(
+                    "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
+                );
+            }
+            default:
+                return context.failAndThrow("Failed to register API", response.error);
+        }
+    }
+}
