@@ -418,23 +418,32 @@ async function generateComparisons({
 
 async function getChangedMdxFilesFromGit(): Promise<string[]> {
     try {
-        // Try to get the default branch name
-        let defaultBranch = "main";
+        // Find the merge base - the point where the current branch diverged from its upstream
+        let mergeBase: string;
         try {
-            const { stdout: remoteBranch } = await execAsync("git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null");
-            defaultBranch = remoteBranch.trim().replace("refs/remotes/origin/", "");
+            // First try to get the upstream tracking branch
+            const { stdout: upstream } = await execAsync("git rev-parse --abbrev-ref @{upstream} 2>/dev/null");
+            const upstreamBranch = upstream.trim();
+            const { stdout: base } = await execAsync(`git merge-base HEAD ${upstreamBranch}`);
+            mergeBase = base.trim();
         } catch {
-            // If that fails, try to detect main vs master
+            // If no upstream, try origin/HEAD (the default branch of the remote)
             try {
-                await execAsync("git rev-parse --verify origin/main 2>/dev/null");
-                defaultBranch = "main";
+                const { stdout: base } = await execAsync("git merge-base HEAD origin/HEAD 2>/dev/null");
+                mergeBase = base.trim();
             } catch {
-                defaultBranch = "master";
+                // Last resort: compare against HEAD~10 or just use HEAD if no history
+                try {
+                    const { stdout: base } = await execAsync("git rev-parse HEAD~10 2>/dev/null");
+                    mergeBase = base.trim();
+                } catch {
+                    mergeBase = "HEAD";
+                }
             }
         }
 
-        // Get changed files compared to the default branch
-        const { stdout } = await execAsync(`git diff --name-only origin/${defaultBranch}...HEAD -- '*.mdx'`);
+        // Get changed files compared to the merge base
+        const { stdout } = await execAsync(`git diff --name-only ${mergeBase}...HEAD -- '*.mdx'`);
         const files = stdout
             .trim()
             .split("\n")
