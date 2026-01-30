@@ -97,6 +97,7 @@ client = SeedErrors(
 )
 response = client.simple.with_raw_response.foo_without_endpoint_error(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

@@ -1,9 +1,0 @@
-# frozen_string_literal: true
-
-module FernFileUpload
-  module Service
-    module Types
-      class JustFileRequest < Internal::Types::Model; end
-    end
-  end
-end

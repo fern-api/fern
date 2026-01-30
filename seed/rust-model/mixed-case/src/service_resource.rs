@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "resource_type")]
 pub enum Resource {
+        #[serde(rename = "user")]
         User {
             #[serde(flatten)]
             data: User,

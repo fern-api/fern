@@ -449,12 +449,12 @@ await client.NullableOptional.CreateComplexProfileAsync(
             "optionalNullableArray",
             "optionalNullableArray",
         },
-        NullableListOfNullables = new List<string>()
+        NullableListOfNullables = new List<string?>()
         {
             "nullableListOfNullables",
             "nullableListOfNullables",
         },
-        NullableMapOfNullables = new Dictionary<string, Address>()
+        NullableMapOfNullables = new Dictionary<string, Address?>()
         {
             {
                 "nullableMapOfNullables",
@@ -1014,7 +1014,7 @@ await client.NullableOptional.GetSearchResultsAsync(
     new SearchRequest
     {
         Query = "query",
-        Filters = new Dictionary<string, string>() { { "filters", "filters" } },
+        Filters = new Dictionary<string, string?>() { { "filters", "filters" } },
         IncludeTypes = new List<string>() { "includeTypes", "includeTypes" },
     }
 );

@@ -558,6 +558,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getRawAsIsFiles(): string[] {
+        // When wire tests are enabled, we generate a custom phpunit.xml with the wire test bootstrap
+        // so we exclude the default phpunit.xml here
+        if (this.customConfig.enableWireTests) {
+            return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon];
+        }
         return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon, AsIsFiles.PhpUnitXml];
     }
 

@@ -9,7 +9,7 @@ namespace SeedWebsocket.Core.WebSockets;
 public class Event<T> : IDisposable
 {
     private readonly HashSet<Action<T>> _subscribers = [];
-    private readonly HashSet<Func<T, Task>> _subscribersAsync = [];
+    private readonly HashSet<Func<T, global::System.Threading.Tasks.Task>> _subscribersAsync = [];
 
     /// <summary>
     /// Initializes a new instance of the Event class.
@@ -21,7 +21,7 @@ public class Event<T> : IDisposable
     /// </summary>
     /// <param name="eventObject">The event data to pass to all handlers.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    internal async Task RaiseEvent(T eventObject)
+    internal async global::System.Threading.Tasks.Task RaiseEvent(T eventObject)
     {
         foreach (var subscriber in _subscribers)
         {
@@ -47,7 +47,7 @@ public class Event<T> : IDisposable
     /// Subscribes an asynchronous event handler to the event.
     /// </summary>
     /// <param name="eventHandler">The asynchronous event handler to subscribe.</param>
-    public void Subscribe(Func<T, Task> eventHandler)
+    public void Subscribe(Func<T, global::System.Threading.Tasks.Task> eventHandler)
     {
         _subscribersAsync.Add(eventHandler);
     }
@@ -68,7 +68,7 @@ public class Event<T> : IDisposable
     /// Unsubscribes an asynchronous event handler from the event.
     /// </summary>
     /// <param name="eventHandler">The asynchronous event handler to unsubscribe.</param>
-    public void Unsubscribe(Func<T, Task> eventHandler)
+    public void Unsubscribe(Func<T, global::System.Threading.Tasks.Task> eventHandler)
     {
         if (_subscribersAsync.Contains(eventHandler))
         {

@@ -32,12 +32,16 @@ package example
 import (
     client "github.com/file-upload-openapi/fern/client"
     fern "github.com/file-upload-openapi/fern"
+    strings "strings"
     context "context"
 )
 
 func do() {
     client := client.NewClient()
     request := &fern.UploadFileRequest{
+        File: strings.NewReader(
+            "",
+        ),
         Name: "name",
     }
     client.FileUploadExample.UploadFile(

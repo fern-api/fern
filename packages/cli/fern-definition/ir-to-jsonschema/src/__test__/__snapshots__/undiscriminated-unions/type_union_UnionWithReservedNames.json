@@ -1,0 +1,14 @@
+{
+  "anyOf": [
+    {
+      "const": "type"
+    },
+    {
+      "const": "value"
+    },
+    {
+      "type": "string"
+    }
+  ],
+  "definitions": {}
+}

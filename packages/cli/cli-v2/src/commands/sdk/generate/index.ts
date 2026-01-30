@@ -1,0 +1,1 @@
+export { addGenerateCommand } from "./command";

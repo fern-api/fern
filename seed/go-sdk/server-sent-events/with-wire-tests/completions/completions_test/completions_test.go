@@ -71,9 +71,7 @@ func TestCompletionsStreamWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &sse.StreamCompletionRequest{
 		Query: "query",

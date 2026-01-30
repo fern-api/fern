@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedLiteral;
-using SeedLiteral.Core;
+using SeedLiteral.Test.Utils;
 
 namespace SeedLiteral.Test.Unit.MockServer;
 
@@ -48,10 +48,7 @@ public class SendTest : BaseMockServerTest
                 Query = "query",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -95,9 +92,6 @@ public class SendTest : BaseMockServerTest
                 Query = "What is the weather today",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -273,7 +273,7 @@ func (m *Movie) GetMetadata() map[string]any {
 
 func (m *Movie) GetRevenue() int64 {
 	if m == nil {
-		return 0
+		return int64(0)
 	}
 	return m.Revenue
 }
@@ -602,7 +602,7 @@ func (e *ExtendedMovie) GetMetadata() map[string]any {
 
 func (e *ExtendedMovie) GetRevenue() int64 {
 	if e == nil {
-		return 0
+		return int64(0)
 	}
 	return e.Revenue
 }

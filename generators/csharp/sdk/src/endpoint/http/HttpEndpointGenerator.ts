@@ -191,16 +191,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string,
         serviceId: ServiceId
     ) {
-        const request = endpointSignatureInfo.request;
-
         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
         if (queryParameterCodeBlock != null) {
             queryParameterCodeBlock.code.write(writer);
         }
-        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-        if (headerParameterCodeBlock != null) {
-            headerParameterCodeBlock.code.write(writer);
-        }
+        const headerParameterCodeBlock =
+            endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+            this.getDefaultHeaderParameterCodeBlock({ endpoint });
+        headerParameterCodeBlock.code.write(writer);
         const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             writer.writeNode(requestBodyCodeBlock.code);
@@ -211,8 +209,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
+            queryString: queryParameterCodeBlock?.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -260,10 +258,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             if (queryParameterCodeBlock != null) {
                 queryParameterCodeBlock.code.write(writer);
             }
-            const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-            if (headerParameterCodeBlock != null) {
-                headerParameterCodeBlock.code.write(writer);
-            }
+            const headerParameterCodeBlock =
+                endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+                this.getDefaultHeaderParameterCodeBlock({ endpoint });
+            headerParameterCodeBlock.code.write(writer);
             const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
             if (requestBodyCodeBlock?.code != null) {
                 writer.writeNode(requestBodyCodeBlock.code);
@@ -274,8 +272,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 endpoint,
                 bodyReference: requestBodyCodeBlock?.requestBodyReference,
                 pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-                headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-                queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+                headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
+                queryString: queryParameterCodeBlock?.queryStringReference,
                 endpointRequest: endpointSignatureInfo.request
             });
             if (apiRequestCodeBlock.code) {
@@ -1207,12 +1205,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         const offsetType = this.context.csharpTypeMapper.convert({
-            reference: pagination.page.property.valueType
+            reference: pagination.page.property.valueType,
+            unboxOptionals: true
         });
         // use specified type or fallback to object
         const stepType = pagination.step
             ? this.context.csharpTypeMapper.convert({
-                  reference: pagination.step?.property.valueType
+                  reference: pagination.step?.property.valueType,
+                  unboxOptionals: true
               })
             : this.Primitive.object;
         const offsetPagerClassReference = this.Types.OffsetPager({
@@ -1238,7 +1238,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         endpoint
                     }),
                     this.csharp.codeblock(
-                        `request => ${this.dotAccess(requestParameter.type, "request", pagination.page)} ?? 0`
+                        `request => ${this.getPropertyWithDefault(requestParameter.type, "request", pagination.page, 0)}`
                     ),
                     this.csharp.codeblock((writer) => {
                         writer.writeLine("(request, offset) =>");
@@ -1259,7 +1259,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     }),
                     this.csharp.codeblock(
                         pagination.step
-                            ? `request => ${this.dotAccess(requestParameter.type, "request", pagination.step)} ?? 0`
+                            ? `request => ${this.getPropertyWithDefault(requestParameter.type, "request", pagination.step, 0)}`
                             : "null"
                     ),
                     this.csharp.codeblock(
@@ -1457,10 +1457,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (queryParameterCodeBlock != null) {
             queryParameterCodeBlock.code.write(writer);
         }
-        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-        if (headerParameterCodeBlock != null) {
-            headerParameterCodeBlock.code.write(writer);
-        }
+        const headerParameterCodeBlock =
+            endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+            this.getDefaultHeaderParameterCodeBlock({ endpoint });
+        headerParameterCodeBlock.code.write(writer);
         const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             writer.writeNode(requestBodyCodeBlock.code);
@@ -1472,8 +1472,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -1589,6 +1588,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
         const dotAccess = this.getDotAccess(enclosingType, property, allowOptional);
         return `${variableName}.${dotAccess.code}.${this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
+    }
+
+    private getPropertyWithDefault(
+        encType: ast.Type,
+        variableName: string,
+        property: RequestProperty | ResponseProperty,
+        defaultValue: number
+    ): string {
+        const propertyAccess = this.dotAccess(encType, variableName, property);
+
+        if (this.context.generation.settings.enableExplicitNullableOptional) {
+            return `${propertyAccess}.GetValueOrDefault(${defaultValue})`;
+        }
+        return `${propertyAccess} ?? ${defaultValue}`;
     }
 
     public override generateEndpointSnippet({
@@ -1757,5 +1770,40 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         } else {
             return this.names.parameters.requestOptions;
         }
+    }
+
+    /**
+     * Generates header code block for endpoints without a request parameter.
+     * This ensures client-level headers (API key, SDK version, etc.) are always included.
+     */
+    private getDefaultHeaderParameterCodeBlock({ endpoint }: { endpoint: HttpEndpoint }): {
+        code: ast.CodeBlock;
+        headerParameterBagReference: string;
+    } {
+        const requestOptionsVar = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+
+        return {
+            code: this.csharp.codeblock((writer) => {
+                writer.write(
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                );
+                writer.indent();
+                writer.writeLine(".Add(_client.Options.Headers)");
+                writer.writeLine(".Add(_client.Options.AdditionalHeaders)");
+
+                if (endpoint.idempotent) {
+                    writer.writeLine(
+                        `.Add(((${this.Types.IdempotentRequestOptionsInterface.name}?)${requestOptionsVar})?.GetIdempotencyHeaders())`
+                    );
+                }
+
+                writer.writeLine(`.Add(${requestOptionsVar}?.AdditionalHeaders)`);
+                writer.writeLine(".BuildAsync()");
+                writer.writeLine(".ConfigureAwait(false);");
+
+                writer.dedent();
+            }),
+            headerParameterBagReference: this.names.variables.headers
+        };
     }
 }

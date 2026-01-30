@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.HttpMethods;
@@ -60,9 +60,6 @@ public class TestPostTest : BaseMockServerTest
         var response = await Client.Endpoints.HttpMethods.TestPostAsync(
             new ObjectWithRequiredField { String = "string" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

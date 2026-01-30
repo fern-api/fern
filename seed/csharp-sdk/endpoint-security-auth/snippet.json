@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n    }\n);\n"
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\n    \"TOKEN\",\n    \"API_KEY\",\n    \"client_id\",\n    \"client_secret\",\n    \"USERNAME\",\n    \"PASSWORD\"\n);\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithBearerAsync();\n"
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\n    \"TOKEN\",\n    \"API_KEY\",\n    \"client_id\",\n    \"client_secret\",\n    \"USERNAME\",\n    \"PASSWORD\"\n);\nawait client.User.GetWithBearerAsync();\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithApiKeyAsync();\n"
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\n    \"TOKEN\",\n    \"API_KEY\",\n    \"client_id\",\n    \"client_secret\",\n    \"USERNAME\",\n    \"PASSWORD\"\n);\nawait client.User.GetWithApiKeyAsync();\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithOAuthAsync();\n"
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\n    \"TOKEN\",\n    \"API_KEY\",\n    \"client_id\",\n    \"client_secret\",\n    \"USERNAME\",\n    \"PASSWORD\"\n);\nawait client.User.GetWithOAuthAsync();\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithBasicAsync();\n"
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\n    \"TOKEN\",\n    \"API_KEY\",\n    \"client_id\",\n    \"client_secret\",\n    \"USERNAME\",\n    \"PASSWORD\"\n);\nawait client.User.GetWithBasicAsync();\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithInferredAuthAsync();\n"
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\n    \"TOKEN\",\n    \"API_KEY\",\n    \"client_id\",\n    \"client_secret\",\n    \"USERNAME\",\n    \"PASSWORD\"\n);\nawait client.User.GetWithInferredAuthAsync();\n"
             }
         },
         {
@@ -82,7 +82,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithAnyAuthAsync();\n"
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\n    \"TOKEN\",\n    \"API_KEY\",\n    \"client_id\",\n    \"client_secret\",\n    \"USERNAME\",\n    \"PASSWORD\"\n);\nawait client.User.GetWithAnyAuthAsync();\n"
             }
         },
         {
@@ -94,7 +94,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithAllAuthAsync();\n"
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\n    \"TOKEN\",\n    \"API_KEY\",\n    \"client_id\",\n    \"client_secret\",\n    \"USERNAME\",\n    \"PASSWORD\"\n);\nawait client.User.GetWithAllAuthAsync();\n"
             }
         }
     ]

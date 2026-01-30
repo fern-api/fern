@@ -228,6 +228,21 @@ export class ClonedRepository {
         }
     }
 
+    /**
+     * Checks if a branch exists on the remote.
+     * @param branch The branch name to check
+     * @returns true if the branch exists on remote, false otherwise
+     */
+    public async remoteBranchExists(branch: string): Promise<boolean> {
+        await this.git.cwd(this.clonePath);
+        try {
+            const result = await this.git.raw(["ls-remote", "--heads", "origin", branch]);
+            return result.trim().length > 0;
+        } catch (_error) {
+            return false;
+        }
+    }
+
     public async pushUpstream(branch: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         await this.git.push("origin", branch, { "--set-upstream": null });

@@ -38,6 +38,8 @@ from seed import SeedInferredAuthImplicit
 
 client = SeedInferredAuthImplicit(
     base_url="https://yourhost.com/path/to/api",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.get_token_with_client_credentials(
     client_id="client_id",
@@ -57,6 +59,8 @@ from seed import AsyncSeedInferredAuthImplicit
 
 client = AsyncSeedInferredAuthImplicit(
     base_url="https://yourhost.com/path/to/api",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 
 
@@ -101,6 +105,7 @@ client = SeedInferredAuthImplicit(
 )
 response = client.auth.with_raw_response.get_token_with_client_credentials(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

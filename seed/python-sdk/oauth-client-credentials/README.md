@@ -38,9 +38,7 @@ Instantiate and use the client with the following:
 from seed import SeedOauthClientCredentials
 
 client = SeedOauthClientCredentials(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.auth.get_token_with_client_credentials(
     client_id="my_oauth_app_123",
@@ -59,9 +57,7 @@ import asyncio
 from seed import AsyncSeedOauthClientCredentials
 
 client = AsyncSeedOauthClientCredentials(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 
 
@@ -124,6 +120,7 @@ client = SeedOauthClientCredentials(
 )
 response = client.auth.with_raw_response.get_token_with_client_credentials(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

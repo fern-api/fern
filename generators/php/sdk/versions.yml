@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.25.4
+  changelogEntry:
+    - summary: |
+        Fix wire tests to start and stop the mock server once for all tests instead of per test class. Previously, each test class would start and stop the WireMock container in setUpBeforeClass/tearDownAfterClass, causing the container to restart multiple times. Now uses a PHPUnit bootstrap file to manage the container lifecycle once for the entire test suite.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 1.25.3
   changelogEntry:
     - summary: |

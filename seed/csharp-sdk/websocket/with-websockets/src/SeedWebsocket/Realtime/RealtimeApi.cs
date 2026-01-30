@@ -52,12 +52,11 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         _options = options;
         var uri = new UriBuilder(_options.BaseUrl)
         {
-            Query = new Query()
-            {
-                { "model", _options.Model },
-                { "temperature", _options.Temperature },
-                { "language-code", _options.LanguageCode },
-            },
+            Query = new SeedWebsocket.Core.QueryStringBuilder.Builder(capacity: 3)
+                .Add("model", _options.Model)
+                .Add("temperature", _options.Temperature)
+                .Add("language-code", _options.LanguageCode)
+                .Build(),
         };
         uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(_options.SessionId)}";
         _client = new WebSocketClient(uri.Uri, OnTextMessage);

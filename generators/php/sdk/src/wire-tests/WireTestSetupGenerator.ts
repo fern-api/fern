@@ -25,6 +25,8 @@ export class WireTestSetupGenerator {
         this.generateWireMockConfigFile();
         this.generateDockerComposeFile();
         this.generateWireMockTestCaseFile();
+        this.generateWireTestBootstrapFile();
+        this.generateWireTestPhpunitXml();
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation) {
@@ -102,44 +104,11 @@ use PHPUnit\\Framework\\TestCase;
 /**
  * Base test case for WireMock-based wire tests.
  *
- * This class manages the WireMock container lifecycle for integration tests.
+ * The WireMock container lifecycle is managed by the bootstrap file (tests/Wire/bootstrap.php)
+ * which starts the container once before all tests and stops it after all tests complete.
  */
 abstract class WireMockTestCase extends TestCase
 {
-    protected static string $dockerComposeFile;
-
-    public static function setUpBeforeClass(): void
-    {
-        $testDir = __DIR__;
-        $projectRoot = \\dirname($testDir, 2);
-        $wiremockDir = $projectRoot . '/wiremock';
-        self::$dockerComposeFile = $wiremockDir . '/docker-compose.test.yml';
-
-        echo "\\nStarting WireMock container...\\n";
-        $cmd = sprintf(
-            'docker compose -f %s up -d --wait 2>&1',
-            escapeshellarg(self::$dockerComposeFile)
-        );
-        exec($cmd, $output, $exitCode);
-        if ($exitCode !== 0) {
-            throw new \\RuntimeException("Failed to start WireMock: " . implode("\\n", $output));
-        }
-        echo "WireMock container is ready\\n";
-    }
-
-    public static function tearDownAfterClass(): void
-    {
-        if (!isset(self::$dockerComposeFile)) {
-            return;
-        }
-        echo "\\nStopping WireMock container...\\n";
-        $cmd = sprintf(
-            'docker compose -f %s down -v 2>&1',
-            escapeshellarg(self::$dockerComposeFile)
-        );
-        exec($cmd);
-    }
-
     /**
      * Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
      *
@@ -198,6 +167,85 @@ abstract class WireMockTestCase extends TestCase
         );
     }
 }
+`;
+    }
+
+    /**
+     * Generates a bootstrap file that starts WireMock once before all tests
+     * and registers a shutdown function to stop it after all tests complete.
+     */
+    private generateWireTestBootstrapFile(): void {
+        const bootstrapContent = this.buildWireTestBootstrapContent();
+        this.context.project.addRawFiles(
+            new File("bootstrap.php", RelativeFilePath.of("tests/Wire"), bootstrapContent)
+        );
+        this.context.logger.debug("Generated bootstrap.php for WireMock container lifecycle management");
+    }
+
+    /**
+     * Builds the content for the bootstrap.php file
+     */
+    private buildWireTestBootstrapContent(): string {
+        return `<?php
+
+/**
+ * Bootstrap file for wire tests.
+ *
+ * This file is loaded once before any tests run and manages the WireMock
+ * container lifecycle - starting it once at the beginning and stopping it
+ * after all tests complete.
+ */
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+$projectRoot = \\dirname(__DIR__, 2);
+$dockerComposeFile = $projectRoot . '/wiremock/docker-compose.test.yml';
+
+echo "\\nStarting WireMock container...\\n";
+$cmd = sprintf(
+    'docker compose -f %s up -d --wait 2>&1',
+    escapeshellarg($dockerComposeFile)
+);
+exec($cmd, $output, $exitCode);
+if ($exitCode !== 0) {
+    throw new \\RuntimeException("Failed to start WireMock: " . implode("\\n", $output));
+}
+echo "WireMock container is ready\\n";
+
+// Register shutdown function to stop the container after all tests complete
+register_shutdown_function(function () use ($dockerComposeFile) {
+    echo "\\nStopping WireMock container...\\n";
+    $cmd = sprintf(
+        'docker compose -f %s down -v 2>&1',
+        escapeshellarg($dockerComposeFile)
+    );
+    exec($cmd);
+});
+`;
+    }
+
+    /**
+     * Generates a phpunit.xml file that uses the wire bootstrap.
+     * This overrides the default phpunit.xml so that `composer test` works correctly.
+     */
+    private generateWireTestPhpunitXml(): void {
+        const phpunitContent = this.buildWireTestPhpunitXmlContent();
+        this.context.project.addRawFiles(new File("phpunit.xml", RelativeFilePath.of(""), phpunitContent));
+        this.context.logger.debug("Generated phpunit.xml with wire test bootstrap");
+    }
+
+    /**
+     * Builds the content for the phpunit.xml file with wire test bootstrap.
+     * This runs all tests (including wire tests) with WireMock started.
+     */
+    private buildWireTestPhpunitXmlContent(): string {
+        return `<phpunit bootstrap="tests/Wire/bootstrap.php">
+    <testsuites>
+        <testsuite name="Test Suite">
+            <directory suffix="Test.php">tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
 `;
     }
 }

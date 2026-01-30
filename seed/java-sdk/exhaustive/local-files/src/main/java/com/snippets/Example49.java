@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
+import java.util.HashMap;
 
 public class Example49 {
     public static void main(String[] args) {
@@ -10,6 +11,8 @@ public class Example49 {
             .url("https://api.fern.com")
             .build();
 
-        client.noReqBody().postWithNoRequestBody();
+        client.noAuth().postWithNoAuth(new 
+        HashMap<String, Object>() {{put("key", "value");
+        }});
     }
 }

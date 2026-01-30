@@ -340,11 +340,15 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                base_64: Some(
+                    base64::engine::general_purpose::STANDARD
+                        .decode("SGVsbG8gd29ybGQh")
+                        .unwrap(),
+                ),
                 list: Some(vec!["list".to_string(), "list".to_string()]),
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
-                bigint: Some("1000000".to_string()),
+                bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
             },
             None,
         )
@@ -396,11 +400,15 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                base_64: Some(
+                    base64::engine::general_purpose::STANDARD
+                        .decode("SGVsbG8gd29ybGQh")
+                        .unwrap(),
+                ),
                 list: Some(vec!["list".to_string(), "list".to_string()]),
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
-                bigint: Some("1000000".to_string()),
+                bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
             },
             None,
         )
@@ -652,11 +660,15 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                base_64: Some(
+                    base64::engine::general_purpose::STANDARD
+                        .decode("SGVsbG8gd29ybGQh")
+                        .unwrap(),
+                ),
                 list: Some(vec!["list".to_string(), "list".to_string()]),
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
-                bigint: Some("1000000".to_string()),
+                bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
             },
             None,
         )
@@ -778,11 +790,15 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                base_64: Some(
+                    base64::engine::general_purpose::STANDARD
+                        .decode("SGVsbG8gd29ybGQh")
+                        .unwrap(),
+                ),
                 list: Some(vec!["list".to_string(), "list".to_string()]),
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
-                bigint: Some("1000000".to_string()),
+                bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
             },
             None,
         )
@@ -927,11 +943,15 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                    base_64: Some(
+                        base64::engine::general_purpose::STANDARD
+                            .decode("SGVsbG8gd29ybGQh")
+                            .unwrap(),
+                    ),
                     list: Some(vec!["list".to_string(), "list".to_string()]),
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
-                    bigint: Some("1000000".to_string()),
+                    bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                 }),
             },
             None,
@@ -987,11 +1007,15 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                    base_64: Some(
+                        base64::engine::general_purpose::STANDARD
+                            .decode("SGVsbG8gd29ybGQh")
+                            .unwrap(),
+                    ),
                     list: Some(vec!["list".to_string(), "list".to_string()]),
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
-                    bigint: Some("1000000".to_string()),
+                    bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                 },
             },
             None,
@@ -1066,11 +1090,15 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                        base_64: Some(
+                            base64::engine::general_purpose::STANDARD
+                                .decode("SGVsbG8gd29ybGQh")
+                                .unwrap(),
+                        ),
                         list: Some(vec!["list".to_string(), "list".to_string()]),
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
-                        bigint: Some("1000000".to_string()),
+                        bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                     },
                 },
                 NestedObjectWithRequiredField {
@@ -1088,14 +1116,79 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                        base_64: Some(
+                            base64::engine::general_purpose::STANDARD
+                                .decode("SGVsbG8gd29ybGQh")
+                                .unwrap(),
+                        ),
                         list: Some(vec!["list".to_string(), "list".to_string()]),
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
-                        bigint: Some("1000000".to_string()),
+                        bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                     },
                 },
             ],
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_datetime_like_string</a>(request: ObjectWithDatetimeLikeString) -> Result&lt;ObjectWithDatetimeLikeString, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_with_datetime_like_string(
+            &ObjectWithDatetimeLikeString {
+                datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
+                actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+            },
             None,
         )
         .await;
@@ -2059,7 +2152,12 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_base_64(&"SGVsbG8gd29ybGQh".to_string(), None)
+        .get_and_return_base_64(
+            &base64::engine::general_purpose::STANDARD
+                .decode("SGVsbG8gd29ybGQh")
+                .unwrap(),
+            None,
+        )
         .await;
 }
 ```
@@ -2365,11 +2463,15 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                    base_64: Some(
+                        base64::engine::general_purpose::STANDARD
+                            .decode("SGVsbG8gd29ybGQh")
+                            .unwrap(),
+                    ),
                     list: Some(vec!["list".to_string(), "list".to_string()]),
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
-                    bigint: Some("1000000".to_string()),
+                    bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                 },
             },
             None,

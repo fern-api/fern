@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedSingleUrlEnvironmentNoDefault.Core;
+using SeedSingleUrlEnvironmentNoDefault.Test.Utils;
 
 namespace SeedSingleUrlEnvironmentNoDefault.Test.Unit.MockServer;
 
@@ -23,6 +23,6 @@ public class GetDummyTest : BaseMockServerTest
             );
 
         var response = await Client.Dummy.GetDummyAsync();
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

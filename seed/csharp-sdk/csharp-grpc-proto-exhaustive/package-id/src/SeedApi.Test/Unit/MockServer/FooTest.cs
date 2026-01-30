@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -27,11 +27,7 @@ public class FooTest : BaseMockServerTest
             );
 
         var response = await Client.Dataservice.FooAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Dictionary<string, object?>>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -53,10 +49,6 @@ public class FooTest : BaseMockServerTest
             );
 
         var response = await Client.Dataservice.FooAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Dictionary<string, object?>>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

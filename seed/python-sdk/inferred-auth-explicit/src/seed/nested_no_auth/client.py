@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawNestedNoAuthClient, RawNestedNoAuthClient
 
 if typing.TYPE_CHECKING:
     from .api.client import ApiClient, AsyncApiClient
@@ -13,20 +12,8 @@ if typing.TYPE_CHECKING:
 
 class NestedNoAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawNestedNoAuthClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._api: typing.Optional[ApiClient] = None
-
-    @property
-    def with_raw_response(self) -> RawNestedNoAuthClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawNestedNoAuthClient
-        """
-        return self._raw_client
 
     @property
     def api(self):
@@ -39,20 +26,8 @@ class NestedNoAuthClient:
 
 class AsyncNestedNoAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawNestedNoAuthClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._api: typing.Optional[AsyncApiClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawNestedNoAuthClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawNestedNoAuthClient
-        """
-        return self._raw_client
 
     @property
     def api(self):

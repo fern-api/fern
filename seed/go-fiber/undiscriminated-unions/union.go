@@ -398,6 +398,9 @@ func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
+// A name (alias for string)
+type Name = string
+
 var (
 	namedMetadataFieldName  = big.NewInt(1 << 0)
 	namedMetadataFieldValue = big.NewInt(1 << 1)
@@ -1284,3 +1287,181 @@ func (u *UnionWithIdenticalStrings) Accept(visitor UnionWithIdenticalStringsVisi
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
+
+// Tests that union members named 'Type' or 'Value' don't collide with internal properties
+type UnionWithReservedNames struct {
+	TypeStringLiteral  string
+	ValueStringLiteral string
+	String             string
+
+	typ string
+}
+
+func NewUnionWithReservedNamesWithTypeStringLiteral() *UnionWithReservedNames {
+	return &UnionWithReservedNames{typ: "TypeStringLiteral", TypeStringLiteral: "type"}
+}
+
+func NewUnionWithReservedNamesWithValueStringLiteral() *UnionWithReservedNames {
+	return &UnionWithReservedNames{typ: "ValueStringLiteral", ValueStringLiteral: "value"}
+}
+
+func (u *UnionWithReservedNames) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithReservedNames) UnmarshalJSON(data []byte) error {
+	var valueTypeStringLiteral string
+	if err := json.Unmarshal(data, &valueTypeStringLiteral); err == nil {
+		u.typ = "TypeStringLiteral"
+		u.TypeStringLiteral = valueTypeStringLiteral
+		if u.TypeStringLiteral != "type" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "type", valueTypeStringLiteral)
+		}
+		return nil
+	}
+	var valueValueStringLiteral string
+	if err := json.Unmarshal(data, &valueValueStringLiteral); err == nil {
+		u.typ = "ValueStringLiteral"
+		u.ValueStringLiteral = valueValueStringLiteral
+		if u.ValueStringLiteral != "value" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "value", valueValueStringLiteral)
+		}
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithReservedNames) MarshalJSON() ([]byte, error) {
+	if u.typ == "TypeStringLiteral" || u.TypeStringLiteral != "" {
+		return json.Marshal("type")
+	}
+	if u.typ == "ValueStringLiteral" || u.ValueStringLiteral != "" {
+		return json.Marshal("value")
+	}
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithReservedNamesVisitor interface {
+	VisitTypeStringLiteral(string) error
+	VisitValueStringLiteral(string) error
+	VisitString(string) error
+}
+
+func (u *UnionWithReservedNames) Accept(visitor UnionWithReservedNamesVisitor) error {
+	if u.typ == "TypeStringLiteral" || u.TypeStringLiteral != "" {
+		return visitor.VisitTypeStringLiteral(u.TypeStringLiteral)
+	}
+	if u.typ == "ValueStringLiteral" || u.ValueStringLiteral != "" {
+		return visitor.VisitValueStringLiteral(u.ValueStringLiteral)
+	}
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// Union with multiple named type aliases that all resolve to the same C# type (string).
+// Without the fix, this would generate duplicate implicit operators:
+//
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//
+// causing CS0557 compiler error.
+type UnionWithTypeAliases struct {
+	String string
+	UserId UserId
+	Name   Name
+
+	typ string
+}
+
+func (u *UnionWithTypeAliases) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithTypeAliases) GetUserId() UserId {
+	if u == nil {
+		return ""
+	}
+	return u.UserId
+}
+
+func (u *UnionWithTypeAliases) GetName() Name {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UnionWithTypeAliases) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	var valueUserId UserId
+	if err := json.Unmarshal(data, &valueUserId); err == nil {
+		u.typ = "UserId"
+		u.UserId = valueUserId
+		return nil
+	}
+	var valueName Name
+	if err := json.Unmarshal(data, &valueName); err == nil {
+		u.typ = "Name"
+		u.Name = valueName
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithTypeAliases) MarshalJSON() ([]byte, error) {
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	if u.typ == "UserId" || u.UserId != "" {
+		return json.Marshal(u.UserId)
+	}
+	if u.typ == "Name" || u.Name != "" {
+		return json.Marshal(u.Name)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithTypeAliasesVisitor interface {
+	VisitString(string) error
+	VisitUserId(UserId) error
+	VisitName(Name) error
+}
+
+func (u *UnionWithTypeAliases) Accept(visitor UnionWithTypeAliasesVisitor) error {
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	if u.typ == "UserId" || u.UserId != "" {
+		return visitor.VisitUserId(u.UserId)
+	}
+	if u.typ == "Name" || u.Name != "" {
+		return visitor.VisitName(u.Name)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// A user identifier (alias for string)
+type UserId = string

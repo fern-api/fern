@@ -43,6 +43,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
             outputEsm: parsed?.outputEsm ?? false,
+            outputSrcOnly: parsed?.outputSrcOnly ?? false,
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
@@ -338,6 +339,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     protected outputSourceFiles(_customConfig: SdkCustomConfig): boolean {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.outputSourceFiles;
+    }
+
+    protected outputSrcOnly(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
+        return customConfig.outputSrcOnly ?? false;
     }
 
     protected shouldTolerateRepublish(_customConfig: SdkCustomConfig): boolean {

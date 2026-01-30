@@ -4,7 +4,7 @@
 //!
 //! - **Webhooks**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod webhooks;
 pub struct ApiClient {
@@ -15,8 +15,10 @@ impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
+            
         })
     }
+
 }
 
 pub use webhooks::WebhooksClient;

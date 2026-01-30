@@ -19,6 +19,12 @@ public partial class OrganizationsClient : IOrganizationsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +36,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         ValueConvert.ToPathParameterString(tenantId),
                         ValueConvert.ToPathParameterString(organizationId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -81,6 +88,12 @@ public partial class OrganizationsClient : IOrganizationsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -93,6 +106,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         ValueConvert.ToPathParameterString(organizationId),
                         ValueConvert.ToPathParameterString(userId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -143,11 +157,16 @@ public partial class OrganizationsClient : IOrganizationsClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.Limit != null)
-        {
-            _query["limit"] = request.Limit.Value.ToString();
-        }
+        var _queryString = new SeedPathParameters.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("limit", request.Limit)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -159,7 +178,8 @@ public partial class OrganizationsClient : IOrganizationsClient
                         ValueConvert.ToPathParameterString(tenantId),
                         ValueConvert.ToPathParameterString(organizationId)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

@@ -39,8 +39,22 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
+      - name: Setup WireMock server
+        run: |
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -f wiremock/docker-compose.test.yml down 2>/dev/null || true
+            docker compose -f wiremock/docker-compose.test.yml up -d --wait
+          fi
+
       - name: Test
-        run: cargo test
+        run: RUN_WIRE_TESTS=true cargo test -- --test-threads=1
+
+      - name: Teardown WireMock server
+        if: always()
+        run: |
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -f wiremock/docker-compose.test.yml down
+          fi
 
   publish:
     needs: [check, compile, test]

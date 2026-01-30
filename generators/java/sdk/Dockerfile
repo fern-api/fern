@@ -1,11 +1,13 @@
 # Stage 1: Java V2
 # Updated: WebSocket feature support added
-FROM node:23.11.1-bookworm AS node
+# Updated Node.js to 24.13.0 to fix CVE-2025-59465, CVE-2025-55131, CVE-2025-55130, CVE-2026-21637, CVE-2025-59466, CVE-2025-55132
+FROM node:24.13.0-bookworm AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
 # Stage 2: Java V1
 # Apple Silicon: FROM bitnami/gradle:latest
+# Note: OpenJDK CVEs (CVE-2026-21945, CVE-2026-21932, CVE-2026-21925, CVE-2026-21933) require 11.0.30 which is not yet available
 FROM gradle:jdk11-jammy
 
 # Remove vulnerable jars from Gradle base image - not used by this generator
@@ -30,6 +32,7 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506, CVE-2025-66293: libpng16-16 vulnerabilities
 # CVE-2021-46848, CVE-2025-13151: libtasn1-6 vulnerabilities
 # CVE-2025-68973: gnupg/gpg vulnerabilities
+# CVE-2025-15467, CVE-2026-22796, CVE-2026-22795, CVE-2025-69420, CVE-2025-69419, CVE-2025-68160, CVE-2025-69421, CVE-2025-69418: openssl/libssl3 vulnerabilities
 # Use purge instead of remove to fully remove packages from dpkg database
 # Add retry logic for apt-get update to handle transient mirror sync issues
 RUN set -eux; \
@@ -46,7 +49,8 @@ RUN set -eux; \
     done; \
     apt-get install -y --only-upgrade libpng16-16 libtasn1-6 \
         dirmngr gnupg gnupg-l10n gnupg-utils gpg gpg-agent \
-        gpg-wks-client gpg-wks-server gpgconf gpgsm gpgv && \
+        gpg-wks-client gpg-wks-server gpgconf gpgsm gpgv \
+        openssl libssl3 && \
     apt-get purge -y --allow-remove-essential \
         python3.10 python3.10-minimal \
         python3 python3-minimal \
@@ -81,14 +85,14 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     mv package glob && \
     rm glob-11.1.0.tgz
 
-# Patch npm's bundled tar to 7.5.3 to fix CVE-2026-23745 (path traversal via hardlinks/symlinks)
+# Patch npm's bundled tar to 7.5.7 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w (path traversal via hardlinks/symlinks)
 # Note: We use curl instead of npm pack because npm pack depends on tar itself
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     rm -rf tar && \
-    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.3.tgz -o tar-7.5.3.tgz && \
-    tar -xzf tar-7.5.3.tgz && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.7.tgz -o tar-7.5.7.tgz && \
+    tar -xzf tar-7.5.7.tgz && \
     mv package tar && \
-    rm tar-7.5.3.tgz
+    rm tar-7.5.7.tgz
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2

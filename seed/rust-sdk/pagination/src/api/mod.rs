@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ComplexClient, InlineUsersClient, PaginationClient, UsersClient};
-pub use types::*;
+pub use resources::{ComplexClient, InlineUsersClient, UsersClient, PaginationClient};
+pub use types::{*};
+

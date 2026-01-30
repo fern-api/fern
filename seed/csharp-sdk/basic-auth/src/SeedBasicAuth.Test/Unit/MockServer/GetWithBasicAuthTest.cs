@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedBasicAuth.Core;
+using SeedBasicAuth.Test.Utils;
 
 namespace SeedBasicAuth.Test.Unit.MockServer;
 
@@ -23,7 +23,7 @@ public class GetWithBasicAuthTest : BaseMockServerTest
             );
 
         var response = await Client.BasicAuth.GetWithBasicAuthAsync();
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -43,6 +43,6 @@ public class GetWithBasicAuthTest : BaseMockServerTest
             );
 
         var response = await Client.BasicAuth.GetWithBasicAuthAsync();
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

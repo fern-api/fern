@@ -6,8 +6,8 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { loadFernYml } from "../config/fern-yml/loadFernYml";
+import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter";
 import type { Target } from "../sdk/config/Target";
-import { SdkConfigConverter } from "../sdk/converter/SdkConfigConverter";
 
 describe("SdkConfigConverter", () => {
     let testDir: AbsoluteFilePath;
@@ -101,7 +101,7 @@ sdks:
     });
 
     describe("docker image resolution", () => {
-        it("resolves docker image for typescript to fern-typescript-node-sdk", async () => {
+        it("resolves docker image for typescript to fern-typescript-sdk", async () => {
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -121,7 +121,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-node-sdk");
+                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
             }
         });
 
@@ -202,7 +202,7 @@ sdks:
                     ruby: "fernapi/fern-ruby-sdk",
                     rust: "fernapi/fern-rust-sdk",
                     swift: "fernapi/fern-swift-sdk",
-                    typescript: "fernapi/fern-typescript-node-sdk"
+                    typescript: "fernapi/fern-typescript-sdk"
                 });
             }
         });
@@ -302,7 +302,7 @@ sdks:
             expect(result.success).toBe(true);
             if (result.success) {
                 expect(result.config.targets[0]?.lang).toBe("typescript");
-                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-node-sdk");
+                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
             }
         });
 

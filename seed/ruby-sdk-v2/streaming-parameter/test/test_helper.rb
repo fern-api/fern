@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require_relative "../lib/fern_streaming_parameter"
+require_relative "../lib/seed"

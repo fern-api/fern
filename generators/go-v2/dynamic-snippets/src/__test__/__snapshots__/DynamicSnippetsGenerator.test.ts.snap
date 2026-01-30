@@ -117,7 +117,7 @@ func do() {
 					"imdb":           7.6,
 				},
 			},
-			Revenue: 1000000,
+			Revenue: int64(1000000),
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -194,7 +194,7 @@ func do() {
 				"imdb":           7.6,
 			},
 		},
-		Revenue: 1000000,
+		Revenue: int64(1000000),
 	}
 	client.Service.CreateMovie(
 		context.TODO(),
@@ -230,7 +230,7 @@ func do() {
 			1,
 		),
 		Long: acme.Int64(
-			1000000,
+			int64(1000000),
 		),
 		Double: acme.Float64(
 			1.1,
@@ -253,7 +253,9 @@ func do() {
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
 		),
-		Base64: []byte("SGVsbG8gd29ybGQh"),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
 		List: []string{
 			"list",
 			"list",
@@ -964,7 +966,7 @@ func do() {
 					"imdb":           7.6,
 				},
 			},
-			Revenue: 1000000,
+			Revenue: int64(1000000),
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -1041,7 +1043,7 @@ func do() {
 				"imdb":           7.6,
 			},
 		},
-		Revenue: 1000000,
+		Revenue: int64(1000000),
 	}
 	client.Service.CreateMovie(
 		context.TODO(),
@@ -1077,7 +1079,7 @@ func do() {
 			1,
 		),
 		Long: acme.Int64(
-			1000000,
+			int64(1000000),
 		),
 		Double: acme.Float64(
 			1.1,
@@ -1100,7 +1102,9 @@ func do() {
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
 		),
-		Base64: []byte("SGVsbG8gd29ybGQh"),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
 		List: []string{
 			"list",
 			"list",
@@ -1811,7 +1815,7 @@ func do() {
 					"imdb":           7.6,
 				},
 			},
-			Revenue: 1000000,
+			Revenue: int64(1000000),
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -1888,7 +1892,7 @@ func do() {
 				"imdb":           7.6,
 			},
 		},
-		Revenue: 1000000,
+		Revenue: int64(1000000),
 	}
 	client.Service.CreateMovie(
 		context.TODO(),
@@ -1924,7 +1928,7 @@ func do() {
 			1,
 		),
 		Long: acme.Int64(
-			1000000,
+			int64(1000000),
 		),
 		Double: acme.Float64(
 			1.1,
@@ -1947,7 +1951,9 @@ func do() {
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
 		),
-		Base64: []byte("SGVsbG8gd29ybGQh"),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
 		List: []string{
 			"list",
 			"list",
