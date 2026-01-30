@@ -163,9 +163,21 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         generatedType: GeneratedRequestWrapper,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
+        const pathParamPropertyNames = new Set(
+            [...this.example.servicePathParameters, ...this.example.endpointPathParameters].map(
+                (pathParam) => generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName
+            )
+        );
+
         return [
             ...body.properties
                 .filter((property) => this.isNotLiteral(property.value.shape))
+                .filter((property) => {
+                    const bodyPropertyName = generatedType.getInlinedRequestBodyPropertyKeyFromName(
+                        property.name
+                    ).propertyName;
+                    return !pathParamPropertyNames.has(bodyPropertyName);
+                })
                 .map((property) => {
                     if (property.originalTypeDeclaration != null) {
                         const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);

@@ -791,9 +791,23 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         context: SdkContext;
         inlinedRequestBody: InlinedRequestBody;
     }): InlinedRequestBodyProperty[] {
+        const pathParameterNames = new Set(
+            this.getPathParamsForRequestWrapper(context).map((param) => {
+                const propertyName = this.getPropertyNameOfPathParameter(param);
+                return propertyName.propertyName;
+            })
+        );
+
         return inlinedRequestBody.properties.filter((property) => {
             const resolvedType = context.type.resolveTypeReference(property.valueType);
-            return !(resolvedType.type === "container" && resolvedType.container.type === "literal");
+            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                return false;
+            }
+            const bodyPropertyName = this.getInlinedRequestBodyPropertyKeyFromName(property.name);
+            if (pathParameterNames.has(bodyPropertyName.propertyName)) {
+                return false;
+            }
+            return true;
         });
     }
 
