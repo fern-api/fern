@@ -5,6 +5,20 @@ import { readdir } from "fs/promises";
 import type { MigratorWarning } from "../types";
 import { convertOpenApiSpecSettings } from "./convertSettings";
 
+/**
+ * Converts OverridesSchema (string | string[] | undefined) to a single string.
+ * The cli-v2 config schema only supports a single override path, so we use the first one if an array is provided.
+ */
+function convertOverridesToString(overrides: generatorsYml.OverridesSchema | undefined): string | undefined {
+    if (overrides == null) {
+        return undefined;
+    }
+    if (Array.isArray(overrides)) {
+        return overrides[0];
+    }
+    return overrides;
+}
+
 export interface ConvertApiSpecsResult {
     specs: schemas.ApiSpecSchema[];
     warnings: MigratorWarning[];
@@ -276,7 +290,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
             result.origin = openApiSpec.origin;
         }
         if (openApiSpec.overrides != null) {
-            result.overrides = openApiSpec.overrides;
+            result.overrides = convertOverridesToString(openApiSpec.overrides);
         }
         if (openApiSpec.overlays != null) {
             result.overlays = openApiSpec.overlays;
@@ -303,7 +317,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
             result.origin = asyncApiSpec.origin;
         }
         if (asyncApiSpec.overrides != null) {
-            result.overrides = asyncApiSpec.overrides;
+            result.overrides = convertOverridesToString(asyncApiSpec.overrides);
         }
         if (asyncApiSpec.namespace != null) {
             result.namespace = asyncApiSpec.namespace;
@@ -328,7 +342,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
             result.proto.target = protoDef.target;
         }
         if (protoDef.overrides != null) {
-            result.proto.overrides = protoDef.overrides;
+            result.proto.overrides = convertOverridesToString(protoDef.overrides);
         }
         if (protoDef["local-generation"] != null) {
             result.proto.localGeneration = protoDef["local-generation"];
@@ -350,7 +364,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         };
 
         if (openRpcSpec.overrides != null) {
-            result.overrides = openRpcSpec.overrides;
+            result.overrides = convertOverridesToString(openRpcSpec.overrides);
         }
 
         return result;
@@ -427,7 +441,7 @@ function convertLegacyApiConfig(
             result.proto.target = protoDef.target;
         }
         if (protoDef.overrides != null) {
-            result.proto.overrides = protoDef.overrides;
+            result.proto.overrides = convertOverridesToString(protoDef.overrides);
         }
 
         specs.push(result);
@@ -446,7 +460,7 @@ function convertLegacyApiConfig(
             result.origin = config.origin;
         }
         if (config.overrides != null) {
-            result.overrides = config.overrides;
+            result.overrides = convertOverridesToString(config.overrides);
         }
         if (Object.keys(settingsResult.settings).length > 0) {
             result.settings = settingsResult.settings;
@@ -483,7 +497,7 @@ function convertApiDefinitionSchema(
             result.origin = item.origin;
         }
         if (item.overrides != null) {
-            result.overrides = item.overrides;
+            result.overrides = convertOverridesToString(item.overrides);
         }
         if (Object.keys(settingsResult.settings).length > 0) {
             result.settings = settingsResult.settings;
