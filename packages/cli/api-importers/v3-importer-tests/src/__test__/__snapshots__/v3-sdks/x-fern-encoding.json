@@ -199,7 +199,7 @@
           {
             "type": {
               "container": {
-                "list": {
+                "itemType": {
                   "type": "unknown"
                 },
                 "type": "list"

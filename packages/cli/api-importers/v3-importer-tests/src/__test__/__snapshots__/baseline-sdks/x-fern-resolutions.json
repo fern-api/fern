@@ -298,7 +298,7 @@
                 "docs": "Success",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "User",
                         "camelCase": {

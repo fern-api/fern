@@ -633,7 +633,7 @@
               "value": {
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "primitive": {
                         "v1": "STRING",
                         "v2": {
@@ -698,7 +698,7 @@
                   "value": {
                     "responseBodyType": {
                       "container": {
-                        "list": {
+                        "itemType": {
                           "primitive": {
                             "v1": "STRING",
                             "v2": {

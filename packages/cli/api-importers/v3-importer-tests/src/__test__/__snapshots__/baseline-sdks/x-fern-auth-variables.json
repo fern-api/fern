@@ -548,7 +548,7 @@
                 "docs": "Success",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "GetAllUserResponseItem",
                         "camelCase": {

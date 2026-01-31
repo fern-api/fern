@@ -601,7 +601,7 @@
                 "docs": "Success",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Comment",
                         "camelCase": {
@@ -789,7 +789,7 @@
                 "docs": "Success",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "User",
                         "camelCase": {
@@ -915,7 +915,7 @@
                 "docs": "Success",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Post",
                         "camelCase": {

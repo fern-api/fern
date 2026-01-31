@@ -758,7 +758,7 @@
                 "docs": "List of trees",
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Tree",
                         "camelCase": {

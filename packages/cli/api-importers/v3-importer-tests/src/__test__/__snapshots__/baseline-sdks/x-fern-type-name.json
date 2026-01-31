@@ -585,7 +585,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "primitive": {
                         "v1": "STRING",
                         "v2": {

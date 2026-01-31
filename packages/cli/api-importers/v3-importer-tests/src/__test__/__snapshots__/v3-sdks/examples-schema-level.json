@@ -2138,7 +2138,7 @@
               "value": {
                 "responseBodyType": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -2239,7 +2239,7 @@
                   "value": {
                     "responseBodyType": {
                       "container": {
-                        "list": {
+                        "itemType": {
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []

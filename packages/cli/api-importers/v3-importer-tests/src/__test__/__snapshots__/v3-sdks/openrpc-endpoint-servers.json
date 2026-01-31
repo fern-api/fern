@@ -3892,7 +3892,7 @@
           {
             "type": {
               "container": {
-                "list": {
+                "itemType": {
                   "primitive": {
                     "v1": "STRING",
                     "v2": {
@@ -4410,7 +4410,7 @@
           {
             "type": {
               "container": {
-                "list": {
+                "itemType": {
                   "primitive": {
                     "v1": "STRING",
                     "v2": {

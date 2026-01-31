@@ -282,7 +282,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Item",
                         "camelCase": {

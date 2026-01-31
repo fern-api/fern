@@ -1139,7 +1139,7 @@
             },
             "valueType": {
               "container": {
-                "list": {
+                "itemType": {
                   "primitive": {
                     "v1": "STRING",
                     "v2": {
@@ -1184,7 +1184,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "Tag",
                         "camelCase": {

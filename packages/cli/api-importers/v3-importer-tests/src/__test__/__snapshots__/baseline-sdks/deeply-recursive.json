@@ -440,7 +440,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "JsonschemaSchema",
                         "camelCase": {
@@ -507,7 +507,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "JsonschemaSchema",
                         "camelCase": {
@@ -867,7 +867,7 @@
                     },
                     "valueType": {
                       "container": {
-                        "list": {
+                        "itemType": {
                           "primitive": {
                             "v1": "STRING",
                             "v2": {
@@ -1143,7 +1143,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "type": "unknown"
                     },
                     "type": "list"
@@ -1186,7 +1186,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "type": "unknown"
                     },
                     "type": "list"
@@ -2086,7 +2086,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "JsonschemaSchema",
                         "camelCase": {
@@ -2272,7 +2272,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "name": {
                         "originalName": "JsonschemaSchema",
                         "camelCase": {
@@ -2480,7 +2480,7 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
+                    "itemType": {
                       "primitive": {
                         "v1": "STRING",
                         "v2": {

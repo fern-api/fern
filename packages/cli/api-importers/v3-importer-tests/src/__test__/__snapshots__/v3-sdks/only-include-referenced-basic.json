@@ -59,7 +59,7 @@
             },
             "valueType": {
               "container": {
-                "list": {
+                "itemType": {
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
