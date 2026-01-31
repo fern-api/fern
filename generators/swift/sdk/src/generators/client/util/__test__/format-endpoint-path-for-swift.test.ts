@@ -15,7 +15,7 @@ async function getIRForTestDefinition(testDefinitionName: string): Promise<Inter
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(pathToTestDefinitions, testDefinitionName));
     return (await createSampleIr(absolutePathToWorkspace, {
         version: "v59" // make sure to upgrade this when the IR version is upgraded
-    })) as IntermediateRepresentation;
+    })) as unknown as IntermediateRepresentation;
 }
 
 describe.each(testDefinitionNames)("formatEndpointPathForSwift - %s", (testDefinitionName) => {
