@@ -1334,7 +1334,9 @@ export class DocsDefinitionResolver {
             snippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
             apiName: apiNameForRegistration,
-            workspace
+            workspace,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types
         });
 
         // Create API definition WITH GraphQL operations (single full conversion)
@@ -1442,45 +1444,35 @@ export class DocsDefinitionResolver {
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
-        // Find all GraphQL specs across all OSS workspaces
-        const allGraphQLSpecs: GraphQLSpec[] = [];
+        // Get pre-processed GraphQL data from workspaces and build namespace mapping
         for (const ossWorkspace of this.ossWorkspaces) {
+            // Merge processed GraphQL data from workspace
+            Object.assign(graphqlOperations, ossWorkspace.getGraphqlOperations());
+            Object.assign(graphqlTypes, ossWorkspace.getGraphqlTypes());
+
+            // Build namespace mapping by processing individual specs
             const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
-            allGraphQLSpecs.push(...graphqlSpecs);
-        }
-
-        if (allGraphQLSpecs.length === 0) {
-            return { operations: {}, types: {}, namespacesByOperationId };
-        }
-
-        // Process each GraphQL spec
-        for (const spec of allGraphQLSpecs) {
-            try {
-                const converter = new GraphQLConverter({
-                    context: this.taskContext,
-                    filePath: spec.absoluteFilepath
-                });
-                const graphqlResult = await converter.convert();
-
-                // Merge the GraphQL operations and types from this spec
-                Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
-
-                // Track namespace for each operation from this spec
+            for (const spec of graphqlSpecs) {
                 if (spec.namespace != null) {
-                    for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
-                        namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
+                    try {
+                        // Process each spec individually to map operations to namespaces
+                        const converter = new GraphQLConverter({
+                            context: this.taskContext,
+                            filePath: spec.absoluteFilepath
+                        });
+                        const graphqlResult = await converter.convert();
+
+                        // Map operations from this spec to its namespace
+                        for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
+                            namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
+                        }
+                    } catch (error) {
+                        this.taskContext.logger.error(
+                            `Failed to process GraphQL spec for namespace mapping ${spec.absoluteFilepath}:`,
+                            String(error)
+                        );
                     }
                 }
-
-                // Convert GraphQL types from api.latest to api.v1.register format
-                for (const [typeId, typeDefinition] of Object.entries(graphqlResult.types)) {
-                    graphqlTypes[FdrAPI.TypeId(typeId)] = typeDefinition;
-                }
-            } catch (error) {
-                this.taskContext.logger.error(
-                    `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
-                    String(error)
-                );
             }
         }
 

@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { GraphQLConverter, GraphQLConverterResult } from "@fern-api/graphql-to-fdr";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { AIExampleEnhancerConfig, registerApi } from "@fern-api/register";
@@ -22,36 +22,11 @@ export async function registerWorkspacesV2({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                // Extract GraphQL operations from the workspace
-                const graphqlOperations: GraphQLConverterResult["graphqlOperations"] = {};
-                const graphqlTypes: GraphQLConverterResult["types"] = {};
-
-                // Process GraphQL specs in the workspace
-                if (workspace instanceof OSSWorkspace) {
-                    const graphqlSpecs = workspace.allSpecs.filter((spec) => spec.type === "graphql");
-
-                    for (const spec of graphqlSpecs) {
-                        try {
-                            const converter = new GraphQLConverter({
-                                context,
-                                filePath: spec.absoluteFilepath
-                            });
-                            const graphqlResult = await converter.convert();
-
-                            // Merge the GraphQL operations and types from this spec
-                            Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
-
-                            // Merge the GraphQL types from this spec
-                            Object.assign(graphqlTypes, graphqlResult.types);
-                        } catch (error) {
-                            context.logger.error(
-                                `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
-                                String(error)
-                            );
-                            // Continue processing other specs
-                        }
-                    }
-                }
+                // Get GraphQL data from workspace (now processed during workspace loading)
+                const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> =
+                    workspace instanceof OSSWorkspace ? workspace.getGraphqlOperations() : {};
+                const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> =
+                    workspace instanceof OSSWorkspace ? workspace.getGraphqlTypes() : {};
 
                 await registerApi({
                     organization: project.config.organization,

@@ -262,14 +262,11 @@ export async function loadAPIWorkspace({
             }
         }
 
-        return {
-            didSucceed: true,
+        const result = {
+            didSucceed: true as const,
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
                     if (spec.type === "openrpc") {
-                        return false;
-                    }
-                    if (spec.type === "graphql") {
                         return false;
                     }
                     if (spec.type === "protobuf") {
@@ -294,6 +291,11 @@ export async function loadAPIWorkspace({
                 cliVersion
             })
         };
+
+        // Process GraphQL specs and populate workspace with operations and types
+        await result.workspace.processGraphQLSpecs(context);
+
+        return result;
     }
 
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {

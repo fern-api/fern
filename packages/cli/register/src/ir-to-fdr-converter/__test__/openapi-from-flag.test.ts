@@ -3214,4 +3214,116 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/response-level-example-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/response-level-example-ir.snap");
     });
+
+    it("should handle GraphQL schema as OSS workspace schema", async () => {
+        // Step 1: Load GraphQL workspace (testing OSS workspace schema loading)
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/graphql")),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "graphql"
+        });
+
+        console.log("=== WORKSPACE LOADING DEBUG ===");
+        console.log("Workspace success:", workspace.didSucceed);
+        if (!workspace.didSucceed) {
+            console.log("Workspace failures:", JSON.stringify(workspace.failures, null, 2));
+        }
+        console.log("=== END DEBUG ===");
+
+        // Debug generators configuration from workspace
+        if (workspace.didSucceed) {
+            const generatorsConfig = (workspace.workspace as any).generatorsConfiguration;
+            console.log("=== CONFIG DEBUG ===");
+            console.log("Has generators config:", !!generatorsConfig);
+            if (generatorsConfig) {
+                console.log("Config type:", typeof generatorsConfig);
+                console.log("Config API type:", generatorsConfig.api?.type);
+                console.log("Config API definitions:", JSON.stringify(generatorsConfig.api?.definitions, null, 2));
+            }
+            console.log("=== END CONFIG DEBUG ===");
+        }
+
+        // Verify workspace loaded successfully
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        console.log("=== WORKSPACE DETAILS DEBUG ===");
+        console.log("Workspace type:", workspace.workspace.constructor.name);
+        console.log("Workspace specs count:", (workspace.workspace as any).specs?.length || 0);
+        if ((workspace.workspace as any).specs?.length > 0) {
+            console.log(
+                "All specs:",
+                (workspace.workspace as any).specs.map((s: any) => ({ type: s.type, path: s.absoluteFilepath }))
+            );
+        }
+        console.log(
+            "Generators config:",
+            JSON.stringify((workspace.workspace as any).generatorsConfiguration?.api, null, 2)
+        );
+        console.log("=== END DEBUG ===");
+
+        // Step 2: Validate GraphQL schema was loaded as OSS workspace schema
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for GraphQL processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const definition = await workspace.workspace.getDefinition({ context });
+        expect(definition).toBeDefined();
+
+        // Step 3: Check for GraphQL operations and types in workspace
+        // GraphQL schemas should be processed and available as operations and types
+        const workspaceData = workspace.workspace as any;
+
+        console.log("=== GRAPHQL OPERATIONS & TYPES DEBUG ===");
+
+        // Check for GraphQL operations
+        const graphqlOperationsCount = workspaceData.getGraphqlOperationsCount?.() || 0;
+        const hasGraphqlOperations = graphqlOperationsCount > 0;
+        console.log("GraphQL operations count:", graphqlOperationsCount);
+        if (hasGraphqlOperations) {
+            const operations = workspaceData.getGraphqlOperations?.() || {};
+            console.log("Operation IDs:", Object.keys(operations));
+            console.log(
+                "Operation types:",
+                Object.values(operations).map((op: any) => op.operationType)
+            );
+        }
+
+        // Check for GraphQL types
+        const graphqlTypesCount = workspaceData.getGraphqlTypesCount?.() || 0;
+        console.log("GraphQL types count:", graphqlTypesCount);
+        if (graphqlTypesCount > 0) {
+            const types = workspaceData.getGraphqlTypes?.() || {};
+            console.log("Type names:", Object.keys(types));
+        }
+
+        // Check other workspace properties that might contain GraphQL data
+        console.log(
+            "Other workspace properties:",
+            Object.keys(workspaceData).filter(
+                (key) => key.toLowerCase().includes("graphql") || key.toLowerCase().includes("schema")
+            )
+        );
+
+        console.log("=== END DEBUG ===");
+
+        // Generate snapshot for GraphQL workspace validation
+        const workspaceSnapshot = {
+            workspaceType: workspace.workspace.constructor.name,
+            hasDefinition: !!definition.rootApiFile?.contents,
+            graphqlOperationsCount: workspaceData.getGraphqlOperationsCount?.() || 0,
+            graphqlTypesCount: workspaceData.getGraphqlTypesCount?.() || 0,
+            hasGeneratorsConfig: !!workspaceData.generatorsConfiguration,
+            apiConfigType: workspaceData.generatorsConfiguration?.api?.type,
+            availableWorkspaceProperties: Object.keys(workspaceData).filter(
+                (key) => key.toLowerCase().includes("graphql") || key.toLowerCase().includes("schema")
+            )
+        };
+
+        await expect(workspaceSnapshot).toMatchFileSnapshot("__snapshots__/graphql-workspace.snap");
+    });
 });
