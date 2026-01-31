@@ -3,7 +3,7 @@
 - version: 3.56.0
   changelogEntry:
     - summary: |
-        Enhance `fern docs diff` to automatically detect changed MDX files via git diff when no files are provided and not in CI/CD. The command now generates an HTML report with links to changed pages and visual difference images, and opens it in the browser automatically.
+        Enhance `fern docs diff` to automatically detect changed MDX files via git diff when no files are provided and not in CI/CD. The command now generates an HTML report with links to changed pages and visual difference images, and opens it in the browser automatically. Additionally, the preview URL is now optional - if not provided, the command will use the most recent preview deployment.
       type: feat
   createdAt: "2026-01-30"
   irVersion: 63

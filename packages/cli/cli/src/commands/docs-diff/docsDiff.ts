@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { createFdrService } from "@fern-api/core";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -472,6 +473,37 @@ async function getChangedMdxFilesFromGit(): Promise<string[]> {
     }
 }
 
+async function getMostRecentPreviewUrl(token: string): Promise<string | null> {
+    const fdr = createFdrService({ token });
+
+    // Fetch all docs URLs and filter for preview URLs
+    const listResponse = await fdr.docs.v2.read.listAllDocsUrls({
+        limit: 100
+    });
+
+    if (!listResponse.ok) {
+        return null;
+    }
+
+    // Preview URLs match the pattern: {org}-preview-{hash}.docs.buildwithfern.com
+    const previewUrlPattern = /-preview-[a-f0-9-]+\.docs\.buildwithfern\.com$/;
+
+    const previewDeployments = listResponse.body.urls
+        .filter((item) => previewUrlPattern.test(item.domain))
+        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
+    if (previewDeployments.length === 0) {
+        return null;
+    }
+
+    // Return the most recent preview URL
+    const mostRecent = previewDeployments[0];
+    if (mostRecent == null) {
+        return null;
+    }
+    return mostRecent.basePath != null ? `${mostRecent.domain}${mostRecent.basePath}` : mostRecent.domain;
+}
+
 function generateDiffHtmlPage({
     diffs,
     outputDir,
@@ -659,7 +691,7 @@ export async function docsDiff({
 }: {
     cliContext: CliContext;
     project: Project;
-    previewUrl: string;
+    previewUrl: string | undefined;
     files: string[] | undefined;
     outputDir: string;
     openInBrowser?: boolean;
@@ -704,15 +736,31 @@ export async function docsDiff({
 
     const productionBaseUrl = getProductionUrl(docsWorkspace.config);
 
-    let normalizedPreviewUrl = previewUrl;
-    if (normalizedPreviewUrl.startsWith("https://")) {
-        normalizedPreviewUrl = normalizedPreviewUrl.slice(8);
-    } else if (normalizedPreviewUrl.startsWith("http://")) {
-        normalizedPreviewUrl = normalizedPreviewUrl.slice(7);
-    }
-    const slashIndex = normalizedPreviewUrl.indexOf("/");
-    if (slashIndex !== -1) {
-        normalizedPreviewUrl = normalizedPreviewUrl.slice(0, slashIndex);
+    // Auto-detect preview URL if not provided
+    let normalizedPreviewUrl: string;
+    if (previewUrl == null || previewUrl.length === 0) {
+        cliContext.logger.info("No preview URL provided, fetching most recent preview deployment...");
+        const detectedPreviewUrl = await getMostRecentPreviewUrl(fernToken);
+        if (detectedPreviewUrl == null) {
+            cliContext.failAndThrow(
+                "No preview URL provided and no preview deployments found. " +
+                    "Please provide a preview URL or deploy a preview first using 'fern generate --docs --preview'."
+            );
+            return { diffs: [] };
+        }
+        normalizedPreviewUrl = detectedPreviewUrl;
+        cliContext.logger.info(`Using preview URL: ${normalizedPreviewUrl}`);
+    } else {
+        normalizedPreviewUrl = previewUrl;
+        if (normalizedPreviewUrl.startsWith("https://")) {
+            normalizedPreviewUrl = normalizedPreviewUrl.slice(8);
+        } else if (normalizedPreviewUrl.startsWith("http://")) {
+            normalizedPreviewUrl = normalizedPreviewUrl.slice(7);
+        }
+        const slashIndex = normalizedPreviewUrl.indexOf("/");
+        if (slashIndex !== -1) {
+            normalizedPreviewUrl = normalizedPreviewUrl.slice(0, slashIndex);
+        }
     }
 
     const slugResponse = await cliContext.runTask(async (context) => {

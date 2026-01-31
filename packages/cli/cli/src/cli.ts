@@ -1528,14 +1528,14 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "diff <preview-url> [files..]",
-        "Generate visual diffs between preview and production docs pages. If no files are provided and not in CI/CD, automatically detects changed MDX files via git diff and opens results in browser.",
+        "diff [preview-url] [files..]",
+        "Generate visual diffs between preview and production docs pages. If no preview URL is provided, uses the most recent preview deployment. If no files are provided and not in CI/CD, automatically detects changed MDX files via git diff and opens results in browser.",
         (yargs) =>
             yargs
                 .positional("preview-url", {
                     type: "string",
-                    description: "The preview deployment URL (e.g. acme-preview-abc123.docs.buildwithfern.com)",
-                    demandOption: true
+                    description:
+                        "The preview deployment URL (e.g. acme-preview-abc123.docs.buildwithfern.com). If not provided, uses the most recent preview deployment."
                 })
                 .positional("files", {
                     type: "string",
