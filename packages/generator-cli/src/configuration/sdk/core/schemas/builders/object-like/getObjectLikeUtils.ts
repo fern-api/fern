@@ -1,9 +1,9 @@
-import { BaseSchema } from "../../Schema";
-import { filterObject } from "../../utils/filterObject";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { isPlainObject } from "../../utils/isPlainObject";
-import { getSchemaUtils } from "../schema-utils";
-import { ObjectLikeSchema, ObjectLikeUtils } from "./types";
+import type { BaseSchema } from "../../Schema.js";
+import { filterObject } from "../../utils/filterObject.js";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
+import { isPlainObject } from "../../utils/isPlainObject.js";
+import { getSchemaUtils } from "../schema-utils/index.js";
+import type { ObjectLikeSchema, ObjectLikeUtils } from "./types.js";
 
 export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed> {
     return {
@@ -17,11 +17,11 @@ export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>)
 
 export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properties>(
     objectLike: BaseSchema<RawObjectShape, ParsedObjectShape>,
-    properties: { [K in keyof Properties]: Properties[K] | ((parsed: ParsedObjectShape) => Properties[K]) }
+    properties: { [K in keyof Properties]: Properties[K] | ((parsed: ParsedObjectShape) => Properties[K]) },
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
     const objectSchema: BaseSchema<RawObjectShape, ParsedObjectShape & Properties> = {
-        parse: async (raw, opts) => {
-            const parsedObject = await objectLike.parse(raw, opts);
+        parse: (raw, opts) => {
+            const parsedObject = objectLike.parse(raw, opts);
             if (!parsedObject.ok) {
                 return parsedObject;
             }
@@ -33,7 +33,7 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                         [key]: typeof value === "function" ? value(parsedObject.value) : value,
                     };
                 },
-                {}
+                {},
             );
 
             return {
@@ -62,7 +62,7 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
             const addedPropertyKeys = new Set(Object.keys(properties));
             const parsedWithoutAddedProperties = filterObject(
                 parsed,
-                Object.keys(parsed).filter((key) => !addedPropertyKeys.has(key))
+                Object.keys(parsed).filter((key) => !addedPropertyKeys.has(key)),
             );
 
             return objectLike.json(parsedWithoutAddedProperties as ParsedObjectShape, opts);

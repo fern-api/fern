@@ -1,2 +1,2 @@
-export { FernConjureError } from "./FernConjureError";
-export { FernConjureTimeoutError } from "./FernConjureTimeoutError";
+export { FernConjureError } from "./FernConjureError.js";
+export { FernConjureTimeoutError } from "./FernConjureTimeoutError.js";

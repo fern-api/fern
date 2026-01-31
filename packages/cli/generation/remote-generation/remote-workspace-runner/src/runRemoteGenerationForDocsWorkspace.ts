@@ -107,7 +107,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 ? Array.isArray(maybeInstance.audiences)
                     ? maybeInstance.audiences
                     : [maybeInstance.audiences]
-                : undefined
+                : undefined,
+            docsUrl: maybeInstance.url
         });
         const publishTime = performance.now() - publishStart;
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);

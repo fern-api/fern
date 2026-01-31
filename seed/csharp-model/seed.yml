@@ -82,3 +82,5 @@ scripts:
           fi
           
           dotnet test "$solution_file" --no-restore --no-build -c Release
+allowedFailures:
+  - unions

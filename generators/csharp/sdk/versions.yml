@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.3
+  changelogEntry:
+    - summary: |
+        Fix `useDefaultRequestParameterValues` to only apply defaults to query parameters and headers, not to inlined request body properties.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 62
+
 - version: 2.20.2
   changelogEntry:
     - summary: |
