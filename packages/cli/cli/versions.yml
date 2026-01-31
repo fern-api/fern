@@ -2,7 +2,7 @@
 - version: 3.56.0
   changelogEntry:
     - summary: |
-        Add scroll-offset detection to `fern docs diff` to handle content shifts. When content is inserted into a page, everything below shifts down. The diff algorithm now detects these shifts and only highlights truly new/changed content, not content that has simply moved to a different position.
+        Improve `fern docs diff` region detection with top-down and bottom-up scanning. The algorithm now finds the first change by scanning from the top, and the last change by scanning from the bottom (aligning footers). This handles content shifts naturally and skips small footer changes like timestamps.
       type: feat
   createdAt: "2026-01-31"
   irVersion: 63

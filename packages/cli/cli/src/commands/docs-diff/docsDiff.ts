@@ -158,278 +158,161 @@ function findChangedRegionBoundingBox(
 }
 
 /**
- * Compute a hash for a row of pixels for fast comparison.
- * Uses a simple sum of RGB values which is fast and works well for detecting identical rows.
+ * Check if a row has any pixel differences between before and after images.
  */
-function computeRowHash(data: Uint8Array, y: number, width: number): number {
-    let hash = 0;
-    const rowStart = y * width * 4;
-    // Sample every 4th pixel for speed while still being representative
-    for (let x = 0; x < width; x += 4) {
-        const idx = rowStart + x * 4;
-        hash += (data[idx] ?? 0) + (data[idx + 1] ?? 0) + (data[idx + 2] ?? 0);
-    }
-    return hash;
-}
-
-/**
- * Check if two rows are similar within a threshold.
- * Returns true if the rows match closely enough.
- */
-function rowsMatch(
-    data1: Uint8Array,
-    y1: number,
-    data2: Uint8Array,
-    y2: number,
-    width: number,
-    threshold: number = 10
-): boolean {
-    const row1Start = y1 * width * 4;
-    const row2Start = y2 * width * 4;
-    let diffCount = 0;
-    const maxDiffs = Math.floor(width * 0.05); // Allow 5% of pixels to differ
-
-    for (let x = 0; x < width; x++) {
-        const idx1 = row1Start + x * 4;
-        const idx2 = row2Start + x * 4;
-        const rDiff = Math.abs((data1[idx1] ?? 0) - (data2[idx2] ?? 0));
-        const gDiff = Math.abs((data1[idx1 + 1] ?? 0) - (data2[idx2 + 1] ?? 0));
-        const bDiff = Math.abs((data1[idx1 + 2] ?? 0) - (data2[idx2 + 2] ?? 0));
-
-        if (rDiff > threshold || gDiff > threshold || bDiff > threshold) {
-            diffCount++;
-            if (diffCount > maxDiffs) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-/**
- * Detect content shifts by finding where rows in the "after" image match rows in the "before" image.
- * Returns a map of afterY -> offset (where offset = afterY - beforeY for matching rows).
- * Positive offset means content shifted down (new content was inserted above).
- */
-function detectContentShifts(
+function rowHasDifference(
     beforeData: Uint8Array,
     afterData: Uint8Array,
-    width: number,
-    beforeHeight: number,
-    afterHeight: number,
-    searchWindow: number = 500
-): Map<number, number> {
-    const shifts = new Map<number, number>();
-
-    // Build a hash map for before rows for fast lookup
-    const beforeHashMap = new Map<number, number[]>();
-    for (let y = 0; y < beforeHeight; y++) {
-        const hash = computeRowHash(beforeData, y, width);
-        const existing = beforeHashMap.get(hash) ?? [];
-        existing.push(y);
-        beforeHashMap.set(hash, existing);
-    }
-
-    // For each row in after, try to find a matching row in before
-    // Sample every 10th row for efficiency
-    for (let afterY = 0; afterY < afterHeight; afterY += 10) {
-        const afterHash = computeRowHash(afterData, afterY, width);
-        const candidates = beforeHashMap.get(afterHash);
-
-        if (candidates != null) {
-            // Check candidates within the search window
-            for (const beforeY of candidates) {
-                const offset = afterY - beforeY;
-                if (Math.abs(offset) <= searchWindow) {
-                    // Verify with pixel-level comparison
-                    if (rowsMatch(beforeData, beforeY, afterData, afterY, width)) {
-                        shifts.set(afterY, offset);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    return shifts;
-}
-
-/**
- * Find the dominant shift offset from a map of detected shifts.
- * Returns the most common offset value, or 0 if no clear dominant shift.
- */
-function findDominantShift(shifts: Map<number, number>): number {
-    if (shifts.size === 0) {
-        return 0;
-    }
-
-    // Count occurrences of each offset
-    const offsetCounts = new Map<number, number>();
-    for (const offset of shifts.values()) {
-        offsetCounts.set(offset, (offsetCounts.get(offset) ?? 0) + 1);
-    }
-
-    // Find the most common non-zero offset
-    let maxCount = 0;
-    let dominantOffset = 0;
-    for (const [offset, count] of offsetCounts) {
-        if (count > maxCount && offset !== 0) {
-            maxCount = count;
-            dominantOffset = offset;
-        }
-    }
-
-    // Only return the dominant offset if it's significantly more common than others
-    const totalShifts = shifts.size;
-    if (maxCount >= totalShifts * 0.3) {
-        // At least 30% of sampled rows have this offset
-        return dominantOffset;
-    }
-
-    return 0;
-}
-
-/**
- * Check if a row in the "after" image is just shifted content (exists in "before" at a different position)
- * or if it's truly new/changed content.
- */
-function isRowShiftedContent(
-    beforeData: Uint8Array,
-    afterData: Uint8Array,
+    beforeY: number,
     afterY: number,
     width: number,
-    beforeHeight: number,
-    dominantShift: number,
-    searchWindow: number = 100
+    thresholdValue: number
 ): boolean {
-    // First check at the expected position based on dominant shift
-    const expectedBeforeY = afterY - dominantShift;
-    if (expectedBeforeY >= 0 && expectedBeforeY < beforeHeight) {
-        if (rowsMatch(beforeData, expectedBeforeY, afterData, afterY, width)) {
+    for (let x = 0; x < width; x++) {
+        const beforeIdx = (beforeY * width + x) * 4;
+        const afterIdx = (afterY * width + x) * 4;
+        const rDiff = Math.abs((beforeData[beforeIdx] ?? 0) - (afterData[afterIdx] ?? 0));
+        const gDiff = Math.abs((beforeData[beforeIdx + 1] ?? 0) - (afterData[afterIdx + 1] ?? 0));
+        const bDiff = Math.abs((beforeData[beforeIdx + 2] ?? 0) - (afterData[afterIdx + 2] ?? 0));
+        if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
             return true;
         }
     }
-
-    // If not found at expected position, search nearby
-    const minY = Math.max(0, afterY - searchWindow);
-    const maxY = Math.min(beforeHeight - 1, afterY + searchWindow);
-    for (let beforeY = minY; beforeY <= maxY; beforeY++) {
-        if (rowsMatch(beforeData, beforeY, afterData, afterY, width)) {
-            return true;
-        }
-    }
-
     return false;
 }
 
+/**
+ * Find the changed region by:
+ * 1. Scanning from top down to find the first row where before[y] != after[y]
+ * 2. Scanning from bottom up, comparing rows relative to each image's ORIGINAL bottom
+ *    (before[beforeOriginalHeight-1-y] vs after[afterOriginalHeight-1-y])
+ *    This aligns footers even when pages have different heights.
+ *
+ * This approach handles content shifts naturally - when content is inserted,
+ * the footer at the bottom of both images should be the same, so scanning
+ * from the bottom finds where the shifted content ends.
+ */
 function findChangedRegions(
     beforeData: Uint8Array,
     afterData: Uint8Array,
     width: number,
     height: number,
+    beforeOriginalHeight: number,
+    afterOriginalHeight: number,
     threshold: number = 0.1,
     minArea: number = 5000,
-    gapRows: number = 50
+    buffer: number = 50
 ): BoundingBox[] {
     const thresholdValue = Math.floor(threshold * 255);
 
-    // Detect content shifts to handle inserted content
-    const beforeHeight = height;
-    const afterHeight = height;
-    const shifts = detectContentShifts(beforeData, afterData, width, beforeHeight, afterHeight);
-    const dominantShift = findDominantShift(shifts);
+    // Find first row with a difference (scanning from top down)
+    // Compare before[y] vs after[y]
+    let firstChangeY = -1;
+    const minOriginalHeight = Math.min(beforeOriginalHeight, afterOriginalHeight);
+    for (let y = 0; y < minOriginalHeight; y++) {
+        if (rowHasDifference(beforeData, afterData, y, y, width, thresholdValue)) {
+            firstChangeY = y;
+            break;
+        }
+    }
 
-    const rowHasDiff: boolean[] = new Array(height).fill(false);
+    // If no differences found in the overlapping region, check if one image is taller
+    if (firstChangeY === -1) {
+        if (beforeOriginalHeight !== afterOriginalHeight) {
+            // The images have different heights, so there's a difference starting at minOriginalHeight
+            firstChangeY = minOriginalHeight;
+        } else {
+            return [];
+        }
+    }
 
-    for (let y = 0; y < height; y++) {
-        // First check if this row differs from the same position in before
-        let hasDiffAtSamePosition = false;
+    // Find last row with a difference (scanning from bottom up)
+    // Compare rows relative to each image's ORIGINAL bottom (aligns footers)
+    // Require multiple consecutive changed rows to skip small footer changes (like timestamps)
+    const minConsecutiveRows = 20; // Skip isolated changes smaller than this
+    let lastChangeY = firstChangeY; // Default to firstChangeY if no bottom change found
+    const maxOriginalHeight = Math.max(beforeOriginalHeight, afterOriginalHeight);
+
+    for (let y = 0; y < maxOriginalHeight; y++) {
+        const beforeY = beforeOriginalHeight - 1 - y;
+        const afterY = afterOriginalHeight - 1 - y;
+
+        // Skip if either index is out of bounds
+        if (beforeY < 0 || afterY < 0) {
+            // One image is shorter, so there's a difference here
+            lastChangeY = Math.max(beforeOriginalHeight, afterOriginalHeight) - 1 - y + 1;
+            break;
+        }
+
+        if (rowHasDifference(beforeData, afterData, beforeY, afterY, width, thresholdValue)) {
+            // Found a difference - check if it's a substantial change (multiple consecutive rows)
+            let consecutiveCount = 1;
+            for (let checkY = y + 1; checkY < Math.min(y + minConsecutiveRows, maxOriginalHeight); checkY++) {
+                const checkBeforeY = beforeOriginalHeight - 1 - checkY;
+                const checkAfterY = afterOriginalHeight - 1 - checkY;
+                if (checkBeforeY < 0 || checkAfterY < 0) {
+                    consecutiveCount++;
+                    continue;
+                }
+                if (rowHasDifference(beforeData, afterData, checkBeforeY, checkAfterY, width, thresholdValue)) {
+                    consecutiveCount++;
+                } else {
+                    break;
+                }
+            }
+
+            if (consecutiveCount >= minConsecutiveRows) {
+                // This is a substantial change, not just a small footer element
+                // Use the smaller Y value so we show the same range for both images
+                lastChangeY = Math.min(beforeY, afterY);
+                break;
+            }
+            // Otherwise, skip this small change and continue scanning upward
+        }
+    }
+
+    // Ensure lastChangeY is at least firstChangeY
+    if (lastChangeY < firstChangeY) {
+        lastChangeY = firstChangeY;
+    }
+
+    // Apply buffer and clamp to image bounds
+    const startY = Math.max(0, firstChangeY - buffer);
+    const endY = Math.min(height - 1, lastChangeY + buffer);
+
+    // Find X bounds within the changed region (compare at same Y positions)
+    let minX = width;
+    let maxX = 0;
+    for (let y = firstChangeY; y <= Math.min(lastChangeY, height - 1); y++) {
         for (let x = 0; x < width; x++) {
             const idx = (y * width + x) * 4;
             const rDiff = Math.abs((beforeData[idx] ?? 0) - (afterData[idx] ?? 0));
             const gDiff = Math.abs((beforeData[idx + 1] ?? 0) - (afterData[idx + 1] ?? 0));
             const bDiff = Math.abs((beforeData[idx + 2] ?? 0) - (afterData[idx + 2] ?? 0));
             if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
-                hasDiffAtSamePosition = true;
-                break;
-            }
-        }
-
-        if (hasDiffAtSamePosition) {
-            // Check if this is just shifted content (exists elsewhere in before)
-            // If there's a dominant shift, check if this row is shifted content
-            if (dominantShift !== 0) {
-                const isShifted = isRowShiftedContent(beforeData, afterData, y, width, beforeHeight, dominantShift);
-                rowHasDiff[y] = !isShifted;
-            } else {
-                rowHasDiff[y] = true;
-            }
-        } else {
-            rowHasDiff[y] = false;
-        }
-    }
-
-    const boxes: BoundingBox[] = [];
-    let y = 0;
-    while (y < height) {
-        while (y < height && !rowHasDiff[y]) {
-            y++;
-        }
-        if (y >= height) {
-            break;
-        }
-        let startY = y;
-        let lastDiffY = y;
-        y++;
-        while (y < height) {
-            if (rowHasDiff[y]) {
-                lastDiffY = y;
-                y++;
-            } else {
-                // allow small gaps within a region up to gapRows
-                let gap = 0;
-                while (y < height && !rowHasDiff[y] && gap < gapRows) {
-                    gap++;
-                    y++;
+                if (x < minX) {
+                    minX = x;
                 }
-                if (y < height && rowHasDiff[y]) {
-                    lastDiffY = y;
-                    y++;
-                } else {
-                    break;
+                if (x > maxX) {
+                    maxX = x;
                 }
-            }
-        }
-        const endY = lastDiffY;
-
-        let minX = width;
-        let maxX = 0;
-        for (let yy = startY; yy <= endY; yy++) {
-            for (let xx = 0; xx < width; xx++) {
-                const idx = (yy * width + xx) * 4;
-                const rDiff = Math.abs((beforeData[idx] ?? 0) - (afterData[idx] ?? 0));
-                const gDiff = Math.abs((beforeData[idx + 1] ?? 0) - (afterData[idx + 1] ?? 0));
-                const bDiff = Math.abs((beforeData[idx + 2] ?? 0) - (afterData[idx + 2] ?? 0));
-                if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
-                    if (xx < minX) {
-                        minX = xx;
-                    }
-                    if (xx > maxX) {
-                        maxX = xx;
-                    }
-                }
-            }
-        }
-        if (minX <= maxX) {
-            const box: BoundingBox = { minX, minY: startY, maxX, maxY: endY };
-            const area = (box.maxX - box.minX) * (box.maxY - box.minY);
-            if (area >= minArea) {
-                boxes.push(box);
             }
         }
     }
 
-    return boxes;
+    if (minX > maxX) {
+        // No X differences found, use full width
+        minX = 0;
+        maxX = width - 1;
+    }
+
+    const box: BoundingBox = { minX, minY: startY, maxX, maxY: endY };
+    const area = (box.maxX - box.minX) * (box.maxY - box.minY);
+    if (area < minArea) {
+        return [];
+    }
+
+    return [box];
 }
 
 function cropPng(png: PNG, box: BoundingBox, padding: number = 50): PNG {
@@ -525,6 +408,10 @@ async function generateComparisons({
     const beforePng = PNG.sync.read(await readFile(beforePath));
     const afterPng = PNG.sync.read(await readFile(afterPath));
 
+    // Store original heights before resizing (needed for bottom-up comparison)
+    const beforeOriginalHeight = beforePng.height;
+    const afterOriginalHeight = afterPng.height;
+
     const width = Math.max(beforePng.width, afterPng.width);
     const height = Math.max(beforePng.height, afterPng.height);
 
@@ -544,7 +431,7 @@ async function generateComparisons({
     );
     const afterData = new Uint8Array(resizedAfter.data.buffer, resizedAfter.data.byteOffset, resizedAfter.data.length);
 
-    const regions = findChangedRegions(beforeData, afterData, width, height);
+    const regions = findChangedRegions(beforeData, afterData, width, height, beforeOriginalHeight, afterOriginalHeight);
 
     const results: DiffRegionResult[] = [];
     if (regions.length === 0) {
