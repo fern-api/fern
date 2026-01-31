@@ -1,18 +1,4 @@
 {
-  "apiConfigType": "singleNamespace",
-  "availableWorkspaceProperties": [
-    "onlyIncludeReferencedSchemas",
-    "respectReadonlySchemas",
-    "respectNullableSchemas",
-    "coerceOptionalSchemasToNullable",
-    "inlineAllOfSchemas",
-    "removeDiscriminantsFromSchemas",
-    "graphqlOperations",
-    "graphqlTypes",
-  ],
-  "graphqlOperationsCount": 7,
-  "graphqlTypesCount": 14,
   "hasDefinition": true,
-  "hasGeneratorsConfig": true,
   "workspaceType": "OSSWorkspace",
 }

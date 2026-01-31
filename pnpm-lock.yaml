@@ -4570,9 +4570,6 @@ importers:
       '@fern-api/generators-validator':
         specifier: workspace:*
         version: link:../yaml/generators-validator
-      '@fern-api/graphql-to-fdr':
-        specifier: workspace:*
-        version: link:../api-importers/graphql
       '@fern-api/init':
         specifier: workspace:*
         version: link:../init
@@ -7328,9 +7325,6 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
-      '@fern-api/graphql-to-fdr':
-        specifier: workspace:*
-        version: link:../../api-importers/graphql
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../lazy-fern-workspace
