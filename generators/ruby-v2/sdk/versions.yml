@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0
+  changelogEntry:
+    - summary: |
+        Release stable version 1.0.0 of the Ruby SDK generator.
+      type: chore
+  createdAt: "2026-01-31"
+  irVersion: 61
+
 - version: 1.0.0-rc85
   changelogEntry:
     - summary: |
