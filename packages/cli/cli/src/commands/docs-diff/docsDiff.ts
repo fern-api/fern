@@ -179,94 +179,168 @@ function findChangedRegionBoundingBox(
     return { minX, minY, maxX, maxY };
 }
 
+/**
+ * Check if a row has any pixel differences between before and after images.
+ */
+function rowHasDifference(
+    beforeData: Uint8Array,
+    afterData: Uint8Array,
+    beforeY: number,
+    afterY: number,
+    width: number,
+    thresholdValue: number
+): boolean {
+    for (let x = 0; x < width; x++) {
+        const beforeIdx = (beforeY * width + x) * 4;
+        const afterIdx = (afterY * width + x) * 4;
+        const rDiff = Math.abs((beforeData[beforeIdx] ?? 0) - (afterData[afterIdx] ?? 0));
+        const gDiff = Math.abs((beforeData[beforeIdx + 1] ?? 0) - (afterData[afterIdx + 1] ?? 0));
+        const bDiff = Math.abs((beforeData[beforeIdx + 2] ?? 0) - (afterData[afterIdx + 2] ?? 0));
+        if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Find the changed region by:
+ * 1. Scanning from top down to find the first row where before[y] != after[y]
+ * 2. Scanning from bottom up, comparing rows relative to each image's ORIGINAL bottom
+ *    (before[beforeOriginalHeight-1-y] vs after[afterOriginalHeight-1-y])
+ *    This aligns footers even when pages have different heights.
+ *
+ * This approach handles content shifts naturally - when content is inserted,
+ * the footer at the bottom of both images should be the same, so scanning
+ * from the bottom finds where the shifted content ends.
+ */
 function findChangedRegions(
     beforeData: Uint8Array,
     afterData: Uint8Array,
     width: number,
     height: number,
+    beforeOriginalHeight: number,
+    afterOriginalHeight: number,
     threshold: number = 0.1,
     minArea: number = 5000,
-    gapRows: number = 200
+    buffer: number = 100
 ): BoundingBox[] {
     const thresholdValue = Math.floor(threshold * 255);
-    const rowHasDiff: boolean[] = new Array(height).fill(false);
 
-    for (let y = 0; y < height; y++) {
-        let has = false;
+    // Find first row with a difference (scanning from top down)
+    // Compare before[y] vs after[y]
+    let firstChangeY = -1;
+    const minOriginalHeight = Math.min(beforeOriginalHeight, afterOriginalHeight);
+    for (let y = 0; y < minOriginalHeight; y++) {
+        if (rowHasDifference(beforeData, afterData, y, y, width, thresholdValue)) {
+            firstChangeY = y;
+            break;
+        }
+    }
+
+    // If no differences found in the overlapping region, check if one image is taller
+    if (firstChangeY === -1) {
+        if (beforeOriginalHeight !== afterOriginalHeight) {
+            // The images have different heights, so there's a difference starting at minOriginalHeight
+            firstChangeY = minOriginalHeight;
+        } else {
+            return [];
+        }
+    }
+
+    // Find last row with a difference (scanning from bottom up)
+    // Compare rows relative to each image's ORIGINAL bottom (aligns footers)
+    // Require multiple consecutive changed rows to skip small footer changes (like timestamps)
+    const minConsecutiveRows = 20; // Skip isolated changes smaller than this
+    let lastChangeY = firstChangeY; // Default to firstChangeY if no bottom change found
+    const maxOriginalHeight = Math.max(beforeOriginalHeight, afterOriginalHeight);
+
+    for (let y = 0; y < maxOriginalHeight; y++) {
+        const beforeY = beforeOriginalHeight - 1 - y;
+        const afterY = afterOriginalHeight - 1 - y;
+
+        // Skip if either index is out of bounds
+        if (beforeY < 0 || afterY < 0) {
+            // One image is shorter, so there's a difference here
+            lastChangeY = Math.max(beforeOriginalHeight, afterOriginalHeight) - 1 - y + 1;
+            break;
+        }
+
+        if (rowHasDifference(beforeData, afterData, beforeY, afterY, width, thresholdValue)) {
+            // Found a difference - check if it's a substantial change (multiple consecutive rows)
+            let consecutiveCount = 1;
+            for (let checkY = y + 1; checkY < Math.min(y + minConsecutiveRows, maxOriginalHeight); checkY++) {
+                const checkBeforeY = beforeOriginalHeight - 1 - checkY;
+                const checkAfterY = afterOriginalHeight - 1 - checkY;
+                if (checkBeforeY < 0 || checkAfterY < 0) {
+                    consecutiveCount++;
+                    continue;
+                }
+                if (rowHasDifference(beforeData, afterData, checkBeforeY, checkAfterY, width, thresholdValue)) {
+                    consecutiveCount++;
+                } else {
+                    break;
+                }
+            }
+
+            if (consecutiveCount >= minConsecutiveRows) {
+                // This is a substantial change, not just a small footer element
+                // Use the smaller Y value so we show the same range for both images
+                lastChangeY = Math.min(beforeY, afterY);
+                break;
+            }
+            // Otherwise, skip this small change and continue scanning upward
+        }
+    }
+
+    // Ensure lastChangeY is at least firstChangeY
+    if (lastChangeY < firstChangeY) {
+        lastChangeY = firstChangeY;
+    }
+
+    // Apply buffer and clamp to image bounds
+    const startY = Math.max(0, firstChangeY - buffer);
+    const endY = Math.min(height - 1, lastChangeY + buffer);
+
+    // Find X bounds within the changed region, with minimum buffer to preserve context
+    const minXBuffer = 100; // Minimum horizontal padding
+    let minX = width;
+    let maxX = 0;
+    for (let y = firstChangeY; y <= Math.min(lastChangeY, height - 1); y++) {
         for (let x = 0; x < width; x++) {
             const idx = (y * width + x) * 4;
             const rDiff = Math.abs((beforeData[idx] ?? 0) - (afterData[idx] ?? 0));
             const gDiff = Math.abs((beforeData[idx + 1] ?? 0) - (afterData[idx + 1] ?? 0));
             const bDiff = Math.abs((beforeData[idx + 2] ?? 0) - (afterData[idx + 2] ?? 0));
             if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
-                has = true;
-                break;
-            }
-        }
-        rowHasDiff[y] = has;
-    }
-
-    const boxes: BoundingBox[] = [];
-    let y = 0;
-    while (y < height) {
-        while (y < height && !rowHasDiff[y]) {
-            y++;
-        }
-        if (y >= height) {
-            break;
-        }
-        let startY = y;
-        let lastDiffY = y;
-        y++;
-        while (y < height) {
-            if (rowHasDiff[y]) {
-                lastDiffY = y;
-                y++;
-            } else {
-                // allow small gaps within a region up to gapRows
-                let gap = 0;
-                while (y < height && !rowHasDiff[y] && gap < gapRows) {
-                    gap++;
-                    y++;
+                if (x < minX) {
+                    minX = x;
                 }
-                if (y < height && rowHasDiff[y]) {
-                    lastDiffY = y;
-                    y++;
-                } else {
-                    break;
+                if (x > maxX) {
+                    maxX = x;
                 }
-            }
-        }
-        const endY = lastDiffY;
-
-        let minX = width;
-        let maxX = 0;
-        for (let yy = startY; yy <= endY; yy++) {
-            for (let xx = 0; xx < width; xx++) {
-                const idx = (yy * width + xx) * 4;
-                const rDiff = Math.abs((beforeData[idx] ?? 0) - (afterData[idx] ?? 0));
-                const gDiff = Math.abs((beforeData[idx + 1] ?? 0) - (afterData[idx + 1] ?? 0));
-                const bDiff = Math.abs((beforeData[idx + 2] ?? 0) - (afterData[idx + 2] ?? 0));
-                if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
-                    if (xx < minX) {
-                        minX = xx;
-                    }
-                    if (xx > maxX) {
-                        maxX = xx;
-                    }
-                }
-            }
-        }
-        if (minX <= maxX) {
-            const box: BoundingBox = { minX, minY: startY, maxX, maxY: endY };
-            const area = (box.maxX - box.minX) * (box.maxY - box.minY);
-            if (area >= minArea) {
-                boxes.push(box);
             }
         }
     }
 
-    return boxes;
+    // Apply minimum buffer and clamp to image bounds
+    if (minX > maxX) {
+        // No X differences found, use full width
+        minX = 0;
+        maxX = width - 1;
+    } else {
+        // Apply buffer and clamp
+        minX = Math.max(0, minX - minXBuffer);
+        maxX = Math.min(width - 1, maxX + minXBuffer);
+    }
+
+    const box: BoundingBox = { minX, minY: startY, maxX, maxY: endY };
+    const area = (box.maxX - box.minX) * (box.maxY - box.minY);
+    if (area < minArea) {
+        return [];
+    }
+
+    return [box];
 }
 
 function cropPng(png: PNG, box: BoundingBox, padding: number = 50): PNG {
@@ -362,6 +436,10 @@ async function generateComparisons({
     const beforePng = PNG.sync.read(await readFile(beforePath));
     const afterPng = PNG.sync.read(await readFile(afterPath));
 
+    // Store original heights before resizing (needed for bottom-up comparison)
+    const beforeOriginalHeight = beforePng.height;
+    const afterOriginalHeight = afterPng.height;
+
     const width = Math.max(beforePng.width, afterPng.width);
     const height = Math.max(beforePng.height, afterPng.height);
 
@@ -381,7 +459,7 @@ async function generateComparisons({
     );
     const afterData = new Uint8Array(resizedAfter.data.buffer, resizedAfter.data.byteOffset, resizedAfter.data.length);
 
-    const regions = findChangedRegions(beforeData, afterData, width, height);
+    const regions = findChangedRegions(beforeData, afterData, width, height, beforeOriginalHeight, afterOriginalHeight);
 
     const results: DiffRegionResult[] = [];
     if (regions.length === 0) {
@@ -662,7 +740,14 @@ function generateDiffHtmlPage({
     return html;
 }
 
-function getProductionUrl(docsConfig: { instances: Array<{ url: string }> | undefined }): string {
+interface ProductionUrlInfo {
+    baseUrl: string;
+    basePath: string | null;
+}
+
+function getProductionUrlInfo(docsConfig: {
+    instances: Array<{ url: string; "custom-domain"?: string }> | undefined;
+}): ProductionUrlInfo {
     if (docsConfig.instances == null || docsConfig.instances.length === 0) {
         throw new Error("No docs instances configured in docs.yml");
     }
@@ -672,13 +757,24 @@ function getProductionUrl(docsConfig: { instances: Array<{ url: string }> | unde
         throw new Error("No docs instances configured in docs.yml");
     }
 
-    const instanceUrl = firstInstance.url;
+    // Prefer custom-domain if available, otherwise use url
+    const instanceUrl = firstInstance["custom-domain"] ?? firstInstance.url;
 
-    if (instanceUrl.startsWith("https://") || instanceUrl.startsWith("http://")) {
-        return instanceUrl;
+    let normalizedUrl = instanceUrl;
+    if (!normalizedUrl.startsWith("https://") && !normalizedUrl.startsWith("http://")) {
+        normalizedUrl = `https://${normalizedUrl}`;
     }
 
-    return `https://${instanceUrl}`;
+    // Parse the URL to extract base path
+    try {
+        const url = new URL(normalizedUrl);
+        const basePath = url.pathname !== "/" ? url.pathname.replace(/\/$/, "") : null;
+        const baseUrl = `${url.protocol}//${url.host}`;
+        return { baseUrl, basePath };
+    } catch {
+        // If URL parsing fails, return as-is with no base path
+        return { baseUrl: normalizedUrl, basePath: null };
+    }
 }
 
 export async function docsDiff({
@@ -734,7 +830,7 @@ export async function docsDiff({
 
     const fernToken = process.env.FERN_TOKEN ?? token.value;
 
-    const productionBaseUrl = getProductionUrl(docsWorkspace.config);
+    const productionUrlInfo = getProductionUrlInfo(docsWorkspace.config);
 
     // Auto-detect preview URL if not provided
     let normalizedPreviewUrl: string;
@@ -810,7 +906,10 @@ export async function docsDiff({
                 const afterPath = join(outputPath, RelativeFilePath.of(`${filename}-after.png`));
                 const comparisonBasePath = join(outputPath, RelativeFilePath.of(`${filename}-comparison.png`));
 
-                const productionUrl = `${productionBaseUrl}/${slug}`;
+                // Construct production URL, handling base path correctly
+                // If the production URL has a base path (e.g., /learn), the slug already includes it
+                // So we use just the base URL (without path) and append the full slug
+                const productionUrl = `${productionUrlInfo.baseUrl}/${slug}`;
                 const previewPageUrl = `https://${normalizedPreviewUrl}/${slug}`;
 
                 context.logger.info(`Capturing screenshots for: ${slug}`);
@@ -888,7 +987,7 @@ export async function docsDiff({
             diffs: results,
             outputDir,
             previewUrl: normalizedPreviewUrl,
-            productionUrl: productionBaseUrl
+            productionUrl: productionUrlInfo.baseUrl
         });
 
         const htmlPath = join(outputPath, RelativeFilePath.of("diff-report.html"));

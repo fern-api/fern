@@ -1,2 +1,2 @@
-export * from "./VariableId";
-export * from "./VariableDeclaration";
+export * from "./VariableDeclaration.js";
+export * from "./VariableId.js";

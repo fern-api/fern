@@ -1,2 +1,2 @@
-export { FernGeneratorCliError } from "./FernGeneratorCliError";
-export { FernGeneratorCliTimeoutError } from "./FernGeneratorCliTimeoutError";
+export { FernGeneratorCliError } from "./FernGeneratorCliError.js";
+export { FernGeneratorCliTimeoutError } from "./FernGeneratorCliTimeoutError.js";

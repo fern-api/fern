@@ -1,1 +1,1 @@
-export * from "./WithDocs";
+export * from "./WithDocs.js";

@@ -1,12 +1,14 @@
-import { Logger } from "@fern-api/logger";
-import { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir";
-import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+import type { Logger } from "@fern-api/logger";
+import type { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir";
+import type { TaskContext } from "@fern-api/task-context";
+import type { OpenAPIV3 } from "openapi-types";
 
-import { ParseOpenAPIOptions } from "../../options";
-import { SchemaParserContext } from "../../schema/SchemaParserContext";
+import { getExtension } from "../../getExtension";
+import type { ParseOpenAPIOptions } from "../../options";
+import type { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
+import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { OpenAPIFilter } from "./OpenAPIFilter";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
@@ -36,6 +38,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly source: Source;
     public readonly filter: OpenAPIFilter;
     public readonly namespace: string | undefined;
+    private readonly schemaNamespaceMapping: Map<SchemaId, string | undefined> | undefined;
     constructor({
         document,
         taskContext,
@@ -62,6 +65,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.DUMMY = this.getDummy();
 
         this.namespace = namespace;
+        this.schemaNamespaceMapping = this.buildSchemaNamespaceMapping();
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
@@ -260,6 +264,10 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         return true;
     }
 
+    public getNamespace(schemaId: SchemaId): string | undefined {
+        return this.schemaNamespaceMapping?.get(schemaId);
+    }
+
     public abstract markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
 
     public abstract markSchemaAsReferencedByRequest(schemaId: SchemaId): void;
@@ -291,4 +299,24 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public abstract excludeSchema(schemaId: SchemaId): void;
 
     public abstract isSchemaExcluded(schemaId: SchemaId): boolean;
+
+    private buildSchemaNamespaceMapping(): Map<SchemaId, string | undefined> | undefined {
+        const mapping = new Map<SchemaId, string | undefined>();
+
+        if (!this.document.components?.schemas) {
+            return mapping;
+        }
+
+        for (const [schemaName, schemaDefinition] of Object.entries(this.document.components.schemas)) {
+            if (!schemaDefinition || isReferenceObject(schemaDefinition)) {
+                continue;
+            }
+            mapping.set(
+                schemaName,
+                getExtension<string>(schemaDefinition, FernOpenAPIExtension.SDK_NAMESPACE) || this.namespace
+            );
+        }
+
+        return mapping;
+    }
 }

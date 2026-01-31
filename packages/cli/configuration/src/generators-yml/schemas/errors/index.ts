@@ -1,2 +1,2 @@
-export { GeneratorsYmlError } from "./GeneratorsYmlError";
-export { GeneratorsYmlTimeoutError } from "./GeneratorsYmlTimeoutError";
+export { GeneratorsYmlError } from "./GeneratorsYmlError.js";
+export { GeneratorsYmlTimeoutError } from "./GeneratorsYmlTimeoutError.js";
