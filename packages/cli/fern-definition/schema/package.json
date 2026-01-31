@@ -40,6 +40,6 @@
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8",
-    "@types/node": "^18.19.70"
+    "@types/node": "18.15.3"
   }
 }
