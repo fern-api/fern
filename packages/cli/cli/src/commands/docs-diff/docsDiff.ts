@@ -359,14 +359,7 @@ function findChangedRegions(
             // Check if this is just shifted content (exists elsewhere in before)
             // If there's a dominant shift, check if this row is shifted content
             if (dominantShift !== 0) {
-                const isShifted = isRowShiftedContent(
-                    beforeData,
-                    afterData,
-                    y,
-                    width,
-                    beforeHeight,
-                    dominantShift
-                );
+                const isShifted = isRowShiftedContent(beforeData, afterData, y, width, beforeHeight, dominantShift);
                 rowHasDiff[y] = !isShifted;
             } else {
                 rowHasDiff[y] = true;
