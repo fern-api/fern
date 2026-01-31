@@ -157,6 +157,171 @@ function findChangedRegionBoundingBox(
     return { minX, minY, maxX, maxY };
 }
 
+/**
+ * Compute a hash for a row of pixels for fast comparison.
+ * Uses a simple sum of RGB values which is fast and works well for detecting identical rows.
+ */
+function computeRowHash(data: Uint8Array, y: number, width: number): number {
+    let hash = 0;
+    const rowStart = y * width * 4;
+    // Sample every 4th pixel for speed while still being representative
+    for (let x = 0; x < width; x += 4) {
+        const idx = rowStart + x * 4;
+        hash += (data[idx] ?? 0) + (data[idx + 1] ?? 0) + (data[idx + 2] ?? 0);
+    }
+    return hash;
+}
+
+/**
+ * Check if two rows are similar within a threshold.
+ * Returns true if the rows match closely enough.
+ */
+function rowsMatch(
+    data1: Uint8Array,
+    y1: number,
+    data2: Uint8Array,
+    y2: number,
+    width: number,
+    threshold: number = 10
+): boolean {
+    const row1Start = y1 * width * 4;
+    const row2Start = y2 * width * 4;
+    let diffCount = 0;
+    const maxDiffs = Math.floor(width * 0.05); // Allow 5% of pixels to differ
+
+    for (let x = 0; x < width; x++) {
+        const idx1 = row1Start + x * 4;
+        const idx2 = row2Start + x * 4;
+        const rDiff = Math.abs((data1[idx1] ?? 0) - (data2[idx2] ?? 0));
+        const gDiff = Math.abs((data1[idx1 + 1] ?? 0) - (data2[idx2 + 1] ?? 0));
+        const bDiff = Math.abs((data1[idx1 + 2] ?? 0) - (data2[idx2 + 2] ?? 0));
+
+        if (rDiff > threshold || gDiff > threshold || bDiff > threshold) {
+            diffCount++;
+            if (diffCount > maxDiffs) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+/**
+ * Detect content shifts by finding where rows in the "after" image match rows in the "before" image.
+ * Returns a map of afterY -> offset (where offset = afterY - beforeY for matching rows).
+ * Positive offset means content shifted down (new content was inserted above).
+ */
+function detectContentShifts(
+    beforeData: Uint8Array,
+    afterData: Uint8Array,
+    width: number,
+    beforeHeight: number,
+    afterHeight: number,
+    searchWindow: number = 500
+): Map<number, number> {
+    const shifts = new Map<number, number>();
+
+    // Build a hash map for before rows for fast lookup
+    const beforeHashMap = new Map<number, number[]>();
+    for (let y = 0; y < beforeHeight; y++) {
+        const hash = computeRowHash(beforeData, y, width);
+        const existing = beforeHashMap.get(hash) ?? [];
+        existing.push(y);
+        beforeHashMap.set(hash, existing);
+    }
+
+    // For each row in after, try to find a matching row in before
+    // Sample every 10th row for efficiency
+    for (let afterY = 0; afterY < afterHeight; afterY += 10) {
+        const afterHash = computeRowHash(afterData, afterY, width);
+        const candidates = beforeHashMap.get(afterHash);
+
+        if (candidates != null) {
+            // Check candidates within the search window
+            for (const beforeY of candidates) {
+                const offset = afterY - beforeY;
+                if (Math.abs(offset) <= searchWindow) {
+                    // Verify with pixel-level comparison
+                    if (rowsMatch(beforeData, beforeY, afterData, afterY, width)) {
+                        shifts.set(afterY, offset);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    return shifts;
+}
+
+/**
+ * Find the dominant shift offset from a map of detected shifts.
+ * Returns the most common offset value, or 0 if no clear dominant shift.
+ */
+function findDominantShift(shifts: Map<number, number>): number {
+    if (shifts.size === 0) {
+        return 0;
+    }
+
+    // Count occurrences of each offset
+    const offsetCounts = new Map<number, number>();
+    for (const offset of shifts.values()) {
+        offsetCounts.set(offset, (offsetCounts.get(offset) ?? 0) + 1);
+    }
+
+    // Find the most common non-zero offset
+    let maxCount = 0;
+    let dominantOffset = 0;
+    for (const [offset, count] of offsetCounts) {
+        if (count > maxCount && offset !== 0) {
+            maxCount = count;
+            dominantOffset = offset;
+        }
+    }
+
+    // Only return the dominant offset if it's significantly more common than others
+    const totalShifts = shifts.size;
+    if (maxCount >= totalShifts * 0.3) {
+        // At least 30% of sampled rows have this offset
+        return dominantOffset;
+    }
+
+    return 0;
+}
+
+/**
+ * Check if a row in the "after" image is just shifted content (exists in "before" at a different position)
+ * or if it's truly new/changed content.
+ */
+function isRowShiftedContent(
+    beforeData: Uint8Array,
+    afterData: Uint8Array,
+    afterY: number,
+    width: number,
+    beforeHeight: number,
+    dominantShift: number,
+    searchWindow: number = 100
+): boolean {
+    // First check at the expected position based on dominant shift
+    const expectedBeforeY = afterY - dominantShift;
+    if (expectedBeforeY >= 0 && expectedBeforeY < beforeHeight) {
+        if (rowsMatch(beforeData, expectedBeforeY, afterData, afterY, width)) {
+            return true;
+        }
+    }
+
+    // If not found at expected position, search nearby
+    const minY = Math.max(0, afterY - searchWindow);
+    const maxY = Math.min(beforeHeight - 1, afterY + searchWindow);
+    for (let beforeY = minY; beforeY <= maxY; beforeY++) {
+        if (rowsMatch(beforeData, beforeY, afterData, afterY, width)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function findChangedRegions(
     beforeData: Uint8Array,
     afterData: Uint8Array,
@@ -167,21 +332,48 @@ function findChangedRegions(
     gapRows: number = 50
 ): BoundingBox[] {
     const thresholdValue = Math.floor(threshold * 255);
+
+    // Detect content shifts to handle inserted content
+    const beforeHeight = height;
+    const afterHeight = height;
+    const shifts = detectContentShifts(beforeData, afterData, width, beforeHeight, afterHeight);
+    const dominantShift = findDominantShift(shifts);
+
     const rowHasDiff: boolean[] = new Array(height).fill(false);
 
     for (let y = 0; y < height; y++) {
-        let has = false;
+        // First check if this row differs from the same position in before
+        let hasDiffAtSamePosition = false;
         for (let x = 0; x < width; x++) {
             const idx = (y * width + x) * 4;
             const rDiff = Math.abs((beforeData[idx] ?? 0) - (afterData[idx] ?? 0));
             const gDiff = Math.abs((beforeData[idx + 1] ?? 0) - (afterData[idx + 1] ?? 0));
             const bDiff = Math.abs((beforeData[idx + 2] ?? 0) - (afterData[idx + 2] ?? 0));
             if (rDiff > thresholdValue || gDiff > thresholdValue || bDiff > thresholdValue) {
-                has = true;
+                hasDiffAtSamePosition = true;
                 break;
             }
         }
-        rowHasDiff[y] = has;
+
+        if (hasDiffAtSamePosition) {
+            // Check if this is just shifted content (exists elsewhere in before)
+            // If there's a dominant shift, check if this row is shifted content
+            if (dominantShift !== 0) {
+                const isShifted = isRowShiftedContent(
+                    beforeData,
+                    afterData,
+                    y,
+                    width,
+                    beforeHeight,
+                    dominantShift
+                );
+                rowHasDiff[y] = !isShifted;
+            } else {
+                rowHasDiff[y] = true;
+            }
+        } else {
+            rowHasDiff[y] = false;
+        }
     }
 
     const boxes: BoundingBox[] = [];
