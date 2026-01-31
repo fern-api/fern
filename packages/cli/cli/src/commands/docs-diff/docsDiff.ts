@@ -164,7 +164,7 @@ function findChangedRegions(
     height: number,
     threshold: number = 0.1,
     minArea: number = 5000,
-    gapRows: number = 200
+    gapRows: number = 50
 ): BoundingBox[] {
     const thresholdValue = Math.floor(threshold * 255);
     const rowHasDiff: boolean[] = new Array(height).fill(false);

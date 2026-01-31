@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.55.7
+  changelogEntry:
+    - summary: |
+        Fix `fern docs diff` capturing too much content in changed-section highlighting. Reduced the gap tolerance from 200 to 50 rows, preventing distant changed regions from being merged into one large region.
+      type: fix
+  createdAt: "2026-01-31"
+  irVersion: 63
+
 - version: 3.55.6
   changelogEntry:
     - summary: |
