@@ -720,7 +720,7 @@ function populateReferencesFromContainer(
 ) {
     ContainerType._visit(containerType, {
         list: (listType) => {
-            populateReferencesFromTypeReference(listType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(listType.itemType, referencedTypes, referencedSubpackages);
         },
         map: (mapType) => {
             populateReferencesFromTypeReference(mapType.keyType, referencedTypes, referencedSubpackages);
@@ -733,7 +733,7 @@ function populateReferencesFromContainer(
             populateReferencesFromTypeReference(nullableType, referencedTypes, referencedSubpackages);
         },
         set: (setType) => {
-            populateReferencesFromTypeReference(setType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(setType.itemType, referencedTypes, referencedSubpackages);
         },
         literal: noop,
         _other: noop
