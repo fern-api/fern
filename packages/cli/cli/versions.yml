@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.55.8
+  changelogEntry:
+    - summary: |
+        Add scroll-offset detection to `fern docs diff` to handle content shifts. When content is inserted into a page, everything below shifts down. The diff algorithm now detects these shifts and only highlights truly new/changed content, not content that has simply moved to a different position.
+      type: feat
+  createdAt: "2026-01-31"
+  irVersion: 63
+
 - version: 3.55.7
   changelogEntry:
     - summary: |
