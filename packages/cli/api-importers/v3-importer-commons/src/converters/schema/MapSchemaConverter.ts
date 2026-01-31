@@ -1,4 +1,4 @@
-import { ContainerType, Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, MapValidationRules, Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
@@ -8,6 +8,8 @@ import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 export declare namespace MapSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
         schemaOrReferenceOrBoolean: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
+        minProperties?: number;
+        maxProperties?: number;
     }
 
     export interface Output {
@@ -19,10 +21,20 @@ export declare namespace MapSchemaConverter {
 
 export class MapSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, MapSchemaConverter.Output> {
     private readonly schemaOrReferenceOrBoolean: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
+    private readonly minProperties?: number;
+    private readonly maxProperties?: number;
 
-    constructor({ context, breadcrumbs, schemaOrReferenceOrBoolean }: MapSchemaConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        schemaOrReferenceOrBoolean,
+        minProperties,
+        maxProperties
+    }: MapSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schemaOrReferenceOrBoolean = schemaOrReferenceOrBoolean;
+        this.minProperties = minProperties;
+        this.maxProperties = maxProperties;
     }
     public convert(): MapSchemaConverter.Output | undefined {
         const maybeUnknownMap = this.tryConvertUnknownMap();
@@ -38,12 +50,23 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
         return undefined;
     }
 
+    private getValidation(): MapValidationRules | undefined {
+        if (this.minProperties == null && this.maxProperties == null) {
+            return undefined;
+        }
+        return {
+            minProperties: this.minProperties,
+            maxProperties: this.maxProperties
+        };
+    }
+
     private tryConvertUnknownMap(): MapSchemaConverter.Output | undefined {
         if (typeof this.schemaOrReferenceOrBoolean === "boolean") {
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({
                     keyType: AbstractConverter.STRING,
-                    valueType: TypeReference.unknown()
+                    valueType: TypeReference.unknown(),
+                    validation: this.getValidation()
                 })
             );
             return {
@@ -74,7 +97,8 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({
                     keyType: AbstractConverter.STRING,
-                    valueType: convertedAdditionalProperties.type
+                    valueType: convertedAdditionalProperties.type,
+                    validation: this.getValidation()
                 })
             );
             const referencedTypes = new Set<string>();

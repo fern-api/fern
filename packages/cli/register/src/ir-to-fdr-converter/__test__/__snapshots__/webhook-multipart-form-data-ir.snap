@@ -638,7 +638,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "list": {
+                    "itemType": {
                       "_visit": [Function],
                       "primitive": {
                         "v1": "STRING",
@@ -657,6 +657,7 @@
                       "type": "primitive",
                     },
                     "type": "list",
+                    "validation": undefined,
                   },
                   "type": "container",
                 },
@@ -1324,7 +1325,7 @@
                     "_visit": [Function],
                     "container": {
                       "_visit": [Function],
-                      "list": {
+                      "itemType": {
                         "_visit": [Function],
                         "primitive": {
                           "v1": "STRING",
@@ -1343,6 +1344,7 @@
                         "type": "primitive",
                       },
                       "type": "list",
+                      "validation": undefined,
                     },
                     "type": "container",
                   },

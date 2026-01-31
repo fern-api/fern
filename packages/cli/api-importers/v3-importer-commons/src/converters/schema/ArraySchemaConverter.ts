@@ -1,4 +1,4 @@
-import { ContainerType, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, ListValidationRules, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
@@ -21,7 +21,9 @@ export class ArraySchemaConverter extends AbstractConverter<
     AbstractConverterContext<object>,
     ArraySchemaConverter.Output
 > {
-    private static LIST_UNKNOWN = TypeReference.container(ContainerType.list(TypeReference.unknown()));
+    private static LIST_UNKNOWN = TypeReference.container(
+        ContainerType.list({ itemType: TypeReference.unknown(), validation: undefined })
+    );
 
     private readonly schema: OpenAPIV3_1.ArraySchemaObject;
 
@@ -56,8 +58,15 @@ export class ArraySchemaConverter extends AbstractConverter<
                         });
                     });
                 }
+
+                const validation = this.getValidation();
                 return {
-                    typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
+                    typeReference: TypeReference.container(
+                        ContainerType.list({
+                            itemType: convertedSchema.type,
+                            validation
+                        })
+                    ),
                     referencedTypes,
                     inlinedTypes: convertedSchema.inlinedTypes
                 };
@@ -65,5 +74,19 @@ export class ArraySchemaConverter extends AbstractConverter<
         }
 
         return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, referencedTypes: new Set(), inlinedTypes: {} };
+    }
+
+    private getValidation(): ListValidationRules | undefined {
+        const minItems = this.schema.minItems;
+        const maxItems = this.schema.maxItems;
+
+        if (minItems == null && maxItems == null) {
+            return undefined;
+        }
+
+        return {
+            minItems,
+            maxItems
+        };
     }
 }
