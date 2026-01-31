@@ -201,7 +201,7 @@ function findChangedRegions(
     afterOriginalHeight: number,
     threshold: number = 0.1,
     minArea: number = 5000,
-    buffer: number = 50
+    buffer: number = 100
 ): BoundingBox[] {
     const thresholdValue = Math.floor(threshold * 255);
 
@@ -280,7 +280,8 @@ function findChangedRegions(
     const startY = Math.max(0, firstChangeY - buffer);
     const endY = Math.min(height - 1, lastChangeY + buffer);
 
-    // Find X bounds within the changed region (compare at same Y positions)
+    // Find X bounds within the changed region, with minimum buffer to preserve context
+    const minXBuffer = 100; // Minimum horizontal padding
     let minX = width;
     let maxX = 0;
     for (let y = firstChangeY; y <= Math.min(lastChangeY, height - 1); y++) {
@@ -300,10 +301,15 @@ function findChangedRegions(
         }
     }
 
+    // Apply minimum buffer and clamp to image bounds
     if (minX > maxX) {
         // No X differences found, use full width
         minX = 0;
         maxX = width - 1;
+    } else {
+        // Apply buffer and clamp
+        minX = Math.max(0, minX - minXBuffer);
+        maxX = Math.min(width - 1, maxX + minXBuffer);
     }
 
     const box: BoundingBox = { minX, minY: startY, maxX, maxY: endY };
