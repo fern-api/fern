@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.46.4
+  changelogEntry:
+    - summary: |
+        Fix test file path generation to use forward slashes for cross-platform compatibility.
+        Previously, `path.join` was used which produces backslashes on Windows, causing test
+        configuration issues. Now paths are joined with forward slashes to work consistently
+        across Mac, Linux, and Windows.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
 - version: 3.46.3
   changelogEntry:
     - summary: |
