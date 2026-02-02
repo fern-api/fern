@@ -2,6 +2,12 @@
 - version: 3.46.4
   changelogEntry:
     - summary: |
+        Fix file upload tests to be OS-agnostic by using dynamic file size calculation instead
+        of hardcoded values. Previously, tests expected a specific file size (21 bytes) which
+        differs between operating systems due to line ending differences (CRLF on Windows vs
+        LF on Unix). Now uses `fs.statSync()` to dynamically read the test file size at runtime.
+      type: fix
+    - summary: |
         Fix test file path generation to use forward slashes for cross-platform compatibility.
         Previously, `path.join` was used which produces backslashes on Windows, causing test
         configuration issues. Now paths are joined with forward slashes to work consistently
