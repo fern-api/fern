@@ -378,6 +378,24 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
+  regional-routing:
+    - customConfig:
+        base_url_template:
+          template: "https://api.{region}.{edge}.example.com"
+          default_region: "us1"
+          default_edge: "default"
+      outputFolder: with-defaults
+    - customConfig:
+        base_url_template:
+          template: "https://api.{region}.{edge}.example.com"
+          region_env_var: "EXAMPLE_REGION"
+          edge_env_var: "EXAMPLE_EDGE"
+      outputFolder: with-env-vars
+    - customConfig:
+        base_url_template:
+          template: "https://api.{region}.example.com"
+          default_region: "us1"
+      outputFolder: region-only
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2

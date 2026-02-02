@@ -1,0 +1,12 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "base_url_template": {
+      "template": "https://api.{region}.example.com",
+      "default_region": "us1"
+    }
+  },
+  "sdkVersion": "0.0.1"
+}

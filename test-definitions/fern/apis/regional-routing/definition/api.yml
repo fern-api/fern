@@ -1,0 +1,4 @@
+name: regional-routing
+auth: bearer
+error-discrimination:
+  strategy: status-code

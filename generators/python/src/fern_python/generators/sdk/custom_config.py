@@ -55,6 +55,28 @@ class WireTestsConfig(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class BaseUrlTemplateConfig(pydantic.BaseModel):
+    """Configuration for base URL template with regional routing support."""
+
+    template: str
+    """
+    URL template with placeholders for region and edge parameters.
+    Example: "https://api.{region}.{edge}.yourservice.com"
+    Supported placeholders: {region}, {edge}
+    """
+    default_region: Optional[str] = None
+    """Default value for the region parameter if not provided by the user."""
+    default_edge: Optional[str] = None
+    """Default value for the edge parameter if not provided by the user."""
+    region_env_var: Optional[str] = None
+    """Environment variable to read the region from if not provided."""
+    edge_env_var: Optional[str] = None
+    """Environment variable to read the edge from if not provided."""
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -78,6 +100,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     follow_redirects_by_default: Optional[bool] = True
 
     environment_class_name: Optional[str] = None
+
+    # Regional routing configuration
+    # Allows specifying a URL template with {region} and {edge} placeholders
+    # that will be substituted at runtime based on constructor parameters
+    base_url_template: Optional[BaseUrlTemplateConfig] = None
 
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.

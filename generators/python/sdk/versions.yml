@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.0
+  changelogEntry:
+    - summary: |
+        Add `base_url_template` config option for regional routing support. This allows specifying
+        a URL template with `{region}` and `{edge}` placeholders that are substituted at runtime
+        based on constructor parameters. Supports default values and environment variable fallbacks
+        for region and edge parameters.
+      type: feat
+  createdAt: "2026-02-02"
+  irVersion: 62
+
 - version: 4.54.2
   changelogEntry:
     - summary: |

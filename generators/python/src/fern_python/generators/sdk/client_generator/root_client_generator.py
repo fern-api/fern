@@ -2,7 +2,7 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional, Sequence
 
-import fern_python.generators.sdk.names as names
+import fern.ir.resources as ir_types
 from ..environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -15,6 +15,9 @@ from .inferred_auth_token_provider_generator import (
     CredentialProperty,
     InferredAuthTokenProviderGenerator,
 )
+from typing_extensions import Unpack
+
+import fern_python.generators.sdk.names as names
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -23,9 +26,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
-from typing_extensions import Unpack
-
-import fern.ir.resources as ir_types
+from fern_python.generators.sdk.custom_config import BaseUrlTemplateConfig
 
 
 @dataclass
@@ -53,6 +54,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     BASE_URL_CONSTRUCTOR_PARAMETER_NAME = "base_url"
     BASE_URL_CONSTRUCTOR_PARAMETER_DOCS = "The base url to use for requests from the client."
     BASE_URL_MEMBER_NAME = "_base_url"
+
+    REGION_CONSTRUCTOR_PARAMETER_NAME = "region"
+    REGION_CONSTRUCTOR_PARAMETER_DOCS = "The region to use for requests from the client."
+
+    EDGE_CONSTRUCTOR_PARAMETER_NAME = "edge"
+    EDGE_CONSTRUCTOR_PARAMETER_DOCS = "The edge to use for requests from the client."
+
+    GET_BASE_URL_FROM_TEMPLATE_FUNCTION_NAME = "_get_base_url_from_template"
 
     CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS = "The client identifier used for authentication."
     CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS = "The client secret used for authentication."
@@ -188,6 +197,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             environments_union = self._environments_config.environments.get_as_union()
             if environments_union.type == "singleBaseUrl":
                 source_file.add_declaration(self._get_base_url_function_declaration(), should_export=False)
+
+        # Add the base URL template function if configured
+        base_url_template_config = self._context.custom_config.base_url_template
+        if base_url_template_config is not None:
+            source_file.add_declaration(
+                self._get_base_url_from_template_function_declaration(base_url_template_config),
+                should_export=False,
+            )
 
     def _write_root_class_docstring(self, writer: AST.NodeWriter, *, is_async: bool) -> None:
         writer.write_line(self.ROOT_CLASS_DOCSTRING)
@@ -408,8 +425,87 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         parameters: List[RootClientConstructorParameter] = []
 
         environments_config = self._context.ir.environments
+        base_url_template_config = self._context.custom_config.base_url_template
+
+        # If base_url_template is configured, add region and edge parameters
+        if base_url_template_config is not None:
+            template = base_url_template_config.template
+            has_region = "{region}" in template
+            has_edge = "{edge}" in template
+
+            # Add base_url as optional override
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    private_member_name=None,
+                    initializer=AST.Expression("None"),
+                    exclude_from_wrapper_construction=True,
+                    docs="The base url to use for requests from the client. Overrides the URL constructed from region/edge.",
+                )
+            )
+
+            # Add region parameter if template contains {region}
+            if has_region:
+                region_initializer: typing.Optional[AST.Expression] = None
+                region_type_hint = AST.TypeHint.str_()
+
+                if base_url_template_config.region_env_var is not None:
+                    region_initializer = AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=AST.Reference(
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                qualified_name_excluding_import=("getenv",),
+                            ),
+                            args=[AST.Expression(f'"{base_url_template_config.region_env_var}"')],
+                        )
+                    )
+                    region_type_hint = AST.TypeHint.optional(AST.TypeHint.str_())
+                elif base_url_template_config.default_region is not None:
+                    region_initializer = AST.Expression(f'"{base_url_template_config.default_region}"')
+
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=region_type_hint,
+                        private_member_name=None,
+                        initializer=region_initializer,
+                        exclude_from_wrapper_construction=True,
+                        docs=RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_DOCS,
+                    )
+                )
+
+            # Add edge parameter if template contains {edge}
+            if has_edge:
+                edge_initializer: typing.Optional[AST.Expression] = None
+                edge_type_hint = AST.TypeHint.str_()
+
+                if base_url_template_config.edge_env_var is not None:
+                    edge_initializer = AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=AST.Reference(
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                qualified_name_excluding_import=("getenv",),
+                            ),
+                            args=[AST.Expression(f'"{base_url_template_config.edge_env_var}"')],
+                        )
+                    )
+                    edge_type_hint = AST.TypeHint.optional(AST.TypeHint.str_())
+                elif base_url_template_config.default_edge is not None:
+                    edge_initializer = AST.Expression(f'"{base_url_template_config.default_edge}"')
+
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=edge_type_hint,
+                        private_member_name=None,
+                        initializer=edge_initializer,
+                        exclude_from_wrapper_construction=True,
+                        docs=RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_DOCS,
+                    )
+                )
         # If no environments, client should only provide base_url argument
-        if environments_config is None:
+        elif environments_config is None:
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
@@ -1211,8 +1307,31 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         client_wrapper_constructor_kwargs = []
 
         environments_config = self._context.ir.environments
+        base_url_template_config = self._context.custom_config.base_url_template
+
+        # If base_url_template is configured, use the template function to construct the URL
+        if base_url_template_config is not None:
+            template = base_url_template_config.template
+            has_region = "{region}" in template
+            has_edge = "{edge}" in template
+
+            # Build the function call arguments
+            func_args = [f"{RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}"]
+            if has_region:
+                func_args.append(f"{RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME}")
+            if has_edge:
+                func_args.append(f"{RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME}")
+
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
+                    AST.Expression(
+                        f"{RootClientGenerator.GET_BASE_URL_FROM_TEMPLATE_FUNCTION_NAME}({', '.join(func_args)})"
+                    ),
+                )
+            )
         # If no environments, client should only provide base_url argument
-        if environments_config is None:
+        elif environments_config is None:
             client_wrapper_constructor_kwargs.append(
                 (
                     ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
@@ -1383,6 +1502,85 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 'raise Exception("Please pass in either base_url or environment to construct the client")'
             )
         writer.write_newline_if_last_line_not()
+
+    def _get_base_url_from_template_function_declaration(
+        self, base_url_template_config: BaseUrlTemplateConfig
+    ) -> AST.FunctionDeclaration:
+        """
+        Generate a function that constructs the base URL from a template with region/edge placeholders.
+        """
+        template = base_url_template_config.template
+        has_region = "{region}" in template
+        has_edge = "{edge}" in template
+
+        named_parameters: List[AST.NamedFunctionParameter] = [
+            AST.NamedFunctionParameter(
+                name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                docs="The base url to use for requests from the client. Overrides the URL constructed from region/edge.",
+            ),
+        ]
+
+        if has_region:
+            named_parameters.append(
+                AST.NamedFunctionParameter(
+                    name=RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    docs=RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_DOCS,
+                )
+            )
+
+        if has_edge:
+            named_parameters.append(
+                AST.NamedFunctionParameter(
+                    name=RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    docs=RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_DOCS,
+                )
+            )
+
+        def write_body(writer: AST.NodeWriter) -> None:
+            # If base_url is provided, use it directly
+            writer.write_line(f"if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None:")
+            with writer.indent():
+                writer.write_line(f"return {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}")
+
+            # Build the URL from the template
+            writer.write_line(f'template = "{template}"')
+
+            # Validate and substitute region if present in template
+            if has_region:
+                writer.write_line(f"if {RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME} is None:")
+                with writer.indent():
+                    writer.write_line(
+                        'raise Exception("region is required when base_url is not provided")'
+                    )
+                writer.write_line(
+                    f"template = template.replace('{{region}}', {RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME})"
+                )
+
+            # Validate and substitute edge if present in template
+            if has_edge:
+                writer.write_line(f"if {RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME} is None:")
+                with writer.indent():
+                    writer.write_line(
+                        'raise Exception("edge is required when base_url is not provided")'
+                    )
+                writer.write_line(
+                    f"template = template.replace('{{edge}}', {RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME})"
+                )
+
+            writer.write_line("return template")
+            writer.write_newline_if_last_line_not()
+
+        return AST.FunctionDeclaration(
+            name=RootClientGenerator.GET_BASE_URL_FROM_TEMPLATE_FUNCTION_NAME,
+            signature=AST.FunctionSignature(
+                named_parameters=named_parameters,
+                return_type=AST.TypeHint.str_(),
+            ),
+            body=AST.CodeWriter(write_body),
+        )
 
     def _get_timeout_constructor_parameter_name(self, params: typing.List[str]) -> str:
         for param in params:
