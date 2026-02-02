@@ -33,6 +33,7 @@ import {
 } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { camelCase, upperFirst } from "lodash-es";
+import path from "path";
 import { Directory, ts } from "ts-morph";
 import { arrayOf, Code, code, literalOf } from "ts-poet";
 
@@ -232,8 +233,7 @@ export class TestGenerator {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
-        // Use forward slashes for cross-platform compatibility in generated code
-        const filePath = ["wire", ...folders, filename].join("/");
+        const filePath = path.join("wire", ...folders, filename);
 
         return {
             directories: [],
