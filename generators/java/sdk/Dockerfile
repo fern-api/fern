@@ -59,7 +59,6 @@ RUN set -eux; \
         git-lfs \
         wget && \
     apt-get autoremove -y --purge && \
-    apt-get install -y git && \
     rm -rf /var/lib/apt/lists/*
 
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /

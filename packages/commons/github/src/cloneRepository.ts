@@ -13,6 +13,19 @@ function sanitizeCloneUrl(url: string): string {
 }
 
 /**
+ * Checks if git is available on the system.
+ * Returns true if git is found and executable, false otherwise.
+ */
+function isGitAvailable(): boolean {
+    try {
+        execSync("git --version", { encoding: "utf-8", stdio: "pipe" });
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/**
  * Gets diagnostic information about the git binary and environment.
  */
 function getGitDiagnostics(): string {
@@ -69,6 +82,18 @@ export async function cloneRepository({
     const clonePath = targetDirectory ?? (await tmp.dir()).path;
     const sanitizedUrl = sanitizeCloneUrl(cloneUrl);
 
+    // Pre-flight check: verify git is available before attempting to clone
+    if (!isGitAvailable()) {
+        const diagnostics = getGitDiagnostics();
+        throw new Error(
+            `Git is not installed or not found in PATH. ` +
+                `Self-hosted GitHub mode requires git to be installed on the host machine where the Fern CLI runs. ` +
+                `Please install git and ensure it is available in your PATH. ` +
+                `Repository: ${githubRepository}. ` +
+                `Debug info: ${diagnostics}`
+        );
+    }
+
     const git = simpleGit(clonePath, {
         timeout:
             timeoutMs != null
@@ -90,7 +115,7 @@ export async function cloneRepository({
             const diagnostics = getGitDiagnostics();
             throw new Error(
                 `Failed to clone repository: git command not found. ` +
-                    `This typically means git is not installed in the container. ` +
+                    `Self-hosted GitHub mode requires git to be installed on the host machine where the Fern CLI runs. ` +
                     `URL: ${sanitizedUrl}. ` +
                     `Elapsed: ${elapsed}ms. ` +
                     `Debug info: ${diagnostics}. ` +

@@ -3,9 +3,9 @@
 - version: 3.34.7
   changelogEntry:
     - summary: |
-        Install git in the Docker container to fix SDK generation failures in isolated environments
-        (e.g., Jenkins/Kubernetes with podman) where git is not available from the host. Also adds
-        improved error logging when git clone fails to help diagnose similar issues.
+        Add pre-flight check for git availability when using self-hosted GitHub mode. The CLI now
+        verifies git is installed before attempting to clone, providing a clear error message if
+        git is not found. Also adds improved error logging with diagnostics when git clone fails.
       type: fix
   createdAt: "2026-02-02"
   irVersion: 63
