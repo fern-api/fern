@@ -1,11 +1,4 @@
-import {
-    HttpHeader,
-    PathParameter,
-    QueryParameter,
-    TypeReference,
-    WebSocketMessage,
-    WebSocketMessageBody
-} from "@fern-api/ir-sdk";
+import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { camelCase, startCase } from "lodash-es";
@@ -141,7 +134,6 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
         origin: "server" | "client";
     }): WebSocketMessage | undefined {
-        let convertedSchema: Converters.SchemaConverters.SchemaConverter.ConvertedSchema | undefined = undefined;
         const action = origin === "server" ? "subscribe" : "publish";
         const breadcrumbs = [...this.breadcrumbs, action];
 
@@ -155,6 +147,10 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
 
         const schemaId = startCase(camelCase(`${this.channelPath}_${action}`)).replace(/ /g, "");
 
+        let schemaOrReferenceConverterOutput:
+            | Converters.SchemaConverters.SchemaOrReferenceConverter.Output
+            | undefined = undefined;
+
         if ("oneOf" in operation.message) {
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 context: this.context,
@@ -162,51 +158,30 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 schemaOrReference: operation.message,
                 schemaIdOverride: schemaId
             });
-            const schemaOrReferenceConverterOutput = schemaOrReferenceConverter.convert();
-            if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
-                convertedSchema = schemaOrReferenceConverterOutput.schema;
-                this.inlinedTypes = {
-                    ...this.inlinedTypes,
-                    ...schemaOrReferenceConverterOutput.inlinedTypes
-                };
-            }
+            schemaOrReferenceConverterOutput = schemaOrReferenceConverter.convert();
         } else if (context.isMessageWithPayload(operation.message)) {
-            const payloadSchema = context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+            // Pass the payload directly to the converter (which may be a reference or a schema)
+            // so it can properly handle references to existing types
+            const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+                context: this.context,
+                breadcrumbs,
                 schemaOrReference: operation.message.payload,
-                breadcrumbs
+                schemaIdOverride: schemaId
             });
-            if (payloadSchema != null) {
-                const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                    context: this.context,
-                    breadcrumbs,
-                    schemaOrReference: payloadSchema,
-                    schemaIdOverride: schemaId
-                });
-                const schemaOrReferenceConverterOutput = schemaOrReferenceConverter.convert();
-                if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
-                    convertedSchema = schemaOrReferenceConverterOutput.schema;
-                    this.inlinedTypes = {
-                        ...this.inlinedTypes,
-                        ...schemaOrReferenceConverterOutput.inlinedTypes
-                    };
-                }
-            }
+            schemaOrReferenceConverterOutput = schemaOrReferenceConverter.convert();
         }
 
-        if (convertedSchema != null) {
-            const convertedTypeDeclaration = convertedSchema;
+        if (schemaOrReferenceConverterOutput != null) {
+            // Add any inlined types from the conversion
+            this.inlinedTypes = {
+                ...this.inlinedTypes,
+                ...schemaOrReferenceConverterOutput.inlinedTypes
+            };
 
-            const typeReference = TypeReference.named({
-                fernFilepath: context.createFernFilepath(),
-                name: convertedTypeDeclaration.typeDeclaration.name.name,
-                typeId: convertedTypeDeclaration.typeDeclaration.name.typeId,
-                displayName: undefined,
-                default: undefined,
-                inline: false
-            });
-
+            // Use the type reference from the converter output directly
+            // This handles both references (where schema is undefined) and inline schemas
             const body = WebSocketMessageBody.reference({
-                bodyType: typeReference,
+                bodyType: schemaOrReferenceConverterOutput.type,
                 docs: operation.description
             });
 
