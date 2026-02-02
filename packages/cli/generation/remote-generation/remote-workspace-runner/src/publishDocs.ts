@@ -665,11 +665,13 @@ function getAuthenticationErrorMessage(error: unknown, organization: string): st
         const statusCode = content.statusCode as number | undefined;
 
         if (statusCode === 401 || statusCode === 403) {
+            const errorBody = content.body as string | undefined;
             const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
             const contactMessage =
                 "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
+            const detailMessage = errorBody != null ? `\n\nDetails: ${errorBody}` : "";
 
-            return `${baseMessage}\n\n${contactMessage}`;
+            return `${baseMessage}\n\n${contactMessage}${detailMessage}`;
         }
     }
 
