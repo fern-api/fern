@@ -129,6 +129,46 @@ custom-dependencies:
 
 The provided string will be used as the client class name.
 
+## Enterprise Network Configuration
+
+When running the Java generator in enterprise environments with SSL inspection or custom certificate authorities, you may need to configure the container to trust your organization's CA certificates.
+
+### Custom CA Certificates
+
+If your enterprise network uses SSL inspection (where a corporate proxy intercepts HTTPS traffic and re-signs it with an internal CA), the generator container needs to trust that CA. You can mount your custom CA certificate into the container by passing additional Docker/Podman arguments.
+
+For local generation with custom CA certificates, you can:
+
+1. **Mount your CA certificate bundle**: Place your enterprise CA certificate(s) in a directory and mount it into the container's certificate store.
+
+2. **Use environment variables**: Set `SSL_CERT_FILE` or `SSL_CERT_DIR` to point to your custom certificates.
+
+Example workflow for enterprise environments:
+
+```bash
+# Export your enterprise CA certificate to a file
+# (This step depends on your organization's certificate distribution method)
+
+# Option 1: Add CA to system trust store before running fern
+# On the host machine, add your CA to the system trust store, then run:
+fern generate --local
+
+# Option 2: For Kubernetes/Jenkins environments
+# Ensure your pod has the enterprise CA certificates mounted at the standard
+# certificate locations (/etc/ssl/certs/ or /usr/local/share/ca-certificates/)
+# before running the fern-java-sdk container
+```
+
+### Proxy Configuration
+
+If your enterprise network requires a proxy for outbound connections, ensure the following environment variables are set in your CI/CD environment:
+
+- `HTTP_PROXY` / `http_proxy`
+- `HTTPS_PROXY` / `https_proxy`
+- `NO_PROXY` / `no_proxy` (for internal hosts that should bypass the proxy)
+
+For Podman specifically, ensure your podman machine or pod has proper network connectivity and proxy configuration. The error `proxyconnect tcp: dial tcp <ip>:<port>: connect: connection refused` typically indicates a proxy configuration issue in the container runtime, not the Fern generator itself.
+
 ## Versions
 
 Find the latest version number and changelog for this generator in [this SDK Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#sdk-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.
