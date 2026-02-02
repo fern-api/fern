@@ -305,6 +305,8 @@ fixtures:
       outputFolder: default
   java-with-property-conflict:
     - outputFolder: default
+  java-path-param-key-conflict:
+    - outputFolder: default
   java-output-directory:
     # Test with no output-directory config (should use default PROJECT_ROOT)
     - customConfig:

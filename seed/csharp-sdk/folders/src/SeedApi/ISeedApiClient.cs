@@ -5,7 +5,7 @@ namespace SeedApi;
 
 public partial interface ISeedApiClient
 {
-    public AClient A { get; }
-    public FolderClient Folder { get; }
+    public IAClient A { get; }
+    public IFolderClient Folder { get; }
     Task FooAsync(RequestOptions? options = null, CancellationToken cancellationToken = default);
 }

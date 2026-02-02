@@ -10,7 +10,7 @@ import { type ClassReference } from "./ClassReference";
 import { Field, FieldArgsWithName, FieldArgsWithOrigin } from "./Field";
 import { type Type } from "./IType";
 import { Method } from "./Method";
-import { Optional } from "./Type";
+import { Nullable, Optional } from "./Type";
 
 export declare namespace DefinedType {
     interface Args extends Node.Args {
@@ -132,6 +132,10 @@ export abstract class DefinedType extends Node implements Type {
 
     public asOptional(): Type {
         return new Optional(this, this.generation);
+    }
+
+    public asNullable(): Type {
+        return new Nullable(this, this.generation);
     }
 
     public asNonOptional(): Type {

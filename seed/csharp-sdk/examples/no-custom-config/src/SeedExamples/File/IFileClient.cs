@@ -4,6 +4,6 @@ namespace SeedExamples.File_;
 
 public partial interface IFileClient
 {
-    public NotificationClient Notification { get; }
-    public ServiceClient Service { get; }
+    public INotificationClient Notification { get; }
+    public IServiceClient Service { get; }
 }

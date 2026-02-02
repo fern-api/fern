@@ -46,7 +46,7 @@ func do() {
                     "key": "value",
                 },
             },
-            Revenue: 1000000,
+            Revenue: int64(1000000),
         },
         Entity: &pleaseinhere.Entity{
             Type: &pleaseinhere.Type{

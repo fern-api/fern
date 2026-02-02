@@ -1,17 +1,19 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-
 default-group: local
 groups:
   local:
     audiences:
       - generators-yml
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.48.5
+      - name: fernapi/fern-typescript-sdk
+        version: 3.46.2
         output:
           location: local-file-system
           path: ../../../packages/cli/configuration/src/generators-yml/schemas
         config:
           outputSourceFiles: true
+          outputSrcOnly: true
           namespaceExport: GeneratorsYml
           retainOriginalCasing: true
+          noSerdeLayer: false
+        smart-casing: false

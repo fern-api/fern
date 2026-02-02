@@ -8,7 +8,8 @@ public partial class SeedUnionsClient : ISeedUnionsClient
 
     public SeedUnionsClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedUnionsClient : ISeedUnionsClient
                 { "User-Agent", "Fernunions/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -30,7 +30,7 @@ public partial class SeedUnionsClient : ISeedUnionsClient
         Union = new UnionClient(_client);
     }
 
-    public BigunionClient Bigunion { get; }
+    public IBigunionClient Bigunion { get; }
 
-    public UnionClient Union { get; }
+    public IUnionClient Union { get; }
 }

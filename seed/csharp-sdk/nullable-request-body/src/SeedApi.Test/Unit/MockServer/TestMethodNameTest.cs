@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -49,10 +49,7 @@ public class TestMethodNameTest : BaseMockServerTest
                 Body = new PlainObject { Id = "id", Name = "name" },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<object>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -91,9 +88,6 @@ public class TestMethodNameTest : BaseMockServerTest
                 Body = new PlainObject(),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<object>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

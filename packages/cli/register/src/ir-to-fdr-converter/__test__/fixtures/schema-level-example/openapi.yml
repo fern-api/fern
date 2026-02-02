@@ -1,0 +1,111 @@
+openapi: 3.1.0
+servers:
+  - url: https://api.plantstore.dev/v3
+    description: Demo server
+info:
+  description: |
+    This is a sample Plant Store Server based on the OpenAPI 3.1 specification. It provides a comprehensive set of endpoints for managing plants, orders, and user authentication.
+  version: 1.0.18
+  title: Swagger Plant Store - OpenAPI 3.1
+  termsOfService: "http://buildwithfern.com/tos/"
+  contact:
+    name: Plant Store API Support
+    url: https://support.plantstore.dev
+    email: support@buildwithfern.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: plant
+    description: Everything about your Plants
+    externalDocs:
+      description: Plant API Documentation
+      url: https://docs.plantstore.dev/plants
+
+paths:
+  /plant:
+    post:
+      tags:
+        - plant
+      summary: Add a new plant to the store
+      operationId: addPlant
+      requestBody:
+        description: Details of the plant to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+            examples:
+              addAPlant:
+                summary: Add a Fern Plant
+                value:
+                  name: "Fern"
+                  category: "Indoor"
+                  tags: ["green", "leafy"]
+                  status: "available"
+              addSucculent:
+                summary: Add a Succulent
+                value:
+                  name: "Echeveria"
+                  category: "Succulent"
+                  tags: ["drought-resistant", "compact"]
+                  status: "available"
+              addFloweringPlant:
+                summary: Add a Flowering Plant
+                value:
+                  name: "Orchid"
+                  category: "Flowering"
+                  tags: ["exotic", "fragrant", "decorative"]
+                  status: "pending"
+              addOutdoorPlant:
+                summary: Add an Outdoor Plant
+                value:
+                  name: "Rose Bush"
+                  category: "Outdoor"
+                  tags: ["flowering", "perennial", "thorny"]
+                  status: "sold"
+      responses:
+        "200":
+          description: Plant successfully added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantResponse"
+        "405":
+          description: Invalid input
+
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [available, pending, sold]
+    PlantResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      example:
+        id: 12345
+        name: "Snake Plant"
+        status: "available"
+        tags: ["low-maintenance", "air-purifying"]

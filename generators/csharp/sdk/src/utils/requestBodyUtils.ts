@@ -1,17 +1,7 @@
-import { HttpRequestBody, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpRequestBody, InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
-export interface RequestBodyProperty {
-    name: {
-        wireValue: string;
-        name: {
-            camelCase: { unsafeName: string };
-            pascalCase: { safeName: string };
-        };
-    };
-    valueType: TypeReference;
-    docs?: string;
-}
+export type RequestBodyProperty = InlinedRequestBodyProperty | ObjectProperty;
 
 /**
  * Extracts non-literal properties from a request body (handles both inline and referenced types).

@@ -6,7 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_oneOfExamples",
@@ -192,7 +192,7 @@
           "slug": undefined,
         },
       ],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "oneOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_oneOfExamples",

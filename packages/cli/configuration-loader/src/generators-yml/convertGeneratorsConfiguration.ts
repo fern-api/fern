@@ -441,13 +441,32 @@ async function parseApiConfigurationV2Schema({
                 audiences: [],
                 settings: apiSettings
             };
+        } else if (generatorsYml.isGraphQLSpecSchema(spec)) {
+            definitionLocation = {
+                schema: {
+                    type: "graphql",
+                    path: spec.graphql
+                },
+                origin: spec.origin,
+                overrides: spec.overrides,
+                overlays: undefined,
+                audiences: [],
+                settings: apiSettings
+            };
         } else {
             continue;
         }
-        if ("namespace" in spec && spec.namespace != null) {
-            namespacedDefinitions[spec.namespace] ??= [];
+        // Handle namespace for most specs, but use "resource" for GraphQL specs
+        const namespaceValue =
+            generatorsYml.isGraphQLSpecSchema(spec) && "resource" in spec
+                ? spec.resource
+                : "namespace" in spec
+                  ? spec.namespace
+                  : undefined;
+        if (namespaceValue != null) {
+            namespacedDefinitions[namespaceValue] ??= [];
             // biome-ignore lint/style/noNonNullAssertion: allow
-            namespacedDefinitions[spec.namespace]!.push(definitionLocation);
+            namespacedDefinitions[namespaceValue]!.push(definitionLocation);
         } else {
             rootDefinitions.push(definitionLocation);
         }
@@ -742,10 +761,11 @@ async function convertOutputMode({
                     })
                 );
             case "pull-request": {
+                const pullRequestConfig = generator.github as generatorsYml.GithubPullRequestSchema;
                 const reviewers = _getReviewers({
                     topLevelReviewers: maybeTopLevelReviewers,
                     groupLevelReviewers: maybeGroupLevelReviewers,
-                    outputModeReviewers: (generator.github as generatorsYml.GithubPullRequestSchema).reviewers
+                    outputModeReviewers: pullRequestConfig.reviewers
                 });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
@@ -754,7 +774,8 @@ async function convertOutputMode({
                         license,
                         publishInfo,
                         downloadSnippets,
-                        reviewers
+                        reviewers,
+                        branch: pullRequestConfig.branch
                     })
                 );
             }

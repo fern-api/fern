@@ -1,4 +1,4 @@
-using System.Reflection;
+using global::System.Reflection;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using WellKnownProto = Google.Protobuf.WellKnownTypes;
@@ -9,7 +9,7 @@ public static class ProtoAnyMapper
 {
     public static Any? ToProto(object? value)
     {
-        if (value == null)
+        if (value is null)
         {
             return null;
         }
@@ -17,7 +17,7 @@ public static class ProtoAnyMapper
             "ToProto",
             BindingFlags.Instance | BindingFlags.NonPublic
         );
-        if (toProtoMethod == null)
+        if (toProtoMethod is null)
         {
             throw new InvalidOperationException($"Type {value.GetType()} does not have a ToProto method");
         }

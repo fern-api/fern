@@ -4,7 +4,7 @@
 //!
 //! - **Dummy**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod dummy;
 pub struct NoEnvironmentClient {
@@ -16,9 +16,10 @@ impl NoEnvironmentClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            dummy: DummyClient::new(config.clone())?,
+            dummy: DummyClient::new(config.clone())?
         })
     }
+
 }
 
 pub use dummy::DummyClient;

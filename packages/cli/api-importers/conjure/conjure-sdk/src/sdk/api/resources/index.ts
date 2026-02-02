@@ -1,8 +1,8 @@
-export * as commons from "./commons";
-export * from "./commons/types";
-export * as conjure from "./conjure";
-export * from "./conjure/types";
-export * as services from "./services";
-export * from "./services/types";
-export * as types from "./types";
-export * from "./types/types";
+export * as commons from "./commons/index.js";
+export * from "./commons/types/index.js";
+export * as conjure from "./conjure/index.js";
+export * from "./conjure/types/index.js";
+export * as services from "./services/index.js";
+export * from "./services/types/index.js";
+export * as types from "./types/index.js";
+export * from "./types/types/index.js";

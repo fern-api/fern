@@ -22,6 +22,7 @@ function getDependencyVersion(packageName) {
  * Common external dependencies for full builds (dev/prod with extensive externals)
  */
 export const FULL_EXTERNALS = [
+    "@boundaryml/baml",
     /^prettier(?:\/.*)?$/,
     /^prettier2(?:\/.*)?$/,
     /^vitest(?:\/.*)?$/,
@@ -34,7 +35,7 @@ export const FULL_EXTERNALS = [
 /**
  * Minimal external dependencies for local/unminified builds
  */
-export const MINIMAL_EXTERNALS = [];
+export const MINIMAL_EXTERNALS = ["@boundaryml/baml"];
 
 /**
  * Common tsup overrides for production-like builds with optimization
@@ -115,4 +116,9 @@ export async function buildCli(config) {
 
     // Run npm pkg fix to format and fix the package.json
     await execAsync("npm pkg fix");
+
+    // Install runtime dependencies if any
+    if (Object.keys(dependencies).length > 0) {
+        await execAsync("pnpm install --ignore-workspace");
+    }
 }

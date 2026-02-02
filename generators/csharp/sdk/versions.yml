@@ -1,4 +1,259 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.3
+  changelogEntry:
+    - summary: |
+        Fix `useDefaultRequestParameterValues` to only apply defaults to query parameters and headers, not to inlined request body properties.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 62
+
+- version: 2.20.2
+  changelogEntry:
+    - summary: |
+        Wire test assertions now use JSON element comparison instead of object equality, resolving false failures when comparing collections inside undiscriminated union types.
+      type: fix
+    - summary: |
+        Fix mock response data generation to omit null values for optional-but-not-nullable properties, matching SDK serialization behavior.
+      type: fix
+    - summary: |
+        Fix nullability warning (CS8764) in undiscriminated union JsonConverter by using non-optional return type for ReadAsPropertyName method.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.20.1
+  changelogEntry:
+    - summary: |
+        Fix ambiguous type references (CS0104) for sub-client interfaces when multiple sub-clients share the same name in different namespaces.
+      type: fix
+    - summary: |
+        Fix duplicate implicit conversion operators (CS0557) for undiscriminated unions with multiple variants that resolve to the same type.
+      type: fix
+    - summary: |
+        Add transitive implicit conversion operators for nested undiscriminated unions.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.20.0
+  changelogEntry:
+    - summary: |
+        Remove .NET 6 (EOL 2024/10/12) and 7 (EOL 2024/05/14) target frameworks from generated SDKs as they are no longer supported by Microsoft.
+        The generated SDKs now only target .NET Framework 4.6.2, .NET Standard 2.0, and .NET 8.
+      type: chore
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.7
+  changelogEntry:
+    - summary: |
+        Top-level clients now use interface types for sub-clients instead of concrete types.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to preserve string field values that contain datetime-like strings.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.5
+  changelogEntry:
+    - summary: |
+        Fix missing client-level headers for endpoints without endpoint-specific headers.
+
+        Previously, endpoints that didn't have endpoint-specific headers (like custom request headers)
+        would not include client-level headers (API key, SDK version, additional headers) in their
+        HTTP requests. This caused authentication failures for APIs that rely on headers set at the
+        client level.
+
+        The fix ensures that all endpoints now properly merge headers from:
+        * Client options headers (API key, SDK version, etc.)
+        * Client additional headers (user-provided at client construction)
+        * Request options additional headers (user-provided per-request)
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.4
+  changelogEntry:
+    - summary: |
+        Fix missing `[Optional]` and/or `Nullable` attributes on generated properties with defaults.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.3
+  changelogEntry:
+    - summary: |
+        Fully unwrap optional-nullable wrappers when generating undiscriminated unions.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.2
+  changelogEntry:
+    - summary: |
+        Fixes missing references to Core utilities in interface files for the Optional wrapper.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.1
+  changelogEntry:
+    - summary: |
+        Fix nullable element types in collections to correctly preserve nullable markers.
+
+        Previously, nullable types nested inside collections would incorrectly strip the inner nullable marker:
+        - `nullable<list<nullable<string>>>` incorrectly generated `IEnumerable<string>?`
+        - `nullable<map<string, nullable<Address>>>` incorrectly generated `Dictionary<string, Address>?`
+
+        Now generates correctly:
+        - `nullable<list<nullable<string>>>` generates `IEnumerable<string?>?`
+        - `nullable<map<string, nullable<Address>>>` generates `Dictionary<string, Address?>?`
+        - `optional<map<string, nullable<string>>>` generates `Dictionary<string, string?>?`
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.0
+  changelogEntry:
+    - summary: |
+        Add support for type-safe undiscriminated unions with the new `use-undiscriminated-unions` configuration option.
+
+        Undiscriminated unions provide a clean, type-safe way to work with values that can be one of several types:
+
+        ```csharp
+        // Creating union values
+        var response = MyUnion.FromString("hello");
+        var response = MyUnion.FromInt(42);
+        var response = MyUnion.FromCustomObject(new CustomObject { ... });
+
+        // Type-safe value access with Is* properties and As* methods
+        if (response.IsString)
+        {
+            string value = response.AsString();
+            Console.WriteLine($"Got string: {value}");
+        }
+        else if (response.IsInt)
+        {
+            int value = response.AsInt();
+            Console.WriteLine($"Got integer: {value}");
+        }
+
+        // Safe extraction with TryAs* pattern (no exceptions)
+        if (response.TryAsCustomObject(out var obj))
+        {
+            Console.WriteLine($"Got object: {obj.Name}");
+        }
+        ```
+
+        This provides better IntelliSense support and compile-time safety compared to working with generic `object` types.
+      type: feat
+    - summary: |
+        Reduce NuGet package dependencies. The OneOf library is no longer required when undiscriminated unions are not used,
+        resulting in smaller package sizes and fewer transitive dependencies.
+      type: chore
+  createdAt: "2026-01-27"
+  irVersion: 62
+
+- version: 2.18.1
+  changelogEntry:
+    - summary: |
+        While most `<`s and `>`s should be escaped to `&lt;` and `&gt;` to avoid mangling the output,
+        genuine XML/HTML tags should be kept as-is; this commit scans for potential valid tags and
+        prevents their being escaped. (Ambiguous cases are escaped.)
+
+        Before:
+        ```
+        /// XMLDoc (C#) (Example of actual XML tags):
+        /// See &lt;a href="https://example.com/docs"&gt;the docs&lt;/a&gt; for more info.
+        /// Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+        /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
+        ```
+
+        After:
+        ```
+        /// XMLDoc (C#) (Example of actual XML tags):
+        /// See <a href="https://example.com/docs">the docs</a> for more info.
+        /// Use <code>getValue()</code> to retrieve the value.
+        /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
+        ```
+      type: fix
+  createdAt: "2026-01-27"
+  irVersion: 62
+
+- version: 2.18.0
+  changelogEntry:
+    - summary: |
+        Add `QueryStringBuilder` class for building query strings with proper URL encoding.
+
+        Example usage:
+        ```csharp
+        var queryString = new QueryStringBuilder.Builder()
+            .Add("access_token", "abc123")
+            .Add("config_id", "cfg-456")
+            .AddDeepObject("session_settings", new { SystemPrompt = "Hello" })
+            .Build();
+        // Result: ?access_token=abc123&config_id=cfg-456&session_settings%5BSystemPrompt%5D=Hello
+        ```
+      type: feat
+    - summary: Improve header merging logic for better reliability and maintainability.
+      type: chore
+    - summary: |
+        Remove `additional-properties` and `experimental-additional-properties` configuration options.
+        AdditionalProperties support is now always enabled for all generated SDKs, simplifying the generator
+        and ensuring consistent behavior across all generated code. This feature allows handling of extra/unknown
+        properties in JSON responses.
+      type: chore
+  createdAt: "2026-01-22"
+  irVersion: 62
+
+- version: 2.17.5
+  changelogEntry:
+    - summary: |
+        Fix test equality comparison for nested OneOf values in collections.
+
+        Previously, when comparing objects containing `List<OneOf<...>>` properties (such as
+        `RelatedResources` in FHIR-style models), the test framework would incorrectly report
+        differences even when the values were identical. This was because the nested OneOf
+        comparer didn't recursively handle OneOf values within collections.
+
+        The fix adds a custom `EqualityAdapter` that registers itself with the inner
+        `NUnitEqualityComparer`, enabling proper recursive comparison of nested OneOf values.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.4
+  changelogEntry:
+    - summary: |
+        Fix extra properties support for inlined request bodies and improve test equality comparisons.
+
+        This fix addresses three issues with the `extra-properties: true` feature:
+        * Inlined request bodies now properly support `AdditionalProperties` for serialization/deserialization
+        * Test snippets now include extra properties from examples for both object types and wrapped requests
+        * Added `AdditionalPropertiesComparer` to handle type mismatches between JsonElement and native C# types in test assertions
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.3
+  changelogEntry:
+    - summary: |
+        Fix mock server tests to use FormUrlEncodedMatcher for form-urlencoded requests.
+
+        Previously, mock server tests used `WithBodyAsJson` for form-urlencoded requests, which
+        caused test failures because the SDK sends the request body as `key=value&key2=value2`
+        format, not JSON. This fix uses WireMock's `FormUrlEncodedMatcher` to properly match
+        form-urlencoded request bodies.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
 - version: 2.17.2
   changelogEntry:
     - summary: |

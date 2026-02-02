@@ -6,9 +6,9 @@ namespace SeedExamples;
 
 public partial interface ISeedExamplesClient
 {
-    public FileClient File { get; }
-    public HealthClient Health { get; }
-    public ServiceClient Service { get; }
+    public IFileClient File { get; }
+    public IHealthClient Health { get; }
+    public IServiceClient Service { get; }
     WithRawResponseTask<string> EchoAsync(
         string request,
         RequestOptions? options = null,

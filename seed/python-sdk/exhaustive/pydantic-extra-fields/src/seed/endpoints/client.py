@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawEndpointsClient, RawEndpointsClient
 
 if typing.TYPE_CHECKING:
     from .container.client import AsyncContainerClient, ContainerClient
@@ -22,7 +21,6 @@ if typing.TYPE_CHECKING:
 
 class EndpointsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._container: typing.Optional[ContainerClient] = None
         self._content_type: typing.Optional[ContentTypeClient] = None
@@ -34,17 +32,6 @@ class EndpointsClient:
         self._put: typing.Optional[PutClient] = None
         self._union: typing.Optional[UnionClient] = None
         self._urls: typing.Optional[UrlsClient] = None
-
-    @property
-    def with_raw_response(self) -> RawEndpointsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawEndpointsClient
-        """
-        return self._raw_client
 
     @property
     def container(self):
@@ -129,7 +116,6 @@ class EndpointsClient:
 
 class AsyncEndpointsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._container: typing.Optional[AsyncContainerClient] = None
         self._content_type: typing.Optional[AsyncContentTypeClient] = None
@@ -141,17 +127,6 @@ class AsyncEndpointsClient:
         self._put: typing.Optional[AsyncPutClient] = None
         self._union: typing.Optional[AsyncUnionClient] = None
         self._urls: typing.Optional[AsyncUrlsClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawEndpointsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawEndpointsClient
-        """
-        return self._raw_client
 
     @property
     def container(self):

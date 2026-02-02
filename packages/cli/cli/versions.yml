@@ -1,8 +1,191 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.50.2
+- version: 3.56.9
   changelogEntry:
     - summary: |
         Fix undiscriminated union variant displayName to only use user-specified values. Previously, displayName would fall back to the type's originalName, which for OpenAPI-sourced APIs could be long generated schema names (e.g., "ObjectsObjectTypeBatchUpsertPostRequestBody..."). Now displayName is only set when explicitly specified via `display-name` in the Fern definition.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.56.8
+  changelogEntry:
+    - summary: |
+        Support GraphQL API References. You can now add a `graphql` spec to `generators.yml` to render an auto-generated reference in the docs.
+      type: fix
+  createdAt: "2026-02-2"
+  irVersion: 63
+
+- version: 3.55.7
+  changelogEntry:
+    - summary: |
+        Improve `fern docs diff` region detection with top-down and bottom-up scanning. The algorithm now finds the first change by scanning from the top, and the last change by scanning from the bottom (aligning footers). This handles content shifts naturally and skips small footer changes like timestamps.
+      type: fix
+  createdAt: "2026-01-31"
+  irVersion: 63
+
+- version: 3.55.6
+  changelogEntry:
+    - summary: |
+        Regenerate types for fern-definition, docs-yml, generators-yml, conjure-sdk, openapi-ir, and ir-types-latest schemas.
+      type: internal
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.55.5
+  changelogEntry:
+    - summary: |
+        Fix default value for `switcher-placement` in docs.yml layout configuration.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.4
+  changelogEntry:
+    - summary: |
+        Fix discriminated union variants with optional or nullable object types incorrectly using `samePropertiesAsObject`. When a union variant has a type like `body: optional<SomeObjectType>`, the IR generator now correctly uses `singleProperty` instead of `samePropertiesAsObject`, which ensures the generated TypeScript code has a `value` property with the optional type instead of extending the object type directly.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.3
+  changelogEntry:
+    - summary: Fix schema namespace resolution to OpenAPI importers for proper type reference targeting
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs diff` production URL construction when docs instance URL has a base path (e.g., `/learn`).
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.1
+  changelogEntry:
+    - summary: |
+        Add docs param when publishing a doc site to support fine grain access controlls
+      type: chore
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs diff` command for visual regression testing of docs. This command captures screenshots of preview and production docs pages, generates visual diffs using pixelmatch, and outputs JSON with change percentages.
+      type: feat
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.54.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets not being generated when using the v3 OpenAPI parser. The workspace is now loaded for dynamic snippet generation even when the v3 parser successfully generates the IR, ensuring that generators.yml configuration is available for snippet generation.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.54.0
+  changelogEntry:
+    - summary: |
+        Add support for `switcher-placement` field in docs.yml layout configuration. This allows users to specify the placement of the version and language switcher, with options `header` or `sidebar` (default: `header`).
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.53.2
+  changelogEntry:
+    - summary: |
+        Reduce memory usage when generating docs for customers with many API versions by processing versions in batches of 5 instead of all in parallel.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.53.1
+  changelogEntry:
+    - summary: |
+        Fix primitive example generation to handle zero-length strings correctly.
+      type: chore
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.53.0
+  changelogEntry:
+    - summary: |
+        Add internal support for ListType/SetType/MapType validation into IR.
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.52.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI oneOf with discriminator to be parsed as discriminated union. Previously, when the discriminant property was defined in each variant schema (which is the standard OpenAPI pattern), the union was incorrectly parsed as an undiscriminated union. Now, any oneOf with a discriminator is correctly parsed as a discriminated union, and the discriminant property is filtered out from variant schemas to avoid duplication.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.52.0
+  changelogEntry:
+    - summary: |
+        Add support for `branch` property in pull-request GitHub mode. When specified, the PR will target this branch instead of the repository's default branch.
+      type: feat
+  createdAt: "2026-01-28"
+  irVersion: 63
+
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting "Invalid OpenAPI reference" errors for AsyncAPI JSON files. The validation rule now detects both YAML format (`asyncapi:`) and JSON format (`"asyncapi":`) when skipping AsyncAPI files.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 63
+
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting "Invalid OpenAPI reference" errors for AsyncAPI JSON files. The validation rule now detects both YAML format (`asyncapi:`) and JSON format (`"asyncapi":`) when skipping AsyncAPI files.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 63
+
+- version: 3.51.2
+  changelogEntry:
+    - summary: |
+        Fix air-gapped environment support for `fern generate --docs`. Added airgapped detection to skip external services that don't have local equivalents (Python docs generation, Venus organization lookup). Fixed protobuf air-gapped detection to use `detectAirGappedModeForProtobuf()` instead of `detectAirGappedMode()`. Added Venus-specific connectivity check for AI example enhancement that doesn't rely on the global cache.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.51.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev --broken-links` failing with "Failed to load API Definition" error for valid API configurations. The broken links validator now properly handles OpenAPI-only workspaces.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.51.0
+  changelogEntry:
+    - summary: |
+        Add support for OAS 3.2's `itemSchema` standard for SSE endpoints. When `text/event-stream` content type uses `itemSchema` instead of `schema`, it is now automatically treated as an SSE streaming endpoint with `x-fern-streaming: format: sse`.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.3
+  changelogEntry:
+    - summary: |
+        Fix Python library docs placeholder page appearing on published sites. The placeholder page is now only created during `fern docs dev` (local development), not during `fern generate --docs` (publishing).
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.2
+  changelogEntry:
+    - summary: |
+        Fix `python-docs` configuration not being detected when placed inside product or version files. Previously, `python-docs` only worked when placed in the top-level `docs.yml` navigation. Now it correctly searches through product files and version files referenced via `config.products` and `config.versions`.
       type: fix
   createdAt: "2026-01-26"
   irVersion: 63

@@ -1,4 +1,4 @@
-using System.Text;
+using global::System.Text;
 
 namespace SeedTrace.Core;
 

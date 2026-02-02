@@ -33,21 +33,15 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.144.7-efc9f5ccf",
+    "@fern-api/fdr-sdk": "0.145.3-38fc1b71a",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.738",
-    "node-fetch": "2",
-    "qs": "6.14.1",
-    "readable-stream": "^4.7.0",
+    "@fern-fern/fiddle-sdk": "0.0.775",
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
-    "@types/node-fetch": "2",
-    "@types/qs": "6.9.15",
-    "@types/readable-stream": "^4.0.22",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedUnknownAsAny.Core;
+using SeedUnknownAsAny.Test.Utils;
 
 namespace SeedUnknownAsAny.Test.Unit.MockServer;
 
@@ -44,9 +44,6 @@ public class PostTest : BaseMockServerTest
         var response = await Client.Unknown.PostAsync(
             new Dictionary<object, object?>() { { "key", "value" } }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<object>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

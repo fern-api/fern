@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedPathParameters;
-using SeedPathParameters.Core;
+using SeedPathParameters.Test.Utils;
 
 namespace SeedPathParameters.Test.Unit.MockServer;
 
@@ -40,9 +40,6 @@ public class GetUserMetadataTest : BaseMockServerTest
             1,
             new GetUserMetadataRequest()
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -52,6 +52,10 @@ public final class ObjectWithDocs {
    * <li>/**: Block comment start</li>
    * <li>** /: Block comment end</li>
    * </ul>
+   * <p>XMLDoc (C#) (Example of actual XML tags):
+   * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
+   * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+   * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
    * <p>Javadoc (Java):</p>
    * <ul>
    * <li>@: Used for Javadoc tags</li>
@@ -150,6 +154,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
+     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>
@@ -242,6 +250,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
+     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>
@@ -308,6 +320,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
+     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>

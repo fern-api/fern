@@ -18,9 +18,13 @@ public partial class AuthClient : IAuthClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>() { { "X-Api-Key", request.ApiKey } }
-        );
+        var _headers = await new SeedInferredAuthImplicitApiKey.Core.HeadersBuilder.Builder()
+            .Add("X-Api-Key", request.ApiKey)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest

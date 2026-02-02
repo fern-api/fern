@@ -1,1 +1,1 @@
-export * from "./ErrorDeclarationSchema";
+export * from "./ErrorDeclarationSchema.js";

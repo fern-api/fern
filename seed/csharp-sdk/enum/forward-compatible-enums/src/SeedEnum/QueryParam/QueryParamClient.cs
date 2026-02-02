@@ -22,17 +22,19 @@ public partial class QueryParamClient : IQueryParamClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["operand"] = request.Operand.Stringify();
-        _query["operandOrColor"] = JsonUtils.Serialize(request.OperandOrColor);
-        if (request.MaybeOperand != null)
-        {
-            _query["maybeOperand"] = request.MaybeOperand.Value.Stringify();
-        }
-        if (request.MaybeOperandOrColor != null)
-        {
-            _query["maybeOperandOrColor"] = JsonUtils.Serialize(request.MaybeOperandOrColor);
-        }
+        var _queryString = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
+            .Add("operand", request.Operand)
+            .Add("maybeOperand", request.MaybeOperand)
+            .AddDeepObject("operandOrColor", request.OperandOrColor)
+            .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -40,7 +42,8 @@ public partial class QueryParamClient : IQueryParamClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "query",
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -77,15 +80,19 @@ public partial class QueryParamClient : IQueryParamClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["operand"] = request.Operand.Select(_value => _value.Stringify()).ToList();
-        _query["maybeOperand"] = request.MaybeOperand.Select(_value => _value.Stringify()).ToList();
-        _query["operandOrColor"] = request
-            .OperandOrColor.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["maybeOperandOrColor"] = request
-            .MaybeOperandOrColor.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
+        var _queryString = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 4)
+            .Add("operand", request.Operand)
+            .Add("maybeOperand", request.MaybeOperand)
+            .AddDeepObject("operandOrColor", request.OperandOrColor)
+            .AddDeepObject("maybeOperandOrColor", request.MaybeOperandOrColor)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -93,7 +100,8 @@ public partial class QueryParamClient : IQueryParamClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "query-list",
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

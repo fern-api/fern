@@ -2,5 +2,5 @@ namespace SeedNoEnvironment;
 
 public partial interface ISeedNoEnvironmentClient
 {
-    public DummyClient Dummy { get; }
+    public IDummyClient Dummy { get; }
 }

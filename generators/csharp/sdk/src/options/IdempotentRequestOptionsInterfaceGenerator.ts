@@ -25,7 +25,7 @@ export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<CS
             name: "GetIdempotencyHeaders",
             access: ast.Access.Internal,
             parameters: [],
-            return_: this.Types.Headers,
+            return_: this.System.Collections.Generic.Dictionary(this.Primitive.string, this.Primitive.string),
             type: ast.MethodType.INSTANCE,
             noBody: true
         });

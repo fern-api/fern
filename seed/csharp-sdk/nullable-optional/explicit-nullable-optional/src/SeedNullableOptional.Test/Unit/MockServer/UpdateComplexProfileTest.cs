@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using SeedNullableOptional;
-using SeedNullableOptional.Core;
+using SeedNullableOptional.Test.Utils;
 
 namespace SeedNullableOptional.Test.Unit.MockServer;
 
@@ -221,9 +221,6 @@ public class UpdateComplexProfileTest : BaseMockServerTest
                 NullableArray = new List<string>() { "nullableArray", "nullableArray" },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ComplexProfile>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

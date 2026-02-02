@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+using global::System.Runtime.CompilerServices;
 
 namespace SeedInferredAuthImplicitNoExpiry.Core;
 
@@ -10,12 +10,12 @@ namespace SeedInferredAuthImplicitNoExpiry.Core;
 /// <typeparam name="T">The type of the parsed response data.</typeparam>
 public readonly struct WithRawResponseTask<T>
 {
-    private readonly Task<WithRawResponse<T>> _task;
+    private readonly global::System.Threading.Tasks.Task<WithRawResponse<T>> _task;
 
     /// <summary>
     /// Creates a new WithRawResponseTask wrapping the given task.
     /// </summary>
-    public WithRawResponseTask(Task<WithRawResponse<T>> task)
+    public WithRawResponseTask(global::System.Threading.Tasks.Task<WithRawResponse<T>> task)
     {
         _task = task;
     }
@@ -23,7 +23,7 @@ public readonly struct WithRawResponseTask<T>
     /// <summary>
     /// Returns the underlying task that yields both the data and raw response metadata.
     /// </summary>
-    public Task<WithRawResponse<T>> WithRawResponse() => _task;
+    public global::System.Threading.Tasks.Task<WithRawResponse<T>> WithRawResponse() => _task;
 
     /// <summary>
     /// Gets the custom awaiter that unwraps to just T when awaited.
@@ -37,10 +37,12 @@ public readonly struct WithRawResponseTask<T>
         new(_task.ConfigureAwait(continueOnCapturedContext));
 
     /// <summary>
-    /// Implicitly converts WithRawResponseTask&lt;T&gt; to Task&lt;T&gt; for backward compatibility.
+    /// Implicitly converts WithRawResponseTask&lt;T&gt; to global::System.Threading.Tasks.Task&lt;T&gt; for backward compatibility.
     /// The resulting task will yield just the data when awaited.
     /// </summary>
-    public static implicit operator Task<T>(WithRawResponseTask<T> task)
+    public static implicit operator global::System.Threading.Tasks.Task<T>(
+        WithRawResponseTask<T> task
+    )
     {
         return task._task.ContinueWith(
             t => t.Result.Data,
@@ -73,12 +75,13 @@ public readonly struct WithRawResponseTask<T>
         /// <summary>
         /// Schedules the continuation action.
         /// </summary>
-        public void OnCompleted(Action continuation) => _awaiter.OnCompleted(continuation);
+        public void OnCompleted(global::System.Action continuation) =>
+            _awaiter.OnCompleted(continuation);
 
         /// <summary>
         /// Schedules the continuation action without capturing the execution context.
         /// </summary>
-        public void UnsafeOnCompleted(Action continuation) =>
+        public void UnsafeOnCompleted(global::System.Action continuation) =>
             _awaiter.UnsafeOnCompleted(continuation);
     }
 
@@ -128,12 +131,13 @@ public readonly struct WithRawResponseTask<T>
             /// <summary>
             /// Schedules the continuation action.
             /// </summary>
-            public void OnCompleted(Action continuation) => _awaiter.OnCompleted(continuation);
+            public void OnCompleted(global::System.Action continuation) =>
+                _awaiter.OnCompleted(continuation);
 
             /// <summary>
             /// Schedules the continuation action without capturing the execution context.
             /// </summary>
-            public void UnsafeOnCompleted(Action continuation) =>
+            public void UnsafeOnCompleted(global::System.Action continuation) =>
                 _awaiter.UnsafeOnCompleted(continuation);
         }
     }

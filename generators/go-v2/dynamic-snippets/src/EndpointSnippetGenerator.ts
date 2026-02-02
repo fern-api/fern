@@ -626,7 +626,10 @@ export class EndpointSnippetGenerator {
                 return this.getBytesBodyRequestArg({ value });
             }
             case "typeReference":
-                return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible({
+                    typeReference: body.value,
+                    value
+                });
             default:
                 assertNever(body);
         }
@@ -852,7 +855,7 @@ export class EndpointSnippetGenerator {
         });
         for (const parameter of bodyProperties) {
             fields.push({
-                name: this.context.getTypeName(parameter.name.name),
+                name: this.context.getFieldName(parameter.name.name),
                 value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
             });
         }

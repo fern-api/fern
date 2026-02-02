@@ -1,24 +1,23 @@
-import { BaseSchema, MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { MaybePromise } from "../../utils/MaybePromise";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { getSchemaUtils } from "../schema-utils";
+import { type BaseSchema, type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
+import { getSchemaUtils } from "../schema-utils/index.js";
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
     const baseSchema: BaseSchema<Raw[], Parsed[]> = {
-        parse: async (raw, opts) =>
+        parse: (raw, opts) =>
             validateAndTransformArray(raw, (item, index) =>
                 schema.parse(item, {
                     ...opts,
                     breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`],
-                })
+                }),
             ),
         json: (parsed, opts) =>
             validateAndTransformArray(parsed, (item, index) =>
                 schema.json(item, {
                     ...opts,
                     breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`],
-                })
+                }),
             ),
         getType: () => SchemaType.LIST,
     };
@@ -29,10 +28,10 @@ export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Pa
     };
 }
 
-async function validateAndTransformArray<Raw, Parsed>(
+function validateAndTransformArray<Raw, Parsed>(
     value: unknown,
-    transformItem: (item: Raw, index: number) => MaybePromise<MaybeValid<Parsed>>
-): Promise<MaybeValid<Parsed[]>> {
+    transformItem: (item: Raw, index: number) => MaybeValid<Parsed>,
+): MaybeValid<Parsed[]> {
     if (!Array.isArray(value)) {
         return {
             ok: false,
@@ -45,7 +44,7 @@ async function validateAndTransformArray<Raw, Parsed>(
         };
     }
 
-    const maybeValidItems = await Promise.all(value.map((item, index) => transformItem(item, index)));
+    const maybeValidItems = value.map((item, index) => transformItem(item, index));
 
     return maybeValidItems.reduce<MaybeValid<Parsed[]>>(
         (acc, item) => {
@@ -69,6 +68,6 @@ async function validateAndTransformArray<Raw, Parsed>(
                 errors,
             };
         },
-        { ok: true, value: [] }
+        { ok: true, value: [] },
     );
 }

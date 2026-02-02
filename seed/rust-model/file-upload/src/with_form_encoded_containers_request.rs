@@ -5,9 +5,12 @@ pub struct WithFormEncodedContainersRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_string: Option<String>,
     pub integer: i64,
+    #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
     pub file_list: Vec<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::base64_bytes::option")]
     pub maybe_file: Option<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_file_list: Option<Vec<Vec<u8>>>,

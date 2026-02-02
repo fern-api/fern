@@ -3,17 +3,17 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum UndiscriminatedLiteral {
-    String(String),
+        String(String),
 
-    Literal1(String),
+        Literal1(String),
 
-    Literal2(String),
+        Literal2(String),
 
-    Literal3(bool),
+        Literal3(bool),
 
-    Literal4(bool),
+        Literal4(bool),
 
-    Boolean(bool),
+        Boolean(bool),
 }
 
 impl UndiscriminatedLiteral {
@@ -41,87 +41,89 @@ impl UndiscriminatedLiteral {
         matches!(self, Self::Boolean(_))
     }
 
+
     pub fn as_string(&self) -> Option<&String> {
         match self {
-            Self::String(value) => Some(value),
-            _ => None,
-        }
+                    Self::String(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_string(self) -> Option<String> {
         match self {
-            Self::String(value) => Some(value),
-            _ => None,
-        }
+                    Self::String(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_literal1(&self) -> Option<&String> {
         match self {
-            Self::Literal1(value) => Some(value),
-            _ => None,
-        }
+                    Self::Literal1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_literal1(self) -> Option<String> {
         match self {
-            Self::Literal1(value) => Some(value),
-            _ => None,
-        }
+                    Self::Literal1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_literal2(&self) -> Option<&String> {
         match self {
-            Self::Literal2(value) => Some(value),
-            _ => None,
-        }
+                    Self::Literal2(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_literal2(self) -> Option<String> {
         match self {
-            Self::Literal2(value) => Some(value),
-            _ => None,
-        }
+                    Self::Literal2(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_literal3(&self) -> Option<&bool> {
         match self {
-            Self::Literal3(value) => Some(value),
-            _ => None,
-        }
+                    Self::Literal3(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_literal3(self) -> Option<bool> {
         match self {
-            Self::Literal3(value) => Some(value),
-            _ => None,
-        }
+                    Self::Literal3(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_literal4(&self) -> Option<&bool> {
         match self {
-            Self::Literal4(value) => Some(value),
-            _ => None,
-        }
+                    Self::Literal4(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_literal4(self) -> Option<bool> {
         match self {
-            Self::Literal4(value) => Some(value),
-            _ => None,
-        }
+                    Self::Literal4(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_boolean(&self) -> Option<&bool> {
         match self {
-            Self::Boolean(value) => Some(value),
-            _ => None,
-        }
+                    Self::Boolean(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_boolean(self) -> Option<bool> {
         match self {
-            Self::Boolean(value) => Some(value),
-            _ => None,
-        }
+                    Self::Boolean(value) => Some(value),
+                    _ => None,
+                }
     }
+
 }

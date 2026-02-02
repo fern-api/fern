@@ -15,7 +15,8 @@ import { convertTypeReference } from "./convertTypeShape";
 
 export function convertPackage(
     irPackage: Ir.ir.Package,
-    ir: Ir.ir.IntermediateRepresentation
+    ir: Ir.ir.IntermediateRepresentation,
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>
 ): FdrCjsSdk.api.v1.register.ApiDefinitionPackage {
     const service = irPackage.service != null ? ir.services[irPackage.service] : undefined;
     const webhooks = irPackage.webhooks != null ? ir.webhookGroups[irPackage.webhooks] : undefined;
@@ -23,8 +24,12 @@ export function convertPackage(
         irPackage.websocket != null && ir.websocketChannels != null
             ? ir.websocketChannels[irPackage.websocket]
             : undefined;
+
+    // Convert REST endpoints
+    const restEndpoints = service != null ? convertService(service, ir) : [];
+
     return {
-        endpoints: service != null ? convertService(service, ir) : [],
+        endpoints: restEndpoints,
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
         websockets: websocket != null ? [convertWebSocketChannel(websocket, ir)] : [],
         types: irPackage.types.map((typeId) => FdrCjsSdk.TypeId(typeId)),
@@ -33,7 +38,7 @@ export function convertPackage(
             irPackage.navigationConfig != null
                 ? FdrCjsSdk.api.v1.SubpackageId(irPackage.navigationConfig.pointsTo)
                 : undefined,
-        graphqlOperations: undefined
+        graphqlOperations: graphqlOperations ? Object.values(graphqlOperations) : []
     };
 }
 

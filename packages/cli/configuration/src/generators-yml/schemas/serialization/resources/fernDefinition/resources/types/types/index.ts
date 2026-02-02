@@ -1,2 +1,2 @@
-export * from "./BaseTypeReferenceSchema";
-export * from "./TypeReferenceDeclarationWithName";
+export * from "./BaseTypeReferenceSchema.js";
+export * from "./TypeReferenceDeclarationWithName.js";

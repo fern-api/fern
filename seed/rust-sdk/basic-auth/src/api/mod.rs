@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{BasicAuthClient, BasicAuthClient2, ErrorsClient};
-pub use types::*;
+pub use resources::{BasicAuthClient2, ErrorsClient, BasicAuthClient};
+pub use types::{*};
+

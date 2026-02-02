@@ -144,35 +144,31 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         if (this.endpoint.requestBody.type === "inlinedRequestBody") {
             const wrapperReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
-            const bodyPropertyNames = [
-                ...this.endpoint.requestBody.properties,
-                ...(this.endpoint.requestBody.extendedProperties ?? [])
-            ].map((prop) => prop.name.name.snakeCase.safeName);
 
-            const BODY_PROP_NAMES_VN = "body_prop_names";
+            // Get all non-body parameter names (path, query, headers) that need to be excluded from the body
+            const nonBodyParamNames = this.getNonBodyParameterWireNames();
 
-            if (this.hasPathParameters()) {
+            if (nonBodyParamNames.length > 0) {
+                // Fix for request body serialization bug:
+                // Instead of removing path/query params before serialization (which causes nil values
+                // to be serialized for required fields), we serialize ALL params through the wrapper
+                // type first, then remove the non-body params from the serialized result.
+                const NON_BODY_PARAM_NAMES_VN = "non_body_param_names";
                 return {
                     code: ruby.codeblock((writer) => {
-                        writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
-                        writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
-                        writer.writeLine(`${BODY_PROP_NAMES_VN} = ${toRubySymbolArray(bodyPropertyNames)}`);
-                        writer.writeLine(`body_bag = ${BODY_BAG_NAME}.slice(*${BODY_PROP_NAMES_VN})`);
-                    }),
-                    requestBodyReference: ruby.codeblock((writer) => {
+                        writer.write(`request_data = `);
                         writer.writeNode(wrapperReference);
-                        writer.write(`.new(body_bag).to_h`);
-                    })
+                        writer.writeLine(`.new(params).to_h`);
+                        writer.writeLine(`${NON_BODY_PARAM_NAMES_VN} = ${toExplicitArray(nonBodyParamNames)}`);
+                        writer.writeLine(`body = request_data.except(*${NON_BODY_PARAM_NAMES_VN})`);
+                    }),
+                    requestBodyReference: ruby.codeblock("body")
                 };
             }
             return {
-                code: ruby.codeblock((writer) => {
-                    writer.writeLine(`${BODY_PROP_NAMES_VN} = ${toRubySymbolArray(bodyPropertyNames)}`);
-                    writer.writeLine(`body_bag = params.slice(*${BODY_PROP_NAMES_VN})`);
-                }),
                 requestBodyReference: ruby.codeblock((writer) => {
                     writer.writeNode(wrapperReference);
-                    writer.write(`.new(body_bag).to_h`);
+                    writer.write(`.new(params).to_h`);
                 })
             };
         }
@@ -215,6 +211,32 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private hasQueryParameters(): boolean {
         return this.endpoint.queryParameters.length > 0;
+    }
+
+    /**
+     * Returns the wire names of all non-body parameters (path, query, headers).
+     * These are the keys that will appear in the serialized hash and need to be
+     * excluded from the request body.
+     */
+    private getNonBodyParameterWireNames(): string[] {
+        const wireNames: string[] = [];
+
+        // Path parameters use originalName as wireValue
+        for (const pathParam of this.endpoint.allPathParameters) {
+            wireNames.push(pathParam.name.originalName);
+        }
+
+        // Query parameters have explicit wireValue
+        for (const queryParam of this.endpoint.queryParameters) {
+            wireNames.push(queryParam.name.wireValue);
+        }
+
+        // Headers have explicit wireValue
+        for (const header of this.endpoint.headers) {
+            wireNames.push(header.name.wireValue);
+        }
+
+        return wireNames;
     }
 }
 

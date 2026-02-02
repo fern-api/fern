@@ -126,8 +126,10 @@ def test_cached_instances(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
 def test_lazy_loading_preserves_client_wrapper(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
     endpoints = client.endpoints
 
+    # Intermediate clients (like endpoints) that have no direct endpoints store _client_wrapper directly
+    # instead of _raw_client, since they don't need raw client functionality
     assert endpoints._client_wrapper is client._client_wrapper
-    assert endpoints._raw_client._client_wrapper is client._client_wrapper
 
+    # Leaf clients (like container) that have actual endpoints still have _raw_client
     container = client.endpoints.container
     assert container._raw_client._client_wrapper is endpoints._client_wrapper

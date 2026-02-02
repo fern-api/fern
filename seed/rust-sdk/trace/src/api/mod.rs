@@ -11,8 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{
-    AdminClient, CommonsClient, HomepageClient, LangServerClient, MigrationClient, PlaylistClient,
-    ProblemClient, SubmissionClient, SyspropClient, TraceClient, V2Client,
-};
-pub use types::*;
+pub use resources::{V2Client, AdminClient, CommonsClient, HomepageClient, LangServerClient, MigrationClient, PlaylistClient, ProblemClient, SubmissionClient, SyspropClient, TraceClient};
+pub use types::{*};
+
