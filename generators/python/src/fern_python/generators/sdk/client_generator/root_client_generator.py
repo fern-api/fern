@@ -2,7 +2,7 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional, Sequence
 
-import fern.ir.resources as ir_types
+import fern_python.generators.sdk.names as names
 from ..environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -15,9 +15,6 @@ from .inferred_auth_token_provider_generator import (
     CredentialProperty,
     InferredAuthTokenProviderGenerator,
 )
-from typing_extensions import Unpack
-
-import fern_python.generators.sdk.names as names
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -27,6 +24,9 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ConstructorParameter,
 )
 from fern_python.generators.sdk.custom_config import BaseUrlTemplateConfig
+from typing_extensions import Unpack
+
+import fern.ir.resources as ir_types
 
 
 @dataclass
@@ -1316,11 +1316,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             has_edge = "{edge}" in template
 
             # Build the function call arguments
-            func_args = [f"{RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}"]
+            func_args = [
+                f"{RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}"
+            ]
             if has_region:
-                func_args.append(f"{RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME}")
+                func_args.append(
+                    f"{RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME}"
+                )
             if has_edge:
-                func_args.append(f"{RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME}")
+                func_args.append(
+                    f"{RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME}"
+                )
 
             client_wrapper_constructor_kwargs.append(
                 (
@@ -1552,9 +1558,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if has_region:
                 writer.write_line(f"if {RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME} is None:")
                 with writer.indent():
-                    writer.write_line(
-                        'raise Exception("region is required when base_url is not provided")'
-                    )
+                    writer.write_line('raise Exception("region is required when base_url is not provided")')
                 writer.write_line(
                     f"template = template.replace('{{region}}', {RootClientGenerator.REGION_CONSTRUCTOR_PARAMETER_NAME})"
                 )
@@ -1563,9 +1567,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if has_edge:
                 writer.write_line(f"if {RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME} is None:")
                 with writer.indent():
-                    writer.write_line(
-                        'raise Exception("edge is required when base_url is not provided")'
-                    )
+                    writer.write_line('raise Exception("edge is required when base_url is not provided")')
                 writer.write_line(
                     f"template = template.replace('{{edge}}', {RootClientGenerator.EDGE_CONSTRUCTOR_PARAMETER_NAME})"
                 )
