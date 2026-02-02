@@ -378,7 +378,7 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
-  regional-routing:
+  python-regional-routing:
     - customConfig:
         base_url_template:
           template: "https://api.{region}.{edge}.example.com"
