@@ -1507,6 +1507,10 @@ export class SdkGenerator {
     }
 
     private generateWebhooksHelper(): void {
+        // Only include WebhooksHelper if the SDK has webhook support
+        if (Object.keys(this.intermediateRepresentation.webhookGroups).length === 0) {
+            return;
+        }
         const tempSourceFile = this.project.createSourceFile("__webhooks_temp__.ts");
         this.coreUtilitiesManager
             .getCoreUtilities({
