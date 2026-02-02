@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.56.10
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v2 publish operations not generating send methods in SDKs. The converter was not properly handling message payloads that reference existing schemas, causing client-to-server messages to be silently dropped from the IR.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
 - version: 3.56.9
   changelogEntry:
     - summary: |
