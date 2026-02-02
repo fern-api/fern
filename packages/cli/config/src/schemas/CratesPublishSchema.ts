@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-export const NpmPublishSchema = z.object({
+export const CratesPublishSchema = z.object({
     packageName: z.string(),
     url: z.string().optional(),
     token: z.string().optional()
 });
 
-export type NpmPublishSchema = z.infer<typeof NpmPublishSchema>;
+export type CratesPublishSchema = z.infer<typeof CratesPublishSchema>;
