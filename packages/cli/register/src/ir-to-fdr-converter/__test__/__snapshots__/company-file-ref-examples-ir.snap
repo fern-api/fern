@@ -481,7 +481,9 @@
         },
         "typeId": "Company",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": Set {
+        "File",
+      },
       "shape": {
         "_visit": [Function],
         "extendedProperties": [],

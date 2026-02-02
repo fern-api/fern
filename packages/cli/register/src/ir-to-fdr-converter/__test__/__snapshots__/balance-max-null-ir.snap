@@ -601,6 +601,7 @@
         "typeId": "RateResponse",
       },
       "referencedTypes": Set {
+        "FixedRate",
         "RateResponseRateType",
       },
       "shape": {

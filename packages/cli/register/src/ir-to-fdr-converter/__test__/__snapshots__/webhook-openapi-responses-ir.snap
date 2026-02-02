@@ -1163,6 +1163,7 @@
         "typeId": "PaymentSessionCompletedEvent",
       },
       "referencedTypes": Set {
+        "PaymentSession",
         "PaymentSessionCompletedEventEventType",
       },
       "shape": {
