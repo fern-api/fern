@@ -1,4 +1,4 @@
-import { Logger } from "@fern-api/logger";
+import { createLogger, Logger, LogLevel } from "@fern-api/logger";
 import type {
     CreateInteractiveTaskParams,
     Finishable,
@@ -14,14 +14,28 @@ import { TaskContextLogger } from "./TaskContextLogger";
 
 /**
  * Adapts the CLI context to the legacy TaskContext interface.
+ *
+ * When a task is provided, logs are written to the task's log display.
+ * When no task is provided (e.g., during validation), logs are written
+ * directly to stderr for warnings/errors only.
  */
 export class TaskContextAdapter implements TaskContext {
     private result: TaskResult = TaskResult.Success;
 
     public readonly logger: Logger;
 
-    constructor({ context, task }: { context: Context; task: Task }) {
-        this.logger = new TaskContextLogger({ context, task });
+    constructor({ context, task }: { context: Context; task?: Task }) {
+        if (task != null) {
+            this.logger = new TaskContextLogger({ context, task });
+        } else {
+            // When no task is provided, use a simple logger that writes to stderr
+            this.logger = createLogger((level: LogLevel, ...args: string[]) => {
+                // Only log warnings and errors to keep output clean
+                if (level === LogLevel.Warn || level === LogLevel.Error) {
+                    context.stderr.log(level, ...args);
+                }
+            });
+        }
     }
 
     public async takeOverTerminal(run: () => void | Promise<void>): Promise<void> {
@@ -47,7 +61,7 @@ export class TaskContextAdapter implements TaskContext {
         return this.result;
     }
 
-    public addInteractiveTask(params: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
+    public addInteractiveTask(_params: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
         const subtask: InteractiveTaskContext & Startable<InteractiveTaskContext> & Finishable = {
             logger: this.logger,
             takeOverTerminal: this.takeOverTerminal.bind(this),

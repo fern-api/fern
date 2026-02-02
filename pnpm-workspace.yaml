@@ -7,3 +7,6 @@ packages:
   - "!packages/cli/cli/dist/local"
   - "!packages/cli/cli/dist/dev"
   - "!packages/cli/cli/dist/prod"
+  - "!packages/cli/cli-v2/dist/local"
+  - "!packages/cli/cli-v2/dist/dev"
+  - "!packages/cli/cli-v2/dist/prod"
