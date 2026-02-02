@@ -51,7 +51,6 @@ RUN set -eux; \
         dirmngr gnupg gnupg-l10n gnupg-utils gpg gpg-agent \
         gpg-wks-client gpg-wks-server gpgconf gpgsm gpgv \
         openssl libssl3 && \
-    apt-get install -y git && \
     apt-get purge -y --allow-remove-essential \
         python3.10 python3.10-minimal \
         python3 python3-minimal \
@@ -60,6 +59,7 @@ RUN set -eux; \
         git-lfs \
         wget && \
     apt-get autoremove -y --purge && \
+    apt-get install -y git && \
     rm -rf /var/lib/apt/lists/*
 
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
