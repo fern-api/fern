@@ -643,7 +643,10 @@ export class ApiReferenceNodeConverter {
                     icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: parentAvailability,
+                    availability:
+                        FernNavigation.V1.convertAvailability(
+                            (webhook as { availability?: APIV1Read.Availability }).availability
+                        ) ?? parentAvailability,
                     authed: undefined,
                     viewers: endpointItem.viewers,
                     orphaned: endpointItem.orphaned,
@@ -845,7 +848,10 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: parentAvailability,
+                availability:
+                    FernNavigation.V1.convertAvailability(
+                        (webhook as { availability?: APIV1Read.Availability }).availability
+                    ) ?? parentAvailability,
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
