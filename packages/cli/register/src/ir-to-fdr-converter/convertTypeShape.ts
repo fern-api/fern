@@ -113,9 +113,9 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type),
                         availability: undefined,
-                        // Only use user-specified displayName, don't fall back to originalName
-                        // because originalName may contain generated schema names from OpenAPI
-                        // (e.g., "ObjectsObjectTypeBatchUpsertPostRequestBody...") which are not user-friendly
+                        // If displayName is not specified, don't fall back to originalName
+                        // originalName may contain generated names (e.g., "ObjectsObjectTypeBatchUpsertPostRequestBody...")
+                        // which are not user-friendly and should not be user-facing
                         displayName: variant.type.type === "named" ? variant.type.displayName : undefined
                     };
                 })
