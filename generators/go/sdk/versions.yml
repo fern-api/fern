@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.4
+  changelogEntry:
+    - summary: |
+        Fix unsafe pointer dereference in cycle.go.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 61
+
 - version: 1.23.3
   changelogEntry:
     - summary: |

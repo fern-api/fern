@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .double_optional import DoubleOptional
     from .nested_object_with_optional_field import NestedObjectWithOptionalField
     from .nested_object_with_required_field import NestedObjectWithRequiredField
+    from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
     from .object_with_map_of_map import ObjectWithMapOfMap
     from .object_with_optional_field import ObjectWithOptionalField
     from .object_with_required_field import ObjectWithRequiredField
@@ -17,6 +18,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DoubleOptional": ".double_optional",
     "NestedObjectWithOptionalField": ".nested_object_with_optional_field",
     "NestedObjectWithRequiredField": ".nested_object_with_required_field",
+    "ObjectWithDatetimeLikeString": ".object_with_datetime_like_string",
     "ObjectWithMapOfMap": ".object_with_map_of_map",
     "ObjectWithOptionalField": ".object_with_optional_field",
     "ObjectWithRequiredField": ".object_with_required_field",
@@ -49,6 +51,7 @@ __all__ = [
     "DoubleOptional",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",
+    "ObjectWithDatetimeLikeString",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",

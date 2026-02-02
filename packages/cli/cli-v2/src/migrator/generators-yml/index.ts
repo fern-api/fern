@@ -1,0 +1,1 @@
+export { GeneratorsYmlMigrator } from "./GeneratorsYmlMigrator";

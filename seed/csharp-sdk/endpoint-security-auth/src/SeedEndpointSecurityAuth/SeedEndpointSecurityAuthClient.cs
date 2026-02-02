@@ -85,9 +85,9 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
         User = new UserClient(_client);
     }
 
-    public AuthClient Auth { get; }
+    public IAuthClient Auth { get; }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedValidation;
-using SeedValidation.Core;
+using SeedValidation.Test.Utils;
 
 namespace SeedValidation.Test.Unit.MockServer;
 
@@ -52,9 +52,6 @@ public class CreateTest : BaseMockServerTest
                 Shape = Shape.Square,
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedValidation.Type>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

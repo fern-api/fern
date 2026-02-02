@@ -22,6 +22,7 @@
         "schema": {
           "generatedName": "WithAdditionalPropertiesExplicitRequest",
           "schema": "RequestWithAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-true.yml",
             "type": "openapi"
@@ -42,6 +43,7 @@
         "schema": {
           "generatedName": "WithAdditionalPropertiesExplicitResponse",
           "schema": "ResponseWithAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-true.yml",
             "type": "openapi"
@@ -109,6 +111,7 @@
         "schema": {
           "generatedName": "WithoutAdditionalPropertiesExplicitRequest",
           "schema": "RequestWithoutAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-true.yml",
             "type": "openapi"
@@ -129,6 +132,7 @@
         "schema": {
           "generatedName": "WithoutAdditionalPropertiesExplicitResponse",
           "schema": "ResponseWithoutAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-true.yml",
             "type": "openapi"
@@ -196,6 +200,7 @@
         "schema": {
           "generatedName": "ImplicitRequest",
           "schema": "Request",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-true.yml",
             "type": "openapi"
@@ -216,6 +221,7 @@
         "schema": {
           "generatedName": "ImplicitResponse",
           "schema": "Response",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-true.yml",
             "type": "openapi"
@@ -283,6 +289,7 @@
         "schema": {
           "generatedName": "WithAdditionalPropertiesExplicitRequest",
           "schema": "RequestWithAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-false.yml",
             "type": "openapi"
@@ -303,6 +310,7 @@
         "schema": {
           "generatedName": "WithAdditionalPropertiesExplicitResponse",
           "schema": "ResponseWithAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-false.yml",
             "type": "openapi"
@@ -370,6 +378,7 @@
         "schema": {
           "generatedName": "WithoutAdditionalPropertiesExplicitRequest",
           "schema": "RequestWithoutAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-false.yml",
             "type": "openapi"
@@ -390,6 +399,7 @@
         "schema": {
           "generatedName": "WithoutAdditionalPropertiesExplicitResponse",
           "schema": "ResponseWithoutAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-false.yml",
             "type": "openapi"
@@ -457,6 +467,7 @@
         "schema": {
           "generatedName": "ImplicitRequest",
           "schema": "Request",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-false.yml",
             "type": "openapi"
@@ -477,6 +488,7 @@
         "schema": {
           "generatedName": "ImplicitResponse",
           "schema": "Response",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "source": {
             "file": "../openapi-additional-properties-defaults-to-false.yml",
             "type": "openapi"

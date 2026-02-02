@@ -50,6 +50,9 @@
     },
     {
       "path": "../workspace/loader"
+    },
+    {
+      "path": "../api-importers/graphql"
     }
   ]
 }

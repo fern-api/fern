@@ -1,5 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.54.2
+  changelogEntry:
+    - summary: |
+        Generate CI workflow Python versions and PyPI trove classifiers dynamically based on the
+        `pyproject_python_version` constraint.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 4.54.1
+  changelogEntry:
+    - summary: |
+        Switch from `poetry install` to `poetry lock` after SDK generation. This performs dependency
+        resolution and saves the lockfile without installing packages, which avoids failures when
+        transitive dependencies require custom build tools.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
 - version: 4.54.0
   changelogEntry:
     - summary: |
@@ -72,6 +91,17 @@
         it correctly parses the data field based on what the matching variant expects (string vs.
         complex object), enabling proper handling of streaming responses with mixed data types.
       type: feat
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 4.50.1
+  changelogEntry:
+    - summary: |
+        Fix duplicate imports in __init__.py when using additional_init_exports. When the same
+        symbol was exported from both the regular types module and additional_init_exports, the
+        generator would produce duplicate imports causing F811 "Redefinition of unused" ruff errors.
+        The generator now deduplicates exports, with additional_init_exports taking precedence.
+      type: fix
   createdAt: "2026-01-26"
   irVersion: 62
 

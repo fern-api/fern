@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
 
@@ -37,6 +37,6 @@ public class GetAndReturnDatetimeTest : BaseMockServerTest
         var response = await Client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
             DateTime.Parse("2024-01-15T09:30:00.000Z", null, DateTimeStyles.AdjustToUniversal)
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<DateTime>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

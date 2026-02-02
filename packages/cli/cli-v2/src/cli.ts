@@ -3,6 +3,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { addAuthCommand } from "./commands/auth";
 import { addCheckCommand } from "./commands/check";
+import { addConfigCommand } from "./commands/config";
 import { addSdkCommand } from "./commands/sdk";
 import { GlobalArgs } from "./context/GlobalArgs";
 import { Version } from "./version";
@@ -13,9 +14,11 @@ export async function runCliV2(argv?: string[]): Promise<void> {
 }
 
 function createCliV2(argv?: string[]): Argv<GlobalArgs> {
+    const terminalWidth = process.stdout.columns ?? 80;
     const cli: Argv<GlobalArgs> = yargs(argv ?? hideBin(process.argv))
         .scriptName("fern")
         .version(Version)
+        .wrap(Math.min(120, terminalWidth))
         .option("log-level", {
             type: "string",
             description: "Set log level",
@@ -39,6 +42,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
 
     addAuthCommand(cli);
     addCheckCommand(cli);
+    addConfigCommand(cli);
     addSdkCommand(cli);
 
     return cli;

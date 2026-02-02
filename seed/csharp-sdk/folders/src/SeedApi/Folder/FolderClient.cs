@@ -13,7 +13,7 @@ public partial class FolderClient : IFolderClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 
     /// <example><code>
     /// await client.Folder.FooAsync();

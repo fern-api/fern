@@ -2,5 +2,5 @@ namespace SeedBytesDownload;
 
 public partial interface ISeedBytesDownloadClient
 {
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

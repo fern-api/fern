@@ -12,5 +12,5 @@ public partial class NestedNoAuthClient : INestedNoAuthClient
         Api = new ApiClient(_client);
     }
 
-    public ApiClient Api { get; }
+    public IApiClient Api { get; }
 }

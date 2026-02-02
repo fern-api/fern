@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedMultiLineDocs;
-using SeedMultiLineDocs.Core;
+using SeedMultiLineDocs.Test.Utils;
 
 namespace SeedMultiLineDocs.Test.Unit.MockServer;
 
@@ -43,9 +43,6 @@ public class CreateUserTest : BaseMockServerTest
         var response = await Client.User.CreateUserAsync(
             new CreateUserRequest { Name = "name", Age = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

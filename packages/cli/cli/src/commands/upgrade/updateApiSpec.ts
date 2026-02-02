@@ -4,6 +4,7 @@ import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import * as fs from "fs";
 import { readFile, writeFile } from "fs/promises";
+import { buildClientSchema, getIntrospectionQuery, printSchema } from "graphql";
 import yaml from "js-yaml";
 import { Readable } from "stream";
 import { finished } from "stream/promises";
@@ -27,6 +28,71 @@ async function fetchAndWriteFile(url: string, path: string, logger: Logger, inde
             await writeFile(path, yaml.dump(yaml.load(fileContents), { indent }), "utf8");
         }
         logger.debug("File written successfully");
+    }
+}
+
+async function fetchGraphQLSchemaFromIntrospection(url: string, path: string, logger: Logger): Promise<void> {
+    // Create the introspection query
+    const introspectionQuery = getIntrospectionQuery();
+
+    // Prepare headers with authentication if available
+    const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+    };
+
+    // Check for authentication tokens in environment variables
+    const authToken = process.env.GRAPHQL_TOKEN;
+
+    if (authToken) {
+        // GitHub uses "token" format, most others use "Bearer"
+        if (url.includes("github.com")) {
+            headers.Authorization = `token ${authToken}`;
+        } else {
+            headers.Authorization = `Bearer ${authToken}`;
+        }
+    }
+
+    // Send POST request with introspection query
+    const resp = await fetch(url, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+            query: introspectionQuery
+        })
+    });
+
+    if (!resp.ok) {
+        if (resp.status === 401 || resp.status === 403) {
+            const authHint = url.includes("github.com")
+                ? "Set GITHUB_TOKEN environment variable with a GitHub personal access token"
+                : "Set GRAPHQL_TOKEN or API_TOKEN environment variable with an authentication token";
+            throw new Error(
+                `GraphQL introspection failed: ${resp.status} ${resp.statusText}. ` +
+                    `This endpoint requires authentication. ${authHint}`
+            );
+        }
+        throw new Error(`GraphQL introspection failed: ${resp.status} ${resp.statusText}`);
+    }
+
+    const result = await resp.json();
+
+    if (result.errors) {
+        throw new Error(`GraphQL introspection errors: ${JSON.stringify(result.errors)}`);
+    }
+
+    if (!result.data) {
+        throw new Error("GraphQL introspection returned no data");
+    }
+
+    try {
+        // Convert introspection result to schema and then to SDL
+        const schema = buildClientSchema(result.data);
+        const sdl = printSchema(schema);
+
+        await writeFile(path, sdl, "utf8");
+    } catch (error) {
+        throw new Error(`Failed to convert introspection result to SDL: ${error}`);
     }
 }
 
@@ -112,13 +178,17 @@ async function getAndFetchFromAPIDefinitionLocation({
         return;
     }
     if (apiLocation.origin != null) {
-        cliContext.logger.info(`Origin found, fetching spec from ${apiLocation.origin}`);
-        await fetchAndWriteFile(
-            apiLocation.origin,
-            join(workspacePath, RelativeFilePath.of(apiLocation.schema.path)),
-            cliContext.logger,
-            indent
-        );
+        const filePath = join(workspacePath, RelativeFilePath.of(apiLocation.schema.path));
+
+        if (apiLocation.schema.type === "graphql") {
+            cliContext.logger.info(
+                `GraphQL schema origin found, performing introspection query to ${apiLocation.origin}`
+            );
+            await fetchGraphQLSchemaFromIntrospection(apiLocation.origin, filePath, cliContext.logger);
+        } else {
+            cliContext.logger.info(`Origin found, fetching spec from ${apiLocation.origin}`);
+            await fetchAndWriteFile(apiLocation.origin, filePath, cliContext.logger, indent);
+        }
     }
 }
 

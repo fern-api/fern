@@ -30,7 +30,7 @@ public partial class SeedPathParametersClient : ISeedPathParametersClient
         User = new UserClient(_client);
     }
 
-    public OrganizationsClient Organizations { get; }
+    public IOrganizationsClient Organizations { get; }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

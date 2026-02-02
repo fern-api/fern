@@ -40,5 +40,5 @@ public partial class SeedSingleUrlEnvironmentDefaultClient : ISeedSingleUrlEnvir
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; }
+    public IDummyClient Dummy { get; }
 }

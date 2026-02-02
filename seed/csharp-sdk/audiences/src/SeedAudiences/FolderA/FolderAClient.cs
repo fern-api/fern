@@ -12,5 +12,5 @@ public partial class FolderAClient : IFolderAClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedClientSideParams;
-using SeedClientSideParams.Core;
+using SeedClientSideParams.Test.Utils;
 
 namespace SeedClientSideParams.Test.Unit.MockServer;
 
@@ -57,9 +57,6 @@ public class GetConnectionTest : BaseMockServerTest
             "connectionId",
             new GetConnectionRequest { Fields = "fields" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Connection>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

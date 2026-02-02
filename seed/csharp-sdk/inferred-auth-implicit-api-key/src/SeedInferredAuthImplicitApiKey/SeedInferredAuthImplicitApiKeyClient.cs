@@ -45,11 +45,11 @@ public partial class SeedInferredAuthImplicitApiKeyClient : ISeedInferredAuthImp
         Simple = new SimpleClient(_client);
     }
 
-    public AuthClient Auth { get; }
+    public IAuthClient Auth { get; }
 
-    public NestedNoAuthClient NestedNoAuth { get; }
+    public INestedNoAuthClient NestedNoAuth { get; }
 
-    public NestedClient Nested { get; }
+    public INestedClient Nested { get; }
 
-    public SimpleClient Simple { get; }
+    public ISimpleClient Simple { get; }
 }

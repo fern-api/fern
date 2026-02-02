@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.34.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation importing types from the wrong package when multiple services have
+        endpoints with the same HTTP method and path. The generator now uses endpoint IDs to resolve
+        the correct endpoint instead of relying solely on method and path matching.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
 - version: 3.34.5
   changelogEntry:
     - summary: |
