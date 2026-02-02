@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.56.9
+  changelogEntry:
+    - summary: |
+        Add proactive debug logging for git environment when using self-hosted GitHub mode. Running with
+        `--log-level debug` now outputs git path, version, and PATH before attempting to clone, helping
+        diagnose git availability issues without requiring manual debug prints.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
 - version: 3.56.8
   changelogEntry:
     - summary: |
