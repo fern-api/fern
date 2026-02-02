@@ -1,0 +1,19 @@
+edition: 2026-01-01
+
+org: test-org
+
+api:
+  specs:
+    - fern: ./definition
+
+sdks:
+  targets:
+    typescript:
+      version: 3.45.1
+      output:
+        path: ./sdks/typescript
+
+    python:
+      version: 4.50.1
+      output:
+        path: ./sdks/python
