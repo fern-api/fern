@@ -22,7 +22,7 @@ interface GenerateArgs extends GlobalArgs {
     group?: string;
 
     /** Filter by audiences */
-    audiences?: string[];
+    audience?: string[];
 
     /** Whether to run the generator locally in a container */
     local?: boolean;
@@ -57,10 +57,10 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                 type: "string",
                 description: "The SDK group to generate"
             })
-            .option("audiences", {
+            .option("audience", {
                 type: "array",
                 string: true,
-                description: "Filter the target API(s) with the given audiences"
+                description: "Filter the target API(s) with the given audience(s)"
             })
             .option("local", {
                 type: "boolean",
@@ -175,7 +175,7 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
                 task,
                 target,
                 apiDefinition,
-                audiences: parseAudiences(args.audiences),
+                audiences: parseAudiences(args.audience),
                 runtime,
                 containerEngine: args["container-engine"] ?? "docker",
                 keepContainer: args["keep-container"] ?? false,
@@ -269,6 +269,9 @@ function validateArgs(args: GenerateArgs): void {
     }
     if (args.group != null && args.target != null) {
         throw new Error("The --group and --target flags cannot be used together");
+    }
+    if (args.group == null && args.target == null) {
+        throw new Error("A --target or --group must be specified");
     }
 }
 
