@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.56.8
+  changelogEntry:
+    - summary: |
+        Support GraphQL API References. You can now add a `graphql` spec to `generators.yml` to render an auto-generated reference in the docs.
+      type: fix
+  createdAt: "2026-02-2"
+  irVersion: 63
+
 - version: 3.55.7
   changelogEntry:
     - summary: |
