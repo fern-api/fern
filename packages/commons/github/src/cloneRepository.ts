@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import simpleGit from "simple-git";
 import tmp from "tmp-promise";
 
@@ -35,7 +36,30 @@ export async function cloneRepository({
                 : undefined
     });
 
-    await git.clone(cloneUrl, ".");
+    try {
+        await git.clone(cloneUrl, ".");
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        if (errorMessage.includes("ENOENT") || errorMessage.includes("spawn git")) {
+            let gitInfo = "git binary not found";
+            try {
+                const gitPath = execSync("which git 2>/dev/null || echo 'not found'", { encoding: "utf-8" }).trim();
+                const gitVersion = execSync("git --version 2>/dev/null || echo 'unknown'", {
+                    encoding: "utf-8"
+                }).trim();
+                gitInfo = `git path: ${gitPath}, version: ${gitVersion}`;
+            } catch {
+                gitInfo = "git binary not available in PATH";
+            }
+            throw new Error(
+                `Failed to clone repository: git command not found. ` +
+                    `This typically means git is not installed in the container. ` +
+                    `Debug info: ${gitInfo}. ` +
+                    `Original error: ${errorMessage}`
+            );
+        }
+        throw error;
+    }
 
     return new ClonedRepository({
         clonePath,
