@@ -44,5 +44,8 @@ function convertErrorToString(error: unknown): string | undefined {
     if (error instanceof Error) {
         return error.message;
     }
+    if (error != null && typeof error === "object") {
+        return JSON.stringify(error);
+    }
     return undefined;
 }
