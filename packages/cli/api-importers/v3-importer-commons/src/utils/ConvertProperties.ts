@@ -77,6 +77,15 @@ export function convertProperties({
                     referencedTypes.add(type);
                 });
             }
+
+            // If the property is a reference to another schema, add the referenced type ID
+            // This ensures that deeply nested types are properly tracked as descendants
+            if (context.isReferenceObject(propertySchema)) {
+                const typeId = context.getTypeIdFromSchemaReference(propertySchema);
+                if (typeId != null) {
+                    referencedTypes.add(typeId);
+                }
+            }
             for (const audience of convertedProperty.schema?.audiences ?? []) {
                 if (propertiesByAudience[audience] == null) {
                     propertiesByAudience[audience] = new Set<string>();
