@@ -230,6 +230,9 @@
           "displayName": "Get plant by ID (requires OAuth)",
           "method": "GET",
           "baseUrl": "https://api.example.com/v1",
+          "v2BaseUrls": [
+            "https://api.example.com/v1"
+          ],
           "path": {
             "head": "/plants/",
             "parts": [

@@ -248,6 +248,9 @@
         {
           "method": "GET",
           "baseUrl": "Test API",
+          "v2BaseUrls": [
+            "Test API"
+          ],
           "path": {
             "head": "/trees",
             "parts": []
@@ -1329,6 +1332,9 @@
         {
           "method": "POST",
           "baseUrl": "Test API",
+          "v2BaseUrls": [
+            "Test API"
+          ],
           "path": {
             "head": "/trees",
             "parts": []

@@ -118,6 +118,9 @@
         {
           "method": "POST",
           "baseUrl": "production",
+          "v2BaseUrls": [
+            "production"
+          ],
           "path": {
             "head": "/v1/users",
             "parts": []

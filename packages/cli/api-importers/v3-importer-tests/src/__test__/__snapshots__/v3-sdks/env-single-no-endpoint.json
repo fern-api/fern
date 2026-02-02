@@ -23,6 +23,9 @@
         {
           "method": "GET",
           "baseUrl": "Prod",
+          "v2BaseUrls": [
+            "Prod"
+          ],
           "path": {
             "head": "/pets",
             "parts": []

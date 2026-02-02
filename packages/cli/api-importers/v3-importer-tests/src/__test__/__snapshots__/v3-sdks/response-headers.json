@@ -334,6 +334,9 @@
           "displayName": "List all users",
           "method": "GET",
           "baseUrl": "Test API",
+          "v2BaseUrls": [
+            "Test API"
+          ],
           "path": {
             "head": "/users",
             "parts": []
@@ -1219,6 +1222,9 @@
           "displayName": "Get a user by ID",
           "method": "GET",
           "baseUrl": "Test API",
+          "v2BaseUrls": [
+            "Test API"
+          ],
           "path": {
             "head": "/users/",
             "parts": [

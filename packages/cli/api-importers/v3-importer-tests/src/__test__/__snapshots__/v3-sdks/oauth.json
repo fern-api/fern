@@ -435,6 +435,9 @@
           "displayName": "Request an access token",
           "method": "POST",
           "baseUrl": "https://api.example.com/v1",
+          "v2BaseUrls": [
+            "https://api.example.com/v1"
+          ],
           "path": {
             "head": "/oauth/token",
             "parts": []

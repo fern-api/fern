@@ -347,6 +347,9 @@
           "displayName": "Create a Test",
           "method": "POST",
           "baseUrl": "https://api.test.io",
+          "v2BaseUrls": [
+            "https://api.test.io"
+          ],
           "path": {
             "head": "/v2/test",
             "parts": []
@@ -848,6 +851,9 @@
           "displayName": "Create a Test",
           "method": "POST",
           "baseUrl": "https://api.test.io",
+          "v2BaseUrls": [
+            "https://api.test.io"
+          ],
           "path": {
             "head": "/v2/test",
             "parts": []

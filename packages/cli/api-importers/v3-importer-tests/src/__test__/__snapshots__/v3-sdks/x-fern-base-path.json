@@ -152,6 +152,9 @@
           "displayName": "Example endpoint",
           "method": "GET",
           "baseUrl": "https://api.acme.com",
+          "v2BaseUrls": [
+            "https://api.acme.com"
+          ],
           "path": {
             "head": "/example",
             "parts": []

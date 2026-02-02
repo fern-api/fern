@@ -784,34 +784,62 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         const operationServer = this.operation.servers?.[0];
-        if (operationServer == null) {
-            return undefined;
-        }
-        const matchingTopLevelServer = this.topLevelServers?.find((server) => server.url === operationServer.url);
-        const serverToUse = matchingTopLevelServer ?? operationServer;
+        if (operationServer != null) {
+            const matchingTopLevelServer = this.topLevelServers?.find((server) => server.url === operationServer.url);
+            const serverToUse = matchingTopLevelServer ?? operationServer;
 
-        return ServersConverter.getServerName({
-            server: serverToUse,
-            context: this.context
-        });
-    }
-
-    private getEndpointBaseUrls(): string[] | undefined {
-        const operationServers = this.operation.servers;
-        if (operationServers == null) {
-            return undefined;
-        }
-        const baseUrls = operationServers.map((server) => {
-            const matchingTopLevelServer = this.topLevelServers?.find(
-                (topLevelServer) => topLevelServer.url === server.url
-            );
-            const serverToUse = matchingTopLevelServer ?? server;
             return ServersConverter.getServerName({
                 server: serverToUse,
                 context: this.context
             });
-        });
-        return baseUrls;
+        }
+
+        // Fall back to the spec-level server when there are no operation-level servers.
+        // This ensures that endpoints inherit the correct base URL from their spec's
+        // x-fern-server-name, rather than defaulting to the global default-url.
+        if (this.topLevelServers != null && this.topLevelServers.length > 0) {
+            const topLevelServer = this.topLevelServers[0];
+            if (topLevelServer != null) {
+                return ServersConverter.getServerName({
+                    server: topLevelServer,
+                    context: this.context
+                });
+            }
+        }
+
+        return undefined;
+    }
+
+    private getEndpointBaseUrls(): string[] | undefined {
+        const operationServers = this.operation.servers;
+        if (operationServers != null && operationServers.length > 0) {
+            const baseUrls = operationServers.map((server) => {
+                const matchingTopLevelServer = this.topLevelServers?.find(
+                    (topLevelServer) => topLevelServer.url === server.url
+                );
+                const serverToUse = matchingTopLevelServer ?? server;
+                return ServersConverter.getServerName({
+                    server: serverToUse,
+                    context: this.context
+                });
+            });
+            return baseUrls;
+        }
+
+        // Fall back to the spec-level server when there are no operation-level servers.
+        if (this.topLevelServers != null && this.topLevelServers.length > 0) {
+            const topLevelServer = this.topLevelServers[0];
+            if (topLevelServer != null) {
+                return [
+                    ServersConverter.getServerName({
+                        server: topLevelServer,
+                        context: this.context
+                    })
+                ];
+            }
+        }
+
+        return undefined;
     }
 
     private buildExamplePath(httpPath: HttpPath, pathParameters: Record<string, unknown>): string {

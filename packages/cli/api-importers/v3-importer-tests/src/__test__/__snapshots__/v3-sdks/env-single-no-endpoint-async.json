@@ -295,6 +295,9 @@
         {
           "method": "GET",
           "baseUrl": "Base",
+          "v2BaseUrls": [
+            "Base"
+          ],
           "path": {
             "head": "/pets",
             "parts": []

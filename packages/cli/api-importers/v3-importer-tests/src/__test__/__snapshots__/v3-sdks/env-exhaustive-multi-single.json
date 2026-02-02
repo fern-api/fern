@@ -197,6 +197,9 @@
         {
           "method": "GET",
           "baseUrl": "Base",
+          "v2BaseUrls": [
+            "Base"
+          ],
           "path": {
             "head": "/pets",
             "parts": []
@@ -358,6 +361,9 @@
         {
           "method": "GET",
           "baseUrl": "Prod-1",
+          "v2BaseUrls": [
+            "Prod-1"
+          ],
           "path": {
             "head": "/petstore",
             "parts": []

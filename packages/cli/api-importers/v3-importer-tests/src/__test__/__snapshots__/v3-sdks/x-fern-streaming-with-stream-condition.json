@@ -443,6 +443,9 @@
           "displayName": "Start a chat",
           "method": "POST",
           "baseUrl": "https://api.streamingtest.io",
+          "v2BaseUrls": [
+            "https://api.streamingtest.io"
+          ],
           "path": {
             "head": "/v2/chats",
             "parts": []
@@ -1037,6 +1040,9 @@
           "displayName": "Start a chat",
           "method": "POST",
           "baseUrl": "https://api.streamingtest.io",
+          "v2BaseUrls": [
+            "https://api.streamingtest.io"
+          ],
           "path": {
             "head": "/v2/chats",
             "parts": []

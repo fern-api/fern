@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.56.9
+  changelogEntry:
+    - summary: |
+        Fix multi-URL environments not being routed per-namespace in generated SDKs. When using multiple OpenAPI specs with different `servers` URLs combined via namespaces, endpoints now correctly inherit the `x-fern-server-name` from their spec-level servers instead of defaulting to the global `default-url`.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
 - version: 3.56.8
   changelogEntry:
     - summary: |

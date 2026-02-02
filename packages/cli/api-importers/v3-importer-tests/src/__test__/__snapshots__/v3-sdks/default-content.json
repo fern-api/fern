@@ -156,6 +156,9 @@
         {
           "method": "POST",
           "baseUrl": "https://ai.com",
+          "v2BaseUrls": [
+            "https://ai.com"
+          ],
           "path": {
             "head": "/generateContent",
             "parts": []

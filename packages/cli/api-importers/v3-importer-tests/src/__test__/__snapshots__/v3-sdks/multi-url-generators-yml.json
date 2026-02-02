@@ -438,6 +438,9 @@
           "displayName": "List Users",
           "method": "GET",
           "baseUrl": "https://a.com",
+          "v2BaseUrls": [
+            "https://a.com"
+          ],
           "path": {
             "head": "/users",
             "parts": []
@@ -1167,6 +1170,9 @@
           "displayName": "Get user information",
           "method": "GET",
           "baseUrl": "user",
+          "v2BaseUrls": [
+            "https://a.com"
+          ],
           "path": {
             "head": "/users/",
             "parts": [
@@ -2088,6 +2094,9 @@
           "displayName": "Get authentication token",
           "method": "GET",
           "baseUrl": "auth",
+          "v2BaseUrls": [
+            "https://a.com"
+          ],
           "path": {
             "head": "/token",
             "parts": []
