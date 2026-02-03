@@ -60,6 +60,7 @@
       "_visit": [Function],
       "environments": [
         {
+          "defaultUrl": undefined,
           "docs": "Demo server",
           "id": "Demo server",
           "name": {
