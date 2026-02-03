@@ -131,7 +131,14 @@
             {
               "description": undefined,
               "headers": {},
-              "messages": [],
+              "messages": [
+                {
+                  "body": {
+                    "key": "value",
+                  },
+                  "type": "subscribe",
+                },
+              ],
               "name": undefined,
               "path": "/plant/updates",
               "pathParameters": {},
@@ -140,7 +147,21 @@
           ],
           "headers": [],
           "id": "plantUpdates",
-          "messages": [],
+          "messages": [
+            {
+              "availability": undefined,
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown",
+                },
+              },
+              "description": undefined,
+              "displayName": "subscribe",
+              "origin": "server",
+              "type": "subscribe",
+            },
+          ],
           "name": "Plant Updates",
           "path": {
             "parts": [
