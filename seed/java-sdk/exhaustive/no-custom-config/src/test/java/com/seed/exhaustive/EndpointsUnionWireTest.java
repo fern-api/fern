@@ -22,9 +22,8 @@ public class EndpointsUnionWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedExhaustiveClient.builder()
+        client = SeedExhaustiveClient.withCredentials("test-client-id", "test-client-secret")
                 .url(server.url("/").toString())
-                .token("test-token")
                 .build();
     }
 
@@ -35,6 +34,10 @@ public class EndpointsUnionWireTest {
 
     @Test
     public void testGetAndReturnUnion() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setBody("{\"animal\":\"dog\",\"name\":\"name\",\"likesToWoof\":true}"));
@@ -42,9 +45,17 @@ public class EndpointsUnionWireTest {
                 .union()
                 .getAndReturnUnion(
                         Animal.dog(Dog.builder().name("name").likesToWoof(true).build()));
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody =

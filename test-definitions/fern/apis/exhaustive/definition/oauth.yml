@@ -1,0 +1,32 @@
+# OAuth endpoint for testing staged builder ordering
+# This tests the case where grant_type is a required property that comes before client_id
+# in the staged builder order, which requires the OAuth token supplier to call methods
+# in the correct order.
+
+types:
+  OAuthTokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: string
+      expires_in: optional<long>
+      refresh_token: optional<string>
+
+service:
+  auth: false
+  base-path: /oauth
+  endpoints:
+    getToken:
+      path: /token
+      method: POST
+      request:
+        name: GetTokenRequest
+        body:
+          properties:
+            # grant_type is required and comes BEFORE client_id in definition order
+            # This means the staged builder will have GrantTypeStage -> ClientIdStage -> ...
+            grant_type: string
+            client_id: string
+            client_secret: optional<string>
+            scope: optional<string>
+      response: OAuthTokenResponse

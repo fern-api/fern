@@ -5,11 +5,10 @@ import java.time.OffsetDateTime;
 
 public class Example36 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
-            .builder()
-            .token("<token>")
+        SeedExhaustiveClient client = SeedExhaustiveClient.withCredentials("<clientId>", "<clientSecret>")
             .url("https://api.fern.com")
-            .build();
+            .build()
+        ;
 
         client.endpoints().primitive().getAndReturnDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"));
     }

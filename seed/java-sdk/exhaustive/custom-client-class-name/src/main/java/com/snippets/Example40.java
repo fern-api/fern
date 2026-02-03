@@ -5,8 +5,9 @@ import com.seed.exhaustive.resources.endpoints.put.requests.PutRequest;
 
 public class Example40 {
     public static void main(String[] args) {
-        Best client =
-                Best.builder().token("<token>").url("https://api.fern.com").build();
+        Best client = Best.withCredentials("<clientId>", "<clientSecret>")
+                .url("https://api.fern.com")
+                .build();
 
         client.endpoints().put().add(PutRequest.builder().id("id").build());
     }

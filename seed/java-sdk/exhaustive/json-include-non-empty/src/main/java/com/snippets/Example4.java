@@ -5,8 +5,7 @@ import java.util.HashMap;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
-                .token("<token>")
+        SeedExhaustiveClient client = SeedExhaustiveClient.withCredentials("<clientId>", "<clientSecret>")
                 .url("https://api.fern.com")
                 .build();
 

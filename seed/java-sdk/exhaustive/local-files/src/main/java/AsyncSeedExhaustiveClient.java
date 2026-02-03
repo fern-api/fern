@@ -10,7 +10,9 @@ import com.fern.sdk.resources.endpoints.AsyncEndpointsClient;
 import com.fern.sdk.resources.inlinedrequests.AsyncInlinedRequestsClient;
 import com.fern.sdk.resources.noauth.AsyncNoAuthClient;
 import com.fern.sdk.resources.noreqbody.AsyncNoReqBodyClient;
+import com.fern.sdk.resources.oauth.AsyncOauthClient;
 import com.fern.sdk.resources.reqwithheaders.AsyncReqWithHeadersClient;
+import java.lang.String;
 import java.util.function.Supplier;
 
 public class AsyncSeedExhaustiveClient {
@@ -24,6 +26,8 @@ public class AsyncSeedExhaustiveClient {
 
   protected final Supplier<AsyncNoReqBodyClient> noReqBodyClient;
 
+  protected final Supplier<AsyncOauthClient> oauthClient;
+
   protected final Supplier<AsyncReqWithHeadersClient> reqWithHeadersClient;
 
   public AsyncSeedExhaustiveClient(ClientOptions clientOptions) {
@@ -32,6 +36,7 @@ public class AsyncSeedExhaustiveClient {
     this.inlinedRequestsClient = Suppliers.memoize(() -> new AsyncInlinedRequestsClient(clientOptions));
     this.noAuthClient = Suppliers.memoize(() -> new AsyncNoAuthClient(clientOptions));
     this.noReqBodyClient = Suppliers.memoize(() -> new AsyncNoReqBodyClient(clientOptions));
+    this.oauthClient = Suppliers.memoize(() -> new AsyncOauthClient(clientOptions));
     this.reqWithHeadersClient = Suppliers.memoize(() -> new AsyncReqWithHeadersClient(clientOptions));
   }
 
@@ -51,11 +56,39 @@ public class AsyncSeedExhaustiveClient {
     return this.noReqBodyClient.get();
   }
 
+  public AsyncOauthClient oauth() {
+    return this.oauthClient.get();
+  }
+
   public AsyncReqWithHeadersClient reqWithHeaders() {
     return this.reqWithHeadersClient.get();
   }
 
-  public static AsyncSeedExhaustiveClientBuilder builder() {
-    return new AsyncSeedExhaustiveClientBuilder();
+  /**
+   * Creates a client builder using a pre-generated access token.
+   * @param token The access token to use for authentication
+   * @return A builder configured for token authentication
+   */
+  public static AsyncSeedExhaustiveClientBuilder._TokenAuth withToken(String token) {
+    return AsyncSeedExhaustiveClientBuilder.withToken(token);
+  }
+
+  /**
+   * Creates a client builder using OAuth client credentials.
+   * @param clientId The OAuth client ID
+   * @param clientSecret The OAuth client secret
+   * @return A builder configured for OAuth authentication
+   */
+  public static AsyncSeedExhaustiveClientBuilder._CredentialsAuth withCredentials(String clientId,
+      String clientSecret) {
+    return AsyncSeedExhaustiveClientBuilder.withCredentials(clientId, clientSecret);
+  }
+
+  /**
+   * Creates a new client builder.
+   * @return A builder for configuring and creating the client
+   */
+  public static AsyncSeedExhaustiveClientBuilder._Builder builder() {
+    return AsyncSeedExhaustiveClientBuilder.builder();
   }
 }

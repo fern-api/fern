@@ -4,11 +4,10 @@ import com.fern.sdk.SeedExhaustiveClient;
 
 public class Example37 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
-            .builder()
-            .token("<token>")
+        SeedExhaustiveClient client = SeedExhaustiveClient.withCredentials("<clientId>", "<clientSecret>")
             .url("https://api.fern.com")
-            .build();
+            .build()
+        ;
 
         client.endpoints().primitive().getAndReturnDate("2023-01-15");
     }

@@ -2537,6 +2537,79 @@ client.noReqBody().postWithNoRequestBody();
 </dl>
 </details>
 
+## Oauth
+<details><summary><code>client.oauth.getToken(request) -> OAuthTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.oauth().getToken(
+    GetTokenRequest
+        .builder()
+        .grantType("grant_type")
+        .clientId("client_id")
+        .clientSecret("client_secret")
+        .scope("scope")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**grantType:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientSecret:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `Optional<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ReqWithHeaders
 <details><summary><code>client.reqWithHeaders.getWithCustomHeader(request)</code></summary>
 <dl>

@@ -60,16 +60,40 @@ import java.util.Arrays;
 
 public class Example {
     public static void main(String[] args) {
-        Best client = Best
-            .builder()
-            .token("<token>")
-            .build();
+        Best client = Best.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.endpoints().container().getAndReturnListOfPrimitives(
             Arrays.asList("string", "string")
         );
     }
 }
+```
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+Best client = Best.builder()
+    .token("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+Best client = Best.builder()
+    .credentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
 ```
 
 ## Base Url

@@ -1,4 +1,23 @@
 name: exhaustive
-auth: bearer
+imports:
+  oauth: oauth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: oauth.getToken
+      request-properties:
+        # client_id and client_secret are mapped to client_id and client_secret in the request
+        # but grant_type comes BEFORE client_id in the request definition order
+        # This tests that the OAuth token supplier calls methods in the correct staged builder order
+        client-id: $request.client_id
+        client-secret: $request.client_secret
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+
 error-discrimination:
   strategy: status-code

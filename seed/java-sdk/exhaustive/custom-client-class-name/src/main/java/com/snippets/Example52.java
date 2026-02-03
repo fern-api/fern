@@ -1,18 +1,20 @@
 package com.snippets;
 
 import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
+import com.seed.exhaustive.resources.oauth.requests.GetTokenRequest;
 
 public class Example52 {
     public static void main(String[] args) {
-        Best client =
-                Best.builder().token("<token>").url("https://api.fern.com").build();
+        Best client = Best.withCredentials("<clientId>", "<clientSecret>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.reqWithHeaders()
-                .getWithCustomHeader(ReqWithHeaders.builder()
-                        .xTestServiceHeader("X-TEST-SERVICE-HEADER")
-                        .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
-                        .body("string")
+        client.oauth()
+                .getToken(GetTokenRequest.builder()
+                        .grantType("grant_type")
+                        .clientId("client_id")
+                        .clientSecret("client_secret")
+                        .scope("scope")
                         .build());
     }
 }
