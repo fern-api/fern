@@ -7,6 +7,7 @@ servers:
   - url: https://api.{region}.{environment}.example.com/v1
     description: Regional API server
     x-server-name: Default
+    x-fern-default-url: https://api.example.com/v1
     variables:
       region:
         default: us-east-1

@@ -11,6 +11,7 @@ export const Server: core.serialization.ObjectSchema<serializers.Server.Raw, Fer
         name: core.serialization.string().optional(),
         url: core.serialization.string(),
         audiences: core.serialization.list(core.serialization.string()).optional(),
+        defaultUrl: core.serialization.string().optional(),
         urlTemplate: core.serialization.string().optional(),
         variables: core.serialization.list(ServerVariable).optional(),
     })
@@ -21,6 +22,7 @@ export declare namespace Server {
         name?: string | null;
         url: string;
         audiences?: string[] | null;
+        defaultUrl?: string | null;
         urlTemplate?: string | null;
         variables?: ServerVariable.Raw[] | null;
     }

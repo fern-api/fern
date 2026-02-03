@@ -134,6 +134,9 @@ types:
         docs: Populated by `X-Server-Name`
       url: string
       audiences: optional<list<string>>
+      defaultUrl:
+        type: optional<string>
+        docs: A separate default URL to use when no variables are provided (from x-fern-default-url extension)
       urlTemplate:
         type: optional<string>
         docs: The original URL template with variable placeholders (e.g., "https://api.{region}.example.com")

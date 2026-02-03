@@ -20,6 +20,7 @@ interface SingleApiServer {
     description?: string;
     url: string;
     audiences?: string[];
+    defaultUrl?: string;
     urlTemplate?: string;
     variables?: ServerVariable[];
 }
@@ -191,6 +192,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 ? {
                       url: server.url,
                       audiences: server.audiences,
+                      "default-url": server.defaultUrl,
                       "url-template": server.urlTemplate,
                       variables: server.variables?.map((v) => ({
                           id: v.id,
@@ -444,6 +446,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         const firstServer = context.ir.servers[0];
         const singleURL = firstServer?.url;
         const singleURLAudiences = firstServer?.audiences;
+        const singleURLDefaultUrl = firstServer?.defaultUrl;
         const singleURLTemplate = firstServer?.urlTemplate;
         const singleURLVariables = firstServer?.variables;
         if (singleURL != null) {
@@ -453,6 +456,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 ? {
                       url: singleURL,
                       audiences: singleURLAudiences,
+                      "default-url": singleURLDefaultUrl,
                       "url-template": singleURLTemplate,
                       variables: singleURLVariables?.map((v) => ({
                           id: v.id,

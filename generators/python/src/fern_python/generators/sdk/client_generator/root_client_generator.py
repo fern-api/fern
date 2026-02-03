@@ -1272,15 +1272,36 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if url_template_info is not None:
                 # URL templating is enabled - construct URL from template and variables
                 url_template, variables = url_template_info
+                default_url = env_generator.get_default_url()
                 # Build the format string call: url_template.format(var1=var1, var2=var2, ...)
                 format_kwargs = ", ".join([f"{var_id}={var_name}" for var_id, var_name, _, _ in variables])
                 template_url_expr = f'"{url_template}".format({format_kwargs})'
-                # Use base_url if provided, otherwise construct from template
+
+                if default_url is not None:
+                    # If defaultUrl is configured, use it when no variables are provided
+                    # Check if all variables are using their defaults (i.e., user didn't provide any)
+                    var_checks = " and ".join(
+                        [
+                            f"{var_name} == {repr(var_default)}"
+                            for _, var_name, var_default, _ in variables
+                            if var_default
+                        ]
+                    )
+                    if var_checks:
+                        # Use default_url when all variables are at their defaults, otherwise use template
+                        url_expr = f'"{default_url}" if ({var_checks}) else {template_url_expr}'
+                    else:
+                        # No defaults to check, just use template
+                        url_expr = template_url_expr
+                else:
+                    url_expr = template_url_expr
+
+                # Use base_url if provided, otherwise construct from template/default
                 client_wrapper_constructor_kwargs.append(
                     (
                         ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
                         AST.Expression(
-                            f"{RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None else {template_url_expr}"
+                            f"{RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None else {url_expr}"
                         ),
                     )
                 )

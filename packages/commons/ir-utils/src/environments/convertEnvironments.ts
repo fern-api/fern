@@ -68,6 +68,7 @@ function convertSingleBaseUrlEnvironments({
                 visitRawEnvironmentDeclaration(rawEnvironment, {
                     singleBaseUrl: (singleBaseUrlEnvironment) => {
                         const isString = typeof singleBaseUrlEnvironment === "string";
+                        const defaultUrl = isString ? undefined : singleBaseUrlEnvironment["default-url"];
                         const urlTemplate = isString ? undefined : singleBaseUrlEnvironment["url-template"];
                         const variables = isString ? undefined : singleBaseUrlEnvironment.variables;
 
@@ -78,6 +79,7 @@ function convertSingleBaseUrlEnvironments({
                             url: removeTrailingSlash(
                                 isString ? singleBaseUrlEnvironment : singleBaseUrlEnvironment.url
                             ),
+                            defaultUrl: defaultUrl ? removeTrailingSlash(defaultUrl) : undefined,
                             urlTemplate: urlTemplate,
                             urlVariables: variables?.map((v) => ({
                                 id: v.id,

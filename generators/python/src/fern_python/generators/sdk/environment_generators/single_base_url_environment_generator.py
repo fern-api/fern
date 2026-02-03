@@ -151,3 +151,21 @@ class SingleBaseUrlEnvironmentGenerator:
                             variables.append((var_id, var_name, var_default, var_values))
                 return (url_template, variables)
         return None
+
+    def get_default_url(self) -> Optional[str]:
+        """
+        Get the default URL to use when no variables are provided.
+        Returns the defaultUrl from the first environment that has URL templating,
+        or None if no default URL is configured.
+
+        Note: Uses getattr with camelCase field names for forward-compatibility.
+        The Python IR SDK stores extra fields (not yet in the schema) in model_extra
+        with their original JSON key names (camelCase). Once the IR SDK is updated,
+        these fields will be available as snake_case attributes.
+        """
+        for env in self._environments.environments:
+            # Try camelCase first (extra fields from JSON), then snake_case (future IR SDK)
+            default_url = getattr(env, "defaultUrl", None) or getattr(env, "default_url", None)
+            if default_url is not None:
+                return str(default_url)
+        return None

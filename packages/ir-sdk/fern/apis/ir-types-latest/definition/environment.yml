@@ -23,6 +23,12 @@ types:
       id: EnvironmentId
       name: commons.Name
       url: EnvironmentUrl
+      defaultUrl:
+        type: optional<string>
+        docs: |
+          A separate default URL to use when no variables are provided.
+          If present and no variables are passed, use this URL instead of the template.
+          This is typically a server without variables that serves as the fallback.
       urlTemplate:
         type: optional<string>
         docs: |

@@ -12,6 +12,7 @@ import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ServerNameExtension } from "../../extensions/x-fern-server-name";
 
 const DEFAULT_BASE_URL_ID = "Base";
+const X_FERN_DEFAULT_URL = "x-fern-default-url";
 
 export declare namespace ServersConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -96,6 +97,9 @@ export class ServersConverter extends AbstractConverter<
             };
         }
 
+        // Extract x-fern-default-url from any server that has it
+        const fernDefaultUrl = this.extractFernDefaultUrl();
+
         const environments: SingleBaseUrlEnvironment[] = this.servers
             .map((server) => {
                 const serverName = ServersConverter.getServerName({ server, context: this.context });
@@ -107,6 +111,7 @@ export class ServersConverter extends AbstractConverter<
                         id: serverName,
                         name: this.context.casingsGenerator.generateName(serverName),
                         url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
+                        defaultUrl: fernDefaultUrl,
                         urlTemplate: this.maybeRemoveTrailingSlashIfNotEmpty(server.url),
                         urlVariables: this.convertServerVariables(server.variables),
                         docs: server.description
@@ -117,6 +122,7 @@ export class ServersConverter extends AbstractConverter<
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
                     url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
+                    defaultUrl: undefined,
                     urlTemplate: undefined,
                     urlVariables: undefined,
                     docs: server.description
@@ -199,5 +205,22 @@ export class ServersConverter extends AbstractConverter<
 
     private maybeRemoveTrailingSlashIfNotEmpty(url: string): string {
         return url.endsWith("/") && url !== "/" ? url.slice(0, -1) : url;
+    }
+
+    /**
+     * Extracts the x-fern-default-url extension from any server in the list.
+     * This URL is used as a fallback when no variables are provided.
+     */
+    private extractFernDefaultUrl(): string | undefined {
+        if (this.servers == null) {
+            return undefined;
+        }
+        for (const server of this.servers) {
+            const defaultUrl = (server as Record<string, unknown>)[X_FERN_DEFAULT_URL];
+            if (typeof defaultUrl === "string") {
+                return this.maybeRemoveTrailingSlashIfNotEmpty(defaultUrl);
+            }
+        }
+        return undefined;
     }
 }

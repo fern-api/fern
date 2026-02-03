@@ -104,6 +104,7 @@ export function parse({
                                 ...server,
                                 audiences: undefined,
                                 description: undefined,
+                                defaultUrl: undefined,
                                 urlTemplate: undefined,
                                 variables: undefined
                             }))
