@@ -17,6 +17,7 @@ type DiscriminatedUnionVariant = {
     symbolName: string;
     discriminantWireValue: string;
     docsContent: string | undefined;
+    referencedTypeId: string | undefined;
 };
 
 export class NameRegistry {
@@ -445,11 +446,13 @@ export class NameRegistry {
         const sortedVariants = [...variants].sort((a, b) => a.caseName.localeCompare(b.caseName));
         this.discriminatedUnionVariantsByParentSymbolId.set(parentSymbolId, sortedVariants);
         sortedVariants.forEach((variant) => {
-            this.symbolRegistry.registerNestedType({
-                parentSymbol,
-                symbolName: variant.symbolName,
-                shape: { type: "struct" }
-            });
+            if (variant.referencedTypeId == null) {
+                this.symbolRegistry.registerNestedType({
+                    parentSymbol,
+                    symbolName: variant.symbolName,
+                    shape: { type: "struct" }
+                });
+            }
         });
         return sortedVariants;
     }
@@ -465,6 +468,9 @@ export class NameRegistry {
             variant,
             `Discriminated union variant symbol not found for discriminant wire value "${discriminantWireValue}" in parent symbol "${parentSymbolId}"`
         );
+        if (variant.referencedTypeId != null) {
+            return this.getSchemaTypeSymbolOrThrow(variant.referencedTypeId);
+        }
         const symbolId = this.symbolRegistry.inferSymbolIdForNestedType(parentSymbolId, variant.symbolName);
         return swift.Symbol.create(symbolId, variant.symbolName, { type: "struct" });
     }

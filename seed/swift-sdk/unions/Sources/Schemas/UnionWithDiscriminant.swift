@@ -25,9 +25,9 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .bar(let data):
-            try data.encode(to: encoder)
         case .foo(let data):
+            try data.encode(to: encoder)
+        case .bar(let data):
             try data.encode(to: encoder)
         }
     }

@@ -27,11 +27,11 @@ public enum UnionWithSameNumberTypes: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .anyNumber(let data):
+        case .positiveInt(let data):
             try data.encode(to: encoder)
         case .negativeInt(let data):
             try data.encode(to: encoder)
-        case .positiveInt(let data):
+        case .anyNumber(let data):
             try data.encode(to: encoder)
         }
     }

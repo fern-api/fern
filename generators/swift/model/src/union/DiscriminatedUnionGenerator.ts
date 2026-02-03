@@ -52,9 +52,17 @@ export class DiscriminatedUnionGenerator {
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
         return this.getAllVariants().map((variant) => {
+            const variantSymbol = this.context.project.nameRegistry.getDiscriminatedUnionVariantSymbolOrThrow(
+                this.symbol,
+                variant.discriminantWireValue
+            );
+            const symbolRef = this.context.project.nameRegistry.reference({
+                fromSymbol: this.symbol,
+                toSymbol: variantSymbol
+            });
             return {
                 unsafeName: variant.caseName,
-                associatedValue: [swift.TypeReference.symbol(variant.symbolName)],
+                associatedValue: [swift.TypeReference.symbol(symbolRef)],
                 docs: variant.docsContent ? swift.docComment({ summary: variant.docsContent }) : undefined
             };
         });
@@ -107,6 +115,10 @@ export class DiscriminatedUnionGenerator {
             swift.Statement.switch({
                 target: swift.Expression.reference("discriminant"),
                 cases: this.getAllVariants().map((variant) => {
+                    const variantSymbol = this.context.project.nameRegistry.getDiscriminatedUnionVariantSymbolOrThrow(
+                        this.symbol,
+                        variant.discriminantWireValue
+                    );
                     return {
                         pattern: swift.Expression.stringLiteral(variant.discriminantWireValue),
                         body: [
@@ -117,7 +129,7 @@ export class DiscriminatedUnionGenerator {
                                         swift.functionArgument({
                                             value: swift.Expression.try(
                                                 swift.Expression.structInitialization({
-                                                    unsafeName: variant.symbolName,
+                                                    unsafeName: variantSymbol.name,
                                                     arguments_: [
                                                         swift.functionArgument({
                                                             label: "from",
@@ -187,6 +199,13 @@ export class DiscriminatedUnionGenerator {
     }
 
     private generateEncodeMethod(): swift.Method {
+        const samePropertiesAsObjectTypeIds = new Set<string>();
+        for (const singleUnionType of this.unionTypeDeclaration.types) {
+            if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
+                samePropertiesAsObjectTypeIds.add(singleUnionType.shape.typeId);
+            }
+        }
+
         return swift.method({
             unsafeName: "encode",
             accessLevel: swift.AccessLevel.Public,
@@ -202,29 +221,84 @@ export class DiscriminatedUnionGenerator {
             body: swift.CodeBlock.withStatements([
                 swift.Statement.switch({
                     target: swift.Expression.rawValue("self"),
-                    cases: this.getAllVariants().map((variant) => {
+                    cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
+                        const variant = this.getAllVariants().find(
+                            (v) => v.discriminantWireValue === singleUnionType.discriminantValue.wireValue
+                        );
+                        if (variant == null) {
+                            throw new Error(
+                                `Variant not found for discriminant wire value: ${singleUnionType.discriminantValue.wireValue}`
+                            );
+                        }
+
+                        const isSamePropertiesAsObject =
+                            singleUnionType.shape.propertiesType === "samePropertiesAsObject";
+
+                        const encodeStatements: swift.Statement[] = [];
+
+                        if (isSamePropertiesAsObject) {
+                            encodeStatements.push(
+                                swift.Statement.variableDeclaration({
+                                    unsafeName: "container",
+                                    value: swift.Expression.methodCall({
+                                        target: swift.Expression.reference("encoder"),
+                                        methodName: "container",
+                                        arguments_: [
+                                            swift.functionArgument({
+                                                label: "keyedBy",
+                                                value: swift.Expression.rawValue("CodingKeys.self")
+                                            })
+                                        ]
+                                    })
+                                }),
+                                swift.Statement.expressionStatement(
+                                    swift.Expression.try(
+                                        swift.Expression.methodCall({
+                                            target: swift.Expression.reference("container"),
+                                            methodName: "encode",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    value: swift.Expression.stringLiteral(
+                                                        singleUnionType.discriminantValue.wireValue
+                                                    )
+                                                }),
+                                                swift.functionArgument({
+                                                    label: "forKey",
+                                                    value: swift.Expression.enumCaseShorthand(
+                                                        this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName
+                                                    )
+                                                })
+                                            ]
+                                        })
+                                    )
+                                )
+                            );
+                        }
+
+                        encodeStatements.push(
+                            swift.Statement.expressionStatement(
+                                swift.Expression.try(
+                                    swift.Expression.methodCall({
+                                        target: swift.Expression.reference("data"),
+                                        methodName: "encode",
+                                        arguments_: [
+                                            swift.functionArgument({
+                                                label: "to",
+                                                value: swift.Expression.reference("encoder")
+                                            })
+                                        ]
+                                    })
+                                )
+                            )
+                        );
+
                         return {
                             pattern: swift.Pattern.enumCaseValueBinding({
                                 caseName: variant.caseName,
                                 referenceName: "data",
                                 declarationType: swift.DeclarationType.Let
                             }),
-                            body: [
-                                swift.Statement.expressionStatement(
-                                    swift.Expression.try(
-                                        swift.Expression.methodCall({
-                                            target: swift.Expression.reference("data"),
-                                            methodName: "encode",
-                                            arguments_: [
-                                                swift.functionArgument({
-                                                    label: "to",
-                                                    value: swift.Expression.reference("encoder")
-                                                })
-                                            ]
-                                        })
-                                    )
-                                )
-                            ]
+                            body: encodeStatements
                         };
                     })
                 })
@@ -233,7 +307,13 @@ export class DiscriminatedUnionGenerator {
     }
 
     private generateNestedTypesForTypeDeclaration(): (swift.Struct | swift.EnumWithRawValues)[] {
-        const variantStructs = this.unionTypeDeclaration.types.map((singleUnionType) => {
+        const variantStructs: swift.Struct[] = [];
+
+        for (const singleUnionType of this.unionTypeDeclaration.types) {
+            if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
+                continue;
+            }
+
             const constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[] = [];
             const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
             const variantSymbol = this.context.project.nameRegistry.getDiscriminatedUnionVariantSymbolOrThrow(
@@ -256,41 +336,23 @@ export class DiscriminatedUnionGenerator {
                         type: singleUnionType.shape.type
                     });
                 }
-            } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
-                const variantProperties = this.context.getPropertiesOfDiscriminatedUnionVariant(
-                    singleUnionType.shape.typeId
-                );
-                constantPropertyDefinitions.push({
-                    unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
-                    rawName: this.unionTypeDeclaration.discriminant.wireValue,
-                    type: referencer.referenceSwiftType("String"),
-                    value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
-                });
-                dataPropertyDefinitions.push(
-                    ...variantProperties
-                        .filter((p) => this.unionTypeDeclaration.discriminant.wireValue !== p.name.wireValue)
-                        .map((p) => ({
-                            unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
-                            rawName: p.name.wireValue,
-                            type: p.valueType,
-                            docsContent: p.docs
-                        }))
-                );
             } else if (singleUnionType.shape.propertiesType === "noProperties") {
                 noop();
             } else {
                 assertNever(singleUnionType.shape);
             }
 
-            return new StructGenerator({
-                symbol: variantSymbol,
-                constantPropertyDefinitions,
-                dataPropertyDefinitions,
-                additionalProperties: true,
-                docsContent: singleUnionType.docs,
-                context: this.context
-            }).generate();
-        });
+            variantStructs.push(
+                new StructGenerator({
+                    symbol: variantSymbol,
+                    constantPropertyDefinitions,
+                    dataPropertyDefinitions,
+                    additionalProperties: true,
+                    docsContent: singleUnionType.docs,
+                    context: this.context
+                }).generate()
+            );
+        }
 
         return [...variantStructs, this.generateCodingKeysEnum()];
     }

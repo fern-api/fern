@@ -27,11 +27,11 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
+        case .value(let data):
+            try data.encode(to: encoder)
         case .date(let data):
             try data.encode(to: encoder)
         case .datetime(let data):
-            try data.encode(to: encoder)
-        case .value(let data):
             try data.encode(to: encoder)
         }
     }

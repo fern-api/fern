@@ -22,12 +22,17 @@ export function registerDiscriminatedUnionVariants({
                 const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(
                     singleUnionType.discriminantValue.name.camelCase.unsafeName
                 );
+                const referencedTypeId =
+                    singleUnionType.shape.propertiesType === "samePropertiesAsObject"
+                        ? singleUnionType.shape.typeId
+                        : undefined;
                 return {
                     swiftType: swift.TypeReference.symbol(symbolName),
                     caseName: caseName,
                     symbolName,
                     discriminantWireValue: singleUnionType.discriminantValue.wireValue,
-                    docsContent: singleUnionType.docs
+                    docsContent: singleUnionType.docs,
+                    referencedTypeId
                 };
             });
             registry.registerDiscriminatedUnionVariants({ parentSymbol, variants });

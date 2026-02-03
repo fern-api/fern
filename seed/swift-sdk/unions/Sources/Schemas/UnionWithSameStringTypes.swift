@@ -29,9 +29,9 @@ public enum UnionWithSameStringTypes: Codable, Hashable, Sendable {
         switch self {
         case .customFormat(let data):
             try data.encode(to: encoder)
-        case .patternString(let data):
-            try data.encode(to: encoder)
         case .regularString(let data):
+            try data.encode(to: encoder)
+        case .patternString(let data):
             try data.encode(to: encoder)
         }
     }

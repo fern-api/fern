@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.25.5
+  changelogEntry:
+    - summary: |
+        Fixed a bug where discriminated unions with variants referencing other schemas via $ref generated duplicate inline structs instead of reusing the referenced types.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 61
+
 - version: 0.25.4
   changelogEntry:
     - summary: |
