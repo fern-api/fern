@@ -133,17 +133,7 @@ async function runCli() {
 }
 
 async function tryRunCli(cliContext: CliContext) {
-    // Handle completion command early to ensure clean exit
-    const args = hideBin(process.argv);
-    if (args[0] === "completion" && !args.includes("--get-yargs-completions")) {
-        const completionCli = yargs(args)
-            .scriptName(cliContext.environment.cliName)
-            .completion("completion", "Generate shell completion script");
-        await completionCli.parse();
-        process.exit(0);
-    }
-
-    const cli: Argv<GlobalCliOptions> = yargs(args)
+    const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
         .scriptName(cliContext.environment.cliName)
         .version(false)
         .completion("completion", "Generate shell completion script")
