@@ -5,12 +5,12 @@ info:
   description: An API spec demonstrating server variables support
 
 servers:
-  - url: https://{space_name}.signalwire.com/api/{version}
+  - url: https://{tenant}.example.com/api/{version}
     description: Production server with variables
     variables:
-      space_name:
-        default: your-space
-        description: The domain of the user's SignalWire space
+      tenant:
+        default: your-tenant
+        description: The tenant subdomain for your organization
       version:
         default: v1
         description: API version

@@ -14,11 +14,11 @@
         "description": "Returns a list of plants in the inventory",
         "environments": [
           {
-            "baseUrl": "https://your-space.signalwire.com/api/v1",
+            "baseUrl": "https://your-tenant.example.com/api/v1",
             "id": "Production server with variables_v1",
           },
           {
-            "baseUrl": "https://your-space.signalwire.com/api/v2",
+            "baseUrl": "https://your-tenant.example.com/api/v2",
             "id": "Production server with variables_v2",
           },
         ],
@@ -138,11 +138,11 @@
         "description": "Retrieves a specific plant by its unique identifier",
         "environments": [
           {
-            "baseUrl": "https://your-space.signalwire.com/api/v1",
+            "baseUrl": "https://your-tenant.example.com/api/v1",
             "id": "Production server with variables_v1",
           },
           {
-            "baseUrl": "https://your-space.signalwire.com/api/v2",
+            "baseUrl": "https://your-tenant.example.com/api/v2",
             "id": "Production server with variables_v2",
           },
         ],
@@ -306,11 +306,11 @@
         "description": "Creates a new plant in the inventory",
         "environments": [
           {
-            "baseUrl": "https://your-space.signalwire.com/api/v1",
+            "baseUrl": "https://your-tenant.example.com/api/v1",
             "id": "Production server with variables_v1",
           },
           {
-            "baseUrl": "https://your-space.signalwire.com/api/v2",
+            "baseUrl": "https://your-tenant.example.com/api/v2",
             "id": "Production server with variables_v2",
           },
         ],

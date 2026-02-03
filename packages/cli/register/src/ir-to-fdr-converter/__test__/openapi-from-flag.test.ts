@@ -3265,7 +3265,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Validate that server variables were preserved in the IR
         // Note: Servers with enum variables are "exploded" into multiple environments
-        // So version enum ["v1", "v2"] creates two environments, and only space_name remains as a variable
+        // So version enum ["v1", "v2"] creates two environments, and only tenant remains as a variable
         expect(intermediateRepresentation.environments).toBeDefined();
         const envConfig = intermediateRepresentation.environments;
         if (envConfig && envConfig.environments.type === "singleBaseUrl") {
@@ -3273,24 +3273,24 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             expect(envConfig.environments.environments.length).toBe(2);
 
             const env = envConfig.environments.environments[0];
-            // The originalUrl should contain the template with remaining variables (space_name)
+            // The originalUrl should contain the template with remaining variables (tenant)
             // The version variable was exploded, so it's replaced with the enum value
-            expect(env?.originalUrl).toBe("https://{space_name}.signalwire.com/api/v1");
+            expect(env?.originalUrl).toBe("https://{tenant}.example.com/api/v1");
             // The url should be fully resolved with default values
-            expect(env?.url).toBe("https://your-space.signalwire.com/api/v1");
-            // Variables should only contain non-enum variables (space_name)
+            expect(env?.url).toBe("https://your-tenant.example.com/api/v1");
+            // Variables should only contain non-enum variables (tenant)
             expect(env?.variables).toBeDefined();
             expect(env?.variables?.length).toBe(1);
-            // Check space_name variable
-            const spaceNameVar = env?.variables?.find((v) => v.name === "space_name");
-            expect(spaceNameVar).toBeDefined();
-            expect(spaceNameVar?.default).toBe("your-space");
-            expect(spaceNameVar?.description).toBe("The domain of the user's SignalWire space");
+            // Check tenant variable
+            const tenantVar = env?.variables?.find((v) => v.name === "tenant");
+            expect(tenantVar).toBeDefined();
+            expect(tenantVar?.default).toBe("your-tenant");
+            expect(tenantVar?.description).toBe("The tenant subdomain for your organization");
 
             // Check second environment (v2)
             const env2 = envConfig.environments.environments[1];
-            expect(env2?.originalUrl).toBe("https://{space_name}.signalwire.com/api/v2");
-            expect(env2?.url).toBe("https://your-space.signalwire.com/api/v2");
+            expect(env2?.originalUrl).toBe("https://{tenant}.example.com/api/v2");
+            expect(env2?.url).toBe("https://your-tenant.example.com/api/v2");
         }
 
         // Snapshot the complete output for regression testing
