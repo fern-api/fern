@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.54.3
+  changelogEntry:
+    - summary: |
+        Fix mypy type checking compatibility with pydantic field aliases. When fields have aliases
+        (e.g., `bucket_id` with alias `bucketId`), the pydantic.Field(alias=...) is now placed inside
+        the Annotated type hint instead of as the default value. This makes mypy see the Python field
+        name in the constructor signature while Pydantic still uses the alias for JSON serialization.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 62
+
 - version: 4.54.2
   changelogEntry:
     - summary: |

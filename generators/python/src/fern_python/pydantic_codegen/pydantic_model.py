@@ -122,21 +122,26 @@ class PydanticModel:
             else field.default_value
         )
 
-        initializer = get_field_name_initializer(
-            alias=field.json_field_name if is_aliased else None,
-            default_factory=field.default_factory,
-            description=field.description,
-            default=default_value,
-            version=self._version,
-        )
+        if is_aliased:
+            # When a field has an alias, we put pydantic.Field(alias=...) inside Annotated
+            # instead of as the default value. This makes mypy see the Python field name
+            # in the constructor signature, while Pydantic still uses the alias for JSON.
+            # See: https://github.com/pydantic/pydantic/issues/5893#issuecomment-2512807073
+            pydantic_field_annotation = get_pydantic_field_annotation(
+                alias=field.json_field_name,
+                default_factory=field.default_factory,
+                default=default_value,
+                version=self._version,
+            )
 
-        if is_aliased and not self._use_pydantic_field_aliases:
+            # Build the Annotated type hint with FieldMetadata and pydantic.Field
             field_metadata = self._field_metadata_getter().get_instance()
             field_metadata.add_alias(field.json_field_name)
 
             aliased_type_hint = AST.TypeHint.annotated(
-                type=field.type_hint,
-                annotation=field_metadata.get_as_node(),
+                field.type_hint,
+                field_metadata.get_as_node(),
+                pydantic_field_annotation,
             )
 
             prev_fields = field.__dict__
@@ -144,6 +149,18 @@ class PydanticModel:
             field = PydanticField(
                 **(field.__dict__),
                 type_hint=aliased_type_hint,
+            )
+
+            # The initializer is just the description (if any), not the pydantic.Field() call
+            initializer = get_field_description_initializer(description=field.description)
+        else:
+            # No alias - use the original behavior
+            initializer = get_field_name_initializer(
+                alias=None,
+                default_factory=field.default_factory,
+                description=field.description,
+                default=default_value,
+                version=self._version,
             )
 
         self._class_declaration.add_class_var(
@@ -670,6 +687,53 @@ def get_field_name_initializer(
             writer.write_line('"""')
             writer.write_line(escape_docstring(description))
             writer.write_line('"""')
+
+    return AST.Expression(AST.CodeWriter(write))
+
+
+def get_pydantic_field_annotation(
+    *,
+    alias: str,
+    default: Optional[AST.Expression],
+    default_factory: Optional[AST.Expression],
+    version: PydanticVersionCompatibility,
+) -> AST.Expression:
+    """
+    Generate a pydantic.Field(alias=..., default=..., default_factory=...) expression
+    for use inside Annotated[]. This allows mypy to see the Python field name in the
+    constructor signature while Pydantic uses the alias for JSON serialization.
+    """
+
+    def write(writer: AST.NodeWriter) -> None:
+        writer.write_reference(Pydantic(version).Field())
+        writer.write("(")
+        writer.write(f'alias="{alias}"')
+        if default is not None:
+            writer.write(", default=")
+            writer.write_node(default)
+        if default_factory is not None:
+            writer.write(", default_factory=")
+            writer.write_node(default_factory)
+        writer.write(")")
+
+    return AST.Expression(AST.CodeWriter(write))
+
+
+def get_field_description_initializer(
+    *,
+    description: Optional[str],
+) -> Optional[AST.Expression]:
+    """
+    Generate just the description docstring for a field (no pydantic.Field() call).
+    Used when the pydantic.Field() is inside Annotated[].
+    """
+    if description is None:
+        return None
+
+    def write(writer: AST.NodeWriter) -> None:
+        writer.write_line('"""')
+        writer.write_line(escape_docstring(description))
+        writer.write_line('"""')
 
     return AST.Expression(AST.CodeWriter(write))
 
