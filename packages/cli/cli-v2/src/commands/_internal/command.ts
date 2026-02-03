@@ -28,7 +28,7 @@ export function command<T extends GlobalArgs = GlobalArgs>(
         name,
         description,
         (yargs) => {
-            const configured = yargs.usage(`$0 ${name} [options]\n\n${description}`);
+            const configured = yargs.version(false).usage(`$0 ${name} [options]\n\n${description}`);
             return builder != null ? builder(configured) : configured;
         },
         withContext(handler) as unknown as () => void

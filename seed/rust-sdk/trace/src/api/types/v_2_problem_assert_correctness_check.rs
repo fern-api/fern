@@ -3,13 +3,15 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum AssertCorrectnessCheck {
-    DeepEquality {
-        #[serde(flatten)]
-        data: DeepEqualityCorrectnessCheck,
-    },
+        #[serde(rename = "deepEquality")]
+        DeepEquality {
+            #[serde(flatten)]
+            data: DeepEqualityCorrectnessCheck,
+        },
 
-    Custom {
-        #[serde(flatten)]
-        data: VoidFunctionDefinitionThatTakesActualResult,
-    },
+        #[serde(rename = "custom")]
+        Custom {
+            #[serde(flatten)]
+            data: VoidFunctionDefinitionThatTakesActualResult,
+        },
 }

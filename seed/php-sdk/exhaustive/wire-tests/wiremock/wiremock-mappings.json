@@ -572,6 +572,32 @@
       }
     },
     {
+      "id": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
+      "name": "getAndReturnWithDatetimeLikeString - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-datetime-like-string",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n  \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
       "name": "getWithPath - default",
       "request": {
@@ -1343,6 +1369,6 @@
     }
   ],
   "meta": {
-    "total": 49
+    "total": 50
   }
 }

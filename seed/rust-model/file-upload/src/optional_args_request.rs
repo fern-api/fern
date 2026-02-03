@@ -3,6 +3,8 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct OptionalArgsRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::base64_bytes::option")]
     pub image_file: Option<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub request: Option<serde_json::Value>,

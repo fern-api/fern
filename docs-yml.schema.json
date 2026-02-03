@@ -4611,6 +4611,13 @@
         "sidebar"
       ]
     },
+    "docs.SwitcherPlacement": {
+      "type": "string",
+      "enum": [
+        "header",
+        "sidebar"
+      ]
+    },
     "docs.ContentAlignment": {
       "type": "string",
       "enum": [
@@ -4682,6 +4689,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "switcher-placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SwitcherPlacement"
             },
             {
               "type": "null"

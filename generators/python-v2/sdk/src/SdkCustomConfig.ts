@@ -38,12 +38,22 @@ const ClientConfigSchema = z.object({
     exported_class_name: z.string().optional()
 });
 
+/**
+ * Schema for wire test configuration options.
+ */
+const WireTestsConfigSchema = z.object({
+    enabled: z.boolean().optional(),
+    exclusions: z.array(z.string()).optional()
+});
+
 export const SdkCustomConfigSchema = z.object({
+    /** @deprecated Use `wire_tests.enabled` instead */
     enable_wire_tests: z.boolean().optional(),
     package_path: relativePathSchema.optional(),
     client: ClientConfigSchema.optional(),
     client_class_name: z.string().optional(),
-    inline_request_params: z.boolean().optional()
+    inline_request_params: z.boolean().optional(),
+    wire_tests: WireTestsConfigSchema.optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

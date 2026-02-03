@@ -29,6 +29,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { docsDiff } from "./commands/docs-diff/docsDiff";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview";
 import { downgrade } from "./commands/downgrade/downgrade";
@@ -206,7 +207,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
-    addV2Command(cli, cliContext);
+    addBetaCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -641,6 +642,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Only upload dynamic IR for specified version, skip SDK generation (remote generation only)",
                     default: false
+                })
+                .option("output", {
+                    type: "string",
+                    description: "Custom output directory (currently only supported with --preview for SDK generation)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -672,6 +677,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     "The --dynamic-ir-only flag can only be used for API generation, not docs generation."
                 );
             }
+            if (argv.output != null && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --output flag currently only works with --preview.");
+            }
+            if (argv.output != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
+            }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -691,7 +702,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
-                    dynamicIrOnly: argv["dynamic-ir-only"]
+                    dynamicIrOnly: argv["dynamic-ir-only"],
+                    outputDir: argv.output
                 });
             }
             if (argv.docs != null) {
@@ -739,7 +751,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
-                dynamicIrOnly: argv["dynamic-ir-only"]
+                dynamicIrOnly: argv["dynamic-ir-only"],
+                outputDir: argv.output
             });
         }
     );
@@ -1508,8 +1521,54 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
         addDocsPreviewCommand(yargs, cliContext);
+        addDocsDiffCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "diff <preview-url> <files..>",
+        "Generate visual diffs between preview and production docs pages",
+        (yargs) =>
+            yargs
+                .positional("preview-url", {
+                    type: "string",
+                    description: "The preview deployment URL (e.g. acme-preview-abc123.docs.buildwithfern.com)",
+                    demandOption: true
+                })
+                .positional("files", {
+                    type: "string",
+                    array: true,
+                    description: "File paths to generate diffs for (e.g. fern/pages/intro.mdx)",
+                    demandOption: true
+                })
+                .option("output", {
+                    type: "string",
+                    default: ".fern/diff",
+                    description: "Output directory for diff images"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs diff"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            const result = await docsDiff({
+                cliContext,
+                project,
+                previewUrl: argv.previewUrl,
+                files: argv.files ?? [],
+                outputDir: argv.output
+            });
+
+            cliContext.logger.info(JSON.stringify(result, null, 2));
+        }
+    );
 }
 
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -1809,9 +1868,9 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "v2",
+        "beta",
         false, // Hidden from --help while in-development.
         (yargs) =>
             yargs.help(false).version(false).strict(false).parserConfiguration({

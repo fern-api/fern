@@ -81,6 +81,11 @@ public class RawSeedJavaOptionalNullableQueryParamsClient {
                     request.getRegularOptionalNoDefault().orElse(null),
                     false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

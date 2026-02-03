@@ -41,6 +41,11 @@ public class AsyncRawServiceClient {
 
         QueryStringMapper.addQueryParameter(httpUrl, "ids", request.getIds(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), true);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

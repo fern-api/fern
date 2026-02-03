@@ -1,14 +1,14 @@
-import { BaseSchema, Schema, SchemaType } from "../../Schema";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { list } from "../list";
-import { getSchemaUtils } from "../schema-utils";
+import { type BaseSchema, type Schema, SchemaType } from "../../Schema.js";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
+import { list } from "../list/index.js";
+import { getSchemaUtils } from "../schema-utils/index.js";
 
 export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set<Parsed>> {
     const listSchema = list(schema);
     const baseSchema: BaseSchema<Raw[], Set<Parsed>> = {
-        parse: async (raw, opts) => {
-            const parsedList = await listSchema.parse(raw, opts);
+        parse: (raw, opts) => {
+            const parsedList = listSchema.parse(raw, opts);
             if (parsedList.ok) {
                 return {
                     ok: true,
@@ -18,7 +18,7 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
                 return parsedList;
             }
         },
-        json: async (parsed, opts) => {
+        json: (parsed, opts) => {
             if (!(parsed instanceof Set)) {
                 return {
                     ok: false,
@@ -30,7 +30,7 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
                     ],
                 };
             }
-            const jsonList = await listSchema.json([...parsed], opts);
+            const jsonList = listSchema.json([...parsed], opts);
             return jsonList;
         },
         getType: () => SchemaType.SET,

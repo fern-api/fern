@@ -9,19 +9,23 @@ export function convertIrToFdrApi({
     ir,
     snippetsConfig,
     playgroundConfig,
+    graphqlOperations = {},
+    graphqlTypes = {},
     context,
     apiNameOverride
 }: {
     ir: IntermediateRepresentation;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>;
+    graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
     context: TaskContext;
     apiNameOverride?: string;
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
-        rootPackage: convertPackage(ir.rootPackage, ir),
+        rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations),
         apiName: apiNameOverride ?? ir.apiName.originalName,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
@@ -45,6 +49,11 @@ export function convertIrToFdrApi({
             availability: convertIrAvailability(type.availability),
             displayName: type.name.displayName
         };
+    }
+
+    // Merge GraphQL types into the API definition
+    for (const [typeId, typeDefinition] of Object.entries(graphqlTypes)) {
+        fdrApi.types[FdrCjsSdk.TypeId(typeId)] = typeDefinition;
     }
 
     for (const [subpackageId, subpackage] of Object.entries(ir.subpackages)) {

@@ -622,7 +622,7 @@
         "slug": undefined,
       },
     ],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [

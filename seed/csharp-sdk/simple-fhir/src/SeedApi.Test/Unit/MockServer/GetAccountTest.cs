@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -1031,9 +1030,6 @@ public class GetAccountTest : BaseMockServerTest
             );
 
         var response = await Client.GetAccountAsync("account_id");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Account>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

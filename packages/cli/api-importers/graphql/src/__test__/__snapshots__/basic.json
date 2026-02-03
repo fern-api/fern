@@ -1,0 +1,764 @@
+{
+  "graphqlOperations": {
+    "query_user": {
+      "id": "query_user",
+      "operationType": "QUERY",
+      "name": "user",
+      "description": "Get a user by ID",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "User"
+      }
+    },
+    "query_users": {
+      "id": "query_users",
+      "operationType": "QUERY",
+      "name": "users",
+      "description": "Get all users with optional filtering",
+      "arguments": [
+        {
+          "name": "filter",
+          "type": {
+            "type": "id",
+            "value": "UserFilter"
+          }
+        },
+        {
+          "name": "limit",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "integer"
+            }
+          },
+          "defaultValue": 10
+        },
+        {
+          "name": "offset",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "integer"
+            }
+          },
+          "defaultValue": 0
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "User"
+        }
+      }
+    },
+    "query_post": {
+      "id": "query_post",
+      "operationType": "QUERY",
+      "name": "post",
+      "description": "Get a post by ID",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "Post"
+      }
+    },
+    "query_posts": {
+      "id": "query_posts",
+      "operationType": "QUERY",
+      "name": "posts",
+      "description": "Get all posts",
+      "arguments": [
+        {
+          "name": "status",
+          "type": {
+            "type": "id",
+            "value": "PostStatus"
+          }
+        },
+        {
+          "name": "limit",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "integer"
+            }
+          },
+          "defaultValue": 10
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "Post"
+        }
+      }
+    },
+    "query_search": {
+      "id": "query_search",
+      "operationType": "QUERY",
+      "name": "search",
+      "description": "Search for users or posts",
+      "arguments": [
+        {
+          "name": "query",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "SearchResult"
+        }
+      }
+    },
+    "mutation_createUser": {
+      "id": "mutation_createUser",
+      "operationType": "MUTATION",
+      "name": "createUser",
+      "description": "Create a new user",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "CreateUserInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "User"
+      }
+    },
+    "mutation_updateUser": {
+      "id": "mutation_updateUser",
+      "operationType": "MUTATION",
+      "name": "updateUser",
+      "description": "Update an existing user",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "name",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "email",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "role",
+          "type": {
+            "type": "id",
+            "value": "UserRole"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "User"
+      }
+    },
+    "mutation_deleteUser": {
+      "id": "mutation_deleteUser",
+      "operationType": "MUTATION",
+      "name": "deleteUser",
+      "description": "Delete a user",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "primitive",
+        "value": {
+          "type": "boolean"
+        }
+      }
+    },
+    "mutation_createPost": {
+      "id": "mutation_createPost",
+      "operationType": "MUTATION",
+      "name": "createPost",
+      "description": "Create a new post",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "CreatePostInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "Post"
+      }
+    },
+    "mutation_updatePostStatus": {
+      "id": "mutation_updatePostStatus",
+      "operationType": "MUTATION",
+      "name": "updatePostStatus",
+      "description": "Update a post's status",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "status",
+          "type": {
+            "type": "id",
+            "value": "PostStatus"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "Post"
+      }
+    },
+    "subscription_userCreated": {
+      "id": "subscription_userCreated",
+      "operationType": "SUBSCRIPTION",
+      "name": "userCreated",
+      "description": "Subscribe to new user creations",
+      "returnType": {
+        "type": "id",
+        "value": "User"
+      }
+    },
+    "subscription_postCreated": {
+      "id": "subscription_postCreated",
+      "operationType": "SUBSCRIPTION",
+      "name": "postCreated",
+      "description": "Subscribe to new posts by a specific user",
+      "arguments": [
+        {
+          "name": "authorId",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "Post"
+      }
+    },
+    "subscription_postStatusChanged": {
+      "id": "subscription_postStatusChanged",
+      "operationType": "SUBSCRIPTION",
+      "name": "postStatusChanged",
+      "description": "Subscribe to post status changes",
+      "arguments": [
+        {
+          "name": "postId",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "Post"
+      }
+    }
+  },
+  "types": {
+    "User": {
+      "name": "User",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The unique identifier for the user"
+          },
+          {
+            "key": "uuid",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "UUID",
+                "description": "A universally unique identifier"
+              }
+            },
+            "description": "The user's unique UUID"
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The user's display name"
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "Email",
+                "description": "A valid email address"
+              }
+            },
+            "description": "The user's email address"
+          },
+          {
+            "key": "age",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            },
+            "description": "The user's age"
+          },
+          {
+            "key": "balance",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "Decimal",
+                "description": "A decimal number for precise calculations"
+              }
+            },
+            "description": "The user's account balance"
+          },
+          {
+            "key": "isActive",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "Whether the user is active"
+          },
+          {
+            "key": "role",
+            "valueType": {
+              "type": "id",
+              "value": "UserRole"
+            },
+            "description": "The user's role in the system"
+          },
+          {
+            "key": "posts",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "Post"
+              }
+            },
+            "description": "The user's posts"
+          },
+          {
+            "key": "createdAt",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "DateTime",
+                "description": "A date-time string in ISO 8601 format"
+              }
+            },
+            "description": "When the user was created"
+          },
+          {
+            "key": "birthDate",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "Date",
+                "description": "A date string in ISO 8601 format (YYYY-MM-DD)"
+              }
+            },
+            "description": "The user's date of birth"
+          },
+          {
+            "key": "profileUrl",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "URL",
+                "description": "A valid URL string"
+              }
+            },
+            "description": "The user's profile URL"
+          },
+          {
+            "key": "metadata",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "JSON",
+                "description": "Arbitrary JSON data"
+              }
+            },
+            "description": "Additional metadata as JSON"
+          }
+        ]
+      },
+      "description": "A user in the system"
+    },
+    "Post": {
+      "name": "Post",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The unique identifier for the post"
+          },
+          {
+            "key": "title",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The post title"
+          },
+          {
+            "key": "content",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The post content"
+          },
+          {
+            "key": "author",
+            "valueType": {
+              "type": "id",
+              "value": "User"
+            },
+            "description": "The post author"
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "id",
+              "value": "PostStatus"
+            },
+            "description": "The post status"
+          },
+          {
+            "key": "tags",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Tags associated with the post"
+          },
+          {
+            "key": "publishedAt",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "DateTime",
+                "description": "A date-time string in ISO 8601 format"
+              }
+            },
+            "description": "When the post was published"
+          },
+          {
+            "key": "viewCount",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "BigInt",
+                "description": "A large integer value"
+              }
+            },
+            "description": "The number of views"
+          }
+        ]
+      },
+      "description": "A blog post"
+    },
+    "UserRole": {
+      "name": "UserRole",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ADMIN",
+            "description": "Administrator with full access"
+          },
+          {
+            "value": "USER",
+            "description": "Regular user"
+          },
+          {
+            "value": "GUEST",
+            "description": "Guest with limited access"
+          }
+        ]
+      },
+      "description": "User roles in the system"
+    },
+    "PostStatus": {
+      "name": "PostStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "DRAFT"
+          },
+          {
+            "value": "PUBLISHED"
+          },
+          {
+            "value": "ARCHIVED"
+          }
+        ]
+      },
+      "description": "Post publication status"
+    },
+    "SearchResult": {
+      "name": "SearchResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "User",
+            "displayName": "User",
+            "type": {
+              "type": "id",
+              "value": "User"
+            },
+            "description": "A user in the system"
+          },
+          {
+            "typeName": "Post",
+            "displayName": "Post",
+            "type": {
+              "type": "id",
+              "value": "Post"
+            },
+            "description": "A blog post"
+          }
+        ]
+      },
+      "description": "Search result that can be either a User or a Post"
+    },
+    "CreateUserInput": {
+      "name": "CreateUserInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The user's name"
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The user's email"
+          },
+          {
+            "key": "role",
+            "valueType": {
+              "type": "id",
+              "value": "UserRole"
+            },
+            "description": "The user's role"
+          }
+        ]
+      },
+      "description": "Input for creating a new user"
+    },
+    "CreatePostInput": {
+      "name": "CreatePostInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The post title"
+          },
+          {
+            "key": "content",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The post content"
+          },
+          {
+            "key": "authorId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The author's user ID"
+          },
+          {
+            "key": "tags",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Tags for the post"
+          }
+        ]
+      },
+      "description": "Input for creating a new post"
+    },
+    "UserFilter": {
+      "name": "UserFilter",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "role",
+            "valueType": {
+              "type": "id",
+              "value": "UserRole"
+            },
+            "description": "Filter by role"
+          },
+          {
+            "key": "isActive",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "Filter by active status"
+          }
+        ]
+      },
+      "description": "Input for filtering users"
+    }
+  }
+}

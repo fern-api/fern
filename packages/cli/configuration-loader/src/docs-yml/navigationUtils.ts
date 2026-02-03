@@ -70,7 +70,9 @@ export async function buildNavigationForDirectory({
     const contents = await getDir(directoryPath);
 
     const markdownFiles = contents.filter(
-        (item) => item.type === "file" && (item.name.endsWith(".md") || item.name.endsWith(".mdx"))
+        (item) =>
+            item.type === "file" &&
+            (item.name.toLowerCase().endsWith(".md") || item.name.toLowerCase().endsWith(".mdx"))
     );
     const subdirectories = contents.filter((item) => item.type === "directory");
 
@@ -102,16 +104,26 @@ export async function buildNavigationForDirectory({
                 readFileFn
             });
 
+            const indexPage = subContents.find(
+                (item) =>
+                    item.type === "page" &&
+                    (item.slug === "index" ||
+                        item.absolutePath.toLowerCase().endsWith("/index.mdx") ||
+                        item.absolutePath.toLowerCase().endsWith("/index.md"))
+            );
+
+            const filteredContents = indexPage ? subContents.filter((item) => item !== indexPage) : subContents;
+
             return {
                 type: "section" as const,
                 title: nameToTitle({ name: dir.name }),
                 slug: nameToSlug({ name: dir.name }),
                 icon: undefined,
-                contents: subContents,
+                contents: filteredContents,
                 collapsed: undefined,
                 hidden: undefined,
                 skipUrlSlug: false,
-                overviewAbsolutePath: undefined,
+                overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
                 viewers: undefined,
                 orphaned: undefined,
                 featureFlags: undefined,

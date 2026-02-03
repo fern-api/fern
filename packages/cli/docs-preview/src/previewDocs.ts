@@ -1,5 +1,9 @@
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
+import {
+    createPythonDocsSectionPlaceholder,
+    DocsDefinitionResolver,
+    filterOssWorkspaces
+} from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -272,7 +276,8 @@ export async function getPreviewDocsDefinition({
                 };
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
-        targetAudiences: undefined
+        targetAudiences: undefined,
+        pythonDocsSectionHandler: createPythonDocsSectionPlaceholder
     });
 
     const writeDocsDefinition = await resolver.resolve();
@@ -307,6 +312,7 @@ export async function getPreviewDocsDefinition({
         filesV2,
         pages: dbDocsDefinition.pages,
         jsFiles: dbDocsDefinition.jsFiles,
+        apiNameToId: {},
         id: undefined
     };
 
@@ -334,17 +340,28 @@ class ReferencedAPICollector {
     public addReferencedAPI({
         ir,
         snippetsConfig,
-        playgroundConfig
+        playgroundConfig,
+        graphqlOperations = {},
+        graphqlTypes = {}
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
         playgroundConfig?: { oauth?: boolean };
+        graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
+        graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
     }): APIDefinitionID {
         try {
             const id = uuidv4();
 
             const dbApiDefinition = convertAPIDefinitionToDb(
-                convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context: this.context }),
+                convertIrToFdrApi({
+                    ir,
+                    snippetsConfig,
+                    playgroundConfig,
+                    graphqlOperations,
+                    graphqlTypes,
+                    context: this.context
+                }),
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
                     snippetsConfigWithSdkId: {},

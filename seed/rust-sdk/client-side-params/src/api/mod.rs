@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ClientSideParamsClient, ServiceClient, TypesClient};
-pub use types::*;
+pub use resources::{ServiceClient, TypesClient, ClientSideParamsClient};
+pub use types::{*};
+

@@ -1770,6 +1770,127 @@
                   "_postman_previewlanguage": "json"
                 }
               ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get And Return With Datetime Like String",
+              "request": {
+                "description": "Tests that string fields containing datetime-like values are NOT reformatted.\nThe datetimeLikeString field should preserve its exact value \"2023-08-31T14:15:22Z\"\nwithout being converted to \"2023-08-31T14:15:22.000Z\".",
+                "url": {
+                  "raw": "{{baseUrl}}/object/get-and-return-with-datetime-like-string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "get-and-return-with-datetime-like-string"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n    \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "Tests that string fields containing datetime-like values are NOT reformatted.\nThe datetimeLikeString field should preserve its exact value \"2023-08-31T14:15:22Z\"\nwithout being converted to \"2023-08-31T14:15:22.000Z\".",
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-with-datetime-like-string",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-with-datetime-like-string"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n    \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n    \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "Tests that string fields containing datetime-like values are NOT reformatted.\nThe datetimeLikeString field should preserve its exact value \"2023-08-31T14:15:22Z\"\nwithout being converted to \"2023-08-31T14:15:22.000Z\".",
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-with-datetime-like-string",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-with-datetime-like-string"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"datetimeLikeString\": \"datetimeLikeString\",\n    \"actualDatetime\": \"2024-01-15T09:30:00Z\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"datetimeLikeString\": \"datetimeLikeString\",\n    \"actualDatetime\": \"2024-01-15T09:30:00Z\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },

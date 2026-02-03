@@ -1,0 +1,1 @@
+export { addCheckCommand } from "./command";

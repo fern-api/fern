@@ -2,6 +2,7 @@ from typing import Dict, List, Optional
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
+from ..type_utilities import is_type_primitive_for_multipart
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
@@ -147,41 +148,14 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         return AST.Expression(AST.CodeWriter(write))
 
     def _is_primitive_type(self, type_reference: ir_types.TypeReference) -> bool:
-        """Check if a type is a primitive that can be used directly in multipart form data."""
-        HTTPX_PRIMITIVE_TYPES = {
-            ir_types.PrimitiveTypeV1.STRING,
-            ir_types.PrimitiveTypeV1.INTEGER,
-            ir_types.PrimitiveTypeV1.DOUBLE,
-            ir_types.PrimitiveTypeV1.BOOLEAN,
-            ir_types.PrimitiveTypeV1.LONG,
-            ir_types.PrimitiveTypeV1.UINT,
-            ir_types.PrimitiveTypeV1.UINT_64,
-            ir_types.PrimitiveTypeV1.FLOAT,
-        }
+        """Check if a type can be passed directly in multipart form data without JSON serialization.
 
-        def check_type(tr: ir_types.TypeReference) -> bool:
-            union = tr.get_as_union()
-            if union.type == "primitive":
-                return union.primitive.v_1 in HTTPX_PRIMITIVE_TYPES
-            elif union.type == "container":
-                container = union.container.get_as_union()
-                if container.type == "optional":
-                    return check_type(container.optional)
-                elif container.type == "nullable":
-                    return check_type(container.nullable)
-                return False
-            elif union.type == "named":
-                # Named types (objects, enums, aliases) need to be checked further
-                type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(union.type_id)
-                shape = type_declaration.shape.get_as_union()
-                if shape.type == "alias":
-                    return check_type(shape.alias_of)
-                elif shape.type == "enum":
-                    return True  # Enums serialize to their string value
-                return False  # Objects and unions need JSON serialization
-            return False
-
-        return check_type(type_reference)
+        See `type_utilities.is_type_primitive_for_multipart` for full documentation.
+        """
+        return is_type_primitive_for_multipart(
+            type_reference,
+            get_type_declaration=self._context.pydantic_generator_context.get_declaration_for_type_id,
+        )
 
     def get_files(self) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:

@@ -4,7 +4,7 @@
 //!
 //! - **Union**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod union_;
 pub struct UndiscriminatedUnionsClient {
@@ -16,9 +16,10 @@ impl UndiscriminatedUnionsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            union_: UnionClient::new(config.clone())?,
+            union_: UnionClient::new(config.clone())?
         })
     }
+
 }
 
 pub use union_::UnionClient;

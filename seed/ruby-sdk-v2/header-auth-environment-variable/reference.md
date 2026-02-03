@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/fern_header_auth_environment_variable/service/client.rb">get_with_bearer_token</a>() -> String</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_with_bearer_token</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.service.get_with_bearer_token();
 <dl>
 <dd>
 
-**request_options:** `FernHeaderAuthEnvironmentVariable::Service::RequestOptions` 
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>

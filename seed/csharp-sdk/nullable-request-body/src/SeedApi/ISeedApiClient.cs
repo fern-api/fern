@@ -2,5 +2,5 @@ namespace SeedApi;
 
 public partial interface ISeedApiClient
 {
-    public TestGroupClient TestGroup { get; }
+    public ITestGroupClient TestGroup { get; }
 }

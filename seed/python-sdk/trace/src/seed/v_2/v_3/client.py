@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawV3Client, RawV3Client
 
 if typing.TYPE_CHECKING:
     from .problem.client import AsyncProblemClient, ProblemClient
@@ -13,20 +12,8 @@ if typing.TYPE_CHECKING:
 
 class V3Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawV3Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._problem: typing.Optional[ProblemClient] = None
-
-    @property
-    def with_raw_response(self) -> RawV3Client:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawV3Client
-        """
-        return self._raw_client
 
     @property
     def problem(self):
@@ -39,20 +26,8 @@ class V3Client:
 
 class AsyncV3Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawV3Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._problem: typing.Optional[AsyncProblemClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawV3Client:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawV3Client
-        """
-        return self._raw_client
 
     @property
     def problem(self):

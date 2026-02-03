@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require_relative "../lib/fern_http_head"
+require_relative "../lib/seed"

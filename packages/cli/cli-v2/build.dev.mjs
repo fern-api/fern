@@ -10,5 +10,6 @@ buildCli({
         name: "@fern-api/fern-v2-dev",
         bin: { "fern-v2": "cli.cjs" }
     },
+    runtimeDependencies: ["@boundaryml/baml"],
     tsupOverrides: PRODUCTION_TSUP_OVERRIDES
 });

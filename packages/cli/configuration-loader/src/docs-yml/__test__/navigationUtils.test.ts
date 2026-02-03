@@ -748,3 +748,346 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
         expect(result[2]).toMatchObject({ title: "C" });
     });
 });
+
+describe("buildNavigationForDirectory with index.mdx as section overview", () => {
+    it("should use index.mdx as section overview for subdirectories", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "guides",
+                        absolutePath: "/test/guides" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (callCount === 2) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/guides/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "getting-started.md",
+                        absolutePath: "/test/guides/getting-started.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(1);
+        const section = result[0];
+        expect(section).toMatchObject({
+            type: "section",
+            title: "Guides",
+            slug: "guides",
+            overviewAbsolutePath: "/test/guides/index.mdx"
+        });
+        if (section && section.type === "section") {
+            expect(section.contents).toHaveLength(1);
+            expect(section.contents[0]).toMatchObject({
+                type: "page",
+                title: "Getting Started",
+                slug: "getting-started"
+            });
+        }
+    });
+
+    it("should use index.md as section overview for subdirectories", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "guides",
+                        absolutePath: "/test/guides" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (callCount === 2) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.md",
+                        absolutePath: "/test/guides/index.md" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "authentication.mdx",
+                        absolutePath: "/test/guides/authentication.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(1);
+        const section = result[0];
+        expect(section).toMatchObject({
+            type: "section",
+            title: "Guides",
+            slug: "guides",
+            overviewAbsolutePath: "/test/guides/index.md"
+        });
+        if (section && section.type === "section") {
+            expect(section.contents).toHaveLength(1);
+            expect(section.contents[0]).toMatchObject({
+                type: "page",
+                title: "Authentication"
+            });
+        }
+    });
+
+    it("should exclude index.mdx from section contents", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "api",
+                        absolutePath: "/test/api" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (callCount === 2) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/api/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "endpoints.md",
+                        absolutePath: "/test/api/endpoints.md" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "errors.md",
+                        absolutePath: "/test/api/errors.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(1);
+        const section = result[0];
+        if (section && section.type === "section") {
+            expect(section.contents).toHaveLength(2);
+            const titles = section.contents.map((item) => (item.type === "page" ? item.title : ""));
+            expect(titles).not.toContain("Index");
+            expect(titles).toContain("Endpoints");
+            expect(titles).toContain("Errors");
+        }
+    });
+
+    it("should handle nested subdirectories with index.mdx", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "guides",
+                        absolutePath: "/test/guides" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (callCount === 2) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/guides/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "advanced",
+                        absolutePath: "/test/guides/advanced" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (callCount === 3) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/guides/advanced/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "auth.md",
+                        absolutePath: "/test/guides/advanced/auth.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(1);
+        const guidesSection = result[0];
+        expect(guidesSection).toMatchObject({
+            type: "section",
+            title: "Guides",
+            overviewAbsolutePath: "/test/guides/index.mdx"
+        });
+        if (guidesSection && guidesSection.type === "section") {
+            expect(guidesSection.contents).toHaveLength(1);
+            const advancedSection = guidesSection.contents[0];
+            expect(advancedSection).toMatchObject({
+                type: "section",
+                title: "Advanced",
+                overviewAbsolutePath: "/test/guides/advanced/index.mdx"
+            });
+            if (advancedSection && advancedSection.type === "section") {
+                expect(advancedSection.contents).toHaveLength(1);
+                expect(advancedSection.contents[0]).toMatchObject({
+                    type: "page",
+                    title: "Auth"
+                });
+            }
+        }
+    });
+
+    it("should handle case-insensitive index file names", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "guides",
+                        absolutePath: "/test/guides" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (callCount === 2) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "INDEX.MDX",
+                        absolutePath: "/test/guides/INDEX.MDX" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "page.md",
+                        absolutePath: "/test/guides/page.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(1);
+        const section = result[0];
+        expect(section).toMatchObject({
+            type: "section",
+            overviewAbsolutePath: "/test/guides/INDEX.MDX"
+        });
+        if (section && section.type === "section") {
+            expect(section.contents).toHaveLength(1);
+            expect(section.contents[0]).toMatchObject({
+                type: "page",
+                title: "Page"
+            });
+        }
+    });
+
+    it("should not set overviewAbsolutePath when no index file exists", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "guides",
+                        absolutePath: "/test/guides" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (callCount === 2) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "getting-started.md",
+                        absolutePath: "/test/guides/getting-started.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(1);
+        const section = result[0];
+        expect(section).toMatchObject({
+            type: "section",
+            title: "Guides",
+            overviewAbsolutePath: undefined
+        });
+        if (section && section.type === "section") {
+            expect(section.contents).toHaveLength(1);
+        }
+    });
+});

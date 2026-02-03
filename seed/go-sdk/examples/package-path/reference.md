@@ -375,7 +375,7 @@ request := &pleaseinhere.Movie{
                 "imdb": 7.6,
             },
         },
-        Revenue: 1000000,
+        Revenue: int64(1000000),
     }
 client.Service.CreateMovie(
         context.TODO(),
@@ -520,7 +520,7 @@ request := &pleaseinhere.BigEntity{
                     "key": "value",
                 },
             },
-            Revenue: 1000000,
+            Revenue: int64(1000000),
         },
         Entity: &pleaseinhere.Entity{
             Type: &pleaseinhere.Type{

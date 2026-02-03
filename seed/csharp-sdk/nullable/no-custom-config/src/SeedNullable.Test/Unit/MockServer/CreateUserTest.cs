@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using SeedNullable;
-using SeedNullable.Core;
+using SeedNullable.Test.Utils;
 
 namespace SeedNullable.Test.Unit.MockServer;
 
@@ -103,14 +103,11 @@ public class CreateUserTest : BaseMockServerTest
                     Avatar = "avatar",
                     Activated = true,
                     Status = new Status(new Status.Active()),
-                    Values = new Dictionary<string, string>() { { "values", "values" } },
+                    Values = new Dictionary<string, string?>() { { "values", "values" } },
                 },
                 Avatar = "avatar",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

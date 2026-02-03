@@ -16,9 +16,7 @@
 from seed import SeedOauthClientCredentialsEnvironmentVariables
 
 client = SeedOauthClientCredentialsEnvironmentVariables(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.auth.get_token_with_client_credentials(
     client_id="client_id",
@@ -92,9 +90,7 @@ client.auth.get_token_with_client_credentials(
 from seed import SeedOauthClientCredentialsEnvironmentVariables
 
 client = SeedOauthClientCredentialsEnvironmentVariables(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.auth.refresh_token(
     client_id="client_id",
@@ -178,9 +174,7 @@ client.auth.refresh_token(
 from seed import SeedOauthClientCredentialsEnvironmentVariables
 
 client = SeedOauthClientCredentialsEnvironmentVariables(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.nested_no_auth.api.get_something()
 
@@ -227,9 +221,7 @@ client.nested_no_auth.api.get_something()
 from seed import SeedOauthClientCredentialsEnvironmentVariables
 
 client = SeedOauthClientCredentialsEnvironmentVariables(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.nested.api.get_something()
 
@@ -276,9 +268,7 @@ client.nested.api.get_something()
 from seed import SeedOauthClientCredentialsEnvironmentVariables
 
 client = SeedOauthClientCredentialsEnvironmentVariables(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.simple.get_something()
 

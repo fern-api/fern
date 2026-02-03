@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct JustFileWithOptionalQueryParamsRequest {
+    #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
     #[serde(rename = "maybeString")]
     #[serde(skip_serializing_if = "Option::is_none")]

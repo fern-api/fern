@@ -790,6 +790,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             // Add ctor crate for lifecycle management (start/stop WireMock container)
             context.dependencyManager.add("ctor", "0.2", RustDependencyType.DEV);
+            // Add base64 crate for decoding base64 strings to bytes in tests
+            context.dependencyManager.add("base64", "0.22", RustDependencyType.DEV);
 
             const wireTestGenerator = new WireTestGenerator(context, context.ir);
             await wireTestGenerator.generate();

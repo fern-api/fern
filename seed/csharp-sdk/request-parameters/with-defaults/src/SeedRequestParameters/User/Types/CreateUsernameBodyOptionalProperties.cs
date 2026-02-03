@@ -11,12 +11,15 @@ public record CreateUsernameBodyOptionalProperties : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("username")]
     public string? Username { get; set; }
 
+    [Optional]
     [JsonPropertyName("password")]
     public string? Password { get; set; }
 
+    [Optional]
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 

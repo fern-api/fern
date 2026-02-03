@@ -25,7 +25,7 @@ class Publisher:
 
     def run_ruff_check_fix(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_fix:
-            command = ["poetry", "run", "ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
+            command = ["ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
             if path is not None:
                 command.append(path)
             self._run_command(
@@ -36,7 +36,7 @@ class Publisher:
 
     def run_ruff_format(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_format:
-            command = ["poetry", "run", "ruff", "format", "--no-cache"]
+            command = ["ruff", "format", "--no-cache"]
             if path is not None:
                 command.append(path)
             self._run_command(
@@ -45,10 +45,10 @@ class Publisher:
                 cwd=cwd,
             )
 
-    def run_poetry_install(self) -> None:
+    def run_poetry_lock(self) -> None:
         self._run_command(
-            command=["poetry", "install"],
-            safe_command="poetry install",
+            command=["poetry", "lock"],
+            safe_command="poetry lock",
         )
 
     def publish_package(

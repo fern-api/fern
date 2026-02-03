@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/rerank",
+                "method": "POST",
+                "identifier_override": "endpoint_service.rerank"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-undiscriminated-union-wire-tests/fern\"\n\tfernclient \"github.com/go-undiscriminated-union-wire-tests/fern/client\"\n\toption \"github.com/go-undiscriminated-union-wire-tests/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.Rerank(\n\tcontext.TODO(),\n\t\u0026fern.RerankRequest{\n\t\tDocuments: []*fern.DocumentItem{\n\t\t\t\u0026fern.DocumentItem{\n\t\t\t\tDocumentObject: \u0026fern.DocumentObject{\n\t\t\t\t\tText: \"Carson City is the capital city of the American state of Nevada.\",\n\t\t\t\t},\n\t\t\t},\n\t\t\t\u0026fern.DocumentItem{\n\t\t\t\tDocumentObject: \u0026fern.DocumentObject{\n\t\t\t\t\tText: \"Washington, D.C. is the capital of the United States.\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tQuery: \"What is the capital of the United States?\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

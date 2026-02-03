@@ -1,9 +1,0 @@
-# frozen_string_literal: true
-
-module FernResponseProperty
-  module Types
-    class WithMetadata < Internal::Types::Model
-      field :metadata, -> { Internal::Types::Hash[String, String] }, optional: false, nullable: false
-    end
-  end
-end

@@ -7,6 +7,7 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.types.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
@@ -115,6 +116,28 @@ public class AsyncObjectClient {
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnNestedWithRequiredFieldAsList(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public CompletableFuture<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request) {
+        return this.rawClient.getAndReturnWithDatetimeLikeString(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public CompletableFuture<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithDatetimeLikeString(request, requestOptions)
                 .thenApply(response -> response.body());
     }
 }

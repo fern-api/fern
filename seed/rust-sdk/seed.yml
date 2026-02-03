@@ -10,6 +10,7 @@ buildScripts:
   testScript:
     commands:
       - cargo test
+      - if [ -f "run_wire_tests.sh" ]; then echo "Running wire tests..." && bash run_wire_tests.sh; fi
 
 publish:
   workingDirectory: generators/rust
@@ -116,6 +117,10 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  exhaustive:
+    - customConfig:
+        enableWireTests: true
+      outputFolder: .
   server-sent-event-examples:
     - customConfig:
         enableWireTests: true

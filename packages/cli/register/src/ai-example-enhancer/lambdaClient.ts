@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
+import { isNetworkError } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
@@ -23,6 +23,7 @@ export class LambdaExampleEnhancer {
     private token: FernToken;
     private jwtPromise: Promise<string> | undefined;
     private organizationId: string;
+    private venusAirGappedResult: boolean | undefined;
 
     constructor(config: AIExampleEnhancerConfig, context: TaskContext, token: FernToken, organizationId: string) {
         this.config = {
@@ -49,6 +50,39 @@ export class LambdaExampleEnhancer {
 
         this.token = token;
         this.organizationId = organizationId;
+    }
+
+    /**
+     * Check if Venus is reachable. This is a separate check from the global air-gapped detection
+     * because in self-hosted environments, the local FDR server may be reachable while Venus is not.
+     * The result is cached for the lifetime of this instance.
+     */
+    private async isVenusAirGapped(): Promise<boolean> {
+        if (this.venusAirGappedResult !== undefined) {
+            return this.venusAirGappedResult;
+        }
+
+        this.context.logger.debug(`Checking Venus connectivity at ${this.venusOrigin}/health`);
+
+        try {
+            await fetch(`${this.venusOrigin}/health`, {
+                method: "GET",
+                signal: AbortSignal.timeout(5000) // 5 second timeout
+            });
+            this.venusAirGappedResult = false;
+            this.context.logger.debug("Venus connectivity check succeeded");
+            return false;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            if (isNetworkError(errorMessage)) {
+                this.venusAirGappedResult = true;
+                this.context.logger.debug(`Venus connectivity check failed - air-gapped mode: ${errorMessage}`);
+                return true;
+            }
+            // Non-network error - assume not air-gapped
+            this.venusAirGappedResult = false;
+            return false;
+        }
     }
 
     /**
@@ -104,9 +138,11 @@ export class LambdaExampleEnhancer {
         }
 
         // Check for air-gapped environment before attempting network calls
-        const isAirGapped = await detectAirGappedMode(`${this.venusOrigin}/health`, this.context.logger);
+        // This uses a Venus-specific check that doesn't rely on the global cache,
+        // since in self-hosted environments the local FDR server may be reachable while Venus is not
+        const isAirGapped = await this.isVenusAirGapped();
         if (isAirGapped) {
-            this.context.logger.debug("Skipping AI example enhancement in air-gapped environment");
+            this.context.logger.debug("Skipping AI example enhancement - Venus is not reachable");
             return {
                 enhancedRequestExample: request.originalRequestExample,
                 enhancedResponseExample: request.originalResponseExample

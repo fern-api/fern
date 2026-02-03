@@ -32,6 +32,12 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -40,6 +46,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                             Method = HttpMethod.Post,
                             Path = "/req-bodies/object",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

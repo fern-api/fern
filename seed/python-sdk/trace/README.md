@@ -110,6 +110,7 @@ client = SeedTrace(
 )
 response = client.admin.with_raw_response.update_test_submission_status(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

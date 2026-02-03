@@ -2,5 +2,5 @@ namespace SeedNullable;
 
 public partial interface ISeedNullableClient
 {
-    public NullableClient Nullable { get; }
+    public INullableClient Nullable { get; }
 }

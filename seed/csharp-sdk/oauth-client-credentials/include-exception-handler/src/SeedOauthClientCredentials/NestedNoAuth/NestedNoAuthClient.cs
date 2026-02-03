@@ -20,5 +20,5 @@ public partial class NestedNoAuthClient : INestedNoAuthClient
         }
     }
 
-    public ApiClient Api { get; }
+    public IApiClient Api { get; }
 }

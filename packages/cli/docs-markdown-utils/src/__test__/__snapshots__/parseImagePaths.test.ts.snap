@@ -27,7 +27,7 @@ exports[`bland > should replace all images with full path 1`] = `
 exports[`bland > should replace all images with full path 2`] = `
 [
   {
-    "added": undefined,
+    "added": false,
     "count": 2,
     "removed": true,
     "value": "title: "Conversational Pathways"
@@ -37,7 +37,7 @@ description: "Gain greater control over your AI agent and the conversational flo
   {
     "added": true,
     "count": 4,
-    "removed": undefined,
+    "removed": false,
     "value": "title: Conversational Pathways
 description: >-
   Gain greater control over your AI agent and the conversational flow. [Create a
@@ -45,7 +45,7 @@ description: >-
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/node.png" />
@@ -54,12 +54,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/node.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/new_pathway.png" />
@@ -68,12 +68,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/new_pathway.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/final_pathway.png" />
@@ -82,12 +82,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/final_pathway.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathway_label.png" />
@@ -96,12 +96,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/pathway_label.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/condition_eg.png" />
@@ -110,12 +110,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/condition_eg.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_node.png" />
@@ -124,12 +124,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/global_node.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_eg.png" />
@@ -138,12 +138,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/global_eg.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/default_node.png" />
@@ -152,12 +152,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/default_node.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_node.png" />
@@ -166,12 +166,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/global_node.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/transfer_node.png" />
@@ -180,12 +180,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/transfer_node.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/end_node.png" />
@@ -194,12 +194,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/end_node.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/kb_node.png" />
@@ -208,12 +208,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/kb_node.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/webhook_node.png" />
@@ -222,12 +222,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/webhook_node.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/add_global_prompt.png" />
@@ -236,12 +236,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/add_global_prompt.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/live_call_logs.png" />
@@ -250,12 +250,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/live_call_logs.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathway_chat.png" />
@@ -264,12 +264,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/pathway_chat.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/extract_variables.png" />
@@ -278,12 +278,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/extract_variables.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathwaylog_finetune.png" />
@@ -292,12 +292,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/pathwaylog_finetune.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/finetuned.png" />
@@ -306,12 +306,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/finetuned.png" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/finetune.png" />
@@ -320,7 +320,7 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/finetune.png" />
 ",
   },
@@ -330,7 +330,7 @@ description: >-
 exports[`bland > should replace all images with full path 3`] = `
 [
   {
-    "added": undefined,
+    "added": false,
     "count": 2,
     "removed": true,
     "value": "title: "Conversational Pathways"
@@ -340,7 +340,7 @@ description: "Gain greater control over your AI agent and the conversational flo
   {
     "added": true,
     "count": 4,
-    "removed": undefined,
+    "removed": false,
     "value": "title: Conversational Pathways
 description: >-
   Gain greater control over your AI agent and the conversational flow. [Create a
@@ -348,7 +348,7 @@ description: >-
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/node.png" />
@@ -357,12 +357,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/new_pathway.png" />
@@ -371,12 +371,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/final_pathway.png" />
@@ -385,12 +385,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathway_label.png" />
@@ -399,12 +399,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/condition_eg.png" />
@@ -413,12 +413,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_node.png" />
@@ -427,12 +427,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_eg.png" />
@@ -441,12 +441,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/default_node.png" />
@@ -455,12 +455,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_node.png" />
@@ -469,12 +469,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/transfer_node.png" />
@@ -483,12 +483,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/end_node.png" />
@@ -497,12 +497,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/kb_node.png" />
@@ -511,12 +511,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/webhook_node.png" />
@@ -525,12 +525,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/add_global_prompt.png" />
@@ -539,12 +539,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/live_call_logs.png" />
@@ -553,12 +553,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathway_chat.png" />
@@ -567,12 +567,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/extract_variables.png" />
@@ -581,12 +581,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathwaylog_finetune.png" />
@@ -595,12 +595,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/finetuned.png" />
@@ -609,12 +609,12 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/finetune.png" />
@@ -623,7 +623,7 @@ description: >-
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
@@ -641,7 +641,7 @@ exports[`hume > should replace all images with full path 1`] = `
 exports[`hume > should replace all images with full path 2`] = `
 [
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "            ![image](./img/add-tool-view.png)
@@ -650,12 +650,12 @@ exports[`hume > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "            ![image](/Volume/git/fern/my/docs/folder/img/add-tool-view.png)
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "      ![test](./img/add-tool-view.png)
@@ -664,12 +664,12 @@ exports[`hume > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "      ![test](/Volume/git/fern/my/docs/folder/img/add-tool-view.png)
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "      <img src="./img/evi-tools-view.png" alt="EVI Tools page" />
@@ -678,12 +678,12 @@ exports[`hume > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "      <img src="/Volume/git/fern/my/docs/folder/img/evi-tools-view.png" alt="EVI Tools page" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "      <img src="./img/create-function-interface.png" alt="EVI Create function interface" />
@@ -692,12 +692,12 @@ exports[`hume > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "      <img src="/Volume/git/fern/my/docs/folder/img/create-function-interface.png" alt="EVI Create function interface" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "      <img src="./img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
@@ -706,12 +706,12 @@ exports[`hume > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "      <img src="/Volume/git/fern/my/docs/folder/img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "---",
@@ -719,7 +719,7 @@ exports[`hume > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "---
 ",
   },
@@ -729,7 +729,7 @@ exports[`hume > should replace all images with full path 2`] = `
 exports[`hume > should replace all images with full path 3`] = `
 [
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "            ![image](./img/add-tool-view.png)
@@ -738,12 +738,12 @@ exports[`hume > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "            ![image](file:123e4567-e89b-12d3-a456-426655440000)
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "      ![test](./img/add-tool-view.png)
@@ -752,12 +752,12 @@ exports[`hume > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "      ![test](file:123e4567-e89b-12d3-a456-426655440000)
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "      <img src="./img/evi-tools-view.png" alt="EVI Tools page" />
@@ -766,12 +766,12 @@ exports[`hume > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "      <img src="file:123e4567-e89b-12d3-a456-426655440000" alt="EVI Tools page" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "      <img src="./img/create-function-interface.png" alt="EVI Create function interface" />
@@ -780,12 +780,12 @@ exports[`hume > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "      <img src="file:123e4567-e89b-12d3-a456-426655440000" alt="EVI Create function interface" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "      <img src="./img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
@@ -794,12 +794,12 @@ exports[`hume > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "      <img src="file:123e4567-e89b-12d3-a456-426655440000" alt="Add tool to configuration within the Hume portal"/>
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "---",
@@ -807,7 +807,7 @@ exports[`hume > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "---
 ",
   },
@@ -827,7 +827,7 @@ exports[`multimedia-file > should replace all images with full path 1`] = `
 exports[`multimedia-file > should replace all images with full path 2`] = `
 [
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "![Image](./image.png)
@@ -836,12 +836,12 @@ exports[`multimedia-file > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "![Image](/Volume/git/fern/my/docs/folder/image.png)
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "  <source src="./video.mp4" type="video/mp4" />
@@ -850,12 +850,12 @@ exports[`multimedia-file > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "  <source src="/Volume/git/fern/my/docs/folder/video.mp4" type="video/mp4" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "![Image](../../../../something/image.png)
@@ -864,12 +864,12 @@ exports[`multimedia-file > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "![Image](/Volume/git/something/image.png)
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img src="../../another/Image.jpeg" />
@@ -878,12 +878,12 @@ exports[`multimedia-file > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img src="/Volume/git/fern/my/another/Image.jpeg" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<embed src="./file.pdf" width="800px" height="2100px" />
@@ -892,7 +892,7 @@ exports[`multimedia-file > should replace all images with full path 2`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<embed src="/Volume/git/fern/my/docs/folder/file.pdf" width="800px" height="2100px" />
 ",
   },
@@ -902,7 +902,7 @@ exports[`multimedia-file > should replace all images with full path 2`] = `
 exports[`multimedia-file > should replace all images with full path 3`] = `
 [
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "![Image](./image.png)
@@ -911,12 +911,12 @@ exports[`multimedia-file > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "![Image](file:123e4567-e89b-12d3-a456-426655440000)
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "  <source src="./video.mp4" type="video/mp4" />
@@ -925,12 +925,12 @@ exports[`multimedia-file > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "  <source src="file:123e4567-e89b-12d3-a456-426655440000" type="video/mp4" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "![Image](../../../../something/image.png)
@@ -939,12 +939,12 @@ exports[`multimedia-file > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "![Image](file:123e4567-e89b-12d3-a456-426655440000)
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<img src="../../another/Image.jpeg" />
@@ -953,12 +953,12 @@ exports[`multimedia-file > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<img src="file:123e4567-e89b-12d3-a456-426655440000" />
 ",
   },
   {
-    "added": undefined,
+    "added": false,
     "count": 1,
     "removed": true,
     "value": "<embed src="./file.pdf" width="800px" height="2100px" />
@@ -967,7 +967,7 @@ exports[`multimedia-file > should replace all images with full path 3`] = `
   {
     "added": true,
     "count": 1,
-    "removed": undefined,
+    "removed": false,
     "value": "<embed src="file:123e4567-e89b-12d3-a456-426655440000" width="800px" height="2100px" />
 ",
   },

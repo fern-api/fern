@@ -8,7 +8,7 @@ import { Node } from "../core/AstNode";
 import type { Writer } from "../core/Writer";
 import { type Field } from "./Field";
 import { Type } from "./IType";
-import { Optional } from "./Type";
+import { Nullable, Optional } from "./Type";
 
 export declare namespace ClassReference {
     interface Identity {
@@ -481,6 +481,10 @@ export class ClassReference extends Node implements Type {
 
     public asOptional(): Type {
         return new Optional(this, this.generation);
+    }
+
+    public asNullable(): Type {
+        return new Nullable(this, this.generation);
     }
 
     public asNonOptional(): Type {

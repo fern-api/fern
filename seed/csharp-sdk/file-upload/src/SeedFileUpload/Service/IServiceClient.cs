@@ -20,6 +20,12 @@ public partial interface IServiceClient
         CancellationToken cancellationToken = default
     );
 
+    Task JustFileWithOptionalQueryParamsAsync(
+        JustFileWithOptionalQueryParamsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     Task WithContentTypeAsync(
         WithContentTypeRequest request,
         RequestOptions? options = null,
@@ -51,4 +57,10 @@ public partial interface IServiceClient
     );
 
     Task SimpleAsync(RequestOptions? options = null, CancellationToken cancellationToken = default);
+
+    WithRawResponseTask<string> WithLiteralAndEnumTypesAsync(
+        LiteralEnumRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

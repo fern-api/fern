@@ -4,7 +4,7 @@ namespace SeedPagination;
 
 public partial interface ISeedPaginationClient
 {
-    public ComplexClient Complex { get; }
-    public InlineUsersClient InlineUsers { get; }
-    public UsersClient Users { get; }
+    public IComplexClient Complex { get; }
+    public IInlineUsersClient InlineUsers { get; }
+    public IUsersClient Users { get; }
 }

@@ -8,44 +8,11 @@ use PHPUnit\Framework\TestCase;
 /**
  * Base test case for WireMock-based wire tests.
  *
- * This class manages the WireMock container lifecycle for integration tests.
+ * The WireMock container lifecycle is managed by the bootstrap file (tests/Wire/bootstrap.php)
+ * which starts the container once before all tests and stops it after all tests complete.
  */
 abstract class WireMockTestCase extends TestCase
 {
-    protected static string $dockerComposeFile;
-
-    public static function setUpBeforeClass(): void
-    {
-        $testDir = __DIR__;
-        $projectRoot = \dirname($testDir, 2);
-        $wiremockDir = $projectRoot . '/wiremock';
-        self::$dockerComposeFile = $wiremockDir . '/docker-compose.test.yml';
-
-        echo "\nStarting WireMock container...\n";
-        $cmd = sprintf(
-            'docker compose -f %s up -d --wait 2>&1',
-            escapeshellarg(self::$dockerComposeFile)
-        );
-        exec($cmd, $output, $exitCode);
-        if ($exitCode !== 0) {
-            throw new \RuntimeException("Failed to start WireMock: " . implode("\n", $output));
-        }
-        echo "WireMock container is ready\n";
-    }
-
-    public static function tearDownAfterClass(): void
-    {
-        if (!isset(self::$dockerComposeFile)) {
-            return;
-        }
-        echo "\nStopping WireMock container...\n";
-        $cmd = sprintf(
-            'docker compose -f %s down -v 2>&1',
-            escapeshellarg(self::$dockerComposeFile)
-        );
-        exec($cmd);
-    }
-
     /**
      * Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
      *

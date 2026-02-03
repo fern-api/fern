@@ -6,7 +6,7 @@ class EndpointsContainerWireTest < WireMockTestCase
   def setup
     super
 
-    @client = FernExhaustive::Client.new(
+    @client = Seed::Client.new(
       token: "<token>",
       base_url: WIREMOCK_BASE_URL
     )

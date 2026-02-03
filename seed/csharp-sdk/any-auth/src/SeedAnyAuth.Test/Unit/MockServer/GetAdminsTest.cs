@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedAnyAuth;
-using SeedAnyAuth.Core;
+using SeedAnyAuth.Test.Utils;
 
 namespace SeedAnyAuth.Test.Unit.MockServer;
 
@@ -33,9 +32,6 @@ public class GetAdminsTest : BaseMockServerTest
             );
 
         var response = await Client.User.GetAdminsAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -5,9 +5,9 @@ namespace SeedOauthClientCredentialsWithVariables;
 
 public partial interface ISeedOauthClientCredentialsWithVariablesClient
 {
-    public AuthClient Auth { get; }
-    public NestedNoAuthClient NestedNoAuth { get; }
-    public NestedClient Nested { get; }
-    public ServiceClient Service { get; }
-    public SimpleClient Simple { get; }
+    public IAuthClient Auth { get; }
+    public INestedNoAuthClient NestedNoAuth { get; }
+    public INestedClient Nested { get; }
+    public IServiceClient Service { get; }
+    public ISimpleClient Simple { get; }
 }

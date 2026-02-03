@@ -90,7 +90,14 @@ export class WireTestGenerator {
             }
         }
 
-        const testModule = this.buildTestModule(serviceName, endpointTestCases);
+        // Detect which imports are needed based on snippet content
+        const allSnippets = Array.from(endpointTestCases.values())
+            .map((tc) => tc.snippet)
+            .join("\n");
+        const needsBase64Import = allSnippets.includes("base64::engine::general_purpose::STANDARD");
+        const needsBigIntImport = allSnippets.includes("BigInt::parse_bytes");
+
+        const testModule = this.buildTestModule(serviceName, endpointTestCases, needsBase64Import, needsBigIntImport);
 
         return new RustFile({
             filename: `${serviceName}_test.rs`,
@@ -105,7 +112,9 @@ export class WireTestGenerator {
 
     private buildTestModule(
         serviceName: string,
-        endpointTestCases: Map<string, { snippet: string; endpoint: HttpEndpoint }>
+        endpointTestCases: Map<string, { snippet: string; endpoint: HttpEndpoint }>,
+        needsBase64Import: boolean,
+        needsBigIntImport: boolean
     ): Module {
         const rawDeclarations: string[] = [];
 
@@ -123,14 +132,28 @@ export class WireTestGenerator {
         }
 
         return new Module({
-            useStatements: this.generateUseStatements(),
+            useStatements: this.generateUseStatements(needsBase64Import, needsBigIntImport),
             rawDeclarations
         });
     }
 
-    private generateUseStatements(): UseStatement[] {
+    private generateUseStatements(needsBase64Import: boolean, needsBigIntImport: boolean): UseStatement[] {
         // Note: reqwest::Client is not needed here - it's used in wire_test_utils.rs
-        return [new UseStatement({ path: `${this.context.getCrateName()}::prelude::*`, isPublic: false })];
+        const statements: UseStatement[] = [
+            new UseStatement({ path: `${this.context.getCrateName()}::prelude::*`, isPublic: false })
+        ];
+
+        // Only add base64 import if the test file actually uses base64 decoding
+        if (needsBase64Import) {
+            statements.push(new UseStatement({ path: "base64::Engine", isPublic: false }));
+        }
+
+        // Only add BigInt import if the test file actually uses BigInt parsing
+        if (needsBigIntImport) {
+            statements.push(new UseStatement({ path: "num_bigint::BigInt", isPublic: false }));
+        }
+
+        return statements;
     }
 
     // =============================================================================
@@ -452,7 +475,9 @@ export class WireTestGenerator {
 
     private getTestFunctionName(endpoint: HttpEndpoint, serviceName: string): string {
         const endpointName = endpoint.name.snakeCase.safeName;
-        return `test_${serviceName}_${endpointName}_with_wiremock`;
+        // Normalize service name to avoid double underscores (e.g., endpoints_union_ -> endpoints_union)
+        const normalizedServiceName = serviceName.replace(/_+$/, "");
+        return `test_${normalizedServiceName}_${endpointName}_with_wiremock`;
     }
 
     private getDynamicEndpointExample(endpoint: HttpEndpoint): dynamic.EndpointExample | null {

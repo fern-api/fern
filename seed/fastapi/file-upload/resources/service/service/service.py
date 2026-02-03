@@ -11,12 +11,14 @@ from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
 from ..types.id import Id
+from ..types.model_type import ModelType
 from ..types.my_alias_object import MyAliasObject
 from ..types.my_collection_alias_object import MyCollectionAliasObject
 from ..types.my_inline_type import MyInlineType
 from ..types.my_object import MyObject
 from ..types.my_object_with_optional import MyObjectWithOptional
 from ..types.object_type import ObjectType
+from ..types.open_enum_type import OpenEnumType
 
 
 class AbstractServiceService(AbstractFernService):
@@ -114,6 +116,16 @@ class AbstractServiceService(AbstractFernService):
     @abc.abstractmethod
     def simple(self) -> None: ...
 
+    @abc.abstractmethod
+    def with_literal_and_enum_types(
+        self,
+        *,
+        file: fastapi.UploadFile,
+        model_type: typing.Optional[ModelType] = None,
+        open_enum: typing.Optional[OpenEnumType] = None,
+        maybe_name: typing.Optional[str] = None,
+    ) -> str: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -131,6 +143,7 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_optional_args(router=router)
         cls.__init_with_inline_type(router=router)
         cls.__init_simple(router=router)
+        cls.__init_with_literal_and_enum_types(router=router)
 
     @classmethod
     def __init_post(cls, router: fastapi.APIRouter) -> None:
@@ -718,4 +731,55 @@ class AbstractServiceService(AbstractFernService):
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.simple.__doc__,
             **get_route_args(cls.simple, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_with_literal_and_enum_types(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.with_literal_and_enum_types)
+        type_hints = typing.get_type_hints(cls.with_literal_and_enum_types)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "file":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
+                )
+            elif parameter_name == "model_type":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
+            elif parameter_name == "open_enum":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
+            elif parameter_name == "maybe_name":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.with_literal_and_enum_types, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.with_literal_and_enum_types)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
+            try:
+                return cls.with_literal_and_enum_types(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'with_literal_and_enum_types' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(
+            path="/with-literal-enum",
+            response_model=None,
+            description=AbstractServiceService.with_literal_and_enum_types.__doc__,
+            **get_route_args(cls.with_literal_and_enum_types, default_tag="service"),
         )(wrapper)
