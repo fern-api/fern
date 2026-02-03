@@ -18,7 +18,9 @@ export class ServersConverter2_X extends AbstractServerConverter<ServerV2> {
             id: serverId,
             name: context.casingsGenerator.generateName(serverId),
             url: this.constructServerUrl(server.protocol, server.url),
-            docs: undefined
+            docs: undefined,
+            originalUrl: undefined,
+            variables: undefined
         };
     }
 }

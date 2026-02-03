@@ -69,10 +69,45 @@ export const V63_TO_V62_MIGRATION: IrMigration<
                     : undefined,
             // ApiVersion contains TypeReferences that need conversion, but since skipValidation is true
             // in the serializer, we can pass it through with a type assertion
-            apiVersion: v63.apiVersion as unknown as IrVersions.V62.ir.ApiVersionScheme | undefined
+            apiVersion: v63.apiVersion as unknown as IrVersions.V62.ir.ApiVersionScheme | undefined,
+            environments: v63.environments != null ? convertEnvironmentsConfig(v63.environments) : undefined
         };
     }
 };
+
+function convertEnvironmentsConfig(
+    config: IrVersions.V63.EnvironmentsConfig
+): IrVersions.V62.environment.EnvironmentsConfig {
+    return {
+        defaultEnvironment: config.defaultEnvironment,
+        environments: convertEnvironments(config.environments)
+    };
+}
+
+function convertEnvironments(environments: IrVersions.V63.Environments): IrVersions.V62.environment.Environments {
+    switch (environments.type) {
+        case "singleBaseUrl":
+            return IrVersions.V62.environment.Environments.singleBaseUrl({
+                environments: environments.environments.map((env) => convertSingleBaseUrlEnvironment(env))
+            });
+        case "multipleBaseUrls":
+            return IrVersions.V62.environment.Environments.multipleBaseUrls({
+                baseUrls: environments.baseUrls,
+                environments: environments.environments
+            });
+    }
+}
+
+function convertSingleBaseUrlEnvironment(
+    env: IrVersions.V63.SingleBaseUrlEnvironment
+): IrVersions.V62.environment.SingleBaseUrlEnvironment {
+    return {
+        id: env.id,
+        name: env.name,
+        url: env.url,
+        docs: env.docs
+    };
+}
 
 function convertApiAuth(auth: IrVersions.V63.ApiAuth): IrVersions.V62.ApiAuth {
     return {

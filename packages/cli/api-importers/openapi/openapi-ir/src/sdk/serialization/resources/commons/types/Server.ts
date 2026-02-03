@@ -3,12 +3,15 @@
 import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ServerVariable } from "./ServerVariable.js";
 import { WithDescription } from "./WithDescription.js";
 
 export const Server: core.serialization.ObjectSchema<serializers.Server.Raw, FernOpenapiIr.Server> = core.serialization
     .objectWithoutOptionalProperties({
         name: core.serialization.string().optional(),
         url: core.serialization.string(),
+        originalUrl: core.serialization.string().optional(),
+        variables: core.serialization.list(ServerVariable).optional(),
         audiences: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithDescription);
@@ -17,6 +20,8 @@ export declare namespace Server {
     export interface Raw extends WithDescription.Raw {
         name?: string | null;
         url: string;
+        originalUrl?: string | null;
+        variables?: ServerVariable.Raw[] | null;
         audiences?: string[] | null;
     }
 }

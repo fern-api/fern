@@ -6,4 +6,14 @@ export interface SingleBaseUrlEnvironment extends FernIr.dynamic.WithDocs {
     id: FernIr.dynamic.EnvironmentId;
     name: FernIr.dynamic.Name;
     url: FernIr.dynamic.EnvironmentUrl;
+    /**
+     * The original URL template with variable placeholders (e.g., "https://{space_name}.example.com").
+     * Only present when the URL contains server variables.
+     */
+    originalUrl: FernIr.dynamic.EnvironmentUrl | undefined;
+    /**
+     * Server variables that can be substituted in the originalUrl.
+     * Only present when the URL contains server variables.
+     */
+    variables: FernIr.dynamic.ServerVariable[] | undefined;
 }

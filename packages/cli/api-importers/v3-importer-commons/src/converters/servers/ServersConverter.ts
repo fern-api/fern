@@ -3,6 +3,7 @@ import {
     Environments,
     EnvironmentsConfig,
     MultipleBaseUrlsEnvironment,
+    ServerVariable,
     SingleBaseUrlEnvironment
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -98,10 +99,13 @@ export class ServersConverter extends AbstractConverter<
         const environments: SingleBaseUrlEnvironment[] = this.withExplodedServers(this.servers)
             .map((server) => {
                 const serverName = ServersConverter.getServerName({ server, context: this.context });
+                const { originalUrl, variables } = this.getServerVariables(server);
                 return {
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
                     url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
+                    originalUrl,
+                    variables,
                     docs: server.description
                 };
             })
@@ -154,6 +158,27 @@ export class ServersConverter extends AbstractConverter<
             }
         }
         return url;
+    }
+
+    private getServerVariables(server: OpenAPIV3_1.ServerObject): {
+        originalUrl: string | undefined;
+        variables: ServerVariable[] | undefined;
+    } {
+        if (server.variables == null || Object.keys(server.variables).length === 0) {
+            return { originalUrl: undefined, variables: undefined };
+        }
+
+        const variables: ServerVariable[] = Object.entries(server.variables).map(([name, variable]) => ({
+            name,
+            default: variable.default,
+            description: variable.description,
+            enum: variable.enum
+        }));
+
+        return {
+            originalUrl: server.url,
+            variables
+        };
     }
 
     /**

@@ -6,5 +6,15 @@ export interface Server extends FernOpenapiIr.WithDescription {
     /** Populated by `X-Server-Name` */
     name: string | undefined;
     url: string;
+    /**
+     * The original URL template with variable placeholders (e.g., "https://{space_name}.example.com").
+     * Only present when the URL contains server variables.
+     */
+    originalUrl: string | undefined;
+    /**
+     * Server variables that can be substituted in the originalUrl.
+     * Only present when the URL contains server variables.
+     */
+    variables: FernOpenapiIr.ServerVariable[] | undefined;
     audiences: string[] | undefined;
 }

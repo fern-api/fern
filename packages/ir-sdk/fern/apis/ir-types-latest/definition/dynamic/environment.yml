@@ -21,6 +21,16 @@ types:
       id: EnvironmentId
       name: commons.Name
       url: EnvironmentUrl
+      originalUrl:
+        type: optional<EnvironmentUrl>
+        docs: |
+          The original URL template with variable placeholders (e.g., "https://{space_name}.example.com").
+          Only present when the URL contains server variables.
+      variables:
+        type: optional<list<ServerVariable>>
+        docs: |
+          Server variables that can be substituted in the originalUrl.
+          Only present when the URL contains server variables.
   MultipleBaseUrlsEnvironments:
     properties:
       baseUrls: list<EnvironmentBaseUrlWithId>
@@ -54,3 +64,21 @@ types:
       - MultipleEnvironmentUrlValues
 
   MultipleEnvironmentUrlValues: map<EnvironmentBaseUrlId, EnvironmentUrl>
+
+  ServerVariable:
+    docs: |
+      Represents a server variable that can be substituted in a URL template.
+      For example, in "https://{space_name}.example.com", space_name is a variable.
+    properties:
+      name:
+        type: string
+        docs: The name of the variable (e.g., "space_name")
+      default:
+        type: string
+        docs: The default value for the variable
+      description:
+        type: optional<string>
+        docs: A description of what this variable represents
+      enum:
+        type: optional<list<string>>
+        docs: An optional list of allowed values for this variable

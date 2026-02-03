@@ -8,5 +8,6 @@ export * from "./EnvironmentValues.js";
 export * from "./MultipleBaseUrlsEnvironment.js";
 export * from "./MultipleBaseUrlsEnvironments.js";
 export * from "./MultipleEnvironmentUrlValues.js";
+export * from "./ServerVariable.js";
 export * from "./SingleBaseUrlEnvironment.js";
 export * from "./SingleBaseUrlEnvironments.js";
