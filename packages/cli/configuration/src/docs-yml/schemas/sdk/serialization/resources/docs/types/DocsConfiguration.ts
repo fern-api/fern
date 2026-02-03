@@ -70,6 +70,8 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     integrations: IntegrationsConfig.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),
+    header: core.serialization.string().optional(),
+    footer: core.serialization.string().optional(),
 });
 
 export declare namespace DocsConfiguration {
@@ -106,5 +108,7 @@ export declare namespace DocsConfiguration {
         integrations?: IntegrationsConfig.Raw | null;
         css?: CssConfig.Raw | null;
         js?: JsConfig.Raw | null;
+        header?: string | null;
+        footer?: string | null;
     }
 }
