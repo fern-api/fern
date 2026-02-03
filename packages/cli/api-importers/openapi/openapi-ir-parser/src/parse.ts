@@ -103,7 +103,10 @@ export function parse({
                             ...parsedAsyncAPI.servers.map((server) => ({
                                 ...server,
                                 audiences: undefined,
-                                description: undefined
+                                description: undefined,
+                                defaultUrl: undefined,
+                                urlTemplate: undefined,
+                                variables: undefined
                             }))
                         ];
                     }

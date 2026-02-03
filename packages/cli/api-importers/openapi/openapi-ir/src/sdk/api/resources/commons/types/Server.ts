@@ -7,4 +7,10 @@ export interface Server extends FernOpenapiIr.WithDescription {
     name: string | undefined;
     url: string;
     audiences: string[] | undefined;
+    /** A separate default URL to use when no variables are provided (from x-fern-default-url extension) */
+    defaultUrl: string | undefined;
+    /** The original URL template with variable placeholders (e.g., "https://api.{region}.example.com") */
+    urlTemplate: string | undefined;
+    /** Server variables for URL templating */
+    variables: FernOpenapiIr.ServerVariable[] | undefined;
 }

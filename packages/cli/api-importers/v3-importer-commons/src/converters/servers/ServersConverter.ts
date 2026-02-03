@@ -3,6 +3,7 @@ import {
     Environments,
     EnvironmentsConfig,
     MultipleBaseUrlsEnvironment,
+    ServerVariable,
     SingleBaseUrlEnvironment
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -11,6 +12,7 @@ import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ServerNameExtension } from "../../extensions/x-fern-server-name";
 
 const DEFAULT_BASE_URL_ID = "Base";
+const X_FERN_DEFAULT_URL = "x-fern-default-url";
 
 export declare namespace ServersConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -95,13 +97,34 @@ export class ServersConverter extends AbstractConverter<
             };
         }
 
-        const environments: SingleBaseUrlEnvironment[] = this.withExplodedServers(this.servers)
+        // Extract x-fern-default-url from any server that has it
+        const fernDefaultUrl = this.extractFernDefaultUrl();
+
+        const environments: SingleBaseUrlEnvironment[] = this.servers
             .map((server) => {
                 const serverName = ServersConverter.getServerName({ server, context: this.context });
+                const hasVariables = server.variables != null && Object.keys(server.variables).length > 0;
+
+                if (hasVariables && server.variables != null) {
+                    // Preserve server variables for runtime URL configuration
+                    return {
+                        id: serverName,
+                        name: this.context.casingsGenerator.generateName(serverName),
+                        url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
+                        defaultUrl: fernDefaultUrl,
+                        urlTemplate: this.maybeRemoveTrailingSlashIfNotEmpty(server.url),
+                        urlVariables: this.convertServerVariables(server.variables),
+                        docs: server.description
+                    };
+                }
+
                 return {
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
                     url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
+                    defaultUrl: undefined,
+                    urlTemplate: undefined,
+                    urlVariables: undefined,
                     docs: server.description
                 };
             })
@@ -116,6 +139,18 @@ export class ServersConverter extends AbstractConverter<
             },
             defaultUrl: environments[0]?.id
         };
+    }
+
+    /**
+     * Converts OpenAPI server variables to IR ServerVariable format.
+     */
+    private convertServerVariables(variables: Record<string, OpenAPIV3_1.ServerVariableObject>): ServerVariable[] {
+        return Object.entries(variables).map(([variableId, variable]) => ({
+            id: variableId,
+            name: this.context.casingsGenerator.generateName(variableId),
+            default: variable.default,
+            values: variable.enum
+        }));
     }
 
     public static getServerExtensionName({
@@ -156,68 +191,6 @@ export class ServersConverter extends AbstractConverter<
         return url;
     }
 
-    /**
-     * Explodes servers with enum variables into multiple servers, one for each enum value.
-     * For example, a server with URL "https://{region}.example.com" where region is an enum ["us", "eu"]
-     * will be exploded into two servers: "https://us.example.com" and "https://eu.example.com"
-     */
-    private withExplodedServers(servers: OpenAPIV3_1.ServerObject[]): OpenAPIV3_1.ServerObject[] {
-        return servers
-            .flatMap((server) => {
-                if (server.variables == null) {
-                    return [server];
-                }
-
-                const variablesWithEnums = Object.entries(server.variables).filter(
-                    ([_, variable]) => variable.enum != null && variable.enum.length > 0
-                );
-
-                if (variablesWithEnums.length === 0) {
-                    return [server];
-                }
-
-                // Take the first variable with an enum to explode
-                const firstVariable = variablesWithEnums[0];
-                if (firstVariable == null) {
-                    return [server];
-                }
-                const [variableName, variable] = firstVariable;
-
-                if (variable.enum == null) {
-                    return [server];
-                }
-
-                return variable.enum.map((enumValue) => {
-                    const newUrl = server.url.replace(`{${variableName}}`, encodeURIComponent(enumValue));
-
-                    // Create a new server with the variable replaced in the URL
-                    // and remove the exploded variable from variables
-                    const newVariables: Record<string, OpenAPIV3_1.ServerVariableObject> = {};
-
-                    // Copy all variables except the one we're exploding
-                    for (const [key, value] of Object.entries(server.variables ?? {})) {
-                        if (key !== variableName) {
-                            newVariables[key] = value;
-                        }
-                    }
-
-                    const newServer: OpenAPIV3_1.ServerObject & { [key: string]: unknown } = {
-                        ...server,
-                        url: newUrl,
-                        variables: Object.keys(newVariables).length > 0 ? newVariables : undefined,
-                        "x-fern-server-name": server.description
-                            ? `${server.description}_${enumValue}`
-                            : `${enumValue}`,
-                        description: server.description
-                    };
-
-                    // Recursively explode any remaining enum variables
-                    return this.withExplodedServers([newServer])[0];
-                });
-            })
-            .filter(isNonNullish);
-    }
-
     private getDefaultBaseUrlName(): string {
         if (this.servers == null || this.servers.length === 0 || this.servers[0] == null) {
             return DEFAULT_BASE_URL_ID;
@@ -232,5 +205,22 @@ export class ServersConverter extends AbstractConverter<
 
     private maybeRemoveTrailingSlashIfNotEmpty(url: string): string {
         return url.endsWith("/") && url !== "/" ? url.slice(0, -1) : url;
+    }
+
+    /**
+     * Extracts the x-fern-default-url extension from any server in the list.
+     * This URL is used as a fallback when no variables are provided.
+     */
+    private extractFernDefaultUrl(): string | undefined {
+        if (this.servers == null) {
+            return undefined;
+        }
+        for (const server of this.servers) {
+            const defaultUrl = (server as Record<string, unknown>)[X_FERN_DEFAULT_URL];
+            if (typeof defaultUrl === "string") {
+                return this.maybeRemoveTrailingSlashIfNotEmpty(defaultUrl);
+            }
+        }
+        return undefined;
     }
 }

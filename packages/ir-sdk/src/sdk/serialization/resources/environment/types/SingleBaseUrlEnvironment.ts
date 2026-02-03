@@ -7,6 +7,7 @@ import { Name } from "../../commons/types/Name.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { EnvironmentId } from "./EnvironmentId.js";
 import { EnvironmentUrl } from "./EnvironmentUrl.js";
+import { ServerVariable } from "./ServerVariable.js";
 
 export const SingleBaseUrlEnvironment: core.serialization.ObjectSchema<
     serializers.SingleBaseUrlEnvironment.Raw,
@@ -16,6 +17,9 @@ export const SingleBaseUrlEnvironment: core.serialization.ObjectSchema<
         id: EnvironmentId,
         name: Name,
         url: EnvironmentUrl,
+        defaultUrl: core.serialization.string().optional(),
+        urlTemplate: core.serialization.string().optional(),
+        urlVariables: core.serialization.list(ServerVariable).optional(),
     })
     .extend(WithDocs);
 
@@ -24,5 +28,8 @@ export declare namespace SingleBaseUrlEnvironment {
         id: EnvironmentId.Raw;
         name: Name.Raw;
         url: EnvironmentUrl.Raw;
+        defaultUrl?: string | null;
+        urlTemplate?: string | null;
+        urlVariables?: ServerVariable.Raw[] | null;
     }
 }

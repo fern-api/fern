@@ -8,12 +8,21 @@ interface ApiServerConfig {
     audiences?: string[];
 }
 
+interface ServerVariable {
+    id: string;
+    default?: string;
+    values?: string[];
+}
+
 interface SingleApiServer {
     type?: "single";
     name?: string;
     description?: string;
     url: string;
     audiences?: string[];
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariable[];
 }
 
 interface GroupedMultiApiServer {
@@ -177,12 +186,26 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             }
         } else if ("url" in server && server.url) {
             // Handle regular single URL servers
-            const environmentSchema = server.audiences
+            const hasServerVariables =
+                server.urlTemplate != null && server.variables != null && server.variables.length > 0;
+            const environmentSchema: string | RawSchemas.SingleBaseUrlEnvironmentSchema = hasServerVariables
                 ? {
                       url: server.url,
-                      audiences: server.audiences
+                      audiences: server.audiences,
+                      "default-url": server.defaultUrl,
+                      "url-template": server.urlTemplate,
+                      variables: server.variables?.map((v) => ({
+                          id: v.id,
+                          default: v.default,
+                          values: v.values
+                      }))
                   }
-                : server.url;
+                : server.audiences
+                  ? {
+                        url: server.url,
+                        audiences: server.audiences
+                    }
+                  : server.url;
             if (server.name == null) {
                 topLevelSkippedServers.push(environmentSchema);
                 continue;
@@ -420,15 +443,33 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     }
 
     if (!hasTopLevelServersWithName) {
-        const singleURL = context.ir.servers[0]?.url;
-        const singleURLAudiences = context.ir.servers[0]?.audiences;
+        const firstServer = context.ir.servers[0];
+        const singleURL = firstServer?.url;
+        const singleURLAudiences = firstServer?.audiences;
+        const singleURLDefaultUrl = firstServer?.defaultUrl;
+        const singleURLTemplate = firstServer?.urlTemplate;
+        const singleURLVariables = firstServer?.variables;
         if (singleURL != null) {
-            const newEnvironmentSchema = singleURLAudiences
+            const hasServerVariables =
+                singleURLTemplate != null && singleURLVariables != null && singleURLVariables.length > 0;
+            const newEnvironmentSchema: string | RawSchemas.SingleBaseUrlEnvironmentSchema = hasServerVariables
                 ? {
                       url: singleURL,
-                      audiences: singleURLAudiences
+                      audiences: singleURLAudiences,
+                      "default-url": singleURLDefaultUrl,
+                      "url-template": singleURLTemplate,
+                      variables: singleURLVariables?.map((v) => ({
+                          id: v.id,
+                          default: v.default,
+                          values: v.values
+                      }))
                   }
-                : singleURL;
+                : singleURLAudiences
+                  ? {
+                        url: singleURL,
+                        audiences: singleURLAudiences
+                    }
+                  : singleURL;
             topLevelServersWithName[DEFAULT_ENVIRONMENT_NAME] = newEnvironmentSchema;
         }
     }
