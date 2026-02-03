@@ -68,6 +68,18 @@ void runCli();
 const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
+    const args = hideBin(process.argv);
+
+    const isCompletionCommand = args[0] === "completion" || args.includes("--get-yargs-completions");
+    if (isCompletionCommand) {
+        const cliContext = new CliContext(process.stdout, process.stderr, { isLocal: false });
+        yargs(args)
+            .scriptName(cliContext.environment.cliName)
+            .completion("completion", "Generate shell completion script")
+            .parse();
+        return;
+    }
+
     const isLocal = process.argv.includes("--local");
     const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
 
