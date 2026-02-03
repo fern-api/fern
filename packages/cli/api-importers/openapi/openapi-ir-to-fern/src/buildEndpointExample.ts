@@ -61,11 +61,6 @@ export function buildEndpointExample({
 
         // Global header handling
         for (const [header, info] of Object.entries(globalHeaders)) {
-            // ignore global headers that are already in the endpoint headers
-            if (endpointHeaderNames.has(header)) {
-                continue;
-            }
-
             // set global header example value
             if (info != null && typeof info === "object" && info.type != null) {
                 // handling header types
@@ -96,18 +91,31 @@ export function buildEndpointExample({
                 });
 
                 if (valueToUse != null) {
-                    namedFullExamples.push({
+                    // If this header already exists from endpoint, override it; otherwise add it
+                    const existingIdx = namedFullExamples.findIndex((e) => e.name === header);
+                    const newExample = {
                         name: header,
                         value: FullExample.literal(LiteralExample.string(valueToUse))
-                    });
+                    };
+                    if (existingIdx >= 0) {
+                        namedFullExamples[existingIdx] = newExample;
+                    } else {
+                        namedFullExamples.push(newExample);
+                    }
+                    continue;
                 }
-            } else {
-                // Adds a header example using the header name as the value when no type information is available
-                namedFullExamples.push({
-                    name: header,
-                    value: FullExample.primitive(PrimitiveExample.string(header))
-                });
             }
+
+            // Skip if already in endpoint headers and no override value was found
+            if (endpointHeaderNames.has(header)) {
+                continue;
+            }
+
+            // Adds a header example using the header name as the value when no type information is available
+            namedFullExamples.push({
+                name: header,
+                value: FullExample.primitive(PrimitiveExample.string(header))
+            });
         }
 
         example.headers = convertHeaderExamples({
