@@ -1,8 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.60.0
+- version: 3.61.0
   changelogEntry:
     - summary: |
         Add support for OpenAPI server templating. Server variables are now preserved in the IR instead of being exploded into multiple environments, enabling SDKs to configure URL variables at runtime.
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Add support for custom header and footer components in docs.yml. Users can now specify
+        `header: ./path/to/header.tsx` and `footer: ./path/to/footer.tsx` to replace the default
+        header and footer with custom React components. The components must have a default export.
       type: feat
   createdAt: "2026-02-03"
   irVersion: 63
