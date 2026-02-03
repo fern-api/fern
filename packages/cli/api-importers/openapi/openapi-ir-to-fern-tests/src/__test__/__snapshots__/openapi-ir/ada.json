@@ -4,6 +4,13 @@
   "servers": [
     {
       "url": "https://example.ada.support/api",
+      "originalUrl": "https://{handle}.ada.support/api",
+      "variables": [
+        {
+          "name": "handle",
+          "default": "example"
+        }
+      ],
       "description": "The subdomain of the client"
     }
   ],
