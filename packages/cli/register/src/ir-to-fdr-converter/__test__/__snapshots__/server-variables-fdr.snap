@@ -1,0 +1,820 @@
+{
+  "apiName": "Server Variables Test API",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server with variables_v1",
+        "description": "Returns a list of plants in the inventory",
+        "environments": [
+          {
+            "baseUrl": "https://your-space.signalwire.com/api/v1",
+            "id": "Production server with variables_v1",
+          },
+          {
+            "baseUrl": "https://your-space.signalwire.com/api/v2",
+            "id": "Production server with variables_v2",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/plants",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": [
+              {
+                "id": "plant-123",
+                "name": "Snake Plant",
+                "species": "Sansevieria trifasciata",
+                "sunlight": "full-sun",
+                "wateringFrequency": "weekly",
+              },
+            ],
+            "responseBodyV3": {
+              "type": "json",
+              "value": [
+                {
+                  "id": "plant-123",
+                  "name": "Snake Plant",
+                  "species": "Sansevieria trifasciata",
+                  "sunlight": "full-sun",
+                  "wateringFrequency": "weekly",
+                },
+              ],
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "listPlants",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "List all plants",
+        "originalEndpointId": "endpoint_.listPlants",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/plants",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "List of plants",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "Plant",
+              },
+              "maxItems": undefined,
+              "minItems": undefined,
+              "type": "list",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "List of plants",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "itemType": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "Plant",
+                  },
+                  "maxItems": undefined,
+                  "minItems": undefined,
+                  "type": "list",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server with variables_v1",
+        "description": "Retrieves a specific plant by its unique identifier",
+        "environments": [
+          {
+            "baseUrl": "https://your-space.signalwire.com/api/v1",
+            "id": "Production server with variables_v1",
+          },
+          {
+            "baseUrl": "https://your-space.signalwire.com/api/v2",
+            "id": "Production server with variables_v2",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Plant not found",
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "PLANT_NOT_FOUND",
+                    "message": "The requested plant could not be found",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
+            "isWildcard": undefined,
+            "name": "NotFoundError",
+            "statusCode": 404,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/plants/plant-123",
+            "pathParameters": {
+              "plantId": "plant-123",
+            },
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "id": "plant-123",
+              "name": "Snake Plant",
+              "species": "Sansevieria trifasciata",
+              "sunlight": "full-sun",
+              "wateringFrequency": "weekly",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "plant-123",
+                "name": "Snake Plant",
+                "species": "Sansevieria trifasciata",
+                "sunlight": "full-sun",
+                "wateringFrequency": "weekly",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getPlant",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "Get a plant by ID",
+        "originalEndpointId": "endpoint_.getPlant",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/plants/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "plantId",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": "The unique identifier of the plant",
+              "explode": undefined,
+              "key": "plantId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Plant found",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Plant",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Plant found",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Plant",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server with variables_v1",
+        "description": "Creates a new plant in the inventory",
+        "environments": [
+          {
+            "baseUrl": "https://your-space.signalwire.com/api/v1",
+            "id": "Production server with variables_v1",
+          },
+          {
+            "baseUrl": "https://your-space.signalwire.com/api/v2",
+            "id": "Production server with variables_v2",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Invalid plant data",
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "PLANT_NOT_FOUND",
+                    "message": "The requested plant could not be found",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
+            "isWildcard": undefined,
+            "name": "BadRequestError",
+            "statusCode": 400,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/plants/plantId",
+            "pathParameters": {
+              "plantId": "plantId",
+            },
+            "queryParameters": {},
+            "requestBody": {
+              "name": "Fiddle Leaf Fig",
+              "species": "Ficus lyrata",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "name": "Fiddle Leaf Fig",
+                "species": "Ficus lyrata",
+              },
+            },
+            "responseBody": {
+              "id": "plant-123",
+              "name": "Snake Plant",
+              "species": "Sansevieria trifasciata",
+              "sunlight": "full-sun",
+              "wateringFrequency": "weekly",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "plant-123",
+                "name": "Snake Plant",
+                "species": "Sansevieria trifasciata",
+                "sunlight": "full-sun",
+                "wateringFrequency": "weekly",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+        ],
+        "headers": [],
+        "id": "createPlant",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create a new plant",
+        "originalEndpointId": "endpoint_.createPlant",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/plants/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "plantId",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "explode": undefined,
+              "key": "plantId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreatePlantRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "CreatePlantRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Plant created successfully",
+          "isWildcard": undefined,
+          "statusCode": 201,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Plant",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Plant created successfully",
+              "isWildcard": undefined,
+              "statusCode": 201,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Plant",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "graphqlOperations": [],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "Plant",
+      "CreatePlantRequest",
+      "Error",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "CreatePlantRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "CreatePlantRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Common name of the plant",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Scientific name",
+            "key": "species",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "How often to water",
+            "key": "wateringFrequency",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Sunlight requirements",
+            "key": "sunlight",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreatePlantRequestSunlight",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "CreatePlantRequestSunlight": {
+      "availability": undefined,
+      "description": "Sunlight requirements",
+      "displayName": undefined,
+      "name": "CreatePlantRequestSunlight",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "full-sun",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "partial-shade",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "shade",
+          },
+        ],
+      },
+    },
+    "Error": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Error",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Error code",
+            "key": "code",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Human-readable error message",
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "Plant": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Plant",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Unique plant identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Common name of the plant",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Scientific name",
+            "key": "species",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "How often to water",
+            "key": "wateringFrequency",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Sunlight requirements",
+            "key": "sunlight",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "PlantSunlight",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "PlantSunlight": {
+      "availability": undefined,
+      "description": "Sunlight requirements",
+      "displayName": undefined,
+      "name": "PlantSunlight",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "full-sun",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "partial-shade",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "shade",
+          },
+        ],
+      },
+    },
+  },
+}

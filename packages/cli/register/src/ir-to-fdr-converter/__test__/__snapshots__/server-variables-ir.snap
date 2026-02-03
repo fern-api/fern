@@ -1,0 +1,2512 @@
+{
+  "apiDisplayName": "Server Variables Test API",
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "serverVariablesTestApi",
+      "unsafeName": "serverVariablesTestApi",
+    },
+    "originalName": "Server Variables Test API",
+    "pascalCase": {
+      "safeName": "ServerVariablesTestApi",
+      "unsafeName": "ServerVariablesTestApi",
+    },
+    "screamingSnakeCase": {
+      "safeName": "SERVER_VARIABLES_TEST_API",
+      "unsafeName": "SERVER_VARIABLES_TEST_API",
+    },
+    "snakeCase": {
+      "safeName": "server_variables_test_api",
+      "unsafeName": "server_variables_test_api",
+    },
+  },
+  "apiPlayground": undefined,
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "Production server with variables_v1",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": "Production server with variables",
+          "id": "Production server with variables_v1",
+          "name": {
+            "camelCase": {
+              "safeName": "productionServerWithVariablesV1",
+              "unsafeName": "productionServerWithVariablesV1",
+            },
+            "originalName": "Production server with variables_v1",
+            "pascalCase": {
+              "safeName": "ProductionServerWithVariablesV1",
+              "unsafeName": "ProductionServerWithVariablesV1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION_SERVER_WITH_VARIABLES_V_1",
+              "unsafeName": "PRODUCTION_SERVER_WITH_VARIABLES_V_1",
+            },
+            "snakeCase": {
+              "safeName": "production_server_with_variables_v_1",
+              "unsafeName": "production_server_with_variables_v_1",
+            },
+          },
+          "originalUrl": "https://{space_name}.signalwire.com/api/v1",
+          "url": "https://your-space.signalwire.com/api/v1",
+          "variables": [
+            {
+              "default": "your-space",
+              "description": "The domain of the user's SignalWire space",
+              "enum": undefined,
+              "name": "space_name",
+            },
+          ],
+        },
+        {
+          "docs": "Production server with variables",
+          "id": "Production server with variables_v2",
+          "name": {
+            "camelCase": {
+              "safeName": "productionServerWithVariablesV2",
+              "unsafeName": "productionServerWithVariablesV2",
+            },
+            "originalName": "Production server with variables_v2",
+            "pascalCase": {
+              "safeName": "ProductionServerWithVariablesV2",
+              "unsafeName": "ProductionServerWithVariablesV2",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION_SERVER_WITH_VARIABLES_V_2",
+              "unsafeName": "PRODUCTION_SERVER_WITH_VARIABLES_V_2",
+            },
+            "snakeCase": {
+              "safeName": "production_server_with_variables_v_2",
+              "unsafeName": "production_server_with_variables_v_2",
+            },
+          },
+          "originalUrl": "https://{space_name}.signalwire.com/api/v2",
+          "url": "https://your-space.signalwire.com/api/v2",
+          "variables": [
+            {
+              "default": "your-space",
+              "description": "The domain of the user's SignalWire space",
+              "enum": undefined,
+              "name": "space_name",
+            },
+          ],
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {
+    "CreatePlantRequestBadRequestError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "createPlantRequestBadRequestError",
+            "unsafeName": "createPlantRequestBadRequestError",
+          },
+          "originalName": "CreatePlantRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreatePlantRequestBadRequestError",
+            "unsafeName": "CreatePlantRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PLANT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_PLANT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_plant_request_bad_request_error",
+            "unsafeName": "create_plant_request_bad_request_error",
+          },
+        },
+        "wireValue": "CreatePlantRequestBadRequestError",
+      },
+      "displayName": "BadRequestError",
+      "docs": "Invalid plant data",
+      "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
+      "name": {
+        "errorId": "CreatePlantRequestBadRequestError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createPlantRequestBadRequestError",
+            "unsafeName": "createPlantRequestBadRequestError",
+          },
+          "originalName": "CreatePlantRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreatePlantRequestBadRequestError",
+            "unsafeName": "CreatePlantRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PLANT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_PLANT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_plant_request_bad_request_error",
+            "unsafeName": "create_plant_request_bad_request_error",
+          },
+        },
+      },
+      "statusCode": 400,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+    "GetPlantRequestNotFoundError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "getPlantRequestNotFoundError",
+            "unsafeName": "getPlantRequestNotFoundError",
+          },
+          "originalName": "GetPlantRequestNotFoundError",
+          "pascalCase": {
+            "safeName": "GetPlantRequestNotFoundError",
+            "unsafeName": "GetPlantRequestNotFoundError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_PLANT_REQUEST_NOT_FOUND_ERROR",
+            "unsafeName": "GET_PLANT_REQUEST_NOT_FOUND_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_plant_request_not_found_error",
+            "unsafeName": "get_plant_request_not_found_error",
+          },
+        },
+        "wireValue": "GetPlantRequestNotFoundError",
+      },
+      "displayName": "NotFoundError",
+      "docs": "Plant not found",
+      "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
+      "name": {
+        "errorId": "GetPlantRequestNotFoundError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getPlantRequestNotFoundError",
+            "unsafeName": "getPlantRequestNotFoundError",
+          },
+          "originalName": "GetPlantRequestNotFoundError",
+          "pascalCase": {
+            "safeName": "GetPlantRequestNotFoundError",
+            "unsafeName": "GetPlantRequestNotFoundError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_PLANT_REQUEST_NOT_FOUND_ERROR",
+            "unsafeName": "GET_PLANT_REQUEST_NOT_FOUND_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_plant_request_not_found_error",
+            "unsafeName": "get_plant_request_not_found_error",
+          },
+        },
+      },
+      "statusCode": 404,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "Plant",
+      "CreatePlantRequest",
+      "Error",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server with variables_v1",
+          "displayName": "List all plants",
+          "docs": "Returns a list of plants in the inventory",
+          "errors": [],
+          "fullPath": {
+            "head": "/plants",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.listPlants",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "listPlants",
+              "unsafeName": "listPlants",
+            },
+            "originalName": "listPlants",
+            "pascalCase": {
+              "safeName": "ListPlants",
+              "unsafeName": "ListPlants",
+            },
+            "screamingSnakeCase": {
+              "safeName": "LIST_PLANTS",
+              "unsafeName": "LIST_PLANTS",
+            },
+            "snakeCase": {
+              "safeName": "list_plants",
+              "unsafeName": "list_plants",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/plants",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "List of plants",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                        "originalName": "Plant",
+                        "pascalCase": {
+                          "safeName": "Plant",
+                          "unsafeName": "Plant",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PLANT",
+                          "unsafeName": "PLANT",
+                        },
+                        "snakeCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Plant",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "listPlantsExample": [
+                      {
+                        "id": "plant-123",
+                        "name": "Snake Plant",
+                        "species": "Sansevieria trifasciata",
+                        "sunlight": "full-sun",
+                        "wateringFrequency": "weekly",
+                      },
+                    ],
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "List of plants",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 200,
+          },
+          "responseHeaders": [],
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_listPlantsExample_200": {
+                "codeSamples": undefined,
+                "displayName": "listPlantsExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/plants",
+                  },
+                  "environment": "Production server with variables_v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": [
+                      {
+                        "id": "plant-123",
+                        "name": "Snake Plant",
+                        "species": "Sansevieria trifasciata",
+                        "sunlight": "full-sun",
+                        "wateringFrequency": "weekly",
+                      },
+                    ],
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "List of plants",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "container": {
+                        "_visit": [Function],
+                        "list": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "displayName": undefined,
+                          "fernFilepath": {
+                            "allParts": [],
+                            "file": undefined,
+                            "packagePath": [],
+                          },
+                          "inline": false,
+                          "name": {
+                            "camelCase": {
+                              "safeName": "plant",
+                              "unsafeName": "plant",
+                            },
+                            "originalName": "Plant",
+                            "pascalCase": {
+                              "safeName": "Plant",
+                              "unsafeName": "Plant",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "PLANT",
+                              "unsafeName": "PLANT",
+                            },
+                            "snakeCase": {
+                              "safeName": "plant",
+                              "unsafeName": "plant",
+                            },
+                          },
+                          "type": "named",
+                          "typeId": "Plant",
+                        },
+                        "type": "list",
+                      },
+                      "type": "container",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "listPlantsExample": [
+                          {
+                            "id": "plant-123",
+                            "name": "Snake Plant",
+                            "species": "Sansevieria trifasciata",
+                            "sunlight": "full-sun",
+                            "wateringFrequency": "weekly",
+                          },
+                        ],
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "List of plants",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [
+            {
+              "docs": "The unique identifier of the plant",
+              "explode": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "plantId",
+                  "unsafeName": "plantId",
+                },
+                "originalName": "plantId",
+                "pascalCase": {
+                  "safeName": "PlantId",
+                  "unsafeName": "PlantId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PLANT_ID",
+                  "unsafeName": "PLANT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "plant_id",
+                  "unsafeName": "plant_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "plantId_example": "plant-123",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server with variables_v1",
+          "displayName": "Get a plant by ID",
+          "docs": "Retrieves a specific plant by its unique identifier",
+          "errors": [
+            {
+              "docs": "Plant not found",
+              "error": {
+                "errorId": "GetPlantRequestNotFoundError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "getPlantRequestNotFoundError",
+                    "unsafeName": "getPlantRequestNotFoundError",
+                  },
+                  "originalName": "GetPlantRequestNotFoundError",
+                  "pascalCase": {
+                    "safeName": "GetPlantRequestNotFoundError",
+                    "unsafeName": "GetPlantRequestNotFoundError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "GET_PLANT_REQUEST_NOT_FOUND_ERROR",
+                    "unsafeName": "GET_PLANT_REQUEST_NOT_FOUND_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "get_plant_request_not_found_error",
+                    "unsafeName": "get_plant_request_not_found_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/plants/",
+            "parts": [
+              {
+                "pathParameter": "plantId",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [],
+          "id": "endpoint_.getPlant",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getPlant",
+              "unsafeName": "getPlant",
+            },
+            "originalName": "getPlant",
+            "pascalCase": {
+              "safeName": "GetPlant",
+              "unsafeName": "GetPlant",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_PLANT",
+              "unsafeName": "GET_PLANT",
+            },
+            "snakeCase": {
+              "safeName": "get_plant",
+              "unsafeName": "get_plant",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/plants/",
+            "parts": [
+              {
+                "pathParameter": "plantId",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "docs": "The unique identifier of the plant",
+              "explode": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "plantId",
+                  "unsafeName": "plantId",
+                },
+                "originalName": "plantId",
+                "pascalCase": {
+                  "safeName": "PlantId",
+                  "unsafeName": "PlantId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PLANT_ID",
+                  "unsafeName": "PLANT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "plant_id",
+                  "unsafeName": "plant_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "plantId_example": "plant-123",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Plant found",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "plant",
+                      "unsafeName": "plant",
+                    },
+                    "originalName": "Plant",
+                    "pascalCase": {
+                      "safeName": "Plant",
+                      "unsafeName": "Plant",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PLANT",
+                      "unsafeName": "PLANT",
+                    },
+                    "snakeCase": {
+                      "safeName": "plant",
+                      "unsafeName": "plant",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Plant",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getPlantExample": {
+                      "id": "plant-123",
+                      "name": "Snake Plant",
+                      "species": "Sansevieria trifasciata",
+                      "sunlight": "full-sun",
+                      "wateringFrequency": "weekly",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "Plant found",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 200,
+          },
+          "responseHeaders": [],
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getPlantExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getPlantExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/plants/plant-123",
+                  },
+                  "environment": "Production server with variables_v1",
+                  "headers": {},
+                  "pathParameters": {
+                    "plantId": "plant-123",
+                  },
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "id": "plant-123",
+                      "name": "Snake Plant",
+                      "species": "Sansevieria trifasciata",
+                      "sunlight": "full-sun",
+                      "wateringFrequency": "weekly",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Plant found",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                        "originalName": "Plant",
+                        "pascalCase": {
+                          "safeName": "Plant",
+                          "unsafeName": "Plant",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PLANT",
+                          "unsafeName": "PLANT",
+                        },
+                        "snakeCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Plant",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getPlantExample": {
+                          "id": "plant-123",
+                          "name": "Snake Plant",
+                          "species": "Sansevieria trifasciata",
+                          "sunlight": "full-sun",
+                          "wateringFrequency": "weekly",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "Plant found",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [
+            {
+              "docs": undefined,
+              "explode": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "plantId",
+                  "unsafeName": "plantId",
+                },
+                "originalName": "plantId",
+                "pascalCase": {
+                  "safeName": "PlantId",
+                  "unsafeName": "PlantId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PLANT_ID",
+                  "unsafeName": "PLANT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "plant_id",
+                  "unsafeName": "plant_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "plantId_example": "plantId",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": undefined,
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server with variables_v1",
+          "displayName": "Create a new plant",
+          "docs": "Creates a new plant in the inventory",
+          "errors": [
+            {
+              "docs": "Invalid plant data",
+              "error": {
+                "errorId": "CreatePlantRequestBadRequestError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "createPlantRequestBadRequestError",
+                    "unsafeName": "createPlantRequestBadRequestError",
+                  },
+                  "originalName": "CreatePlantRequestBadRequestError",
+                  "pascalCase": {
+                    "safeName": "CreatePlantRequestBadRequestError",
+                    "unsafeName": "CreatePlantRequestBadRequestError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_PLANT_REQUEST_BAD_REQUEST_ERROR",
+                    "unsafeName": "CREATE_PLANT_REQUEST_BAD_REQUEST_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_plant_request_bad_request_error",
+                    "unsafeName": "create_plant_request_bad_request_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/plants/",
+            "parts": [
+              {
+                "pathParameter": "plantId",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [],
+          "id": "endpoint_.createPlant",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createPlant",
+              "unsafeName": "createPlant",
+            },
+            "originalName": "createPlant",
+            "pascalCase": {
+              "safeName": "CreatePlant",
+              "unsafeName": "CreatePlant",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_PLANT",
+              "unsafeName": "CREATE_PLANT",
+            },
+            "snakeCase": {
+              "safeName": "create_plant",
+              "unsafeName": "create_plant",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/plants/",
+            "parts": [
+              {
+                "pathParameter": "plantId",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "docs": undefined,
+              "explode": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "plantId",
+                  "unsafeName": "plantId",
+                },
+                "originalName": "plantId",
+                "pascalCase": {
+                  "safeName": "PlantId",
+                  "unsafeName": "PlantId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PLANT_ID",
+                  "unsafeName": "PLANT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "plant_id",
+                  "unsafeName": "plant_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "plantId_example": "plantId",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": undefined,
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "createPlantRequest",
+                  "unsafeName": "createPlantRequest",
+                },
+                "originalName": "CreatePlantRequest",
+                "pascalCase": {
+                  "safeName": "CreatePlantRequest",
+                  "unsafeName": "CreatePlantRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATE_PLANT_REQUEST",
+                  "unsafeName": "CREATE_PLANT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "create_plant_request",
+                  "unsafeName": "create_plant_request",
+                },
+              },
+              "type": "named",
+              "typeId": "CreatePlantRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "createPlantExample": {
+                  "name": "Fiddle Leaf Fig",
+                  "species": "Ficus lyrata",
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Plant created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "plant",
+                      "unsafeName": "plant",
+                    },
+                    "originalName": "Plant",
+                    "pascalCase": {
+                      "safeName": "Plant",
+                      "unsafeName": "Plant",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PLANT",
+                      "unsafeName": "PLANT",
+                    },
+                    "snakeCase": {
+                      "safeName": "plant",
+                      "unsafeName": "plant",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Plant",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createPlantExample": {
+                      "id": "plant-123",
+                      "name": "Snake Plant",
+                      "species": "Sansevieria trifasciata",
+                      "sunlight": "full-sun",
+                      "wateringFrequency": "weekly",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "Plant created successfully",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 201,
+          },
+          "responseHeaders": [],
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "createPlantExample_201": {
+                "codeSamples": undefined,
+                "displayName": "createPlantExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/plants/plantId",
+                  },
+                  "environment": "Production server with variables_v1",
+                  "headers": {},
+                  "pathParameters": {
+                    "plantId": "plantId",
+                  },
+                  "queryParameters": {},
+                  "requestBody": {
+                    "name": "Fiddle Leaf Fig",
+                    "species": "Ficus lyrata",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "id": "plant-123",
+                      "name": "Snake Plant",
+                      "species": "Sansevieria trifasciata",
+                      "sunlight": "full-sun",
+                      "wateringFrequency": "weekly",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "createPlantRequest",
+                      "unsafeName": "createPlantRequest",
+                    },
+                    "originalName": "CreatePlantRequest",
+                    "pascalCase": {
+                      "safeName": "CreatePlantRequest",
+                      "unsafeName": "CreatePlantRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "CREATE_PLANT_REQUEST",
+                      "unsafeName": "CREATE_PLANT_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "create_plant_request",
+                      "unsafeName": "create_plant_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "CreatePlantRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createPlantExample": {
+                      "name": "Fiddle Leaf Fig",
+                      "species": "Ficus lyrata",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Plant created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                        "originalName": "Plant",
+                        "pascalCase": {
+                          "safeName": "Plant",
+                          "unsafeName": "Plant",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PLANT",
+                          "unsafeName": "PLANT",
+                        },
+                        "snakeCase": {
+                          "safeName": "plant",
+                          "unsafeName": "plant",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Plant",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "createPlantExample": {
+                          "id": "plant-123",
+                          "name": "Snake Plant",
+                          "species": "Sansevieria trifasciata",
+                          "sunlight": "full-sun",
+                          "wateringFrequency": "weekly",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "Plant created successfully",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 201,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "CreatePlantRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createPlantRequest",
+            "unsafeName": "createPlantRequest",
+          },
+          "originalName": "CreatePlantRequest",
+          "pascalCase": {
+            "safeName": "CreatePlantRequest",
+            "unsafeName": "CreatePlantRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PLANT_REQUEST",
+            "unsafeName": "CREATE_PLANT_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "create_plant_request",
+            "unsafeName": "create_plant_request",
+          },
+        },
+        "typeId": "CreatePlantRequest",
+      },
+      "referencedTypes": Set {
+        "CreatePlantRequestSunlight",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Common name of the plant",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreatePlantRequestName_example_0": "Fiddle Leaf Fig",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Scientific name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "species",
+                  "unsafeName": "species",
+                },
+                "originalName": "species",
+                "pascalCase": {
+                  "safeName": "Species",
+                  "unsafeName": "Species",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SPECIES",
+                  "unsafeName": "SPECIES",
+                },
+                "snakeCase": {
+                  "safeName": "species",
+                  "unsafeName": "species",
+                },
+              },
+              "wireValue": "species",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreatePlantRequestSpecies_example_0": "Ficus lyrata",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "How often to water",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "wateringFrequency",
+                  "unsafeName": "wateringFrequency",
+                },
+                "originalName": "wateringFrequency",
+                "pascalCase": {
+                  "safeName": "WateringFrequency",
+                  "unsafeName": "WateringFrequency",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "WATERING_FREQUENCY",
+                  "unsafeName": "WATERING_FREQUENCY",
+                },
+                "snakeCase": {
+                  "safeName": "watering_frequency",
+                  "unsafeName": "watering_frequency",
+                },
+              },
+              "wireValue": "wateringFrequency",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreatePlantRequestWateringFrequency_example_0": "bi-weekly",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Sunlight requirements",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "sunlight",
+                  "unsafeName": "sunlight",
+                },
+                "originalName": "sunlight",
+                "pascalCase": {
+                  "safeName": "Sunlight",
+                  "unsafeName": "Sunlight",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SUNLIGHT",
+                  "unsafeName": "SUNLIGHT",
+                },
+                "snakeCase": {
+                  "safeName": "sunlight",
+                  "unsafeName": "sunlight",
+                },
+              },
+              "wireValue": "sunlight",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreatePlantRequestSunlight_example_autogenerated": "full-sun",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "createPlantRequestSunlight",
+                      "unsafeName": "createPlantRequestSunlight",
+                    },
+                    "originalName": "CreatePlantRequestSunlight",
+                    "pascalCase": {
+                      "safeName": "CreatePlantRequestSunlight",
+                      "unsafeName": "CreatePlantRequestSunlight",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "CREATE_PLANT_REQUEST_SUNLIGHT",
+                      "unsafeName": "CREATE_PLANT_REQUEST_SUNLIGHT",
+                    },
+                    "snakeCase": {
+                      "safeName": "create_plant_request_sunlight",
+                      "unsafeName": "create_plant_request_sunlight",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "CreatePlantRequestSunlight",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "CreatePlantRequest_example_autogenerated": {
+            "name": "Fiddle Leaf Fig",
+            "species": "Ficus lyrata",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "CreatePlantRequestSunlight": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Sunlight requirements",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createPlantRequestSunlight",
+            "unsafeName": "createPlantRequestSunlight",
+          },
+          "originalName": "CreatePlantRequestSunlight",
+          "pascalCase": {
+            "safeName": "CreatePlantRequestSunlight",
+            "unsafeName": "CreatePlantRequestSunlight",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PLANT_REQUEST_SUNLIGHT",
+            "unsafeName": "CREATE_PLANT_REQUEST_SUNLIGHT",
+          },
+          "snakeCase": {
+            "safeName": "create_plant_request_sunlight",
+            "unsafeName": "create_plant_request_sunlight",
+          },
+        },
+        "typeId": "CreatePlantRequestSunlight",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "fullSun",
+                  "unsafeName": "fullSun",
+                },
+                "originalName": "full-sun",
+                "pascalCase": {
+                  "safeName": "FullSun",
+                  "unsafeName": "FullSun",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FULL_SUN",
+                  "unsafeName": "FULL_SUN",
+                },
+                "snakeCase": {
+                  "safeName": "full_sun",
+                  "unsafeName": "full_sun",
+                },
+              },
+              "wireValue": "full-sun",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "partialShade",
+                  "unsafeName": "partialShade",
+                },
+                "originalName": "partial-shade",
+                "pascalCase": {
+                  "safeName": "PartialShade",
+                  "unsafeName": "PartialShade",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PARTIAL_SHADE",
+                  "unsafeName": "PARTIAL_SHADE",
+                },
+                "snakeCase": {
+                  "safeName": "partial_shade",
+                  "unsafeName": "partial_shade",
+                },
+              },
+              "wireValue": "partial-shade",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "shade",
+                  "unsafeName": "shade",
+                },
+                "originalName": "shade",
+                "pascalCase": {
+                  "safeName": "Shade",
+                  "unsafeName": "Shade",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SHADE",
+                  "unsafeName": "SHADE",
+                },
+                "snakeCase": {
+                  "safeName": "shade",
+                  "unsafeName": "shade",
+                },
+              },
+              "wireValue": "shade",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "CreatePlantRequestSunlight_example_autogenerated": "full-sun",
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Error": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "typeId": "Error",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Error code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorCode_example_0": "PLANT_NOT_FOUND",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Human-readable error message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorMessage_example_0": "The requested plant could not be found",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Error_example_autogenerated": {
+            "code": "PLANT_NOT_FOUND",
+            "message": "The requested plant could not be found",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Plant": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "plant",
+            "unsafeName": "plant",
+          },
+          "originalName": "Plant",
+          "pascalCase": {
+            "safeName": "Plant",
+            "unsafeName": "Plant",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PLANT",
+            "unsafeName": "PLANT",
+          },
+          "snakeCase": {
+            "safeName": "plant",
+            "unsafeName": "plant",
+          },
+        },
+        "typeId": "Plant",
+      },
+      "referencedTypes": Set {
+        "PlantSunlight",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Unique plant identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PlantId_example_0": "plant-123",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Common name of the plant",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PlantName_example_0": "Snake Plant",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Scientific name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "species",
+                  "unsafeName": "species",
+                },
+                "originalName": "species",
+                "pascalCase": {
+                  "safeName": "Species",
+                  "unsafeName": "Species",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SPECIES",
+                  "unsafeName": "SPECIES",
+                },
+                "snakeCase": {
+                  "safeName": "species",
+                  "unsafeName": "species",
+                },
+              },
+              "wireValue": "species",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PlantSpecies_example_0": "Sansevieria trifasciata",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "How often to water",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "wateringFrequency",
+                  "unsafeName": "wateringFrequency",
+                },
+                "originalName": "wateringFrequency",
+                "pascalCase": {
+                  "safeName": "WateringFrequency",
+                  "unsafeName": "WateringFrequency",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "WATERING_FREQUENCY",
+                  "unsafeName": "WATERING_FREQUENCY",
+                },
+                "snakeCase": {
+                  "safeName": "watering_frequency",
+                  "unsafeName": "watering_frequency",
+                },
+              },
+              "wireValue": "wateringFrequency",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PlantWateringFrequency_example_0": "weekly",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Sunlight requirements",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "sunlight",
+                  "unsafeName": "sunlight",
+                },
+                "originalName": "sunlight",
+                "pascalCase": {
+                  "safeName": "Sunlight",
+                  "unsafeName": "Sunlight",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SUNLIGHT",
+                  "unsafeName": "SUNLIGHT",
+                },
+                "snakeCase": {
+                  "safeName": "sunlight",
+                  "unsafeName": "sunlight",
+                },
+              },
+              "wireValue": "sunlight",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PlantSunlight_example_autogenerated": "full-sun",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "plantSunlight",
+                      "unsafeName": "plantSunlight",
+                    },
+                    "originalName": "PlantSunlight",
+                    "pascalCase": {
+                      "safeName": "PlantSunlight",
+                      "unsafeName": "PlantSunlight",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PLANT_SUNLIGHT",
+                      "unsafeName": "PLANT_SUNLIGHT",
+                    },
+                    "snakeCase": {
+                      "safeName": "plant_sunlight",
+                      "unsafeName": "plant_sunlight",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "PlantSunlight",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Plant_example_autogenerated": {
+            "id": "plant-123",
+            "name": "Snake Plant",
+            "species": "Sansevieria trifasciata",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "PlantSunlight": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Sunlight requirements",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "plantSunlight",
+            "unsafeName": "plantSunlight",
+          },
+          "originalName": "PlantSunlight",
+          "pascalCase": {
+            "safeName": "PlantSunlight",
+            "unsafeName": "PlantSunlight",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PLANT_SUNLIGHT",
+            "unsafeName": "PLANT_SUNLIGHT",
+          },
+          "snakeCase": {
+            "safeName": "plant_sunlight",
+            "unsafeName": "plant_sunlight",
+          },
+        },
+        "typeId": "PlantSunlight",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "fullSun",
+                  "unsafeName": "fullSun",
+                },
+                "originalName": "full-sun",
+                "pascalCase": {
+                  "safeName": "FullSun",
+                  "unsafeName": "FullSun",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FULL_SUN",
+                  "unsafeName": "FULL_SUN",
+                },
+                "snakeCase": {
+                  "safeName": "full_sun",
+                  "unsafeName": "full_sun",
+                },
+              },
+              "wireValue": "full-sun",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "partialShade",
+                  "unsafeName": "partialShade",
+                },
+                "originalName": "partial-shade",
+                "pascalCase": {
+                  "safeName": "PartialShade",
+                  "unsafeName": "PartialShade",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PARTIAL_SHADE",
+                  "unsafeName": "PARTIAL_SHADE",
+                },
+                "snakeCase": {
+                  "safeName": "partial_shade",
+                  "unsafeName": "partial_shade",
+                },
+              },
+              "wireValue": "partial-shade",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "shade",
+                  "unsafeName": "shade",
+                },
+                "originalName": "shade",
+                "pascalCase": {
+                  "safeName": "Shade",
+                  "unsafeName": "Shade",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SHADE",
+                  "unsafeName": "SHADE",
+                },
+                "snakeCase": {
+                  "safeName": "shade",
+                  "unsafeName": "shade",
+                },
+              },
+              "wireValue": "shade",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "PlantSunlight_example_autogenerated": "full-sun",
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

@@ -1,0 +1,154 @@
+openapi: 3.0.3
+info:
+  title: Server Variables Test API
+  version: 1.0.0
+  description: An API spec demonstrating server variables support
+
+servers:
+  - url: https://{space_name}.signalwire.com/api/{version}
+    description: Production server with variables
+    variables:
+      space_name:
+        default: your-space
+        description: The domain of the user's SignalWire space
+      version:
+        default: v1
+        description: API version
+        enum:
+          - v1
+          - v2
+
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      summary: List all plants
+      description: Returns a list of plants in the inventory
+      responses:
+        "200":
+          description: List of plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+
+  /plants/{plantId}:
+    get:
+      operationId: getPlant
+      summary: Get a plant by ID
+      description: Retrieves a specific plant by its unique identifier
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          description: The unique identifier of the plant
+          schema:
+            type: string
+            example: "plant-123"
+      responses:
+        "200":
+          description: Plant found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+        "404":
+          description: Plant not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      operationId: createPlant
+      summary: Create a new plant
+      description: Creates a new plant in the inventory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlantRequest"
+      responses:
+        "201":
+          description: Plant created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+        "400":
+          description: Invalid plant data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Plant:
+      type: object
+      required:
+        - id
+        - name
+        - species
+      properties:
+        id:
+          type: string
+          description: Unique plant identifier
+          example: "plant-123"
+        name:
+          type: string
+          description: Common name of the plant
+          example: "Snake Plant"
+        species:
+          type: string
+          description: Scientific name
+          example: "Sansevieria trifasciata"
+        wateringFrequency:
+          type: string
+          description: How often to water
+          example: "weekly"
+        sunlight:
+          type: string
+          enum: [full-sun, partial-shade, shade]
+          description: Sunlight requirements
+
+    CreatePlantRequest:
+      type: object
+      required:
+        - name
+        - species
+      properties:
+        name:
+          type: string
+          description: Common name of the plant
+          example: "Fiddle Leaf Fig"
+        species:
+          type: string
+          description: Scientific name
+          example: "Ficus lyrata"
+        wateringFrequency:
+          type: string
+          description: How often to water
+          example: "bi-weekly"
+        sunlight:
+          type: string
+          enum: [full-sun, partial-shade, shade]
+          description: Sunlight requirements
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: "PLANT_NOT_FOUND"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "The requested plant could not be found"

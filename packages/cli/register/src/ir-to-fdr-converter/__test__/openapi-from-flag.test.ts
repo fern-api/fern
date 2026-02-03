@@ -3215,6 +3215,89 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/response-level-example-ir.snap");
     });
 
+    it("should handle OpenAPI with server variables", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/server-variables")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "server-variables"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that server variables were preserved in the IR
+        // Note: Servers with enum variables are "exploded" into multiple environments
+        // So version enum ["v1", "v2"] creates two environments, and only space_name remains as a variable
+        expect(intermediateRepresentation.environments).toBeDefined();
+        const envConfig = intermediateRepresentation.environments;
+        if (envConfig && envConfig.environments.type === "singleBaseUrl") {
+            // Should have 2 environments (one for each version enum value)
+            expect(envConfig.environments.environments.length).toBe(2);
+
+            const env = envConfig.environments.environments[0];
+            // The originalUrl should contain the template with remaining variables (space_name)
+            // The version variable was exploded, so it's replaced with the enum value
+            expect(env?.originalUrl).toBe("https://{space_name}.signalwire.com/api/v1");
+            // The url should be fully resolved with default values
+            expect(env?.url).toBe("https://your-space.signalwire.com/api/v1");
+            // Variables should only contain non-enum variables (space_name)
+            expect(env?.variables).toBeDefined();
+            expect(env?.variables?.length).toBe(1);
+            // Check space_name variable
+            const spaceNameVar = env?.variables?.find((v) => v.name === "space_name");
+            expect(spaceNameVar).toBeDefined();
+            expect(spaceNameVar?.default).toBe("your-space");
+            expect(spaceNameVar?.description).toBe("The domain of the user's SignalWire space");
+
+            // Check second environment (v2)
+            const env2 = envConfig.environments.environments[1];
+            expect(env2?.originalUrl).toBe("https://{space_name}.signalwire.com/api/v2");
+            expect(env2?.url).toBe("https://your-space.signalwire.com/api/v2");
+        }
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/server-variables-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/server-variables-ir.snap");
+    });
+
     it("should handle GraphQL schema as OSS workspace schema", async () => {
         // Step 1: Load GraphQL workspace (testing OSS workspace schema loading)
         const context = createMockTaskContext();
