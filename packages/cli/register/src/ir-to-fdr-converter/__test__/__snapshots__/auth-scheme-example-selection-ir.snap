@@ -236,6 +236,8 @@
             },
           },
           "url": "https://api.example.com/v1",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",

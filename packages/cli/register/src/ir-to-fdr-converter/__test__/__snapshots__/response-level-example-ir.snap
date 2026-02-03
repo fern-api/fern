@@ -82,6 +82,8 @@
             },
           },
           "url": "https://api.plantstore.dev/v3",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",

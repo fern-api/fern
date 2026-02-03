@@ -82,6 +82,8 @@
             },
           },
           "url": "wss://events.plantstore.dev",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",
