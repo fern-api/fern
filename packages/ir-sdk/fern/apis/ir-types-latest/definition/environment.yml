@@ -23,6 +23,29 @@ types:
       id: EnvironmentId
       name: commons.Name
       url: EnvironmentUrl
+      urlTemplate:
+        type: optional<string>
+        docs: |
+          The original URL template with variable placeholders (e.g., "https://api.{region}.example.com").
+          If present, the SDK should use this template with urlVariables to construct the final URL.
+      urlVariables:
+        type: optional<list<ServerVariable>>
+        docs: |
+          Variables that can be substituted into the urlTemplate at runtime.
+          Each variable has a name, default value, and optional enum of allowed values.
+  ServerVariable:
+    docs: A variable that can be substituted into a URL template at runtime.
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this variable (matches the placeholder in the URL template).
+      name: commons.Name
+      default:
+        type: optional<string>
+        docs: The default value for this variable.
+      values:
+        type: optional<list<string>>
+        docs: If present, the allowed values for this variable (from OpenAPI enum).
   MultipleBaseUrlsEnvironments:
     properties:
       baseUrls: list<EnvironmentBaseUrlWithId>

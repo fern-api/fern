@@ -6,4 +6,14 @@ export interface SingleBaseUrlEnvironment extends FernIr.WithDocs {
     id: FernIr.EnvironmentId;
     name: FernIr.Name;
     url: FernIr.EnvironmentUrl;
+    /**
+     * The original URL template with variable placeholders (e.g., "https://api.{region}.example.com").
+     * If present, the SDK should use this template with urlVariables to construct the final URL.
+     */
+    urlTemplate: string | undefined;
+    /**
+     * Variables that can be substituted into the urlTemplate at runtime.
+     * Each variable has a name, default value, and optional enum of allowed values.
+     */
+    urlVariables: FernIr.ServerVariable[] | undefined;
 }

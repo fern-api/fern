@@ -74,7 +74,9 @@ function convertSingleBaseUrlEnvironments({
                             typeof singleBaseUrlEnvironment === "string"
                                 ? singleBaseUrlEnvironment
                                 : singleBaseUrlEnvironment.url
-                        )
+                        ),
+                        urlTemplate: undefined,
+                        urlVariables: undefined
                     }),
                     multipleBaseUrls: () => {
                         throw new Error(`Environment ${environmentName} has multiple base URLs`);

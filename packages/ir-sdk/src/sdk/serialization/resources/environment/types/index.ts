@@ -6,5 +6,6 @@ export * from "./EnvironmentsConfig.js";
 export * from "./EnvironmentUrl.js";
 export * from "./MultipleBaseUrlsEnvironment.js";
 export * from "./MultipleBaseUrlsEnvironments.js";
+export * from "./ServerVariable.js";
 export * from "./SingleBaseUrlEnvironment.js";
 export * from "./SingleBaseUrlEnvironments.js";
