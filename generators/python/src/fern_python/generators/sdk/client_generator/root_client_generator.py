@@ -422,8 +422,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         # If single url environment present, client should provide both base_url and environment arguments
         elif environments_config.environments.get_as_union().type == "singleBaseUrl":
             single_base_url_environments = environments_config.environments.get_as_union()
+            # Cast is safe because we checked type == "singleBaseUrl" above
             env_generator = SingleBaseUrlEnvironmentGenerator(
-                context=self._context, environments=single_base_url_environments
+                context=self._context,
+                environments=single_base_url_environments,  # type: ignore[arg-type]
             )
 
             # Check if URL templating is being used
@@ -1260,8 +1262,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         elif environments_config.environments.get_as_union().type == "singleBaseUrl":
             single_base_url_environments = environments_config.environments.get_as_union()
+            # Cast is safe because we checked type == "singleBaseUrl" above
             env_generator = SingleBaseUrlEnvironmentGenerator(
-                context=self._context, environments=single_base_url_environments
+                context=self._context,
+                environments=single_base_url_environments,  # type: ignore[arg-type]
             )
             url_template_info = env_generator.get_url_template_info()
 
