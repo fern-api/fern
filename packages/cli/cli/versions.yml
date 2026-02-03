@@ -4,7 +4,14 @@
     - summary: |
         Add support for setting page availability in frontmatter. Users can now add `availability: beta` (or other values like `stable`, `generally-available`, `in-development`, `pre-release`, `deprecated`) to a page's frontmatter to display an availability badge. When set in frontmatter, it overrides the availability defined in the navigation (docs.yml).
       type: feat
-  createdAt: "2026-02-02"
+  createdAt: "2026-02-03"
+
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Add availability support for webhooks. Webhooks can now inherit availability status from their parent section/package, and display availability badges in the docs UI.
+      type: fix
+  createdAt: "2026-02-03"
   irVersion: 63
 
 - version: 3.57.0
