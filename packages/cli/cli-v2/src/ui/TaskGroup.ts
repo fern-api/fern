@@ -2,6 +2,7 @@ import { TtyAwareLogger } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
 import chalk from "chalk";
 import { Context } from "../context/Context";
+import { formatMultilineText } from "./format";
 import type { Task } from "./Task";
 import type { TaskLog } from "./TaskLog";
 import type { TaskStatus } from "./TaskStatus";
@@ -61,8 +62,8 @@ export class TaskGroup {
     public async start(header?: { title: string; subtitle?: string }): Promise<this> {
         this.startTime = Date.now();
 
-        this.register();
-
+        // Write header before registering to avoid paint/freeze issues.
+        // If we register first, takeOverTerminal() would freeze the initial paint.
         if (header != null) {
             await this.ttyAwareLogger.takeOverTerminal(() => {
                 this.stream.write("\n");
@@ -73,6 +74,8 @@ export class TaskGroup {
                 this.stream.write("\n");
             });
         }
+
+        this.register();
 
         return this;
     }
@@ -222,11 +225,13 @@ export class TaskGroup {
             }
             case "error": {
                 const duration = this.formatTaskDuration(task);
-                const errorLines = this.formatMultilineText(task.error, chalk.red.bind(chalk));
+                const errorLines = formatMultilineText({ text: task.error, colorFn: chalk.red.bind(chalk) });
                 return `${chalk.red("x")} ${name}${duration}${logLines}${errorLines}`;
             }
-            case "skipped":
-                return `${chalk.dim("○")} ${chalk.dim(name)} ${chalk.dim("(skipped)")}`;
+            case "skipped": {
+                const reason = task.skipReason != null ? `skipped: ${task.skipReason}` : "skipped";
+                return `${chalk.dim("○")} ${chalk.dim(name)} ${chalk.dim(`(${reason})`)}`;
+            }
             default:
                 assertNever(task.status);
         }
@@ -268,9 +273,17 @@ export class TaskGroup {
                         return `\n    ${icon} ${chalk.dim(message)}`;
                     }
                     case "warn":
-                        return this.formatMultilineText(log.message, chalk.yellow.bind(chalk), chalk.yellow("⚠"));
+                        return formatMultilineText({
+                            text: log.message,
+                            colorFn: chalk.yellow.bind(chalk),
+                            icon: chalk.yellow("⚠")
+                        });
                     case "error":
-                        return this.formatMultilineText(log.message, chalk.red.bind(chalk), chalk.red("✗"));
+                        return formatMultilineText({
+                            text: log.message,
+                            colorFn: chalk.red.bind(chalk),
+                            icon: chalk.red("✗")
+                        });
                     default:
                         assertNever(log.level);
                 }
@@ -310,21 +323,6 @@ export class TaskGroup {
             return chalk.dim(` ${this.formatDuration(task.endTime - task.startTime)}`);
         }
         return "";
-    }
-
-    private formatMultilineText(text: string | undefined, colorFn: (text: string) => string, icon?: string): string {
-        if (text == null) {
-            return "";
-        }
-        // Split text into lines and format each with proper indentation.
-        const lines = text.split("\n").filter((line) => line.trim().length > 0);
-        if (icon != null) {
-            const [first, ...rest] = lines;
-            const firstLine = `\n    ${icon} ${colorFn(first ?? "")}`;
-            const restLines = rest.map((line) => `\n      ${colorFn(line)}`).join("");
-            return firstLine + restLines;
-        }
-        return lines.map((line) => `\n    ${colorFn(line)}`).join("");
     }
 
     private formatDuration(ms: number): string {

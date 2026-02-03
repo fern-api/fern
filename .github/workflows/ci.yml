@@ -96,7 +96,7 @@ jobs:
 
   test:
     if: github.repository == 'fern-api/fern'
-    runs-on: Test
+    runs-on: Seed
     timeout-minutes: 15
     steps:
       - name: Checkout repo
