@@ -23,6 +23,8 @@ import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
@@ -190,13 +192,17 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             if (isOptional) {
                 // Handle optional expires_in with default fallback
                 // In Java, optional fields return Optional<T>, so use .orElse()
-                // Use string concatenation to ensure the long literal suffix "L" is included
+                // Use L suffix only for Long types, not for Integer types
+                boolean isLong = isLongType(expiresInType);
+                String defaultValue = isLong
+                        ? String.valueOf(DEFAULT_EXPIRES_IN_SECONDS) + "L"
+                        : String.valueOf(DEFAULT_EXPIRES_IN_SECONDS);
                 getMethodSpecBuilder.addStatement(
-                        "this.$L = $L(authResponse.get$L().orElse($LL))",
+                        "this.$L = $L(authResponse.get$L().orElse($L))",
                         EXPIRES_AT_FIELD_NAME,
                         GET_EXPIRES_AT_METHOD_NAME,
                         tokenPropertyName,
-                        DEFAULT_EXPIRES_IN_SECONDS);
+                        defaultValue);
             } else {
                 getMethodSpecBuilder.addStatement(
                         "this.$L = $L(authResponse.get$L())",
@@ -478,6 +484,98 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private boolean isOptionalType(TypeReference typeReference) {
         if (typeReference.isContainer()) {
             return typeReference.getContainer().get().isOptional();
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a type requires a long literal suffix (L) for numeric constants. This includes Long and Uint64 types.
+     * For Optional types, checks the inner type.
+     */
+    private boolean isLongType(TypeReference typeReference) {
+        // If it's an optional, get the inner type
+        TypeReference innerType = typeReference;
+        if (typeReference.isContainer()) {
+            ContainerType container = typeReference.getContainer().get();
+            if (container.isOptional()) {
+                innerType = container.getOptional().get();
+            }
+        }
+
+        // Check if the inner type is a long-like primitive
+        if (innerType.getPrimitive().isPresent()) {
+            PrimitiveType primitive = innerType.getPrimitive().get();
+            return primitive.getV1().visit(new PrimitiveTypeV1.Visitor<Boolean>() {
+                @Override
+                public Boolean visitInteger() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitLong() {
+                    return true;
+                }
+
+                @Override
+                public Boolean visitUint() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitUint64() {
+                    return true;
+                }
+
+                @Override
+                public Boolean visitFloat() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitDouble() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitBoolean() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitString() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitDate() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitDateTime() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitUuid() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitBase64() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitBigInteger() {
+                    return false;
+                }
+
+                @Override
+                public Boolean visitUnknown(String s) {
+                    return false;
+                }
+            });
         }
         return false;
     }

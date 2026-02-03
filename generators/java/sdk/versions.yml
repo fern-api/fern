@@ -9,8 +9,8 @@
         collects properties from the request body in order and builds the request accordingly.
       type: fix
     - summary: |
-        Fix OAuth token supplier to use long literal (3600L) instead of int (3600) for the default
-        expires_in fallback value. This prevents type mismatch errors when expires_in is `Optional<Long>`.
+        Fix OAuth token supplier to use the correct literal suffix for the default expires_in fallback
+        value based on the type. Uses `3600L` for `Optional<Long>` and `3600` for `Optional<Integer>`.
       type: fix
   createdAt: "2026-02-03"
   irVersion: 63
