@@ -109,6 +109,8 @@
             },
           },
           "url": "https://test.com/api",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",
