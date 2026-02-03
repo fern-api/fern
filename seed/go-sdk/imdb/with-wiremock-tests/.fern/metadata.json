@@ -5,7 +5,8 @@
   "generatorConfig": {
     "enableWireTests": true,
     "packageName": "testPackageName",
-    "errorCodes": "per-endpoint"
+    "errorCodes": "per-endpoint",
+    "clientConstructorName": "NewIMDBClient"
   },
   "sdkVersion": "v0.0.1"
 }

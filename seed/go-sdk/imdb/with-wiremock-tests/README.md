@@ -37,7 +37,7 @@ import (
 )
 
 func do() {
-    client := client.NewClient(
+    client := client.NewIMDBClient(
         option.WithToken(
             "<token>",
         ),

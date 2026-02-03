@@ -8,7 +8,7 @@ import (
 )
 
 func do() {
-    client := client.NewClient(
+    client := client.NewIMDBClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),

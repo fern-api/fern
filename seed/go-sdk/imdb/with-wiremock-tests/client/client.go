@@ -17,7 +17,7 @@ type Client struct {
 	caller  *internal.Caller
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
+func NewIMDBClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		Imdb:    imdb.NewClient(options),
