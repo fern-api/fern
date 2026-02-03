@@ -52,6 +52,31 @@ export async function getFrontmatterPosition({
     }
 }
 
+/**
+ * Extracts the title field from markdown frontmatter.
+ * Returns the title string if valid, undefined otherwise.
+ */
+export async function getFrontmatterTitle({
+    absolutePath,
+    readFileFn = (path, encoding) => readFile(path, encoding)
+}: {
+    absolutePath: AbsoluteFilePath;
+    readFileFn?: ReadFileFn;
+}): Promise<string | undefined> {
+    try {
+        const content = await readFileFn(absolutePath, "utf-8");
+        const { data } = grayMatter(content);
+
+        if (typeof data.title === "string" && data.title.trim().length > 0) {
+            return data.title.trim();
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
 interface NavigationItemWithMeta {
     item: docsYml.DocsNavigationItem;
     title: string;
@@ -76,14 +101,19 @@ export async function buildNavigationForDirectory({
     );
     const subdirectories = contents.filter((item) => item.type === "directory");
 
-    const pagePositions = await Promise.all(
-        markdownFiles.map((file) => getFrontmatterPosition({ absolutePath: file.absolutePath, readFileFn }))
-    );
+    const [pagePositions, pageTitles] = await Promise.all([
+        Promise.all(
+            markdownFiles.map((file) => getFrontmatterPosition({ absolutePath: file.absolutePath, readFileFn }))
+        ),
+        Promise.all(
+            markdownFiles.map((file) => getFrontmatterTitle({ absolutePath: file.absolutePath, readFileFn }))
+        )
+    ]);
 
-    const pages: docsYml.DocsNavigationItem[] = markdownFiles.map((file) => {
+    const pages: docsYml.DocsNavigationItem[] = markdownFiles.map((file, index) => {
         return {
             type: "page" as const,
-            title: nameToTitle({ name: file.name }),
+            title: pageTitles[index] ?? nameToTitle({ name: file.name }),
             absolutePath: file.absolutePath,
             slug: nameToSlug({ name: file.name }),
             icon: undefined,
@@ -114,9 +144,17 @@ export async function buildNavigationForDirectory({
 
             const filteredContents = indexPage ? subContents.filter((item) => item !== indexPage) : subContents;
 
+            const indexPageHasFrontmatterTitle =
+                indexPage?.type === "page" &&
+                indexPage.title !== nameToTitle({ name: "index.mdx" }) &&
+                indexPage.title !== nameToTitle({ name: "index.md" }) &&
+                indexPage.title !== nameToTitle({ name: "index" });
+
+            const sectionTitle = indexPageHasFrontmatterTitle ? indexPage.title : nameToTitle({ name: dir.name });
+
             return {
                 type: "section" as const,
-                title: nameToTitle({ name: dir.name }),
+                title: sectionTitle,
                 slug: nameToSlug({ name: dir.name }),
                 icon: undefined,
                 contents: filteredContents,

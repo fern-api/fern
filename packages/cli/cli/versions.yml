@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Use frontmatter `title` prop for navigation titles in folder navigation. When using `folder` navigation, pages and sections now use the `title` from frontmatter instead of deriving the title from the file name. Falls back to file name if no title is specified.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
 - version: 3.59.0
   changelogEntry:
     - summary: |

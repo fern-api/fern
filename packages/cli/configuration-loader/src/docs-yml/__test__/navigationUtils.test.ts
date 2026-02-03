@@ -1,7 +1,13 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 
-import { buildNavigationForDirectory, getFrontmatterPosition, nameToSlug, nameToTitle } from "../navigationUtils";
+import {
+    buildNavigationForDirectory,
+    getFrontmatterPosition,
+    getFrontmatterTitle,
+    nameToSlug,
+    nameToTitle
+} from "../navigationUtils";
 
 describe("nameToSlug", () => {
     it("should convert filename with .md extension to slug", () => {
@@ -395,6 +401,186 @@ describe("getFrontmatterPosition", () => {
     });
 });
 
+describe("getFrontmatterTitle", () => {
+    it("should extract title from frontmatter", async () => {
+        const mockReadFile = async () => "---\ntitle: My Custom Title\n---\n# Content";
+        const result = await getFrontmatterTitle({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBe("My Custom Title");
+    });
+
+    it("should return undefined for missing title", async () => {
+        const mockReadFile = async () => "---\nposition: 1\n---\n# Content";
+        const result = await getFrontmatterTitle({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined for empty title", async () => {
+        const mockReadFile = async () => "---\ntitle: ''\n---\n# Content";
+        const result = await getFrontmatterTitle({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined for whitespace-only title", async () => {
+        const mockReadFile = async () => "---\ntitle: '   '\n---\n# Content";
+        const result = await getFrontmatterTitle({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+
+    it("should trim whitespace from title", async () => {
+        const mockReadFile = async () => "---\ntitle: '  My Title  '\n---\n# Content";
+        const result = await getFrontmatterTitle({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBe("My Title");
+    });
+
+    it("should return undefined when file read fails", async () => {
+        const mockReadFile = async () => {
+            throw new Error("File not found");
+        };
+        const result = await getFrontmatterTitle({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined for non-string title", async () => {
+        const mockReadFile = async () => "---\ntitle: 123\n---\n# Content";
+        const result = await getFrontmatterTitle({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+});
+
+describe("buildNavigationForDirectory with frontmatter title", () => {
+    it("should use frontmatter title for pages when available", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "getting-started.md",
+                absolutePath: "/test/getting-started.md" as AbsoluteFilePath,
+                contents: ""
+            },
+            {
+                type: "file" as const,
+                name: "api-reference.mdx",
+                absolutePath: "/test/api-reference.mdx" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/getting-started.md") {
+                return "---\ntitle: Quick Start Guide\n---\n# Content";
+            }
+            if (path === "/test/api-reference.mdx") {
+                return "---\ntitle: API Documentation\n---\n# Content";
+            }
+            return "---\n---\n# Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(2);
+        expect(result[0]).toMatchObject({ title: "API Documentation" });
+        expect(result[1]).toMatchObject({ title: "Quick Start Guide" });
+    });
+
+    it("should fall back to file name when frontmatter title is not available", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "getting-started.md",
+                absolutePath: "/test/getting-started.md" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const mockReadFile = async () => "---\nposition: 1\n---\n# Content";
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(1);
+        expect(result[0]).toMatchObject({ title: "Getting Started" });
+    });
+
+    it("should use index page frontmatter title for section title", async () => {
+        let callCount = 0;
+        const mockGetDir = async () => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "guides",
+                        absolutePath: "/test/guides" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/guides/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "authentication.md",
+                        absolutePath: "/test/guides/authentication.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            }
+        };
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/guides/index.mdx") {
+                return "---\ntitle: User Guides\n---\n# Content";
+            }
+            return "---\n---\n# Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(1);
+        expect(result[0]).toMatchObject({
+            type: "section",
+            title: "User Guides",
+            overviewAbsolutePath: "/test/guides/index.mdx"
+        });
+    });
+});
+
 describe("buildNavigationForDirectory with position-based sorting", () => {
     it("should sort pages with position before pages without position", async () => {
         const mockGetDir = async () => [
@@ -437,7 +623,7 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
             if (path === "/test/d.md") {
                 return "---\nposition: 99\n---\n# D";
             }
-            return "---\ntitle: Test\n---\n# Content";
+            return "---\n---\n# Content";
         };
 
         const result = await buildNavigationForDirectory({
@@ -519,7 +705,7 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
             if (path === "/test/b.md") {
                 return "---\nposition: 2\n---\n# B";
             }
-            return "---\ntitle: Test\n---\n# C";
+            return "---\n---\n# C";
         };
 
         const result = await buildNavigationForDirectory({
@@ -568,7 +754,7 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
             if (path === "/test/apple.md") {
                 return "---\nposition: 1\n---\n# Apple";
             }
-            return "---\ntitle: Test\n---\n# Content";
+            return "---\n---\n# Content";
         };
 
         const result = await buildNavigationForDirectory({
@@ -649,7 +835,7 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
             if (path === "/test/b.md") {
                 return "---\nposition: 1\n---\n# B";
             }
-            return "---\ntitle: Test\n---\n# C";
+            return "---\n---\n# C";
         };
 
         const result = await buildNavigationForDirectory({
