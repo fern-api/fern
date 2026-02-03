@@ -125,7 +125,31 @@ export async function visitDocsConfigFileYamlAst({
                 nodePath: ["favicon"]
             });
         },
+        footer: async (footer) => {
+            if (footer == null) {
+                return;
+            }
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: footer,
+                visitor,
+                nodePath: ["footer"],
+                willBeUploaded: false
+            });
+        },
         footerLinks: noop,
+        header: async (header) => {
+            if (header == null) {
+                return;
+            }
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: header,
+                visitor,
+                nodePath: ["header"],
+                willBeUploaded: false
+            });
+        },
         integrations: noop,
         js: async (js) => {
             if (js == null) {
