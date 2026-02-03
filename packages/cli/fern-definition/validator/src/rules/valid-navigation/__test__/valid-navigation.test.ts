@@ -60,5 +60,5 @@ describe("valid-navigation", () => {
         ];
 
         expect(violations).toEqual(expectedViolations);
-    }, 10000);
+    });
 });
