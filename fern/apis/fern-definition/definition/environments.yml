@@ -21,6 +21,24 @@ types:
       - commons.WithDocsSchema
     properties:
       url: string
+      url-template:
+        type: optional<string>
+        docs: The original URL template with variable placeholders (e.g., "https://api.{region}.example.com")
+      variables:
+        type: optional<list<ServerVariableSchema>>
+        docs: Server variables for URL templating
+
+  ServerVariableSchema:
+    properties:
+      id:
+        type: string
+        docs: The variable name as it appears in the URL template
+      default:
+        type: optional<string>
+        docs: The default value for this variable
+      values:
+        type: optional<list<string>>
+        docs: Allowed values for this variable (from enum)
 
   MultipleBaseUrlsEnvironmentSchema:
     extends:

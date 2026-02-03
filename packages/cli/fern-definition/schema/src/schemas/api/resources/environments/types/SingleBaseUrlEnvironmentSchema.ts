@@ -4,4 +4,8 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface SingleBaseUrlEnvironmentSchema extends FernDefinition.WithAudiences, FernDefinition.WithDocsSchema {
     url: string;
+    /** The original URL template with variable placeholders (e.g., "https://api.{region}.example.com") */
+    "url-template"?: string;
+    /** Server variables for URL templating */
+    variables?: FernDefinition.ServerVariableSchema[];
 }

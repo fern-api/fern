@@ -421,54 +421,93 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         # If single url environment present, client should provide both base_url and environment arguments
         elif environments_config.environments.get_as_union().type == "singleBaseUrl":
-            parameters.append(
-                RootClientConstructorParameter(
-                    constructor_parameter_name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
-                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                    private_member_name=None,
-                    initializer=AST.Expression("None"),
-                    exclude_from_wrapper_construction=True,
-                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
-                )
+            single_base_url_environments = environments_config.environments.get_as_union()
+            env_generator = SingleBaseUrlEnvironmentGenerator(
+                context=self._context, environments=single_base_url_environments
             )
-            default_environment = (
-                AST.Expression(
-                    environments_config.environments.visit(
-                        single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
-                            context=self._context, environments=single_base_url_environments
-                        ).get_reference_to_default_environment(),
-                        multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
-                            context=self._context, environments=multiple_base_urls_environments
-                        ).get_reference_to_default_environment(),
+
+            # Check if URL templating is being used
+            url_template_info = env_generator.get_url_template_info()
+            if url_template_info is not None:
+                # URL templating is enabled - add server variable parameters instead of environment enum
+                url_template, variables = url_template_info
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        private_member_name=None,
+                        initializer=AST.Expression("None"),
+                        exclude_from_wrapper_construction=True,
+                        docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
                     )
                 )
-                if environments_config.default_environment is not None
-                else None
-            )
-            environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
-            if default_environment is not None:
-                snippet = self._context.source_file_factory.create_snippet()
+                # Add constructor parameters for each server variable
+                for var_id, var_name, var_default, var_values in variables:
+                    var_docs = "Server variable for URL templating. Used to construct the base URL."
+                    if var_values is not None and len(var_values) > 0:
+                        var_docs += f" Allowed values: {', '.join(var_values)}."
+                    parameters.append(
+                        RootClientConstructorParameter(
+                            constructor_parameter_name=var_name,
+                            type_hint=AST.TypeHint.str_(),
+                            private_member_name=None,
+                            initializer=AST.Expression(f'"{var_default}"') if var_default is not None else None,
+                            exclude_from_wrapper_construction=True,
+                            docs=var_docs,
+                        )
+                    )
+            else:
+                # Standard behavior - use environment enum
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        private_member_name=None,
+                        initializer=AST.Expression("None"),
+                        exclude_from_wrapper_construction=True,
+                        docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
+                    )
+                )
+                default_environment = (
+                    AST.Expression(
+                        environments_config.environments.visit(
+                            single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                                context=self._context, environments=single_base_url_environments
+                            ).get_reference_to_default_environment(),
+                            multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                                context=self._context, environments=multiple_base_urls_environments
+                            ).get_reference_to_default_environment(),
+                        )
+                    )
+                    if environments_config.default_environment is not None
+                    else None
+                )
+                environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
+                if default_environment is not None:
+                    snippet = self._context.source_file_factory.create_snippet()
 
-                def write_default_environment(writer: AST.NodeWriter) -> None:
-                    writer.write("Defaults to ")
-                    writer.write_node(default_environment)  # type: ignore
+                    def write_default_environment(writer: AST.NodeWriter) -> None:
+                        writer.write("Defaults to ")
+                        writer.write_node(default_environment)  # type: ignore
 
-                snippet.add_arbitrary_code(AST.CodeWriter(code_writer=write_default_environment))
-                environment_docs += f" {snippet.to_str()}"
-            parameters.append(
-                RootClientConstructorParameter(
-                    constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                    type_hint=(
-                        AST.TypeHint(self._context.get_reference_to_environments_class())
-                        if environments_config.default_environment is not None
-                        else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class()))
+                    snippet.add_arbitrary_code(AST.CodeWriter(code_writer=write_default_environment))
+                    environment_docs += f" {snippet.to_str()}"
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=(
+                            AST.TypeHint(self._context.get_reference_to_environments_class())
+                            if environments_config.default_environment is not None
+                            else AST.TypeHint.optional(
+                                AST.TypeHint(self._context.get_reference_to_environments_class())
+                            )
+                        ),
+                        private_member_name=None,
+                        initializer=default_environment if default_environment is not None else None,
+                        exclude_from_wrapper_construction=True,
+                        docs=environment_docs,
                     ),
-                    private_member_name=None,
-                    initializer=default_environment if default_environment is not None else None,
-                    exclude_from_wrapper_construction=True,
-                    docs=environment_docs,
-                ),
-            )
+                )
         # If multi url environment present, client should provide only environment argument
         elif environments_config.environments.get_as_union().type == "multipleBaseUrls":
             default_environment = (
@@ -1220,14 +1259,37 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 )
             )
         elif environments_config.environments.get_as_union().type == "singleBaseUrl":
-            client_wrapper_constructor_kwargs.append(
-                (
-                    ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
-                    AST.Expression(
-                        f"{RootClientGenerator.GET_BASEURL_FUNCTION_NAME}({RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}, {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME})"
-                    ),
-                )
+            single_base_url_environments = environments_config.environments.get_as_union()
+            env_generator = SingleBaseUrlEnvironmentGenerator(
+                context=self._context, environments=single_base_url_environments
             )
+            url_template_info = env_generator.get_url_template_info()
+
+            if url_template_info is not None:
+                # URL templating is enabled - construct URL from template and variables
+                url_template, variables = url_template_info
+                # Build the format string call: url_template.format(var1=var1, var2=var2, ...)
+                format_kwargs = ", ".join([f"{var_id}={var_name}" for var_id, var_name, _, _ in variables])
+                template_url_expr = f'"{url_template}".format({format_kwargs})'
+                # Use base_url if provided, otherwise construct from template
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
+                        AST.Expression(
+                            f"{RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None else {template_url_expr}"
+                        ),
+                    )
+                )
+            else:
+                # Standard behavior - use _get_base_url function
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
+                        AST.Expression(
+                            f"{RootClientGenerator.GET_BASEURL_FUNCTION_NAME}({RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}, {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME})"
+                        ),
+                    )
+                )
         elif environments_config.environments.get_as_union().type == "multipleBaseUrls":
             client_wrapper_constructor_kwargs.append(
                 (

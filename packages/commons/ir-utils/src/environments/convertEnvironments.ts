@@ -66,18 +66,27 @@ function convertSingleBaseUrlEnvironments({
         environments: Object.entries(environments).map(
             ([environmentName, rawEnvironment]): SingleBaseUrlEnvironment =>
                 visitRawEnvironmentDeclaration(rawEnvironment, {
-                    singleBaseUrl: (singleBaseUrlEnvironment) => ({
-                        docs: typeof singleBaseUrlEnvironment === "string" ? undefined : singleBaseUrlEnvironment.docs,
-                        id: environmentName,
-                        name: casingsGenerator.generateName(environmentName),
-                        url: removeTrailingSlash(
-                            typeof singleBaseUrlEnvironment === "string"
-                                ? singleBaseUrlEnvironment
-                                : singleBaseUrlEnvironment.url
-                        ),
-                        urlTemplate: undefined,
-                        urlVariables: undefined
-                    }),
+                    singleBaseUrl: (singleBaseUrlEnvironment) => {
+                        const isString = typeof singleBaseUrlEnvironment === "string";
+                        const urlTemplate = isString ? undefined : singleBaseUrlEnvironment["url-template"];
+                        const variables = isString ? undefined : singleBaseUrlEnvironment.variables;
+
+                        return {
+                            docs: isString ? undefined : singleBaseUrlEnvironment.docs,
+                            id: environmentName,
+                            name: casingsGenerator.generateName(environmentName),
+                            url: removeTrailingSlash(
+                                isString ? singleBaseUrlEnvironment : singleBaseUrlEnvironment.url
+                            ),
+                            urlTemplate: urlTemplate,
+                            urlVariables: variables?.map((v) => ({
+                                id: v.id,
+                                name: casingsGenerator.generateName(v.id),
+                                default: v.default,
+                                values: v.values
+                            }))
+                        };
+                    },
                     multipleBaseUrls: () => {
                         throw new Error(`Environment ${environmentName} has multiple base URLs`);
                     }

@@ -6,6 +6,7 @@ info:
 servers:
   - url: https://api.{region}.{environment}.example.com/v1
     description: Regional API server
+    x-server-name: Default
     variables:
       region:
         default: us-east-1

@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.0
+  changelogEntry:
+    - summary: |
+        Add support for OpenAPI server URL templating. When an OpenAPI spec uses server variables
+        (e.g., `https://api.{region}.example.com`), the SDK now accepts these variables as constructor
+        parameters instead of exploding them into multiple environment enum values. This allows
+        runtime URL configuration with default values from the OpenAPI spec.
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
 - version: 4.54.2
   changelogEntry:
     - summary: |

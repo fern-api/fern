@@ -1,4 +1,4 @@
-import { Server } from "@fern-api/openapi-ir";
+import { Server, ServerVariable } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../getExtension";
@@ -8,12 +8,25 @@ export function convertServer(
     server: OpenAPIV3.ServerObject,
     options?: { groupMultiApiEnvironments?: boolean }
 ): Server {
+    const hasVariables = server.variables != null && Object.keys(server.variables).length > 0;
+
     return {
         url: getServerUrl({ url: server.url, variables: server.variables ?? {} }),
         description: server.description,
         name: getServerName(server, options),
-        audiences: getExtension<string[]>(server, FernOpenAPIExtension.AUDIENCES)
+        audiences: getExtension<string[]>(server, FernOpenAPIExtension.AUDIENCES),
+        // Preserve server variables for runtime URL configuration
+        urlTemplate: hasVariables ? server.url : undefined,
+        variables: hasVariables && server.variables != null ? convertServerVariables(server.variables) : undefined
     };
+}
+
+function convertServerVariables(variables: Record<string, OpenAPIV3.ServerVariableObject>): ServerVariable[] {
+    return Object.entries(variables).map(([variableId, variable]) => ({
+        id: variableId,
+        default: variable.default,
+        values: variable.enum
+    }));
 }
 
 function getServerUrl({

@@ -1,3 +1,5 @@
+from typing import List, Optional, Tuple
+
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .generated_environment import GeneratedEnvironment
 from fern_python.codegen import AST, SourceFile
@@ -86,3 +88,66 @@ class SingleBaseUrlEnvironmentGenerator:
             if environment.id == environment_id:
                 return environment
         raise RuntimeError("Environment does not exist: " + environment_id)
+
+    def has_url_templating(self) -> bool:
+        """
+        Check if any environment uses URL templating with variables.
+        Returns True if urlTemplate and urlVariables are present on any environment.
+
+        Note: Uses getattr with camelCase field names for forward-compatibility.
+        The Python IR SDK stores extra fields (not yet in the schema) in model_extra
+        with their original JSON key names (camelCase). Once the IR SDK is updated,
+        these fields will be available as snake_case attributes.
+        """
+        for env in self._environments.environments:
+            # Try camelCase first (extra fields from JSON), then snake_case (future IR SDK)
+            url_template = getattr(env, "urlTemplate", None) or getattr(env, "url_template", None)
+            url_variables = getattr(env, "urlVariables", None) or getattr(env, "url_variables", None)
+            if url_template is not None and url_variables is not None and len(url_variables) > 0:
+                return True
+        return False
+
+    def get_url_template_info(
+        self,
+    ) -> Optional[Tuple[str, List[Tuple[str, str, Optional[str], Optional[List[str]]]]]]:
+        """
+        Get URL template information for the first environment that has URL templating.
+        Returns a tuple of (url_template, list of (variable_id, variable_name, default_value, allowed_values))
+        or None if no URL templating is configured.
+
+        Note: Uses getattr with camelCase field names for forward-compatibility.
+        The Python IR SDK stores extra fields (not yet in the schema) in model_extra
+        with their original JSON key names (camelCase). Once the IR SDK is updated,
+        these fields will be available as snake_case attributes.
+        """
+        for env in self._environments.environments:
+            # Try camelCase first (extra fields from JSON), then snake_case (future IR SDK)
+            url_template = getattr(env, "urlTemplate", None) or getattr(env, "url_template", None)
+            url_variables = getattr(env, "urlVariables", None) or getattr(env, "url_variables", None)
+            if url_template is not None and url_variables is not None and len(url_variables) > 0:
+                variables: List[Tuple[str, str, Optional[str], Optional[List[str]]]] = []
+                for var in url_variables:
+                    # Variables are raw dicts when accessed from model_extra
+                    if isinstance(var, dict):
+                        var_id = var.get("id")
+                        var_name_dict = var.get("name", {})
+                        var_default = var.get("default")
+                        var_values = var.get("values")
+                        if var_id is not None and var_name_dict:
+                            # Get the snake_case safe name for the parameter
+                            snake_case = var_name_dict.get("snakeCase", {})
+                            var_name = snake_case.get("safeName", var_id) if snake_case else var_id
+                            variables.append((var_id, var_name, var_default, var_values))
+                    else:
+                        # Future: when IR SDK is updated, var will be a proper object
+                        var_id = getattr(var, "id", None)
+                        var_name_obj = getattr(var, "name", None)
+                        var_default = getattr(var, "default", None)
+                        var_values = getattr(var, "values", None)
+                        if var_id is not None and var_name_obj is not None:
+                            var_name = (
+                                var_name_obj.snake_case.safe_name if hasattr(var_name_obj, "snake_case") else var_id
+                            )
+                            variables.append((var_id, var_name, var_default, var_values))
+                return (url_template, variables)
+        return None
