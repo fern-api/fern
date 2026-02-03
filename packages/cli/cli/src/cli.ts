@@ -169,7 +169,8 @@ async function tryRunCli(cliContext: CliContext) {
             choices: LOG_LEVELS
         })
         .demandCommand()
-        .recommendCommands();
+        .recommendCommands()
+        .completion("completion", "Generate shell completion script");
 
     addDiffCommand(cli, cliContext);
     addSdkDiffCommand(cli, cliContext);
