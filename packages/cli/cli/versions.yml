@@ -3,6 +3,7 @@
   changelogEntry:
     - summary: |
         Fix header example generation to use global header literal values when defined in generators.yml
+      type: fix
   createdAt: "2026-02-03"
   irVersion: 63
 
