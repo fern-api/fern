@@ -5,8 +5,12 @@ import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.ir.model.commons.EndpointId;
 import com.fern.ir.model.commons.EndpointReference;
 import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpHeader;
+import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpResponseBody;
 import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.http.InlinedRequestBodyProperty;
 import com.fern.ir.model.http.JsonResponseBody;
 import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.http.RequestProperty;
@@ -16,6 +20,8 @@ import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
@@ -184,8 +190,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             if (isOptional) {
                 // Handle optional expires_in with default fallback
                 // In Java, optional fields return Optional<T>, so use .orElse()
+                // Use string concatenation to ensure the long literal suffix "L" is included
                 getMethodSpecBuilder.addStatement(
-                        "this.$L = $L(authResponse.get$L().orElse($L))",
+                        "this.$L = $L(authResponse.get$L().orElse($LL))",
                         EXPIRES_AT_FIELD_NAME,
                         GET_EXPIRES_AT_METHOD_NAME,
                         tokenPropertyName,
@@ -302,15 +309,33 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             String clientSecretPropertyName,
             List<Map.Entry<String, String>> customPropertiesWithNames,
             HttpEndpoint httpEndpoint) {
-        // Required properties (clientId/clientSecret) must come first for staged builders,
-        // followed by optional custom properties (like scope) which are in _FinalStage
-        CodeBlock.Builder requestBuilderCode = CodeBlock.builder()
-                .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType)
-                .add(".$L($L)", clientIdPropertyName, CLIENT_ID_FIELD_NAME)
-                .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME);
+        // Collect all properties from the request body in their definition order.
+        // The staged builder requires properties to be called in the order they are defined,
+        // so we need to iterate through the request body properties and map each one to its
+        // corresponding field name (clientId, clientSecret, or custom property).
+        List<RequestBodyProperty> orderedProperties = collectRequestBodyProperties(httpEndpoint);
 
+        // Build a map from property name to field name for quick lookup
+        Map<String, String> propertyToFieldName = new java.util.HashMap<>();
+        propertyToFieldName.put(clientIdPropertyName, CLIENT_ID_FIELD_NAME);
+        propertyToFieldName.put(clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME);
         for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
-            requestBuilderCode.add(".$L($L)", customProp.getValue(), customProp.getKey());
+            propertyToFieldName.put(customProp.getValue(), customProp.getKey());
+        }
+
+        CodeBlock.Builder requestBuilderCode = CodeBlock.builder()
+                .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType);
+
+        // Add builder method calls in the order properties are defined in the request body
+        for (RequestBodyProperty prop : orderedProperties) {
+            // Skip literal properties - they are hardcoded in the request class
+            if (prop.isLiteral()) {
+                continue;
+            }
+            String fieldName = propertyToFieldName.get(prop.builderMethodName());
+            if (fieldName != null) {
+                requestBuilderCode.add(".$L($L)", prop.builderMethodName(), fieldName);
+            }
         }
 
         requestBuilderCode.add(".build()");
@@ -325,6 +350,105 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         httpEndpoint.getName().get().getCamelCase().getUnsafeName(),
                         GET_TOKEN_REQUEST_NAME)
                 .build();
+    }
+
+    /**
+     * Collects all properties from the request body in their definition order.
+     * This is important for staged builders which require properties to be called in order.
+     */
+    private List<RequestBodyProperty> collectRequestBodyProperties(HttpEndpoint httpEndpoint) {
+        List<RequestBodyProperty> properties = new ArrayList<>();
+
+        // Add headers first (they come before body properties in the staged builder)
+        for (HttpHeader header : httpEndpoint.getHeaders()) {
+            String fieldName = header.getName().getName().getCamelCase().getUnsafeName();
+            Optional<Literal> literal = extractLiteral(header.getValueType());
+            boolean isOptional = isOptionalType(header.getValueType());
+            properties.add(new RequestBodyProperty(fieldName, fieldName, literal, isOptional));
+        }
+
+        // Add body properties in their definition order
+        if (httpEndpoint.getRequestBody().isPresent()) {
+            httpEndpoint.getRequestBody().get().visit(new HttpRequestBody.Visitor<Void>() {
+                @Override
+                public Void visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                    for (InlinedRequestBodyProperty prop : inlinedRequestBody.getProperties()) {
+                        String fieldName = prop.getName().getName().getCamelCase().getUnsafeName();
+                        Optional<Literal> literal = extractLiteral(prop.getValueType());
+                        boolean isOptional = isOptionalType(prop.getValueType());
+                        properties.add(new RequestBodyProperty(fieldName, fieldName, literal, isOptional));
+                    }
+                    return null;
+                }
+
+                @Override
+                public Void visitReference(com.fern.ir.model.http.HttpRequestBodyReference reference) {
+                    // For referenced types, we would need to resolve the type
+                    // For now, skip - most OAuth uses inline bodies
+                    return null;
+                }
+
+                @Override
+                public Void visitFileUpload(com.fern.ir.model.http.FileUploadRequest fileUpload) {
+                    return null;
+                }
+
+                @Override
+                public Void visitBytes(com.fern.ir.model.http.BytesRequest bytes) {
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object unknownType) {
+                    return null;
+                }
+            });
+        }
+
+        return properties;
+    }
+
+    /** Extracts a literal value from a TypeReference if present. */
+    private Optional<Literal> extractLiteral(TypeReference typeReference) {
+        if (typeReference.isContainer()) {
+            ContainerType container = typeReference.getContainer().get();
+            if (container.isLiteral()) {
+                return Optional.of(container.getLiteral().get());
+            }
+        }
+        return Optional.empty();
+    }
+
+    /** Represents a property from the request body. */
+    private static class RequestBodyProperty {
+        private final String fieldName;
+        private final String builderMethodName;
+        private final Optional<Literal> literalValue;
+        private final boolean isOptional;
+
+        RequestBodyProperty(
+                String fieldName, String builderMethodName, Optional<Literal> literalValue, boolean isOptional) {
+            this.fieldName = fieldName;
+            this.builderMethodName = builderMethodName;
+            this.literalValue = literalValue;
+            this.isOptional = isOptional;
+        }
+
+        public String fieldName() {
+            return fieldName;
+        }
+
+        public String builderMethodName() {
+            return builderMethodName;
+        }
+
+        public boolean isLiteral() {
+            return literalValue.isPresent();
+        }
+
+        public boolean isOptional() {
+            return isOptional;
+        }
     }
 
     private TypeName getFetchTokenRequestType(HttpEndpoint httpEndpoint, HttpService httpService) {

@@ -1,5 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.34.8
+  changelogEntry:
+    - summary: |
+        Fix OAuth token supplier to call staged builder methods in the correct order. Previously,
+        the generator hardcoded clientId and clientSecret as the first builder calls, but staged
+        builders require properties to be called in their definition order. The generator now
+        collects properties from the request body in order and builds the request accordingly.
+      type: fix
+    - summary: |
+        Fix OAuth token supplier to use long literal (3600L) instead of int (3600) for the default
+        expires_in fallback value. This prevents type mismatch errors when expires_in is Optional<Long>.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
 - version: 3.34.7
   changelogEntry:
     - summary: |
