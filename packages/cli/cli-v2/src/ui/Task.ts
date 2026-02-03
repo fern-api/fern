@@ -14,6 +14,8 @@ export interface Task {
     output?: string[];
     /** The error message (shown if status is error) */
     error?: string;
+    /** The reason the task was skipped (shown if status is skipped) */
+    skipReason?: string;
     /** The start time of the task */
     startTime?: number;
     /** The end time of the task */

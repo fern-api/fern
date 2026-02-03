@@ -16,6 +16,7 @@ webhooks:
       operationId: paymentSessionCompletedWebhook
       summary: Payment session completed webhook
       description: Webhook triggered when a payment session is completed
+      x-fern-availability: deprecated
       tags:
         - Payment Sessions
       requestBody:
@@ -76,6 +77,7 @@ webhooks:
     post:
       operationId: documentUploadedWebhook
       x-fern-webhook: true
+      x-fern-availability: beta
       summary: Document uploaded webhook (multipart)
       description: Webhook triggered when a document is uploaded via multipart form
       tags:
