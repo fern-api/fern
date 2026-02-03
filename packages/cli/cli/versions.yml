@@ -7,6 +7,14 @@
   createdAt: "2026-02-03"
   irVersion: 63
 
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Fix unknown argument error for `fern completion`.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
 - version: 3.59.0
   changelogEntry:
     - summary: |
