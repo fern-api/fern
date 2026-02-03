@@ -389,6 +389,9 @@
                         }
                     },
                     "url": "https://localhost",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]
