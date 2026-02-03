@@ -1,4 +1,4 @@
-import { docsYml, FernDocsConfig } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
@@ -90,7 +90,7 @@ export async function buildNavigationForDirectory({
     readFileFn = (path, encoding) => readFile(path, encoding)
 }: {
     directoryPath: AbsoluteFilePath;
-    titleSource?: FernDocsConfig.TitleSource;
+    titleSource?: docsYml.RawSchemas.TitleSource;
     getDir?: typeof getDirectoryContents;
     readFileFn?: ReadFileFn;
 }): Promise<docsYml.DocsNavigationItem[]> {
