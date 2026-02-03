@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add namespace prefix support for endpoint references. When working with multiple OpenAPI specs that have namespaces, you can now disambiguate endpoints using the `namespace::METHOD /path` syntax (e.g., `oauth::POST /v2/token`). This is useful for OAuth configuration when multiple specs may have overlapping paths.
+      type: feat
+  createdAt: "2026-02-02"
+  irVersion: 63
+
 - version: 3.55.0
   changelogEntry:
     - summary: |
