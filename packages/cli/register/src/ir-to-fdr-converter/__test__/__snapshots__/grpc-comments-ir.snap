@@ -1237,7 +1237,9 @@
         },
         "typeId": "CreateCommentResponse",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": Set {
+        "Comment",
+      },
       "shape": {
         "_visit": [Function],
         "extendedProperties": [],
