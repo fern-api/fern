@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  types: types.yml
+  examples: examples.yml
+  http: http.yml
+
+types:
+  ErrorDeclaration:
+    extends: commons.WithDocs
+    properties:
+      name: DeclaredErrorName
+      displayName: optional<string>
+      discriminantValue: commons.NameAndWireValue
+      type: optional<types.TypeReference>
+      statusCode: integer
+      isWildcardStatusCode:
+        type: optional<boolean>
+        docs: |
+          When true, indicates that the statusCode represents a wildcard pattern (e.g., 4XX or 5XX).
+          The statusCode field will contain the base value (400 for 4XX, 500 for 5XX).
+      examples: list<ExampleError>
+      v2Examples: optional<examples.V2SchemaExamples>
+      headers:
+        type: optional<list<http.HttpHeader>>
+        docs: |
+          Response headers associated with this error (e.g., Retry-After for 429 errors).
+  ErrorDeclarationDiscriminantValue:
+    union:
+      property: commons.NameAndWireValue
+      statusCode: {}
+  DeclaredErrorName:
+    properties:
+      errorId: commons.ErrorId
+      fernFilepath: commons.FernFilepath
+      name: commons.Name
+
+  # examples
+
+  ExampleError:
+    extends:
+      - commons.WithJsonExample
+      - commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      shape: types.ExampleTypeReference
