@@ -253,6 +253,7 @@ export class DocsDefinitionResolver {
     private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
+    private markdownFilesToAvailability: Map<AbsoluteFilePath, docsYml.RawSchemas.Availability> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     private referencedMarkdownFiles: ReferencedMarkdownFile[] = [];
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
@@ -557,7 +558,7 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Extracts all frontmatter data (slug, sidebar-title, noindex, tags) from pages in a single pass.
+     * Extracts all frontmatter data (slug, sidebar-title, noindex, tags, availability) from pages in a single pass.
      * This is more efficient than parsing frontmatter multiple times for each field.
      * @param pages - the pages to extract frontmatter from
      */
@@ -604,6 +605,43 @@ export class DocsDefinitionResolver {
             } else if (Array.isArray(tags)) {
                 this.markdownFilesToTags.set(absolutePath, tags);
             }
+
+            // Extract availability
+            const availability = frontmatter.data.availability;
+            if (typeof availability === "string") {
+                const parsedAvailability = this.parseAvailabilityFromFrontmatter(availability);
+                if (parsedAvailability != null) {
+                    this.markdownFilesToAvailability.set(absolutePath, parsedAvailability);
+                }
+            }
+        }
+    }
+
+    /**
+     * Parses an availability string from frontmatter into the Availability enum value.
+     * @param value - the availability string from frontmatter
+     * @returns the Availability enum value, or undefined if the value is not valid
+     */
+    private parseAvailabilityFromFrontmatter(value: string): docsYml.RawSchemas.Availability | undefined {
+        const normalizedValue = value.toLowerCase().trim();
+        switch (normalizedValue) {
+            case "stable":
+                return "stable";
+            case "generally-available":
+                return "generally-available";
+            case "in-development":
+                return "in-development";
+            case "pre-release":
+                return "pre-release";
+            case "deprecated":
+                return "deprecated";
+            case "beta":
+                return "beta";
+            default:
+                this.taskContext.logger.warn(
+                    `Invalid availability value "${value}" in frontmatter. Valid values are: stable, generally-available, in-development, pre-release, deprecated, beta`
+                );
+                return undefined;
         }
     }
 
@@ -1536,6 +1574,7 @@ export class DocsDefinitionResolver {
             fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/")
         });
         const id = this.#idgen.get(pageId);
+        const frontmatterAvailability = this.markdownFilesToAvailability.get(item.absolutePath);
         return {
             id,
             type: "page",
@@ -1549,7 +1588,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: item.availability ?? parentAvailability
+            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
         };
     }
 
@@ -1578,6 +1617,10 @@ export class DocsDefinitionResolver {
         });
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
+        const frontmatterAvailability =
+            item.overviewAbsolutePath != null
+                ? this.markdownFilesToAvailability.get(item.overviewAbsolutePath)
+                : undefined;
         const hiddenSection = hideChildren || item.hidden;
         const children = await Promise.all(
             item.contents.map((child) =>
@@ -1627,7 +1670,7 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: item.availability ?? parentAvailability
+            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
         };
     }
 

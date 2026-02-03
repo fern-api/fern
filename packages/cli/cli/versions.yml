@@ -1,11 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.57.1
+- version: 3.58.1
   changelogEntry:
     - summary: |
         Fix memory issues during SDK generation for large APIs by skipping dynamic IR generation during the main IR generation phase. Dynamic IR is now only generated when needed for uploading to FDR, reducing peak memory usage significantly.
       type: fix
     - summary: |
         Automatically increase Node.js heap size to 8GB for large API generation. The CLI now detects when the heap limit is below 8GB and re-spawns with increased memory to prevent out-of-memory errors.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.58.0
+  changelogEntry:
+    - summary: |
+        Add support for setting page availability in frontmatter. Users can now add `availability: beta` (or other values like `stable`, `generally-available`, `in-development`, `pre-release`, `deprecated`) to a page's frontmatter to display an availability badge. When set in frontmatter, it overrides the availability defined in the navigation (docs.yml).
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Add availability support for webhooks. Webhooks can now inherit availability status from their parent section/package, and display availability badges in the docs UI.
       type: fix
   createdAt: "2026-02-03"
   irVersion: 63
@@ -97,6 +113,14 @@
         Add docs param when publishing a doc site to support fine grain access controlls
       type: chore
   createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add namespace prefix support for endpoint references. When working with multiple OpenAPI specs that have namespaces, you can now disambiguate endpoints using the `namespace::METHOD /path` syntax (e.g., `oauth::POST /v2/token`). This is useful for OAuth configuration when multiple specs may have overlapping paths.
+      type: feat
+  createdAt: "2026-02-02"
   irVersion: 63
 
 - version: 3.55.0

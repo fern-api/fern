@@ -44,6 +44,7 @@
       "types": [],
       "webhooks": [
         {
+          "availability": "Beta",
           "description": "Webhook triggered when a document is uploaded via multipart form",
           "examples": [
             {
@@ -224,6 +225,7 @@
       "types": [],
       "webhooks": [
         {
+          "availability": "Deprecated",
           "description": "Webhook triggered when a payment session is completed",
           "examples": [
             {

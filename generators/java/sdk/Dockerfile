@@ -7,8 +7,9 @@ COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
 # Stage 2: Java V1
 # Apple Silicon: FROM bitnami/gradle:latest
-# Note: OpenJDK CVEs (CVE-2026-21945, CVE-2026-21932, CVE-2026-21925, CVE-2026-21933) require 11.0.30 which is not yet available
-FROM gradle:jdk11-jammy
+# Use Corretto to fix January 2026 Oracle CPU CVEs:
+# - CVE-2026-21945, CVE-2026-21932, CVE-2026-21925, CVE-2026-21933
+FROM gradle:jdk11-corretto
 
 # Remove vulnerable jars from Gradle base image - not used by this generator
 # CVE-2025-4949: jgit 5.13.3
@@ -24,42 +25,14 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar \
        /opt/gradle/lib/kotlin-stdlib-*.jar
 
-# Remove vulnerable packages not needed at runtime and update vulnerable packages
-# CVE-2025-8291, CVE-2025-6075: python3.10 zipfile/expandvars vulnerabilities
-# CVE-2024-46901: subversion vulnerability
-# Go stdlib CVEs (60+): git-lfs 3.0.2 embeds Go 1.18.1 with many critical vulnerabilities
-# CVE-2024-10524, CVE-2021-31879: wget vulnerabilities
-# CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506, CVE-2025-66293: libpng16-16 vulnerabilities
-# CVE-2021-46848, CVE-2025-13151: libtasn1-6 vulnerabilities
-# CVE-2025-68973: gnupg/gpg vulnerabilities
-# CVE-2025-15467, CVE-2026-22796, CVE-2026-22795, CVE-2025-69420, CVE-2025-69419, CVE-2025-68160, CVE-2025-69421, CVE-2025-69418: openssl/libssl3 vulnerabilities
-# Use purge instead of remove to fully remove packages from dpkg database
-# Add retry logic for apt-get update to handle transient mirror sync issues
-RUN set -eux; \
-    max=5; \
-    count=0; \
-    until apt-get update; do \
-      count=$((count + 1)); \
-      if [ "$count" -ge "$max" ]; then \
-        echo "apt-get update failed after ${count} attempts"; \
-        exit 1; \
-      fi; \
-      echo "apt-get update failed, retrying in 20s..."; \
-      sleep 20; \
-    done; \
-    apt-get install -y --only-upgrade libpng16-16 libtasn1-6 \
-        dirmngr gnupg gnupg-l10n gnupg-utils gpg gpg-agent \
-        gpg-wks-client gpg-wks-server gpgconf gpgsm gpgv \
-        openssl libssl3 && \
-    apt-get purge -y --allow-remove-essential \
-        python3.10 python3.10-minimal \
-        python3 python3-minimal \
-        libpython3.10-minimal libpython3.10-stdlib libpython3-stdlib \
-        subversion \
-        git-lfs \
-        wget && \
-    apt-get autoremove -y --purge && \
-    rm -rf /var/lib/apt/lists/*
+# Update packages to get latest security fixes and remove unnecessary packages
+# Amazon Linux 2023 uses dnf instead of apt-get
+# Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only
+# need to update what's present and remove what we don't need
+RUN dnf update -y && \
+    dnf remove -y git-lfs wget || true && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf
 
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
