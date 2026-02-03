@@ -1,9 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.60.0
+- version: 3.61.0
   changelogEntry:
     - summary: |
         Add `title-source` configuration option for folder navigation. When using `folder` navigation, you can now set `title-source: frontmatter` to use the `title` field from frontmatter for page and section titles instead of deriving titles from file names. The default behavior (`title-source: filename`) remains unchanged.
       type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Add support for custom header and footer components in docs.yml. Users can now specify
+        `header: ./path/to/header.tsx` and `footer: ./path/to/footer.tsx` to replace the default
+        header and footer with custom React components. The components must have a default export.
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Fix unknown argument error for `fern completion`.
+      type: fix
   createdAt: "2026-02-03"
   irVersion: 63
 

@@ -133,7 +133,17 @@ async function runCli() {
 }
 
 async function tryRunCli(cliContext: CliContext) {
-    const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
+    const args = hideBin(process.argv);
+
+    if (args[0] === "completion") {
+        yargs(args)
+            .scriptName(cliContext.environment.cliName)
+            .completion("completion", "Generate shell completion script")
+            .parse();
+        return;
+    }
+
+    const cli: Argv<GlobalCliOptions> = yargs(args)
         .scriptName(cliContext.environment.cliName)
         .version(false)
         .completion("completion", "Generate shell completion script")
