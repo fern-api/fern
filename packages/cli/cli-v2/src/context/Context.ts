@@ -2,8 +2,12 @@ import { FernToken, getToken } from "@fern-api/auth";
 import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
+import { loadFernYml } from "../config/fern-yml/loadFernYml";
 import { CliError } from "../errors/CliError";
+import { ValidationError } from "../errors/ValidationError";
 import { Target } from "../sdk/config/Target";
+import type { Workspace } from "../workspace/Workspace";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader";
 import { LogFileWriter } from "./LogFileWriter";
 
 export class Context {
@@ -34,6 +38,32 @@ export class Context {
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
     }
 
+    /** Get the authentication token or throw an error if it's not available. */
+    public async getAuthTokenOrThrow(): Promise<FernToken> {
+        const token = await this.getAuthToken();
+        if (token == null) {
+            throw CliError.authRequired();
+        }
+        return token;
+    }
+
+    /** Get the authentication token or return undefined if it's not available. */
+    public async getAuthToken(): Promise<FernToken | undefined> {
+        return await getToken();
+    }
+
+    public async loadWorkspaceOrThrow(): Promise<Workspace> {
+        const fernYml = await loadFernYml({ cwd: this.cwd });
+
+        const loader = new WorkspaceLoader({ cwd: this.cwd, logger: this.stderr });
+        const result = await loader.load({ fernYml });
+        if (!result.success) {
+            throw new ValidationError(result.issues);
+        }
+
+        return result.workspace;
+    }
+
     /**
      * Returns true if running in an interactive TTY environment (not CI).
      * Delegates to TtyAwareLogger which handles the is-ci check.
@@ -50,20 +80,6 @@ export class Context {
             return this.logFileWriter.logFilePath;
         }
         return undefined;
-    }
-
-    /** Get the authentication token or throw an error if it's not available. */
-    public async getAuthTokenOrThrow(): Promise<FernToken> {
-        const token = await this.getAuthToken();
-        if (token == null) {
-            throw CliError.authRequired();
-        }
-        return token;
-    }
-
-    /** Get the authentication token or return undefined if it's not available. */
-    public async getAuthToken(): Promise<FernToken | undefined> {
-        return await getToken();
     }
 
     public resolveTargetOutputs(target: Target): string[] | undefined {

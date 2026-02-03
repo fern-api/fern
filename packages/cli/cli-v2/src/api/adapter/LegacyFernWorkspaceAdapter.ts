@@ -1,11 +1,12 @@
 import type { FernWorkspace, OpenAPISpec, ProtobufSpec } from "@fern-api/api-workspace-commons";
-import { dirname, relativize } from "@fern-api/fs-utils";
+import type { generatorsYml } from "@fern-api/configuration";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, dirname, relativize } from "@fern-api/fs-utils";
 import { ConjureWorkspace, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
 import type { Context } from "../../context/Context";
 import type { Task } from "../../ui/Task";
 import type { ApiDefinition } from "../config/ApiDefinition";
-import type { ApiSpec } from "../config/ApiSpec";
 import type { ConjureSpec } from "../config/ConjureSpec";
 import { isConjureSpec } from "../config/ConjureSpec";
 import type { FernSpec } from "../config/FernSpec";
@@ -45,7 +46,7 @@ export class LegacyFernWorkspaceAdapter {
      * Supports three mutually exclusive modes:
      *  - Fern definition: Uses LazyFernWorkspace
      *  - Conjure definition: Uses ConjureWorkspace
-     *  - OpenAPI/AsyncAPI/Protobuf: Uses OSSWorkspace (can be mixed together)
+     *  - OpenAPI/AsyncAPI/Protobuf/OpenRPC: Uses OSSWorkspace (can be mixed together)
      *
      * Note: Spec combination validation is performed earlier in ApiDefinitionConverter.
      */
@@ -58,7 +59,7 @@ export class LegacyFernWorkspaceAdapter {
         if (conjureSpec != null) {
             return this.adaptConjureSpec(conjureSpec);
         }
-        return this.adaptOssSpecs(definition.specs);
+        return this.adaptOssSpecs(definition);
     }
 
     private async adaptFernSpec(spec: FernSpec): Promise<FernWorkspace> {
@@ -91,9 +92,9 @@ export class LegacyFernWorkspaceAdapter {
         return conjureWorkspace.toFernWorkspace({ context: this.taskContext });
     }
 
-    private async adaptOssSpecs(specs: ApiSpec[]): Promise<FernWorkspace> {
+    private async adaptOssSpecs(definition: ApiDefinition): Promise<FernWorkspace> {
         // Filter out Fern and Conjure specs (handled separately).
-        const ossSpecs = specs.filter((spec) => !isFernSpec(spec) && !isConjureSpec(spec));
+        const ossSpecs = definition.specs.filter((spec) => !isFernSpec(spec) && !isConjureSpec(spec));
 
         const specAdapter = new LegacyApiSpecAdapter({ context: this.context });
         const v1Specs = specAdapter.convertAll(ossSpecs);
@@ -115,16 +116,59 @@ export class LegacyFernWorkspaceAdapter {
             return true;
         });
 
+        const apiConfig = this.buildApiConfiguration(definition);
+
         const ossWorkspace = new OSSWorkspace({
             specs: filteredSpecs,
             allSpecs,
             absoluteFilePath: this.context.cwd,
             cliVersion: this.cliVersion,
+            generatorsConfiguration: apiConfig != null ? this.buildGeneratorsConfiguration(apiConfig) : undefined,
             workspaceName: undefined,
-            generatorsConfiguration: undefined,
             changelog: undefined
         });
 
         return ossWorkspace.toFernWorkspace({ context: this.taskContext });
+    }
+
+    private buildApiConfiguration(definition: ApiDefinition): generatorsYml.SingleNamespaceAPIDefinition | undefined {
+        if (
+            definition.auth == null &&
+            definition.authSchemes == null &&
+            definition.environments == null &&
+            definition.headers == null &&
+            definition.defaultUrl == null &&
+            definition.defaultEnvironment == null
+        ) {
+            return undefined;
+        }
+        return {
+            type: "singleNamespace",
+            definitions: [],
+            auth: definition.auth as RawSchemas.ApiAuthSchema | undefined,
+            "auth-schemes": definition.authSchemes as
+                | Record<RawSchemas.AuthSchemeKey, RawSchemas.AuthSchemeDeclarationSchema>
+                | undefined,
+            "default-url": definition.defaultUrl,
+            "default-environment": definition.defaultEnvironment,
+            environments: definition.environments as Record<string, RawSchemas.EnvironmentSchema> | undefined,
+            headers: definition.headers as Record<string, RawSchemas.HttpHeaderSchema> | undefined
+        };
+    }
+
+    private buildGeneratorsConfiguration(
+        apiConfig: generatorsYml.SingleNamespaceAPIDefinition
+    ): generatorsYml.GeneratorsConfiguration {
+        return {
+            absolutePathToConfiguration: AbsoluteFilePath.of(this.context.cwd),
+            api: apiConfig,
+            defaultGroup: undefined,
+            groupAliases: {},
+            reviewers: undefined,
+            groups: [],
+            whitelabel: undefined,
+            ai: undefined,
+            rawConfiguration: {}
+        };
     }
 }

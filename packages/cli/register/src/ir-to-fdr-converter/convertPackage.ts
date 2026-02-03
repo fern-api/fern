@@ -67,6 +67,7 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
         }
         return {
             description: webhook.docs ?? undefined,
+            availability: convertIrAvailability(webhook.availability),
             id: FdrCjsSdk.WebhookId(webhook.name.originalName),
             path: [],
             method: webhook.method,
