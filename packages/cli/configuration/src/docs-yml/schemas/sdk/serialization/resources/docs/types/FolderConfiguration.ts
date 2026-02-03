@@ -4,6 +4,7 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Availability } from "./Availability.js";
+import { TitleSource } from "./TitleSource.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
 import { WithPermissions } from "./WithPermissions.js";
 
@@ -14,6 +15,7 @@ export const FolderConfiguration: core.serialization.ObjectSchema<
     .object({
         folder: core.serialization.string(),
         title: core.serialization.string().optional(),
+        titleSource: core.serialization.property("title-source", TitleSource.optional()),
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
@@ -28,6 +30,7 @@ export declare namespace FolderConfiguration {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         folder: string;
         title?: string | null;
+        "title-source"?: TitleSource.Raw | null;
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;

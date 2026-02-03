@@ -468,8 +468,46 @@ describe("getFrontmatterTitle", () => {
     });
 });
 
-describe("buildNavigationForDirectory with frontmatter title", () => {
-    it("should use frontmatter title for pages when available", async () => {
+describe("buildNavigationForDirectory with frontmatter title (title-source: frontmatter)", () => {
+    it("should use frontmatter title for pages when titleSource is frontmatter", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "getting-started.md",
+                absolutePath: "/test/getting-started.md" as AbsoluteFilePath,
+                contents: ""
+            },
+            {
+                type: "file" as const,
+                name: "api-reference.mdx",
+                absolutePath: "/test/api-reference.mdx" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/getting-started.md") {
+                return "---\ntitle: Quick Start Guide\n---\n# Content";
+            }
+            if (path === "/test/api-reference.mdx") {
+                return "---\ntitle: API Documentation\n---\n# Content";
+            }
+            return "---\n---\n# Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            titleSource: "frontmatter",
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(2);
+        expect(result[0]).toMatchObject({ title: "API Documentation" });
+        expect(result[1]).toMatchObject({ title: "Quick Start Guide" });
+    });
+
+    it("should use filename-based title by default (no titleSource)", async () => {
         const mockGetDir = async () => [
             {
                 type: "file" as const,
@@ -502,8 +540,31 @@ describe("buildNavigationForDirectory with frontmatter title", () => {
         });
 
         expect(result).toHaveLength(2);
-        expect(result[0]).toMatchObject({ title: "API Documentation" });
-        expect(result[1]).toMatchObject({ title: "Quick Start Guide" });
+        expect(result[0]).toMatchObject({ title: "Api Reference" });
+        expect(result[1]).toMatchObject({ title: "Getting Started" });
+    });
+
+    it("should use filename-based title when titleSource is filename", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "getting-started.md",
+                absolutePath: "/test/getting-started.md" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const mockReadFile = async () => "---\ntitle: Quick Start Guide\n---\n# Content";
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            titleSource: "filename",
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(1);
+        expect(result[0]).toMatchObject({ title: "Getting Started" });
     });
 
     it("should fall back to file name when frontmatter title is not available", async () => {
@@ -520,6 +581,7 @@ describe("buildNavigationForDirectory with frontmatter title", () => {
 
         const result = await buildNavigationForDirectory({
             directoryPath: "/test" as AbsoluteFilePath,
+            titleSource: "frontmatter",
             getDir: mockGetDir,
             readFileFn: mockReadFile
         });
@@ -528,7 +590,60 @@ describe("buildNavigationForDirectory with frontmatter title", () => {
         expect(result[0]).toMatchObject({ title: "Getting Started" });
     });
 
-    it("should use index page frontmatter title for section title", async () => {
+    it("should use index page frontmatter title for section title when titleSource is frontmatter", async () => {
+        let callCount = 0;
+        const mockGetDir = async () => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "guides",
+                        absolutePath: "/test/guides" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/guides/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "authentication.md",
+                        absolutePath: "/test/guides/authentication.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            }
+        };
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/guides/index.mdx") {
+                return "---\ntitle: User Guides\n---\n# Content";
+            }
+            return "---\n---\n# Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            titleSource: "frontmatter",
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(1);
+        expect(result[0]).toMatchObject({
+            type: "section",
+            title: "User Guides",
+            overviewAbsolutePath: "/test/guides/index.mdx"
+        });
+    });
+
+    it("should use directory name for section title by default (no titleSource)", async () => {
         let callCount = 0;
         const mockGetDir = async () => {
             callCount++;
@@ -575,7 +690,7 @@ describe("buildNavigationForDirectory with frontmatter title", () => {
         expect(result).toHaveLength(1);
         expect(result[0]).toMatchObject({
             type: "section",
-            title: "User Guides",
+            title: "Guides",
             overviewAbsolutePath: "/test/guides/index.mdx"
         });
     });

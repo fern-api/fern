@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml, FernDocsConfig } from "@fern-api/configuration";
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
@@ -85,14 +85,17 @@ interface NavigationItemWithMeta {
 
 export async function buildNavigationForDirectory({
     directoryPath,
+    titleSource,
     getDir = getDirectoryContents,
     readFileFn = (path, encoding) => readFile(path, encoding)
 }: {
     directoryPath: AbsoluteFilePath;
+    titleSource?: FernDocsConfig.TitleSource;
     getDir?: typeof getDirectoryContents;
     readFileFn?: ReadFileFn;
 }): Promise<docsYml.DocsNavigationItem[]> {
     const contents = await getDir(directoryPath);
+    const useFrontmatterTitles = titleSource === "frontmatter";
 
     const markdownFiles = contents.filter(
         (item) =>
@@ -105,9 +108,11 @@ export async function buildNavigationForDirectory({
         Promise.all(
             markdownFiles.map((file) => getFrontmatterPosition({ absolutePath: file.absolutePath, readFileFn }))
         ),
-        Promise.all(
-            markdownFiles.map((file) => getFrontmatterTitle({ absolutePath: file.absolutePath, readFileFn }))
-        )
+        useFrontmatterTitles
+            ? Promise.all(
+                  markdownFiles.map((file) => getFrontmatterTitle({ absolutePath: file.absolutePath, readFileFn }))
+              )
+            : Promise.resolve(markdownFiles.map(() => undefined))
     ]);
 
     const pages: docsYml.DocsNavigationItem[] = markdownFiles.map((file, index) => {
@@ -130,6 +135,7 @@ export async function buildNavigationForDirectory({
         subdirectories.map(async (dir) => {
             const subContents = await buildNavigationForDirectory({
                 directoryPath: dir.absolutePath,
+                titleSource,
                 getDir,
                 readFileFn
             });
@@ -144,13 +150,14 @@ export async function buildNavigationForDirectory({
 
             const filteredContents = indexPage ? subContents.filter((item) => item !== indexPage) : subContents;
 
-            const indexPageHasFrontmatterTitle =
-                indexPage?.type === "page" &&
-                indexPage.title !== nameToTitle({ name: "index.mdx" }) &&
-                indexPage.title !== nameToTitle({ name: "index.md" }) &&
-                indexPage.title !== nameToTitle({ name: "index" });
+            // Only check frontmatter for section title when title-source is "frontmatter"
+            const indexFileFrontmatterTitle = useFrontmatterTitles
+                ? indexPage?.type === "page"
+                    ? await getFrontmatterTitle({ absolutePath: indexPage.absolutePath, readFileFn })
+                    : undefined
+                : undefined;
 
-            const sectionTitle = indexPageHasFrontmatterTitle ? indexPage.title : nameToTitle({ name: dir.name });
+            const sectionTitle = indexFileFrontmatterTitle ?? nameToTitle({ name: dir.name });
 
             return {
                 type: "section" as const,
