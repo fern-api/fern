@@ -30,6 +30,11 @@ export async function createOrganizationIfDoesNotExist({
         organizationId: FernVenusApi.OrganizationId(organization)
     });
     if (!createOrganizationResponse.ok) {
+        // If the organization already exists (e.g., in Auth0 but not in Nursery),
+        // treat it as if we found the org rather than failing
+        if (createOrganizationResponse.error.error === "OrganizationAlreadyExistsError") {
+            return false;
+        }
         context.failAndThrow(`Failed to create organization: ${organization}`, createOrganizationResponse.error);
     }
     return true;
