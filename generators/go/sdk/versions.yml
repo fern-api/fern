@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.5
+  changelogEntry:
+    - summary: |
+        Fix wire tests to use configured `clientConstructorName` instead of hardcoded `NewClient`.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 61
+
 - version: 1.23.4
   changelogEntry:
     - summary: |
