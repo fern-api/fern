@@ -7,8 +7,9 @@ COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
 # Stage 2: Java V1
 # Apple Silicon: FROM bitnami/gradle:latest
-# Note: OpenJDK CVEs (CVE-2026-21945, CVE-2026-21932, CVE-2026-21925, CVE-2026-21933) require 11.0.30 which is not yet available
-FROM gradle:jdk11-jammy
+# Use Corretto to fix January 2026 Oracle CPU CVEs:
+# - CVE-2026-21945, CVE-2026-21932, CVE-2026-21925, CVE-2026-21933
+FROM gradle:jdk11-corretto
 
 # Remove vulnerable jars from Gradle base image - not used by this generator
 # CVE-2025-4949: jgit 5.13.3
