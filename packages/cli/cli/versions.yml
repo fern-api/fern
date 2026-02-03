@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.59.0
+- version: 3.60.0
   changelogEntry:
     - summary: |
         Add support for OpenAPI server templating. Server variables are now preserved in the IR instead of being exploded into multiple environments, enabling SDKs to configure URL variables at runtime.
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.59.0
+  changelogEntry:
+    - summary: |
+        Add shell completion support via `fern completion`. Running this command outputs a shell script that can be sourced in your `.bashrc` or `.zshrc` to enable tab completion for Fern CLI commands and options.
       type: feat
   createdAt: "2026-02-03"
   irVersion: 63
