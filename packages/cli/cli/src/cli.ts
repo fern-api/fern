@@ -132,73 +132,21 @@ async function runCli() {
     await exit();
 }
 
-function addCompletionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "completion",
-        "Generate shell completion script",
-        (yargs) => yargs,
-        async () => {
-            const scriptName = cliContext.environment.cliName;
-            const isZsh = process.env.SHELL?.includes("zsh");
-            const lines: string[] = [];
-            if (isZsh) {
-                lines.push(`#compdef ${scriptName}`);
-            }
-            lines.push(`###-begin-${scriptName}-completions-###`);
-            lines.push("#");
-            lines.push("# yargs command completion script");
-            lines.push("#");
-            if (isZsh) {
-                lines.push(`# Installation: ${scriptName} completion >> ~/.zshrc`);
-                lines.push(`#    or ${scriptName} completion >> ~/.zprofile on OSX.`);
-                lines.push("#");
-                lines.push(`_${scriptName}_yargs_completions()`);
-                lines.push("{");
-                lines.push("  local reply");
-                lines.push("  local si=$IFS");
-                lines.push(
-                    `  IFS=$'\\n' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" ${scriptName} --get-yargs-completions "\${words[@]}"))`
-                );
-                lines.push("  IFS=$si");
-                lines.push("  _describe 'values' reply");
-                lines.push("}");
-                lines.push(`compdef _${scriptName}_yargs_completions ${scriptName}`);
-            } else {
-                lines.push(`# Installation: ${scriptName} completion >> ~/.bashrc`);
-                lines.push(`#    or ${scriptName} completion >> ~/.bash_profile on OSX.`);
-                lines.push("#");
-                lines.push(`_${scriptName}_yargs_completions()`);
-                lines.push("{");
-                lines.push("    local cur_word args type_list");
-                lines.push("");
-                lines.push('    cur_word="${COMP_WORDS[COMP_CWORD]}"');
-                lines.push('    args=("${COMP_WORDS[@]}")');
-                lines.push("");
-                lines.push("    # ask yargs to generate completions.");
-                lines.push(`    type_list=$(${scriptName} --get-yargs-completions "\${args[@]}")`);
-                lines.push("");
-                lines.push('    COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )');
-                lines.push("");
-                lines.push("    # if no match was found, fall back to filename completion");
-                lines.push("    if [ ${#COMPREPLY[@]} -eq 0 ]; then");
-                lines.push("      COMPREPLY=()");
-                lines.push("    fi");
-                lines.push("");
-                lines.push("    return 0");
-                lines.push("}");
-                lines.push(`complete -o bashdefault -o default -F _${scriptName}_yargs_completions ${scriptName}`);
-            }
-            lines.push(`###-end-${scriptName}-completions-###`);
-            process.stdout.write(lines.join("\n") + "\n");
-            process.exit(0);
-        }
-    );
-}
-
 async function tryRunCli(cliContext: CliContext) {
-    const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
+    // Handle completion command early to ensure clean exit
+    const args = hideBin(process.argv);
+    if (args[0] === "completion" && !args.includes("--get-yargs-completions")) {
+        const completionCli = yargs(args)
+            .scriptName(cliContext.environment.cliName)
+            .completion("completion", "Generate shell completion script");
+        await completionCli.parse();
+        process.exit(0);
+    }
+
+    const cli: Argv<GlobalCliOptions> = yargs(args)
         .scriptName(cliContext.environment.cliName)
         .version(false)
+        .completion("completion", "Generate shell completion script")
         .fail((message, error: unknown, argv) => {
             // if error is null, it's a yargs validation error
             if (error == null) {
@@ -234,7 +182,6 @@ async function tryRunCli(cliContext: CliContext) {
         .demandCommand()
         .recommendCommands();
 
-    addCompletionCommand(cli, cliContext);
     addDiffCommand(cli, cliContext);
     addSdkDiffCommand(cli, cliContext);
     addInitCommand(cli, cliContext);
