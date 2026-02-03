@@ -96,6 +96,7 @@ export async function runRemoteGenerationForGenerator({
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
         dynamicGeneratorConfig,
+        skipDynamicIr: true,
         generationMetadata: {
             cliVersion: workspace.cliVersion,
             generatorName: generatorInvocation.name,

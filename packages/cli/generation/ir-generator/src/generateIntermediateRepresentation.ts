@@ -76,6 +76,7 @@ export declare namespace generateIntermediateRepresentation {
         sourceResolver: SourceResolver;
         fdrApiDefinitionId?: string;
         disableDynamicExamples?: boolean;
+        skipDynamicIr?: boolean;
         dynamicGeneratorConfig?: dynamic.GeneratorConfig;
         generationMetadata?: FernIr.GenerationMetadata;
     }
@@ -94,6 +95,7 @@ export function generateIntermediateRepresentation({
     fdrApiDefinitionId,
     sourceResolver,
     disableDynamicExamples,
+    skipDynamicIr,
     dynamicGeneratorConfig,
     generationMetadata
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
@@ -551,13 +553,15 @@ export function generateIntermediateRepresentation({
 
     return {
         ...finalIR,
-        dynamic: convertIrToDynamicSnippetsIr({
-            ir: finalIR,
-            generatorConfig: dynamicGeneratorConfig,
-            disableExamples: disableDynamicExamples,
-            generationLanguage,
-            smartCasing
-        })
+        dynamic: skipDynamicIr
+            ? undefined
+            : convertIrToDynamicSnippetsIr({
+                  ir: finalIR,
+                  generatorConfig: dynamicGeneratorConfig,
+                  disableExamples: disableDynamicExamples,
+                  generationLanguage,
+                  smartCasing
+              })
     };
 }
 

@@ -88,6 +88,7 @@ export async function runLocalGenerationForWorkspace({
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),
                     dynamicGeneratorConfig,
+                    skipDynamicIr: true,
                     generationMetadata: {
                         cliVersion: workspace.cliVersion,
                         generatorName: generatorInvocation.name,

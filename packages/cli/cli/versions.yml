@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Fix memory issues during SDK generation for large APIs by skipping dynamic IR generation during the main IR generation phase. Dynamic IR is now only generated when needed for uploading to FDR, reducing peak memory usage significantly.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
 - version: 3.57.0
   changelogEntry:
     - summary: |
