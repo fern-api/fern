@@ -136,6 +136,7 @@ async function tryRunCli(cliContext: CliContext) {
     const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
         .scriptName(cliContext.environment.cliName)
         .version(false)
+        .completion("completion", "Generate shell completion script")
         .fail((message, error: unknown, argv) => {
             // if error is null, it's a yargs validation error
             if (error == null) {
