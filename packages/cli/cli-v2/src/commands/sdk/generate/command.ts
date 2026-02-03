@@ -2,16 +2,14 @@ import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { resolve } from "@fern-api/fs-utils";
 import type { Argv } from "yargs";
-import { loadFernYml } from "../../../config/fern-yml/loadFernYml";
+import { ApiChecker } from "../../../api/checker/ApiChecker";
 import type { Context } from "../../../context/Context";
 import type { GlobalArgs } from "../../../context/GlobalArgs";
 import { CliError } from "../../../errors/CliError";
-import { ValidationError } from "../../../errors/ValidationError";
 import type { Target } from "../../../sdk/config/Target";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline";
 import { TaskGroup } from "../../../ui/TaskGroup";
 import type { Workspace } from "../../../workspace/Workspace";
-import { WorkspaceLoader } from "../../../workspace/WorkspaceLoader";
 import { command } from "../../_internal/command";
 
 interface GenerateArgs extends GlobalArgs {
@@ -100,15 +98,7 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
 async function handleGenerate(context: Context, args: GenerateArgs): Promise<void> {
     validateArgs(args);
 
-    const fernYml = await loadFernYml({ cwd: context.cwd });
-
-    const loader = new WorkspaceLoader({ cwd: context.cwd, logger: context.stderr });
-    const result = await loader.load({ fernYml });
-    if (!result.success) {
-        throw new ValidationError(result.issues);
-    }
-
-    const workspace = result.workspace;
+    const workspace = await context.loadWorkspaceOrThrow();
     if (workspace.sdks == null) {
         throw new Error("No SDKs configured in fern.yml");
     }
@@ -118,6 +108,22 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
         groupName: args.group ?? workspace.sdks.defaultGroup,
         targetName: args.target
     });
+
+    const apisToCheck = [...new Set(targets.map((t) => t.api))];
+    const checker = new ApiChecker({
+        context,
+        cliVersion: workspace.cliVersion
+    });
+
+    const checkResult = await checker.check({
+        workspace,
+        apiNames: apisToCheck
+    });
+
+    const validTargets = targets.filter((t) => checkResult.validApis.has(t.api));
+    if (validTargets.length === 0) {
+        throw CliError.exit();
+    }
 
     const pipeline = new GeneratorPipeline({
         context,
@@ -131,7 +137,18 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
     }
 
     const taskGroup = new TaskGroup({ context });
-    for (const target of targets) {
+
+    const skippedTargets = targets.filter((t) => checkResult.invalidApis.has(t.api));
+    for (const target of skippedTargets) {
+        taskGroup.addTask({
+            id: target.name,
+            name: target.name,
+            status: "skipped",
+            skipReason: `API '${target.api}' has errors`
+        });
+    }
+
+    for (const target of validTargets) {
         taskGroup.addTask({
             id: target.name,
             name: target.name
@@ -144,7 +161,7 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
     });
 
     await Promise.all(
-        targets.map(async (target) => {
+        validTargets.map(async (target) => {
             const apiDefinition = workspace.apis[target.api];
             if (apiDefinition == null) {
                 const message = `API '${target.api}' not found in workspace`;
@@ -169,7 +186,7 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
                 }
             });
 
-            const result = await pipeline.run({
+            const pipelineResult = await pipeline.run({
                 organization: workspace.org,
                 ai: workspace.ai,
                 task,
@@ -184,12 +201,12 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
                 token,
                 version: args.version
             });
-            if (!result.success) {
+            if (!pipelineResult.success) {
                 taskGroup.updateTask({
                     id: target.name,
                     update: {
                         status: "error",
-                        error: result.error
+                        error: pipelineResult.error
                     }
                 });
                 return;
@@ -198,15 +215,15 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
                 id: target.name,
                 update: {
                     status: "success",
-                    output: result.output
+                    output: pipelineResult.output
                 }
             });
         })
     );
 
     const summary = taskGroup.complete({
-        successMessage: `Successfully generated ${maybePluralSdks(targets)}`,
-        errorMessage: `Failed to generate ${maybePluralSdks(targets)}`
+        successMessage: `Successfully generated ${maybePluralSdks(validTargets)}`,
+        errorMessage: `Failed to generate ${maybePluralSdks(validTargets)}`
     });
 
     if (summary.failedCount > 0) {

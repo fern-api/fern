@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.57.0
+- version: 3.58.0
   changelogEntry:
     - summary: |
         Add support for setting page availability in frontmatter. Users can now add `availability: beta` (or other values like `stable`, `generally-available`, `in-development`, `pre-release`, `deprecated`) to a page's frontmatter to display an availability badge. When set in frontmatter, it overrides the availability defined in the navigation (docs.yml).
+      type: feat
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.57.0
+  changelogEntry:
+    - summary: |
+        Add support for `index.mdx` (or `index.md`) files as section overviews when using `folder` navigation. When a nested subfolder contains an `index.mdx` file, it is now automatically used as the section overview page instead of appearing as a regular page in the navigation.
       type: feat
   createdAt: "2026-02-02"
   irVersion: 63
@@ -86,6 +94,14 @@
         Add docs param when publishing a doc site to support fine grain access controlls
       type: chore
   createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add namespace prefix support for endpoint references. When working with multiple OpenAPI specs that have namespaces, you can now disambiguate endpoints using the `namespace::METHOD /path` syntax (e.g., `oauth::POST /v2/token`). This is useful for OAuth configuration when multiple specs may have overlapping paths.
+      type: feat
+  createdAt: "2026-02-02"
   irVersion: 63
 
 - version: 3.55.0
