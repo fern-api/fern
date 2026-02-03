@@ -204,6 +204,7 @@ FDRAPIV
 fernapi
 ferndevtest
 fernir
+fernrc
 FERPA
 fhir
 Fhir

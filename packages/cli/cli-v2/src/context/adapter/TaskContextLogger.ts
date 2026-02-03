@@ -6,12 +6,14 @@ export class TaskContextLogger implements Logger {
     private readonly context: Context;
     private readonly task: Task;
 
+    private logLevel: LogLevel;
     private enabled: boolean = true;
     private collectedErrors: string[] = [];
 
-    constructor({ context, task }: { context: Context; task: Task }) {
+    constructor({ context, task, logLevel = LogLevel.Warn }: { context: Context; task: Task; logLevel?: LogLevel }) {
         this.context = context;
         this.task = task;
+        this.logLevel = logLevel;
     }
 
     public disable(): void {
