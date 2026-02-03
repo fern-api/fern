@@ -17,7 +17,9 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
+import { spawnSync } from "child_process";
 import getPort from "get-port";
+import v8 from "v8";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -62,6 +64,27 @@ import { writeTranslationForProject } from "./commands/write-translation/writeTr
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
+
+// Increase heap size for large API generation if not already set
+const DESIRED_HEAP_SIZE_MB = 8192; // 8GB
+const heapStats = v8.getHeapStatistics();
+const currentHeapLimitMB = Math.floor(heapStats.heap_size_limit / (1024 * 1024));
+
+// Only re-spawn if heap is below desired size and we haven't already tried
+if (currentHeapLimitMB < DESIRED_HEAP_SIZE_MB && process.env.FERN_HEAP_INCREASED !== "true") {
+    const result = spawnSync(
+        process.execPath,
+        [`--max-old-space-size=${DESIRED_HEAP_SIZE_MB}`, ...process.argv.slice(1)],
+        {
+            stdio: "inherit",
+            env: {
+                ...process.env,
+                FERN_HEAP_INCREASED: "true"
+            }
+        }
+    );
+    process.exit(result.status ?? 1);
+}
 
 void runCli();
 

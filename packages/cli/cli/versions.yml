@@ -4,6 +4,9 @@
     - summary: |
         Fix memory issues during SDK generation for large APIs by skipping dynamic IR generation during the main IR generation phase. Dynamic IR is now only generated when needed for uploading to FDR, reducing peak memory usage significantly.
       type: fix
+    - summary: |
+        Automatically increase Node.js heap size to 8GB for large API generation. The CLI now detects when the heap limit is below 8GB and re-spawns with increased memory to prevent out-of-memory errors.
+      type: fix
   createdAt: "2026-02-03"
   irVersion: 63
 
