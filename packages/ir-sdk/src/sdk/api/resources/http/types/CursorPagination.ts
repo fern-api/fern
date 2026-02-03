@@ -10,7 +10,7 @@ import type * as FernIr from "../../../index.js";
  * response.
  */
 export interface CursorPagination {
-    page: FernIr.RequestProperty;
+    page: FernIr.RequestLocator;
     next: FernIr.ResponseProperty;
     results: FernIr.ResponseProperty;
 }

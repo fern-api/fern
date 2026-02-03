@@ -56,6 +56,7 @@ export * from "./PathParameterLocation.js";
 export * from "./PropertyPathItem.js";
 export * from "./ProtoSourceInfo.js";
 export * from "./QueryParameter.js";
+export * from "./RequestLocator.js";
 export * from "./RequestProperty.js";
 export * from "./RequestPropertyValue.js";
 export * from "./ResponseError.js";

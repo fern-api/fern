@@ -417,9 +417,23 @@ types:
       the next page and results are resolved from properties defined on the
       response.
     properties:
-      page: RequestProperty
+      page: RequestLocator
       next: ResponseProperty
       results: ResponseProperty
+
+  RequestLocator:
+    docs: |
+      Where to inject data into the request, like for cursor pagination.
+    union:
+      uri:
+        docs: The full URI of the request.
+        type: string
+      path:
+        docs: The full path of the request, i.e. everything after the base hostname and port.
+        type: string
+      property:
+        docs: A property on the request.
+        type: RequestProperty
 
   OffsetPagination:
     docs: |
