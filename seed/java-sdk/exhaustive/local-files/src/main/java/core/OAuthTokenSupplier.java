@@ -40,7 +40,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
   }
 
   public OAuthTokenResponse fetchToken() {
-    GetTokenRequest getTokenRequest = GetTokenRequest.builder().clientId(clientId).clientSecret(clientSecret).grantType(grantType).scope(scope).build();
+    GetTokenRequest getTokenRequest = GetTokenRequest.builder().grantType(grantType).clientId(clientId).clientSecret(clientSecret).scope(scope).build();
     return authClient.getToken(getTokenRequest);
   }
 
@@ -49,7 +49,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
     if (accessToken == null || expiresAt.isBefore(Instant.now())) {
       OAuthTokenResponse authResponse = fetchToken();
       this.accessToken = authResponse.getAccessToken();
-      this.expiresAt = getExpiresAt(authResponse.getExpiresIn().orElse(3600));
+      this.expiresAt = getExpiresAt(authResponse.getExpiresIn().orElse(3600L));
     }
     return "Bearer " + accessToken;
   }
