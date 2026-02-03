@@ -353,8 +353,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /**
-     * Collects all properties from the request body in their definition order.
-     * This is important for staged builders which require properties to be called in order.
+     * Collects all properties from the request body in their definition order. This is important for staged builders
+     * which require properties to be called in order.
      */
     private List<RequestBodyProperty> collectRequestBodyProperties(HttpEndpoint httpEndpoint) {
         List<RequestBodyProperty> properties = new ArrayList<>();
@@ -373,7 +373,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 @Override
                 public Void visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
                     for (InlinedRequestBodyProperty prop : inlinedRequestBody.getProperties()) {
-                        String fieldName = prop.getName().getName().getCamelCase().getUnsafeName();
+                        String fieldName =
+                                prop.getName().getName().getCamelCase().getUnsafeName();
                         Optional<Literal> literal = extractLiteral(prop.getValueType());
                         boolean isOptional = isOptionalType(prop.getValueType());
                         properties.add(new RequestBodyProperty(fieldName, fieldName, literal, isOptional));
