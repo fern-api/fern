@@ -16,7 +16,8 @@ export {
     type GeneratorInvocation,
     type GeneratorsConfiguration,
     getPackageName,
-    type ProtoAPIDefinitionSchema
+    type ProtoAPIDefinitionSchema,
+    type SingleNamespaceAPIDefinition
 } from "./GeneratorsConfiguration";
 export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
 export * from "./schemas";
