@@ -3,10 +3,8 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ...commons.types.types.tag import Tag
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...core.serialization import FieldMetadata
 from .movie_id import MovieId
 
 
@@ -35,7 +33,7 @@ class Movie(UniversalBaseModel):
     id: MovieId
     prequel: typing.Optional[MovieId] = None
     title: str
-    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from"), pydantic.Field(alias="from")]
+    from_: str = pydantic.Field(alias="from")
     rating: float = pydantic.Field()
     """
     The rating scale is one to five stars
