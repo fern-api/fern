@@ -1,22 +1,22 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
+import com.fern.sdk.resources.oauth.requests.GetTokenRequest;
 
 public class Example52 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
-            .builder()
-            .token("<token>")
+        SeedExhaustiveClient client = SeedExhaustiveClient.withCredentials("<clientId>", "<clientSecret>")
             .url("https://api.fern.com")
-            .build();
+            .build()
+        ;
 
-        client.reqWithHeaders().getWithCustomHeader(
-            ReqWithHeaders
+        client.oauth().getToken(
+            GetTokenRequest
                 .builder()
-                .xTestServiceHeader("X-TEST-SERVICE-HEADER")
-                .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
-                .body("string")
+                .grantType("grant_type")
+                .clientId("client_id")
+                .clientSecret("client_secret")
+                .scope("scope")
                 .build()
         );
     }

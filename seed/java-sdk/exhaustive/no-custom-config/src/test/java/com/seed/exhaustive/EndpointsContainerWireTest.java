@@ -28,9 +28,8 @@ public class EndpointsContainerWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedExhaustiveClient.builder()
+        client = SeedExhaustiveClient.withCredentials("test-client-id", "test-client-secret")
                 .url(server.url("/").toString())
-                .token("test-token")
                 .build();
     }
 
@@ -41,12 +40,24 @@ public class EndpointsContainerWireTest {
 
     @Test
     public void testGetAndReturnListOfPrimitives() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("[\"string\",\"string\"]"));
         List<String> response =
                 client.endpoints().container().getAndReturnListOfPrimitives(Arrays.asList("string", "string"));
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "[\n" + "  \"string\",\n" + "  \"string\"\n" + "]";
@@ -114,6 +125,10 @@ public class EndpointsContainerWireTest {
 
     @Test
     public void testGetAndReturnListOfObjects() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(
                 new MockResponse().setResponseCode(200).setBody("[{\"string\":\"string\"},{\"string\":\"string\"}]"));
         List<ObjectWithRequiredField> response = client.endpoints()
@@ -121,9 +136,17 @@ public class EndpointsContainerWireTest {
                 .getAndReturnListOfObjects(Arrays.asList(
                         ObjectWithRequiredField.builder().string("string").build(),
                         ObjectWithRequiredField.builder().string("string").build()));
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = ""
@@ -207,13 +230,25 @@ public class EndpointsContainerWireTest {
 
     @Test
     public void testGetAndReturnSetOfPrimitives() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("[\"string\"]"));
         Set<String> response = client.endpoints()
                 .container()
                 .getAndReturnSetOfPrimitives(new HashSet<String>(Arrays.asList("string")));
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "[\n" + "  \"string\"\n" + "]";
@@ -281,14 +316,26 @@ public class EndpointsContainerWireTest {
 
     @Test
     public void testGetAndReturnSetOfObjects() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("[{\"string\":\"string\"}]"));
         Set<ObjectWithRequiredField> response = client.endpoints()
                 .container()
                 .getAndReturnSetOfObjects(new HashSet<ObjectWithRequiredField>(Arrays.asList(
                         ObjectWithRequiredField.builder().string("string").build())));
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "[\n" + "  {\n" + "    \"string\": \"string\"\n" + "  }\n" + "]";
@@ -356,6 +403,10 @@ public class EndpointsContainerWireTest {
 
     @Test
     public void testGetAndReturnMapPrimToPrim() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"string\":\"string\"}"));
         Map<String, String> response = client.endpoints()
                 .container()
@@ -364,9 +415,17 @@ public class EndpointsContainerWireTest {
                         put("string", "string");
                     }
                 });
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "{\n" + "  \"string\": \"string\"\n" + "}";
@@ -434,6 +493,10 @@ public class EndpointsContainerWireTest {
 
     @Test
     public void testGetAndReturnMapOfPrimToObject() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"string\":{\"string\":\"string\"}}"));
         Map<String, ObjectWithRequiredField> response = client.endpoints()
                 .container()
@@ -446,9 +509,17 @@ public class EndpointsContainerWireTest {
                                         .build());
                     }
                 });
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "{\n" + "  \"string\": {\n" + "    \"string\": \"string\"\n" + "  }\n" + "}";
@@ -516,14 +587,26 @@ public class EndpointsContainerWireTest {
 
     @Test
     public void testGetAndReturnOptional() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"string\":\"string\"}"));
         Optional<ObjectWithRequiredField> response = client.endpoints()
                 .container()
                 .getAndReturnOptional(Optional.of(
                         ObjectWithRequiredField.builder().string("string").build()));
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "{\n" + "  \"string\": \"string\"\n" + "}";

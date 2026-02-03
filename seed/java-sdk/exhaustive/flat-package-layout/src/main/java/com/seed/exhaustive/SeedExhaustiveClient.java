@@ -19,6 +19,8 @@ public class SeedExhaustiveClient {
 
     protected final Supplier<NoReqBodyClient> noReqBodyClient;
 
+    protected final Supplier<OauthClient> oauthClient;
+
     protected final Supplier<ReqWithHeadersClient> reqWithHeadersClient;
 
     public SeedExhaustiveClient(ClientOptions clientOptions) {
@@ -27,6 +29,7 @@ public class SeedExhaustiveClient {
         this.inlinedRequestsClient = Suppliers.memoize(() -> new InlinedRequestsClient(clientOptions));
         this.noAuthClient = Suppliers.memoize(() -> new NoAuthClient(clientOptions));
         this.noReqBodyClient = Suppliers.memoize(() -> new NoReqBodyClient(clientOptions));
+        this.oauthClient = Suppliers.memoize(() -> new OauthClient(clientOptions));
         this.reqWithHeadersClient = Suppliers.memoize(() -> new ReqWithHeadersClient(clientOptions));
     }
 
@@ -46,11 +49,38 @@ public class SeedExhaustiveClient {
         return this.noReqBodyClient.get();
     }
 
+    public OauthClient oauth() {
+        return this.oauthClient.get();
+    }
+
     public ReqWithHeadersClient reqWithHeaders() {
         return this.reqWithHeadersClient.get();
     }
 
-    public static SeedExhaustiveClientBuilder builder() {
-        return new SeedExhaustiveClientBuilder();
+    /**
+     * Creates a client builder using a pre-generated access token.
+     * @param token The access token to use for authentication
+     * @return A builder configured for token authentication
+     */
+    public static SeedExhaustiveClientBuilder._TokenAuth withToken(String token) {
+        return SeedExhaustiveClientBuilder.withToken(token);
+    }
+
+    /**
+     * Creates a client builder using OAuth client credentials.
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured for OAuth authentication
+     */
+    public static SeedExhaustiveClientBuilder._CredentialsAuth withCredentials(String clientId, String clientSecret) {
+        return SeedExhaustiveClientBuilder.withCredentials(clientId, clientSecret);
+    }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static SeedExhaustiveClientBuilder._Builder builder() {
+        return SeedExhaustiveClientBuilder.builder();
     }
 }

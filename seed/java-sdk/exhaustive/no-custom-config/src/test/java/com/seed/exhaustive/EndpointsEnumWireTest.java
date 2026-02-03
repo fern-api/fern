@@ -21,9 +21,8 @@ public class EndpointsEnumWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedExhaustiveClient.builder()
+        client = SeedExhaustiveClient.withCredentials("test-client-id", "test-client-secret")
                 .url(server.url("/").toString())
-                .token("test-token")
                 .build();
     }
 
@@ -34,11 +33,23 @@ public class EndpointsEnumWireTest {
 
     @Test
     public void testGetAndReturnEnum() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"SUNNY\""));
         WeatherReport response = client.endpoints().enum_().getAndReturnEnum(WeatherReport.SUNNY);
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "\"SUNNY\"";

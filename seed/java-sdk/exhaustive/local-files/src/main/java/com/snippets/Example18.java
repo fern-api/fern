@@ -13,11 +13,10 @@ import java.util.UUID;
 
 public class Example18 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
-            .builder()
-            .token("<token>")
+        SeedExhaustiveClient client = SeedExhaustiveClient.withCredentials("<clientId>", "<clientSecret>")
             .url("https://api.fern.com")
-            .build();
+            .build()
+        ;
 
         client.endpoints().object().getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField

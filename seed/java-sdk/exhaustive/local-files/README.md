@@ -34,16 +34,40 @@ import java.util.Arrays;
 
 public class Example {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
-            .builder()
-            .token("<token>")
-            .build();
+        SeedExhaustiveClient client = SeedExhaustiveClient.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.endpoints().container().getAndReturnListOfPrimitives(
             Arrays.asList("string", "string")
         );
     }
 }
+```
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+    .token("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+    .credentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
 ```
 
 ## Base Url

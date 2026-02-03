@@ -5,11 +5,10 @@ import java.util.HashMap;
 
 public class Example49 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
-            .builder()
-            .token("<token>")
+        SeedExhaustiveClient client = SeedExhaustiveClient.withCredentials("<clientId>", "<clientSecret>")
             .url("https://api.fern.com")
-            .build();
+            .build()
+        ;
 
         client.noAuth().postWithNoAuth(new 
         HashMap<String, Object>() {{put("key", "value");

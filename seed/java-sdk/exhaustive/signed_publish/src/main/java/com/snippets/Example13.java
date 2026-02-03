@@ -12,8 +12,7 @@ import java.util.UUID;
 
 public class Example13 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
-                .token("<token>")
+        SeedExhaustiveClient client = SeedExhaustiveClient.withCredentials("<clientId>", "<clientSecret>")
                 .url("https://api.fern.com")
                 .build();
 

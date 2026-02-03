@@ -27,9 +27,8 @@ public class EndpointsParamsWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedExhaustiveClient.builder()
+        client = SeedExhaustiveClient.withCredentials("test-client-id", "test-client-secret")
                 .url(server.url("/").toString())
-                .token("test-token")
                 .build();
     }
 
@@ -40,11 +39,23 @@ public class EndpointsParamsWireTest {
 
     @Test
     public void testGetWithPath() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"string\""));
         String response = client.endpoints().params().getWithPath("param");
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
 
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
@@ -83,13 +94,25 @@ public class EndpointsParamsWireTest {
 
     @Test
     public void testGetWithInlinePath() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"string\""));
         String response = client.endpoints()
                 .params()
                 .getWithInlinePath("param", GetWithInlinePath.builder().build());
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
 
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
@@ -128,17 +151,33 @@ public class EndpointsParamsWireTest {
 
     @Test
     public void testGetWithQuery() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.endpoints()
                 .params()
                 .getWithQuery(GetWithQuery.builder().query("query").number(1).build());
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
     }
 
     @Test
     public void testGetWithAllowMultipleQuery() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.endpoints()
                 .params()
@@ -146,43 +185,87 @@ public class EndpointsParamsWireTest {
                         .query(Arrays.asList("query"))
                         .number(Arrays.asList(1))
                         .build());
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
     }
 
     @Test
     public void testGetWithPathAndQuery() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.endpoints()
                 .params()
                 .getWithPathAndQuery(
                         "param", GetWithPathAndQuery.builder().query("query").build());
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
     }
 
     @Test
     public void testGetWithInlinePathAndQuery() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.endpoints()
                 .params()
                 .getWithInlinePathAndQuery(
                         "param",
                         GetWithInlinePathAndQuery.builder().query("query").build());
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
     }
 
     @Test
     public void testModifyWithPath() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"string\""));
         String response = client.endpoints().params().modifyWithPath("param", "string");
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PUT", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "\"string\"";
@@ -250,15 +333,27 @@ public class EndpointsParamsWireTest {
 
     @Test
     public void testModifyWithInlinePath() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"string\""));
         String response = client.endpoints()
                 .params()
                 .modifyWithInlinePath(
                         "param",
                         ModifyResourceAtInlinedPath.builder().body("string").build());
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PUT", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "\"string\"";

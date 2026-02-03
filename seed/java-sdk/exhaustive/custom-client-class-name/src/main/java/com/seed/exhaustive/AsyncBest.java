@@ -9,6 +9,7 @@ import com.seed.exhaustive.resources.endpoints.AsyncEndpointsClient;
 import com.seed.exhaustive.resources.inlinedrequests.AsyncInlinedRequestsClient;
 import com.seed.exhaustive.resources.noauth.AsyncNoAuthClient;
 import com.seed.exhaustive.resources.noreqbody.AsyncNoReqBodyClient;
+import com.seed.exhaustive.resources.oauth.AsyncOauthClient;
 import com.seed.exhaustive.resources.reqwithheaders.AsyncReqWithHeadersClient;
 import java.util.function.Supplier;
 
@@ -23,6 +24,8 @@ public class AsyncBest {
 
     protected final Supplier<AsyncNoReqBodyClient> noReqBodyClient;
 
+    protected final Supplier<AsyncOauthClient> oauthClient;
+
     protected final Supplier<AsyncReqWithHeadersClient> reqWithHeadersClient;
 
     public AsyncBest(ClientOptions clientOptions) {
@@ -31,6 +34,7 @@ public class AsyncBest {
         this.inlinedRequestsClient = Suppliers.memoize(() -> new AsyncInlinedRequestsClient(clientOptions));
         this.noAuthClient = Suppliers.memoize(() -> new AsyncNoAuthClient(clientOptions));
         this.noReqBodyClient = Suppliers.memoize(() -> new AsyncNoReqBodyClient(clientOptions));
+        this.oauthClient = Suppliers.memoize(() -> new AsyncOauthClient(clientOptions));
         this.reqWithHeadersClient = Suppliers.memoize(() -> new AsyncReqWithHeadersClient(clientOptions));
     }
 
@@ -50,11 +54,38 @@ public class AsyncBest {
         return this.noReqBodyClient.get();
     }
 
+    public AsyncOauthClient oauth() {
+        return this.oauthClient.get();
+    }
+
     public AsyncReqWithHeadersClient reqWithHeaders() {
         return this.reqWithHeadersClient.get();
     }
 
-    public static AsyncBestBuilder builder() {
-        return new AsyncBestBuilder();
+    /**
+     * Creates a client builder using a pre-generated access token.
+     * @param token The access token to use for authentication
+     * @return A builder configured for token authentication
+     */
+    public static AsyncBestBuilder._TokenAuth withToken(String token) {
+        return AsyncBestBuilder.withToken(token);
+    }
+
+    /**
+     * Creates a client builder using OAuth client credentials.
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured for OAuth authentication
+     */
+    public static AsyncBestBuilder._CredentialsAuth withCredentials(String clientId, String clientSecret) {
+        return AsyncBestBuilder.withCredentials(clientId, clientSecret);
+    }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static AsyncBestBuilder._Builder builder() {
+        return AsyncBestBuilder.builder();
     }
 }
