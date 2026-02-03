@@ -49,4 +49,14 @@ export interface DocsConfiguration {
     integrations?: FernDocsConfig.IntegrationsConfig;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
+    /**
+     * Relative filepath to a custom React component (TSX/JSX) that replaces the default header.
+     * The component must have a default export.
+     */
+    header?: string;
+    /**
+     * Relative filepath to a custom React component (TSX/JSX) that replaces the default footer.
+     * The component must have a default export.
+     */
+    footer?: string;
 }

@@ -84,8 +84,9 @@ export interface ParsedDocsConfiguration {
 
     pageActions: ParsedPageActionsConfig | undefined;
 
-    header: undefined;
-    footer: undefined;
+    /* custom components */
+    header: AbsoluteFilePath | undefined;
+    footer: AbsoluteFilePath | undefined;
 }
 
 export interface AbsoluteJsFileConfig {
