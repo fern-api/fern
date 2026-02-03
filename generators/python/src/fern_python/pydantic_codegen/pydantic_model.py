@@ -122,11 +122,16 @@ class PydanticModel:
             else field.default_value
         )
 
-        if is_aliased:
-            # When a field has an alias, we put pydantic.Field(alias=...) inside Annotated
-            # instead of as the default value. This makes mypy see the Python field name
-            # in the constructor signature, while Pydantic still uses the alias for JSON.
-            # See: https://github.com/pydantic/pydantic/issues/5893#issuecomment-2512807073
+        # For pure V2 mode with aliased fields, we use the Annotated pattern where
+        # pydantic.Field(alias=...) is inside Annotated. This makes mypy see the Python
+        # field name in the constructor signature, while Pydantic still uses the alias for JSON.
+        # See: https://github.com/pydantic/pydantic/issues/5893#issuecomment-2512807073
+        #
+        # For V1, Both, and V1_ON_V2 modes, we keep the original behavior with Field as
+        # the default value because Pydantic v1 doesn't support Field inside Annotated.
+        use_annotated_pattern = is_aliased and self._version == PydanticVersionCompatibility.V2
+
+        if use_annotated_pattern:
             pydantic_field_annotation = get_pydantic_field_annotation(
                 alias=field.json_field_name,
                 default_factory=field.default_factory,
@@ -153,6 +158,15 @@ class PydanticModel:
 
             # The initializer is just the description (if any), not the pydantic.Field() call
             initializer = get_field_description_initializer(description=field.description)
+        elif is_aliased:
+            # Aliased field in non-V2 mode - use the original behavior with Field(alias=...) as default value
+            initializer = get_field_name_initializer(
+                alias=field.json_field_name,
+                default_factory=field.default_factory,
+                description=field.description,
+                default=default_value,
+                version=self._version,
+            )
         else:
             # No alias - use the original behavior
             initializer = get_field_name_initializer(
