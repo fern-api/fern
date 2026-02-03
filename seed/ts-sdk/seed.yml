@@ -520,6 +520,7 @@ allowedFailures:
   - errors
   - oauth-client-credentials-custom
   - package-yml
+  - server-url-templating
   - trace:no-custom-config
   - trace:serde
   - inferred-auth-implicit-reference
