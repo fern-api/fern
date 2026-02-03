@@ -37,14 +37,23 @@ export class EndpointResolverImpl implements EndpointResolver {
     public resolveEndpointByMethodAndPath({
         method,
         path,
+        namespace,
         casingsGenerator
     }: {
         method: HttpMethod;
         path: string;
+        namespace: string | undefined;
         casingsGenerator: CasingsGenerator;
     }): ResolvedEndpoint | undefined {
         let result: ResolvedEndpoint | undefined = undefined;
         visitAllDefinitionFiles(this.workspace, (relativeFilepath, file, metadata) => {
+            // Check namespace match if specified
+            if (namespace != null) {
+                const fileNamespace = this.getNamespaceFromFilepath(relativeFilepath);
+                if (fileNamespace !== namespace) {
+                    return;
+                }
+            }
             const context = constructFernFileContext({
                 relativeFilepath,
                 definitionFile: file,
@@ -63,6 +72,13 @@ export class EndpointResolverImpl implements EndpointResolver {
             }
         });
         visitAllPackageMarkers(this.workspace, (relativeFilepath, packageMarker) => {
+            // Check namespace match if specified
+            if (namespace != null) {
+                const fileNamespace = this.getNamespaceFromFilepath(relativeFilepath);
+                if (fileNamespace !== namespace) {
+                    return;
+                }
+            }
             const context = constructFernFileContext({
                 relativeFilepath,
                 definitionFile: packageMarker,
@@ -82,6 +98,17 @@ export class EndpointResolverImpl implements EndpointResolver {
         return result;
     }
 
+    private getNamespaceFromFilepath(relativeFilepath: string): string | undefined {
+        const parts = relativeFilepath.split("/");
+        // If there's more than one part, the first part is the namespace
+        // e.g., "oauth/service.yml" -> namespace is "oauth"
+        // e.g., "service.yml" -> no namespace
+        if (parts.length > 1) {
+            return parts[0];
+        }
+        return undefined;
+    }
+
     public resolveEndpoint({
         endpoint,
         file
@@ -93,7 +120,9 @@ export class EndpointResolverImpl implements EndpointResolver {
         const parsedEndpointReference = referenceParser.tryParse(endpoint);
         if (parsedEndpointReference != null) {
             return this.resolveEndpointByMethodAndPath({
-                ...parsedEndpointReference,
+                method: parsedEndpointReference.method,
+                path: parsedEndpointReference.path,
+                namespace: parsedEndpointReference.namespace,
                 casingsGenerator: file.casingsGenerator
             });
         }
