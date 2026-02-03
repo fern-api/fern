@@ -57,7 +57,6 @@ export async function getIntermediateRepresentation({
             packageName,
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),
-            skipDynamicIr: true,
             generationMetadata: {
                 cliVersion: workspace.cliVersion,
                 generatorName: generatorInvocation.name,

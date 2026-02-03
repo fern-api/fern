@@ -151,7 +151,6 @@ export class GenerationRunner {
             packageName: generatorsYml.getPackageName({ generatorInvocation }),
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),
-            skipDynamicIr: true,
             generationMetadata: {
                 cliVersion: workspace.cliVersion,
                 generatorName: generatorInvocation.name,
