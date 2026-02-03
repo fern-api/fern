@@ -136,6 +136,7 @@ class PydanticModel:
                 alias=field.json_field_name,
                 default_factory=field.default_factory,
                 default=default_value,
+                description=field.description,
                 version=self._version,
             )
 
@@ -156,8 +157,8 @@ class PydanticModel:
                 type_hint=aliased_type_hint,
             )
 
-            # The initializer is just the description (if any), not the pydantic.Field() call
-            initializer = get_field_description_initializer(description=field.description)
+            # No initializer needed - the pydantic.Field() inside Annotated handles everything
+            initializer = None
         elif is_aliased:
             # Aliased field in non-V2 mode - use the original behavior with Field(alias=...) as default value
             initializer = get_field_name_initializer(
@@ -710,10 +711,11 @@ def get_pydantic_field_annotation(
     alias: str,
     default: Optional[AST.Expression],
     default_factory: Optional[AST.Expression],
+    description: Optional[str],
     version: PydanticVersionCompatibility,
 ) -> AST.Expression:
     """
-    Generate a pydantic.Field(alias=..., default=..., default_factory=...) expression
+    Generate a pydantic.Field(alias=..., default=..., default_factory=..., description=...) expression
     for use inside Annotated[]. This allows mypy to see the Python field name in the
     constructor signature while Pydantic uses the alias for JSON serialization.
     """
@@ -728,6 +730,9 @@ def get_pydantic_field_annotation(
         if default_factory is not None:
             writer.write(", default_factory=")
             writer.write_node(default_factory)
+        if description is not None:
+            escaped_description = escape_docstring(description)
+            writer.write(f', description="{escaped_description}"')
         writer.write(")")
 
     return AST.Expression(AST.CodeWriter(write))
