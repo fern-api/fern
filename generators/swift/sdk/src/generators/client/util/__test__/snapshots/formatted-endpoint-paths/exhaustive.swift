@@ -73,5 +73,8 @@
 "/no-req-body"
 "/no-req-body"
 
+// service_oauth
+"/oauth/token"
+
 // service_req-with-headers
 "/test-headers/custom-header"
