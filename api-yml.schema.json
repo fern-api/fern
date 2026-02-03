@@ -291,6 +291,16 @@
         "url": {
           "type": "string"
         },
+        "default-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "url-template": {
           "oneOf": [
             {
