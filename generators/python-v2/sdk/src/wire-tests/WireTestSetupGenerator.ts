@@ -532,9 +532,8 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "inferred":
-                // Inferred auth - handle based on the inferred type
-                // For now, we'll add a generic token parameter
-                params.push(`        _token_getter_override=lambda: "test_token",`);
+                // Inferred auth - use api_key instead of _token_getter_override
+                params.push(`        api_key="test_api_key",`);
                 break;
         }
 

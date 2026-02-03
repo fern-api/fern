@@ -30,6 +30,12 @@ public partial class ParamsClient : IParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -40,6 +46,7 @@ public partial class ParamsClient : IParamsClient
                                 "/params/path/{0}",
                                 ValueConvert.ToPathParameterString(param)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -95,6 +102,12 @@ public partial class ParamsClient : IParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -105,6 +118,7 @@ public partial class ParamsClient : IParamsClient
                                 "/params/path/{0}",
                                 ValueConvert.ToPathParameterString(request.Param)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -161,6 +175,12 @@ public partial class ParamsClient : IParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -172,6 +192,7 @@ public partial class ParamsClient : IParamsClient
                                 ValueConvert.ToPathParameterString(param)
                             ),
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -227,6 +248,12 @@ public partial class ParamsClient : IParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -238,6 +265,7 @@ public partial class ParamsClient : IParamsClient
                                 ValueConvert.ToPathParameterString(request.Param)
                             ),
                             Body = request.Body,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -338,6 +366,12 @@ public partial class ParamsClient : IParamsClient
                     .Add("number", request.Number)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -346,6 +380,7 @@ public partial class ParamsClient : IParamsClient
                             Method = HttpMethod.Get,
                             Path = "/params",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -389,6 +424,12 @@ public partial class ParamsClient : IParamsClient
                     .Add("number", request.Number)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -397,6 +438,7 @@ public partial class ParamsClient : IParamsClient
                             Method = HttpMethod.Get,
                             Path = "/params",
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -441,6 +483,12 @@ public partial class ParamsClient : IParamsClient
                     .Add("query", request.Query)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -452,6 +500,7 @@ public partial class ParamsClient : IParamsClient
                                 ValueConvert.ToPathParameterString(param)
                             ),
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -494,6 +543,12 @@ public partial class ParamsClient : IParamsClient
                     .Add("query", request.Query)
                     .MergeAdditional(options?.AdditionalQueryParameters)
                     .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -505,6 +560,7 @@ public partial class ParamsClient : IParamsClient
                                 ValueConvert.ToPathParameterString(request.Param)
                             ),
                             QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

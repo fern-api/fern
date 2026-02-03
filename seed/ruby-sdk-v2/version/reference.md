@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/fern_version/user/client.rb">get_user</a>(user_id) -> FernVersion::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user</a>(user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ client.user.get_user(user_id: 'userId');
 <dl>
 <dd>
 
-**request_options:** `FernVersion::User::RequestOptions` 
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>

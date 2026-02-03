@@ -23,6 +23,12 @@ public partial class TestGroupClient : ITestGroupClient
             .Add("query_param_integer", request.QueryParamInteger)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -35,6 +41,7 @@ public partial class TestGroupClient : ITestGroupClient
                     ),
                     Body = request.Body,
                     QueryString = _queryString,
+                    Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
                 },

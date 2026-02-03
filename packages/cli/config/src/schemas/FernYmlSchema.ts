@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AiConfigSchema } from "./AiConfigSchema";
 import { ApiDefinitionSchema } from "./ApiDefinitionSchema";
 import { ApisSchema } from "./ApisSchema";
 import { CliSchema } from "./CliSchema";
@@ -7,6 +8,7 @@ import { SdksSchema } from "./SdksSchema";
 export const FernYmlSchema = z.object({
     edition: z.string(),
     org: z.string(),
+    ai: AiConfigSchema.optional(),
     cli: CliSchema.optional(),
     sdks: SdksSchema.optional(),
 

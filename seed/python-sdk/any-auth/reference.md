@@ -16,9 +16,7 @@
 from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.auth.get_token(
     client_id="client_id",
@@ -84,9 +82,7 @@ client.auth.get_token(
 from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.user.get()
 
@@ -132,9 +128,7 @@ client.user.get()
 from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.user.get_admins()
 

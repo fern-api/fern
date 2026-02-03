@@ -315,6 +315,8 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
         if (this.allTypeClassReferences == null) {
             const resultMap = new Map<string, Set<string>>();
+
+            // Track API types
             Object.values(this.ir.types).forEach((typeDeclaration) => {
                 const classReference = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
                 const key = classReference.name;
@@ -326,6 +328,21 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
                 resultMap.get(key)?.add(value);
             });
+
+            // Track subpackage interface references to detect collisions
+            // (e.g., ITemplatesClient in multiple namespaces)
+            Object.values(this.ir.subpackages).forEach((subpackage) => {
+                const interfaceRef = this.getSubpackageInterfaceReference(subpackage);
+                const key = interfaceRef.name;
+                const value = interfaceRef.namespace;
+
+                if (!resultMap.has(key)) {
+                    resultMap.set(key, new Set<string>());
+                }
+
+                resultMap.get(key)?.add(value);
+            });
+
             this.allTypeClassReferences = resultMap;
         }
         return this.allTypeClassReferences;

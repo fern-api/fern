@@ -6,7 +6,7 @@ import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
 
-import { Migration, MigrationModule, MigrationResult } from "./types";
+import { Migration, MigrationModule, MigratorResult } from "./types";
 
 /**
  * The unified migration package name.
@@ -214,7 +214,7 @@ export function runMigrations(params: {
     migrations: Migration[];
     config: generatorsYml.GeneratorInvocationSchema;
     logger: Logger;
-}): MigrationResult {
+}): MigratorResult {
     const { migrations, logger } = params;
     let currentConfig = params.config;
     const appliedVersions: string[] = [];
@@ -300,7 +300,7 @@ export async function loadAndRunMigrations(params: {
     to: string;
     config: unknown;
     logger: Logger;
-}): Promise<MigrationResult | undefined> {
+}): Promise<MigratorResult | undefined> {
     const { generatorName, from, to, config, logger } = params;
     // Validate config structure before proceeding
     if (!isValidGeneratorConfig(config)) {

@@ -263,7 +263,7 @@ public class HeadersBuilderTests
     {
         // Test that BuildAsync properly resolves HeaderValue instances
         var existingHeaders = new Headers();
-        existingHeaders["DynamicHeader"] = new HeaderValue((Func<global::System.Threading.Tasks.Task<string>>)(() => global::System.Threading.Tasks.Task.FromResult("dynamic-value")));
+        existingHeaders["DynamicHeader"] = (Func<global::System.Threading.Tasks.Task<string>>)(() => global::System.Threading.Tasks.Task.FromResult("dynamic-value"));
 
         var result = await new HeadersBuilder.Builder()
             .Add("StaticHeader", "static-value")

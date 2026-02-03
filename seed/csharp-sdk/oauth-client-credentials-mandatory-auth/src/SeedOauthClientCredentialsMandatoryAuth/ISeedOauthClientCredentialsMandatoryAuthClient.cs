@@ -4,7 +4,7 @@ namespace SeedOauthClientCredentialsMandatoryAuth;
 
 public partial interface ISeedOauthClientCredentialsMandatoryAuthClient
 {
-    public AuthClient Auth { get; }
-    public NestedClient Nested { get; }
-    public SimpleClient Simple { get; }
+    public IAuthClient Auth { get; }
+    public INestedClient Nested { get; }
+    public ISimpleClient Simple { get; }
 }

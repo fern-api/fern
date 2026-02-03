@@ -12,6 +12,7 @@ groups:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+        smart-casing: false
   dynamic-ir:
     audiences:
       - dynamic
@@ -20,11 +21,12 @@ groups:
         version: 0.45.1
         output:
           location: npm
-          package-name: "@fern-api/dynamic-ir-sdk"
+          package-name: '@fern-api/dynamic-ir-sdk'
           token: ${NPM_TOKEN}
         config:
           noOptionalProperties: false
           noSerdeLayer: true
+        smart-casing: false
   node:
     generators:
       - name: fernapi/fern-typescript-sdk
@@ -32,10 +34,11 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: "@fern-fern/ir-v62-sdk"
+          package-name: '@fern-fern/ir-v62-sdk'
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+        smart-casing: false
   java:
     generators:
       - name: fernapi/java-model
@@ -47,6 +50,7 @@ groups:
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
+        smart-casing: false
   python:
     generators:
       - name: fernapi/fern-pydantic-model
@@ -56,11 +60,11 @@ groups:
           url: pypi.buildwithfern.com
           package-name: fern_fern_ir_v62
         config:
-          # wrapped_aliases: true
           include_union_utils: true
           frozen: true
           version: v2
           enum_type: python_enums
+        smart-casing: false
   go:
     generators:
       - name: fernapi/fern-go-model
@@ -68,3 +72,4 @@ groups:
         config: {}
         github:
           repository: fern-api/ir-go
+        smart-casing: false

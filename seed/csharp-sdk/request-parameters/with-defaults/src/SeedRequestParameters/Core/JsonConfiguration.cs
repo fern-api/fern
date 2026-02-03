@@ -16,15 +16,11 @@ internal static partial class JsonOptions
     {
         var options = new JsonSerializerOptions
         {
-            Converters =
-            {
-                new DateTimeSerializer(),
+            Converters = { new DateTimeSerializer(),
 #if USE_PORTABLE_DATE_ONLY
                 new DateOnlyConverter(),
 #endif
-                new OneOfSerializer(),
-                new OptionalJsonConverterFactory(),
-            },
+                new OptionalJsonConverterFactory() },
 #if DEBUG
             WriteIndented = true,
 #endif

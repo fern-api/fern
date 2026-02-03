@@ -6,7 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_anyOfExamples",
@@ -192,7 +192,7 @@
           "slug": undefined,
         },
       ],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "anyOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_anyOfExamples",
@@ -270,7 +270,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfErrorA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -281,7 +281,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfErrorB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -359,7 +359,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfVariantA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -370,7 +370,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfVariantB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",

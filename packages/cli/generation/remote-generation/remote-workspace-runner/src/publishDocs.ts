@@ -60,7 +60,8 @@ export async function publishDocs({
     skipUpload = false,
     withAiExamples = true,
     excludeApis = false,
-    targetAudiences
+    targetAudiences,
+    docsUrl
 }: {
     token: FernToken;
     organization: string;
@@ -78,6 +79,7 @@ export async function publishDocs({
     withAiExamples?: boolean;
     excludeApis?: boolean;
     targetAudiences?: string[];
+    docsUrl?: string;
 }): Promise<void> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -271,13 +273,23 @@ export async function publishDocs({
                 }
             }
         },
-        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+        registerApi: async ({
+            ir,
+            snippetsConfig,
+            playgroundConfig,
+            apiName,
+            workspace,
+            graphqlOperations,
+            graphqlTypes
+        }) => {
             // Use apiName from docs.yml (folder name) as the API identifier for FDR
             // This ensures users can reference APIs by their folder name in docs components
             let apiDefinition = convertIrToFdrApi({
                 ir,
                 snippetsConfig,
                 playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
                 context,
                 apiNameOverride: apiName
             });
@@ -346,7 +358,8 @@ export async function publishDocs({
                 apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName.originalName),
                 definition: apiDefinition,
                 definitionV2: undefined,
-                dynamicIRs: dynamicIRsByLanguage
+                dynamicIRs: dynamicIRsByLanguage,
+                docsUrl
             });
 
             if (response.ok) {

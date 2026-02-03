@@ -1,7 +1,6 @@
 import {
     AbstractAstNode,
     AbstractDynamicSnippetsGenerator,
-    AbstractFormatter,
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
@@ -13,8 +12,6 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
     DynamicSnippetsGeneratorContext,
     EndpointSnippetGenerator
 > {
-    private formatter: AbstractFormatter | undefined;
-
     constructor({
         ir,
         config,

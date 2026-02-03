@@ -1,3 +1,4 @@
+import { GraphQLSpec } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
@@ -9,8 +10,9 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
+import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -54,6 +56,8 @@ type RegisterApiFn = (opts: {
     playgroundConfig?: PlaygroundConfig;
     apiName?: string;
     workspace?: FernWorkspace;
+    graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
+    graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }) => AsyncOrSync<string>;
 
 type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AiChatConfig | undefined }) => AsyncOrSync<void>;
@@ -249,6 +253,7 @@ export class DocsDefinitionResolver {
     private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
+    private markdownFilesToAvailability: Map<AbsoluteFilePath, docsYml.RawSchemas.Availability> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     private referencedMarkdownFiles: ReferencedMarkdownFile[] = [];
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
@@ -525,6 +530,20 @@ export class DocsDefinitionResolver {
             }
         }
 
+        // Add custom header/footer component files to jsFiles
+        if (this._parsedDocsConfig.header != null) {
+            const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.header);
+            const contents = (await readFile(this._parsedDocsConfig.header)).toString();
+            jsFiles[relativeFilePath] = contents;
+            this.taskContext.logger.debug(`Added custom header component: ${relativeFilePath}`);
+        }
+        if (this._parsedDocsConfig.footer != null) {
+            const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.footer);
+            const contents = (await readFile(this._parsedDocsConfig.footer)).toString();
+            jsFiles[relativeFilePath] = contents;
+            this.taskContext.logger.debug(`Added custom footer component: ${relativeFilePath}`);
+        }
+
         const totalResolveTime = performance.now() - resolveStartTime;
         const endMemory = process.memoryUsage();
         this.taskContext.logger.debug(
@@ -553,7 +572,7 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Extracts all frontmatter data (slug, sidebar-title, noindex, tags) from pages in a single pass.
+     * Extracts all frontmatter data (slug, sidebar-title, noindex, tags, availability) from pages in a single pass.
      * This is more efficient than parsing frontmatter multiple times for each field.
      * @param pages - the pages to extract frontmatter from
      */
@@ -600,6 +619,43 @@ export class DocsDefinitionResolver {
             } else if (Array.isArray(tags)) {
                 this.markdownFilesToTags.set(absolutePath, tags);
             }
+
+            // Extract availability
+            const availability = frontmatter.data.availability;
+            if (typeof availability === "string") {
+                const parsedAvailability = this.parseAvailabilityFromFrontmatter(availability);
+                if (parsedAvailability != null) {
+                    this.markdownFilesToAvailability.set(absolutePath, parsedAvailability);
+                }
+            }
+        }
+    }
+
+    /**
+     * Parses an availability string from frontmatter into the Availability enum value.
+     * @param value - the availability string from frontmatter
+     * @returns the Availability enum value, or undefined if the value is not valid
+     */
+    private parseAvailabilityFromFrontmatter(value: string): docsYml.RawSchemas.Availability | undefined {
+        const normalizedValue = value.toLowerCase().trim();
+        switch (normalizedValue) {
+            case "stable":
+                return "stable";
+            case "generally-available":
+                return "generally-available";
+            case "in-development":
+                return "in-development";
+            case "pre-release":
+                return "pre-release";
+            case "deprecated":
+                return "deprecated";
+            case "beta":
+                return "beta";
+            default:
+                this.taskContext.logger.warn(
+                    `Invalid availability value "${value}" in frontmatter. Valid values are: stable, generally-available, in-development, pre-release, deprecated, beta`
+                );
+                return undefined;
         }
     }
 
@@ -765,8 +821,9 @@ export class DocsDefinitionResolver {
             colorsV2: undefined,
             typography: undefined,
             backgroundImage: undefined,
-            header: undefined,
-            footer: undefined
+            // custom components - the compiled JS will be stored in jsFiles and referenced by relative path
+            header: this.parsedDocsConfig.header ? this.toRelativeFilepath(this.parsedDocsConfig.header) : undefined,
+            footer: this.parsedDocsConfig.footer ? this.toRelativeFilepath(this.parsedDocsConfig.footer) : undefined
         };
         return config;
     }
@@ -913,13 +970,23 @@ export class DocsDefinitionResolver {
             );
         }
 
+        // Process versions in batches to reduce memory usage for customers with many API versions.
+        // Each version generates a large IR and API definition, so processing all in parallel
+        // can cause memory issues (e.g., 35 versions * ~100-200MB each = 3.5-7GB).
+        const BATCH_SIZE = 5;
+        const children: FernNavigation.V1.VersionNode[] = [];
+        for (let i = 0; i < versioned.versions.length; i += BATCH_SIZE) {
+            const batch = versioned.versions.slice(i, i + BATCH_SIZE);
+            const batchResults = await Promise.all(
+                batch.map((item, batchIdx) => this.toVersionNode(item, parentSlug, i + batchIdx === 0))
+            );
+            children.push(...batchResults);
+        }
+
         return {
             id,
             type: "versioned",
-            // TODO: should the first version always be default? We should make this configurable.
-            children: await Promise.all(
-                versioned.versions.map((item, idx) => this.toVersionNode(item, parentSlug, idx === 0))
-            )
+            children
         };
     }
 
@@ -1292,6 +1359,27 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
+        } else if (Object.keys(snippetsConfig).length > 0) {
+            // When using the v3 parser (ir != null), we still need to load the workspace
+            // for dynamic snippet generation, which requires access to generators.yml configuration.
+            // Only load if there's a snippets configuration to avoid unnecessary work.
+            try {
+                workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                    { context: this.taskContext },
+                    {
+                        enableUniqueErrorsPerEndpoint: true,
+                        detectGlobalHeaders: false,
+                        objectQueryParameters: true,
+                        preserveSchemaIds: true
+                    }
+                );
+            } catch (error) {
+                // If we can't load the workspace for dynamic snippets, log a warning but continue
+                // since the IR was already successfully generated by the v3 parser
+                this.taskContext.logger.debug(
+                    `Could not load workspace for dynamic snippets: ${error}. Dynamic snippets may not be available.`
+                );
+            }
         }
 
         // Apply environment variable substitution to the IR if enabled in docs.yml settings
@@ -1307,6 +1395,9 @@ export class DocsDefinitionResolver {
             );
         }
 
+        // Extract GraphQL operations and types from the workspace
+        const graphqlData = await this.extractGraphQLData();
+
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
         // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
@@ -1317,13 +1408,19 @@ export class DocsDefinitionResolver {
             snippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
             apiName: apiNameForRegistration,
-            workspace
+            workspace,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types
         });
+
+        // Create API definition WITH GraphQL operations (single full conversion)
         const api = convertIrToApiDefinition({
             ir,
             apiDefinitionId,
             playgroundConfig: { oauth: item.playground?.oauth },
-            context: this.taskContext
+            context: this.taskContext,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types
         });
 
         const node = new ApiReferenceNodeConverter(
@@ -1340,7 +1437,8 @@ export class DocsDefinitionResolver {
             workspace,
             hideChildren,
             parentAvailability ?? item.availability,
-            openApiTags
+            openApiTags,
+            graphqlData.namespacesByOperationId
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
@@ -1409,6 +1507,53 @@ export class DocsDefinitionResolver {
     }
 
     /**
+     * Extract GraphQL operations from a workspace
+     */
+    private async extractGraphQLData(): Promise<{
+        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
+        types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
+        namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
+    }> {
+        const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
+        const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+        const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
+
+        // Get pre-processed GraphQL data from workspaces and build namespace mapping
+        for (const ossWorkspace of this.ossWorkspaces) {
+            // Merge processed GraphQL data from workspace
+            Object.assign(graphqlOperations, ossWorkspace.getGraphqlOperations());
+            Object.assign(graphqlTypes, ossWorkspace.getGraphqlTypes());
+
+            // Build namespace mapping by processing individual specs
+            const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+            for (const spec of graphqlSpecs) {
+                if (spec.namespace != null) {
+                    try {
+                        // Process each spec individually to map operations to namespaces
+                        const converter = new GraphQLConverter({
+                            context: this.taskContext,
+                            filePath: spec.absoluteFilepath
+                        });
+                        const graphqlResult = await converter.convert();
+
+                        // Map operations from this spec to its namespace
+                        for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
+                            namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
+                        }
+                    } catch (error) {
+                        this.taskContext.logger.error(
+                            `Failed to process GraphQL spec for namespace mapping ${spec.absoluteFilepath}:`,
+                            String(error)
+                        );
+                    }
+                }
+            }
+        }
+
+        return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
+    }
+
+    /**
      * Handles pythonDocsSection navigation items by delegating to the handler if provided.
      * If no handler is provided, returns null (skips the section - FDR adds generated docs during publish).
      */
@@ -1444,6 +1589,7 @@ export class DocsDefinitionResolver {
             fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/")
         });
         const id = this.#idgen.get(pageId);
+        const frontmatterAvailability = this.markdownFilesToAvailability.get(item.absolutePath);
         return {
             id,
             type: "page",
@@ -1457,7 +1603,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: item.availability ?? parentAvailability
+            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
         };
     }
 
@@ -1486,6 +1632,10 @@ export class DocsDefinitionResolver {
         });
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
+        const frontmatterAvailability =
+            item.overviewAbsolutePath != null
+                ? this.markdownFilesToAvailability.get(item.overviewAbsolutePath)
+                : undefined;
         const hiddenSection = hideChildren || item.hidden;
         const children = await Promise.all(
             item.contents.map((child) =>
@@ -1535,7 +1685,7 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: item.availability ?? parentAvailability
+            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
         };
     }
 

@@ -7,15 +7,18 @@ groups:
         version: 0.0.197
         config:
           mode: model
+        smart-casing: false
   sdks:
     generators:
       - name: fernapi/java-model
         version: 0.3.4
         config:
           wrapped-aliases: true
+        smart-casing: false
       - name: fernapi/fern-pydantic-model
         version: 0.3.6-rc1-1-ga2f760f4
         config:
           wrapped_aliases: true
           include_union_utils: true
           frozen: true
+        smart-casing: false

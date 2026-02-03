@@ -675,3 +675,68 @@ func (r *RawClient) Simple(
 		Body:       nil,
 	}, nil
 }
+
+func (r *RawClient) WithLiteralAndEnumTypes(
+	ctx context.Context,
+	request *upload.LiteralEnumRequest,
+	opts ...option.RequestOption,
+) (*core.Response[string], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/with-literal-enum"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
+	}
+	if request.ModelType != nil {
+		if err := writer.WriteJSON("model_type", *request.ModelType); err != nil {
+			return nil, err
+		}
+	}
+	if request.OpenEnum != nil {
+		if err := writer.WriteJSON("open_enum", string(*request.OpenEnum)); err != nil {
+			return nil, err
+		}
+	}
+	if request.MaybeName != nil {
+		if err := writer.WriteField("maybe_name", *request.MaybeName); err != nil {
+			return nil, err
+		}
+	}
+	if err := writer.Close(); err != nil {
+		return nil, err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	var response string
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[string]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}

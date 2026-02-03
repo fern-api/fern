@@ -19,8 +19,8 @@ internal static partial class JsonOptions
             Converters = { new DateTimeSerializer(),
 #if USE_PORTABLE_DATE_ONLY
                 new DateOnlyConverter(),
-#endif
-                new OneOfSerializer(),
+#endif<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
+                new OneOfSerializer(),<% } %>
                 new OptionalJsonConverterFactory() },
 #if DEBUG
             WriteIndented = true,

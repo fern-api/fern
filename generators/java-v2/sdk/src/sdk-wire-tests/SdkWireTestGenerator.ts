@@ -336,10 +336,13 @@ export class SdkWireTestGenerator {
 
     private async generateSnippetForExample(
         example: dynamic.EndpointExample,
-        dynamicSnippetsGenerator: DynamicSnippetsGenerator
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator,
+        endpointId: string
     ): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-        const response = await dynamicSnippetsGenerator.generate(snippetRequest);
+        // Pass endpointId to avoid path collision issues when multiple namespaces
+        // have endpoints with the same HTTP method and path pattern
+        const response = await dynamicSnippetsGenerator.generate(snippetRequest, { endpointId });
         if (!response.snippet) {
             throw new Error("No snippet generated for example");
         }
@@ -446,7 +449,11 @@ export class SdkWireTestGenerator {
 
             try {
                 dynamicIr.endpoints[endpoint.id] = correctedDynamicEndpoint;
-                const snippet = await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator);
+                const snippet = await this.generateSnippetForExample(
+                    firstDynamicExample,
+                    dynamicSnippetsGenerator,
+                    endpoint.id
+                );
                 this.context.logger.debug(`Service correction succeeded for endpoint ${endpoint.id}`);
                 return snippet;
             } catch (error) {
@@ -464,7 +471,7 @@ export class SdkWireTestGenerator {
                 }
             }
         } else {
-            return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator);
+            return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator, endpoint.id);
         }
     }
 

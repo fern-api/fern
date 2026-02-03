@@ -24,6 +24,12 @@ public partial class ServiceClient : IServiceClient
             .Add("tags", request.Tags)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
+        var _headers = await new SeedAudiences.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -32,6 +38,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethod.Get,
                     Path = "",
                     QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

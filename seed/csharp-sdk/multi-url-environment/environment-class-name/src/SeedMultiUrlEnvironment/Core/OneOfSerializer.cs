@@ -38,6 +38,60 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         JsonSerializer.Serialize(writer, value.Value, options);
     }
 
+    public override IOneOf ReadAsPropertyName(
+        ref Utf8JsonReader reader,
+        global::System.Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        var stringValue = reader.GetString();
+        if (stringValue == null)
+            throw new JsonException("Cannot deserialize null property name into OneOf type");
+
+        // Try to deserialize the string value into one of the supported types
+        foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
+        {
+            try
+            {
+                // For primitive types, try direct conversion
+                if (type == typeof(string))
+                {
+                    return (IOneOf)cast.Invoke(null, [stringValue])!;
+                }
+
+                // For other types, try to deserialize from JSON string
+                var result = JsonSerializer.Deserialize($"\"{stringValue}\"", type, options);
+                if (result != null)
+                {
+                    return (IOneOf)cast.Invoke(null, [result])!;
+                }
+            }
+            catch { }
+        }
+
+        // If no type-specific deserialization worked, default to string if available
+        var stringType = GetOneOfTypes(typeToConvert).FirstOrDefault(t => t.type == typeof(string));
+        if (stringType != default)
+        {
+            return (IOneOf)stringType.cast.Invoke(null, [stringValue])!;
+        }
+
+        throw new JsonException(
+            $"Cannot deserialize dictionary key '{stringValue}' into one of the supported types for {typeToConvert}"
+        );
+    }
+
+    public override void WriteAsPropertyName(
+        Utf8JsonWriter writer,
+        IOneOf value,
+        JsonSerializerOptions options
+    )
+    {
+        // Serialize the underlying value to a string suitable for use as a dictionary key
+        var stringValue = value.Value?.ToString() ?? "null";
+        writer.WritePropertyName(stringValue);
+    }
+
     private static (global::System.Type type, MethodInfo cast)[] GetOneOfTypes(
         global::System.Type typeToConvert
     )

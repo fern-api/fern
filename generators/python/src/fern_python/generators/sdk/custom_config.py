@@ -147,6 +147,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Useful when .fernignore preserves directories with code that doesn't work with the generated SDK.
     mypy_exclude: Optional[List[str]] = None
 
+    # Paths to files that will be auto-loaded when the SDK is imported
+    # (e.g., ["custom_integration", "sentry_integration"] will import <package>/custom_integration.py
+    # and <package>/sentry_integration.py if they exist)
+    import_paths: Optional[List[str]] = None
+
     class Config:
         extra = pydantic.Extra.forbid
 

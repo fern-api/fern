@@ -221,6 +221,18 @@ types:
       css: optional<CssConfig>
       js: optional<JsConfig>
 
+      # custom components
+      header:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom React component (TSX/JSX) that replaces the default header.
+          The component must have a default export.
+      footer:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom React component (TSX/JSX) that replaces the default footer.
+          The component must have a default export.
+
   TabId: string
 
   PageActionsConfig:
@@ -677,6 +689,15 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      switcher-placement:
+        type: optional<SwitcherPlacement>
+        docs: |
+          Set the placement of the version and language switcher
+
+          @default: `header`
+
+          Note: this setting is ignored when `disable-header` is set to true.
+
       content-alignment:
         type: optional<ContentAlignment>
         docs: |
@@ -858,6 +879,11 @@ types:
       - sidebar
 
   TabsPlacement:
+    enum:
+      - header
+      - sidebar
+
+  SwitcherPlacement:
     enum:
       - header
       - sidebar

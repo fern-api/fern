@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using SeedExhaustive.ReqWithHeaders;
 
 namespace Usage;
 
@@ -13,13 +12,7 @@ public class Example50
             }
         );
 
-        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-            new ReqWithHeaders {
-                XTestServiceHeader = "X-TEST-SERVICE-HEADER",
-                XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
-                Body = "string"
-            }
-        );
+        await client.NoReqBody.GetWithNoRequestBodyAsync();
     }
 
 }

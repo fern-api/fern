@@ -14,6 +14,7 @@ import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
+import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
 import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
@@ -331,4 +332,60 @@ public class RawObjectClient {
                   throw new SeedExhaustiveException("Network error executing HTTP request", e);
                 }
               }
-            }
+
+              /**
+               * Tests that string fields containing datetime-like values are NOT reformatted.
+               * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+               * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+               */
+              public SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+                  ObjectWithDatetimeLikeString request) {
+                return getAndReturnWithDatetimeLikeString(request,null);
+              }
+
+              /**
+               * Tests that string fields containing datetime-like values are NOT reformatted.
+               * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+               * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+               */
+              public SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+                  ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+                HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                  .addPathSegments("object")
+                  .addPathSegments("get-and-return-with-datetime-like-string");if (requestOptions != null) {
+                    requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                      httpUrl.addQueryParameter(_key, _value);
+                    } );
+                  }
+                  RequestBody body;
+                  try {
+                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                  }
+                  catch(JsonProcessingException e) {
+                    throw new SeedExhaustiveException("Failed to serialize request", e);
+                  }
+                  Request okhttpRequest = new Request.Builder()
+                    .url(httpUrl.build())
+                    .method("POST", body)
+                    .headers(Headers.of(clientOptions.headers(requestOptions)))
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Accept", "application/json")
+                    .build();
+                  OkHttpClient client = clientOptions.httpClient();
+                  if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                    client = clientOptions.httpClientWithTimeout(requestOptions);
+                  }
+                  try (Response response = client.newCall(okhttpRequest).execute()) {
+                    ResponseBody responseBody = response.body();
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                      return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class), response);
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                  }
+                  catch (IOException e) {
+                    throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                  }
+                }
+              }

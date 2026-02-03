@@ -81,7 +81,19 @@ export class WrappedEndpointRequest extends EndpointRequest {
      * The builder automatically handles null values, so no conditional checks are needed.
      */
     private writeQueryParameterBuilderCallChained(writer: Writer, query: QueryParameter): void {
-        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+        const baseReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+
+        // When experimental explicit nullable/optional is enabled, Optional<T> types need special handling
+        // since QueryStringBuilder doesn't know how to serialize Optional<T> objects directly
+        // Note: Multi-value query parameters (allowMultiple=true) are always generated as IEnumerable<T>,
+        // never as Optional<T>, so they should never use Optional handling regardless of IR type
+        const queryParameterReference =
+            this.context.generation.settings.enableExplicitNullableOptional &&
+            !query.allowMultiple &&
+            this.isOptionalType(query.valueType)
+                ? `${baseReference}.IsDefined ? ${baseReference}.Value : null`
+                : baseReference;
+
         const isComplexType = this.isComplexType(query.valueType);
 
         if (isComplexType) {
@@ -89,6 +101,32 @@ export class WrappedEndpointRequest extends EndpointRequest {
         } else {
             writer.write(`.Add("${query.name.wireValue}", ${queryParameterReference})`);
         }
+    }
+
+    /**
+     * Determines if a type reference represents an Optional<T> wrapper type.
+     * This only returns true for optional<nullable<T>> patterns that generate as Optional<T?>
+     * when enableExplicitNullableOptional is enabled.
+     */
+    private isOptionalType(typeReference: TypeReference): boolean {
+        return typeReference._visit({
+            container: (container) => {
+                if (container.type !== "optional") {
+                    return false;
+                }
+                return container.optional._visit({
+                    container: (innerContainer) => innerContainer.type === "nullable",
+                    named: () => false,
+                    primitive: () => false,
+                    unknown: () => false,
+                    _other: () => false
+                });
+            },
+            named: () => false,
+            primitive: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     /**
@@ -137,9 +175,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const service =
             this.context.getHttpService(this.serviceId) ?? fail(`Service with id ${this.serviceId} not found`);
         const headers = [...service.headers, ...this.endpoint.headers];
-        if (headers.length === 0) {
-            return undefined;
-        }
 
         const requestOptionsVar = this.endpoint.idempotent
             ? this.names.parameters.idempotentOptions
@@ -153,7 +188,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 );
                 writer.indent();
 
-                // Add all headers (required, optional, and nullable) using fluent API
+                // Add all endpoint-specific headers (required, optional, and nullable) using fluent API
                 // The Add method handles null values and serialization automatically
                 for (const header of headers) {
                     writer.writeLine();
@@ -161,7 +196,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     writer.write(`.Add("${header.name.wireValue}", ${headerReference})`);
                 }
 
-                // Add client-level headers (from root client constructor - includes lazy auth headers)
+                // Add client-level headers (from root client constructor)
                 writer.writeLine();
                 writer.write(".Add(_client.Options.Headers)");
 
@@ -173,7 +208,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 if (this.endpoint.idempotent) {
                     writer.writeLine();
                     writer.write(
-                        `.Add(((${this.Types.IdempotentRequestOptionsInterface})${requestOptionsVar})?.GetIdempotencyHeaders())`
+                        `.Add(((${this.Types.IdempotentRequestOptionsInterface.name}?)${requestOptionsVar})?.GetIdempotencyHeaders())`
                     );
                 }
 

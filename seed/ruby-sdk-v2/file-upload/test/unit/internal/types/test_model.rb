@@ -2,15 +2,15 @@
 
 require "test_helper"
 
-describe FernFileUpload::Internal::Types::Model do
+describe Seed::Internal::Types::Model do
   module StringInteger
-    extend FernFileUpload::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     member String
     member Integer
   end
 
-  class ExampleModel < FernFileUpload::Internal::Types::Model
+  class ExampleModel < Seed::Internal::Types::Model
     field :name, String
     field :rating, StringInteger, optional: true
     field :year, Integer, optional: true, nullable: true, api_name: "yearOfRelease"
@@ -24,11 +24,11 @@ describe FernFileUpload::Internal::Types::Model do
     field :type, String, default: "example"
   end
 
-  class ExampleChild < FernFileUpload::Internal::Types::Model
+  class ExampleChild < Seed::Internal::Types::Model
     field :value, String
   end
 
-  class ExampleParent < FernFileUpload::Internal::Types::Model
+  class ExampleParent < Seed::Internal::Types::Model
     field :child, ExampleChild
   end
 
@@ -113,7 +113,7 @@ describe FernFileUpload::Internal::Types::Model do
   end
 
   describe "#inspect" do
-    class SensitiveModel < FernFileUpload::Internal::Types::Model
+    class SensitiveModel < Seed::Internal::Types::Model
       field :username, String
       field :password, String
       field :client_secret, String

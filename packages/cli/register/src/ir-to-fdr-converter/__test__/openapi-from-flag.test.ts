@@ -3214,4 +3214,44 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/response-level-example-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/response-level-example-ir.snap");
     });
+
+    it("should handle GraphQL schema as OSS workspace schema", async () => {
+        // Step 1: Load GraphQL workspace (testing OSS workspace schema loading)
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/graphql")),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "graphql"
+        });
+
+        console.log("=== WORKSPACE LOADING DEBUG ===");
+        console.log("Workspace success:", workspace.didSucceed);
+        if (!workspace.didSucceed) {
+            console.log("Workspace failures:", JSON.stringify(workspace.failures, null, 2));
+        }
+        console.log("=== END DEBUG ===");
+
+        // Verify workspace loaded successfully
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        // Step 2: Validate GraphQL schema was loaded as OSS workspace schema
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for GraphQL processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const definition = await workspace.workspace.getDefinition({ context });
+        expect(definition).toBeDefined();
+
+        // Generate snapshot for GraphQL workspace validation
+        const workspaceSnapshot = {
+            workspaceType: workspace.workspace.constructor.name,
+            hasDefinition: !!definition.rootApiFile?.contents
+        };
+
+        await expect(workspaceSnapshot).toMatchFileSnapshot("__snapshots__/graphql-workspace.snap");
+    });
 });

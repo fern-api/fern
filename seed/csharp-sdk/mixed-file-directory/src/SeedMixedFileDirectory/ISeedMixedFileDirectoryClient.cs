@@ -2,6 +2,6 @@ namespace SeedMixedFileDirectory;
 
 public partial interface ISeedMixedFileDirectoryClient
 {
-    public OrganizationClient Organization { get; }
-    public UserClient User { get; }
+    public IOrganizationClient Organization { get; }
+    public IUserClient User { get; }
 }

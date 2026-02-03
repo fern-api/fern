@@ -12,6 +12,8 @@ export * from "./UnionWithDuplicativeDiscriminants";
 export * from "./UnionWithLiteral";
 export * from "./UnionWithMultipleNoProperties";
 export * from "./UnionWithNoProperties";
+export * from "./UnionWithNullableReference";
+export * from "./UnionWithOptionalReference";
 export * from "./UnionWithOptionalTime";
 export * from "./UnionWithoutKey";
 export * from "./UnionWithPrimitive";

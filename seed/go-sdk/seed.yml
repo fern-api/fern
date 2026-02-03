@@ -131,13 +131,14 @@ fixtures:
         enableWireTests: true
         packageName: testPackageName
         errorCodes: per-endpoint
+        clientConstructorName: NewIMDBClient
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
     - outputFolder: deep-package-path
-      customConfig: 
+      customConfig:
         packagePath: all/the/way/in/here/please
   undiscriminated-unions:
     - outputFolder: no-custom-config
@@ -316,8 +317,8 @@ allowedFailures:
   - variables
 
   # Will include these back in once we fix dynamic snippets for inline file properties
-  - file-upload:no-custom-config 
-  - file-upload:package-name 
+  - file-upload:no-custom-config
+  - file-upload:package-name
   - file-upload-openapi
 
   - pagination-custom:.

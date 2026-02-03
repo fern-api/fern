@@ -32,15 +32,6 @@ public class BaseMockServerTest
                     .WithPath("/token")
                     .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
-                    .WithBody(
-                        new WireMock.Matchers.FormUrlEncodedMatcher([
-                            "client_id=CLIENT_ID",
-                            "client_secret=CLIENT_SECRET",
-                            "audience=https://api.example.com",
-                            "grant_type=client_credentials",
-                            "scope=scope",
-                        ])
-                    )
             )
             .RespondWith(
                 WireMock
@@ -64,15 +55,6 @@ public class BaseMockServerTest
                     .WithPath("/token")
                     .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
-                    .WithBody(
-                        new WireMock.Matchers.FormUrlEncodedMatcher([
-                            "client_id=CLIENT_ID",
-                            "client_secret=CLIENT_SECRET",
-                            "audience=https://api.example.com",
-                            "grant_type=client_credentials",
-                            "scope=read:users",
-                        ])
-                    )
             )
             .RespondWith(
                 WireMock
@@ -92,8 +74,8 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedOauthClientCredentialsClient(
-            "CLIENT_ID",
-            "CLIENT_SECRET",
+            "client_id",
+            "client_secret",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
         MockOAuthEndpoint();

@@ -28,23 +28,23 @@ public partial class EndpointsClient : IEndpointsClient
         Urls = new UrlsClient(_client);
     }
 
-    public ContainerClient Container { get; }
+    public IContainerClient Container { get; }
 
-    public ContentTypeClient ContentType { get; }
+    public IContentTypeClient ContentType { get; }
 
-    public SeedExhaustive.Endpoints.Enum.EnumClient Enum { get; }
+    public SeedExhaustive.Endpoints.Enum.IEnumClient Enum { get; }
 
-    public HttpMethodsClient HttpMethods { get; }
+    public IHttpMethodsClient HttpMethods { get; }
 
-    public SeedExhaustive.Endpoints.Object.ObjectClient Object { get; }
+    public SeedExhaustive.Endpoints.Object.IObjectClient Object { get; }
 
-    public ParamsClient Params { get; }
+    public IParamsClient Params { get; }
 
-    public PrimitiveClient Primitive { get; }
+    public IPrimitiveClient Primitive { get; }
 
-    public PutClient Put { get; }
+    public IPutClient Put { get; }
 
-    public SeedExhaustive.Endpoints.Union.UnionClient Union { get; }
+    public SeedExhaustive.Endpoints.Union.IUnionClient Union { get; }
 
-    public UrlsClient Urls { get; }
+    public IUrlsClient Urls { get; }
 }
