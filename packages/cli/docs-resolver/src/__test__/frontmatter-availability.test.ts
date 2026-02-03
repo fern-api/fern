@@ -143,9 +143,7 @@ describe("frontmatter availability override", () => {
         expect(pageWithBeta).toBeDefined();
         expect(pageWithBeta?.availability).toBe("beta");
 
-        const pageWithoutAvailability = pageNodes.find((node) =>
-            node.pageId.includes("page-without-availability.mdx")
-        );
+        const pageWithoutAvailability = pageNodes.find((node) => node.pageId.includes("page-without-availability.mdx"));
         expect(pageWithoutAvailability).toBeDefined();
         expect(pageWithoutAvailability?.availability).toBeUndefined();
 
