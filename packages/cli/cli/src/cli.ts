@@ -66,12 +66,17 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
 
 // Increase heap size for large API generation if not already set
+// Skip during tests to avoid breaking test execution
 const DESIRED_HEAP_SIZE_MB = 8192; // 8GB
+const isTestEnvironment = process.env.VITEST != null || process.env.NODE_ENV === "test";
 const heapStats = v8.getHeapStatistics();
 const currentHeapLimitMB = Math.floor(heapStats.heap_size_limit / (1024 * 1024));
 
-// Only re-spawn if heap is below desired size and we haven't already tried
-if (currentHeapLimitMB < DESIRED_HEAP_SIZE_MB && process.env.FERN_HEAP_INCREASED !== "true") {
+// Only re-spawn if:
+// 1. Not in test environment
+// 2. Heap is below desired size
+// 3. Haven't already tried re-spawning
+if (!isTestEnvironment && currentHeapLimitMB < DESIRED_HEAP_SIZE_MB && process.env.FERN_HEAP_INCREASED !== "true") {
     const result = spawnSync(
         process.execPath,
         [`--max-old-space-size=${DESIRED_HEAP_SIZE_MB}`, ...process.argv.slice(1)],

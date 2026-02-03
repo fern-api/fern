@@ -1,0 +1,3 @@
+rootProject.name = 'oauth-client-credentials-environment-variables'
+
+include 'sample-app'
