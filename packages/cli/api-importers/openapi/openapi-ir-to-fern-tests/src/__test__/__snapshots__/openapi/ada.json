@@ -1446,6 +1446,7 @@ webhooks:
       "environments": {
         "Default": {
           "audiences": undefined,
+          "default-url": undefined,
           "url": "https://example.ada.support/api",
           "url-template": "https://{handle}.ada.support/api",
           "variables": [
