@@ -134,7 +134,7 @@ async function runCli() {
 
 async function tryRunCli(cliContext: CliContext) {
     const args = hideBin(process.argv);
-    
+
     if (args[0] === "completion") {
         yargs(args)
             .scriptName(cliContext.environment.cliName)
@@ -142,7 +142,7 @@ async function tryRunCli(cliContext: CliContext) {
             .parse();
         return;
     }
-    
+
     const cli: Argv<GlobalCliOptions> = yargs(args)
         .scriptName(cliContext.environment.cliName)
         .version(false)
