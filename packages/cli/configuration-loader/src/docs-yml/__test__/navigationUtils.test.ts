@@ -738,7 +738,7 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
             if (path === "/test/d.md") {
                 return "---\nposition: 99\n---\n# D";
             }
-            return "---\n---\n# Content";
+            return "---\ntitle: Test\n---\n# Content";
         };
 
         const result = await buildNavigationForDirectory({
@@ -820,7 +820,7 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
             if (path === "/test/b.md") {
                 return "---\nposition: 2\n---\n# B";
             }
-            return "---\n---\n# C";
+            return "---\ntitle: Test\n---\n# C";
         };
 
         const result = await buildNavigationForDirectory({
@@ -869,7 +869,7 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
             if (path === "/test/apple.md") {
                 return "---\nposition: 1\n---\n# Apple";
             }
-            return "---\n---\n# Content";
+            return "---\ntitle: Test\n---\n# Content";
         };
 
         const result = await buildNavigationForDirectory({
@@ -950,7 +950,7 @@ describe("buildNavigationForDirectory with position-based sorting", () => {
             if (path === "/test/b.md") {
                 return "---\nposition: 1\n---\n# B";
             }
-            return "---\n---\n# C";
+            return "---\ntitle: Test\n---\n# C";
         };
 
         const result = await buildNavigationForDirectory({
