@@ -1,5 +1,12 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath, HttpResponse, V2HttpRequestBodies } from "@fern-api/ir-sdk";
+import {
+    FernIr,
+    HttpEndpoint,
+    HttpEndpointSource,
+    HttpPath,
+    HttpResponse,
+    V2HttpRequestBodies
+} from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
