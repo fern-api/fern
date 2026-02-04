@@ -14,7 +14,9 @@ function validateReference(ref: string, spec: unknown): boolean {
         .split("/")
         .map((part) =>
             // Decode JSON Pointer escapes: ~1 -> /, ~0 -> ~
-            part.replace(/~1/g, "/").replace(/~0/g, "~")
+            part
+                .replace(/~1/g, "/")
+                .replace(/~0/g, "~")
         );
 
     let current: unknown = spec;
