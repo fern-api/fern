@@ -331,7 +331,7 @@ class WebsocketConnectMethodGenerator:
 
             # If auth message config is present, send auth message after connecting
             # Use getattr for backward compatibility with older IR types packages
-            auth_message_config = getattr(websocket, 'auth_message', None)
+            auth_message_config = getattr(websocket, "auth_message", None)
             if auth_message_config is not None:
                 with_body.extend(self._get_auth_message_statements(auth_message_config, is_async))
 
@@ -927,9 +927,7 @@ class WebsocketConnectMethodGenerator:
             )
         return query_parameter_type_hint
 
-    def _get_auth_message_statements(
-        self, auth_message_config: Any, is_async: bool
-    ) -> List[AST.AstNode]:
+    def _get_auth_message_statements(self, auth_message_config: Any, is_async: bool) -> List[AST.AstNode]:
         """
         Generate statements to send an auth message after connecting.
         This gets the OAuth token and sends it as the first message.
