@@ -78,7 +78,7 @@
     - summary: |
         Improve `.fernignore` to prevent generation of new files. Previously, `.fernignore` only prevented modification or deletion of existing files during SDK regeneration.
       type: feat
-  createdAt: "2026-02-04"
+  createdAt: "2026-02-05"
   irVersion: 63
 
 - version: 3.63.0
