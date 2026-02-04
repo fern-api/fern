@@ -131,7 +131,12 @@ export async function buildNavigationForDirectory({
         };
     });
 
-    const sections: docsYml.DocsNavigationItem[] = await Promise.all(
+    interface SectionWithPosition {
+        section: docsYml.DocsNavigationItem;
+        position: number | undefined;
+    }
+
+    const sectionsWithPositions: SectionWithPosition[] = await Promise.all(
         subdirectories.map(async (dir) => {
             const subContents = await buildNavigationForDirectory({
                 directoryPath: dir.absolutePath,
@@ -159,20 +164,28 @@ export async function buildNavigationForDirectory({
 
             const sectionTitle = indexFileFrontmatterTitle ?? nameToTitle({ name: dir.name });
 
+            const sectionPosition =
+                indexPage?.type === "page"
+                    ? await getFrontmatterPosition({ absolutePath: indexPage.absolutePath, readFileFn })
+                    : undefined;
+
             return {
-                type: "section" as const,
-                title: sectionTitle,
-                slug: nameToSlug({ name: dir.name }),
-                icon: undefined,
-                contents: filteredContents,
-                collapsed: undefined,
-                hidden: undefined,
-                skipUrlSlug: false,
-                overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
-                viewers: undefined,
-                orphaned: undefined,
-                featureFlags: undefined,
-                availability: undefined
+                section: {
+                    type: "section" as const,
+                    title: sectionTitle,
+                    slug: nameToSlug({ name: dir.name }),
+                    icon: undefined,
+                    contents: filteredContents,
+                    collapsed: undefined,
+                    hidden: undefined,
+                    skipUrlSlug: false,
+                    overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined,
+                    availability: undefined
+                },
+                position: sectionPosition
             };
         })
     );
@@ -183,10 +196,10 @@ export async function buildNavigationForDirectory({
             title: page.type === "page" ? page.title : "",
             position: pagePositions[index]
         })),
-        ...sections.map((section) => ({
-            item: section,
-            title: section.type === "section" ? section.title : "",
-            position: undefined
+        ...sectionsWithPositions.map((s) => ({
+            item: s.section,
+            title: s.section.type === "section" ? s.section.title : "",
+            position: s.position
         }))
     ];
 

@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.63.0
+- version: 3.64.0
   changelogEntry:
     - summary: |
         Add `page-size` configuration option for changelog navigation items. This allows users to control how many changelog entries are displayed per page. If not specified, all entries are displayed on a single page.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
+- version: 3.63.0
+  changelogEntry:
+    - summary: |
+        Add support for setting subfolder position based on the `position` field in the index file's frontmatter when using `folder` navigation. Subfolders with a position are sorted before those without, and items with the same position are sorted alphabetically.
       type: feat
   createdAt: "2026-02-04"
   irVersion: 63
