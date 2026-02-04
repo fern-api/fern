@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Set, Tuple, Union
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from fern_python.codegen import AST
@@ -330,8 +330,9 @@ class WebsocketConnectMethodGenerator:
             with_body: List[AST.AstNode] = []
 
             # If auth message config is present, send auth message after connecting
-            if websocket.auth_message is not None:
-                auth_message_config = websocket.auth_message
+            # Use getattr for backward compatibility with older IR types packages
+            auth_message_config = getattr(websocket, 'auth_message', None)
+            if auth_message_config is not None:
                 with_body.extend(self._get_auth_message_statements(auth_message_config, is_async))
 
             if is_async:
@@ -927,7 +928,7 @@ class WebsocketConnectMethodGenerator:
         return query_parameter_type_hint
 
     def _get_auth_message_statements(
-        self, auth_message_config: ir_types.WebSocketAuthMessageConfig, is_async: bool
+        self, auth_message_config: Any, is_async: bool
     ) -> List[AST.AstNode]:
         """
         Generate statements to send an auth message after connecting.
@@ -960,46 +961,36 @@ class WebsocketConnectMethodGenerator:
         statements.append(AST.Expression(f"_auth_message = {auth_message_dict}"))
 
         # Send the auth message as JSON
+        def write_async_send(writer: NodeWriter) -> None:
+            writer.write("await protocol.send(")
+            writer.write_node(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                        qualified_name_excluding_import=("dumps",),
+                    ),
+                    args=[AST.Expression("_auth_message")],
+                )
+            )
+            writer.write(")")
+
+        def write_sync_send(writer: NodeWriter) -> None:
+            writer.write("protocol.send(")
+            writer.write_node(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                        qualified_name_excluding_import=("dumps",),
+                    ),
+                    args=[AST.Expression("_auth_message")],
+                )
+            )
+            writer.write(")")
+
         if is_async:
-            statements.append(
-                AST.Expression(
-                    AST.CodeWriter(
-                        lambda writer: (
-                            writer.write("await protocol.send("),
-                            writer.write_node(
-                                AST.FunctionInvocation(
-                                    function_definition=AST.Reference(
-                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
-                                        qualified_name_excluding_import=("dumps",),
-                                    ),
-                                    args=[AST.Expression("_auth_message")],
-                                )
-                            ),
-                            writer.write(")"),
-                        )
-                    )
-                )
-            )
+            statements.append(AST.Expression(AST.CodeWriter(write_async_send)))
         else:
-            statements.append(
-                AST.Expression(
-                    AST.CodeWriter(
-                        lambda writer: (
-                            writer.write("protocol.send("),
-                            writer.write_node(
-                                AST.FunctionInvocation(
-                                    function_definition=AST.Reference(
-                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
-                                        qualified_name_excluding_import=("dumps",),
-                                    ),
-                                    args=[AST.Expression("_auth_message")],
-                                )
-                            ),
-                            writer.write(")"),
-                        )
-                    )
-                )
-            )
+            statements.append(AST.Expression(AST.CodeWriter(write_sync_send)))
 
         return statements
 
