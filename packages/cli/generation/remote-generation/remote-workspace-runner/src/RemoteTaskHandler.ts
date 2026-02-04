@@ -237,8 +237,6 @@ async function downloadZipForTask({
     // Force remove the directory to handle read-only files (e.g., .git/objects)
     await forceRemoveDirectory(absolutePathToLocalOutput);
     await mkdir(absolutePathToLocalOutput, { recursive: true });
-    // Use yauzl for OS-agnostic ZIP extraction that handles files larger than 2 GiB
-    // yauzl streams entries individually instead of loading the entire file into memory
     await extractZipToDirectory(outputZipPath, absolutePathToLocalOutput);
 }
 
@@ -392,8 +390,6 @@ async function downloadAndExtractZipToDirectory({
     const outputZipPath = path.join(tmpDir.path, "output.zip");
     await pipeline(request.data, createWriteStream(outputZipPath));
 
-    // Use yauzl for OS-agnostic ZIP extraction that handles files larger than 2 GiB
-    // yauzl streams entries individually instead of loading the entire file into memory
     await extractZipToDirectory(outputZipPath, outputPath);
 }
 
