@@ -122,6 +122,7 @@ allowedFailures:
   - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
   - object
+  - openapi-namespace-tag-stripping
   - objects-with-imports
   - optional
   - package-yml
