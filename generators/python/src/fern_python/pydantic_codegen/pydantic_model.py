@@ -160,7 +160,20 @@ class PydanticModel:
             # No initializer needed - the pydantic.Field() inside Annotated handles everything
             initializer = None
         elif is_aliased:
-            # Aliased field in non-V2 mode - use the original behavior with Field(alias=...) as default value
+            # Aliased field in non-V2 mode - preserve FieldMetadata AND use Field(alias=...) as default value
+            # FieldMetadata is required for convert_and_respect_annotation_metadata() to dealias wire keys
+            # before passing them to Pydantic's construct(), which doesn't handle aliases in V1
+            field_metadata = self._field_metadata_getter().get_instance()
+            field_metadata.add_alias(field.json_field_name)
+            aliased_type_hint = AST.TypeHint.annotated(
+                field.type_hint,
+                field_metadata.get_as_node(),
+            )
+            # Update field's type_hint to include FieldMetadata
+            prev_fields = field.__dict__
+            field = PydanticField(
+                **{**prev_fields, "type_hint": aliased_type_hint}
+            )
             initializer = get_field_name_initializer(
                 alias=field.json_field_name,
                 default_factory=field.default_factory,
