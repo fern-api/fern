@@ -1,0 +1,77 @@
+openapi: 3.1.0
+info:
+  title: Multiple Request Examples Test
+  version: 1.0.0
+paths:
+  /plants:
+    post:
+      operationId: createPlant
+      summary: Create Plant
+      description: Create a new plant with the specified details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlantRequest'
+            examples:
+              first_example:
+                summary: First Example
+                description: This is the first example that should be displayed
+                value:
+                  name: Rose
+                  species: Rosa
+                  color: red
+              second_example:
+                summary: Second Example
+                description: This is the second example
+                value:
+                  name: Tulip
+                  species: Tulipa
+                  color: yellow
+              third_example:
+                summary: Third Example
+                description: This is the third example
+                value:
+                  name: Sunflower
+                  species: Helianthus
+                  color: yellow
+      responses:
+        '200':
+          description: The plant was created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlantResponse'
+components:
+  schemas:
+    PlantRequest:
+      type: object
+      required:
+        - name
+        - species
+      properties:
+        name:
+          type: string
+          description: The name of the plant
+        species:
+          type: string
+          description: The species of the plant
+        color:
+          type: string
+          description: The color of the plant
+    PlantResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the plant
+        name:
+          type: string
+          description: The name of the plant
+        species:
+          type: string
+          description: The species of the plant
+        color:
+          type: string
+          description: The color of the plant

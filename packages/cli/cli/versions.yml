@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.1
+  changelogEntry:
+    - summary: |
+        Fix native OpenAPI request body examples not being displayed in docs. When an endpoint has multiple request examples defined in `requestBody.content.application/json.examples`, all examples are now properly extracted and displayed in the API reference dropdown, including the first example which was previously being ignored.
+      type: fix
+  createdAt: "2026-02-04"
+  irVersion: 63
+
 - version: 3.63.0
   changelogEntry:
     - summary: |

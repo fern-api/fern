@@ -4,6 +4,7 @@ import {
     HttpEndpoint,
     HttpEndpointSource,
     HttpPath,
+    HttpRequestBody,
     HttpResponse,
     V2HttpRequestBodies
 } from "@fern-api/ir-sdk";
@@ -124,7 +125,9 @@ export class OperationConverter extends AbstractOperationConverter {
         const fernExamples = this.convertExamples({
             httpPath: path,
             httpMethod,
-            baseUrl
+            baseUrl,
+            requestBody,
+            response
         });
 
         const endpointLevelSecuritySchemes = new Set<string>(
@@ -597,11 +600,15 @@ export class OperationConverter extends AbstractOperationConverter {
     private convertExamples({
         httpPath,
         httpMethod,
-        baseUrl
+        baseUrl,
+        requestBody,
+        response
     }: {
         httpPath: HttpPath;
         httpMethod: FernIr.HttpMethod;
         baseUrl: string | undefined;
+        requestBody: HttpRequestBody | undefined;
+        response: HttpResponse | undefined;
     }): {
         examples: Record<string, FernIr.V2HttpEndpointExample>;
         streamExamples: Record<string, FernIr.V2HttpEndpointExample>;
@@ -627,16 +634,220 @@ export class OperationConverter extends AbstractOperationConverter {
         );
         const allExamples = hasFernCodeSamples ? fernExamples : [...fernExamples, ...redoclyCodeSamples];
 
-        if (allExamples.length === 0) {
-            return { examples: {}, streamExamples: {} };
+        if (allExamples.length > 0) {
+            if (this.streamingExtension?.type === "streamCondition") {
+                return this.convertStreamConditionExamples({
+                    httpPath,
+                    httpMethod,
+                    baseUrl,
+                    fernExamples: allExamples
+                });
+            }
+            return {
+                examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples }),
+                streamExamples: {}
+            };
         }
-        if (this.streamingExtension?.type === "streamCondition") {
-            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples });
+
+        const nativeExamples = this.convertNativeOpenApiExamples({
+            httpPath,
+            httpMethod,
+            baseUrl,
+            requestBody,
+            response
+        });
+        return { examples: nativeExamples, streamExamples: {} };
+    }
+
+    private convertNativeOpenApiExamples({
+        httpPath,
+        httpMethod,
+        baseUrl,
+        requestBody,
+        response
+    }: {
+        httpPath: HttpPath;
+        httpMethod: FernIr.HttpMethod;
+        baseUrl: string | undefined;
+        requestBody: HttpRequestBody | undefined;
+        response: HttpResponse | undefined;
+    }): Record<string, FernIr.V2HttpEndpointExample> {
+        const requestBodyExamples = this.getRequestBodyExamples(requestBody);
+        const responseBodyExamples = this.getResponseBodyExamples(response);
+
+        if (requestBodyExamples.length === 0 && responseBodyExamples.length === 0) {
+            return {};
         }
-        return {
-            examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples }),
-            streamExamples: {}
-        };
+
+        const examples: Record<string, FernIr.V2HttpEndpointExample> = {};
+
+        if (requestBodyExamples.length === 0) {
+            for (const [name, responseExample] of responseBodyExamples) {
+                examples[name] = {
+                    displayName: name,
+                    request: undefined,
+                    response: {
+                        docs: undefined,
+                        statusCode: undefined,
+                        body: FernIr.V2HttpEndpointResponseBody.json(responseExample)
+                    },
+                    codeSamples: undefined
+                };
+            }
+            return examples;
+        }
+
+        if (responseBodyExamples.length === 0) {
+            for (const [name, requestExample] of requestBodyExamples) {
+                examples[name] = {
+                    displayName: name,
+                    request: {
+                        docs: undefined,
+                        endpoint: {
+                            method: httpMethod,
+                            path: this.buildExamplePath(httpPath, {})
+                        },
+                        baseUrl: undefined,
+                        environment: baseUrl,
+                        auth: undefined,
+                        pathParameters: {},
+                        queryParameters: {},
+                        headers: {},
+                        requestBody: requestExample
+                    },
+                    response: undefined,
+                    codeSamples: undefined
+                };
+            }
+            return examples;
+        }
+
+        for (const [requestName, requestExample] of requestBodyExamples) {
+            const matchingResponse = responseBodyExamples.find(([responseName]) => responseName === requestName);
+            const responseToUse = matchingResponse ?? responseBodyExamples[0];
+
+            examples[requestName] = {
+                displayName: requestName,
+                request: {
+                    docs: undefined,
+                    endpoint: {
+                        method: httpMethod,
+                        path: this.buildExamplePath(httpPath, {})
+                    },
+                    baseUrl: undefined,
+                    environment: baseUrl,
+                    auth: undefined,
+                    pathParameters: {},
+                    queryParameters: {},
+                    headers: {},
+                    requestBody: requestExample
+                },
+                response: responseToUse
+                    ? {
+                          docs: undefined,
+                          statusCode: undefined,
+                          body: FernIr.V2HttpEndpointResponseBody.json(responseToUse[1])
+                      }
+                    : undefined,
+                codeSamples: undefined
+            };
+        }
+
+        const usedRequestNames = new Set(requestBodyExamples.map(([name]) => name));
+        for (const [responseName, responseExample] of responseBodyExamples) {
+            if (!usedRequestNames.has(responseName)) {
+                const requestToUse = requestBodyExamples[0];
+                examples[responseName] = {
+                    displayName: responseName,
+                    request: requestToUse
+                        ? {
+                              docs: undefined,
+                              endpoint: {
+                                  method: httpMethod,
+                                  path: this.buildExamplePath(httpPath, {})
+                              },
+                              baseUrl: undefined,
+                              environment: baseUrl,
+                              auth: undefined,
+                              pathParameters: {},
+                              queryParameters: {},
+                              headers: {},
+                              requestBody: requestToUse[1]
+                          }
+                        : undefined,
+                    response: {
+                        docs: undefined,
+                        statusCode: undefined,
+                        body: FernIr.V2HttpEndpointResponseBody.json(responseExample)
+                    },
+                    codeSamples: undefined
+                };
+            }
+        }
+
+        return examples;
+    }
+
+    private getRequestBodyExamples(requestBody: HttpRequestBody | undefined): [string, unknown][] {
+        if (requestBody == null) {
+            return [];
+        }
+
+        const v2Examples = requestBody._visit<FernIr.V2SchemaExamples | undefined>({
+            inlinedRequestBody: (body) => body.v2Examples,
+            reference: (body) => body.v2Examples,
+            fileUpload: (body) => body.v2Examples,
+            bytes: (body) => body.v2Examples,
+            _other: () => undefined
+        });
+
+        if (v2Examples == null) {
+            return [];
+        }
+
+        const examples: [string, unknown][] = [];
+        for (const [name, example] of Object.entries(v2Examples.userSpecifiedExamples)) {
+            examples.push([name, example]);
+        }
+        return examples;
+    }
+
+    private getResponseBodyExamples(response: HttpResponse | undefined): [string, unknown][] {
+        if (response?.body == null) {
+            return [];
+        }
+
+        const v2Examples = response.body._visit<FernIr.V2SchemaExamples | undefined>({
+            json: (body) => body.v2Examples,
+            fileDownload: (body) => body.v2Examples,
+            text: (body) => body.v2Examples,
+            bytes: (body) => body.v2Examples,
+            streaming: (body) => body.v2Examples,
+            streamParameter: (body) => this.getV2ExamplesFromNonStreamResponse(body.nonStreamResponse),
+            _other: () => undefined
+        });
+
+        if (v2Examples == null) {
+            return [];
+        }
+
+        const examples: [string, unknown][] = [];
+        for (const [name, example] of Object.entries(v2Examples.userSpecifiedExamples)) {
+            examples.push([name, example]);
+        }
+        return examples;
+    }
+
+    private getV2ExamplesFromNonStreamResponse(
+        nonStreamResponse: FernIr.NonStreamHttpResponseBody
+    ): FernIr.V2SchemaExamples | undefined {
+        return nonStreamResponse._visit<FernIr.V2SchemaExamples | undefined>({
+            json: (body) => body.v2Examples,
+            fileDownload: (body) => body.v2Examples,
+            text: (body) => body.v2Examples,
+            bytes: (body) => body.v2Examples,
+            _other: () => undefined
+        });
     }
 
     private convertStreamConditionExamples({
