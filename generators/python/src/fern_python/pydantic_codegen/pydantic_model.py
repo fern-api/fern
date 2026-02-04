@@ -122,20 +122,26 @@ class PydanticModel:
             else field.default_value
         )
 
-        # For pure V2 mode with aliased fields, we use the Annotated pattern where
-        # pydantic.Field(alias=...) is inside Annotated. This makes mypy see the Python
-        # field name in the constructor signature, while Pydantic still uses the alias for JSON.
+        # For aliased fields, we use the Annotated pattern where pydantic.Field(alias=...)
+        # is inside Annotated. This makes mypy see the Python field name in the constructor
+        # signature, while Pydantic still uses the alias for JSON serialization.
         # See: https://github.com/pydantic/pydantic/issues/5893#issuecomment-2512807073
         #
-        # For V1, Both, and V1_ON_V2 modes, we keep the original behavior with Field as
-        # the default value because Pydantic v1 doesn't support Field inside Annotated.
-        use_annotated_pattern = is_aliased and self._version == PydanticVersionCompatibility.V2
+        # This pattern works for all Pydantic versions (V1, V2, Both, V1_ON_V2) with one caveat:
+        # Pydantic V1 does NOT support Field(default=...) inside Annotated, but it DOES support
+        # Field(alias=...) and Field(default_factory=...). So for non-V2 modes, we put the
+        # default value as a plain initializer outside the Annotated pattern.
+        use_annotated_pattern = is_aliased
 
         if use_annotated_pattern:
+            is_pure_v2 = self._version == PydanticVersionCompatibility.V2
+
+            # For V2: include default in Field inside Annotated
+            # For non-V2: only include alias and default_factory; default goes outside
             pydantic_field_annotation = get_pydantic_field_annotation(
                 alias=field.json_field_name,
                 default_factory=field.default_factory,
-                default=default_value,
+                default=default_value if is_pure_v2 else None,
                 description=field.description,
                 version=self._version,
             )
@@ -157,28 +163,19 @@ class PydanticModel:
                 type_hint=aliased_type_hint,
             )
 
-            # No initializer needed - the pydantic.Field() inside Annotated handles everything
-            initializer = None
-        elif is_aliased:
-            # Aliased field in non-V2 mode - preserve FieldMetadata AND use Field(alias=...) as default value
-            # FieldMetadata is required for convert_and_respect_annotation_metadata() to dealias wire keys
-            # before passing them to Pydantic's construct(), which doesn't handle aliases in V1
-            field_metadata = self._field_metadata_getter().get_instance()
-            field_metadata.add_alias(field.json_field_name)
-            aliased_type_hint = AST.TypeHint.annotated(
-                field.type_hint,
-                field_metadata.get_as_node(),
-            )
-            # Update field's type_hint to include FieldMetadata
-            prev_fields = field.__dict__
-            field = PydanticField(**{**prev_fields, "type_hint": aliased_type_hint})
-            initializer = get_field_name_initializer(
-                alias=field.json_field_name,
-                default_factory=field.default_factory,
-                description=field.description,
-                default=default_value,
-                version=self._version,
-            )
+            # For V2: no initializer needed (Field inside Annotated handles everything)
+            # For non-V2: use plain default as initializer (V1 rejects default in Annotated Field)
+            if is_pure_v2:
+                initializer = None
+            elif default_value is not None or field.default_factory is not None:
+                # For non-V2 with default_factory, it's already in Field inside Annotated
+                # Only need plain initializer for regular defaults
+                if field.default_factory is not None:
+                    initializer = None
+                else:
+                    initializer = default_value
+            else:
+                initializer = None
         else:
             # No alias - use the original behavior
             initializer = get_field_name_initializer(
