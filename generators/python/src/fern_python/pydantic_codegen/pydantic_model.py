@@ -150,6 +150,10 @@ class PydanticModel:
             field_metadata = self._field_metadata_getter().get_instance()
             field_metadata.add_alias(field.json_field_name)
 
+            # Store the original type hint (without any annotations) for validators
+            original_type_hint = field.type_hint
+
+            # Build full Annotated type with FieldMetadata AND pydantic.Field (for field definition)
             aliased_type_hint = AST.TypeHint.annotated(
                 field.type_hint,
                 field_metadata.get_as_node(),
@@ -158,9 +162,12 @@ class PydanticModel:
 
             prev_fields = field.__dict__
             del prev_fields["type_hint"]
+            if "raw_type_hint" in prev_fields:
+                del prev_fields["raw_type_hint"]
             field = PydanticField(
                 **(field.__dict__),
                 type_hint=aliased_type_hint,
+                raw_type_hint=original_type_hint,
             )
 
             # For V2: no initializer needed (Field inside Annotated handles everything)
@@ -739,7 +746,14 @@ def get_pydantic_field_annotation(
             writer.write(", default_factory=")
             writer.write_node(default_factory)
         if description is not None:
-            escaped_description = escape_docstring(description)
+            # Escape for use in a regular double-quoted string literal
+            escaped_description = (
+                description.replace("\\", "\\\\")
+                .replace('"', '\\"')
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t")
+            )
             writer.write(f', description="{escaped_description}"')
         writer.write(")")
 
