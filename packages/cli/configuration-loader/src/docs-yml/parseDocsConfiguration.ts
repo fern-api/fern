@@ -1088,6 +1088,7 @@ async function convertNavigationItem({
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
             slug: rawConfig.slug,
+            pageSize: rawConfig.pageSize,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
             featureFlags: convertFeatureFlag(rawConfig.featureFlag)

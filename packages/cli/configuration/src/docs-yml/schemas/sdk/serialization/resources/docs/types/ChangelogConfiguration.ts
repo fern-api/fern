@@ -17,6 +17,7 @@ export const ChangelogConfiguration: core.serialization.ObjectSchema<
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
+        pageSize: core.serialization.property("page-size", core.serialization.number().optional()),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -28,5 +29,6 @@ export declare namespace ChangelogConfiguration {
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;
+        "page-size"?: number | null;
     }
 }

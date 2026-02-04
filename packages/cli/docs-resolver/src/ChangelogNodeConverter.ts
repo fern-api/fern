@@ -18,6 +18,7 @@ interface ConvertOptions {
     icon?: string;
     hidden?: boolean;
     slug?: string;
+    pageSize?: number;
     viewers?: APIV1Write.RoleId[];
     orphaned?: boolean;
     // skipUrlSlug?: boolean;
@@ -119,6 +120,7 @@ export class ChangelogNodeConverter {
             children: changelogYears,
             overviewPageId,
             noindex,
+            pageSize: opts.pageSize,
             authed: undefined,
             viewers: opts.viewers,
             orphaned: opts.orphaned,

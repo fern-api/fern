@@ -1498,7 +1498,8 @@ export class DocsDefinitionResolver {
             icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: hideChildren || item.hidden,
-            slug: item.slug
+            slug: item.slug,
+            pageSize: item.pageSize
         });
     }
 

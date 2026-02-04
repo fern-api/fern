@@ -1058,6 +1058,10 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      page-size:
+        type: optional<integer>
+        docs: |
+          The number of changelog entries to display per page. If not specified, all entries are displayed on a single page.
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
 
   SectionConfiguration:

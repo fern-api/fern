@@ -370,6 +370,7 @@ export declare namespace DocsNavigationItem {
         icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
+        pageSize: number | undefined;
     }
 
     export interface PythonDocsSection {

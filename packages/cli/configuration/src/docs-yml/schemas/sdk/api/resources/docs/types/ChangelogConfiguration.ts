@@ -8,4 +8,6 @@ export interface ChangelogConfiguration extends FernDocsConfig.WithPermissions, 
     slug?: string;
     icon?: string;
     hidden?: boolean;
+    /** The number of changelog entries to display per page. If not specified, all entries are displayed on a single page. */
+    pageSize?: number;
 }
