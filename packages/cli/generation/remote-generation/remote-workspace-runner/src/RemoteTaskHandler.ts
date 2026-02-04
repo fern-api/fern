@@ -13,6 +13,7 @@ import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
+import * as yauzl from "yauzl-promise";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -205,8 +206,7 @@ async function downloadFilesForTask({
         } else {
             await downloadZipForTask({
                 s3PreSignedReadUrl,
-                absolutePathToLocalOutput,
-                context
+                absolutePathToLocalOutput
             });
         }
 
@@ -218,12 +218,10 @@ async function downloadFilesForTask({
 
 async function downloadZipForTask({
     s3PreSignedReadUrl,
-    absolutePathToLocalOutput,
-    context
+    absolutePathToLocalOutput
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
-    context: InteractiveTaskContext;
 }): Promise<void> {
     // initiate request
     const request = await axios.get(s3PreSignedReadUrl, {
@@ -239,11 +237,9 @@ async function downloadZipForTask({
     // Force remove the directory to handle read-only files (e.g., .git/objects)
     await forceRemoveDirectory(absolutePathToLocalOutput);
     await mkdir(absolutePathToLocalOutput, { recursive: true });
-    // Use unzip command-line tool instead of decompress library to handle files larger than 2 GiB
-    // Node.js has a 2 GiB limit for reading files into buffers, which the decompress library hits
-    await loggingExeca(context.logger, "unzip", ["-o", "-q", outputZipPath, "-d", absolutePathToLocalOutput], {
-        doNotPipeOutput: true
-    });
+    // Use yauzl-promise for OS-agnostic ZIP extraction that handles files larger than 2 GiB
+    // yauzl streams entries individually instead of loading the entire file into memory
+    await extractZipToDirectory(outputZipPath, absolutePathToLocalOutput);
 }
 
 async function forceRemoveDirectory(dirPath: AbsoluteFilePath): Promise<void> {
@@ -331,7 +327,7 @@ async function downloadFilesWithFernIgnoreInExistingRepo({
 
     await runGitCommand(["rm", "-rf", "."], absolutePathToLocalOutput, context);
 
-    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: absolutePathToLocalOutput, context });
+    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: absolutePathToLocalOutput });
 
     await runGitCommand(["add", "."], absolutePathToLocalOutput, context);
 
@@ -367,7 +363,7 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
     await runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir, context);
 
-    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: tmpOutputResolutionDir, context });
+    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: tmpOutputResolutionDir });
 
     await runGitCommand(["add", "."], tmpOutputResolutionDir, context);
 
@@ -383,12 +379,10 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
 async function downloadAndExtractZipToDirectory({
     s3PreSignedReadUrl,
-    outputPath,
-    context
+    outputPath
 }: {
     s3PreSignedReadUrl: string;
     outputPath: AbsoluteFilePath;
-    context: InteractiveTaskContext;
 }): Promise<void> {
     const request = await axios.get(s3PreSignedReadUrl, {
         responseType: "stream"
@@ -398,9 +392,27 @@ async function downloadAndExtractZipToDirectory({
     const outputZipPath = path.join(tmpDir.path, "output.zip");
     await pipeline(request.data, createWriteStream(outputZipPath));
 
-    // Use unzip command-line tool instead of decompress library to handle files larger than 2 GiB
-    // Node.js has a 2 GiB limit for reading files into buffers, which the decompress library hits
-    await loggingExeca(context.logger, "unzip", ["-o", "-q", outputZipPath, "-d", outputPath], {
-        doNotPipeOutput: true
-    });
+    // Use yauzl-promise for OS-agnostic ZIP extraction that handles files larger than 2 GiB
+    // yauzl streams entries individually instead of loading the entire file into memory
+    await extractZipToDirectory(outputZipPath, outputPath);
+}
+
+async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
+    const zip = await yauzl.open(zipPath);
+    try {
+        for await (const entry of zip) {
+            const outputPath = path.join(outputDir, entry.filename);
+            if (entry.filename.endsWith("/")) {
+                // Directory entry
+                await mkdir(outputPath, { recursive: true });
+            } else {
+                // File entry - ensure parent directory exists
+                await mkdir(path.dirname(outputPath), { recursive: true });
+                const readStream = await entry.openReadStream();
+                await pipeline(readStream, createWriteStream(outputPath));
+            }
+        }
+    } finally {
+        await zip.close();
+    }
 }

@@ -61,7 +61,8 @@
     "mime-types": "^2.1.35",
     "terminal-link": "^3.0.0",
     "tmp-promise": "^3.0.3",
-    "url-join": "^5.0.0"
+    "url-join": "^5.0.0",
+    "yauzl-promise": "^4.0.0"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
@@ -71,6 +72,7 @@
     "@types/node": "18.15.3",
     "@types/terminal-link": "^1.2.0",
     "@types/url-join": "^4.0.3",
+    "@types/yauzl-promise": "^4.0.1",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
