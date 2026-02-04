@@ -13,7 +13,7 @@ import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
-import * as yauzl from "yauzl-promise";
+import yauzl from "yauzl";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -237,7 +237,7 @@ async function downloadZipForTask({
     // Force remove the directory to handle read-only files (e.g., .git/objects)
     await forceRemoveDirectory(absolutePathToLocalOutput);
     await mkdir(absolutePathToLocalOutput, { recursive: true });
-    // Use yauzl-promise for OS-agnostic ZIP extraction that handles files larger than 2 GiB
+    // Use yauzl for OS-agnostic ZIP extraction that handles files larger than 2 GiB
     // yauzl streams entries individually instead of loading the entire file into memory
     await extractZipToDirectory(outputZipPath, absolutePathToLocalOutput);
 }
@@ -392,27 +392,56 @@ async function downloadAndExtractZipToDirectory({
     const outputZipPath = path.join(tmpDir.path, "output.zip");
     await pipeline(request.data, createWriteStream(outputZipPath));
 
-    // Use yauzl-promise for OS-agnostic ZIP extraction that handles files larger than 2 GiB
+    // Use yauzl for OS-agnostic ZIP extraction that handles files larger than 2 GiB
     // yauzl streams entries individually instead of loading the entire file into memory
     await extractZipToDirectory(outputZipPath, outputPath);
 }
 
 async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
-    const zip = await yauzl.open(zipPath);
-    try {
-        for await (const entry of zip) {
-            const outputPath = path.join(outputDir, entry.filename);
-            if (entry.filename.endsWith("/")) {
-                // Directory entry
-                await mkdir(outputPath, { recursive: true });
-            } else {
-                // File entry - ensure parent directory exists
-                await mkdir(path.dirname(outputPath), { recursive: true });
-                const readStream = await entry.openReadStream();
-                await pipeline(readStream, createWriteStream(outputPath));
+    return new Promise((resolve, reject) => {
+        yauzl.open(zipPath, { lazyEntries: true }, (err, zipfile) => {
+            if (err) {
+                reject(err);
+                return;
             }
-        }
-    } finally {
-        await zip.close();
-    }
+            if (!zipfile) {
+                reject(new Error("Failed to open zip file"));
+                return;
+            }
+
+            zipfile.readEntry();
+            zipfile.on("entry", (entry) => {
+                const outputPath = path.join(outputDir, entry.fileName);
+                if (entry.fileName.endsWith("/")) {
+                    // Directory entry
+                    mkdir(outputPath, { recursive: true })
+                        .then(() => zipfile.readEntry())
+                        .catch(reject);
+                } else {
+                    // File entry - ensure parent directory exists
+                    mkdir(path.dirname(outputPath), { recursive: true })
+                        .then(() => {
+                            zipfile.openReadStream(entry, (streamErr, readStream) => {
+                                if (streamErr) {
+                                    reject(streamErr);
+                                    return;
+                                }
+                                if (!readStream) {
+                                    reject(new Error("Failed to open read stream"));
+                                    return;
+                                }
+                                const writeStream = createWriteStream(outputPath);
+                                readStream.pipe(writeStream);
+                                writeStream.on("close", () => zipfile.readEntry());
+                                writeStream.on("error", reject);
+                                readStream.on("error", reject);
+                            });
+                        })
+                        .catch(reject);
+                }
+            });
+            zipfile.on("end", () => resolve());
+            zipfile.on("error", reject);
+        });
+    });
 }
