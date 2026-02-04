@@ -36,10 +36,10 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedApi
 
-client = SeedApi()
-client.taskrouter_v_1_activity.create_activity(
-    workspace_sid="WorkspaceSid",
+client = SeedApi(
+    x_api_version="YOUR_X_API_VERSION",
 )
+client.taskrouter.accounts.auth_token.promote()
 ```
 
 ## Async Client
@@ -51,13 +51,13 @@ import asyncio
 
 from seed import AsyncSeedApi
 
-client = AsyncSeedApi()
+client = AsyncSeedApi(
+    x_api_version="YOUR_X_API_VERSION",
+)
 
 
 async def main() -> None:
-    await client.taskrouter_v_1_activity.create_activity(
-        workspace_sid="WorkspaceSid",
-    )
+    await client.taskrouter.accounts.auth_token.promote()
 
 
 asyncio.run(main())
@@ -72,7 +72,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.taskrouter_v_1_activity.create_activity(...)
+    client.taskrouter.accounts.auth_token.promote(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -91,7 +91,7 @@ from seed import SeedApi
 client = SeedApi(
     ...,
 )
-response = client.taskrouter_v_1_activity.with_raw_response.create_activity(...)
+response = client.taskrouter.accounts.auth_token.with_raw_response.promote(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -112,7 +112,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.taskrouter_v_1_activity.create_activity(..., request_options={
+client.taskrouter.accounts.auth_token.promote(..., request_options={
     "max_retries": 1
 })
 ```
@@ -132,7 +132,7 @@ client = SeedApi(
 
 
 # Override timeout for a specific method
-client.taskrouter_v_1_activity.create_activity(..., request_options={
+client.taskrouter.accounts.auth_token.promote(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

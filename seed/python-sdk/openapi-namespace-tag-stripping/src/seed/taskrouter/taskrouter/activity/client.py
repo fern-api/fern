@@ -2,34 +2,34 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
-from ..types.activity import Activity
-from .raw_client import AsyncRawTaskrouterV1ActivityClient, RawTaskrouterV1ActivityClient
-from .types.list_activities_response import ListActivitiesResponse
+from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ....core.request_options import RequestOptions
+from ...types.activity import Activity
+from .raw_client import AsyncRawActivityClient, RawActivityClient
+from .types.list_activity_response import ListActivityResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class TaskrouterV1ActivityClient:
+class ActivityClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawTaskrouterV1ActivityClient(client_wrapper=client_wrapper)
+        self._raw_client = RawActivityClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawTaskrouterV1ActivityClient:
+    def with_raw_response(self) -> RawActivityClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawTaskrouterV1ActivityClient
+        RawActivityClient
         """
         return self._raw_client
 
-    def list_activities(
+    def list(
         self, workspace_sid: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ListActivitiesResponse:
+    ) -> ListActivityResponse:
         """
         Parameters
         ----------
@@ -40,22 +40,24 @@ class TaskrouterV1ActivityClient:
 
         Returns
         -------
-        ListActivitiesResponse
+        ListActivityResponse
             Success
 
         Examples
         --------
         from seed import SeedApi
 
-        client = SeedApi()
-        client.taskrouter_v_1_activity.list_activities(
+        client = SeedApi(
+            x_api_version="YOUR_X_API_VERSION",
+        )
+        client.taskrouter.taskrouter.activity.list(
             workspace_sid="WorkspaceSid",
         )
         """
-        _response = self._raw_client.list_activities(workspace_sid, request_options=request_options)
+        _response = self._raw_client.list(workspace_sid, request_options=request_options)
         return _response.data
 
-    def create_activity(
+    def create(
         self,
         workspace_sid: str,
         *,
@@ -84,35 +86,39 @@ class TaskrouterV1ActivityClient:
         --------
         from seed import SeedApi
 
-        client = SeedApi()
-        client.taskrouter_v_1_activity.create_activity(
+        client = SeedApi(
+            x_api_version="YOUR_X_API_VERSION",
+        )
+        client.taskrouter.taskrouter.activity.create(
             workspace_sid="WorkspaceSid",
+            friendly_name="friendlyName",
+            available=True,
         )
         """
-        _response = self._raw_client.create_activity(
+        _response = self._raw_client.create(
             workspace_sid, friendly_name=friendly_name, available=available, request_options=request_options
         )
         return _response.data
 
 
-class AsyncTaskrouterV1ActivityClient:
+class AsyncActivityClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawTaskrouterV1ActivityClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawActivityClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawTaskrouterV1ActivityClient:
+    def with_raw_response(self) -> AsyncRawActivityClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawTaskrouterV1ActivityClient
+        AsyncRawActivityClient
         """
         return self._raw_client
 
-    async def list_activities(
+    async def list(
         self, workspace_sid: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ListActivitiesResponse:
+    ) -> ListActivityResponse:
         """
         Parameters
         ----------
@@ -123,7 +129,7 @@ class AsyncTaskrouterV1ActivityClient:
 
         Returns
         -------
-        ListActivitiesResponse
+        ListActivityResponse
             Success
 
         Examples
@@ -132,21 +138,23 @@ class AsyncTaskrouterV1ActivityClient:
 
         from seed import AsyncSeedApi
 
-        client = AsyncSeedApi()
+        client = AsyncSeedApi(
+            x_api_version="YOUR_X_API_VERSION",
+        )
 
 
         async def main() -> None:
-            await client.taskrouter_v_1_activity.list_activities(
+            await client.taskrouter.taskrouter.activity.list(
                 workspace_sid="WorkspaceSid",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list_activities(workspace_sid, request_options=request_options)
+        _response = await self._raw_client.list(workspace_sid, request_options=request_options)
         return _response.data
 
-    async def create_activity(
+    async def create(
         self,
         workspace_sid: str,
         *,
@@ -177,18 +185,22 @@ class AsyncTaskrouterV1ActivityClient:
 
         from seed import AsyncSeedApi
 
-        client = AsyncSeedApi()
+        client = AsyncSeedApi(
+            x_api_version="YOUR_X_API_VERSION",
+        )
 
 
         async def main() -> None:
-            await client.taskrouter_v_1_activity.create_activity(
+            await client.taskrouter.taskrouter.activity.create(
                 workspace_sid="WorkspaceSid",
+                friendly_name="friendlyName",
+                available=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_activity(
+        _response = await self._raw_client.create(
             workspace_sid, friendly_name=friendly_name, available=available, request_options=request_options
         )
         return _response.data

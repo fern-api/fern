@@ -3,11 +3,11 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...types.workspace import Workspace
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....types.workspace import Workspace
 
 
-class ListWorkspacesResponse(UniversalBaseModel):
+class ListWorkspaceResponse(UniversalBaseModel):
     workspaces: typing.Optional[typing.List[Workspace]] = None
 
     if IS_PYDANTIC_V2:

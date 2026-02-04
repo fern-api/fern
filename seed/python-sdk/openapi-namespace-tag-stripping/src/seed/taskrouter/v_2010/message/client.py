@@ -2,31 +2,31 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
-from ..types.message import Message
-from .raw_client import AsyncRawApi20100401MessageClient, RawApi20100401MessageClient
+from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ....core.request_options import RequestOptions
+from ...types.message import Message
+from .raw_client import AsyncRawMessageClient, RawMessageClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class Api20100401MessageClient:
+class MessageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawApi20100401MessageClient(client_wrapper=client_wrapper)
+        self._raw_client = RawMessageClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawApi20100401MessageClient:
+    def with_raw_response(self) -> RawMessageClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawApi20100401MessageClient
+        RawMessageClient
         """
         return self._raw_client
 
-    def create_message(
+    def create(
         self,
         account_sid: str,
         *,
@@ -58,33 +58,36 @@ class Api20100401MessageClient:
         --------
         from seed import SeedApi
 
-        client = SeedApi()
-        client.api_20100401_message.create_message(
+        client = SeedApi(
+            x_api_version="YOUR_X_API_VERSION",
+        )
+        client.taskrouter.v_2010.message.create(
             account_sid="AccountSid",
+            to="to",
+            from_="from",
+            body="body",
         )
         """
-        _response = self._raw_client.create_message(
-            account_sid, to=to, from_=from_, body=body, request_options=request_options
-        )
+        _response = self._raw_client.create(account_sid, to=to, from_=from_, body=body, request_options=request_options)
         return _response.data
 
 
-class AsyncApi20100401MessageClient:
+class AsyncMessageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawApi20100401MessageClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawMessageClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawApi20100401MessageClient:
+    def with_raw_response(self) -> AsyncRawMessageClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawApi20100401MessageClient
+        AsyncRawMessageClient
         """
         return self._raw_client
 
-    async def create_message(
+    async def create(
         self,
         account_sid: str,
         *,
@@ -118,18 +121,23 @@ class AsyncApi20100401MessageClient:
 
         from seed import AsyncSeedApi
 
-        client = AsyncSeedApi()
+        client = AsyncSeedApi(
+            x_api_version="YOUR_X_API_VERSION",
+        )
 
 
         async def main() -> None:
-            await client.api_20100401_message.create_message(
+            await client.taskrouter.v_2010.message.create(
                 account_sid="AccountSid",
+                to="to",
+                from_="from",
+                body="body",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_message(
+        _response = await self._raw_client.create(
             account_sid, to=to, from_=from_, body=body, request_options=request_options
         )
         return _response.data

@@ -6,16 +6,16 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import taskrouter
-    from .client import AsyncSeedApi, SeedApi
-    from .environment import SeedApiEnvironment
-    from .version import __version__
+    from .types import Activity, AuthToken, Message, Workspace
+    from . import accounts, taskrouter, v_2010
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "SeedApi": ".client",
-    "SeedApiEnvironment": ".environment",
-    "__version__": ".version",
+    "Activity": ".types",
+    "AuthToken": ".types",
+    "Message": ".types",
+    "Workspace": ".types",
+    "accounts": ".accounts",
     "taskrouter": ".taskrouter",
+    "v_2010": ".v_2010",
 }
 
 
@@ -40,4 +40,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedApi", "SeedApi", "SeedApiEnvironment", "__version__", "taskrouter"]
+__all__ = ["Activity", "AuthToken", "Message", "Workspace", "accounts", "taskrouter", "v_2010"]

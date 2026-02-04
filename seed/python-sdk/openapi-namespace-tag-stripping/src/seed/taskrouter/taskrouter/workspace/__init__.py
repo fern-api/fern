@@ -6,17 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import taskrouter
-    from .client import AsyncSeedApi, SeedApi
-    from .environment import SeedApiEnvironment
-    from .version import __version__
-_dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "SeedApi": ".client",
-    "SeedApiEnvironment": ".environment",
-    "__version__": ".version",
-    "taskrouter": ".taskrouter",
-}
+    from .types import ListWorkspaceResponse
+_dynamic_imports: typing.Dict[str, str] = {"ListWorkspaceResponse": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -40,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedApi", "SeedApi", "SeedApiEnvironment", "__version__", "taskrouter"]
+__all__ = ["ListWorkspaceResponse"]

@@ -9,10 +9,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .environment import SeedApiEnvironment
 
 if typing.TYPE_CHECKING:
-    from .accounts_v_1_auth_token.client import AccountsV1AuthTokenClient, AsyncAccountsV1AuthTokenClient
-    from .api_20100401_message.client import Api20100401MessageClient, AsyncApi20100401MessageClient
-    from .taskrouter_v_1_activity.client import AsyncTaskrouterV1ActivityClient, TaskrouterV1ActivityClient
-    from .taskrouter_v_1_workspace.client import AsyncTaskrouterV1WorkspaceClient, TaskrouterV1WorkspaceClient
+    from .taskrouter.client import AsyncTaskrouterClient, TaskrouterClient
 
 
 class SeedApi:
@@ -33,6 +30,7 @@ class SeedApi:
 
 
 
+    x_api_version : typing.Optional[str]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -49,7 +47,9 @@ class SeedApi:
     --------
     from seed import SeedApi
 
-    client = SeedApi()
+    client = SeedApi(
+        x_api_version="YOUR_X_API_VERSION",
+    )
     """
 
     def __init__(
@@ -57,6 +57,7 @@ class SeedApi:
         *,
         base_url: typing.Optional[str] = None,
         environment: SeedApiEnvironment = SeedApiEnvironment.DEFAULT,
+        x_api_version: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -67,6 +68,7 @@ class SeedApi:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
+            x_api_version=x_api_version,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -75,42 +77,15 @@ class SeedApi:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self._taskrouter_v_1_activity: typing.Optional[TaskrouterV1ActivityClient] = None
-        self._taskrouter_v_1_workspace: typing.Optional[TaskrouterV1WorkspaceClient] = None
-        self._api_20100401_message: typing.Optional[Api20100401MessageClient] = None
-        self._accounts_v_1_auth_token: typing.Optional[AccountsV1AuthTokenClient] = None
+        self._taskrouter: typing.Optional[TaskrouterClient] = None
 
     @property
-    def taskrouter_v_1_activity(self):
-        if self._taskrouter_v_1_activity is None:
-            from .taskrouter_v_1_activity.client import TaskrouterV1ActivityClient  # noqa: E402
+    def taskrouter(self):
+        if self._taskrouter is None:
+            from .taskrouter.client import TaskrouterClient  # noqa: E402
 
-            self._taskrouter_v_1_activity = TaskrouterV1ActivityClient(client_wrapper=self._client_wrapper)
-        return self._taskrouter_v_1_activity
-
-    @property
-    def taskrouter_v_1_workspace(self):
-        if self._taskrouter_v_1_workspace is None:
-            from .taskrouter_v_1_workspace.client import TaskrouterV1WorkspaceClient  # noqa: E402
-
-            self._taskrouter_v_1_workspace = TaskrouterV1WorkspaceClient(client_wrapper=self._client_wrapper)
-        return self._taskrouter_v_1_workspace
-
-    @property
-    def api_20100401_message(self):
-        if self._api_20100401_message is None:
-            from .api_20100401_message.client import Api20100401MessageClient  # noqa: E402
-
-            self._api_20100401_message = Api20100401MessageClient(client_wrapper=self._client_wrapper)
-        return self._api_20100401_message
-
-    @property
-    def accounts_v_1_auth_token(self):
-        if self._accounts_v_1_auth_token is None:
-            from .accounts_v_1_auth_token.client import AccountsV1AuthTokenClient  # noqa: E402
-
-            self._accounts_v_1_auth_token = AccountsV1AuthTokenClient(client_wrapper=self._client_wrapper)
-        return self._accounts_v_1_auth_token
+            self._taskrouter = TaskrouterClient(client_wrapper=self._client_wrapper)
+        return self._taskrouter
 
 
 class AsyncSeedApi:
@@ -131,6 +106,7 @@ class AsyncSeedApi:
 
 
 
+    x_api_version : typing.Optional[str]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -147,7 +123,9 @@ class AsyncSeedApi:
     --------
     from seed import AsyncSeedApi
 
-    client = AsyncSeedApi()
+    client = AsyncSeedApi(
+        x_api_version="YOUR_X_API_VERSION",
+    )
     """
 
     def __init__(
@@ -155,6 +133,7 @@ class AsyncSeedApi:
         *,
         base_url: typing.Optional[str] = None,
         environment: SeedApiEnvironment = SeedApiEnvironment.DEFAULT,
+        x_api_version: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -165,6 +144,7 @@ class AsyncSeedApi:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
+            x_api_version=x_api_version,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -173,42 +153,15 @@ class AsyncSeedApi:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self._taskrouter_v_1_activity: typing.Optional[AsyncTaskrouterV1ActivityClient] = None
-        self._taskrouter_v_1_workspace: typing.Optional[AsyncTaskrouterV1WorkspaceClient] = None
-        self._api_20100401_message: typing.Optional[AsyncApi20100401MessageClient] = None
-        self._accounts_v_1_auth_token: typing.Optional[AsyncAccountsV1AuthTokenClient] = None
+        self._taskrouter: typing.Optional[AsyncTaskrouterClient] = None
 
     @property
-    def taskrouter_v_1_activity(self):
-        if self._taskrouter_v_1_activity is None:
-            from .taskrouter_v_1_activity.client import AsyncTaskrouterV1ActivityClient  # noqa: E402
+    def taskrouter(self):
+        if self._taskrouter is None:
+            from .taskrouter.client import AsyncTaskrouterClient  # noqa: E402
 
-            self._taskrouter_v_1_activity = AsyncTaskrouterV1ActivityClient(client_wrapper=self._client_wrapper)
-        return self._taskrouter_v_1_activity
-
-    @property
-    def taskrouter_v_1_workspace(self):
-        if self._taskrouter_v_1_workspace is None:
-            from .taskrouter_v_1_workspace.client import AsyncTaskrouterV1WorkspaceClient  # noqa: E402
-
-            self._taskrouter_v_1_workspace = AsyncTaskrouterV1WorkspaceClient(client_wrapper=self._client_wrapper)
-        return self._taskrouter_v_1_workspace
-
-    @property
-    def api_20100401_message(self):
-        if self._api_20100401_message is None:
-            from .api_20100401_message.client import AsyncApi20100401MessageClient  # noqa: E402
-
-            self._api_20100401_message = AsyncApi20100401MessageClient(client_wrapper=self._client_wrapper)
-        return self._api_20100401_message
-
-    @property
-    def accounts_v_1_auth_token(self):
-        if self._accounts_v_1_auth_token is None:
-            from .accounts_v_1_auth_token.client import AsyncAccountsV1AuthTokenClient  # noqa: E402
-
-            self._accounts_v_1_auth_token = AsyncAccountsV1AuthTokenClient(client_wrapper=self._client_wrapper)
-        return self._accounts_v_1_auth_token
+            self._taskrouter = AsyncTaskrouterClient(client_wrapper=self._client_wrapper)
+        return self._taskrouter
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedApiEnvironment) -> str:

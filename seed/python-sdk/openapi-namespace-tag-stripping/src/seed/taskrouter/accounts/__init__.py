@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ListWorkspacesResponse
-_dynamic_imports: typing.Dict[str, str] = {"ListWorkspacesResponse": ".types"}
+    from . import auth_token
+_dynamic_imports: typing.Dict[str, str] = {"auth_token": ".auth_token"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ListWorkspacesResponse"]
+__all__ = ["auth_token"]

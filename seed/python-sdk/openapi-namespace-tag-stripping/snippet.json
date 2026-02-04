@@ -4,13 +4,26 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/v1/Workspaces/{WorkspaceSid}/Activities",
-                "method": "GET",
-                "identifier_override": "endpoint_taskrouterV1Activity.ListActivities"
+                "path": "/v1/AuthTokens/Promote",
+                "method": "POST",
+                "identifier_override": "endpoint_taskrouter/accounts/authToken.promote"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.taskrouter_v_1_activity.list_activities(\n    workspace_sid=\"WorkspaceSid\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.taskrouter_v_1_activity.list_activities(\n        workspace_sid=\"WorkspaceSid\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\nclient.taskrouter.accounts.auth_token.promote()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\n\n\nasync def main() -> None:\n    await client.taskrouter.accounts.auth_token.promote()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/v1/Workspaces/{WorkspaceSid}/Activities",
+                "method": "GET",
+                "identifier_override": "endpoint_taskrouter/taskrouter/activity.list"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\nclient.taskrouter.taskrouter.activity.list(\n    workspace_sid=\"WorkspaceSid\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\n\n\nasync def main() -> None:\n    await client.taskrouter.taskrouter.activity.list(\n        workspace_sid=\"WorkspaceSid\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +32,11 @@
             "id": {
                 "path": "/v1/Workspaces/{WorkspaceSid}/Activities",
                 "method": "POST",
-                "identifier_override": "endpoint_taskrouterV1Activity.CreateActivity"
+                "identifier_override": "endpoint_taskrouter/taskrouter/activity.create"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.taskrouter_v_1_activity.create_activity(\n    workspace_sid=\"WorkspaceSid\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.taskrouter_v_1_activity.create_activity(\n        workspace_sid=\"WorkspaceSid\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\nclient.taskrouter.taskrouter.activity.create(\n    workspace_sid=\"WorkspaceSid\",\n    friendly_name=\"friendlyName\",\n    available=True,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\n\n\nasync def main() -> None:\n    await client.taskrouter.taskrouter.activity.create(\n        workspace_sid=\"WorkspaceSid\",\n        friendly_name=\"friendlyName\",\n        available=True,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -32,11 +45,11 @@
             "id": {
                 "path": "/v1/Workspaces",
                 "method": "GET",
-                "identifier_override": "endpoint_taskrouterV1Workspace.ListWorkspaces"
+                "identifier_override": "endpoint_taskrouter/taskrouter/workspace.list"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.taskrouter_v_1_workspace.list_workspaces()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.taskrouter_v_1_workspace.list_workspaces()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\nclient.taskrouter.taskrouter.workspace.list()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\n\n\nasync def main() -> None:\n    await client.taskrouter.taskrouter.workspace.list()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -45,24 +58,11 @@
             "id": {
                 "path": "/2010-04-01/Accounts/{AccountSid}/Messages",
                 "method": "POST",
-                "identifier_override": "endpoint_api20100401Message.CreateMessage"
+                "identifier_override": "endpoint_taskrouter/v2010/message.create"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.api_20100401_message.create_message(\n    account_sid=\"AccountSid\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.api_20100401_message.create_message(\n        account_sid=\"AccountSid\",\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
-                "path": "/v1/AuthTokens/Promote",
-                "method": "POST",
-                "identifier_override": "endpoint_accountsV1AuthToken.PromoteAuthToken"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.accounts_v_1_auth_token.promote_auth_token()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.accounts_v_1_auth_token.promote_auth_token()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\nclient.taskrouter.v_2010.message.create(\n    account_sid=\"AccountSid\",\n    to=\"to\",\n    from_=\"from\",\n    body=\"body\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    x_api_version=\"YOUR_X_API_VERSION\",\n)\n\n\nasync def main() -> None:\n    await client.taskrouter.v_2010.message.create(\n        account_sid=\"AccountSid\",\n        to=\"to\",\n        from_=\"from\",\n        body=\"body\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

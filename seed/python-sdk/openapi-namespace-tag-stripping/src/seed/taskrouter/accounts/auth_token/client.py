@@ -2,28 +2,28 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
-from ..types.auth_token import AuthToken
-from .raw_client import AsyncRawAccountsV1AuthTokenClient, RawAccountsV1AuthTokenClient
+from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ....core.request_options import RequestOptions
+from ...types.auth_token import AuthToken
+from .raw_client import AsyncRawAuthTokenClient, RawAuthTokenClient
 
 
-class AccountsV1AuthTokenClient:
+class AuthTokenClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawAccountsV1AuthTokenClient(client_wrapper=client_wrapper)
+        self._raw_client = RawAuthTokenClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawAccountsV1AuthTokenClient:
+    def with_raw_response(self) -> RawAuthTokenClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawAccountsV1AuthTokenClient
+        RawAuthTokenClient
         """
         return self._raw_client
 
-    def promote_auth_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> AuthToken:
+    def promote(self, *, request_options: typing.Optional[RequestOptions] = None) -> AuthToken:
         """
         Parameters
         ----------
@@ -39,29 +39,31 @@ class AccountsV1AuthTokenClient:
         --------
         from seed import SeedApi
 
-        client = SeedApi()
-        client.accounts_v_1_auth_token.promote_auth_token()
+        client = SeedApi(
+            x_api_version="YOUR_X_API_VERSION",
+        )
+        client.taskrouter.accounts.auth_token.promote()
         """
-        _response = self._raw_client.promote_auth_token(request_options=request_options)
+        _response = self._raw_client.promote(request_options=request_options)
         return _response.data
 
 
-class AsyncAccountsV1AuthTokenClient:
+class AsyncAuthTokenClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawAccountsV1AuthTokenClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawAuthTokenClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawAccountsV1AuthTokenClient:
+    def with_raw_response(self) -> AsyncRawAuthTokenClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawAccountsV1AuthTokenClient
+        AsyncRawAuthTokenClient
         """
         return self._raw_client
 
-    async def promote_auth_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> AuthToken:
+    async def promote(self, *, request_options: typing.Optional[RequestOptions] = None) -> AuthToken:
         """
         Parameters
         ----------
@@ -79,14 +81,16 @@ class AsyncAccountsV1AuthTokenClient:
 
         from seed import AsyncSeedApi
 
-        client = AsyncSeedApi()
+        client = AsyncSeedApi(
+            x_api_version="YOUR_X_API_VERSION",
+        )
 
 
         async def main() -> None:
-            await client.accounts_v_1_auth_token.promote_auth_token()
+            await client.taskrouter.accounts.auth_token.promote()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.promote_auth_token(request_options=request_options)
+        _response = await self._raw_client.promote(request_options=request_options)
         return _response.data

@@ -3,23 +3,23 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
-from ..core.request_options import RequestOptions
-from ..types.message import Message
+from ....core.api_error import ApiError
+from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ....core.http_response import AsyncHttpResponse, HttpResponse
+from ....core.jsonable_encoder import jsonable_encoder
+from ....core.pydantic_utilities import parse_obj_as
+from ....core.request_options import RequestOptions
+from ...types.message import Message
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawApi20100401MessageClient:
+class RawMessageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_message(
+    def create(
         self,
         account_sid: str,
         *,
@@ -77,11 +77,11 @@ class RawApi20100401MessageClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawApi20100401MessageClient:
+class AsyncRawMessageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_message(
+    async def create(
         self,
         account_sid: str,
         *,
