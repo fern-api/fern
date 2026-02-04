@@ -359,7 +359,7 @@ export class DocsDefinitionResolver {
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
-            // Transform @/ prefix imports to relative paths
+
             const newMarkdown = transformAtPrefixImports({
                 markdown: codeReplacedMarkdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
