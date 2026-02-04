@@ -130,11 +130,8 @@ async function handleGenerate(context: Context, args: GenerateArgs): Promise<voi
         cliVersion: workspace.cliVersion
     });
 
+    const token = args.local ? undefined : await context.getTokenOrPrompt();
     const runtime = args.local ? "local" : "remote";
-    const token = await context.getAuthToken();
-    if (runtime === "remote" && token == null) {
-        throw CliError.authRequired();
-    }
 
     const taskGroup = new TaskGroup({ context });
 

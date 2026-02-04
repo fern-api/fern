@@ -1,9 +1,12 @@
-export { type FernOrganizationToken, type FernToken, type FernUserToken } from "./FernToken";
+export type { FernOrganizationToken, FernToken, FernUserToken } from "./FernToken";
 export { createOrganizationIfDoesNotExist } from "./orgs/createOrganizationIfDoesNotExist";
 export { getOrganizationNameValidationError } from "./orgs/getOrganizationNameValidationError";
+export { getPathToTokenFile } from "./persistence/getPathToTokenFile";
 export { getAccessToken, getToken, getUserToken } from "./persistence/getToken";
 export { removeToken } from "./persistence/removeToken";
 export { storeToken } from "./persistence/storeToken";
 export { getCurrentUser } from "./users/getCurrentUser";
 export { getUserIdFromToken } from "./verify/getPropertiesFromJwtToken";
 export { isLoggedIn } from "./verify/isLoggedIn";
+export type { Auth0JwtPayload } from "./verify/verifyJwt";
+export { verifyAndDecodeJwt, verifyJwt } from "./verify/verifyJwt";

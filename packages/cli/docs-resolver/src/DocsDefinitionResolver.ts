@@ -8,7 +8,8 @@ import {
     type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
-    replaceReferencedMarkdown
+    replaceReferencedMarkdown,
+    transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
@@ -352,11 +353,17 @@ export class DocsDefinitionResolver {
                     this.referencedMarkdownFiles.push(refFile);
                 }
             }
-            const newMarkdown = await replaceReferencedCode({
+            const codeReplacedMarkdown = await replaceReferencedCode({
                 markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
+            });
+
+            const newMarkdown = transformAtPrefixImports({
+                markdown: codeReplacedMarkdown,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath)
             });
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
         }

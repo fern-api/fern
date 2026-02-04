@@ -1,7 +1,9 @@
 import { LogLevel } from "@fern-api/logger";
 import chalk from "chalk";
+import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError";
 import { CliError } from "../errors/CliError";
 import { ValidationError } from "../errors/ValidationError";
+import { Icons } from "../ui/format";
 import { Context } from "./Context";
 import type { GlobalArgs } from "./GlobalArgs";
 
@@ -45,6 +47,11 @@ function handleError(context: Context, error: unknown): void {
         for (const issue of error.issues) {
             process.stderr.write(`${chalk.red(issue.toString())}\n`);
         }
+        return;
+    }
+
+    if (error instanceof KeyringUnavailableError) {
+        context.stdout.error(`${Icons.error} ${error.message}`);
         return;
     }
 

@@ -27,20 +27,27 @@ const SUCCESS_PAGE = `
 </html>
 `;
 
+export interface Auth0TokenResponse {
+    accessToken: string;
+    idToken: string;
+}
+
 export async function doAuth0LoginFlow({
     auth0Domain,
     auth0ClientId,
-    audience
+    audience,
+    forceReauth = false
 }: {
     auth0Domain: string;
     auth0ClientId: string;
     audience: string;
-}): Promise<string> {
+    /** If true, forces re-authentication even if already logged in (allows switching accounts). */
+    forceReauth?: boolean;
+}): Promise<Auth0TokenResponse> {
     const { origin, server } = await createServer();
-    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience });
+    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience, forceReauth });
     server.close();
-    const token = await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin });
-    return token;
+    return await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin });
 }
 
 function getCode({
@@ -48,13 +55,15 @@ function getCode({
     auth0Domain,
     auth0ClientId,
     origin,
-    audience
+    audience,
+    forceReauth
 }: {
     server: Server;
     auth0Domain: string;
     auth0ClientId: string;
     origin: string;
     audience: string;
+    forceReauth: boolean;
 }) {
     return new Promise<{ code: string }>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -68,7 +77,7 @@ function getCode({
             }
         });
 
-        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience }));
+        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience, forceReauth }));
     });
 }
 
@@ -90,7 +99,7 @@ async function getTokenFromCode({
     auth0ClientId: string;
     code: string;
     origin: string;
-}): Promise<string> {
+}): Promise<Auth0TokenResponse> {
     const response = await axios.post(
         `https://${auth0Domain}/oauth/token`,
         new URLSearchParams({
@@ -103,23 +112,28 @@ async function getTokenFromCode({
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
         }
     );
-    const { access_token: token } = response.data;
-    if (token == null) {
-        throw new Error("Token is not defined");
+    const { access_token: accessToken, id_token: idToken } = response.data;
+    if (accessToken == null) {
+        throw new Error("Access token is not defined");
     }
-    return token;
+    if (idToken == null) {
+        throw new Error("ID token is not defined");
+    }
+    return { accessToken, idToken };
 }
 
 function constructAuth0Url({
     origin,
     auth0Domain,
     auth0ClientId,
-    audience
+    audience,
+    forceReauth
 }: {
     origin: string;
     auth0Domain: string;
     auth0ClientId: string;
     audience: string;
+    forceReauth: boolean;
 }) {
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
@@ -128,6 +142,12 @@ function constructAuth0Url({
         redirect_uri: origin,
         audience
     });
+
+    // Force re-authentication to allow switching accounts.
+    if (forceReauth) {
+        queryParams.set("prompt", "login");
+    }
+
     const url = `https://${auth0Domain}/authorize?${queryParams.toString()}`;
     return url;
 }

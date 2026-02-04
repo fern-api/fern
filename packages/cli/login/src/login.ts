@@ -4,8 +4,10 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
 import { doAuth0DeviceAuthorizationFlow } from "./auth0-login/doAuth0DeviceAuthorizationFlow";
-import { doAuth0LoginFlow } from "./auth0-login/doAuth0LoginFlow";
+import { type Auth0TokenResponse, doAuth0LoginFlow } from "./auth0-login/doAuth0LoginFlow";
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, VENUS_AUDIENCE } from "./constants";
+
+export type { Auth0TokenResponse } from "./auth0-login/doAuth0LoginFlow";
 
 export async function login(
     context: TaskContext,
@@ -15,8 +17,8 @@ export async function login(
         command: "Login initiated"
     });
 
-    const token = await getTokenFromAuth0(context, { useDeviceCodeFlow });
-    await storeToken(token);
+    const { accessToken } = await getTokenFromAuth0(context, { useDeviceCodeFlow });
+    await storeToken(accessToken);
 
     context.logger.info(chalk.green("Logged in!"));
 
@@ -24,14 +26,14 @@ export async function login(
 
     return {
         type: "user",
-        value: token
+        value: accessToken
     };
 }
 
-async function getTokenFromAuth0(
+export async function getTokenFromAuth0(
     context: TaskContext,
-    { useDeviceCodeFlow }: { useDeviceCodeFlow: boolean }
-): Promise<string> {
+    { useDeviceCodeFlow, forceReauth = false }: { useDeviceCodeFlow: boolean; forceReauth?: boolean }
+): Promise<Auth0TokenResponse> {
     if (useDeviceCodeFlow) {
         return await doAuth0DeviceAuthorizationFlow({
             auth0Domain: AUTH0_DOMAIN,
@@ -45,7 +47,8 @@ async function getTokenFromAuth0(
         return await doAuth0LoginFlow({
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
-            audience: VENUS_AUDIENCE
+            audience: VENUS_AUDIENCE,
+            forceReauth
         });
     } catch {
         return await doAuth0DeviceAuthorizationFlow({

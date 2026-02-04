@@ -1087,12 +1087,21 @@ types:
         type: optional<string>
         docs: |
           The title to display for this folder section. If not provided, the folder name will be used.
+      title-source:
+        type: optional<TitleSource>
+        docs: |
+          Determines how page titles are derived for files in this folder. Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename` (derive title from the file name). Defaults to `filename`.
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       collapsed: optional<boolean>
       availability: optional<Availability>
+
+  TitleSource:
+    enum:
+      - frontmatter
+      - filename
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]

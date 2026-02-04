@@ -1,2 +1,2 @@
 export * as schemas from "./schemas";
-export { FernYmlSchema } from "./schemas";
+export { createEmptyFernRcSchema, FernRcSchema, FernYmlSchema } from "./schemas";
