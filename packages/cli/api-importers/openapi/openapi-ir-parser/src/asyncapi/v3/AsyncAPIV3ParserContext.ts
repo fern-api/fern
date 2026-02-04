@@ -39,9 +39,16 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         const MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
 
         if (message.$ref.startsWith(CHANNELS_PATH_PART)) {
-            const parts = message.$ref.split("/");
-            const channelPath = parts[2];
-            const messageKey = parts[4];
+            // Extract the path after #/channels/ and before /messages/
+            const afterChannels = message.$ref.substring(CHANNELS_PATH_PART.length);
+            const messagesIndex = afterChannels.indexOf("/messages/");
+            if (messagesIndex === -1) {
+                throw new Error(`Failed to resolve message reference ${message.$ref}: missing /messages/ segment`);
+            }
+            // Decode JSON Pointer escape sequences: ~1 -> / and ~0 -> ~
+            // See RFC 6901: https://datatracker.ietf.org/doc/html/rfc6901#section-3
+            const channelPath = afterChannels.substring(0, messagesIndex).replace(/~1/g, "/").replace(/~0/g, "~");
+            const messageKey = afterChannels.substring(messagesIndex + "/messages/".length);
 
             if (channelPath == null || messageKey == null || !this.document.channels?.[channelPath]) {
                 throw new Error(`Failed to resolve message reference ${message.$ref} in channel ${channelPath}`);

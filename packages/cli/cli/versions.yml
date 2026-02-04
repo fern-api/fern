@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.2
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI V3 parser to properly decode JSON Pointer escape sequences in channel references.
+        Channel paths containing slashes (e.g., `/api/v1/ws`) are encoded as `~1` in JSON Pointer references
+        per RFC 6901. The parser now correctly decodes `~1` to `/` and `~0` to `~` when resolving channel
+        references, enabling proper parsing of AsyncAPI specs with URL-like channel paths.
+      type: fix
+  createdAt: "2026-02-04"
+  irVersion: 63
+
 - version: 3.60.1
   changelogEntry:
     - summary: |

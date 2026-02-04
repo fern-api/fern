@@ -401,10 +401,15 @@ export function parseAsyncAPIV3({
 }
 
 function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
+    if (operation.channel == null) {
+        throw new Error(`Operation is missing 'channel' property. Operation: ${JSON.stringify(operation)}`);
+    }
     if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
         throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
     }
-    return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
+    // Decode JSON Pointer escape sequences: ~1 -> / and ~0 -> ~
+    // See RFC 6901: https://datatracker.ietf.org/doc/html/rfc6901#section-3
+    return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length).replace(/~1/g, "/").replace(/~0/g, "~");
 }
 
 function convertChannelParameterLocation(location: string): {
