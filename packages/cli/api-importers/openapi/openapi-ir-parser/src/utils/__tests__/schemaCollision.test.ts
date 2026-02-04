@@ -3,14 +3,18 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createSchemaCollisionTracker } from "../schemaCollision";
 
 describe("Schema Collision", () => {
-    let mockLogger: Partial<Logger>;
+    let mockLogger: Logger;
 
     beforeEach(() => {
         mockLogger = {
-            warn: vi.fn(),
+            disable: vi.fn(),
+            enable: vi.fn(),
+            trace: vi.fn(),
             debug: vi.fn(),
+            info: vi.fn(),
+            warn: vi.fn(),
             error: vi.fn(),
-            info: vi.fn()
+            log: vi.fn()
         };
     });
 

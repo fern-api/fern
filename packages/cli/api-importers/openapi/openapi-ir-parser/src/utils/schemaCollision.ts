@@ -17,7 +17,7 @@ export function createSchemaCollisionTracker(): SchemaCollisionTracker {
 
             if (existingCount > 0) {
                 const uniqueId = `${baseId}${existingCount + 1}`;
-                logger?.warn(
+                logger?.warn?.(
                     `Schema name collision detected: '${baseId}' already exists. Renaming to '${uniqueId}' to avoid conflicts.`
                 );
                 return uniqueId;
