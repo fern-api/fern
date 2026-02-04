@@ -1,0 +1,198 @@
+openapi: 3.0.3
+info:
+  title: Namespace Tag Stripping Test API
+  version: 1.0.0
+  description: |
+    Test fixture for validating that domain+version prefixes are stripped from OpenAPI tags
+    when generating SDK service names. This simulates the Twilio API pattern where tags like
+    "TaskrouterV1Activity" should become "Activity" when the namespace is "taskrouter".
+servers:
+  - url: https://api.example.com
+x-fern-global-headers:
+  - name: X-Api-Version
+    header: X-Api-Version
+    type: optional<string>
+tags:
+  - name: TaskrouterV1Activity
+    description: Activity management endpoints
+  - name: TaskrouterV1Workspace
+    description: Workspace management endpoints
+  - name: Api20100401Message
+    description: Message endpoints (date-versioned pattern)
+  - name: AccountsV1AuthToken
+    description: Auth token endpoints
+paths:
+  /v1/Workspaces/{WorkspaceSid}/Activities:
+    get:
+      tags:
+        - TaskrouterV1Activity
+      operationId: ListActivities
+      summary: List all activities in a workspace
+      x-fern-sdk-group-name:
+        - taskrouter
+        - activity
+      x-fern-sdk-method-name: list
+      parameters:
+        - name: WorkspaceSid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  activities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Activity'
+    post:
+      tags:
+        - TaskrouterV1Activity
+      operationId: CreateActivity
+      summary: Create a new activity
+      x-fern-sdk-group-name:
+        - taskrouter
+        - activity
+      x-fern-sdk-method-name: create
+      parameters:
+        - name: WorkspaceSid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                friendlyName:
+                  type: string
+                available:
+                  type: boolean
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+  /v1/Workspaces:
+    get:
+      tags:
+        - TaskrouterV1Workspace
+      operationId: ListWorkspaces
+      summary: List all workspaces
+      x-fern-sdk-group-name:
+        - taskrouter
+        - workspace
+      x-fern-sdk-method-name: list
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workspaces:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Workspace'
+  /2010-04-01/Accounts/{AccountSid}/Messages:
+    post:
+      tags:
+        - Api20100401Message
+      operationId: CreateMessage
+      summary: Send a message
+      x-fern-sdk-group-name:
+        - v2010
+        - message
+      x-fern-sdk-method-name: create
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                to:
+                  type: string
+                from:
+                  type: string
+                body:
+                  type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /v1/AuthTokens/Promote:
+    post:
+      tags:
+        - AccountsV1AuthToken
+      operationId: PromoteAuthToken
+      summary: Promote a secondary auth token
+      x-fern-sdk-group-name:
+        - accounts
+        - auth_token
+      x-fern-sdk-method-name: promote
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+components:
+  schemas:
+    Activity:
+      type: object
+      properties:
+        sid:
+          type: string
+        friendlyName:
+          type: string
+        available:
+          type: boolean
+    Workspace:
+      type: object
+      properties:
+        sid:
+          type: string
+        friendlyName:
+          type: string
+    Message:
+      type: object
+      properties:
+        sid:
+          type: string
+        to:
+          type: string
+        from:
+          type: string
+        body:
+          type: string
+        status:
+          type: string
+    AuthToken:
+      type: object
+      properties:
+        accountSid:
+          type: string
+        authToken:
+          type: string
