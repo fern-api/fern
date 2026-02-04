@@ -9538,7 +9538,10 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                         "ServerA": "a.prod.com",
                         "ServerB": "b.prod.com"
                     },
-                    "docs": null
+                    "docs": null,
+                    "defaultUrls": null,
+                    "urlTemplates": null,
+                    "urlVariables": null
                 },
                 {
                     "id": "Staging",
@@ -9565,7 +9568,10 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                         "ServerA": "a.staging.com",
                         "ServerB": "b.staging.com"
                     },
-                    "docs": null
+                    "docs": null,
+                    "defaultUrls": null,
+                    "urlTemplates": null,
+                    "urlVariables": null
                 }
             ]
         }
@@ -9908,7 +9914,10 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                             "ServerA": "a.prod.com",
                             "ServerB": "b.prod.com"
                         },
-                        "docs": null
+                        "docs": null,
+                        "defaultUrls": null,
+                        "urlTemplates": null,
+                        "urlVariables": null
                     },
                     {
                         "id": "Staging",
@@ -9935,7 +9944,10 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                             "ServerA": "a.staging.com",
                             "ServerB": "b.staging.com"
                         },
-                        "docs": null
+                        "docs": null,
+                        "defaultUrls": null,
+                        "urlTemplates": null,
+                        "urlVariables": null
                     }
                 ]
             }
