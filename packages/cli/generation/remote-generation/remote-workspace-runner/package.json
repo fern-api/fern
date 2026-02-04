@@ -73,8 +73,10 @@
     "@types/terminal-link": "^1.2.0",
     "@types/url-join": "^4.0.3",
     "@types/yauzl": "^2.10.3",
+    "@types/yazl": "^3.3.0",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "yazl": "^3.3.1"
   }
 }

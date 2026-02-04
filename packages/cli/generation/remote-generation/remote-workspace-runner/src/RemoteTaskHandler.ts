@@ -393,7 +393,7 @@ async function downloadAndExtractZipToDirectory({
     await extractZipToDirectory(outputZipPath, outputPath);
 }
 
-async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
+export async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
     return new Promise((resolve, reject) => {
         yauzl.open(zipPath, { lazyEntries: true }, (err, zipfile) => {
             if (err) {
