@@ -171,9 +171,7 @@ class PydanticModel:
             )
             # Update field's type_hint to include FieldMetadata
             prev_fields = field.__dict__
-            field = PydanticField(
-                **{**prev_fields, "type_hint": aliased_type_hint}
-            )
+            field = PydanticField(**{**prev_fields, "type_hint": aliased_type_hint})
             initializer = get_field_name_initializer(
                 alias=field.json_field_name,
                 default_factory=field.default_factory,
