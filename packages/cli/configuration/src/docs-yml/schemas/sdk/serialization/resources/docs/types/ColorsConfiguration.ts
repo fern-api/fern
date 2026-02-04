@@ -16,6 +16,18 @@ export const ColorsConfiguration: core.serialization.ObjectSchema<
     sidebarBackground: core.serialization.property("sidebar-background", ColorConfig.optional()),
     headerBackground: core.serialization.property("header-background", ColorConfig.optional()),
     cardBackground: core.serialization.property("card-background", ColorConfig.optional()),
+    accent1: core.serialization.property("accent-1", ColorConfig.optional()),
+    accent2: core.serialization.property("accent-2", ColorConfig.optional()),
+    accent3: core.serialization.property("accent-3", ColorConfig.optional()),
+    accent4: core.serialization.property("accent-4", ColorConfig.optional()),
+    accent5: core.serialization.property("accent-5", ColorConfig.optional()),
+    accent6: core.serialization.property("accent-6", ColorConfig.optional()),
+    accent7: core.serialization.property("accent-7", ColorConfig.optional()),
+    accent8: core.serialization.property("accent-8", ColorConfig.optional()),
+    accent9: core.serialization.property("accent-9", ColorConfig.optional()),
+    accent10: core.serialization.property("accent-10", ColorConfig.optional()),
+    accent11: core.serialization.property("accent-11", ColorConfig.optional()),
+    accent12: core.serialization.property("accent-12", ColorConfig.optional()),
 });
 
 export declare namespace ColorsConfiguration {
@@ -27,5 +39,17 @@ export declare namespace ColorsConfiguration {
         "sidebar-background"?: ColorConfig.Raw | null;
         "header-background"?: ColorConfig.Raw | null;
         "card-background"?: ColorConfig.Raw | null;
+        "accent-1"?: ColorConfig.Raw | null;
+        "accent-2"?: ColorConfig.Raw | null;
+        "accent-3"?: ColorConfig.Raw | null;
+        "accent-4"?: ColorConfig.Raw | null;
+        "accent-5"?: ColorConfig.Raw | null;
+        "accent-6"?: ColorConfig.Raw | null;
+        "accent-7"?: ColorConfig.Raw | null;
+        "accent-8"?: ColorConfig.Raw | null;
+        "accent-9"?: ColorConfig.Raw | null;
+        "accent-10"?: ColorConfig.Raw | null;
+        "accent-11"?: ColorConfig.Raw | null;
+        "accent-12"?: ColorConfig.Raw | null;
     }
 }
