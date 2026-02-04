@@ -867,9 +867,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return exampleConverter.convert();
         });
 
-        const isValid =
-            resultsByKey.every((entry) => entry.result.isValid) && allOfResults.every((result) => result.isValid);
-
         const usedProvidedExample =
             this.example !== undefined &&
             (resultsByKey.some(({ result }) => result.usedProvidedExample) ||
@@ -919,22 +916,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     });
                 });
             } else {
-                // Additional properties are allowed, but create warning errors for unexpected properties
-                // We'll add these as separate warning results that don't affect validation
+                // Additional properties are allowed - preserve them in the example
                 additionalPropertyKeys.forEach((key) => {
-                    const breadcrumbPath = [...this.breadcrumbs, key].join(".");
-                    const warningError = {
-                        message: `Additional property ${key} is not allowed`,
-                        path: [...this.breadcrumbs, key]
-                    };
                     additionalPropertiesResults.push({
                         key,
                         result: {
-                            isValid: true, // Keep as valid since additional properties are allowed
+                            isValid: true,
                             coerced: false,
                             usedProvidedExample: true,
-                            validExample: undefined, // Don't provide a valid example to avoid further validation
-                            errors: [warningError] // Include as warning error
+                            validExample: exampleObj[key],
+                            errors: []
                         }
                     });
                 });
@@ -947,6 +938,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 example[key] = result.validExample;
             }
         }
+
+        const isValid =
+            resultsByKey.every((entry) => entry.result.isValid) &&
+            allOfResults.every((result) => result.isValid) &&
+            additionalPropertiesResults.every(({ result }) => result.isValid);
 
         if (Object.keys(example).length === 0) {
             const firstValidNonObject = allOfResults.find(

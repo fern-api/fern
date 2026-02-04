@@ -244,4 +244,120 @@ describe("ExampleConverter", () => {
             expect(result).toBeLessThanOrEqual(0.01);
         });
     });
+
+    describe("additionalProperties", () => {
+        it("should preserve additional properties when additionalProperties is true", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" },
+                    slug: { type: "string" }
+                },
+                required: ["name", "slug"],
+                additionalProperties: true
+            };
+
+            const example = {
+                name: "My Item",
+                slug: "my-item",
+                customField: "custom value",
+                anotherField: 42
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual({
+                name: "My Item",
+                slug: "my-item",
+                customField: "custom value",
+                anotherField: 42
+            });
+            expect(result.errors).toHaveLength(0);
+        });
+
+        it("should reject additional properties when additionalProperties is false", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: false
+            };
+
+            const example = {
+                name: "My Item",
+                extraField: "should not be allowed"
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.length).toBeGreaterThan(0);
+            expect(result.errors[0]?.message).toContain("extraField");
+        });
+
+        it("should preserve additional properties with various types when additionalProperties is true", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: true
+            };
+
+            const example = {
+                name: "Test",
+                stringField: "hello",
+                numberField: 123,
+                booleanField: true,
+                arrayField: [1, 2, 3],
+                objectField: { nested: "value" }
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual(example);
+            expect(result.errors).toHaveLength(0);
+        });
+    });
 });
