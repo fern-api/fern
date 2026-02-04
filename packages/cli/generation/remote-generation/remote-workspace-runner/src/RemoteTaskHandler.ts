@@ -7,7 +7,6 @@ import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import chalk from "chalk";
-import decompress from "decompress";
 import { createWriteStream } from "fs";
 import { chmod, cp, mkdir, readdir, rm } from "fs/promises";
 import path from "path";
@@ -206,7 +205,8 @@ async function downloadFilesForTask({
         } else {
             await downloadZipForTask({
                 s3PreSignedReadUrl,
-                absolutePathToLocalOutput
+                absolutePathToLocalOutput,
+                context
             });
         }
 
@@ -218,10 +218,12 @@ async function downloadFilesForTask({
 
 async function downloadZipForTask({
     s3PreSignedReadUrl,
-    absolutePathToLocalOutput
+    absolutePathToLocalOutput,
+    context
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
+    context: InteractiveTaskContext;
 }): Promise<void> {
     // initiate request
     const request = await axios.get(s3PreSignedReadUrl, {
@@ -237,7 +239,11 @@ async function downloadZipForTask({
     // Force remove the directory to handle read-only files (e.g., .git/objects)
     await forceRemoveDirectory(absolutePathToLocalOutput);
     await mkdir(absolutePathToLocalOutput, { recursive: true });
-    await decompress(outputZipPath, absolutePathToLocalOutput);
+    // Use unzip command-line tool instead of decompress library to handle files larger than 2 GiB
+    // Node.js has a 2 GiB limit for reading files into buffers, which the decompress library hits
+    await loggingExeca(context.logger, "unzip", ["-o", "-q", outputZipPath, "-d", absolutePathToLocalOutput], {
+        doNotPipeOutput: true
+    });
 }
 
 async function forceRemoveDirectory(dirPath: AbsoluteFilePath): Promise<void> {
@@ -325,7 +331,7 @@ async function downloadFilesWithFernIgnoreInExistingRepo({
 
     await runGitCommand(["rm", "-rf", "."], absolutePathToLocalOutput, context);
 
-    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: absolutePathToLocalOutput });
+    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: absolutePathToLocalOutput, context });
 
     await runGitCommand(["add", "."], absolutePathToLocalOutput, context);
 
@@ -361,7 +367,7 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
     await runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir, context);
 
-    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: tmpOutputResolutionDir });
+    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: tmpOutputResolutionDir, context });
 
     await runGitCommand(["add", "."], tmpOutputResolutionDir, context);
 
@@ -377,10 +383,12 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
 async function downloadAndExtractZipToDirectory({
     s3PreSignedReadUrl,
-    outputPath
+    outputPath,
+    context
 }: {
     s3PreSignedReadUrl: string;
     outputPath: AbsoluteFilePath;
+    context: InteractiveTaskContext;
 }): Promise<void> {
     const request = await axios.get(s3PreSignedReadUrl, {
         responseType: "stream"
@@ -390,5 +398,9 @@ async function downloadAndExtractZipToDirectory({
     const outputZipPath = path.join(tmpDir.path, "output.zip");
     await pipeline(request.data, createWriteStream(outputZipPath));
 
-    await decompress(outputZipPath, outputPath);
+    // Use unzip command-line tool instead of decompress library to handle files larger than 2 GiB
+    // Node.js has a 2 GiB limit for reading files into buffers, which the decompress library hits
+    await loggingExeca(context.logger, "unzip", ["-o", "-q", outputZipPath, "-d", outputPath], {
+        doNotPipeOutput: true
+    });
 }

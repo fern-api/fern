@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.1
+  changelogEntry:
+    - summary: |
+        Fix extraction of large generated ZIP files (>2 GiB) by using the `unzip` command-line tool instead of the `decompress` library. Node.js has a 2 GiB limit for reading files into buffers, which caused the `decompress` library to fail with `ERR_FS_FILE_TOO_LARGE` errors for large SDK outputs.
+      type: fix
+  createdAt: "2026-02-04"
+  irVersion: 63
+
 - version: 3.63.0
   changelogEntry:
     - summary: |
