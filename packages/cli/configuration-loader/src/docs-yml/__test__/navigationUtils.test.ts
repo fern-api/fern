@@ -1392,3 +1392,262 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
         }
     });
 });
+
+describe("buildNavigationForDirectory with section position from index file", () => {
+    it("should sort sections based on position from index file frontmatter", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "zebra-section",
+                        absolutePath: "/test/zebra-section" as AbsoluteFilePath,
+                        contents: []
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "alpha-section",
+                        absolutePath: "/test/alpha-section" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (path === ("/test/zebra-section" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/zebra-section/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "page.md",
+                        absolutePath: "/test/zebra-section/page.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else if (path === ("/test/alpha-section" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/alpha-section/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "page.md",
+                        absolutePath: "/test/alpha-section/page.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/zebra-section/index.mdx") {
+                return "---\nposition: 1\n---\n# Zebra Section";
+            }
+            if (path === "/test/alpha-section/index.mdx") {
+                return "---\nposition: 2\n---\n# Alpha Section";
+            }
+            return "---\n---\n# Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(2);
+        expect(result[0]).toMatchObject({ type: "section", title: "Zebra Section" });
+        expect(result[1]).toMatchObject({ type: "section", title: "Alpha Section" });
+    });
+
+    it("should sort sections with position before sections without position", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "alpha-section",
+                        absolutePath: "/test/alpha-section" as AbsoluteFilePath,
+                        contents: []
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "zebra-section",
+                        absolutePath: "/test/zebra-section" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (path === ("/test/alpha-section" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "page.md",
+                        absolutePath: "/test/alpha-section/page.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else if (path === ("/test/zebra-section" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/zebra-section/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "file" as const,
+                        name: "page.md",
+                        absolutePath: "/test/zebra-section/page.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/zebra-section/index.mdx") {
+                return "---\nposition: 1\n---\n# Zebra Section";
+            }
+            return "---\n---\n# Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(2);
+        expect(result[0]).toMatchObject({ type: "section", title: "Zebra Section" });
+        expect(result[1]).toMatchObject({ type: "section", title: "Alpha Section" });
+    });
+
+    it("should sort pages and sections together based on position", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "page-a.md",
+                        absolutePath: "/test/page-a.md" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "section-b",
+                        absolutePath: "/test/section-b" as AbsoluteFilePath,
+                        contents: []
+                    },
+                    {
+                        type: "file" as const,
+                        name: "page-c.md",
+                        absolutePath: "/test/page-c.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else if (path === ("/test/section-b" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "index.mdx",
+                        absolutePath: "/test/section-b/index.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/page-a.md") {
+                return "---\nposition: 3\n---\n# Page A";
+            }
+            if (path === "/test/section-b/index.mdx") {
+                return "---\nposition: 1\n---\n# Section B";
+            }
+            if (path === "/test/page-c.md") {
+                return "---\nposition: 2\n---\n# Page C";
+            }
+            return "---\n---\n# Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(3);
+        expect(result[0]).toMatchObject({ type: "section", title: "Section B" });
+        expect(result[1]).toMatchObject({ type: "page", title: "Page C" });
+        expect(result[2]).toMatchObject({ type: "page", title: "Page A" });
+    });
+
+    it("should not use position from index file if no index file exists", async () => {
+        let callCount = 0;
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "zebra-section",
+                        absolutePath: "/test/zebra-section" as AbsoluteFilePath,
+                        contents: []
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "alpha-section",
+                        absolutePath: "/test/alpha-section" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            } else if (path === ("/test/zebra-section" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "page.md",
+                        absolutePath: "/test/zebra-section/page.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else if (path === ("/test/alpha-section" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "page.md",
+                        absolutePath: "/test/alpha-section/page.md" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            } else {
+                return [];
+            }
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(2);
+        expect(result[0]).toMatchObject({ type: "section", title: "Alpha Section" });
+        expect(result[1]).toMatchObject({ type: "section", title: "Zebra Section" });
+    });
+});
