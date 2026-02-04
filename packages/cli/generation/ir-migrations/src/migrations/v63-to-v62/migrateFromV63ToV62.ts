@@ -91,8 +91,23 @@ function convertEnvironments(environments: IrVersions.V63.Environments): IrVersi
                 environments: environments.environments.map((env) => convertSingleBaseUrlEnvironment(env))
             });
         case "multipleBaseUrls":
-            return IrVersions.V62.environment.Environments.multipleBaseUrls(environments);
+            return IrVersions.V62.environment.Environments.multipleBaseUrls({
+                baseUrls: environments.baseUrls,
+                environments: environments.environments.map((env) => convertMultipleBaseUrlsEnvironment(env))
+            });
     }
+}
+
+function convertMultipleBaseUrlsEnvironment(
+    env: IrVersions.V63.MultipleBaseUrlsEnvironment
+): IrVersions.V62.environment.MultipleBaseUrlsEnvironment {
+    // Strip out defaultUrls, urlTemplates, and urlVariables which don't exist in v62
+    return {
+        id: env.id,
+        name: env.name,
+        urls: env.urls,
+        docs: env.docs
+    };
 }
 
 function convertSingleBaseUrlEnvironment(
