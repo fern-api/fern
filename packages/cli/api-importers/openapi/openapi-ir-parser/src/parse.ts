@@ -16,6 +16,7 @@ import { AsyncAPIV2 } from "./asyncapi/v2";
 import { AsyncAPIV3 } from "./asyncapi/v3";
 import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
 import { getParseOptions, ParseOpenAPIOptions } from "./options";
+import { createSchemaCollisionTracker } from "./utils/schemaCollision";
 
 export type Document = OpenAPIDocument | AsyncAPIDocument;
 
@@ -616,11 +617,24 @@ function merge(
 }
 
 function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
-    schemas1.rootSchemas = { ...schemas1.rootSchemas, ...schemas2.rootSchemas };
+    const collisionTracker = createSchemaCollisionTracker();
 
+    // Merge root schemas with collision detection
+    const mergedRootSchemas = { ...schemas1.rootSchemas };
+    for (const [key, schema] of Object.entries(schemas2.rootSchemas)) {
+        const uniqueKey = collisionTracker.getUniqueSchemaId(key);
+        mergedRootSchemas[uniqueKey] = schema;
+    }
+    schemas1.rootSchemas = mergedRootSchemas;
+
+    // Merge namespaced schemas with collision detection
     for (const [namespace, namespaceSchemas] of Object.entries(schemas2.namespacedSchemas)) {
         if (schemas1.namespacedSchemas[namespace] != null) {
-            schemas1.namespacedSchemas[namespace] = { ...schemas1.namespacedSchemas[namespace], ...namespaceSchemas };
+            const existingSchemas = schemas1.namespacedSchemas[namespace];
+            for (const [key, schema] of Object.entries(namespaceSchemas)) {
+                const uniqueKey = collisionTracker.getUniqueSchemaId(key);
+                existingSchemas[uniqueKey] = schema;
+            }
         } else {
             schemas1.namespacedSchemas[namespace] = namespaceSchemas;
         }
