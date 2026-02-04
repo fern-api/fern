@@ -76,8 +76,8 @@ module Seed
           in Module
             case type
             in ->(t) {
-                 t.singleton_class.include?(Enum) ||
-                   t.singleton_class.include?(Union)
+                 t.singleton_class.included_modules.include?(Enum) ||
+                   t.singleton_class.included_modules.include?(Union)
                }
               return type.coerce(value, strict: strict)
             else
@@ -94,21 +94,6 @@ module Seed
 
         def self.symbolize_keys(hash)
           hash.transform_keys(&:to_sym)
-        end
-
-        # Converts camelCase keys to snake_case symbols
-        # This allows SDK methods to accept both snake_case and camelCase keys
-        # e.g., { refundMethod: ... } becomes { refund_method: ... }
-        #
-        # @param hash [Hash]
-        # @return [Hash]
-        def self.normalize_keys(hash)
-          hash.transform_keys do |key|
-            key_str = key.to_s
-            # Convert camelCase to snake_case
-            snake_case = key_str.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
-            snake_case.to_sym
-          end
         end
       end
     end

@@ -162,6 +162,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             idempotent: isIdempotent,
             idToAuthScheme: this.idToAuthScheme,
             topLevelServers: this.topLevelServers,
+            pathLevelServers: this.pathItem.servers,
             streamingExtension
         });
         return operationConverter.convert();

@@ -6,7 +6,7 @@ require_relative "custom.gemspec"
 # NOTE: A handful of these fields are required as part of the Ruby specification.
 #       You can change them here or overwrite them in the custom gemspec file.
 Gem::Specification.new do |spec|
-  spec.name = "fern_server-url-templating"
+  spec.name = "seed"
   spec.authors = ["Seed"]
   spec.version = Seed::VERSION
   spec.summary = "Ruby client library for the Seed API"

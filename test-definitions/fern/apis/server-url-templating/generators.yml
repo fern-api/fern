@@ -2,3 +2,6 @@
 api:
   specs:
     - openapi: ./openapi.yml
+      settings:
+        title-as-schema-name: false
+        group-multi-api-environments: true

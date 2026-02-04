@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Server URL Templating API
-  description: API demonstrating server URL templating with variables
+  description: API demonstrating server URL templating with variables across multiple base URLs
   version: 1.0.0
 servers:
   - url: https://api.{region}.{environment}.example.com/v1
@@ -54,6 +54,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+  /auth/token:
+    post:
+      operationId: getToken
+      summary: Get authentication token
+      servers:
+        - url: https://auth.{region}.example.com
+          x-fern-server-name: Auth
+          x-fern-default-url: https://auth.example.com
+          variables:
+            region:
+              default: us-east-1
+              description: The AWS region for auth service
+              enum:
+                - us-east-1
+                - us-west-2
+                - eu-west-1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
 components:
   schemas:
     User:
@@ -68,3 +97,23 @@ components:
           type: string
         email:
           type: string
+    TokenRequest:
+      type: object
+      required:
+        - client_id
+        - client_secret
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+    TokenResponse:
+      type: object
+      required:
+        - access_token
+        - expires_in
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer

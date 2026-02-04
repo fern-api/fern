@@ -70,21 +70,28 @@ export class ServersConverter extends AbstractConverter<
                     server: baseUrl,
                     context: this.context
                 });
-                const endpointLevelServers = this.endpointLevelServers?.map((server) => [
+                const endpointLevelServerEntries = this.endpointLevelServers?.map((server) => [
                     ServersConverter.getServerName({ server, context: this.context }),
                     this.getServerUrl(server)
                 ]);
+
+                const { defaultUrls, urlTemplates, urlVariables } = this.buildMultiUrlTemplateFields({
+                    defaultBaseUrlId,
+                    topLevelServer: baseUrl,
+                    endpointServers: this.endpointLevelServers ?? []
+                });
+
                 return {
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
                     urls: {
                         [defaultBaseUrlId]: this.getServerUrl(baseUrl),
-                        ...Object.fromEntries(endpointLevelServers ?? [])
+                        ...Object.fromEntries(endpointLevelServerEntries ?? [])
                     },
                     docs: baseUrl.description,
-                    defaultUrls: undefined,
-                    urlTemplates: undefined,
-                    urlVariables: undefined
+                    defaultUrls,
+                    urlTemplates,
+                    urlVariables
                 };
             });
 
@@ -211,6 +218,75 @@ export class ServersConverter extends AbstractConverter<
     }
 
     /**
+     * Builds defaultUrls, urlTemplates, and urlVariables maps for a MultipleBaseUrlsEnvironment.
+     * Only populates these fields when at least one server has variables.
+     */
+    private buildMultiUrlTemplateFields({
+        defaultBaseUrlId,
+        topLevelServer,
+        endpointServers
+    }: {
+        defaultBaseUrlId: string;
+        topLevelServer: OpenAPIV3_1.ServerObject;
+        endpointServers: OpenAPIV3_1.ServerObject[];
+    }): {
+        defaultUrls: Record<string, string> | undefined;
+        urlTemplates: Record<string, string> | undefined;
+        urlVariables: Record<string, ServerVariable[]> | undefined;
+    } {
+        const defaultUrls: Record<string, string> = {};
+        const urlTemplates: Record<string, string> = {};
+        const urlVariables: Record<string, ServerVariable[]> = {};
+        let hasAnyVariables = false;
+
+        // Check top-level server for variables
+        if (topLevelServer.variables != null && Object.keys(topLevelServer.variables).length > 0) {
+            hasAnyVariables = true;
+            const defaultUrl = this.extractFernDefaultUrlFromServer(topLevelServer);
+            if (defaultUrl != null) {
+                defaultUrls[defaultBaseUrlId] = defaultUrl;
+            }
+            urlTemplates[defaultBaseUrlId] = this.maybeRemoveTrailingSlashIfNotEmpty(topLevelServer.url);
+            urlVariables[defaultBaseUrlId] = this.convertServerVariables(topLevelServer.variables);
+        }
+
+        // Check endpoint-level servers for variables
+        for (const server of endpointServers) {
+            const endpointServerName = ServersConverter.getServerName({ server, context: this.context });
+            if (server.variables != null && Object.keys(server.variables).length > 0) {
+                hasAnyVariables = true;
+                const defaultUrl = this.extractFernDefaultUrlFromServer(server);
+                if (defaultUrl != null) {
+                    defaultUrls[endpointServerName] = defaultUrl;
+                }
+                urlTemplates[endpointServerName] = this.maybeRemoveTrailingSlashIfNotEmpty(server.url);
+                urlVariables[endpointServerName] = this.convertServerVariables(server.variables);
+            }
+        }
+
+        if (!hasAnyVariables) {
+            return { defaultUrls: undefined, urlTemplates: undefined, urlVariables: undefined };
+        }
+
+        return {
+            defaultUrls: Object.keys(defaultUrls).length > 0 ? defaultUrls : undefined,
+            urlTemplates,
+            urlVariables
+        };
+    }
+
+    /**
+     * Extracts the x-fern-default-url extension from a single server object.
+     */
+    private extractFernDefaultUrlFromServer(server: OpenAPIV3_1.ServerObject): string | undefined {
+        const defaultUrl = (server as Record<string, unknown>)[X_FERN_DEFAULT_URL];
+        if (typeof defaultUrl === "string") {
+            return this.maybeRemoveTrailingSlashIfNotEmpty(defaultUrl);
+        }
+        return undefined;
+    }
+
+    /**
      * Extracts the x-fern-default-url extension from any server in the list.
      * This URL is used as a fallback when no variables are provided.
      */
@@ -219,9 +295,9 @@ export class ServersConverter extends AbstractConverter<
             return undefined;
         }
         for (const server of this.servers) {
-            const defaultUrl = (server as Record<string, unknown>)[X_FERN_DEFAULT_URL];
-            if (typeof defaultUrl === "string") {
-                return this.maybeRemoveTrailingSlashIfNotEmpty(defaultUrl);
+            const result = this.extractFernDefaultUrlFromServer(server);
+            if (result != null) {
+                return result;
             }
         }
         return undefined;
