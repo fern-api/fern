@@ -54,7 +54,6 @@
     "@fern-fern/fiddle-sdk": "0.0.775",
     "axios": "^1.12.0",
     "chalk": "^5.3.0",
-    "decompress": "^4.2.1",
     "form-data": "4.0.4",
     "image-size": "^1.2.1",
     "js-yaml": "^4.1.1",
@@ -66,7 +65,6 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/decompress": "^4.2.7",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/mime-types": "^2.1.4",
