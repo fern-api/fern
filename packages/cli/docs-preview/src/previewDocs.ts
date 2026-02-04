@@ -196,12 +196,12 @@ export async function getPreviewDocsDefinition({
                 absolutePathToMarkdownFile: absoluteFilePath,
                 context
             });
-            
+
             const markdownReplacedMdAndCode = transformAtPrefixImports({
                 markdown: markdownReplacedCode,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath
-            })
+            });
 
             const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
