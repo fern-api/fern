@@ -2,7 +2,7 @@
 - version: 3.63.1
   changelogEntry:
     - summary: |
-        Fix extraction of large generated ZIP files (>2 GiB) by using the `unzip` command-line tool instead of the `decompress` library. Node.js has a 2 GiB limit for reading files into buffers, which caused the `decompress` library to fail with `ERR_FS_FILE_TOO_LARGE` errors for large SDK outputs.
+        Fix extraction of large generated ZIP files (>2 GiB) by using the `yauzl` library instead of the `decompress` library. Node.js has a 2 GiB limit for reading files into buffers, which caused the `decompress` library to fail with `ERR_FS_FILE_TOO_LARGE` errors for large SDK outputs. The `yauzl` library streams ZIP entries individually instead of loading the entire file into memory.
       type: fix
   createdAt: "2026-02-04"
   irVersion: 63
