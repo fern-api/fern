@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.2
+  changelogEntry:
+    - summary: |
+        Strip domain+version prefix from OpenAPI tags when generating SDK service names. When using
+        namespaced OpenAPI specs (e.g., Twilio APIs), tags like `TaskrouterV1Activity` or `Api20100401Message`
+        are now simplified to `Activity` and `Message` respectively, resulting in cleaner SDK method paths
+        like `client.taskrouter.activity` instead of `client.taskrouter.taskrouter_v1activity`.
+      type: fix
+  createdAt: "2026-02-04"
+  irVersion: 63
+
 - version: 3.60.1
   changelogEntry:
     - summary: |

@@ -27,11 +27,38 @@ function resolveEndpointLocationWithNamespaceOverride({
     return location;
 }
 
+/**
+ * Strips the domain+version prefix from a tag when a namespace is defined.
+ * This handles patterns like:
+ * - TaskrouterV1Activity -> Activity (when namespace is "taskrouter")
+ * - Api20100401Message -> Message (when namespace is "v2010")
+ * - AccountsV1AuthTokenPromotion -> AuthTokenPromotion (when namespace is "accounts")
+ *
+ * The pattern matches: {PascalCaseWord(s)}{Version}{Resource}
+ * where Version can be: V followed by digits (V1, V2) or a date-like number (20100401)
+ */
+function stripDomainVersionPrefixFromTag(tag: string, namespace: string | undefined): string {
+    if (namespace == null) {
+        return tag;
+    }
+
+    // Pattern: {PascalCaseWord(s)}{Version}{Resource}
+    // Version can be: V followed by digits, or a date-like number (6+ digits)
+    const match = tag.match(/^((?:[A-Z][a-z0-9]*)+?)(V\d+|\d{6,})(.+)$/);
+    if (match && match[3]) {
+        return match[3];
+    }
+
+    return tag;
+}
+
 function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const namespace = endpoint.namespace;
 
     // Ignore the namespace tag as we'll apply that later, universally
-    const tag = endpoint.tags.filter((tag) => tag !== namespace)[0];
+    const rawTag = endpoint.tags.filter((tag) => tag !== namespace)[0];
+    // Strip domain+version prefix from tag when namespace is defined
+    const tag = rawTag != null ? stripDomainVersionPrefixFromTag(rawTag, namespace) : rawTag;
     const operationId = endpoint.operationId;
 
     if (operationId == null) {
