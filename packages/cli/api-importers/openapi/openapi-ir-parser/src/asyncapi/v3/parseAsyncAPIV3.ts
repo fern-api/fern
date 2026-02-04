@@ -76,7 +76,11 @@ export function parseAsyncAPIV3({
 
     const collisionTracker = createSchemaCollisionTracker();
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const uniqueSchemaId = collisionTracker.getUniqueSchemaId(schemaId, context.logger);
+        const uniqueSchemaId = collisionTracker.getUniqueSchemaId(
+            schemaId,
+            context.logger,
+            context.options.resolveSchemaCollisions
+        );
         schemas[uniqueSchemaId] = convertSchema(
             schema,
             false,
@@ -153,7 +157,11 @@ export function parseAsyncAPIV3({
 
     for (const [channelId, channelSchemas] of Object.entries(messageSchemas)) {
         for (const [messageId, messageSchema] of Object.entries(channelSchemas)) {
-            const uniqueMessageId = messageCollisionTracker.getUniqueSchemaId(messageId, context.logger);
+            const uniqueMessageId = messageCollisionTracker.getUniqueSchemaId(
+                messageId,
+                context.logger,
+                context.options.resolveSchemaCollisions
+            );
             flattenedMessageSchemas[uniqueMessageId] = messageSchema;
         }
     }
@@ -412,7 +420,11 @@ export function parseAsyncAPIV3({
     const finalCollisionTracker = createSchemaCollisionTracker();
 
     for (const [schemaId, schemaWithExample] of Object.entries(allSchemasWithExample)) {
-        const uniqueSchemaId = finalCollisionTracker.getUniqueSchemaId(schemaId, context.logger);
+        const uniqueSchemaId = finalCollisionTracker.getUniqueSchemaId(
+            schemaId,
+            context.logger,
+            context.options.resolveSchemaCollisions
+        );
         allSchemas[uniqueSchemaId] = convertSchemaWithExampleToSchema(schemaWithExample);
     }
 

@@ -21,7 +21,7 @@ describe("Schema Collision", () => {
     describe("getUniqueSchemaId", () => {
         it("should return original ID for first occurrence", () => {
             const tracker = createSchemaCollisionTracker();
-            const uniqueId = tracker.getUniqueSchemaId("MessageSchema", mockLogger);
+            const uniqueId = tracker.getUniqueSchemaId("MessageSchema", mockLogger, true);
 
             expect(uniqueId).toBe("MessageSchema");
             expect(mockLogger.warn).not.toHaveBeenCalled();
@@ -31,27 +31,27 @@ describe("Schema Collision", () => {
             const tracker = createSchemaCollisionTracker();
 
             // First occurrence
-            const firstId = tracker.getUniqueSchemaId("MessageSchema", mockLogger);
+            const firstId = tracker.getUniqueSchemaId("MessageSchema", mockLogger, true);
             expect(firstId).toBe("MessageSchema");
 
             // Second occurrence (collision)
-            const secondId = tracker.getUniqueSchemaId("MessageSchema", mockLogger);
+            const secondId = tracker.getUniqueSchemaId("MessageSchema", mockLogger, true);
             expect(secondId).toBe("MessageSchema2");
             expect(mockLogger.warn).toHaveBeenCalledWith(
                 "Schema name collision detected: 'MessageSchema' already exists. Renaming to 'MessageSchema2' to avoid conflicts."
             );
 
             // Third occurrence
-            const thirdId = tracker.getUniqueSchemaId("MessageSchema", mockLogger);
+            const thirdId = tracker.getUniqueSchemaId("MessageSchema", mockLogger, true);
             expect(thirdId).toBe("MessageSchema3");
         });
 
         it("should handle multiple different schemas independently", () => {
             const tracker = createSchemaCollisionTracker();
 
-            const id1 = tracker.getUniqueSchemaId("UserSchema", mockLogger);
-            const id2 = tracker.getUniqueSchemaId("MessageSchema", mockLogger);
-            const id3 = tracker.getUniqueSchemaId("UserSchema", mockLogger);
+            const id1 = tracker.getUniqueSchemaId("UserSchema", mockLogger, true);
+            const id2 = tracker.getUniqueSchemaId("MessageSchema", mockLogger, true);
+            const id3 = tracker.getUniqueSchemaId("UserSchema", mockLogger, true);
 
             expect(id1).toBe("UserSchema");
             expect(id2).toBe("MessageSchema");
@@ -62,7 +62,7 @@ describe("Schema Collision", () => {
     describe("getUniqueTitleName", () => {
         it("should return original title for first occurrence", () => {
             const tracker = createSchemaCollisionTracker();
-            const uniqueName = tracker.getUniqueTitleName("User", "user_schema", mockLogger);
+            const uniqueName = tracker.getUniqueTitleName("User", "user_schema", mockLogger, true);
 
             expect(uniqueName).toBe("User");
             expect(mockLogger.warn).not.toHaveBeenCalled();
@@ -72,11 +72,11 @@ describe("Schema Collision", () => {
             const tracker = createSchemaCollisionTracker();
 
             // First occurrence
-            const firstName = tracker.getUniqueTitleName("User", "user_schema_1", mockLogger);
+            const firstName = tracker.getUniqueTitleName("User", "user_schema_1", mockLogger, true);
             expect(firstName).toBe("User");
 
             // Second occurrence (collision)
-            const secondName = tracker.getUniqueTitleName("User", "user_schema_2", mockLogger);
+            const secondName = tracker.getUniqueTitleName("User", "user_schema_2", mockLogger, true);
             expect(secondName).toBe("User2");
             expect(mockLogger.warn).toHaveBeenCalledWith(
                 "Schema title collision detected: Multiple schemas use title 'User'. Schema 'user_schema_2' retitled to 'User2' to avoid conflicts."
@@ -86,11 +86,37 @@ describe("Schema Collision", () => {
         it("should work without logger", () => {
             const tracker = createSchemaCollisionTracker();
 
-            const firstName = tracker.getUniqueSchemaId("Test");
-            const secondName = tracker.getUniqueSchemaId("Test");
+            const firstName = tracker.getUniqueSchemaId("Test", undefined, true);
+            const secondName = tracker.getUniqueSchemaId("Test", undefined, true);
 
             expect(firstName).toBe("Test");
             expect(secondName).toBe("Test2");
+        });
+
+        it("should throw error when collisions occur and resolveCollisions is false", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            const firstName = tracker.getUniqueSchemaId("Test", mockLogger, false);
+            expect(firstName).toBe("Test");
+
+            expect(() => {
+                tracker.getUniqueSchemaId("Test", mockLogger, false);
+            }).toThrow(
+                "Schema name collision detected: 'Test' already exists. Use 'resolve-schema-collisions: true' to automatically resolve collisions."
+            );
+        });
+
+        it("should throw error when title collisions occur and resolveCollisions is false", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            const firstName = tracker.getUniqueTitleName("User", "user_schema_1", mockLogger, false);
+            expect(firstName).toBe("User");
+
+            expect(() => {
+                tracker.getUniqueTitleName("User", "user_schema_2", mockLogger, false);
+            }).toThrow(
+                "Schema title collision detected: Multiple schemas use title 'User'. Use 'resolve-schema-collisions: true' to automatically resolve collisions."
+            );
         });
     });
 
@@ -99,10 +125,10 @@ describe("Schema Collision", () => {
             const tracker = createSchemaCollisionTracker();
 
             // These should not interfere with each other
-            const schemaId = tracker.getUniqueSchemaId("User", mockLogger);
-            const titleName = tracker.getUniqueTitleName("User", "different_schema", mockLogger);
-            const schemaId2 = tracker.getUniqueSchemaId("User", mockLogger);
-            const titleName2 = tracker.getUniqueTitleName("User", "another_schema", mockLogger);
+            const schemaId = tracker.getUniqueSchemaId("User", mockLogger, true);
+            const titleName = tracker.getUniqueTitleName("User", "different_schema", mockLogger, true);
+            const schemaId2 = tracker.getUniqueSchemaId("User", mockLogger, true);
+            const titleName2 = tracker.getUniqueTitleName("User", "another_schema", mockLogger, true);
 
             expect(schemaId).toBe("User");
             expect(titleName).toBe("User");
@@ -118,10 +144,10 @@ describe("Schema Collision", () => {
             const tracker = createSchemaCollisionTracker();
 
             // First, create some collisions
-            const id1 = tracker.getUniqueSchemaId("Test", mockLogger);
-            const id2 = tracker.getUniqueSchemaId("Test", mockLogger);
-            const title1 = tracker.getUniqueTitleName("Example", "schema1", mockLogger);
-            const title2 = tracker.getUniqueTitleName("Example", "schema2", mockLogger);
+            const id1 = tracker.getUniqueSchemaId("Test", mockLogger, true);
+            const id2 = tracker.getUniqueSchemaId("Test", mockLogger, true);
+            const title1 = tracker.getUniqueTitleName("Example", "schema1", mockLogger, true);
+            const title2 = tracker.getUniqueTitleName("Example", "schema2", mockLogger, true);
 
             expect(id1).toBe("Test");
             expect(id2).toBe("Test2");
@@ -133,8 +159,8 @@ describe("Schema Collision", () => {
             tracker.reset();
 
             // After reset, should start from scratch (no collisions)
-            const resetId = tracker.getUniqueSchemaId("Test", mockLogger);
-            const resetTitle = tracker.getUniqueTitleName("Example", "schema3", mockLogger);
+            const resetId = tracker.getUniqueSchemaId("Test", mockLogger, true);
+            const resetTitle = tracker.getUniqueTitleName("Example", "schema3", mockLogger, true);
 
             expect(resetId).toBe("Test");
             expect(resetTitle).toBe("Example");

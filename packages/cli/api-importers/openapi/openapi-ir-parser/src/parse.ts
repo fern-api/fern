@@ -118,7 +118,7 @@ export function parse({
                         };
                     }
                     if (parsedAsyncAPI.groupedSchemas != null) {
-                        ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
+                        ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas, options);
                     }
                     if (parsedAsyncAPI.basePath != null) {
                         ir.basePath = parsedAsyncAPI.basePath;
@@ -384,7 +384,7 @@ function merge(
                 ...ir1.channels,
                 ...ir2.channels
             },
-            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
             variables: {
                 ...ir1.variables,
                 ...ir2.variables
@@ -544,7 +544,7 @@ function merge(
                 ...ir1.channels,
                 ...ir2.channels
             },
-            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
             variables: {
                 ...ir1.variables,
                 ...ir2.variables
@@ -595,7 +595,7 @@ function merge(
             ...ir1.channels,
             ...ir2.channels
         },
-        groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+        groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
         variables: {
             ...ir1.variables,
             ...ir2.variables
@@ -616,13 +616,13 @@ function merge(
     };
 }
 
-function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
+function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial<ParseOpenAPIOptions>): Schemas {
     const collisionTracker = createSchemaCollisionTracker();
 
     // Merge root schemas with collision detection
     const mergedRootSchemas = { ...schemas1.rootSchemas };
     for (const [key, schema] of Object.entries(schemas2.rootSchemas)) {
-        const uniqueKey = collisionTracker.getUniqueSchemaId(key);
+        const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, options?.resolveSchemaCollisions ?? false);
         mergedRootSchemas[uniqueKey] = schema;
     }
     schemas1.rootSchemas = mergedRootSchemas;
@@ -632,7 +632,11 @@ function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
         if (schemas1.namespacedSchemas[namespace] != null) {
             const existingSchemas = schemas1.namespacedSchemas[namespace];
             for (const [key, schema] of Object.entries(namespaceSchemas)) {
-                const uniqueKey = collisionTracker.getUniqueSchemaId(key);
+                const uniqueKey = collisionTracker.getUniqueSchemaId(
+                    key,
+                    undefined,
+                    options?.resolveSchemaCollisions ?? false
+                );
                 existingSchemas[uniqueKey] = schema;
             }
         } else {

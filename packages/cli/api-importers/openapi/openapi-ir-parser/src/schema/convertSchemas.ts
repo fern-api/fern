@@ -78,7 +78,12 @@ function getDisambiguatedNameOverride(
     if (!isComponentSchema) {
         return baseOverride;
     }
-    return globalTitleCollisionTracker.getUniqueTitleName(baseOverride, originalName, context.logger);
+    return globalTitleCollisionTracker.getUniqueTitleName(
+        baseOverride,
+        originalName,
+        context.logger,
+        context.options.resolveSchemaCollisions
+    );
 }
 
 function isInlinable(

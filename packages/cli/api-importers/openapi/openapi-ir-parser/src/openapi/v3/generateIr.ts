@@ -211,7 +211,7 @@ export function generateIr({
             continue;
         }
         // Use collision tracker for unique key generation
-        const uniqueKey = collisionTracker.getUniqueSchemaId(key, context.logger);
+        const uniqueKey = collisionTracker.getUniqueSchemaId(key, context.logger, options.resolveSchemaCollisions);
         schemas[uniqueKey] = schema;
     }
 
