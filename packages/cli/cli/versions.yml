@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.1
+  changelogEntry:
+    - summary: |
+        Fix additionalProperties in examples being lost when a schema defines `additionalProperties: true`. Previously, additional properties in examples were set to undefined during conversion, causing them to be stripped from the output. Now the actual values from the example are preserved.
+      type: fix
+  createdAt: "2026-02-04"
+  irVersion: 63
+
 - version: 3.63.0
   changelogEntry:
     - summary: |
