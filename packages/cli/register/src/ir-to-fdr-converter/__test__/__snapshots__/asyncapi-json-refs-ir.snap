@@ -693,6 +693,7 @@
   "websocketChannels": {
     "channel_plantOrders": {
       "auth": false,
+      "authMessage": undefined,
       "availability": undefined,
       "baseUrl": "production",
       "displayName": undefined,
@@ -1097,6 +1098,7 @@
     },
     "channel_plantUpdates": {
       "auth": false,
+      "authMessage": undefined,
       "availability": undefined,
       "baseUrl": "production",
       "displayName": undefined,
