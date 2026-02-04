@@ -118,7 +118,10 @@ function convertMultipleBaseUrlEnvironments({
                         docs: multipleBaseUrlsEnvironment.docs,
                         id: environmentName,
                         name: casingsGenerator.generateName(environmentName),
-                        urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url))
+                        urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url)),
+                        defaultUrls: undefined,
+                        urlTemplates: undefined,
+                        urlVariables: undefined
                     }),
                     singleBaseUrl: () => {
                         throw new Error(`Environment ${environmentName} does not have multiple base URLs`);

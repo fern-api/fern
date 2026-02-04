@@ -227,7 +227,10 @@ function mergeEnvironments(
                                 deconflictedEnvironments2.environments.map((env) => [env.id, env.url])
                             )
                         },
-                        docs: undefined
+                        docs: undefined,
+                        defaultUrls: undefined,
+                        urlTemplates: undefined,
+                        urlVariables: undefined
                     }))
                 })
             },
