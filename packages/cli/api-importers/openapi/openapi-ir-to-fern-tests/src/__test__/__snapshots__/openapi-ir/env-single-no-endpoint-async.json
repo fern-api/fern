@@ -189,7 +189,24 @@
     }
   },
   "groupedSchemas": {
-    "rootSchemas": {},
+    "rootSchemas": {
+      "testChannel_sendMessage": {
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "TestChannelSendMessage",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "testChannel2_sendMessage": {
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "TestChannel2SendMessage",
+        "groupName": [],
+        "type": "primitive"
+      }
+    },
     "namespacedSchemas": {}
   },
   "variables": {},

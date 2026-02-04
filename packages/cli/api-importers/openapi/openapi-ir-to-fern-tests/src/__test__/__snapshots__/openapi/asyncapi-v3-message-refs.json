@@ -6,6 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
+          "ServerResponse": "ServerResponsePayload",
           "ServerResponsePayload": {
             "docs": undefined,
             "inline": undefined,
@@ -19,6 +20,7 @@
               "openapi": "../asyncapi.yml",
             },
           },
+          "UserMessage": "UserMessagePayload",
           "UserMessagePayload": {
             "docs": undefined,
             "inline": undefined,
@@ -49,6 +51,8 @@
         docs: Response text
     source:
       openapi: ../asyncapi.yml
+  UserMessage: UserMessagePayload
+  ServerResponse: ServerResponsePayload
 ",
     },
     "chat.yml": {
@@ -59,7 +63,20 @@
           "docs": "Chat channel for testing message references",
           "examples": [
             {
-              "messages": [],
+              "messages": [
+                {
+                  "body": {
+                    "text": "text",
+                  },
+                  "type": "userMessage",
+                },
+                {
+                  "body": {
+                    "reply": "reply",
+                  },
+                  "type": "serverResponse",
+                },
+              ],
             },
           ],
           "messages": {
@@ -92,7 +109,13 @@
       origin: client
       body: root.UserMessagePayload
   examples:
-    - messages: []
+    - messages:
+        - type: userMessage
+          body:
+            text: text
+        - type: serverResponse
+          body:
+            reply: reply
 imports:
   root: __package__.yml
 ",

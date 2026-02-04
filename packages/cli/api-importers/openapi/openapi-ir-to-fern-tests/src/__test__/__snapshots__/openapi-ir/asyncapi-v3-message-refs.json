@@ -63,7 +63,38 @@
         {
           "queryParameters": [],
           "headers": [],
-          "messages": []
+          "messages": [
+            {
+              "messageType": "userMessage",
+              "payload": {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "serverResponse",
+              "payload": {
+                "properties": {
+                  "reply": {
+                    "value": {
+                      "value": "reply",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       ],
       "source": {
@@ -75,28 +106,27 @@
   "groupedSchemas": {
     "rootSchemas": {
       "UserMessagePayload": {
+        "allOf": [],
         "properties": [
           {
+            "conflict": {},
+            "generatedName": "userMessagePayloadText",
             "key": "text",
             "schema": {
-              "generatedName": "UserMessagePayloadText",
+              "description": "Message text",
               "schema": {
                 "type": "string"
               },
-              "description": "Message text",
+              "generatedName": "UserMessagePayloadText",
               "groupName": [],
               "type": "primitive"
             },
-            "audiences": [],
-            "conflict": {},
-            "generatedName": "userMessagePayloadText"
+            "audiences": []
           }
         ],
-        "generatedName": "UserMessagePayload",
-        "allOf": [],
         "allOfPropertyConflicts": [],
+        "generatedName": "UserMessagePayload",
         "groupName": [],
-        "fullExamples": [],
         "additionalProperties": false,
         "source": {
           "file": "../asyncapi.yml",
@@ -105,34 +135,51 @@
         "type": "object"
       },
       "ServerResponsePayload": {
+        "allOf": [],
         "properties": [
           {
+            "conflict": {},
+            "generatedName": "serverResponsePayloadReply",
             "key": "reply",
             "schema": {
-              "generatedName": "ServerResponsePayloadReply",
+              "description": "Response text",
               "schema": {
                 "type": "string"
               },
-              "description": "Response text",
+              "generatedName": "ServerResponsePayloadReply",
               "groupName": [],
               "type": "primitive"
             },
-            "audiences": [],
-            "conflict": {},
-            "generatedName": "serverResponsePayloadReply"
+            "audiences": []
           }
         ],
-        "generatedName": "ServerResponsePayload",
-        "allOf": [],
         "allOfPropertyConflicts": [],
+        "generatedName": "ServerResponsePayload",
         "groupName": [],
-        "fullExamples": [],
         "additionalProperties": false,
         "source": {
           "file": "../asyncapi.yml",
           "type": "openapi"
         },
         "type": "object"
+      },
+      "userMessage": {
+        "generatedName": "UserMessage",
+        "schema": "UserMessagePayload",
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "serverResponse": {
+        "generatedName": "ServerResponse",
+        "schema": "ServerResponsePayload",
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
       }
     },
     "namespacedSchemas": {}

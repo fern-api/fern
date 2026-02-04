@@ -86,7 +86,38 @@
     }
   },
   "groupedSchemas": {
-    "rootSchemas": {},
+    "rootSchemas": {
+      "SpeakV1Text": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "speakV1TextType",
+            "key": "type",
+            "schema": {
+              "description": "Message type identifier",
+              "schema": {
+                "example": "Speak",
+                "type": "string"
+              },
+              "generatedName": "SpeakV1TextType",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "SpeakV1Text",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
     "namespacedSchemas": {}
   },
   "variables": {},

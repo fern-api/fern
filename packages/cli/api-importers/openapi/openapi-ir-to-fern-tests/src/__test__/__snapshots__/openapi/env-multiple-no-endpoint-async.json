@@ -36,6 +36,10 @@
             "openapi": "../openapi.yml",
           },
         },
+        "types": {
+          "TestChannel2SendMessage": "string",
+          "TestChannelSendMessage": "string",
+        },
       },
       "rawContents": "service:
   auth: false
@@ -55,6 +59,9 @@
             body: string
   source:
     openapi: ../openapi.yml
+types:
+  TestChannelSendMessage: string
+  TestChannel2SendMessage: string
 ",
     },
     "testChannel.yml": {

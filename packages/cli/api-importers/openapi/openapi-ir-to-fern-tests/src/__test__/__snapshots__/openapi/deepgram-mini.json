@@ -4,8 +4,31 @@
   "namedDefinitionFiles": {
     "__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "contents": {},
-      "rawContents": "{}
+      "contents": {
+        "types": {
+          "SpeakV1Text": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "type": {
+                "docs": "Message type identifier",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  SpeakV1Text:
+    properties:
+      type:
+        type: string
+        docs: Message type identifier
+    source:
+      openapi: ../asyncapi.yml
 ",
     },
     "speakV1.yml": {
