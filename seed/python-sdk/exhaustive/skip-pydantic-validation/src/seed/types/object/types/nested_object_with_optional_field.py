@@ -13,8 +13,10 @@ from .object_with_optional_field import ObjectWithOptionalField
 class NestedObjectWithOptionalField(UncheckedBaseModel):
     string: typing.Optional[str] = None
     nested_object: typing_extensions.Annotated[
-        typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")
-    ] = pydantic.Field(alias="NestedObject", default=None)
+        typing.Optional[ObjectWithOptionalField],
+        FieldMetadata(alias="NestedObject"),
+        pydantic.Field(alias="NestedObject"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
