@@ -5,10 +5,12 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...commons.types.types.data import Data
 from ...commons.types.types.event_info import EventInfo
 from ...commons.types.types.metadata import Metadata as commons_types_types_metadata_Metadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 from .cast_member import CastMember
 from .entity import Entity
 from .exception import Exception
@@ -20,14 +22,20 @@ from .test import Test
 
 
 class BigEntity(UniversalBaseModel):
-    cast_member: typing.Optional[CastMember] = pydantic.Field(alias="castMember", default=None)
-    extended_movie: typing.Optional[ExtendedMovie] = pydantic.Field(alias="extendedMovie", default=None)
+    cast_member: typing_extensions.Annotated[typing.Optional[CastMember], FieldMetadata(alias="castMember")] = (
+        pydantic.Field(alias="castMember", default=None)
+    )
+    extended_movie: typing_extensions.Annotated[
+        typing.Optional[ExtendedMovie], FieldMetadata(alias="extendedMovie")
+    ] = pydantic.Field(alias="extendedMovie", default=None)
     entity: typing.Optional[Entity] = None
     metadata: typing.Optional[types_types_metadata_Metadata] = None
-    common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = pydantic.Field(
-        alias="commonMetadata", default=None
+    common_metadata: typing_extensions.Annotated[
+        typing.Optional[commons_types_types_metadata_Metadata], FieldMetadata(alias="commonMetadata")
+    ] = pydantic.Field(alias="commonMetadata", default=None)
+    event_info: typing_extensions.Annotated[typing.Optional[EventInfo], FieldMetadata(alias="eventInfo")] = (
+        pydantic.Field(alias="eventInfo", default=None)
     )
-    event_info: typing.Optional[EventInfo] = pydantic.Field(alias="eventInfo", default=None)
     data: typing.Optional[Data] = None
     migration: typing.Optional[Migration] = None
     exception: typing.Optional[Exception] = None
