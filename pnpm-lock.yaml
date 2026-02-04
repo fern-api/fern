@@ -6555,9 +6555,6 @@ importers:
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
-      decompress:
-        specifier: ^4.2.1
-        version: 4.2.1
       form-data:
         specifier: ^4.0.4
         version: 4.0.5
@@ -6586,9 +6583,6 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../configs
-      '@types/decompress':
-        specifier: ^4.2.7
-        version: 4.2.7
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.9
@@ -10765,7 +10759,6 @@ packages:
   '@rolldown/binding-darwin-arm64@1.0.0-rc.2':
     resolution: {integrity: sha512-PYR+PQu1mMmQiiKHN2JiOctvH32Xc/Mf+Su2RSmWtC9BbIqlqsVWjbulnShk0imjRim0IsbkMMCN5vYQwiuqaA==}
     engines: {node: ^20.19.0 || >=22.12.0}
-    cpu: [arm64]
     os: [darwin]
 
   '@rolldown/binding-darwin-x64@1.0.0-rc.1':
