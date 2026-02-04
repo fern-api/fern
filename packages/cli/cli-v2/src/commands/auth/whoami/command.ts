@@ -1,8 +1,5 @@
-import { getAccessToken } from "@fern-api/auth";
-import { createVenusService } from "@fern-api/core";
 import chalk from "chalk";
 import type { Argv } from "yargs";
-import { FERN_TOKEN_ENV_VAR } from "../../../constants";
 import type { Context } from "../../../context/Context";
 import type { GlobalArgs } from "../../../context/GlobalArgs";
 import { CliError } from "../../../errors/CliError";
