@@ -30,7 +30,8 @@ import {
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
-    replaceReferencedMarkdown
+    replaceReferencedMarkdown,
+    transformAtPrefixImports
 } from "../../docs-markdown-utils/src";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
@@ -189,12 +190,18 @@ export async function getPreviewDocsDefinition({
                 context
             });
 
-            const markdownReplacedMdAndCode = await replaceReferencedCode({
+            const markdownReplacedCode = await replaceReferencedCode({
                 markdown: markdownReplacedMd,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath,
                 context
             });
+            
+            const markdownReplacedMdAndCode = transformAtPrefixImports({
+                markdown: markdownReplacedCode,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath
+            })
 
             const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
