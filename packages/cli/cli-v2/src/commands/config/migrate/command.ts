@@ -5,57 +5,67 @@ import { CliError } from "../../../errors/CliError";
 import { Migrator } from "../../../migrator";
 import { command } from "../../_internal/command";
 
-interface MigrateArgs extends GlobalArgs {
-    /**
-     * If set, the original configuration files will not be deleted after migration.
-     */
-    delete?: boolean;
+export declare namespace MigrateCommand {
+    export interface Args extends GlobalArgs {
+        /**
+         * If set, the original configuration files will not be deleted after migration.
+         */
+        delete: boolean;
+    }
+}
+
+export class MigrateCommand {
+    public async handle(context: Context, args: MigrateCommand.Args): Promise<void> {
+        const migrator = new Migrator({
+            cwd: context.cwd,
+            logger: context.stdout,
+            deleteOriginals: args.delete
+        });
+
+        const result = await migrator.migrate();
+        for (const warning of result.warnings) {
+            switch (warning.type) {
+                case "deprecated":
+                    context.stdout.warn(`Deprecated: ${warning.message}`);
+                    break;
+                case "unsupported":
+                    context.stdout.warn(`Unsupported: ${warning.message}`);
+                    break;
+                case "conflict":
+                    context.stderr.error(`Error: ${warning.message}`);
+                    break;
+                case "info":
+                    context.stdout.info(warning.message);
+                    break;
+            }
+            if (warning.suggestion != null) {
+                context.stdout.info(`  Suggestion: ${warning.suggestion}`);
+            }
+        }
+
+        if (result.success) {
+            if (result.outputPath != null) {
+                context.stdout.debug(`Created: ${result.outputPath}`);
+            }
+            return;
+        }
+
+        throw new CliError({ message: "Migration failed" });
+    }
 }
 
 export function addMigrateCommand(cli: Argv<GlobalArgs>): void {
-    command(cli, "migrate", "Migrate legacy configuration files to fern.yml", handleMigrate, (yargs) =>
-        yargs.option("delete", {
-            type: "boolean",
-            description: "Keep original files after migration",
-            default: true
-        })
+    const cmd = new MigrateCommand();
+    command(
+        cli,
+        "migrate",
+        "Migrate legacy configuration files to fern.yml",
+        (context, args) => cmd.handle(context, args as MigrateCommand.Args),
+        (yargs) =>
+            yargs.option("delete", {
+                type: "boolean",
+                description: "Keep original files after migration",
+                default: true
+            })
     );
-}
-
-async function handleMigrate(context: Context, args: MigrateArgs): Promise<void> {
-    const migrator = new Migrator({
-        cwd: context.cwd,
-        logger: context.stdout,
-        deleteOriginals: args.delete
-    });
-
-    const result = await migrator.migrate();
-    for (const warning of result.warnings) {
-        switch (warning.type) {
-            case "deprecated":
-                context.stdout.warn(`Deprecated: ${warning.message}`);
-                break;
-            case "unsupported":
-                context.stdout.warn(`Unsupported: ${warning.message}`);
-                break;
-            case "conflict":
-                context.stderr.error(`Error: ${warning.message}`);
-                break;
-            case "info":
-                context.stdout.info(warning.message);
-                break;
-        }
-        if (warning.suggestion != null) {
-            context.stdout.info(`  Suggestion: ${warning.suggestion}`);
-        }
-    }
-
-    if (result.success) {
-        if (result.outputPath != null) {
-            context.stdout.debug(`Created: ${result.outputPath}`);
-        }
-        return;
-    }
-
-    throw new CliError({ message: "Migration failed" });
 }
