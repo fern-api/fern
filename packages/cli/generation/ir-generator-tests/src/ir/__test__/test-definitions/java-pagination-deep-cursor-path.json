@@ -3018,6 +3018,7 @@
                     "pagination": {
                         "type": "cursor",
                         "page": {
+                            "type": "property",
                             "propertyPath": [
                                 {
                                     "name": {
@@ -4650,6 +4651,7 @@
                     "pagination": {
                         "type": "cursor",
                         "page": {
+                            "type": "property",
                             "propertyPath": [
                                 {
                                     "name": {
@@ -5827,6 +5829,7 @@
                     "pagination": {
                         "type": "cursor",
                         "page": {
+                            "type": "property",
                             "propertyPath": [
                                 {
                                     "name": {
