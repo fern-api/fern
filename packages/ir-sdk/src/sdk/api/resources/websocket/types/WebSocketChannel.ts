@@ -13,6 +13,12 @@ export interface WebSocketChannel extends FernIr.Declaration {
     pathParameters: FernIr.PathParameter[];
     /** The messages that can be sent and received on this channel */
     messages: FernIr.WebSocketMessage[];
+    /**
+     * Configuration for automatic auth message sending after connection.
+     * If specified, the SDK will automatically send this message with the OAuth token
+     * as the first message after establishing the websocket connection.
+     */
+    authMessage: FernIr.WebSocketAuthMessageConfig | undefined;
     examples: FernIr.ExampleWebSocketSession[];
     v2Examples: FernIr.V2WebSocketSessionExamples | undefined;
 }

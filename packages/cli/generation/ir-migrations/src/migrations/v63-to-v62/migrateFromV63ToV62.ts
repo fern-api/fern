@@ -656,6 +656,7 @@ function convertWebsocketChannel(channel: IrVersions.V63.WebSocketChannel): IrVe
         queryParameters: channel.queryParameters.map((q) => convertQueryParameter(q)),
         pathParameters: channel.pathParameters.map((p) => convertPathParameter(p)),
         messages: channel.messages.map((m) => convertWebsocketMessage(m)),
+        // authMessage is a new field in v63, so we drop it when migrating backwards to v62
         // Examples contain TypeReferences that need conversion, but since skipValidation is true
         // in the serializer, we can pass them through with a type assertion
         examples: channel.examples as unknown as IrVersions.V62.websocket.ExampleWebSocketSession[]

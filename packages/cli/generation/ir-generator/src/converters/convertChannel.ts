@@ -108,6 +108,13 @@ export function convertChannel({
                   })
                 : [],
         messages: Object.values(messages),
+        authMessage:
+            channel["auth-message"] != null
+                ? {
+                      messageId: channel["auth-message"]["message-id"],
+                      tokenPropertyPath: channel["auth-message"]["token-property-path"]
+                  }
+                : undefined,
         examples: (channel.examples ?? []).map((example): ExampleWebSocketSession => {
             const convertedPathParameters = convertChannelPathParameters({
                 channel,

@@ -3,6 +3,7 @@ export * from "./ExampleWebSocketMessageBody.js";
 export * from "./ExampleWebSocketSession.js";
 export * from "./InlinedWebSocketMessageBody.js";
 export * from "./InlinedWebSocketMessageBodyProperty.js";
+export * from "./WebSocketAuthMessageConfig.js";
 export * from "./WebSocketChannel.js";
 export * from "./WebSocketMessage.js";
 export * from "./WebSocketMessageBody.js";

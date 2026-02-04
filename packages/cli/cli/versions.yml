@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.61.0
+  changelogEntry:
+    - summary: |
+        Add support for websocket auth message configuration. Users can now specify an `auth-message` field
+        in websocket channel definitions to automatically send an authentication message with the OAuth token
+        after establishing the websocket connection. This enables the SDK to handle message-level auth patterns
+        where the token is sent as the first message after connecting.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
 - version: 3.60.1
   changelogEntry:
     - summary: |

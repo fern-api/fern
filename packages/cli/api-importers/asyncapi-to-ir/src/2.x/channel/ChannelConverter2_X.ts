@@ -13,6 +13,7 @@ import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
+import { AuthMessageExtension } from "../../extensions/x-fern-auth-message";
 import { ChannelAddressExtension } from "../../extensions/x-fern-channel-address";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
 import { AsyncAPIV2 } from "..";
@@ -84,6 +85,13 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             messages.push(publishMessage);
         }
 
+        const authMessageExtension = new AuthMessageExtension({
+            breadcrumbs: this.breadcrumbs,
+            channel: this.channel,
+            context: this.context
+        });
+        const authMessage = authMessageExtension.convert();
+
         const channelAddressExtension = new ChannelAddressExtension({
             breadcrumbs: this.breadcrumbs,
             channel: this.channel,
@@ -112,6 +120,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 queryParameters,
                 pathParameters,
                 messages,
+                authMessage,
                 availability: this.context.getAvailability({
                     node: this.channel,
                     breadcrumbs: this.breadcrumbs

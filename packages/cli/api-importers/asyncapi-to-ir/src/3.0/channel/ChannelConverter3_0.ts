@@ -4,6 +4,7 @@ import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
+import { AuthMessageExtension } from "../../extensions/x-fern-auth-message";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
 import { AsyncAPIV3 } from "..";
 import { ChannelParameter } from "../types";
@@ -92,6 +93,13 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             }
         }
 
+        const authMessageExtension = new AuthMessageExtension({
+            breadcrumbs: this.breadcrumbs,
+            channel: this.channel,
+            context: this.context
+        });
+        const authMessage = authMessageExtension.convert();
+
         const baseUrl =
             this.resolveChannelServersFromReference(this.channel.servers ?? []) ??
             Object.keys(this.context.spec.servers ?? {})[0];
@@ -116,6 +124,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 queryParameters,
                 pathParameters,
                 messages,
+                authMessage,
                 availability: this.context.getAvailability({
                     node: this.channel,
                     breadcrumbs: this.breadcrumbs

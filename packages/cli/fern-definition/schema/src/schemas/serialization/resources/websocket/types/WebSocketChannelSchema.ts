@@ -9,6 +9,7 @@ import { ExampleWebSocketSession } from "../../examples/types/ExampleWebSocketSe
 import { HttpHeaderSchema } from "../../service/types/HttpHeaderSchema.js";
 import { HttpPathParameterSchema } from "../../service/types/HttpPathParameterSchema.js";
 import { HttpQueryParameterSchema } from "../../service/types/HttpQueryParameterSchema.js";
+import { WebSocketAuthMessageSchema } from "./WebSocketAuthMessageSchema.js";
 import { WebSocketChannelMessageSchema } from "./WebSocketChannelMessageSchema.js";
 
 export const WebSocketChannelSchema: core.serialization.ObjectSchema<
@@ -23,6 +24,7 @@ export const WebSocketChannelSchema: core.serialization.ObjectSchema<
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
         "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).optional(),
         messages: core.serialization.record(core.serialization.string(), WebSocketChannelMessageSchema).optional(),
+        "auth-message": WebSocketAuthMessageSchema.optional(),
         examples: core.serialization.list(ExampleWebSocketSession).optional(),
     })
     .extend(DeclarationSchema)
@@ -37,6 +39,7 @@ export declare namespace WebSocketChannelSchema {
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
         "query-parameters"?: Record<string, HttpQueryParameterSchema.Raw> | null;
         messages?: Record<string, WebSocketChannelMessageSchema.Raw> | null;
+        "auth-message"?: WebSocketAuthMessageSchema.Raw | null;
         examples?: ExampleWebSocketSession.Raw[] | null;
     }
 }

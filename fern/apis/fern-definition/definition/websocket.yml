@@ -17,7 +17,25 @@ types:
       path-parameters: optional<map<string, service.HttpPathParameterSchema>>
       query-parameters: optional<map<string, service.HttpQueryParameterSchema>>
       messages: optional<map<string, WebSocketChannelMessageSchema>>
+      auth-message: optional<WebSocketAuthMessageSchema>
       examples: optional<list<examples.ExampleWebSocketSession>>
+
+  WebSocketAuthMessageSchema:
+    docs: |
+      Configuration for automatic authentication message sending after websocket connection.
+      This enables the SDK to automatically send an auth message with the OAuth token
+      immediately after establishing the websocket connection.
+    properties:
+      message-id:
+        docs: |
+          The ID of the message type to use for authentication.
+          This should reference one of the client-origin messages defined in the channel.
+        type: string
+      token-property-path:
+        docs: |
+          The property path where the OAuth token should be placed in the message body.
+          For example, "params.token" would place the token at message.params.token.
+        type: string
 
   WebSocketChannelMessageSchema:
     extends:

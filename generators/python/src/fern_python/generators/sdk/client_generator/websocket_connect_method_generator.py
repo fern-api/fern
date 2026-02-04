@@ -326,7 +326,23 @@ class WebsocketConnectMethodGenerator:
                 )
             )
 
+            # Build the body of the with statement
+            with_body: List[AST.AstNode] = []
+
+            # If auth message config is present, send auth message after connecting
+            if websocket.auth_message is not None:
+                auth_message_config = websocket.auth_message
+                with_body.extend(self._get_auth_message_statements(auth_message_config, is_async))
+
             if is_async:
+                with_body.append(
+                    AST.YieldStatement(
+                        value=AST.Expression(
+                            f"{self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
+                            f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                        )
+                    )
+                )
                 body = [
                     AST.WithStatement(
                         context_managers=[
@@ -335,18 +351,19 @@ class WebsocketConnectMethodGenerator:
                                 as_variable="protocol",
                             )
                         ],
-                        body=[
-                            AST.YieldStatement(
-                                value=AST.Expression(
-                                    f"{self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
-                                    f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
-                                )
-                            )
-                        ],
+                        body=with_body,
                         is_async=True,
                     )
                 ]
             else:
+                with_body.append(
+                    AST.YieldStatement(
+                        value=AST.Expression(
+                            f"{self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
+                            f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                        )
+                    )
+                )
                 body = [
                     AST.WithStatement(
                         context_managers=[
@@ -355,14 +372,7 @@ class WebsocketConnectMethodGenerator:
                                 as_variable="protocol",
                             )
                         ],
-                        body=[
-                            AST.YieldStatement(
-                                value=AST.Expression(
-                                    f"{self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
-                                    f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
-                                )
-                            )
-                        ],
+                        body=with_body,
                         is_async=False,
                     )
                 ]
@@ -915,6 +925,83 @@ class WebsocketConnectMethodGenerator:
                 ),
             )
         return query_parameter_type_hint
+
+    def _get_auth_message_statements(
+        self, auth_message_config: ir_types.WebSocketAuthMessageConfig, is_async: bool
+    ) -> List[AST.AstNode]:
+        """
+        Generate statements to send an auth message after connecting.
+        This gets the OAuth token and sends it as the first message.
+        """
+        statements: List[AST.AstNode] = []
+
+        # Build the auth message dict with the token at the specified property path
+        # e.g., if tokenPropertyPath is "params.token", we create {"params": {"token": token}}
+        token_path_parts = auth_message_config.token_property_path.split(".")
+
+        def build_nested_dict(parts: List[str], value_expr: str) -> str:
+            if len(parts) == 1:
+                return f'{{"{parts[0]}": {value_expr}}}'
+            return f'{{"{parts[0]}": {build_nested_dict(parts[1:], value_expr)}}}'
+
+        # Get the token from the client wrapper
+        if is_async:
+            # For async, we need to await the token
+            get_token_code = f"_auth_token = await self.{self._client_wrapper_member_name}._async_token()"
+        else:
+            # For sync, we call get_headers which includes the token, but we need the raw token
+            # The client wrapper stores the token provider, so we access it directly
+            get_token_code = f'_auth_token = self.{self._client_wrapper_member_name}.get_headers().get("Authorization", "").replace("Bearer ", "")'
+
+        statements.append(AST.Expression(get_token_code))
+
+        # Build the auth message
+        auth_message_dict = build_nested_dict(token_path_parts, "_auth_token")
+        statements.append(AST.Expression(f"_auth_message = {auth_message_dict}"))
+
+        # Send the auth message as JSON
+        if is_async:
+            statements.append(
+                AST.Expression(
+                    AST.CodeWriter(
+                        lambda writer: (
+                            writer.write("await protocol.send("),
+                            writer.write_node(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                                        qualified_name_excluding_import=("dumps",),
+                                    ),
+                                    args=[AST.Expression("_auth_message")],
+                                )
+                            ),
+                            writer.write(")"),
+                        )
+                    )
+                )
+            )
+        else:
+            statements.append(
+                AST.Expression(
+                    AST.CodeWriter(
+                        lambda writer: (
+                            writer.write("protocol.send("),
+                            writer.write_node(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                                        qualified_name_excluding_import=("dumps",),
+                                    ),
+                                    args=[AST.Expression("_auth_message")],
+                                )
+                            ),
+                            writer.write(")"),
+                        )
+                    )
+                )
+            )
+
+        return statements
 
     def convert_and_respect_annotation_metadata_raw(
         self, context: SdkGeneratorContext, object_: AST.Expression, type_reference: ir_types.TypeReference

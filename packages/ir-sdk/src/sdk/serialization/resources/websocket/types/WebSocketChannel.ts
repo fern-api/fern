@@ -11,6 +11,7 @@ import { HttpPath } from "../../http/types/HttpPath.js";
 import { PathParameter } from "../../http/types/PathParameter.js";
 import { QueryParameter } from "../../http/types/QueryParameter.js";
 import { ExampleWebSocketSession } from "./ExampleWebSocketSession.js";
+import { WebSocketAuthMessageConfig } from "./WebSocketAuthMessageConfig.js";
 import { WebSocketMessage } from "./WebSocketMessage.js";
 import { WebSocketName } from "./WebSocketName.js";
 
@@ -28,6 +29,7 @@ export const WebSocketChannel: core.serialization.ObjectSchema<
         queryParameters: core.serialization.list(QueryParameter),
         pathParameters: core.serialization.list(PathParameter),
         messages: core.serialization.list(WebSocketMessage),
+        authMessage: WebSocketAuthMessageConfig.optional(),
         examples: core.serialization.list(ExampleWebSocketSession),
         v2Examples: V2WebSocketSessionExamples.optional(),
     })
@@ -44,6 +46,7 @@ export declare namespace WebSocketChannel {
         queryParameters: QueryParameter.Raw[];
         pathParameters: PathParameter.Raw[];
         messages: WebSocketMessage.Raw[];
+        authMessage?: WebSocketAuthMessageConfig.Raw | null;
         examples: ExampleWebSocketSession.Raw[];
         v2Examples?: V2WebSocketSessionExamples.Raw | null;
     }

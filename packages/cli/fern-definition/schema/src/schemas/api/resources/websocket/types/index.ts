@@ -1,3 +1,4 @@
+export * from "./WebSocketAuthMessageSchema.js";
 export * from "./WebSocketChannelInlinedMessageSchema.js";
 export * from "./WebSocketChannelMessageBodySchema.js";
 export * from "./WebSocketChannelMessageSchema.js";

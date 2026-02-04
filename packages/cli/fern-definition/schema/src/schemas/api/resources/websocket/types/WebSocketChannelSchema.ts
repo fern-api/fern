@@ -10,5 +10,6 @@ export interface WebSocketChannelSchema extends FernDefinition.DeclarationSchema
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
     "query-parameters"?: Record<string, FernDefinition.HttpQueryParameterSchema>;
     messages?: Record<string, FernDefinition.WebSocketChannelMessageSchema>;
+    "auth-message"?: FernDefinition.WebSocketAuthMessageSchema;
     examples?: FernDefinition.ExampleWebSocketSession[];
 }
