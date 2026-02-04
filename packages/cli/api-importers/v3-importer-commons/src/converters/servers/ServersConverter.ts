@@ -81,7 +81,10 @@ export class ServersConverter extends AbstractConverter<
                         [defaultBaseUrlId]: this.getServerUrl(baseUrl),
                         ...Object.fromEntries(endpointLevelServers ?? [])
                     },
-                    docs: baseUrl.description
+                    docs: baseUrl.description,
+                    defaultUrls: undefined,
+                    urlTemplates: undefined,
+                    urlVariables: undefined
                 };
             });
 
