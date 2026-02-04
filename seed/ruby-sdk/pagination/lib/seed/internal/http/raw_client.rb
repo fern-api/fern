@@ -89,6 +89,7 @@ module Seed
             return [delay, MAX_RETRY_DELAY].min if delay&.positive?
           end
 
+
           # Exponential backoff with jitter: base_delay * 2^attempt
           base_delay = INITIAL_RETRY_DELAY * (2**attempt)
           add_jitter([base_delay, MAX_RETRY_DELAY].min)
@@ -180,7 +181,7 @@ module Seed
 
           http = Net::HTTP.new(url.host, port)
           http.use_ssl = is_https
-          # NOTE: We handle retries at the application level with HTTP status code awareness,
+          # Note: We handle retries at the application level with HTTP status code awareness,
           # so we set max_retries to 0 to disable Net::HTTP's built-in network-level retries.
           http.max_retries = 0
           http
@@ -193,4 +194,4 @@ module Seed
       end
     end
   end
-end
+end                                                                                                                                                                                                                                                                

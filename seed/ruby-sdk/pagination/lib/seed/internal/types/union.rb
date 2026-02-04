@@ -81,7 +81,9 @@ module Seed
             matching_keys = members_hash.keys.select { |k| k.to_s.downcase == discriminant_lower }
 
             # Only use case-insensitive match if exactly one key matches (avoid ambiguity)
-            return members_hash[matching_keys.first]&.call if matching_keys.length == 1
+            if matching_keys.length == 1
+              return members_hash[matching_keys.first]&.call
+            end
 
             nil
           else
@@ -107,7 +109,9 @@ module Seed
                   # Validate that all required (non-optional) fields are present
                   # This ensures undiscriminated unions properly distinguish between member types
                   member_type.fields.each do |field_name, field|
-                    raise Errors::TypeError, "Required field `#{field_name}` missing for union member #{member_type.name}" if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional
+                    if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional
+                      raise Errors::TypeError, "Required field `#{field_name}` missing for union member #{member_type.name}"
+                    end
                   end
 
                   true
@@ -158,4 +162,4 @@ module Seed
       end
     end
   end
-end
+end                

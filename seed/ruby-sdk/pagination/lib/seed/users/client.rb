@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module Users
@@ -31,7 +30,7 @@ module Seed
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
@@ -76,7 +75,7 @@ module Seed
         query_param_names = %i[cursor]
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
@@ -120,9 +119,9 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
-          initial_cursor: query_params[:cursor]
+          initial_cursor: params[:cursor]
         ) do |next_cursor|
-          query_params[:cursor] = next_cursor
+          params[:cursor] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -163,9 +162,9 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_cursor,
           item_field: :data,
-          initial_cursor: query_params[:cursor]
+          initial_cursor: params[:cursor]
         ) do |next_cursor|
-          query_params[:cursor] = next_cursor
+          params[:cursor] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -209,7 +208,7 @@ module Seed
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params[:page],
@@ -261,7 +260,7 @@ module Seed
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params[:page],
@@ -304,12 +303,12 @@ module Seed
       def list_with_body_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::OffsetItemIterator.new(
-          initial_page: query_params[:page],
+          initial_page: params[:page],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
-          query_params[:page] = next_page
+          params[:page] = next_page
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -351,7 +350,7 @@ module Seed
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["order"] = params[:order] if params.key?(:order)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params[:page],
@@ -401,7 +400,7 @@ module Seed
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["order"] = params[:order] if params.key?(:order)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params[:page],
@@ -447,7 +446,7 @@ module Seed
         query_param_names = %i[cursor]
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
@@ -492,7 +491,7 @@ module Seed
         query_param_names = %i[cursor]
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
@@ -537,7 +536,7 @@ module Seed
         query_param_names = %i[starting_after]
         query_params = {}
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
@@ -582,7 +581,7 @@ module Seed
         query_param_names = %i[starting_after]
         query_params = {}
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
@@ -603,7 +602,8 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          unless code.between?(200, 299)
+          if code.between?(200, 299)
+          else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
@@ -625,7 +625,7 @@ module Seed
         query_param_names = %i[offset]
         query_params = {}
         query_params["offset"] = params[:offset] if params.key?(:offset)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params[:offset],
@@ -671,7 +671,7 @@ module Seed
         query_param_names = %i[page]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params[:page],
@@ -701,6 +701,7 @@ module Seed
           end
         end
       end
+
     end
   end
 end

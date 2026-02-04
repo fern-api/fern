@@ -26,7 +26,7 @@ module Seed
           type.is_a?(Proc) ? type.call : type
         end
 
-        def self.coerce(target, value, strict: false)
+        def self.coerce(target, value, strict: false) # rubocop:disable Metrics/CyclomaticComplexity
           type = unwrap_type(target)
 
           case type
@@ -76,8 +76,8 @@ module Seed
           in Module
             case type
             in ->(t) {
-                 t.singleton_class.include?(Enum) ||
-                   t.singleton_class.include?(Union)
+                 t.singleton_class.included_modules.include?(Enum) ||
+                   t.singleton_class.included_modules.include?(Union)
                }
               return type.coerce(value, strict: strict)
             else
@@ -113,4 +113,4 @@ module Seed
       end
     end
   end
-end
+end   

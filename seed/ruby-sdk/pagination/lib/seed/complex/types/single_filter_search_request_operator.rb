@@ -5,7 +5,6 @@ module Seed
     module Types
       module SingleFilterSearchRequestOperator
         extend Seed::Internal::Types::Enum
-
         EQUALS = "="
         NOT_EQUALS = "!="
         IN = "IN"
@@ -15,8 +14,7 @@ module Seed
         CONTAINS = "~"
         DOES_NOT_CONTAIN = "!~"
         STARTS_WITH = "^"
-        ENDS_WITH = "$"
-      end
+        ENDS_WITH = "$"end
     end
   end
 end

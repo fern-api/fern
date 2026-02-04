@@ -6,6 +6,7 @@ module Seed
       class SearchRequestQuery < Internal::Types::Model
         extend Seed::Internal::Types::Union
 
+
         member -> { Seed::Complex::Types::SingleFilterSearchRequest }
         member -> { Seed::Complex::Types::MultipleFilterSearchRequest }
       end

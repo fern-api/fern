@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Seed
   module Internal
     class ItemIterator
@@ -10,7 +8,7 @@ module Seed
       # @param block [Proc] The block which each retrieved item is yielded to.
       # @return [NilClass]
       def each(&block)
-        while (item = next_element)
+        while item = next_element do
           block.call(item)
         end
       end
@@ -23,7 +21,6 @@ module Seed
         return false if @page.nil?
 
         return true if any_items_in_cached_page?
-
         load_next_page
         any_items_in_cached_page?
       end
@@ -32,7 +29,6 @@ module Seed
       def next_element
         item = next_item_from_cached_page
         return item if item
-
         load_next_page
         next_item_from_cached_page
       end
@@ -40,14 +36,12 @@ module Seed
       private
 
       def next_item_from_cached_page
-        return unless @page
-
+        return if !@page
         @page.send(@item_field).shift
       end
 
       def any_items_in_cached_page?
-        return false unless @page
-
+        return false if !@page
         !@page.send(@item_field).empty?
       end
 

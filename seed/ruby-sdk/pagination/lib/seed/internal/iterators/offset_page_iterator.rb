@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Seed
   module Internal
     class OffsetPageIterator
@@ -31,7 +29,7 @@ module Seed
       # @param block [Proc] The block which each retrieved page is yielded to.
       # @return [NilClass]
       def each(&block)
-        while (page = next_page)
+        while page = next_page do
           block.call(page)
         end
       end
@@ -64,7 +62,9 @@ module Seed
           this_page = @get_next_page.call(@page_number)
         end
 
-        @has_next_page = this_page&.send(@has_next_field) if @has_next_field
+        if @has_next_field
+          @has_next_page = this_page&.send(@has_next_field)
+        end
 
         items = this_page.send(@item_field)
         if items.nil? || items.empty?

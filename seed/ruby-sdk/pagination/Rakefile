@@ -15,6 +15,6 @@ task lint: %i[rubocop]
 
 # Run only the custom test file
 Minitest::TestTask.create(:customtest) do |t|
-  t.libs << "test"
-  t.test_globs = ["test/custom.test.rb"]
+t.libs << "test"
+t.test_globs = ["test/custom.test.rb"]
 end

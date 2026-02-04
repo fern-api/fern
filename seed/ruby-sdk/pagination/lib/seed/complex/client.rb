@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module Complex
@@ -25,9 +24,9 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :conversations,
-          initial_cursor: query_params[:starting_after]
+          initial_cursor: params[:starting_after]
         ) do |next_cursor|
-          query_params[:starting_after] = next_cursor
+          params[:starting_after] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -49,6 +48,7 @@ module Seed
           end
         end
       end
+
     end
   end
 end

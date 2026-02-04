@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Seed
   module Internal
     class CursorPageIterator
@@ -23,7 +21,7 @@ module Seed
       # @param block [Proc] The block which each retrieved page is yielded to.
       # @return [NilClass]
       def each(&block)
-        while (page = next_page)
+        while page = next_page do
           block.call(page)
         end
       end
@@ -40,7 +38,6 @@ module Seed
       # @return [Boolean]
       def next_page
         return if !@need_initial_load && @cursor.nil?
-
         @need_initial_load = false
         fetched_page = @get_next_page.call(@cursor)
         @cursor = fetched_page.send(@cursor_field)

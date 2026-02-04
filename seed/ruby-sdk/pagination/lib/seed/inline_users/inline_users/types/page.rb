@@ -9,6 +9,7 @@ module Seed
           field :next_, -> { Seed::InlineUsers::InlineUsers::Types::NextPage }, optional: true, nullable: false, api_name: "next"
           field :per_page, -> { Integer }, optional: false, nullable: false
           field :total_page, -> { Integer }, optional: false, nullable: false
+
         end
       end
     end

@@ -26,6 +26,11 @@ test:
   docker:
     image: fernapi/fern-ruby-sdk:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-ruby-sdk
+  local:
+    workingDirectory: generators/ruby-v2
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
+    runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 language: ruby
 generatorType: SDK
 defaultOutputMode: github

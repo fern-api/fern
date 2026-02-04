@@ -9,6 +9,7 @@ module Seed
           field :page, -> { Seed::InlineUsers::InlineUsers::Types::Page }, optional: true, nullable: false
           field :total_count, -> { Integer }, optional: false, nullable: false
           field :data, -> { Seed::InlineUsers::InlineUsers::Types::Users }, optional: false, nullable: false
+
         end
       end
     end

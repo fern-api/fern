@@ -133,7 +133,14 @@ export class HttpEndpointGenerator {
                     ];
                     break;
                 }
-                case "cursor":
+                case "cursor": {
+                    // Determine if the cursor is in query params or request body
+                    const cursorIsInBody = endpoint.pagination.page.property.type === "body";
+                    const cursorBagName = cursorIsInBody ? PARAMS_VN : QUERY_PARAMETER_BAG_NAME;
+                    // For body params, use snakeCase.safeName; for query params, use wireValue
+                    const cursorKeyName = cursorIsInBody
+                        ? endpoint.pagination.page.property.name.name.snakeCase.safeName
+                        : endpoint.pagination.page.property.name.wireValue;
                     requestStatements = [
                         ruby.invokeMethod({
                             on: ruby.classReference({
@@ -159,26 +166,28 @@ export class HttpEndpointGenerator {
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
-                                    // Keep wireValue for query params (sent over HTTP)
-                                    value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
-                                    )
+                                    value: ruby.codeblock(`${cursorBagName}[:${cursorKeyName}]`)
                                 })
                             ],
                             block: [
                                 ["next_cursor"],
                                 [
-                                    ruby.codeblock(
-                                        // Keep wireValue for query params (sent over HTTP)
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
-                                    ),
+                                    ruby.codeblock(`${cursorBagName}[:${cursorKeyName}] = next_cursor`),
                                     ...requestStatements
                                 ]
                             ]
                         })
                     ];
                     break;
-                case "offset":
+                }
+                case "offset": {
+                    // Determine if the page offset is in query params or request body
+                    const offsetIsInBody = endpoint.pagination.page.property.type === "body";
+                    const offsetBagName = offsetIsInBody ? PARAMS_VN : QUERY_PARAMETER_BAG_NAME;
+                    // For body params, use snakeCase.safeName; for query params, use wireValue
+                    const offsetKeyName = offsetIsInBody
+                        ? endpoint.pagination.page.property.name.name.snakeCase.safeName
+                        : endpoint.pagination.page.property.name.wireValue;
                     requestStatements = [
                         ruby.invokeMethod({
                             on: ruby.classReference({
@@ -190,10 +199,7 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "initial_page",
-                                    // Keep wireValue for query params (sent over HTTP)
-                                    value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
-                                    )
+                                    value: ruby.codeblock(`${offsetBagName}[:${offsetKeyName}]`)
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
@@ -219,16 +225,14 @@ export class HttpEndpointGenerator {
                             block: [
                                 ["next_page"],
                                 [
-                                    ruby.codeblock(
-                                        // Keep wireValue for query params (sent over HTTP)
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
-                                    ),
+                                    ruby.codeblock(`${offsetBagName}[:${offsetKeyName}] = next_page`),
                                     ...requestStatements
                                 ]
                             ]
                         })
                     ];
                     break;
+                }
                 default:
                     assertNever(endpoint.pagination);
             }

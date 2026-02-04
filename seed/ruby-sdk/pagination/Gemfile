@@ -2,20 +2,21 @@
 
 source "https://rubygems.org"
 
-gemspec
+    gemspec
 
-group :test, :development do
-  gem "rake", "~> 13.0"
+    group :test, :development do
+    gem "rake", "~> 13.0"
 
-  gem "minitest", "~> 5.16"
-  gem "minitest-rg"
+    gem "minitest", "~> 5.16"
+    gem "minitest-rg"
 
-  gem "rubocop", "~> 1.21"
-  gem "rubocop-minitest"
+    gem "rubocop", "~> 1.21"
+    gem "rubocop-minitest"
 
-  gem "pry"
+    gem "pry"
 
-  gem "webmock"
+    gem "webmock"
+
 end
 
 # Load custom Gemfile configuration if it exists

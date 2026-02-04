@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc86
+  changelogEntry:
+    - summary: |
+        Fix pagination for endpoints where the cursor/offset is in the request body instead of query
+        parameters. Previously, body-based pagination endpoints would reference an undefined `query_params`
+        variable, causing runtime errors. The generator now correctly detects whether the pagination
+        property is in the query params or request body and uses the appropriate variable (`query_params`
+        for query-based pagination, `params` for body-based pagination).
+      type: fix
+  createdAt: "2026-02-04"
+  irVersion: 61
+
 - version: 1.0.0-rc85
   changelogEntry:
     - summary: |

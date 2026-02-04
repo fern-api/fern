@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Seed
   module Internal
     class OffsetItemIterator < ItemIterator
@@ -12,10 +10,10 @@ module Seed
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
       #
       # @return [Seed::Internal::OffsetItemIterator]
-      def initialize(initial_page:, item_field:, has_next_field:, step:, &)
+      def initialize(initial_page:, item_field:, has_next_field:, step:, &block)
         super()
         @item_field = item_field
-        @page_iterator = OffsetPageIterator.new(initial_page:, item_field:, has_next_field:, step:, &)
+        @page_iterator = OffsetPageIterator.new(initial_page:, item_field:, has_next_field:, step:, &block)
         @page = nil
       end
 

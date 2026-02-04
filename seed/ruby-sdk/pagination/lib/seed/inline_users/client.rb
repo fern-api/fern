@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module InlineUsers
@@ -9,6 +8,7 @@ module Seed
       def initialize(client:)
         @client = client
       end
+
 
       # @return [Seed::InlineUsers::Client]
       def inline_users

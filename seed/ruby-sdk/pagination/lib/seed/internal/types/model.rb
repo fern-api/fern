@@ -183,7 +183,9 @@ module Seed
           # and the discriminant key is not already present in the result
           discriminant_key = instance_variable_get(:@_fern_union_discriminant_key)
           discriminant_value = instance_variable_get(:@_fern_union_discriminant_value)
-          result[discriminant_key] = discriminant_value if discriminant_key && discriminant_value && !result.key?(discriminant_key)
+          if discriminant_key && discriminant_value && !result.key?(discriminant_key)
+            result[discriminant_key] = discriminant_value
+          end
 
           result
         end
@@ -205,4 +207,4 @@ module Seed
       end
     end
   end
-end
+end    

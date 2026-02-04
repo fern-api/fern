@@ -8,6 +8,7 @@ module Seed
         field :page, -> { Seed::Users::Types::Page }, optional: true, nullable: false
         field :total_count, -> { Integer }, optional: false, nullable: false
         field :data, -> { Internal::Types::Array[Seed::Users::Types::User] }, optional: true, nullable: false
+
       end
     end
   end

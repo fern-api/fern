@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module InlineUsers
@@ -9,6 +8,7 @@ module Seed
           field :per_page, -> { Integer }, optional: true, nullable: false
           field :order, -> { Seed::InlineUsers::InlineUsers::Types::Order }, optional: true, nullable: false
           field :starting_after, -> { String }, optional: true, nullable: false
+
         end
       end
     end
