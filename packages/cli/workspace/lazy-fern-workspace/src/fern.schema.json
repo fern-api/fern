@@ -3478,6 +3478,22 @@
       ],
       "additionalProperties": false
     },
+    "websocket.WebSocketAuthMessageSchema": {
+      "type": "object",
+      "properties": {
+        "message-id": {
+          "type": "string"
+        },
+        "token-property-path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message-id",
+        "token-property-path"
+      ],
+      "additionalProperties": false
+    },
     "examples.ExampleWebSocketMessage": {
       "type": "object",
       "properties": {
@@ -3683,6 +3699,16 @@
               "additionalProperties": {
                 "$ref": "#/definitions/websocket.WebSocketChannelMessageSchema"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "auth-message": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/websocket.WebSocketAuthMessageSchema"
             },
             {
               "type": "null"
