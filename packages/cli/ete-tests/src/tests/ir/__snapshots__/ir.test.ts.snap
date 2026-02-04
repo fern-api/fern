@@ -9538,10 +9538,10 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                         "ServerA": "a.prod.com",
                         "ServerB": "b.prod.com"
                     },
-                    "docs": null,
                     "defaultUrls": null,
                     "urlTemplates": null,
-                    "urlVariables": null
+                    "urlVariables": null,
+                    "docs": null
                 },
                 {
                     "id": "Staging",
@@ -9568,10 +9568,10 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                         "ServerA": "a.staging.com",
                         "ServerB": "b.staging.com"
                     },
-                    "docs": null,
                     "defaultUrls": null,
                     "urlTemplates": null,
-                    "urlVariables": null
+                    "urlVariables": null,
+                    "docs": null
                 }
             ]
         }
@@ -9914,10 +9914,10 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                             "ServerA": "a.prod.com",
                             "ServerB": "b.prod.com"
                         },
-                        "docs": null,
                         "defaultUrls": null,
                         "urlTemplates": null,
-                        "urlVariables": null
+                        "urlVariables": null,
+                        "docs": null
                     },
                     {
                         "id": "Staging",
@@ -9944,10 +9944,10 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                             "ServerA": "a.staging.com",
                             "ServerB": "b.staging.com"
                         },
-                        "docs": null,
                         "defaultUrls": null,
                         "urlTemplates": null,
-                        "urlVariables": null
+                        "urlVariables": null,
+                        "docs": null
                     }
                 ]
             }
