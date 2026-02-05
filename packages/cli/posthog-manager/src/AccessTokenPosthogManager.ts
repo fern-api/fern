@@ -1,6 +1,7 @@
 import { PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
+import { logPosthogError } from "./logPosthogError";
 import { PosthogManager } from "./PosthogManager";
 
 export class AccessTokenPosthogManager implements PosthogManager {
@@ -33,10 +34,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
         try {
             await this.posthog.flush();
         } catch (error) {
-            // Log at debug level for internal visibility, but don't show to users by default
-            // These are typically network errors in air-gapped environments
-            // biome-ignore lint/suspicious/noConsole: intentional debug logging for internal troubleshooting
-            console.debug("[PostHog] Failed to flush analytics:", error);
+            logPosthogError(error);
         }
     }
 }
