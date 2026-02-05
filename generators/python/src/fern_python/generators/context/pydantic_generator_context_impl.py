@@ -89,13 +89,16 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self,
         type_reference: ir_types.TypeReference,
         ignore_literals: bool = False,
+        *,
+        for_request_param: bool = False,
     ) -> Optional[AST.Expression]:
         default_value = None
         union = type_reference.get_as_union()
 
         # Only populate primitive defaults if we're allowed to leverage them via config
-        # Otherwise we want to be able to generate defaults for literals, and aliases of literals
-        if union.type == "primitive" and self._allow_leveraging_defaults:
+        # AND this is for a request param (query param or header). Request body properties
+        # and Pydantic model fields should not get primitive defaults.
+        if union.type == "primitive" and self._allow_leveraging_defaults and for_request_param:
             maybe_v2_scheme = union.primitive.v_2
             if maybe_v2_scheme is not None:
                 default_value = maybe_v2_scheme.visit(
@@ -116,7 +119,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         elif union.type == "named":
             type_declaration = self.get_declaration_for_type_id(union.type_id)
             default_value = type_declaration.shape.visit(
-                alias=lambda a: self.get_initializer_for_type_reference(a.alias_of, ignore_literals=ignore_literals),
+                alias=lambda a: self.get_initializer_for_type_reference(
+                    a.alias_of, ignore_literals=ignore_literals, for_request_param=for_request_param
+                ),
                 enum=lambda _: None,
                 object=lambda _: None,
                 union=lambda _: None,
@@ -133,8 +138,12 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 list_=lambda _: None,
                 set_=lambda _: None,
                 # Ignore literal defaults when the wrapping type is optional
-                optional=lambda opt: self.get_initializer_for_type_reference(opt, ignore_literals=True),
-                nullable=lambda nullable: self.get_initializer_for_type_reference(nullable, ignore_literals=True),
+                optional=lambda opt: self.get_initializer_for_type_reference(
+                    opt, ignore_literals=True, for_request_param=for_request_param
+                ),
+                nullable=lambda nullable: self.get_initializer_for_type_reference(
+                    nullable, ignore_literals=True, for_request_param=for_request_param
+                ),
                 map_=lambda _: None,
             )
 
