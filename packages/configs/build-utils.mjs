@@ -1,3 +1,4 @@
+import nodePolyfills from "@rolldown/plugin-node-polyfills";
 import { exec } from "child_process";
 import { cp, mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
@@ -87,12 +88,10 @@ export async function buildDynamicSnippets(dirname, packageJson, versionOverride
         dts: true,
         sourcemap: true,
         platform: "browser",
-        define: {
-            "process.env.NODE_ENV": JSON.stringify("production")
-        },
+        plugins: [nodePolyfills()],
         tsconfig: tsconfigPath,
         format: ["cjs", "esm"],
-        outDir: path.join(distDir, "dist"), // yes, this is intentional to have dist/dist
+        outDir: path.join(distDir, "dist"),
         clean: false
     });
 

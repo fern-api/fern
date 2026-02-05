@@ -42,7 +42,7 @@
     "@fern-api/logger": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "tsdown": "0.20.1",
+    "tsdown": "0.20.3",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

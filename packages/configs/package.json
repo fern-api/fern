@@ -8,7 +8,8 @@
     "./*": "./*"
   },
   "devDependencies": {
-    "tsdown": "0.20.1",
+    "@rolldown/plugin-node-polyfills": "1.0.3",
+    "tsdown": "0.20.3",
     "vitest": "^4.0.8"
   }
 }
