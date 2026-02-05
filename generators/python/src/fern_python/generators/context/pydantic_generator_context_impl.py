@@ -129,12 +129,14 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             )
         elif union.type == "container":
             default_value = union.container.visit(
-                literal=lambda lv: lv.visit(
-                    string=lambda s: AST.Expression(f'"{s}"'),
-                    boolean=lambda b: AST.Expression(f"{b}"),
-                )
-                if not ignore_literals
-                else None,
+                literal=lambda lv: (
+                    lv.visit(
+                        string=lambda s: AST.Expression(f'"{s}"'),
+                        boolean=lambda b: AST.Expression(f"{b}"),
+                    )
+                    if not ignore_literals
+                    else None
+                ),
                 list_=lambda _: None,
                 set_=lambda _: None,
                 # Ignore literal defaults when the wrapping type is optional
@@ -257,10 +259,8 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 set_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 nullable=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
-                map_=lambda map_type: (
-                    self.get_referenced_types_of_type_reference(map_type.key_type).union(
-                        self.get_referenced_types_of_type_reference(map_type.value_type)
-                    )
+                map_=lambda map_type: self.get_referenced_types_of_type_reference(map_type.key_type).union(
+                    self.get_referenced_types_of_type_reference(map_type.value_type)
                 ),
                 literal=lambda literal: set(),
             ),
@@ -278,10 +278,8 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 set_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 nullable=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
-                map_=lambda map_type: (
-                    self.get_referenced_types_of_type_reference(map_type.key_type).union(
-                        self.get_referenced_types_of_type_reference(map_type.value_type)
-                    )
+                map_=lambda map_type: self.get_referenced_types_of_type_reference(map_type.key_type).union(
+                    self.get_referenced_types_of_type_reference(map_type.value_type)
                 ),
                 literal=lambda literal: set(),
             ),
@@ -296,8 +294,10 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         return type_reference.visit(
             container=lambda ct: ct.visit(
                 list_=lambda list_tr: self.maybe_get_type_ids_for_type_reference(list_tr),
-                map_=lambda mt: (self.maybe_get_type_ids_for_type_reference(mt.key_type) or [])
-                + (self.maybe_get_type_ids_for_type_reference(mt.value_type) or []),
+                map_=lambda mt: (
+                    (self.maybe_get_type_ids_for_type_reference(mt.key_type) or [])
+                    + (self.maybe_get_type_ids_for_type_reference(mt.value_type) or [])
+                ),
                 nullable=lambda nullable_tr: self.maybe_get_type_ids_for_type_reference(nullable_tr),
                 optional=lambda optional_tr: self.maybe_get_type_ids_for_type_reference(optional_tr),
                 set_=lambda set_tr: self.maybe_get_type_ids_for_type_reference(set_tr),
@@ -324,12 +324,16 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             container=lambda container: container.visit(
                 list_=lambda _: example_type_reference,
                 set_=lambda _: example_type_reference,
-                optional=lambda optional: self.unwrap_example_type_reference(optional.optional)
-                if optional.optional is not None
-                else example_type_reference,
-                nullable=lambda nullable: self.unwrap_example_type_reference(nullable.nullable)
-                if nullable.nullable is not None
-                else example_type_reference,
+                optional=lambda optional: (
+                    self.unwrap_example_type_reference(optional.optional)
+                    if optional.optional is not None
+                    else example_type_reference
+                ),
+                nullable=lambda nullable: (
+                    self.unwrap_example_type_reference(nullable.nullable)
+                    if nullable.nullable is not None
+                    else example_type_reference
+                ),
                 map_=lambda _: example_type_reference,
                 literal=lambda _: example_type_reference,
             ),

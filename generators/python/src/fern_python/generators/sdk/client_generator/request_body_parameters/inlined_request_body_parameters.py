@@ -47,9 +47,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                             property.value_type,
                             in_endpoint=True,
                         ),
-                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
-                        if type_hint.is_optional
-                        else None,
+                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                         raw_type=property.value_type,
                         raw_name=property.name.wire_value,
                     ),
