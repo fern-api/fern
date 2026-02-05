@@ -5,6 +5,7 @@ import { Context } from "../context/Context";
 import { formatMultilineText } from "./format";
 import type { Task } from "./Task";
 import type { TaskLog } from "./TaskLog";
+import type { TaskStage, TaskStageDefinition } from "./TaskStage";
 import type { TaskStatus } from "./TaskStatus";
 
 export declare namespace TaskGroup {
@@ -28,6 +29,9 @@ export declare namespace TaskGroup {
  * Uses TtyAwareLogger for all TTY coordination (clear/repaint/cursor).
  */
 export class TaskGroup {
+    private static readonly MAX_DISPLAYED_LOGS_TTY = 10;
+    private static readonly URL_PATTERN = /https?:\/\/[^\s]+/;
+
     private readonly context: Context;
     private readonly ttyAwareLogger: TtyAwareLogger;
     private readonly stream: NodeJS.WriteStream;
@@ -101,7 +105,6 @@ export class TaskGroup {
         if (task == null) {
             return this;
         }
-
         const prevStatus = task.status;
         if (update.status != null) {
             task.status = update.status;
@@ -115,16 +118,63 @@ export class TaskGroup {
         if (update.output !== undefined) {
             task.output = update.output;
         }
-
-        // Register with TtyAwareLogger when first task starts running
         if (prevStatus !== "running" && task.status === "running") {
             task.startTime = Date.now();
         }
-
         if (prevStatus === "running" && (task.status === "success" || task.status === "error")) {
             task.endTime = Date.now();
         }
+        return this;
+    }
 
+    /**
+     * Define all stages upfront so users see the full journey. All stages start as "pending".
+     */
+    public setStages(taskId: string, stages: TaskStageDefinition[]): this {
+        const task = this.tasks[taskId];
+        if (task == null) {
+            return this;
+        }
+        task.stages = stages.map((stage) => ({
+            id: stage.id,
+            status: "pending" as const,
+            labels: stage.labels
+        }));
+        return this;
+    }
+
+    /**
+     * Update a stage's status by ID. The displayed label automatically changes based on the status.
+     */
+    public updateStage({
+        taskId,
+        stageId,
+        status,
+        options
+    }: {
+        taskId: string;
+        stageId: string;
+        status: TaskStatus;
+        options?: { detail?: string; error?: string };
+    }): this {
+        const task = this.tasks[taskId];
+        if (task == null) {
+            return this;
+        }
+        if (task.stages == null) {
+            return this;
+        }
+        const stage = task.stages.find((s) => s.id === stageId);
+        if (stage == null) {
+            return this;
+        }
+        stage.status = status;
+        if (options?.detail !== undefined) {
+            stage.detail = options.detail;
+        }
+        if (options?.error !== undefined) {
+            stage.error = options.error;
+        }
         return this;
     }
 
@@ -207,26 +257,49 @@ export class TaskGroup {
 
     private formatTaskLine(task: Task, spinnerFrame: string): string | undefined {
         const name = chalk.bold(task.name);
-        const logLines = this.formatTaskLogs(task.logs);
+        const hasStages = task.stages != null && task.stages.length > 0;
+
         switch (task.status) {
-            case "pending":
+            case "pending": {
+                // Show pending tasks with stages so users see the full journey.
+                if (hasStages) {
+                    const stageLines = this.formatTaskStages(task.stages, spinnerFrame);
+                    return `${chalk.dim("○")} ${chalk.dim(name)}${stageLines}`;
+                }
                 return undefined;
+            }
             case "running": {
+                if (hasStages) {
+                    const stageLines = this.formatTaskStages(task.stages, spinnerFrame, task.logs);
+                    return `${spinnerFrame} ${name}${stageLines}`;
+                }
                 const step = task.currentStep != null ? `  ${chalk.dim(task.currentStep)}` : "";
-                return `${spinnerFrame} ${name}${step}${logLines}`;
+                return `${spinnerFrame} ${name}${step}`;
             }
             case "success": {
                 const duration = this.formatTaskDuration(task);
+                if (hasStages) {
+                    const stageLines = this.formatTaskStages(task.stages, spinnerFrame);
+                    const outputLines =
+                        task.output != null && task.output.length > 0
+                            ? task.output.map((output) => `\n    ${chalk.dim("→")} ${chalk.cyan(output)}`).join("")
+                            : "";
+                    return `${chalk.green("✓")} ${name}${duration}${stageLines}${outputLines}`;
+                }
                 const outputLines =
                     task.output != null && task.output.length > 0
                         ? task.output.map((output) => `\n    ${chalk.dim("→")} ${chalk.cyan(output)}`).join("")
                         : "";
-                return `${chalk.green("✓")} ${name}${duration}${logLines}${outputLines}`;
+                return `${chalk.green("✓")} ${name}${duration}${outputLines}`;
             }
             case "error": {
                 const duration = this.formatTaskDuration(task);
+                if (hasStages) {
+                    const stageLines = this.formatTaskStages(task.stages, spinnerFrame, task.logs);
+                    return `${chalk.red("✗")} ${name}${duration}${stageLines}`;
+                }
                 const errorLines = formatMultilineText({ text: task.error, colorFn: chalk.red.bind(chalk) });
-                return `${chalk.red("x")} ${name}${duration}${logLines}${errorLines}`;
+                return `${chalk.red("✗")} ${name}${duration}${errorLines}`;
             }
             case "skipped": {
                 const reason = task.skipReason != null ? `skipped: ${task.skipReason}` : "skipped";
@@ -237,14 +310,99 @@ export class TaskGroup {
         }
     }
 
-    private static readonly MAX_DISPLAYED_LOGS_TTY = 10;
+    /**
+     * Format the stages for a task as indented lines. When a stage fails, logs are shown under it.
+     */
+    private formatTaskStages(stages: TaskStage[] | undefined, spinnerFrame: string, logs?: TaskLog[]): string {
+        if (stages == null || stages.length === 0) {
+            return "";
+        }
 
-    private static readonly URL_PATTERN = /https?:\/\//i;
+        const lines: string[] = [];
+        for (const stage of stages) {
+            const icon = this.getStageIcon(stage.status, spinnerFrame);
+            let line = `\n    ${icon} ${this.getStageLabel(stage)}`;
 
-    private formatTaskLogs(logs: TaskLog[] | undefined): string {
+            if (stage.detail != null) {
+                line += `\n        ${chalk.dim(stage.detail)}`;
+            }
+
+            // Show logs under the failed stage.
+            if (stage.status === "error") {
+                const logLines = this.formatTaskLogs(logs, { baseIndent: 8 });
+                if (logLines.length > 0) {
+                    line += logLines;
+                }
+                if (stage.error != null) {
+                    line += `\n        ${chalk.red(stage.error)}`;
+                }
+            }
+
+            lines.push(line);
+        }
+
+        return lines.join("");
+    }
+
+    /**
+     * Get the appropriate icon for a stage status.
+     *
+     * Uses a static arrow (▸) for running stages to avoid visual noise
+     * from having multiple spinners (the parent task already has a spinner).
+     */
+    private getStageIcon(status: TaskStage["status"], _spinnerFrame: string): string {
+        switch (status) {
+            case "pending":
+                return chalk.dim("○");
+            case "running":
+                return chalk.cyan("▸");
+            case "success":
+                return chalk.green("✓");
+            case "error":
+                return chalk.red("✗");
+            case "skipped":
+                return chalk.dim("○");
+            default:
+                assertNever(status);
+        }
+    }
+
+    /**
+     * Get the formatted label for a stage based on its status.
+     * Uses the appropriate label from the stage's labels map.
+     */
+    private getStageLabel(stage: TaskStage): string {
+        const label = stage.labels[stage.status] ?? stage.labels.pending;
+        switch (stage.status) {
+            case "pending":
+                return chalk.dim(label);
+            case "running":
+                return chalk.cyan(label);
+            case "success":
+                return label;
+            case "error":
+                return chalk.red(label);
+            case "skipped":
+                return chalk.dim(label);
+            default:
+                assertNever(stage.status);
+        }
+    }
+
+    /**
+     * Format task logs for display.
+     *
+     * @param logs - The logs to format
+     * @param options - Formatting options
+     * @param options.baseIndent - Number of spaces for base indentation (default: 8 for stage nesting)
+     */
+    private formatTaskLogs(logs: TaskLog[] | undefined, options?: { baseIndent?: number }): string {
         if (logs == null || logs.length === 0) {
             return "";
         }
+
+        const baseIndent = options?.baseIndent ?? 8;
+        const indentStr = " ".repeat(baseIndent);
 
         // In TTY mode (interactive), limit logs to avoid overwhelming the display.
         // In CI/non-TTY mode, show all logs since the console can handle scrolling.
@@ -266,23 +424,27 @@ export class TaskGroup {
             .map((log) => {
                 switch (log.level) {
                     case "debug": {
-                        // For debug logs, we want to truncate the message to prevent line wrapping in TTY mode.
+                        // For debug logs, truncate to prevent line wrapping in TTY mode.
                         const maxMessageLength = shouldLimit ? this.getMaxLogMessageLength() : Infinity;
                         const message = shouldLimit ? this.truncateMessage(log.message, maxMessageLength) : log.message;
                         const icon = chalk.dim("•");
-                        return `\n    ${icon} ${chalk.dim(message)}`;
+                        return `\n${indentStr}${icon} ${chalk.dim(message)}`;
                     }
                     case "warn":
                         return formatMultilineText({
                             text: log.message,
                             colorFn: chalk.yellow.bind(chalk),
-                            icon: chalk.yellow("⚠")
+                            icon: chalk.yellow("⚠"),
+                            baseIndent,
+                            continuationIndent: baseIndent + 2
                         });
                     case "error":
                         return formatMultilineText({
                             text: log.message,
                             colorFn: chalk.red.bind(chalk),
-                            icon: chalk.red("✗")
+                            icon: chalk.red("✗"),
+                            baseIndent,
+                            continuationIndent: baseIndent + 2
                         });
                     default:
                         assertNever(log.level);
@@ -291,7 +453,7 @@ export class TaskGroup {
             .join("");
 
         if (hiddenCount > 0) {
-            return `\n    ${chalk.dim(`... ${hiddenCount} earlier logs hidden ...`)}${formattedLogs}`;
+            return `\n${indentStr}${chalk.dim(`... ${hiddenCount} earlier logs hidden ...`)}${formattedLogs}`;
         }
 
         return formattedLogs;
@@ -299,15 +461,11 @@ export class TaskGroup {
 
     /**
      * Maximum characters for a log message line in TTY mode.
-     * This prevents terminal line wrapping which breaks the paint/clear cycle.
-     *
-     * Account for: box prefix "│ " (2) + indent "    " (4) + icon + space "• " (2) = 8 chars
-     * Use 72 chars for message to stay under 80 col, or scale with terminal width.
      */
     private getMaxLogMessageLength(): number {
         const terminalWidth = this.stream.columns ?? 80;
-        // Reserve space for: "│     • " prefix (8 chars) + some margin
-        return Math.max(40, terminalWidth - 12);
+        // Reserve space for indent + icon prefix + some margin
+        return Math.max(40, terminalWidth - 16);
     }
 
     private truncateMessage(message: string, maxLength: number): string {

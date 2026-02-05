@@ -15,10 +15,14 @@ import { TaskContextLogger } from "./TaskContextLogger";
 /**
  * Adapts the CLI context to the legacy TaskContext interface.
  *
- * When a task is provided, logs are written to the task's log display.
+ * When a task is provided, logs are written to the task's log display
+ * and to the log file via TaskContextLogger.
+ *
  * When no task is provided (e.g., during validation), logs are written
  * directly to stderr, filtered by logLevel (defaults to Warn).
  *
+ * @param context - The CLI context
+ * @param task - Optional task for log file writing
  * @param logLevel - Minimum log level to display. Defaults to Warn (only warnings and errors).
  *                   Pass LogLevel.Info to include info messages (e.g., for device code flow).
  */
@@ -29,9 +33,9 @@ export class TaskContextAdapter implements TaskContext {
 
     constructor({ context, task, logLevel = LogLevel.Warn }: { context: Context; task?: Task; logLevel?: LogLevel }) {
         if (task != null) {
-            this.logger = new TaskContextLogger({ context, task });
+            this.logger = new TaskContextLogger({ context, task, logLevel });
         } else {
-            // When no task is provided, use a simple logger that writes to stderr.
+            // When no task is provided, write directly to stderr.
             this.logger = createLogger((level: LogLevel, ...args: string[]) => {
                 if (LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(logLevel)) {
                     context.stderr.log(level, ...args);

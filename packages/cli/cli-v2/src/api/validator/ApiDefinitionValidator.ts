@@ -11,6 +11,7 @@ import type { ApiSpec } from "../config/ApiSpec";
 import { isConjureSpec } from "../config/ConjureSpec";
 import type { FernSpec } from "../config/FernSpec";
 import { isFernSpec } from "../config/FernSpec";
+import { Task } from "../../ui/Task";
 
 /**
  * Validates ApiDefinitions before generation.
@@ -26,6 +27,9 @@ export namespace ApiDefinitionValidator {
 
         /** CLI version for workspace metadata */
         cliVersion: string;
+
+        /** The current task, if any */
+        task?: Task;
     }
 
     export interface Result {
@@ -50,7 +54,7 @@ export class ApiDefinitionValidator {
 
     constructor(config: ApiDefinitionValidator.Config) {
         this.context = config.context;
-        this.taskContext = new TaskContextAdapter({ context: this.context });
+        this.taskContext = new TaskContextAdapter({ context: this.context, task: config.task });
         this.cliVersion = config.cliVersion;
     }
 
