@@ -9,6 +9,9 @@ async function main() {
         dts: true,
         noExternal: ["@fern-api/fs-utils", "@fern-api/github"],
         inlineOnly: false,
+        outputOptions: {
+            codeSplitting: false
+        },
         minify: false,
         sourcemap: false,
         outDir: "dist",

@@ -21,6 +21,9 @@ async function main() {
         sourcemap: true,
         clean: true,
         inlineOnly: false,
+        outputOptions: {
+            codeSplitting: false
+        },
         inputOptions: {
             resolve: {
                 conditionNames: ["development", "source", "import", "default"]
