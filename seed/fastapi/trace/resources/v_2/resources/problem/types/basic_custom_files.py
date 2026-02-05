@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ......core.serialization import FieldMetadata
 from .....commons.types.language import Language
 from .basic_test_case_template import BasicTestCaseTemplate
 from .files import Files
@@ -11,10 +13,16 @@ from .non_void_function_signature import NonVoidFunctionSignature
 
 
 class BasicCustomFiles(UniversalBaseModel):
-    method_name: str = pydantic.Field(alias="methodName")
+    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName"), pydantic.Field(alias="methodName")]
     signature: NonVoidFunctionSignature
-    additional_files: typing.Dict[Language, Files] = pydantic.Field(alias="additionalFiles")
-    basic_test_case_template: BasicTestCaseTemplate = pydantic.Field(alias="basicTestCaseTemplate")
+    additional_files: typing_extensions.Annotated[
+        typing.Dict[Language, Files], FieldMetadata(alias="additionalFiles"), pydantic.Field(alias="additionalFiles")
+    ]
+    basic_test_case_template: typing_extensions.Annotated[
+        BasicTestCaseTemplate,
+        FieldMetadata(alias="basicTestCaseTemplate"),
+        pydantic.Field(alias="basicTestCaseTemplate"),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

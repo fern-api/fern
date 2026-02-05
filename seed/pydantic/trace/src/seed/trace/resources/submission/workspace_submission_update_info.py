@@ -7,6 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from .error_info import ErrorInfo
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
@@ -20,7 +21,9 @@ class WorkspaceSubmissionUpdateInfo_Running(UniversalBaseModel):
 
 class WorkspaceSubmissionUpdateInfo_Ran(UniversalBaseModel):
     type: typing.Literal["ran"] = "ran"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+    exception_v_2: typing_extensions.Annotated[
+        typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2"), pydantic.Field(alias="exceptionV2")
+    ] = None
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
@@ -56,7 +59,9 @@ class WorkspaceSubmissionUpdateInfo_Traced(UniversalBaseModel):
 
 class WorkspaceSubmissionUpdateInfo_TracedV2(UniversalBaseModel):
     type: typing.Literal["tracedV2"] = "tracedV2"
-    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
+    trace_responses_size: typing_extensions.Annotated[
+        int, FieldMetadata(alias="traceResponsesSize"), pydantic.Field(alias="traceResponsesSize")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

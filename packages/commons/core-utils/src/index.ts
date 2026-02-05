@@ -1,3 +1,4 @@
+// Force cache invalidation for CI - server URL templating feature
 export { addPrefixToString } from "./addPrefixToString";
 export { applyOpenAPIOverlay, type Overlay, type OverlayAction } from "./applyOpenAPIOverlay";
 export {

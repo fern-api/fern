@@ -3,13 +3,17 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from .running_submission_state import RunningSubmissionState
 from .submission_id import SubmissionId
 
 
 class RunningResponse(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    submission_id: typing_extensions.Annotated[
+        SubmissionId, FieldMetadata(alias="submissionId"), pydantic.Field(alias="submissionId")
+    ]
     state: RunningSubmissionState
 
     if IS_PYDANTIC_V2:

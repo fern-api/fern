@@ -21,6 +21,27 @@ types:
       - commons.WithDocsSchema
     properties:
       url: string
+      default-url:
+        type: optional<string>
+        docs: A separate default URL to use when no variables are provided (from x-fern-default-url extension)
+      url-template:
+        type: optional<string>
+        docs: The original URL template with variable placeholders (e.g., "https://api.{region}.example.com")
+      variables:
+        type: optional<list<ServerVariableSchema>>
+        docs: Server variables for URL templating
+
+  ServerVariableSchema:
+    properties:
+      id:
+        type: string
+        docs: The variable name as it appears in the URL template
+      default:
+        type: optional<string>
+        docs: The default value for this variable
+      values:
+        type: optional<list<string>>
+        docs: Allowed values for this variable (from enum)
 
   MultipleBaseUrlsEnvironmentSchema:
     extends:

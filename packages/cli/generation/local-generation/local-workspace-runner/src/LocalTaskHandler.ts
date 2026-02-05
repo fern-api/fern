@@ -298,6 +298,7 @@ export class LocalTaskHandler {
 
         // Undo changes to fernignore paths
         await this.runGitCommand(["reset", "--", ...fernIgnorePaths], this.absolutePathToLocalOutput);
+        await this.runGitCommand(["clean", "-fd", "--", ...fernIgnorePaths], this.absolutePathToLocalOutput);
         await this.runGitCommand(["restore", "."], this.absolutePathToLocalOutput);
     }
 
@@ -335,7 +336,7 @@ export class LocalTaskHandler {
 
         // Undo changes to fernignore paths
         await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
-
+        await this.runGitCommand(["clean", "-fd", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
         await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over
