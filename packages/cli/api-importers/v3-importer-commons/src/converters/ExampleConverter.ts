@@ -895,22 +895,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
 
         // Find properties in the example that are not defined in the schema
-        // Include properties from both the schema itself and any allOf schemas
-        const definedPropertyKeys = new Set(Object.keys(resolvedSchema.properties ?? {}));
-
-        // Also include properties from allOf schemas
-        for (const subSchema of resolvedSchema.allOf ?? []) {
-            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                schemaOrReference: subSchema,
-                breadcrumbs: this.breadcrumbs,
-                skipErrorCollector: true
-            });
-            if (resolved?.properties) {
-                for (const key of Object.keys(resolved.properties)) {
-                    definedPropertyKeys.add(key);
-                }
-            }
-        }
+        // Include properties from both the schema itself and any allOf schemas (recursively)
+        const definedPropertyKeys = this.collectAllPropertyKeys(resolvedSchema);
 
         const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
 
@@ -1296,5 +1282,64 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         resolvedSchema: OpenAPIV3_1.SchemaObject;
     }): boolean {
         return resolvedSchema.required?.includes(key) ?? false;
+    }
+
+    /**
+     * Recursively collects all property keys from a schema, including properties
+     * from allOf, oneOf, and anyOf compositions.
+     */
+    private collectAllPropertyKeys(
+        schema: OpenAPIV3_1.SchemaObject,
+        visited: Set<string> = new Set()
+    ): Set<string> {
+        const propertyKeys = new Set<string>();
+
+        // Add direct properties
+        if (schema.properties) {
+            for (const key of Object.keys(schema.properties)) {
+                propertyKeys.add(key);
+            }
+        }
+
+        // Recursively collect from allOf schemas
+        for (const subSchema of schema.allOf ?? []) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                // Prevent infinite recursion by tracking visited schemas
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    const nestedKeys = this.collectAllPropertyKeys(resolved, visited);
+                    for (const key of nestedKeys) {
+                        propertyKeys.add(key);
+                    }
+                }
+            }
+        }
+
+        // Also collect from oneOf/anyOf schemas (properties could be in any variant)
+        for (const subSchema of [...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    const nestedKeys = this.collectAllPropertyKeys(resolved, visited);
+                    for (const key of nestedKeys) {
+                        propertyKeys.add(key);
+                    }
+                }
+            }
+        }
+
+        return propertyKeys;
     }
 }
