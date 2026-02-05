@@ -6,7 +6,7 @@
       type: fix
   createdAt: "2026-02-05"
   irVersion: 63
- 
+
 - version: 3.64.3
   changelogEntry:
     - summary: |
@@ -19,7 +19,7 @@
   changelogEntry:
     - summary: |
         Add support for OpenAPI server templating. Server variables are now preserved in the IR instead of being exploded into multiple environments, enabling SDKs to configure URL variables at runtime. Supports both single and multiple base URL environments.
-      type: feat
+      type: fix
   createdAt: "2026-02-05"
   irVersion: 63
 
