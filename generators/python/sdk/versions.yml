@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.54.4
+  changelogEntry:
+    - summary: |
+        Remove `pydantic.v1` compatibility imports that trigger deprecation warnings on Python 3.14+.
+        The generated SDK now uses stdlib equivalents (`typing.get_args`, `typing.get_origin`, etc.)
+        and inline implementations for `parse_date`, `parse_datetime`, `encoders_by_type`, and
+        `is_literal_type`/`is_union` when Pydantic V2 is detected, instead of importing from
+        the `pydantic.v1` namespace.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 62
+
 - version: 4.54.3
   changelogEntry:
     - summary: |

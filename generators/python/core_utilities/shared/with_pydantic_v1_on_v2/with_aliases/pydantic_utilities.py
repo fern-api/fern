@@ -10,18 +10,78 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, 
 import pydantic
 import typing_extensions
 from .datetime_utils import serialize_datetime
-from pydantic.v1.datetime_parse import parse_date as parse_date
 
 if TYPE_CHECKING:
     from .http_sse._models import ServerSentEvent
-from pydantic.v1.datetime_parse import parse_datetime as parse_datetime
-from pydantic.v1.fields import ModelField as ModelField
-from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
-from pydantic.v1.typing import get_args as get_args
-from pydantic.v1.typing import get_origin as get_origin
-from pydantic.v1.typing import is_literal_type as is_literal_type
-from pydantic.v1.typing import is_union as is_union
 from typing_extensions import TypeAlias
+
+get_args = typing_extensions.get_args
+get_origin = typing_extensions.get_origin
+
+
+def is_literal_type(type_: Any) -> bool:
+    return typing_extensions.get_origin(type_) is typing_extensions.Literal
+
+
+def is_union(tp: Optional[Type[Any]]) -> bool:
+    return tp is Union or typing_extensions.get_origin(tp) is Union
+
+
+def parse_date(value: Any) -> dt.date:
+    if isinstance(value, dt.date):
+        if isinstance(value, dt.datetime):
+            return value.date()
+        return value
+    if isinstance(value, (int, float)):
+        return dt.datetime.fromtimestamp(value, tz=dt.timezone.utc).date()
+    if isinstance(value, bytes):
+        value = value.decode()
+    return dt.date.fromisoformat(value)
+
+
+def parse_datetime(value: Any) -> dt.datetime:
+    if isinstance(value, dt.datetime):
+        return value
+    if isinstance(value, dt.date):
+        return dt.datetime(value.year, value.month, value.day)
+    if isinstance(value, (int, float)):
+        return dt.datetime.fromtimestamp(value, tz=dt.timezone.utc)
+    if isinstance(value, bytes):
+        value = value.decode()
+    return dt.datetime.fromisoformat(value)
+
+
+ModelField = pydantic.fields.FieldInfo  # type: ignore[misc,assignment]
+
+import decimal
+from collections import deque
+from enum import Enum as _Enum
+from ipaddress import IPv4Address, IPv4Interface, IPv4Network, IPv6Address, IPv6Interface, IPv6Network
+from pathlib import Path
+from types import GeneratorType
+from uuid import UUID
+
+encoders_by_type: Dict[Type[Any], Callable[[Any], Any]] = {
+    bytes: lambda o: o.decode(),
+    dt.date: lambda o: o.isoformat(),
+    dt.datetime: lambda o: o.isoformat(),
+    dt.time: lambda o: o.isoformat(),
+    dt.timedelta: lambda td: td.total_seconds(),
+    decimal.Decimal: lambda o: int(o) if o == int(o) else float(o),
+    _Enum: lambda o: o.value,
+    frozenset: list,
+    deque: list,
+    GeneratorType: list,
+    IPv4Address: str,
+    IPv4Interface: str,
+    IPv4Network: str,
+    IPv6Address: str,
+    IPv6Interface: str,
+    IPv6Network: str,
+    Path: str,
+    set: list,
+    UUID: str,
+}
 
 _logger = logging.getLogger(__name__)
 
