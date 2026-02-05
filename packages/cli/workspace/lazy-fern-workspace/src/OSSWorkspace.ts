@@ -419,19 +419,18 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     ? ` for ${errorCollector.relativeFilepathToSpec}`
                     : "";
 
-                // TODO(kenny): we should do something more useful with the warnings here, or remove.
-
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
                         "error",
                         `API validation${specInfo} completed with ${errorStats.numErrors} errors and ${errorStats.numWarnings} warnings.`
                     );
-                } else if (errorStats.numWarnings > 0) {
+                } else if (errorStats.numWarnings > 0 && logWarnings) {
+                    // Only show warning count if logWarnings is true, since the user can see the details
                     context.logger.log(
                         "warn",
                         `API validation${specInfo} completed with ${errorStats.numWarnings} warnings.`
                     );
-                } else {
+                } else if (errorStats.numWarnings === 0) {
                     context.logger.log("info", `All checks passed when parsing OpenAPI${specInfo}.`);
                 }
 
