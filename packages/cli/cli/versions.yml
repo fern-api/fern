@@ -2,7 +2,7 @@
 - version: 3.64.0
   changelogEntry:
     - summary: |
-        Improve `.fernignore` to prevent initial generation of files. Previously, `.fernignore` only prevented overwriting existing files during SDK regeneration.
+        Improve `.fernignore` to prevent generation of new files. Previously, `.fernignore` only prevented modification or deletion of existing files during SDK regeneration.
       type: feat
   createdAt: "2026-02-04"
   irVersion: 63
