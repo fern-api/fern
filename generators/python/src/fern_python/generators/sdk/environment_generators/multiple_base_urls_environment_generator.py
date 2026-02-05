@@ -115,6 +115,13 @@ class MultipleBaseUrlsEnvironmentGenerator:
             property_name = get_base_url_property_name(base_url)
             writer.write_line(f"self.{property_name} = {property_name}")
 
+    def _get_preferred_url(self, environment: ir_types.MultipleBaseUrlsEnvironment, base_url_id: str) -> str:
+        if hasattr(environment, "model_extra") and environment.model_extra:
+            default_urls = environment.model_extra.get("defaultUrls")
+            if default_urls is not None and base_url_id in default_urls:
+                return str(default_urls[base_url_id])
+        return environment.urls[base_url_id]
+
     def _write_bottom_statements(self, writer: AST.NodeWriter) -> None:
         for environment in self._environments.environments:
             class_var = self._get_class_var_name(environment)
@@ -125,7 +132,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
                     kwargs=[
                         (
                             get_base_url_property_name(base_url),
-                            AST.Expression(f'"{environment.urls[base_url.id]}"'),
+                            AST.Expression(f'"{self._get_preferred_url(environment, base_url.id)}"'),
                         )
                         for base_url in self._environments.base_urls
                     ],

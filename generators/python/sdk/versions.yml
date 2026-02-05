@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL templating with x-fern-default-url. When an OpenAPI spec
+        defines server variables with x-fern-default-url, the generated SDK now uses the default
+        URL instead of the variable-substituted URL for environment values.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 62
+
 - version: 4.54.3
   changelogEntry:
     - summary: |

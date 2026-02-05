@@ -234,12 +234,18 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 continue;
             }
 
+            const serverRecord = server as unknown as Record<string, unknown>;
+            const serverDefaultUrl =
+                "defaultUrl" in server && typeof serverRecord["defaultUrl"] === "string"
+                    ? (serverRecord["defaultUrl"] as string)
+                    : undefined;
+            const serverUrl = serverDefaultUrl ?? server.url;
             const environmentSchema = server.audiences
                 ? {
-                      url: server.url,
+                      url: serverUrl,
                       audiences: server.audiences
                   }
-                : server.url;
+                : serverUrl;
             if (server.name == null) {
                 endpointLevelSkippedServers.push(environmentSchema);
                 continue;
@@ -250,7 +256,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 endpointLevelServersByName[server.name] = [];
             }
             endpointLevelServersByName[server.name]?.push({
-                url: server.url,
+                url: serverUrl,
                 audiences: server.audiences
             });
 
@@ -525,7 +531,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             ? schema
                             : isRawMultipleBaseUrlsEnvironment(schema)
                               ? Object.values(schema.urls)[0]
-                              : schema.url;
+                              : (schema["default-url"] ?? schema.url);
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -550,7 +556,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             ? schema
                             : isRawMultipleBaseUrlsEnvironment(schema)
                               ? Object.values(schema.urls)[0]
-                              : schema.url;
+                              : (schema["default-url"] ?? schema.url);
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -583,7 +589,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     ? topLevelServerSchema
                     : isRawMultipleBaseUrlsEnvironment(topLevelServerSchema)
                       ? Object.values(topLevelServerSchema.urls)[0]
-                      : topLevelServerSchema.url;
+                      : (topLevelServerSchema["default-url"] ?? topLevelServerSchema.url);
             context.builder.addEnvironment({
                 name: environmentName,
                 schema: {
@@ -624,7 +630,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             ? envSchema
                             : isRawMultipleBaseUrlsEnvironment(envSchema)
                               ? Object.values(envSchema.urls)[0]
-                              : envSchema.url;
+                              : (envSchema["default-url"] ?? envSchema.url);
 
                     if (!baseUrl) {
                         continue; // Skip if no base URL
@@ -680,7 +686,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                                 ? schema
                                 : isRawMultipleBaseUrlsEnvironment(schema)
                                   ? Object.values(schema.urls)[0]
-                                  : schema.url;
+                                  : (schema["default-url"] ?? schema.url);
                         context.builder.addEnvironment({
                             name,
                             schema: {
