@@ -854,6 +854,25 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         });
 
         const allOfResults = (resolvedSchema.allOf ?? []).map((subSchema, index) => {
+            // Resolve the sub-schema to check if it's a constraint-only schema
+            const resolvedSubSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
+                skipErrorCollector: true
+            });
+
+            // Skip validation for constraint-only schemas (only have 'required', no actual structure)
+            // These schemas are meant to add constraints to the merged schema, not define structure
+            if (resolvedSubSchema && this.isConstraintOnlySchema(resolvedSubSchema)) {
+                return {
+                    isValid: true,
+                    coerced: false,
+                    usedProvidedExample: this.example !== undefined,
+                    validExample: this.example,
+                    errors: []
+                };
+            }
+
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
                 context: this.context,
@@ -1266,6 +1285,56 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         return undefined;
+    }
+
+    /**
+     * Checks if a schema is a "constraint-only" schema that only has validation constraints
+     * like 'required' but no actual structure (no type, properties, allOf, oneOf, anyOf, etc.).
+     * These schemas are used in allOf compositions to add constraints to the merged schema.
+     */
+    private isConstraintOnlySchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+        // If the schema has any structural elements, it's not constraint-only
+        if (
+            schema.type !== undefined ||
+            schema.properties !== undefined ||
+            schema.allOf !== undefined ||
+            schema.oneOf !== undefined ||
+            schema.anyOf !== undefined ||
+            "items" in schema ||
+            schema.additionalProperties !== undefined ||
+            schema.enum !== undefined ||
+            schema.const !== undefined
+        ) {
+            return false;
+        }
+
+        // Check if it only has constraint-related fields (required, description, etc.)
+        const constraintOnlyFields = new Set([
+            "required",
+            "description",
+            "title",
+            "deprecated",
+            "readOnly",
+            "writeOnly",
+            "nullable",
+            "example",
+            "examples",
+            "default",
+            "minLength",
+            "maxLength",
+            "minimum",
+            "maximum",
+            "exclusiveMinimum",
+            "exclusiveMaximum",
+            "minItems",
+            "maxItems",
+            "uniqueItems",
+            "pattern",
+            "format"
+        ]);
+
+        const schemaKeys = Object.keys(schema);
+        return schemaKeys.length > 0 && schemaKeys.every((key) => constraintOnlyFields.has(key));
     }
 
     private isDeprecatedProperty(
