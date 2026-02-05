@@ -48,6 +48,8 @@ def parse_datetime(value: Any) -> dt.datetime:
         return dt.datetime.fromtimestamp(value, tz=dt.timezone.utc)
     if isinstance(value, bytes):
         value = value.decode()
+    if isinstance(value, str) and value.endswith("Z"):
+        value = value[:-1] + "+00:00"
     return dt.datetime.fromisoformat(value)
 
 
