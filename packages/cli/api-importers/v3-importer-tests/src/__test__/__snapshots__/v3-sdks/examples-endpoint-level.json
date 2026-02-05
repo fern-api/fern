@@ -5495,6 +5495,16 @@
                     "color": "red",
                     "name": "RedFern"
                   }
+                },
+                "response": {
+                  "statusCode": 201,
+                  "body": {
+                    "value": {
+                      "message": "RedFern created",
+                      "code": 42
+                    },
+                    "type": "json"
+                  }
                 }
               },
               "fernRequestExample2": {
@@ -5510,6 +5520,16 @@
                   "requestBody": {
                     "color": "green",
                     "name": "GreenFern"
+                  }
+                },
+                "response": {
+                  "statusCode": 201,
+                  "body": {
+                    "value": {
+                      "message": "RedFern created",
+                      "code": 42
+                    },
+                    "type": "json"
                   }
                 }
               }
