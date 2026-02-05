@@ -2,7 +2,7 @@ import * as FernIr from "@fern-api/ir-sdk";
 import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, APIErrorLevel, Extensions } from "../..";
+import { AbstractConverter, AbstractConverterContext, Extensions } from "../..";
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";
 import { ExampleConverter } from "../ExampleConverter";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
@@ -574,9 +574,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     private generateOrValidateExample({
-        example,
-        ignoreErrors,
-        exampleName
+        example
     }: {
         example: unknown;
         ignoreErrors?: boolean;
@@ -588,19 +586,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             schema: this.schema,
             example
         });
-        const { validExample: convertedExample, errors } = exampleConverter.convert();
-        if (!ignoreErrors) {
-            errors.forEach((error) => {
-                const contextPrefix = exampleName
-                    ? `Example "${exampleName}" for schema "${this.id}": `
-                    : `Schema "${this.id}": `;
-                this.context.errorCollector.collect({
-                    message: `${contextPrefix}${error.message}`,
-                    path: error.path,
-                    level: APIErrorLevel.WARNING
-                });
-            });
-        }
+        const { validExample: convertedExample } = exampleConverter.convert();
+        // Note: Example validation errors are intentionally not collected as warnings
+        // because they are too verbose and not actionable for users
         return convertedExample;
     }
 }

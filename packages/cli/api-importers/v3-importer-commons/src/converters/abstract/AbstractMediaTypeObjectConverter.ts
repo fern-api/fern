@@ -2,7 +2,7 @@ import { V2SchemaExamples } from "@fern-api/ir-sdk";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, APIErrorLevel } from "../..";
+import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ExampleConverter } from "../ExampleConverter";
 import { SchemaOrReferenceConverter } from "../schema";
 import { SchemaConverter } from "../schema/SchemaConverter";
@@ -210,10 +210,8 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
     protected generateOrValidateExample({
         schema,
         example,
-        ignoreErrors,
         generateOptionalProperties,
-        exampleGenerationStrategy,
-        exampleName
+        exampleGenerationStrategy
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         ignoreErrors?: boolean;
@@ -245,20 +243,9 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
             generateOptionalProperties: generateOptionalProperties ?? false,
             exampleGenerationStrategy
         });
-        const { validExample: convertedExample, errors } = exampleConverter.convert();
-        if (!ignoreErrors) {
-            const endpointPath = [...this.group, this.method].join("/");
-            errors.forEach((error) => {
-                const contextPrefix = exampleName
-                    ? `Example "${exampleName}" for endpoint ${endpointPath}: `
-                    : `Endpoint ${endpointPath}: `;
-                this.context.errorCollector.collect({
-                    message: `${contextPrefix}${error.message}`,
-                    path: error.path,
-                    level: APIErrorLevel.WARNING
-                });
-            });
-        }
+        const { validExample: convertedExample } = exampleConverter.convert();
+        // Note: Example validation errors are intentionally not collected as warnings
+        // because they are too verbose and not actionable for users
         return convertedExample;
     }
 }

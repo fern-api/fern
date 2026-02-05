@@ -1,7 +1,7 @@
 import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, APIErrorLevel } from "../..";
+import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ExampleConverter } from "../ExampleConverter";
 import { SchemaConverter } from "../schema/SchemaConverter";
 
@@ -195,9 +195,7 @@ export abstract class AbstractParameterConverter<
 
     private generateOrValidateExample({
         schema,
-        ignoreErrors,
-        example,
-        exampleName
+        example
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         example: unknown;
@@ -210,20 +208,9 @@ export abstract class AbstractParameterConverter<
             schema,
             example
         });
-        const { validExample: convertedExample, errors } = exampleConverter.convert();
-        if (!ignoreErrors) {
-            const parameterContext = `${this.parameter.in} parameter "${this.parameter.name}"`;
-            errors.forEach((error) => {
-                const contextPrefix = exampleName
-                    ? `Example "${exampleName}" for ${parameterContext}: `
-                    : `Parameter ${parameterContext}: `;
-                this.context.errorCollector.collect({
-                    message: `${contextPrefix}${error.message}`,
-                    path: error.path,
-                    level: APIErrorLevel.WARNING
-                });
-            });
-        }
+        const { validExample: convertedExample } = exampleConverter.convert();
+        // Note: Example validation errors are intentionally not collected as warnings
+        // because they are too verbose and not actionable for users
         return convertedExample;
     }
 
