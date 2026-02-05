@@ -75,10 +75,8 @@ class SingleBaseUrlEnvironmentGenerator:
         return AST.Expression(AST.CodeWriter(write))
 
     def _get_preferred_url(self, environment: ir_types.SingleBaseUrlEnvironment) -> str:
-        if hasattr(environment, "model_extra") and environment.model_extra:
-            default_url = environment.model_extra.get("defaultUrl")
-            if default_url is not None:
-                return str(default_url)
+        if environment.default_url is not None:
+            return environment.default_url
         return environment.url
 
     def _get_enum_value_name(self, environment: ir_types.SingleBaseUrlEnvironment) -> str:
