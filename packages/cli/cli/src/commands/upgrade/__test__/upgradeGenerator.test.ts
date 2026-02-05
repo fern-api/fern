@@ -10,11 +10,22 @@ import { loadAndUpdateGenerators } from "../upgradeGenerator";
 
 vi.mock("@fern-api/configuration-loader", () => ({
     getPathToGeneratorsConfiguration: vi.fn(),
-    getGeneratorNameOrThrow: vi.fn((name: string) => {
+    normalizeGeneratorName: vi.fn((name: string) => {
         if (!name.includes("/")) {
-            return `fernapi/${name}`;
+            name = `fernapi/${name}`;
         }
-        return name;
+        const knownGenerators = [
+            "fernapi/fern-typescript-sdk",
+            "fernapi/fern-python-sdk",
+            "fernapi/fern-java-sdk",
+            "fernapi/fern-java-model",
+            "fernapi/fern-csharp-sdk",
+            "fernapi/fern-go-sdk"
+        ];
+        if (knownGenerators.includes(name)) {
+            return name;
+        }
+        return undefined;
     }),
     getLatestGeneratorVersion: vi.fn(),
     addDefaultDockerOrgIfNotPresent: vi.fn((name: string) => {

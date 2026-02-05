@@ -48,8 +48,16 @@ export function getGeneratorNameOrThrow(generatorName: string, context: TaskCont
     return normalizedGeneratorName;
 }
 
+const GENERATOR_NAME_ALIASES: Record<string, string> = {
+    "fernapi/java-model": GeneratorName.JAVA_MODEL
+};
+
 export function normalizeGeneratorName(generatorName: string): GeneratorName | undefined {
     generatorName = addDefaultDockerOrgIfNotPresent(generatorName);
+    const aliased = GENERATOR_NAME_ALIASES[generatorName];
+    if (aliased != null) {
+        generatorName = aliased;
+    }
     if (isGeneratorName(generatorName)) {
         return generatorName;
     }

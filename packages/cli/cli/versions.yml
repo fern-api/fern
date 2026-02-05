@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.64.6
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing when encountering unrecognized generator names. Previously, an unrecognized generator (e.g. `fernapi/java-model`) would block the entire upgrade process. Now unrecognized generators are skipped with a warning, allowing the remaining generators to be upgraded. Also adds support for the `java-model` legacy generator name alias.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
 - version: 3.64.5
   changelogEntry:
     - summary: |

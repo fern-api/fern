@@ -1,9 +1,9 @@
 import {
     addDefaultDockerOrgIfNotPresent,
-    getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
     getPathToGeneratorsConfiguration,
-    loadRawGeneratorsConfiguration
+    loadRawGeneratorsConfiguration,
+    normalizeGeneratorName
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
@@ -141,7 +141,13 @@ export async function loadAndUpdateGenerators({
             const generatorName = generator.get("name") as string;
             // Normalize the generator name to add default Docker org prefix if not present
             // This is needed because the YAML may contain shorthand names like "fern-csharp-sdk"
-            const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
+            const normalizedGeneratorName = normalizeGeneratorName(generatorName);
+            if (normalizedGeneratorName == null) {
+                context.logger.warn(
+                    `Skipping unrecognized generator: ${generatorName}. The generator will not be upgraded.`
+                );
+                continue;
+            }
 
             // Normalize the generator filter to add default Docker org prefix if not present
             const normalizedGeneratorFilter =
