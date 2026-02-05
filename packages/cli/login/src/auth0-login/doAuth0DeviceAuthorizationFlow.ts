@@ -5,6 +5,8 @@ import boxen from "boxen";
 import open from "open";
 import qs from "qs";
 
+import type { Auth0TokenResponse } from "./doAuth0LoginFlow";
+
 interface DeviceCodeResponse {
     device_code: string;
     user_code: string;
@@ -24,12 +26,16 @@ export async function doAuth0DeviceAuthorizationFlow({
     auth0ClientId: string;
     audience: string;
     context: TaskContext;
-}): Promise<string> {
+}): Promise<Auth0TokenResponse> {
     const deviceCodeResponse = await axios.request<DeviceCodeResponse>({
         method: "POST",
         url: `https://${auth0Domain}/oauth/device/code`,
         headers: { "content-type": "application/x-www-form-urlencoded" },
-        data: qs.stringify({ client_id: auth0ClientId, audience }),
+        data: qs.stringify({
+            client_id: auth0ClientId,
+            audience,
+            scope: "openid profile email offline_access"
+        }),
         validateStatus: () => true
     });
 
@@ -54,14 +60,12 @@ export async function doAuth0DeviceAuthorizationFlow({
         ].join("\n")
     );
 
-    const token = await pollForToken({
+    return await pollForToken({
         auth0ClientId,
         auth0Domain,
         deviceCode: deviceCodeResponse.data.device_code,
         context
     });
-
-    return token;
 }
 
 interface PollTokenFailedResponse {
@@ -87,7 +91,7 @@ async function pollForToken({
     auth0ClientId: string;
     deviceCode: string;
     context: TaskContext;
-}): Promise<string> {
+}): Promise<Auth0TokenResponse> {
     const response = await axios.request({
         method: "POST",
         url: `https://${auth0Domain}/oauth/token`,
@@ -102,7 +106,10 @@ async function pollForToken({
 
     if (response.status === 200) {
         const data = response.data as PollTokenSuccessResponse;
-        return data.access_token;
+        return {
+            accessToken: data.access_token,
+            idToken: data.id_token
+        };
     }
 
     const data = response.data as PollTokenFailedResponse;

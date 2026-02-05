@@ -7,6 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 
 
 class NotificationMethod_Email(UniversalBaseModel):
@@ -15,9 +16,13 @@ class NotificationMethod_Email(UniversalBaseModel):
     """
 
     type: typing.Literal["email"] = "email"
-    email_address: str = pydantic.Field(alias="emailAddress")
+    email_address: typing_extensions.Annotated[
+        str, FieldMetadata(alias="emailAddress"), pydantic.Field(alias="emailAddress")
+    ]
     subject: str
-    html_content: typing.Optional[str] = pydantic.Field(alias="htmlContent", default=None)
+    html_content: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="htmlContent"), pydantic.Field(alias="htmlContent")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -33,9 +38,13 @@ class NotificationMethod_Sms(UniversalBaseModel):
     """
 
     type: typing.Literal["sms"] = "sms"
-    phone_number: str = pydantic.Field(alias="phoneNumber")
+    phone_number: typing_extensions.Annotated[
+        str, FieldMetadata(alias="phoneNumber"), pydantic.Field(alias="phoneNumber")
+    ]
     message: str
-    short_code: typing.Optional[str] = pydantic.Field(alias="shortCode", default=None)
+    short_code: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="shortCode"), pydantic.Field(alias="shortCode")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -51,7 +60,9 @@ class NotificationMethod_Push(UniversalBaseModel):
     """
 
     type: typing.Literal["push"] = "push"
-    device_token: str = pydantic.Field(alias="deviceToken")
+    device_token: typing_extensions.Annotated[
+        str, FieldMetadata(alias="deviceToken"), pydantic.Field(alias="deviceToken")
+    ]
     title: str
     body: str
     badge: typing.Optional[int] = None

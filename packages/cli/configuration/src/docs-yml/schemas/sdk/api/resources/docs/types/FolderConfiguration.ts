@@ -7,6 +7,8 @@ export interface FolderConfiguration extends FernDocsConfig.WithPermissions, Fer
     folder: string;
     /** The title to display for this folder section. If not provided, the folder name will be used. */
     title?: string;
+    /** Determines how page titles are derived for files in this folder. Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename` (derive title from the file name). Defaults to `filename`. */
+    titleSource?: FernDocsConfig.TitleSource;
     slug?: string;
     icon?: string;
     hidden?: boolean;

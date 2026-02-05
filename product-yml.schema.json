@@ -1471,6 +1471,13 @@
       ],
       "additionalProperties": false
     },
+    "docs.TitleSource": {
+      "type": "string",
+      "enum": [
+        "frontmatter",
+        "filename"
+      ]
+    },
     "docs.FolderConfiguration": {
       "type": "object",
       "properties": {
@@ -1511,6 +1518,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TitleSource"
             },
             {
               "type": "null"

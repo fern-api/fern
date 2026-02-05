@@ -8,6 +8,7 @@ export { CliSchema } from "./CliSchema";
 export { CratesPublishSchema } from "./CratesPublishSchema";
 export { EnvironmentSchema } from "./EnvironmentSchema";
 export { FernYmlSchema } from "./FernYmlSchema";
+export { createEmptyFernRcSchema, FernRcAccountSchema, FernRcAuthSchema, FernRcSchema } from "./fernrc";
 export { GitOutputModeSchema } from "./GitOutputModeSchema";
 export { GitOutputSchema } from "./GitOutputSchema";
 export { HeaderConfigSchema } from "./HeaderConfigSchema";

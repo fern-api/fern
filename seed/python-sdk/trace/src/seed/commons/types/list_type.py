@@ -11,15 +11,17 @@ from ...core.serialization import FieldMetadata
 
 
 class ListType(UniversalBaseModel):
-    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")] = pydantic.Field(
-        alias="valueType"
-    )
-    is_fixed_length: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isFixedLength")] = (
-        pydantic.Field(alias="isFixedLength", default=None)
-    )
-    """
-    Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
-    """
+    value_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="valueType"), pydantic.Field(alias="valueType")
+    ]
+    is_fixed_length: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isFixedLength"),
+        pydantic.Field(
+            alias="isFixedLength",
+            description="Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

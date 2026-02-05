@@ -15,4 +15,5 @@ export {
     type ReplaceReferencedMarkdownResult,
     replaceReferencedMarkdown
 } from "./replaceReferencedMarkdown";
+export { transformAtPrefixImports } from "./transformAtPrefixImports";
 export { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";

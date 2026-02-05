@@ -1,13 +1,19 @@
-import { FernToken, getToken } from "@fern-api/auth";
+import { FernToken, FernUserToken, getAccessToken, verifyAndDecodeJwt } from "@fern-api/auth";
 import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
+import { getTokenFromAuth0 } from "@fern-api/login";
+import chalk from "chalk";
+import inquirer from "inquirer";
+import { KeyringStore, TokenService } from "../auth";
 import { loadFernYml } from "../config/fern-yml/loadFernYml";
 import { CliError } from "../errors/CliError";
 import { ValidationError } from "../errors/ValidationError";
 import { Target } from "../sdk/config/Target";
+import { Icons } from "../ui/format";
 import type { Workspace } from "../workspace/Workspace";
 import { WorkspaceLoader } from "../workspace/WorkspaceLoader";
+import { TaskContextAdapter } from "./adapter/TaskContextAdapter";
 import { LogFileWriter } from "./LogFileWriter";
 
 export class Context {
@@ -18,6 +24,7 @@ export class Context {
     public readonly stdout: Logger;
     public readonly stderr: Logger;
     public readonly logFileWriter: LogFileWriter;
+    public readonly tokenService: TokenService;
 
     constructor({
         stdout,
@@ -36,20 +43,9 @@ export class Context {
         this.logFileWriter = new LogFileWriter({ cwd: this.cwd });
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
-    }
 
-    /** Get the authentication token or throw an error if it's not available. */
-    public async getAuthTokenOrThrow(): Promise<FernToken> {
-        const token = await this.getAuthToken();
-        if (token == null) {
-            throw CliError.authRequired();
-        }
-        return token;
-    }
-
-    /** Get the authentication token or return undefined if it's not available. */
-    public async getAuthToken(): Promise<FernToken | undefined> {
-        return await getToken();
+        const keyring = new KeyringStore();
+        this.tokenService = new TokenService({ keyring });
     }
 
     public async loadWorkspaceOrThrow(): Promise<Workspace> {
@@ -62,6 +58,55 @@ export class Context {
         }
 
         return result.workspace;
+    }
+
+    /**
+     * Get a valid token, prompting to login if necessary.
+     *
+     * Checks in order:
+     *  1. FERN_TOKEN env var (organization token) - returns immediately if set
+     *  2. User token from keyring - verifies JWT and prompts to re-login if expired
+     *
+     * If there's no token or the token is invalid/expired:
+     *  - In TTY mode: prompts "Login required. Continue?" and re-authenticates.
+     *  - In non-TTY mode: throws an error with instructions to run `fern auth login` or set the FERN_TOKEN environment variable.
+     *
+     * @returns A valid FernToken (either organization or user token)
+     * @throws CliError if not logged in and not in TTY mode, or if user declines to login
+     */
+    public async getTokenOrPrompt(): Promise<FernToken> {
+        const envToken = await getAccessToken();
+        if (envToken != null) {
+            return envToken;
+        }
+
+        const token = await this.tokenService.getActiveToken();
+        if (token == null) {
+            if (!this.isTTY) {
+                this.stderr.warn(`${chalk.yellow("⚠")} You are not logged in to Fern.`);
+                this.stderr.info("");
+                this.stderr.info(
+                    chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
+                );
+                throw CliError.exit();
+            }
+            return await this.promptAndLogin();
+        }
+
+        const decoded = await verifyAndDecodeJwt(token);
+        if (decoded == null) {
+            if (!this.isTTY) {
+                this.stderr.error(`${Icons.error} Your access token has expired.`);
+                this.stderr.info("");
+                this.stderr.info(
+                    chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
+                );
+                throw CliError.exit();
+            }
+            return await this.promptAndLogin();
+        }
+
+        return { type: "user", value: token };
     }
 
     /**
@@ -129,6 +174,48 @@ export class Context {
      */
     public finish(): void {
         this.ttyAwareLogger.finish();
+    }
+
+    private async promptAndLogin(): Promise<FernUserToken> {
+        const { confirm } = await inquirer.prompt<{ confirm: boolean }>([
+            {
+                type: "confirm",
+                name: "confirm",
+                message: "Login required. Continue?",
+                default: true
+            }
+        ]);
+
+        if (!confirm) {
+            throw CliError.exit();
+        }
+
+        this.stderr.info(`${Icons.info} Opening browser to log in to Fern...`);
+        this.stderr.info(chalk.dim("  If the browser doesn't open, try: fern auth login --device-code"));
+
+        const taskContext = new TaskContextAdapter({ context: this });
+        const { accessToken, idToken } = await getTokenFromAuth0(taskContext, {
+            useDeviceCodeFlow: false,
+            forceReauth: true
+        });
+
+        const payload = await verifyAndDecodeJwt(idToken);
+        if (payload == null) {
+            this.stderr.error(`${Icons.error} Internal error; could not verify ID token`);
+            throw CliError.exit();
+        }
+
+        const email = payload.email;
+        if (email == null) {
+            this.stderr.error(`${Icons.error} Internal error; ID token does not contain email claim`);
+            throw CliError.exit();
+        }
+
+        await this.tokenService.login(email, accessToken);
+
+        this.stderr.info(`${Icons.success} Logged in as ${chalk.bold(email)}`);
+
+        return { type: "user", value: accessToken };
     }
 
     private log(level: LogLevel, ...parts: string[]) {

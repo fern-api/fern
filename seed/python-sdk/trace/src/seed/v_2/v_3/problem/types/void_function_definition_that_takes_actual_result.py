@@ -18,8 +18,10 @@ class VoidFunctionDefinitionThatTakesActualResult(UniversalBaseModel):
     """
 
     additional_parameters: typing_extensions.Annotated[
-        typing.List[Parameter], FieldMetadata(alias="additionalParameters")
-    ] = pydantic.Field(alias="additionalParameters")
+        typing.List[Parameter],
+        FieldMetadata(alias="additionalParameters"),
+        pydantic.Field(alias="additionalParameters"),
+    ]
     code: FunctionImplementationForMultipleLanguages
 
     if IS_PYDANTIC_V2:
