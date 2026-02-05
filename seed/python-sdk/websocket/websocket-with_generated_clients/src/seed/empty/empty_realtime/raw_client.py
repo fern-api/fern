@@ -55,6 +55,7 @@ class RawEmptyRealtimeClient:
         if _encoded_query_params:
             ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
         headers = self._client_wrapper.get_headers()
+        headers.pop("Authorization", None)
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
         try:
@@ -110,6 +111,7 @@ class AsyncRawEmptyRealtimeClient:
         if _encoded_query_params:
             ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
         headers = self._client_wrapper.get_headers()
+        headers.pop("Authorization", None)
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
         try:

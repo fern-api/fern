@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.54.5
+  changelogEntry:
+    - summary: |
+        Skip sending Authorization header on WebSocket connections when the channel has auth: false.
+        This allows WebSocket APIs that handle authentication via message-based auth (e.g., sending
+        an auth token as the first message) to connect without the server rejecting the handshake
+        due to an unexpected Authorization header.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 62
+
 - version: 4.54.4
   changelogEntry:
     - summary: |

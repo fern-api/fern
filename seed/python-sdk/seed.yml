@@ -358,6 +358,10 @@ fixtures:
     - customConfig:
         should_generate_websocket_clients: true
       outputFolder: websocket-with_generated_clients
+  websocket-bearer-auth:
+    - customConfig:
+        should_generate_websocket_clients: true
+      outputFolder: no-custom-config
   nullable:
     - outputFolder: no-custom-config
     - customConfig:

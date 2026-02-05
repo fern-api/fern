@@ -6,14 +6,14 @@ from contextlib import asynccontextmanager, contextmanager
 
 import websockets.exceptions
 import websockets.sync.client as websockets_sync_client
-from ...core.api_error import ApiError
-from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.jsonable_encoder import jsonable_encoder
-from ...core.query_encoder import encode_query
-from ...core.remove_none_from_dict import remove_none_from_dict
-from ...core.request_options import RequestOptions
-from .raw_client import AsyncRawEmptyRealtimeClient, RawEmptyRealtimeClient
-from .socket_client import AsyncEmptyRealtimeSocketClient, EmptyRealtimeSocketClient
+from ..core.api_error import ApiError
+from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
+from ..core.remove_none_from_dict import remove_none_from_dict
+from ..core.request_options import RequestOptions
+from .raw_client import AsyncRawRealtimeNoAuthClient, RawRealtimeNoAuthClient
+from .socket_client import AsyncRealtimeNoAuthSocketClient, RealtimeNoAuthSocketClient
 
 try:
     from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
@@ -21,40 +21,49 @@ except ImportError:
     from websockets import connect as websockets_client_connect  # type: ignore
 
 
-class EmptyRealtimeClient:
+class RealtimeNoAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawEmptyRealtimeClient(client_wrapper=client_wrapper)
+        self._raw_client = RawRealtimeNoAuthClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawEmptyRealtimeClient:
+    def with_raw_response(self) -> RawRealtimeNoAuthClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawEmptyRealtimeClient
+        RawRealtimeNoAuthClient
         """
         return self._raw_client
 
     @contextmanager
     def connect(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[EmptyRealtimeSocketClient]:
+        self,
+        session_id: str,
+        *,
+        model: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[RealtimeNoAuthSocketClient]:
         """
         Parameters
         ----------
+        session_id : str
+
+        model : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        EmptyRealtimeSocketClient
+        RealtimeNoAuthSocketClient
         """
-        ws_url = self._raw_client._client_wrapper.get_base_url() + "/empty/realtime/"
+        ws_url = self._raw_client._client_wrapper.get_base_url() + "/realtime-no-auth/"
         _encoded_query_params = encode_query(
             jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "model": model,
                         **(
                             request_options.get("additional_query_parameters", {}) or {}
                             if request_options is not None
@@ -72,7 +81,7 @@ class EmptyRealtimeClient:
             headers.update(request_options["additional_headers"])
         try:
             with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
-                yield EmptyRealtimeSocketClient(websocket=protocol)
+                yield RealtimeNoAuthSocketClient(websocket=protocol)
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
@@ -88,40 +97,49 @@ class EmptyRealtimeClient:
             )
 
 
-class AsyncEmptyRealtimeClient:
+class AsyncRealtimeNoAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawEmptyRealtimeClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawRealtimeNoAuthClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawEmptyRealtimeClient:
+    def with_raw_response(self) -> AsyncRawRealtimeNoAuthClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawEmptyRealtimeClient
+        AsyncRawRealtimeNoAuthClient
         """
         return self._raw_client
 
     @asynccontextmanager
     async def connect(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[AsyncEmptyRealtimeSocketClient]:
+        self,
+        session_id: str,
+        *,
+        model: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncRealtimeNoAuthSocketClient]:
         """
         Parameters
         ----------
+        session_id : str
+
+        model : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncEmptyRealtimeSocketClient
+        AsyncRealtimeNoAuthSocketClient
         """
-        ws_url = self._raw_client._client_wrapper.get_base_url() + "/empty/realtime/"
+        ws_url = self._raw_client._client_wrapper.get_base_url() + "/realtime-no-auth/"
         _encoded_query_params = encode_query(
             jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "model": model,
                         **(
                             request_options.get("additional_query_parameters", {}) or {}
                             if request_options is not None
@@ -139,7 +157,7 @@ class AsyncEmptyRealtimeClient:
             headers.update(request_options["additional_headers"])
         try:
             async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
-                yield AsyncEmptyRealtimeSocketClient(websocket=protocol)
+                yield AsyncRealtimeNoAuthSocketClient(websocket=protocol)
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:

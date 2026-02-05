@@ -301,6 +301,8 @@ class WebsocketConnectMethodGenerator:
                 )
             )
             writer.write_line(f"headers = {self._get_client_wrapper_headers_expression()}")
+            if not websocket.auth:
+                writer.write_line('headers.pop("Authorization", None)')
             headers_expr = self._extend_headers_with_websocket_headers(websocket=websocket)
             if websocket.headers and headers_expr is not None:
                 writer.write_node(headers_expr)
