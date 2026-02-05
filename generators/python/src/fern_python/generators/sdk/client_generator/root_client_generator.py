@@ -1439,9 +1439,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             variables.append(var)
                 break
         elif env_union.type == "multipleBaseUrls":
-            for env in env_union.environments:
-                if env.url_variables is not None:
-                    for url_id, vars_list in env.url_variables.items():
+            for multi_env in env_union.environments:
+                if multi_env.url_variables is not None:
+                    for _url_id, vars_list in multi_env.url_variables.items():
                         for var in vars_list:
                             if var.id not in seen_ids:
                                 seen_ids.add(var.id)
@@ -1485,17 +1485,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         writer.write_line(f'base_url = "{first_env.url_template}".format({format_kwargs})')
             elif env_union.type == "multipleBaseUrls":
                 if len(env_union.environments) > 0:
-                    first_env = env_union.environments[0]
-                    if first_env.url_templates is not None:
+                    first_multi_env = env_union.environments[0]
+                    if first_multi_env.url_templates is not None:
                         env_class_name = self._context.get_class_name_of_environments()
                         kwargs_lines = []
                         for base_url in env_union.base_urls:
                             prop_name = base_url.name.snake_case.safe_name
-                            template = first_env.url_templates.get(base_url.id)
+                            template = first_multi_env.url_templates.get(base_url.id)
                             if template is not None:
                                 kwargs_lines.append(f'{prop_name}="{template}".format({format_kwargs})')
                             else:
-                                url = first_env.urls.get(base_url.id, "")
+                                url = first_multi_env.urls.get(base_url.id, "")
                                 kwargs_lines.append(f'{prop_name}="{url}"')
                         if len(kwargs_lines) == 1:
                             writer.write_line(f"environment = {env_class_name}({kwargs_lines[0]})")

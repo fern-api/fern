@@ -618,10 +618,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             const multiDefaultUrls: Record<string, string> = {};
             const multiVariables: Record<string, Array<{ id: string; default?: string; values?: string[] }>> = {};
 
-            if (
-                typeof topLevelServerSchema !== "string" &&
-                !isRawMultipleBaseUrlsEnvironment(topLevelServerSchema)
-            ) {
+            if (typeof topLevelServerSchema !== "string" && !isRawMultipleBaseUrlsEnvironment(topLevelServerSchema)) {
                 if (topLevelServerSchema["url-template"]) {
                     multiUrlTemplates[DEFAULT_URL_NAME] = topLevelServerSchema["url-template"];
                 }
@@ -638,8 +635,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             Object.assign(multiDefaultUrls, endpointLevelDefaultUrls);
             Object.assign(multiVariables, endpointLevelVariables);
 
-            const hasTemplateData =
-                Object.keys(multiUrlTemplates).length > 0 || Object.keys(multiVariables).length > 0;
+            const hasTemplateData = Object.keys(multiUrlTemplates).length > 0 || Object.keys(multiVariables).length > 0;
 
             const multiUrlSchema: Record<string, unknown> = {
                 urls: {
