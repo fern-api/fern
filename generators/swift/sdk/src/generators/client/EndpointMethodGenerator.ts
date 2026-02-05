@@ -1,6 +1,6 @@
 import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
@@ -11,6 +11,7 @@ export declare namespace EndpointMethodGenerator {
         parentClassSymbol: swift.Symbol;
         clientGeneratorContext: ClientGeneratorContext;
         sdkGeneratorContext: SdkGeneratorContext;
+        service: HttpService | undefined;
     }
 }
 
@@ -19,16 +20,19 @@ export class EndpointMethodGenerator {
     private readonly clientGeneratorContext: ClientGeneratorContext;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly referencer: Referencer;
+    private readonly serviceHeaders: HttpHeader[];
 
     public constructor({
         parentClassSymbol,
         clientGeneratorContext,
-        sdkGeneratorContext
+        sdkGeneratorContext,
+        service
     }: EndpointMethodGenerator.Args) {
         this.referencer = sdkGeneratorContext.createReferencer(parentClassSymbol);
         this.parentClassSymbol = parentClassSymbol;
         this.clientGeneratorContext = clientGeneratorContext;
         this.sdkGeneratorContext = sdkGeneratorContext;
+        this.serviceHeaders = service?.headers ?? [];
     }
 
     public generateMethod(endpoint: HttpEndpoint): swift.Method {
@@ -73,7 +77,7 @@ export class EndpointMethodGenerator {
             }
         });
 
-        endpoint.headers.forEach((header) => {
+        this.getAllHeaders(endpoint).forEach((header) => {
             const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
             if (!this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String")) {
                 return;
@@ -240,7 +244,7 @@ export class EndpointMethodGenerator {
             );
         }
 
-        const validHeaders = endpoint.headers.filter((header) => {
+        const validHeaders = this.getAllHeaders(endpoint).filter((header) => {
             const swiftType = this.getSwiftTypeForTypeReference(header.valueType);
             return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
         });
@@ -410,6 +414,18 @@ export class EndpointMethodGenerator {
 
     private getSwiftTypeForTypeReference(typeReference: TypeReference) {
         return this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(typeReference, this.parentClassSymbol);
+    }
+
+    /**
+     * Combines service headers with endpoint headers, deduplicating by wire value.
+     * Endpoint headers take precedence over service headers when there's a conflict.
+     */
+    private getAllHeaders(endpoint: HttpEndpoint): HttpHeader[] {
+        const endpointHeaderWireValues = new Set(endpoint.headers.map((h) => h.name.wireValue));
+        const filteredServiceHeaders = this.serviceHeaders.filter(
+            (header) => !endpointHeaderWireValues.has(header.name.wireValue)
+        );
+        return [...filteredServiceHeaders, ...endpoint.headers];
     }
 
     private getEnumCaseNameForHttpMethod(method: HttpMethod): string {

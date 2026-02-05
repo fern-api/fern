@@ -596,7 +596,8 @@ export class RootClientGenerator {
         const endpointMethodGenerator = new EndpointMethodGenerator({
             parentClassSymbol: this.symbol,
             clientGeneratorContext: this.clientGeneratorContext,
-            sdkGeneratorContext: this.sdkGeneratorContext
+            sdkGeneratorContext: this.sdkGeneratorContext,
+            service: this.service
         });
         return (this.service?.endpoints ?? []).map((endpoint) => {
             return endpointMethodGenerator.generateMethod(endpoint);
