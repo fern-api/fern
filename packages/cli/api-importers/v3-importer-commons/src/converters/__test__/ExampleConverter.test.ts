@@ -359,5 +359,278 @@ describe("ExampleConverter", () => {
             expect(result.validExample).toEqual(example);
             expect(result.errors).toHaveLength(0);
         });
+
+        it("should preserve additional properties when additionalProperties is a string schema", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    id: { type: "string" }
+                },
+                required: ["id"],
+                additionalProperties: { type: "string" }
+            };
+
+            const example = {
+                id: "123",
+                customField1: "value1",
+                customField2: "value2"
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual(example);
+            expect(result.errors).toHaveLength(0);
+        });
+
+        it("should preserve additional properties when additionalProperties is a number schema", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: { type: "number" }
+            };
+
+            const example = {
+                name: "Metrics",
+                score: 95.5,
+                count: 42,
+                rating: 4.8
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual(example);
+            expect(result.errors).toHaveLength(0);
+        });
+
+        it("should preserve additional properties when additionalProperties is an object schema", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: {
+                    type: "object",
+                    properties: {
+                        value: { type: "string" }
+                    }
+                }
+            };
+
+            const example = {
+                name: "Container",
+                metadata1: { value: "first" },
+                metadata2: { value: "second", extra: "data" }
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual(example);
+            expect(result.errors).toHaveLength(0);
+        });
+
+        it("should preserve additional properties when additionalProperties is an array schema", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: {
+                    type: "array",
+                    items: { type: "string" }
+                }
+            };
+
+            const example = {
+                name: "Lists",
+                tags: ["tag1", "tag2"],
+                categories: ["cat1", "cat2", "cat3"]
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual(example);
+            expect(result.errors).toHaveLength(0);
+        });
+
+        it("should preserve additional properties when additionalProperties is an empty object (any type)", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: {}
+            };
+
+            const example = {
+                name: "Flexible",
+                stringProp: "hello",
+                numberProp: 42,
+                boolProp: true,
+                arrayProp: [1, 2, 3],
+                objectProp: { nested: "value" }
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual(example);
+            expect(result.errors).toHaveLength(0);
+        });
+
+        it("should preserve additional properties when additionalProperties is undefined (default allows)", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"]
+            };
+
+            const example = {
+                name: "Default",
+                extraField: "should be preserved"
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual(example);
+            expect(result.errors).toHaveLength(0);
+        });
+
+        it("should preserve nested additional properties in fieldData-like structures", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    id: { type: "string" },
+                    fieldData: {
+                        type: "object",
+                        properties: {
+                            name: { type: "string" },
+                            slug: { type: "string" }
+                        },
+                        required: ["name", "slug"],
+                        additionalProperties: true
+                    }
+                },
+                required: ["id", "fieldData"]
+            };
+
+            const example = {
+                id: "123",
+                fieldData: {
+                    name: "Test Item",
+                    slug: "test-item",
+                    "plain-text": "Some text content",
+                    "rich-text": "<p>HTML content</p>",
+                    "main-image": {
+                        fileId: "abc123",
+                        url: "/files/abc123.png"
+                    },
+                    "is-featured": true,
+                    "view-count": 42
+                }
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual(example);
+            expect(result.errors).toHaveLength(0);
+        });
     });
 });
