@@ -12,9 +12,9 @@ class Organization(UniversalBaseModel):
     id: str
     name: str
     domain: typing.Optional[str] = None
-    employee_count: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="employeeCount")] = (
-        pydantic.Field(alias="employeeCount", default=None)
-    )
+    employee_count: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="employeeCount"), pydantic.Field(alias="employeeCount")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

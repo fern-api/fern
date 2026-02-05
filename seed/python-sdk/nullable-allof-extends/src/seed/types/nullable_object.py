@@ -13,9 +13,9 @@ class NullableObject(UniversalBaseModel):
     This schema has nullable:true at the top level.
     """
 
-    nullable_field: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nullableField")] = (
-        pydantic.Field(alias="nullableField", default=None)
-    )
+    nullable_field: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="nullableField"), pydantic.Field(alias="nullableField")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

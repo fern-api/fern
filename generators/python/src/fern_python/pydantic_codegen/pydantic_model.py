@@ -122,28 +122,75 @@ class PydanticModel:
             else field.default_value
         )
 
-        initializer = get_field_name_initializer(
-            alias=field.json_field_name if is_aliased else None,
-            default_factory=field.default_factory,
-            description=field.description,
-            default=default_value,
-            version=self._version,
-        )
+        # For aliased fields, we use the Annotated pattern where pydantic.Field(alias=...)
+        # is inside Annotated. This makes mypy see the Python field name in the constructor
+        # signature, while Pydantic still uses the alias for JSON serialization.
+        # See: https://github.com/pydantic/pydantic/issues/5893#issuecomment-2512807073
+        #
+        # This pattern works for all Pydantic versions (V1, V2, Both, V1_ON_V2) with one caveat:
+        # Pydantic V1 does NOT support Field(default=...) inside Annotated, but it DOES support
+        # Field(alias=...) and Field(default_factory=...). So for non-V2 modes, we put the
+        # default value as a plain initializer outside the Annotated pattern.
+        use_annotated_pattern = is_aliased
 
-        if is_aliased and not self._use_pydantic_field_aliases:
+        if use_annotated_pattern:
+            is_pure_v2 = self._version == PydanticVersionCompatibility.V2
+
+            # For V2: include default in Field inside Annotated
+            # For non-V2: only include alias and default_factory; default goes outside
+            pydantic_field_annotation = get_pydantic_field_annotation(
+                alias=field.json_field_name,
+                default_factory=field.default_factory,
+                default=default_value if is_pure_v2 else None,
+                description=field.description,
+                version=self._version,
+            )
+
+            # Build the Annotated type hint with FieldMetadata and pydantic.Field
             field_metadata = self._field_metadata_getter().get_instance()
             field_metadata.add_alias(field.json_field_name)
 
+            # Store the original type hint (without any annotations) for validators
+            original_type_hint = field.type_hint
+
+            # Build full Annotated type with FieldMetadata AND pydantic.Field (for field definition)
             aliased_type_hint = AST.TypeHint.annotated(
-                type=field.type_hint,
-                annotation=field_metadata.get_as_node(),
+                field.type_hint,
+                field_metadata.get_as_node(),
+                pydantic_field_annotation,
             )
 
             prev_fields = field.__dict__
             del prev_fields["type_hint"]
+            if "raw_type_hint" in prev_fields:
+                del prev_fields["raw_type_hint"]
             field = PydanticField(
                 **(field.__dict__),
                 type_hint=aliased_type_hint,
+                raw_type_hint=original_type_hint,
+            )
+
+            # For V2: no initializer needed (Field inside Annotated handles everything)
+            # For non-V2: use plain default as initializer (V1 rejects default in Annotated Field)
+            if is_pure_v2:
+                initializer = None
+            elif default_value is not None or field.default_factory is not None:
+                # For non-V2 with default_factory, it's already in Field inside Annotated
+                # Only need plain initializer for regular defaults
+                if field.default_factory is not None:
+                    initializer = None
+                else:
+                    initializer = default_value
+            else:
+                initializer = None
+        else:
+            # No alias - use the original behavior
+            initializer = get_field_name_initializer(
+                alias=None,
+                default_factory=field.default_factory,
+                description=field.description,
+                default=default_value,
+                version=self._version,
             )
 
         self._class_declaration.add_class_var(
@@ -670,6 +717,64 @@ def get_field_name_initializer(
             writer.write_line('"""')
             writer.write_line(escape_docstring(description))
             writer.write_line('"""')
+
+    return AST.Expression(AST.CodeWriter(write))
+
+
+def get_pydantic_field_annotation(
+    *,
+    alias: str,
+    default: Optional[AST.Expression],
+    default_factory: Optional[AST.Expression],
+    description: Optional[str],
+    version: PydanticVersionCompatibility,
+) -> AST.Expression:
+    """
+    Generate a pydantic.Field(alias=..., default=..., default_factory=..., description=...) expression
+    for use inside Annotated[]. This allows mypy to see the Python field name in the
+    constructor signature while Pydantic uses the alias for JSON serialization.
+    """
+
+    def write(writer: AST.NodeWriter) -> None:
+        writer.write_reference(Pydantic(version).Field())
+        writer.write("(")
+        writer.write(f'alias="{alias}"')
+        if default is not None:
+            writer.write(", default=")
+            writer.write_node(default)
+        if default_factory is not None:
+            writer.write(", default_factory=")
+            writer.write_node(default_factory)
+        if description is not None:
+            # Escape for use in a regular double-quoted string literal
+            escaped_description = (
+                description.replace("\\", "\\\\")
+                .replace('"', '\\"')
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t")
+            )
+            writer.write(f', description="{escaped_description}"')
+        writer.write(")")
+
+    return AST.Expression(AST.CodeWriter(write))
+
+
+def get_field_description_initializer(
+    *,
+    description: Optional[str],
+) -> Optional[AST.Expression]:
+    """
+    Generate just the description docstring for a field (no pydantic.Field() call).
+    Used when the pydantic.Field() is inside Annotated[].
+    """
+    if description is None:
+        return None
+
+    def write(writer: AST.NodeWriter) -> None:
+        writer.write_line('"""')
+        writer.write_line(escape_docstring(description))
+        writer.write_line('"""')
 
     return AST.Expression(AST.CodeWriter(write))
 
