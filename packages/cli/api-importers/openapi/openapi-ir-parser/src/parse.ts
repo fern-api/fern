@@ -618,11 +618,12 @@ function merge(
 
 function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial<ParseOpenAPIOptions>): Schemas {
     const collisionTracker = createSchemaCollisionTracker();
+    const shouldWarn = options?.resolveSchemaCollisions ?? false;
 
     // Merge root schemas with collision detection
     const mergedRootSchemas = { ...schemas1.rootSchemas };
     for (const [key, schema] of Object.entries(schemas2.rootSchemas)) {
-        const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, options?.resolveSchemaCollisions ?? false);
+        const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldWarn);
         mergedRootSchemas[uniqueKey] = schema;
     }
     schemas1.rootSchemas = mergedRootSchemas;
@@ -632,11 +633,7 @@ function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial
         if (schemas1.namespacedSchemas[namespace] != null) {
             const existingSchemas = schemas1.namespacedSchemas[namespace];
             for (const [key, schema] of Object.entries(namespaceSchemas)) {
-                const uniqueKey = collisionTracker.getUniqueSchemaId(
-                    key,
-                    undefined,
-                    options?.resolveSchemaCollisions ?? false
-                );
+                const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldWarn);
                 existingSchemas[uniqueKey] = schema;
             }
         } else {

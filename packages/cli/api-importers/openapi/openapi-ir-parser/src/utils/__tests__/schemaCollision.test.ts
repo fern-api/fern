@@ -57,6 +57,28 @@ describe("Schema Collision", () => {
             expect(id2).toBe("MessageSchema");
             expect(id3).toBe("UserSchema2");
         });
+
+        it("should return original ID without renaming when resolveCollisions is false", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            const firstId = tracker.getUniqueSchemaId("Test", mockLogger, false);
+            expect(firstId).toBe("Test");
+
+            const secondId = tracker.getUniqueSchemaId("Test", mockLogger, false);
+            expect(secondId).toBe("Test");
+            expect(mockLogger.warn).not.toHaveBeenCalled();
+        });
+
+        it("should default to not resolving collisions", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            const firstId = tracker.getUniqueSchemaId("Test", mockLogger);
+            expect(firstId).toBe("Test");
+
+            const secondId = tracker.getUniqueSchemaId("Test", mockLogger);
+            expect(secondId).toBe("Test");
+            expect(mockLogger.warn).not.toHaveBeenCalled();
+        });
     });
 
     describe("getUniqueTitleName", () => {
@@ -93,30 +115,26 @@ describe("Schema Collision", () => {
             expect(secondName).toBe("Test2");
         });
 
-        it("should throw error when collisions occur and resolveCollisions is false", () => {
-            const tracker = createSchemaCollisionTracker();
-
-            const firstName = tracker.getUniqueSchemaId("Test", mockLogger, false);
-            expect(firstName).toBe("Test");
-
-            expect(() => {
-                tracker.getUniqueSchemaId("Test", mockLogger, false);
-            }).toThrow(
-                "Schema name collision detected: 'Test' already exists. Use 'resolve-schema-collisions: true' to automatically resolve collisions."
-            );
-        });
-
-        it("should throw error when title collisions occur and resolveCollisions is false", () => {
+        it("should return original title without renaming when resolveCollisions is false", () => {
             const tracker = createSchemaCollisionTracker();
 
             const firstName = tracker.getUniqueTitleName("User", "user_schema_1", mockLogger, false);
             expect(firstName).toBe("User");
 
-            expect(() => {
-                tracker.getUniqueTitleName("User", "user_schema_2", mockLogger, false);
-            }).toThrow(
-                "Schema title collision detected: Multiple schemas use title 'User'. Use 'resolve-schema-collisions: true' to automatically resolve collisions."
-            );
+            const secondName = tracker.getUniqueTitleName("User", "user_schema_2", mockLogger, false);
+            expect(secondName).toBe("User");
+            expect(mockLogger.warn).not.toHaveBeenCalled();
+        });
+
+        it("should default to not resolving collisions", () => {
+            const tracker = createSchemaCollisionTracker();
+
+            const firstName = tracker.getUniqueTitleName("User", "user_schema_1", mockLogger);
+            expect(firstName).toBe("User");
+
+            const secondName = tracker.getUniqueTitleName("User", "user_schema_2", mockLogger);
+            expect(secondName).toBe("User");
+            expect(mockLogger.warn).not.toHaveBeenCalled();
         });
     });
 
