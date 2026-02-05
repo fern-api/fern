@@ -320,7 +320,7 @@ export class OAuthWireTestGenerator {
         writer.writeLine("\ttransport := &requestCapturingTransport{}");
         writer.writeLine("\thttpClient := &http.Client{Transport: transport}");
         writer.newLine();
-        writer.writeLine("\tc := client.NewClient(");
+        writer.writeLine(`\tc := client.${this.context.getClientConstructorName()}(`);
         writer.writeLine('\t\toption.WithBaseURL("http://localhost:8080"),');
         writer.writeLine("\t\toption.WithHTTPClient(httpClient),");
         writer.writeLine('\t\toption.WithClientCredentials("test_client_id", "test_client_secret"),');
@@ -391,7 +391,7 @@ export class OAuthWireTestGenerator {
         writer.writeLine('\tcustomHeaders.Set("X-Custom-Header", "custom-value")');
         writer.writeLine('\tcustomHeaders.Set("X-Sandbox-Auth", "sandbox-token-123")');
         writer.newLine();
-        writer.writeLine("\tc := client.NewClient(");
+        writer.writeLine(`\tc := client.${this.context.getClientConstructorName()}(`);
         writer.writeLine('\t\toption.WithBaseURL("http://localhost:8080"),');
         writer.writeLine("\t\toption.WithHTTPClient(httpClient),");
         writer.writeLine('\t\toption.WithClientCredentials("test_client_id", "test_client_secret"),');

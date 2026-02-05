@@ -9,8 +9,8 @@ from ..core.serialization import FieldMetadata
 
 
 class TwoFields(UniversalBaseModel):
-    field_1: typing_extensions.Annotated[str, FieldMetadata(alias="field1")]
-    field_2: typing_extensions.Annotated[int, FieldMetadata(alias="field2")]
+    field_1: typing_extensions.Annotated[str, FieldMetadata(alias="field1")] = pydantic.Field(alias="field1")
+    field_2: typing_extensions.Annotated[int, FieldMetadata(alias="field2")] = pydantic.Field(alias="field2")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -166,6 +166,11 @@ async function createJob({
                     "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com."
                 );
             },
+            branchDoesNotExist: (value) => {
+                return context.failAndThrow(
+                    `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`
+                );
+            },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
                 return context.failAndThrow(
@@ -299,6 +304,8 @@ function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Err
                 return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.body);
             case "OrgNotConfiguredForWhitelabel":
                 return FernFiddle.remoteGen.createJobV3.Error.orgNotConfiguredForWhitelabel(body.body);
+            case "BranchDoesNotExist":
+                return FernFiddle.remoteGen.createJobV3.Error.branchDoesNotExist(body.body);
         }
     }
     return error;

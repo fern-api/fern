@@ -41,6 +41,7 @@ export const CsharpConfigSchema = z.object({
     "read-only-memory-types": z.optional(z.array(z.string())),
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),
+    "use-undiscriminated-unions": z.boolean().optional(),
     "experimental-fully-qualified-namespaces": z.boolean().optional(),
     "experimental-dotnet-format": z.boolean().optional(),
 
@@ -85,7 +86,6 @@ export const CsharpConfigSchema = z.object({
     "root-client-class-access": z.enum(["public", "internal"]).optional(),
     "custom-pager-name": z.string().optional(),
     "enable-forward-compatible-enums": z.boolean().optional(),
-    "additional-properties": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
@@ -103,8 +103,7 @@ export const CsharpConfigSchema = z.object({
         ),
     "pascal-case-environments": z.boolean().optional(),
 
-    "experimental-enable-forward-compatible-enums": z.boolean().optional(),
-    "experimental-additional-properties": z.boolean().optional()
+    "experimental-enable-forward-compatible-enums": z.boolean().optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

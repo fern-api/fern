@@ -181,7 +181,7 @@ export class GeneratedQueryParams {
         if (primitiveType != null) {
             if (primitiveTypeNeedsStringify(primitiveType.primitive)) {
                 return context.type.stringify(referenceToQueryParameter, queryParameter.valueType, {
-                    includeNullCheckIfOptional: false
+                    includeNullCheckIfOptional: true
                 });
             }
             return referenceToQueryParameter;

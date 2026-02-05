@@ -1,18 +1,18 @@
-import { Logger } from "@fern-api/logger";
+import type { Logger } from "@fern-api/logger";
 import {
-    Availability,
-    Encoding,
+    type Availability,
+    type Encoding,
     LiteralSchemaValue,
-    NamedFullExample,
+    type NamedFullExample,
     PrimitiveSchemaValueWithExample,
-    ReferencedSchema,
+    type ReferencedSchema,
     Schema,
     SchemaWithExample,
-    SdkGroupName,
-    Source
+    type SdkGroupName,
+    type Source
 } from "@fern-api/openapi-ir";
 import { size } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
+import type { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
@@ -39,7 +39,7 @@ import {
 } from "./convertUndiscriminatedOneOf";
 import { getDefaultAsString } from "./defaults/getDefault";
 import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
-import { SchemaParserContext } from "./SchemaParserContext";
+import type { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -247,7 +247,7 @@ export function convertReferenceObject(
               new Set()
           )
         : SchemaWithExample.reference(
-              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
+              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds, context)
           );
 
     // if referenced schema would be found nullable in convertSchemaObject(),
@@ -1380,7 +1380,8 @@ export function convertToReferencedSchema(
     schema: OpenAPIV3.ReferenceObject,
     breadcrumbs: string[],
     source: Source,
-    preserveSchemaIds: boolean
+    preserveSchemaIds: boolean,
+    context: SchemaParserContext
 ): ReferencedSchema {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs, preserveSchemaIds);
@@ -1401,7 +1402,7 @@ export function convertToReferencedSchema(
         schema: schemaId,
         description: description ?? undefined,
         availability,
-        namespace: undefined,
+        namespace: context.getNamespace(schemaId),
         groupName: undefined,
         source
     });

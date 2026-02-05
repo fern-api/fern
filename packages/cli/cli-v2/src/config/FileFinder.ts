@@ -27,10 +27,16 @@ export class FileFinder {
      * @returns The absolute path to the file if found, undefined otherwise.
      * @throws Error if the file is not found.
      */
-    public async findOrThrow(filename: string): Promise<AbsoluteFilePath> {
-        const filepath = await this.find(filename);
+    public async findOrThrow({
+        filename,
+        remediationMessage
+    }: {
+        filename: string;
+        remediationMessage?: string;
+    }): Promise<AbsoluteFilePath> {
+        const filepath = await this.find({ filename });
         if (filepath == null) {
-            throw new Error(`File ${filename} not found in any parent directory from ${this.from}`);
+            throw new Error(`${filename} file not found in any parent directory from ${this.from}`);
         }
         return filepath;
     }
@@ -42,7 +48,7 @@ export class FileFinder {
      * @param filename - The name of the file to find (e.g., "fern.yml")
      * @returns The absolute path to the file if found, undefined otherwise.
      */
-    public async find(filename: string): Promise<AbsoluteFilePath | undefined> {
+    public async find({ filename }: { filename: string }): Promise<AbsoluteFilePath | undefined> {
         const filepath = await findUp(filename, { cwd: this.from, type: "file" });
         if (filepath == null) {
             return undefined;

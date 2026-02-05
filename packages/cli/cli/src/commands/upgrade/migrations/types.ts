@@ -6,5 +6,5 @@ export type {
     GeneratorsYmlDocument,
     Migration,
     MigrationModule,
-    MigrationResult
+    MigratorResult
 } from "@fern-api/migrations-base";

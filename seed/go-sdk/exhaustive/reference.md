@@ -361,7 +361,7 @@ request := &types.ObjectWithOptionalField{
             1,
         ),
         Long: fern.Int64(
-            1000000,
+            int64(1000000),
         ),
         Double: fern.Float64(
             1.1,
@@ -384,7 +384,9 @@ request := &types.ObjectWithOptionalField{
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         ),
-        Base64: []byte("SGVsbG8gd29ybGQh"),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
         List: []string{
             "list",
             "list",
@@ -451,7 +453,7 @@ request := &types.ObjectWithOptionalField{
             1,
         ),
         Long: fern.Int64(
-            1000000,
+            int64(1000000),
         ),
         Double: fern.Float64(
             1.1,
@@ -474,7 +476,9 @@ request := &types.ObjectWithOptionalField{
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         ),
-        Base64: []byte("SGVsbG8gd29ybGQh"),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
         List: []string{
             "list",
             "list",
@@ -734,7 +738,7 @@ request := &types.ObjectWithOptionalField{
             1,
         ),
         Long: fern.Int64(
-            1000000,
+            int64(1000000),
         ),
         Double: fern.Float64(
             1.1,
@@ -757,7 +761,9 @@ request := &types.ObjectWithOptionalField{
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         ),
-        Base64: []byte("SGVsbG8gd29ybGQh"),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
         List: []string{
             "list",
             "list",
@@ -878,7 +884,7 @@ request := &types.ObjectWithOptionalField{
             1,
         ),
         Long: fern.Int64(
-            1000000,
+            int64(1000000),
         ),
         Double: fern.Float64(
             1.1,
@@ -901,7 +907,9 @@ request := &types.ObjectWithOptionalField{
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         ),
-        Base64: []byte("SGVsbG8gd29ybGQh"),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
         List: []string{
             "list",
             "list",
@@ -1070,7 +1078,7 @@ request := &types.NestedObjectWithOptionalField{
                 1,
             ),
             Long: fern.Int64(
-                1000000,
+                int64(1000000),
             ),
             Double: fern.Float64(
                 1.1,
@@ -1093,7 +1101,9 @@ request := &types.NestedObjectWithOptionalField{
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             ),
-            Base64: []byte("SGVsbG8gd29ybGQh"),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
             List: []string{
                 "list",
                 "list",
@@ -1163,7 +1173,7 @@ request := &types.NestedObjectWithRequiredField{
                 1,
             ),
             Long: fern.Int64(
-                1000000,
+                int64(1000000),
             ),
             Double: fern.Float64(
                 1.1,
@@ -1186,7 +1196,9 @@ request := &types.NestedObjectWithRequiredField{
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             ),
-            Base64: []byte("SGVsbG8gd29ybGQh"),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
             List: []string{
                 "list",
                 "list",
@@ -1266,7 +1278,7 @@ request := []*types.NestedObjectWithRequiredField{
                     1,
                 ),
                 Long: fern.Int64(
-                    1000000,
+                    int64(1000000),
                 ),
                 Double: fern.Float64(
                     1.1,
@@ -1289,7 +1301,9 @@ request := []*types.NestedObjectWithRequiredField{
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                 ),
-                Base64: []byte("SGVsbG8gd29ybGQh"),
+                Base64: fern.Bytes(
+                    []byte("SGVsbG8gd29ybGQh"),
+                ),
                 List: []string{
                     "list",
                     "list",
@@ -1315,7 +1329,7 @@ request := []*types.NestedObjectWithRequiredField{
                     1,
                 ),
                 Long: fern.Int64(
-                    1000000,
+                    int64(1000000),
                 ),
                 Double: fern.Float64(
                     1.1,
@@ -1338,7 +1352,9 @@ request := []*types.NestedObjectWithRequiredField{
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                 ),
-                Base64: []byte("SGVsbG8gd29ybGQh"),
+                Base64: fern.Bytes(
+                    []byte("SGVsbG8gd29ybGQh"),
+                ),
                 List: []string{
                     "list",
                     "list",
@@ -1375,6 +1391,72 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 <dd>
 
 **request:** `[]*types.NestedObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithDatetimeLikeString{
+        DatetimeLikeString: "2023-08-31T14:15:22Z",
+        ActualDatetime: fern.MustParseDateTime(
+            "2023-08-31T14:15:22Z",
+        ),
+    }
+client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>
@@ -2555,7 +2637,7 @@ POST with custom object in request body, response is an object
 
 ```go
 request := &fern.PostWithObjectBody{
-        String: "string",
+        FieldString: "string",
         Integer: 1,
         NestedObject: &types.ObjectWithOptionalField{
             FieldString: fern.String(
@@ -2565,7 +2647,7 @@ request := &fern.PostWithObjectBody{
                 1,
             ),
             Long: fern.Int64(
-                1000000,
+                int64(1000000),
             ),
             Double: fern.Float64(
                 1.1,
@@ -2588,7 +2670,9 @@ request := &fern.PostWithObjectBody{
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             ),
-            Base64: []byte("SGVsbG8gd29ybGQh"),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
             List: []string{
                 "list",
                 "list",

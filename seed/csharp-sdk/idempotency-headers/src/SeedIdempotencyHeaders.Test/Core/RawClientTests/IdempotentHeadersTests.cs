@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+using global::System.Collections.Generic;
+using global::System.Linq;
+using global::System.Net.Http;
 using NUnit.Framework;
 using SeedIdempotencyHeaders.Core;
 using WireMock.Matchers;
@@ -18,7 +18,7 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
+    internal Headers Headers { get; init; } = new();
 
     /// <summary>
     /// The Base URL for the API.
@@ -115,9 +115,13 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 #endif
     }
 
-    Headers IIdempotentRequestOptions.GetIdempotencyHeaders()
+    Dictionary<string, string> IIdempotentRequestOptions.GetIdempotencyHeaders()
     {
-        return new Headers(new Dictionary<string, string> { ["IDEMPOTENCY-KEY"] = IdempotencyKey });
+        return new Dictionary<string, string>()
+        {
+            ["Idempotency-Key"] = IdempotencyKey,
+            ["Idempotency-Expiration"] = IdempotencyExpiration.ToString(),
+        };
     }
 }
 
@@ -142,29 +146,21 @@ public class IdempotentHeadersTests
     [Test]
     public async SystemTask CheckForIdempotencyHeadersSupport()
     {
-        _server
-            .Given(WireMockRequest.Create().WithPath("/test").WithParam("foo", "bar").UsingGet())
-            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+        // Test that GetIdempotencyHeaders() returns the correct headers
+        var options = new IdempotentRequestOptions
+        {
+            IdempotencyKey = "1234567890",
+            IdempotencyExpiration = 3600,
+        };
 
-        var request = await _rawClient
-            .CreateHttpRequestAsync(
-                new JsonRequest()
-                {
-                    BaseUrl = _baseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/test",
-                    Query = new Dictionary<string, object>(),
-                    Options = new IdempotentRequestOptions
-                    {
-                        IdempotencyKey = "1234567890",
-                        IdempotencyExpiration = 3600,
-                    },
-                }
-            )
-            .ConfigureAwait(false);
+        var headers = ((IIdempotentRequestOptions)options).GetIdempotencyHeaders();
 
-        request.Headers.TryGetValues("IDEMPOTENCY-KEY", out var idempotencyKey);
-        Assert.That(idempotencyKey?.First(), Is.EqualTo("1234567890"));
+        Assert.That(headers.Count, Is.EqualTo(2));
+        Assert.That(headers.ContainsKey("Idempotency-Key"), Is.True);
+        Assert.That(headers.ContainsKey("Idempotency-Expiration"), Is.True);
+
+        Assert.That(headers["Idempotency-Key"], Is.EqualTo("1234567890"));
+        Assert.That(headers["Idempotency-Expiration"], Is.EqualTo("3600"));
     }
 
     [TearDown]

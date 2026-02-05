@@ -3,29 +3,39 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum VariableType {
-    IntegerType,
+        #[serde(rename = "integerType")]
+        IntegerType,
 
-    DoubleType,
+        #[serde(rename = "doubleType")]
+        DoubleType,
 
-    BooleanType,
+        #[serde(rename = "booleanType")]
+        BooleanType,
 
-    StringType,
+        #[serde(rename = "stringType")]
+        StringType,
 
-    CharType,
+        #[serde(rename = "charType")]
+        CharType,
 
-    ListType {
-        #[serde(flatten)]
-        data: Box<ListType>,
-    },
+        #[serde(rename = "listType")]
+        ListType {
+            #[serde(flatten)]
+            data: Box<ListType>,
+        },
 
-    MapType {
-        #[serde(flatten)]
-        data: Box<MapType>,
-    },
+        #[serde(rename = "mapType")]
+        MapType {
+            #[serde(flatten)]
+            data: Box<MapType>,
+        },
 
-    BinaryTreeType,
+        #[serde(rename = "binaryTreeType")]
+        BinaryTreeType,
 
-    SinglyLinkedListType,
+        #[serde(rename = "singlyLinkedListType")]
+        SinglyLinkedListType,
 
-    DoublyLinkedListType,
+        #[serde(rename = "doublyLinkedListType")]
+        DoublyLinkedListType,
 }

@@ -1,0 +1,3 @@
+rootProject.name = 'java-path-param-key-conflict'
+
+include 'sample-app'

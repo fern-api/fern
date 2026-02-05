@@ -24,4 +24,9 @@ export interface Options {
     // Skip client instantiation in the generated snippet. Useful for wire tests
     // where the client is already instantiated in the test setup.
     skipClientInstantiation?: boolean;
+
+    // Optional endpoint ID to generate a snippet for a specific endpoint.
+    // This is useful when multiple endpoints have the same HTTP method and path
+    // across different namespaces, and we need to generate a snippet for a specific one.
+    endpointId?: string;
 }

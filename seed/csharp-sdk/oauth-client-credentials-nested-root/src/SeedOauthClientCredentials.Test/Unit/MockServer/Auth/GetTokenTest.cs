@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SeedOauthClientCredentials.Auth;
-using SeedOauthClientCredentials.Core;
 using SeedOauthClientCredentials.Test.Unit.MockServer;
+using SeedOauthClientCredentials.Test.Utils;
 
 namespace SeedOauthClientCredentials.Test.Unit.MockServer.Auth;
 
@@ -54,9 +54,6 @@ public class GetTokenTest : BaseMockServerTest
                 Scope = "scope",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

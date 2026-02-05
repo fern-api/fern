@@ -19,14 +19,17 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["datetime"] = request.Datetime.ToString(Constants.DateTimeFormat);
-        if (request.OptionalDatetime != null)
-        {
-            _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString(
-                Constants.DateTimeFormat
-            );
-        }
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("datetime", request.Datetime)
+            .Add("optionalDatetime", request.OptionalDatetime)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -38,7 +41,8 @@ public partial class PlaylistClient : IPlaylistClient
                         ValueConvert.ToPathParameterString(serviceParam)
                     ),
                     Body = request.Body,
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -88,15 +92,20 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["otherField"] = request.OtherField;
-        _query["multiLineDocs"] = request.MultiLineDocs;
-        _query["optionalMultipleField"] = request.OptionalMultipleField;
-        _query["multipleField"] = request.MultipleField;
-        if (request.Limit != null)
-        {
-            _query["limit"] = request.Limit.Value.ToString();
-        }
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 5)
+            .Add("limit", request.Limit)
+            .Add("otherField", request.OtherField)
+            .Add("multiLineDocs", request.MultiLineDocs)
+            .Add("optionalMultipleField", request.OptionalMultipleField)
+            .Add("multipleField", request.MultipleField)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -107,7 +116,8 @@ public partial class PlaylistClient : IPlaylistClient
                         "/v2/playlist/{0}/all",
                         ValueConvert.ToPathParameterString(serviceParam)
                     ),
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -157,6 +167,12 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -168,6 +184,7 @@ public partial class PlaylistClient : IPlaylistClient
                         ValueConvert.ToPathParameterString(serviceParam),
                         ValueConvert.ToPathParameterString(playlistId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -218,6 +235,12 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -230,6 +253,7 @@ public partial class PlaylistClient : IPlaylistClient
                         ValueConvert.ToPathParameterString(playlistId)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -388,6 +412,12 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -399,6 +429,7 @@ public partial class PlaylistClient : IPlaylistClient
                         ValueConvert.ToPathParameterString(serviceParam),
                         ValueConvert.ToPathParameterString(playlistId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

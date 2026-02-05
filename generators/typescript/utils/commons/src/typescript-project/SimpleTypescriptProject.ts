@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { produce } from "immer";
-import { IPackageJson } from "package-json-type";
+import { produce, WritableDraft } from "immer";
+import { IPackageJson, IPeerDependenciesMeta } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
 import { DependencyType } from "../dependency-manager/DependencyManager";
@@ -306,9 +306,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
             }
 
             if (Object.keys(this.extraPeerDependenciesMeta).length > 0) {
-                draft.peerDependenciesMeta = {
-                    ...this.extraPeerDependenciesMeta
-                };
+                draft.peerDependenciesMeta = { ...this.extraPeerDependenciesMeta } as
+                    | WritableDraft<IPeerDependenciesMeta>
+                    | undefined;
             }
 
             const devDependencies = {

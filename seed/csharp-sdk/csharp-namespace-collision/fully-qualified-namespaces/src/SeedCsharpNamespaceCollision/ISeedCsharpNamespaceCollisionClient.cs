@@ -4,7 +4,7 @@ namespace SeedCsharpNamespaceCollision;
 
 public partial interface ISeedCsharpNamespaceCollisionClient
 {
-    public SystemClient System { get; }
+    public ISystemClient System { get; }
     WithRawResponseTask<User> CreateUserAsync(
         User request,
         RequestOptions? options = null,

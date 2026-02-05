@@ -10,6 +10,7 @@ import { TestClassBuilder } from "./builders/TestClassBuilder";
 import { TestMethodBuilder } from "./builders/TestMethodBuilder";
 import { SnippetExtractor } from "./extractors/SnippetExtractor";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor";
+import { TestResourceWriter } from "./resources/TestResourceWriter";
 
 /**
  * Generates wire tests that validate SDK adherence to API specifications.
@@ -18,11 +19,16 @@ export class SdkWireTestGenerator {
     private readonly testClassBuilder: TestClassBuilder;
     private readonly testMethodBuilder: TestMethodBuilder;
     private readonly snippetExtractor: SnippetExtractor;
+    private readonly resourceWriter: TestResourceWriter;
 
     constructor(private readonly context: SdkGeneratorContext) {
         this.testClassBuilder = new TestClassBuilder(context);
         this.testMethodBuilder = new TestMethodBuilder(context);
         this.snippetExtractor = new SnippetExtractor(context);
+        this.resourceWriter = new TestResourceWriter(context);
+
+        // Connect the resource writer to the test method builder
+        this.testMethodBuilder.setResourceWriter(this.resourceWriter);
     }
 
     /**
@@ -111,6 +117,23 @@ export class SdkWireTestGenerator {
             }
         }
 
+        // Generate TestResources.java utility class and resource files if needed
+        if (this.resourceWriter.hasResources()) {
+            this.context.logger.info("Generating TestResources.java for large JSON payloads");
+
+            // Generate the TestResources.java utility class
+            const testResourcesFile = this.resourceWriter.generateTestResourcesClass();
+            this.context.project.addJavaFiles(testResourcesFile);
+
+            // Generate resource files
+            const resourceFiles = this.resourceWriter.getResourceFiles();
+            for (const resourceFile of resourceFiles) {
+                this.context.project.addRawFiles(resourceFile);
+            }
+
+            this.context.logger.info(`Generated ${resourceFiles.length} resource file(s) for large JSON payloads`);
+        }
+
         this.context.logger.info(
             `Wire test generation summary: ${totalEndpointsGenerated}/${totalEndpointsProcessed} endpoints successful across ${totalServiceFilesGenerated} test files`
         );
@@ -139,6 +162,8 @@ export class SdkWireTestGenerator {
         const endpointTests = new Map<string, { snippet: string; testExample: WireTestExample }>();
         const allImports = new Set<string>();
         const skippedEndpoints: Array<{ endpointId: string; endpointName: string; reason: string }> = [];
+
+        this.testMethodBuilder.setCurrentTestClassName(className);
 
         for (const endpoint of endpoints) {
             const testExamples = testDataExtractor.getTestExamples(endpoint);
@@ -311,10 +336,13 @@ export class SdkWireTestGenerator {
 
     private async generateSnippetForExample(
         example: dynamic.EndpointExample,
-        dynamicSnippetsGenerator: DynamicSnippetsGenerator
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator,
+        endpointId: string
     ): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-        const response = await dynamicSnippetsGenerator.generate(snippetRequest);
+        // Pass endpointId to avoid path collision issues when multiple namespaces
+        // have endpoints with the same HTTP method and path pattern
+        const response = await dynamicSnippetsGenerator.generate(snippetRequest, { endpointId });
         if (!response.snippet) {
             throw new Error("No snippet generated for example");
         }
@@ -421,7 +449,11 @@ export class SdkWireTestGenerator {
 
             try {
                 dynamicIr.endpoints[endpoint.id] = correctedDynamicEndpoint;
-                const snippet = await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator);
+                const snippet = await this.generateSnippetForExample(
+                    firstDynamicExample,
+                    dynamicSnippetsGenerator,
+                    endpoint.id
+                );
                 this.context.logger.debug(`Service correction succeeded for endpoint ${endpoint.id}`);
                 return snippet;
             } catch (error) {
@@ -439,7 +471,7 @@ export class SdkWireTestGenerator {
                 }
             }
         } else {
-            return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator);
+            return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator, endpoint.id);
         }
     }
 

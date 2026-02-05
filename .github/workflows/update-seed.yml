@@ -34,11 +34,16 @@ on:
         required: false
         default: false
         type: boolean
+      fixture:
+        description: 'Specific fixture to run'
+        required: false
+        default: "all"
+        type: string
 
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 # These scope secrets.GITHUB_TOKEN
 permissions:
@@ -59,6 +64,7 @@ jobs:
       update-by-pr: ${{ steps.set-update-options.outputs.update-by-pr }}
       selected-language: ${{ steps.set-language-filter.outputs.selected-language }}
       commit-on-failure: ${{ steps.set-commit-on-failure.outputs.commit-on-failure }}
+      selected-fixture: ${{ steps.set-fixture-filter.outputs.selected-fixture }}
     steps:
       # Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
       - name: Set update options
@@ -110,6 +116,21 @@ jobs:
             echo "Push event detected, defaulting commit-on-failure to false"
           fi
           echo "commit-on-failure=$COMMIT_ON_FAILURE" >> $GITHUB_OUTPUT
+
+      - name: Set fixture filter
+        id: set-fixture-filter
+        shell: bash
+        run: |
+          # For workflow_dispatch events, use the input fixture filter
+          # For push events, default to 'all' to maintain existing behavior
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            SELECTED_FIXTURE="${{ github.event.inputs.fixture }}"
+            echo "Fixture filter from workflow_dispatch input: $SELECTED_FIXTURE"
+          else
+            SELECTED_FIXTURE="all"
+            echo "Push event detected, running all fixtures"
+          fi
+          echo "selected-fixture=$SELECTED_FIXTURE" >> $GITHUB_OUTPUT
 
   changes:
     if: github.repository == 'fern-api/fern'
@@ -256,6 +277,7 @@ jobs:
   get-all-test-matrices:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: [setup]
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix:
@@ -359,10 +381,20 @@ jobs:
       - name: Create Seed Groups Matrix
         id: create-seed-groups-matrix
         run: |
+          SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
+          
+          # If a specific fixture is selected, use a single-item matrix with just that fixture
+          if [[ "$SELECTED_FIXTURE" != "all" ]]; then
+            echo "Specific fixture selected: $SELECTED_FIXTURE"
+            BASH_VAR="[{\"fixtures\":[\"$SELECTED_FIXTURE\"]}]"
+            echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+            
+            # Echo the data to command line for visibility
+            echo "Single fixture for ${{ matrix.sdk-name }}-test-matrix:"
+            echo "$BASH_VAR" | jq .
           # Parallelize tests and add leftover test runner, or run all tests in a single runner
           # Note: "leftovers" and "all" are used as keywords in the matrix jobs following this setup
-          BASH_VAR=""
-          if [[ "${{ steps.determine-parallelization.outputs.split-tests }}" == "true" ]]; then
+          elif [[ "${{ steps.determine-parallelization.outputs.split-tests }}" == "true" ]]; then
             echo "Using balanced groups from ${{ matrix.sdk-name }}-seed-groups.json and adding a group for any leftover tests"
             BASH_VAR=$(jq '[.groups[] | {fixtures: .fixtures}]' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
             WITH_LEFTOVERS=$(echo "$BASH_VAR" | jq -c '. += [{"fixtures": ["leftovers"]}]')
@@ -517,7 +549,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   python-sdk-seed-update:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -653,7 +685,7 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-sdk-seed-update:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -1251,14 +1283,14 @@ jobs:
           message: "Automated update of seed files"
 
   # Verify that the branch is the default branch (running for PR to main)
-  # By default, block on failures. If commit-on-failure is true, continue even if some seed runs fail.
+  # Always run this job to create PRs for generators that succeeded, even if some seed runs fail.
+  # Each matrix job will only create a PR if its corresponding seed-update job produced patches.
   commit-seed-changes-by-pr:
     if: >-
       ${{
         always() && !cancelled() &&
         github.ref == 'refs/heads/main' &&
-        needs.setup.outputs.update-by-pr == 'true' &&
-        (needs.setup.outputs.commit-on-failure == 'true' || (!contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')))
+        needs.setup.outputs.update-by-pr == 'true'
       }}
     needs:
       [
@@ -1398,7 +1430,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
           title: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
           branch: update-${{ matrix.sdk-name }}-seed
@@ -1426,7 +1458,7 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 

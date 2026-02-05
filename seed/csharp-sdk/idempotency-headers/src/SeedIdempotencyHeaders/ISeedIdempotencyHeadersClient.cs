@@ -2,5 +2,5 @@ namespace SeedIdempotencyHeaders;
 
 public partial interface ISeedIdempotencyHeadersClient
 {
-    public PaymentClient Payment { get; }
+    public IPaymentClient Payment { get; }
 }

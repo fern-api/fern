@@ -2,5 +2,5 @@ namespace SeedApiWideBasePath;
 
 public partial interface ISeedApiWideBasePathClient
 {
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

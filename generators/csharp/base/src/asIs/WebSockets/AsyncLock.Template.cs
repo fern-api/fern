@@ -17,7 +17,7 @@ namespace <%= namespace%>.WebSockets;
 /// </summary>
 internal class AsyncLock
 {
-    private readonly Task<IDisposable> _releaserTask;
+    private readonly global::System.Threading.Tasks.Task<IDisposable> _releaserTask;
     private readonly SemaphoreSlim _semaphore = new(1, 1);
     private readonly IDisposable _releaser;
 
@@ -28,7 +28,7 @@ internal class AsyncLock
     internal AsyncLock()
     {
         _releaser = new Releaser(_semaphore);
-        _releaserTask = Task.FromResult<IDisposable>(_releaser);
+        _releaserTask = global::System.Threading.Tasks.Task.FromResult<IDisposable>(_releaser);
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ internal class AsyncLock
     /// Acquires the lock asynchronously. Use inside a 'using' block with await to ensure proper disposal.
     /// </summary>
     /// <returns>A task that represents the asynchronous lock acquisition and returns an IDisposable that releases the lock when disposed.</returns>
-    internal Task<IDisposable> LockAsync()
+    internal global::System.Threading.Tasks.Task<IDisposable> LockAsync()
     {
         var waitTask = _semaphore.WaitAsync();
         return waitTask.IsCompleted

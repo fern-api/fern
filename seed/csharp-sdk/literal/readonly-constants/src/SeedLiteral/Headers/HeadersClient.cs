@@ -18,13 +18,14 @@ public partial class HeadersClient : IHeadersClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>()
-            {
-                { "X-Endpoint-Version", request.EndpointVersion.ToString() },
-                { "X-Async", JsonUtils.Serialize(request.Async) },
-            }
-        );
+        var _headers = await new SeedLiteral.Core.HeadersBuilder.Builder()
+            .Add("X-Endpoint-Version", request.EndpointVersion)
+            .Add("X-Async", request.Async)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest

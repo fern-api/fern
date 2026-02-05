@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawFolderAClient, RawFolderAClient
 
 if typing.TYPE_CHECKING:
     from .service.client import AsyncServiceClient, ServiceClient
@@ -13,20 +12,8 @@ if typing.TYPE_CHECKING:
 
 class FolderAClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawFolderAClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._service: typing.Optional[ServiceClient] = None
-
-    @property
-    def with_raw_response(self) -> RawFolderAClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawFolderAClient
-        """
-        return self._raw_client
 
     @property
     def service(self):
@@ -39,20 +26,8 @@ class FolderAClient:
 
 class AsyncFolderAClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawFolderAClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._service: typing.Optional[AsyncServiceClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawFolderAClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawFolderAClient
-        """
-        return self._raw_client
 
     @property
     def service(self):

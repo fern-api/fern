@@ -101,6 +101,7 @@ client = SeedEnum(
 )
 response = client.headers.with_raw_response.send(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

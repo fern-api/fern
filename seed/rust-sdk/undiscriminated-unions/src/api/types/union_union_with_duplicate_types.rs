@@ -3,13 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum UnionWithDuplicateTypes {
-    String(String),
+        String(String),
 
-    List1(Vec<String>),
+        List1(Vec<String>),
 
-    Integer(i64),
+        Integer(i64),
 
-    Set3(HashSet<String>),
+        Set3(HashSet<String>),
 }
 
 impl UnionWithDuplicateTypes {
@@ -29,59 +29,61 @@ impl UnionWithDuplicateTypes {
         matches!(self, Self::Set3(_))
     }
 
+
     pub fn as_string(&self) -> Option<&String> {
         match self {
-            Self::String(value) => Some(value),
-            _ => None,
-        }
+                    Self::String(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_string(self) -> Option<String> {
         match self {
-            Self::String(value) => Some(value),
-            _ => None,
-        }
+                    Self::String(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_list1(&self) -> Option<&Vec<String>> {
         match self {
-            Self::List1(value) => Some(value),
-            _ => None,
-        }
+                    Self::List1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_list1(self) -> Option<Vec<String>> {
         match self {
-            Self::List1(value) => Some(value),
-            _ => None,
-        }
+                    Self::List1(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_integer(&self) -> Option<&i64> {
         match self {
-            Self::Integer(value) => Some(value),
-            _ => None,
-        }
+                    Self::Integer(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_integer(self) -> Option<i64> {
         match self {
-            Self::Integer(value) => Some(value),
-            _ => None,
-        }
+                    Self::Integer(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_set3(&self) -> Option<&HashSet<String>> {
         match self {
-            Self::Set3(value) => Some(value),
-            _ => None,
-        }
+                    Self::Set3(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_set3(self) -> Option<HashSet<String>> {
         match self {
-            Self::Set3(value) => Some(value),
-            _ => None,
-        }
+                    Self::Set3(value) => Some(value),
+                    _ => None,
+                }
     }
+
 }

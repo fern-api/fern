@@ -665,6 +665,215 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_service:ModelType": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "ModelType",
+                    "camelCase": {
+                        "unsafeName": "modelType",
+                        "safeName": "modelType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "model_type",
+                        "safeName": "model_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MODEL_TYPE",
+                        "safeName": "MODEL_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ModelType",
+                        "safeName": "ModelType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "literal",
+                "value": {
+                    "type": "string",
+                    "value": "model_v1"
+                }
+            }
+        },
+        "type_service:OpenEnumType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "OpenEnumType",
+                    "camelCase": {
+                        "unsafeName": "openEnumType",
+                        "safeName": "openEnumType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "open_enum_type",
+                        "safeName": "open_enum_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OPEN_ENUM_TYPE",
+                        "safeName": "OPEN_ENUM_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OpenEnumType",
+                        "safeName": "OpenEnumType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "OPTION_A",
+                        "camelCase": {
+                            "unsafeName": "optionA",
+                            "safeName": "optionA"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "option_a",
+                            "safeName": "option_a"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OPTION_A",
+                            "safeName": "OPTION_A"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "OptionA",
+                            "safeName": "OptionA"
+                        }
+                    },
+                    "wireValue": "OPTION_A"
+                },
+                {
+                    "name": {
+                        "originalName": "OPTION_B",
+                        "camelCase": {
+                            "unsafeName": "optionB",
+                            "safeName": "optionB"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "option_b",
+                            "safeName": "option_b"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OPTION_B",
+                            "safeName": "OPTION_B"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "OptionB",
+                            "safeName": "OptionB"
+                        }
+                    },
+                    "wireValue": "OPTION_B"
+                },
+                {
+                    "name": {
+                        "originalName": "OPTION_C",
+                        "camelCase": {
+                            "unsafeName": "optionC",
+                            "safeName": "optionC"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "option_c",
+                            "safeName": "option_c"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OPTION_C",
+                            "safeName": "OPTION_C"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "OptionC",
+                            "safeName": "OptionC"
+                        }
+                    },
+                    "wireValue": "OPTION_C"
+                }
+            ]
         }
     },
     "headers": [],
@@ -3697,6 +3906,285 @@
                 "type": "body",
                 "pathParameters": [],
                 "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_service.withLiteralAndEnumTypes": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "withLiteralAndEnumTypes",
+                    "camelCase": {
+                        "unsafeName": "withLiteralAndEnumTypes",
+                        "safeName": "withLiteralAndEnumTypes"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "with_literal_and_enum_types",
+                        "safeName": "with_literal_and_enum_types"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WITH_LITERAL_AND_ENUM_TYPES",
+                        "safeName": "WITH_LITERAL_AND_ENUM_TYPES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WithLiteralAndEnumTypes",
+                        "safeName": "WithLiteralAndEnumTypes"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/with-literal-enum"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "LiteralEnumRequest",
+                        "camelCase": {
+                            "unsafeName": "literalEnumRequest",
+                            "safeName": "literalEnumRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "literal_enum_request",
+                            "safeName": "literal_enum_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LITERAL_ENUM_REQUEST",
+                            "safeName": "LITERAL_ENUM_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "LiteralEnumRequest",
+                            "safeName": "LiteralEnumRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "fileUpload",
+                    "properties": [
+                        {
+                            "type": "file",
+                            "name": {
+                                "originalName": "file",
+                                "camelCase": {
+                                    "unsafeName": "file",
+                                    "safeName": "file"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "file",
+                                    "safeName": "file"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FILE",
+                                    "safeName": "FILE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "File",
+                                    "safeName": "File"
+                                }
+                            },
+                            "wireValue": "file"
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "model_type",
+                                    "camelCase": {
+                                        "unsafeName": "modelType",
+                                        "safeName": "modelType"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "model_type",
+                                        "safeName": "model_type"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MODEL_TYPE",
+                                        "safeName": "MODEL_TYPE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ModelType",
+                                        "safeName": "ModelType"
+                                    }
+                                },
+                                "wireValue": "model_type"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_service:ModelType"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "open_enum",
+                                    "camelCase": {
+                                        "unsafeName": "openEnum",
+                                        "safeName": "openEnum"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "open_enum",
+                                        "safeName": "open_enum"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "OPEN_ENUM",
+                                        "safeName": "OPEN_ENUM"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "OpenEnum",
+                                        "safeName": "OpenEnum"
+                                    }
+                                },
+                                "wireValue": "open_enum"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_service:OpenEnumType"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "maybe_name",
+                                    "camelCase": {
+                                        "unsafeName": "maybeName",
+                                        "safeName": "maybeName"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "maybe_name",
+                                        "safeName": "maybe_name"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MAYBE_NAME",
+                                        "safeName": "MAYBE_NAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "MaybeName",
+                                        "safeName": "MaybeName"
+                                    }
+                                },
+                                "wireValue": "maybe_name"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
             },
             "response": {
                 "type": "json"

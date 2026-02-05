@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::DollarStringExamplesClient;
-pub use types::*;
+pub use resources::{DollarStringExamplesClient};
+pub use types::{*};
+

@@ -101,7 +101,7 @@
     {
       "fixtures": [
         "query-parameters-openapi",
-        "exhaustive",
+        "exhaustive:.",
         "oauth-client-credentials-environment-variables",
         "mixed-case:default-values",
         "multiple-request-bodies",

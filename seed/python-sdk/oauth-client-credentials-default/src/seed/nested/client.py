@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawNestedClient, RawNestedClient
 
 if typing.TYPE_CHECKING:
     from .api.client import ApiClient, AsyncApiClient
@@ -13,20 +12,8 @@ if typing.TYPE_CHECKING:
 
 class NestedClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawNestedClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._api: typing.Optional[ApiClient] = None
-
-    @property
-    def with_raw_response(self) -> RawNestedClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawNestedClient
-        """
-        return self._raw_client
 
     @property
     def api(self):
@@ -39,20 +26,8 @@ class NestedClient:
 
 class AsyncNestedClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawNestedClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._api: typing.Optional[AsyncApiClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawNestedClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawNestedClient
-        """
-        return self._raw_client
 
     @property
     def api(self):

@@ -337,6 +337,26 @@
           "type": "null"
         }
       ]
+    },
+    "header": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "footer": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -2429,6 +2449,13 @@
       ],
       "additionalProperties": false
     },
+    "docs.TitleSource": {
+      "type": "string",
+      "enum": [
+        "frontmatter",
+        "filename"
+      ]
+    },
     "docs.FolderConfiguration": {
       "type": "object",
       "properties": {
@@ -2469,6 +2496,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TitleSource"
             },
             {
               "type": "null"
@@ -4611,6 +4648,13 @@
         "sidebar"
       ]
     },
+    "docs.SwitcherPlacement": {
+      "type": "string",
+      "enum": [
+        "header",
+        "sidebar"
+      ]
+    },
     "docs.ContentAlignment": {
       "type": "string",
       "enum": [
@@ -4682,6 +4726,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "switcher-placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SwitcherPlacement"
             },
             {
               "type": "null"

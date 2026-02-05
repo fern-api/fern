@@ -9,7 +9,8 @@ public partial class SeedValidationClient : ISeedValidationClient
 
     public SeedValidationClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -18,8 +19,7 @@ public partial class SeedValidationClient : ISeedValidationClient
                 { "User-Agent", "Fernvalidation/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -35,6 +35,12 @@ public partial class SeedValidationClient : ISeedValidationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedValidation.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -43,6 +49,7 @@ public partial class SeedValidationClient : ISeedValidationClient
                     Method = HttpMethod.Post,
                     Path = "/create",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -91,10 +98,18 @@ public partial class SeedValidationClient : ISeedValidationClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["decimal"] = request.Decimal.ToString();
-        _query["even"] = request.Even.ToString();
-        _query["name"] = request.Name;
+        var _queryString = new SeedValidation.Core.QueryStringBuilder.Builder(capacity: 3)
+            .Add("decimal", request.Decimal)
+            .Add("even", request.Even)
+            .Add("name", request.Name)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedValidation.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -102,7 +117,8 @@ public partial class SeedValidationClient : ISeedValidationClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "",
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

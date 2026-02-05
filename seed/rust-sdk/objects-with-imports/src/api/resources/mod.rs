@@ -5,7 +5,7 @@
 //! - **Commons**
 //! - **File**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod commons;
 pub mod file;
@@ -17,8 +17,10 @@ impl ObjectsWithImportsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
+            
         })
     }
+
 }
 
 pub use commons::CommonsClient;

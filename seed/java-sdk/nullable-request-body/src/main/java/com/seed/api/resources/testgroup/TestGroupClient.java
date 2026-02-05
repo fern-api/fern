@@ -6,6 +6,8 @@ package com.seed.api.resources.testgroup;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;
+import com.seed.api.types.PlainObject;
+import java.util.Optional;
 
 public class TestGroupClient {
     protected final ClientOptions clientOptions;
@@ -22,6 +24,20 @@ public class TestGroupClient {
      */
     public RawTestGroupClient withRawResponse() {
         return this.rawClient;
+    }
+
+    /**
+     * Post a nullable request body
+     */
+    public Object testMethodName(String pathParam, Optional<PlainObject> body) {
+        return this.rawClient.testMethodName(pathParam, body).body();
+    }
+
+    /**
+     * Post a nullable request body
+     */
+    public Object testMethodName(String pathParam, Optional<PlainObject> body, RequestOptions requestOptions) {
+        return this.rawClient.testMethodName(pathParam, body, requestOptions).body();
     }
 
     /**

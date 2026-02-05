@@ -10,7 +10,7 @@ public record SearchRequest
     public required string Query { get; set; }
 
     [JsonPropertyName("filters")]
-    public Dictionary<string, string>? Filters { get; set; }
+    public Dictionary<string, string?>? Filters { get; set; }
 
     [JsonPropertyName("includeTypes")]
     public IEnumerable<string>? IncludeTypes { get; set; }

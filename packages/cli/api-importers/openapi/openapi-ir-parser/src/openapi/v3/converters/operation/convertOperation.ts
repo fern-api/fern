@@ -9,12 +9,14 @@ import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../../getExtension";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getFernAsyncExtension } from "../../extensions/getFernAsyncExtension";
-import { getFernStreamingExtension } from "../../extensions/getFernStreamingExtension";
+import { FernStreamingExtension, getFernStreamingExtension } from "../../extensions/getFernStreamingExtension";
 import { getFernPaginationExtension } from "../../extensions/getPaginationExtension";
 import { OperationContext, PathItemContext } from "../contexts";
+import { hasTextEventStreamWithItemSchema } from "../endpoint/getApplicationJsonSchema";
 import { convertAsyncSyncOperation } from "./convertAsyncSyncOperation";
 import { convertHttpOperation } from "./convertHttpOperation";
 import { convertStreamingOperation } from "./convertStreamingOperation";
@@ -94,7 +96,17 @@ export function convertOperation({
         return { type: "webhook", value: webhooks };
     }
 
-    const streamingExtension = getFernStreamingExtension(operation);
+    let streamingExtension: FernStreamingExtension | undefined = getFernStreamingExtension(operation);
+
+    // If no streaming extension is specified, check if the response has text/event-stream with itemSchema
+    // This is the OAS 3.2 standard for SSE endpoints
+    if (streamingExtension == null) {
+        const hasItemSchemaStreaming = checkOperationForItemSchemaStreaming({ operation, context });
+        if (hasItemSchemaStreaming) {
+            streamingExtension = { type: "stream", format: "sse" };
+        }
+    }
+
     if (streamingExtension != null) {
         const streamingOperation = convertStreamingOperation({
             context,
@@ -184,4 +196,34 @@ function getBaseBreadcrumbs({
         baseBreadcrumbs.push(camelCase(`${httpMethod}_${path.split("/").join("_")}`));
     }
     return baseBreadcrumbs;
+}
+
+/**
+ * Checks if the operation has a response with text/event-stream content type
+ * that uses itemSchema instead of schema. This is the OAS 3.2 standard for SSE endpoints.
+ */
+function checkOperationForItemSchemaStreaming({
+    operation,
+    context
+}: {
+    operation: OpenAPIV3.OperationObject;
+    context: AbstractOpenAPIV3ParserContext;
+}): boolean {
+    if (operation.responses == null) {
+        return false;
+    }
+
+    for (const response of Object.values(operation.responses)) {
+        const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
+
+        if (resolvedResponse.content == null) {
+            continue;
+        }
+
+        if (hasTextEventStreamWithItemSchema(resolvedResponse.content)) {
+            return true;
+        }
+    }
+
+    return false;
 }

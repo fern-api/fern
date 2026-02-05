@@ -18,6 +18,12 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -26,6 +32,7 @@ public partial class SystemClient : ISystemClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -74,6 +81,12 @@ public partial class SystemClient : ISystemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -82,6 +95,7 @@ public partial class SystemClient : ISystemClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

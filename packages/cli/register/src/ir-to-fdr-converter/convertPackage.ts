@@ -15,7 +15,8 @@ import { convertTypeReference } from "./convertTypeShape";
 
 export function convertPackage(
     irPackage: Ir.ir.Package,
-    ir: Ir.ir.IntermediateRepresentation
+    ir: Ir.ir.IntermediateRepresentation,
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>
 ): FdrCjsSdk.api.v1.register.ApiDefinitionPackage {
     const service = irPackage.service != null ? ir.services[irPackage.service] : undefined;
     const webhooks = irPackage.webhooks != null ? ir.webhookGroups[irPackage.webhooks] : undefined;
@@ -23,8 +24,12 @@ export function convertPackage(
         irPackage.websocket != null && ir.websocketChannels != null
             ? ir.websocketChannels[irPackage.websocket]
             : undefined;
+
+    // Convert REST endpoints
+    const restEndpoints = service != null ? convertService(service, ir) : [];
+
     return {
-        endpoints: service != null ? convertService(service, ir) : [],
+        endpoints: restEndpoints,
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
         websockets: websocket != null ? [convertWebSocketChannel(websocket, ir)] : [],
         types: irPackage.types.map((typeId) => FdrCjsSdk.TypeId(typeId)),
@@ -33,7 +38,7 @@ export function convertPackage(
             irPackage.navigationConfig != null
                 ? FdrCjsSdk.api.v1.SubpackageId(irPackage.navigationConfig.pointsTo)
                 : undefined,
-        graphqlOperations: undefined
+        graphqlOperations: graphqlOperations ? Object.values(graphqlOperations) : []
     };
 }
 
@@ -62,6 +67,7 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
         }
         return {
             description: webhook.docs ?? undefined,
+            availability: convertIrAvailability(webhook.availability),
             id: FdrCjsSdk.WebhookId(webhook.name.originalName),
             path: [],
             method: webhook.method,
@@ -184,7 +190,7 @@ function convertService(
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
             authV2: convertEndpointSecurity(irEndpoint.security),
-            multiAuth: convertMultiAuth(irEndpoint.security),
+            multiAuth: convertMultiAuth(irEndpoint.security, ir.auth),
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
             defaultEnvironment:
@@ -425,9 +431,15 @@ function convertEndpointSecurity(
 }
 
 function convertMultiAuth(
-    security: Ir.http.HttpEndpointSecurityItem[] | undefined
+    security: Ir.http.HttpEndpointSecurityItem[] | undefined,
+    apiAuth?: Ir.auth.ApiAuth
 ): FdrCjsSdk.MultipleAuthType[] | undefined {
     if (security == null) {
+        if (apiAuth != null && apiAuth.requirement === "ANY" && apiAuth.schemes.length > 0) {
+            return apiAuth.schemes.map((scheme) => ({
+                schemes: [FdrCjsSdk.AuthSchemeId(scheme.key)]
+            }));
+        }
         return undefined;
     }
 

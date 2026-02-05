@@ -233,6 +233,18 @@
         },
         {
             "id": {
+                "path": "/object/get-and-return-with-datetime-like-string",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithDatetimeLikeString({\n    datetimeLikeString: \"2023-08-31T14:15:22Z\",\n    actualDatetime: \"2023-08-31T14:15:22Z\"\n});\n"
+            },
+            "example_identifier": "DatetimeLikeStringExample"
+        },
+        {
+            "id": {
                 "path": "/params/path/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithPath"

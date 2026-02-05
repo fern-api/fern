@@ -15,7 +15,9 @@ async fn main() {
                 id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                bytes: "SGVsbG8gd29ybGQh".to_string(),
+                bytes: base64::engine::general_purpose::STANDARD
+                    .decode("SGVsbG8gd29ybGQh")
+                    .unwrap(),
                 user: User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
@@ -52,7 +54,7 @@ async fn main() {
                 }],
                 filter: vec!["filter".to_string()],
                 long_param: 1000000,
-                big_int_param: "1000000".to_string(),
+                big_int_param: BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap(),
             },
             None,
         )

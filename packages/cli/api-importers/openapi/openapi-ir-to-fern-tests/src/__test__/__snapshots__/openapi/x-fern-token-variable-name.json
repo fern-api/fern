@@ -54,7 +54,7 @@
               "examples": [
                 {
                   "headers": {
-                    "X-API-Key": "[object Object]",
+                    "X-API-Key": "X-API-Key",
                   },
                   "request": {
                     "prompt": "prompt",
@@ -117,7 +117,7 @@
         status-code: 200
       examples:
         - headers:
-            X-API-Key: '[object Object]'
+            X-API-Key: X-API-Key
           request:
             prompt: prompt
           response:

@@ -197,6 +197,8 @@ function getObjectUtils(schema) {
             return Object.assign(Object.assign(Object.assign(Object.assign({}, baseSchema), (0, index_2.getSchemaUtils)(baseSchema)), (0, index_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
         },
         passthrough: () => {
+            const knownRawKeys = new Set(schema._getRawProperties());
+            const knownParsedKeys = new Set(schema._getParsedProperties());
             const baseSchema = {
                 _getParsedProperties: () => schema._getParsedProperties(),
                 _getRawProperties: () => schema._getRawProperties(),
@@ -205,9 +207,17 @@ function getObjectUtils(schema) {
                     if (!transformed.ok) {
                         return transformed;
                     }
+                    const extraProperties = {};
+                    if (typeof raw === "object" && raw != null) {
+                        for (const [key, value] of Object.entries(raw)) {
+                            if (!knownRawKeys.has(key)) {
+                                extraProperties[key] = value;
+                            }
+                        }
+                    }
                     return {
                         ok: true,
-                        value: Object.assign(Object.assign({}, raw), transformed.value),
+                        value: Object.assign(Object.assign({}, extraProperties), transformed.value),
                     };
                 },
                 json: (parsed, opts) => {
@@ -215,9 +225,17 @@ function getObjectUtils(schema) {
                     if (!transformed.ok) {
                         return transformed;
                     }
+                    const extraProperties = {};
+                    if (typeof parsed === "object" && parsed != null) {
+                        for (const [key, value] of Object.entries(parsed)) {
+                            if (!knownParsedKeys.has(key)) {
+                                extraProperties[key] = value;
+                            }
+                        }
+                    }
                     return {
                         ok: true,
-                        value: Object.assign(Object.assign({}, parsed), transformed.value),
+                        value: Object.assign(Object.assign({}, extraProperties), transformed.value),
                     };
                 },
                 getType: () => Schema_1.SchemaType.OBJECT,

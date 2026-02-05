@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
 
@@ -40,10 +40,6 @@ public class GetAndReturnMapPrimToPrimTest : BaseMockServerTest
         var response = await Client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
             new Dictionary<string, string>() { { "string", "string" } }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Dictionary<string, string>>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -5,11 +5,11 @@ import { SourcedNullish } from "./Sourced";
  *
  * This distinguishes between:
  * - `undefined` - field is missing from YAML
- * - `SourcedNullish` - field is explicitly null in YAML (has `value` property)
- * - `SourcedObject`/`SourcedArray` - field has actual content (no `value` property)
+ * - `SourcedNullish` - field is explicitly null in YAML
+ * - `SourcedString`/`SourcedNumber`/`SourcedBoolean`/`SourcedObject`/`SourcedArray` - field has actual content
  */
 export function isNullish<T>(
     value: T | SourcedNullish<null | undefined> | null | undefined
 ): value is SourcedNullish<null | undefined> | null | undefined {
-    return value == null || (typeof value === "object" && "value" in value);
+    return value == null || value instanceof SourcedNullish;
 }

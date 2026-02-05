@@ -2,5 +2,5 @@ namespace SeedOauthClientCredentialsMandatoryAuth.Nested;
 
 public partial interface INestedClient
 {
-    public ApiClient Api { get; }
+    public IApiClient Api { get; }
 }

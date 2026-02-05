@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": true,
+    "packageName": "fern",
+    "module": {
+      "path": "github.com/go-undiscriminated-union-wire-tests/fern"
+    }
+  },
+  "sdkVersion": "v0.0.1"
+}

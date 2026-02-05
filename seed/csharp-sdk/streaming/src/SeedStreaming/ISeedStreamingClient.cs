@@ -2,5 +2,5 @@ namespace SeedStreaming;
 
 public partial interface ISeedStreamingClient
 {
-    public DummyClient Dummy { get; }
+    public IDummyClient Dummy { get; }
 }

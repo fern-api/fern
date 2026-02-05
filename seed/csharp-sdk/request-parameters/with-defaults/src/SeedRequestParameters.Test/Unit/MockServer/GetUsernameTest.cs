@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using SeedRequestParameters;
-using SeedRequestParameters.Core;
+using SeedRequestParameters.Test.Utils;
 
 namespace SeedRequestParameters.Test.Unit.MockServer;
 
@@ -109,9 +109,6 @@ public class GetUsernameTest : BaseMockServerTest
                 BigIntParam = "1000000",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

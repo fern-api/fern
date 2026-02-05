@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedErrors;
-using SeedErrors.Core;
+using SeedErrors.Test.Utils;
 
 namespace SeedErrors.Test.Unit.MockServer;
 
@@ -40,9 +40,6 @@ public class FooWithoutEndpointErrorTest : BaseMockServerTest
         var response = await Client.Simple.FooWithoutEndpointErrorAsync(
             new FooRequest { Bar = "bar" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<FooResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

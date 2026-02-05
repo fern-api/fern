@@ -12,6 +12,11 @@ import (
 type JustFileRequest struct {
 }
 
+type JustFileWithOptionalQueryParamsRequest struct {
+	MaybeString  *string `query:"maybeString"`
+	MaybeInteger *int    `query:"maybeInteger"`
+}
+
 type JustFileWithQueryParamsRequest struct {
 	MaybeString           *string   `query:"maybeString"`
 	Integer               int       `query:"integer"`
@@ -39,6 +44,8 @@ type MyRequest struct {
 }
 
 type Id = string
+
+type ModelType = string
 
 type MyAliasObject = *MyObject
 
@@ -295,6 +302,31 @@ func (o ObjectType) Ptr() *ObjectType {
 	return &o
 }
 
+type OpenEnumType string
+
+const (
+	OpenEnumTypeOptionA OpenEnumType = "OPTION_A"
+	OpenEnumTypeOptionB OpenEnumType = "OPTION_B"
+	OpenEnumTypeOptionC OpenEnumType = "OPTION_C"
+)
+
+func NewOpenEnumTypeFromString(s string) (OpenEnumType, error) {
+	switch s {
+	case "OPTION_A":
+		return OpenEnumTypeOptionA, nil
+	case "OPTION_B":
+		return OpenEnumTypeOptionB, nil
+	case "OPTION_C":
+		return OpenEnumTypeOptionC, nil
+	}
+	var t OpenEnumType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OpenEnumType) Ptr() *OpenEnumType {
+	return &o
+}
+
 type WithContentTypeRequest struct {
 	Foo    string    `json:"foo" url:"-"`
 	Bar    *MyObject `json:"bar" url:"-"`
@@ -323,4 +355,10 @@ type WithFormEncodingRequest struct {
 
 type InlineTypeRequest struct {
 	Request *MyInlineType `json:"request" url:"-"`
+}
+
+type LiteralEnumRequest struct {
+	ModelType *ModelType    `json:"model_type,omitempty" url:"-"`
+	OpenEnum  *OpenEnumType `json:"open_enum,omitempty" url:"-"`
+	MaybeName *string       `json:"maybe_name,omitempty" url:"-"`
 }

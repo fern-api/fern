@@ -1737,7 +1737,10 @@
   "webhookGroups": {
     "Documents": [
       {
-        "availability": undefined,
+        "availability": {
+          "message": undefined,
+          "status": "PRE_RELEASE",
+        },
         "displayName": "Document uploaded webhook (multipart)",
         "docs": "Webhook triggered when a document is uploaded via multipart form",
         "examples": [],
@@ -2210,7 +2213,10 @@
     ],
     "Payment Sessions": [
       {
-        "availability": undefined,
+        "availability": {
+          "message": undefined,
+          "status": "DEPRECATED",
+        },
         "displayName": "Payment session completed webhook",
         "docs": "Webhook triggered when a payment session is completed",
         "examples": [],

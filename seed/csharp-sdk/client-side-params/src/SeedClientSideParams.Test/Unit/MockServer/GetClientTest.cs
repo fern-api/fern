@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedClientSideParams;
-using SeedClientSideParams.Core;
+using SeedClientSideParams.Test.Utils;
 
 namespace SeedClientSideParams.Test.Unit.MockServer;
 
@@ -107,9 +107,6 @@ public class GetClientTest : BaseMockServerTest
             "clientId",
             new GetClientRequest { Fields = "fields", IncludeFields = true }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Client>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

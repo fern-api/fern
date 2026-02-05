@@ -17,7 +17,9 @@ from .requests.my_inline_type import MyInlineTypeParams
 from .requests.my_object import MyObjectParams
 from .requests.my_object_with_optional import MyObjectWithOptionalParams
 from .types.id import Id
+from .types.model_type import ModelType
 from .types.object_type import ObjectType
+from .types.open_enum_type import OpenEnumType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -202,6 +204,54 @@ class RawServiceClient:
                 "maybeInteger": maybe_integer,
                 "listOfStrings": list_of_strings,
                 "optionalListOfStrings": optional_list_of_strings,
+            },
+            data={},
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def just_file_with_optional_query_params(
+        self,
+        *,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "just-file-with-optional-query-params",
+            method="POST",
+            params={
+                "maybeString": maybe_string,
+                "maybeInteger": maybe_integer,
             },
             data={},
             files={
@@ -544,6 +594,64 @@ class RawServiceClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def with_literal_and_enum_types(
+        self,
+        *,
+        file: core.File,
+        model_type: typing.Optional[ModelType] = OMIT,
+        open_enum: typing.Optional[OpenEnumType] = OMIT,
+        maybe_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[str]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        model_type : typing.Optional[ModelType]
+
+        open_enum : typing.Optional[OpenEnumType]
+
+        maybe_name : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[str]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "with-literal-enum",
+            method="POST",
+            data={
+                "model_type": model_type,
+                "open_enum": open_enum,
+                "maybe_name": maybe_name,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -724,6 +832,54 @@ class AsyncRawServiceClient:
                 "maybeInteger": maybe_integer,
                 "listOfStrings": list_of_strings,
                 "optionalListOfStrings": optional_list_of_strings,
+            },
+            data={},
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def just_file_with_optional_query_params(
+        self,
+        *,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "just-file-with-optional-query-params",
+            method="POST",
+            params={
+                "maybeString": maybe_string,
+                "maybeInteger": maybe_integer,
             },
             data={},
             files={
@@ -1061,6 +1217,64 @@ class AsyncRawServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def with_literal_and_enum_types(
+        self,
+        *,
+        file: core.File,
+        model_type: typing.Optional[ModelType] = OMIT,
+        open_enum: typing.Optional[OpenEnumType] = OMIT,
+        maybe_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[str]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        model_type : typing.Optional[ModelType]
+
+        open_enum : typing.Optional[OpenEnumType]
+
+        maybe_name : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[str]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "with-literal-enum",
+            method="POST",
+            data={
+                "model_type": model_type,
+                "open_enum": open_enum,
+                "maybe_name": maybe_name,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

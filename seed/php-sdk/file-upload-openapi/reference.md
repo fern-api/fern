@@ -29,6 +29,7 @@ Upload a file to the database
 ```php
 $client->fileUploadExample->uploadFile(
     new UploadFileRequest([
+        'file' => File::createFromString("example_file", "example_file"),
         'name' => 'name',
     ]),
 );

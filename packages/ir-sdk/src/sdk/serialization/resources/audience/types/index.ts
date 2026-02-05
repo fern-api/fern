@@ -1,2 +1,2 @@
-export * from "./AudienceDefinition";
-export * from "./AudienceReference";
+export * from "./AudienceDefinition.js";
+export * from "./AudienceReference.js";

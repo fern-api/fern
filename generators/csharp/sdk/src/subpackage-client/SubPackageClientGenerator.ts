@@ -103,7 +103,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
                     origin: subpackage,
                     access: ast.Access.Public,
                     get: true,
-                    type: this.context.getSubpackageClassReference(subpackage)
+                    type: this.context.getSubpackageInterfaceReference(subpackage)
                 });
             }
         }

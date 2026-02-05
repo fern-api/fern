@@ -3,7 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "moduleResolution": "bundler"
   },
   "include": ["./src/**/*"],
   "references": [
@@ -12,6 +13,12 @@
     },
     {
       "path": "../logger"
+    },
+    {
+      "path": "../login"
+    },
+    {
+      "path": "../../commons/core-utils"
     }
   ]
 }

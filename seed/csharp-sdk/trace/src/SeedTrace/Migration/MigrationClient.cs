@@ -18,9 +18,13 @@ public partial class MigrationClient : IMigrationClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>() { { "admin-key-header", request.AdminKeyHeader } }
-        );
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add("admin-key-header", request.AdminKeyHeader)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest

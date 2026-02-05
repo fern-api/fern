@@ -21,7 +21,8 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
             "PASSWORD",
             "Please pass in accessToken or set the environment variable PASSWORD."
         );
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -30,8 +31,7 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
                 { "User-Agent", "Fernbasic-auth-environment-variables/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -42,7 +42,7 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
         BasicAuth = new BasicAuthClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; }
+    public IBasicAuthClient BasicAuth { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

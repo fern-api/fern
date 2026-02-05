@@ -20,8 +20,8 @@ public class BaseMockServerTest
     {
         const string requestJson = """
             {
-              "client_id": "CLIENT_ID",
-              "client_secret": "CLIENT_SECRET",
+              "client_id": "client_id",
+              "client_secret": "client_secret",
               "audience": "https://api.example.com",
               "grant_type": "client_credentials",
               "scope": "scope"
@@ -37,13 +37,7 @@ public class BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/token")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/token").UsingPost())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -62,8 +56,8 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedOauthClientCredentialsEnvironmentVariablesClient(
-            "CLIENT_ID",
-            "CLIENT_SECRET",
+            "client_id",
+            "client_secret",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
         MockOAuthEndpoint();

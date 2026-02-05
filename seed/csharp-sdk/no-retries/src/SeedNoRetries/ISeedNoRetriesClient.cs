@@ -2,5 +2,5 @@ namespace SeedNoRetries;
 
 public partial interface ISeedNoRetriesClient
 {
-    public RetriesClient Retries { get; }
+    public IRetriesClient Retries { get; }
 }

@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "vehicle_type")]
 pub enum Vehicle {
+        #[serde(rename = "car")]
         Car {
             #[serde(flatten)]
             data: Car,
@@ -11,6 +12,7 @@ pub enum Vehicle {
             year: i64,
         },
 
+        #[serde(rename = "motorcycle")]
         Motorcycle {
             #[serde(flatten)]
             data: Motorcycle,
@@ -19,6 +21,7 @@ pub enum Vehicle {
             year: i64,
         },
 
+        #[serde(rename = "truck")]
         Truck {
             #[serde(flatten)]
             data: Truck,

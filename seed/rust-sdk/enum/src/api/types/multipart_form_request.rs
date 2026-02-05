@@ -14,28 +14,28 @@ pub struct MultipartFormRequest {
 }
 impl MultipartFormRequest {
     pub fn to_multipart(self) -> reqwest::multipart::Form {
-        let mut form = reqwest::multipart::Form::new();
+    let mut form = reqwest::multipart::Form::new();
 
-        if let Ok(json_str) = serde_json::to_string(&self.color) {
-            form = form.text("color", json_str);
-        }
-
-        if let Some(ref value) = self.maybe_color {
-            if let Ok(json_str) = serde_json::to_string(value) {
-                form = form.text("maybeColor", json_str);
-            }
-        }
-
-        if let Ok(json_str) = serde_json::to_string(&self.color_list) {
-            form = form.text("colorList", json_str);
-        }
-
-        if let Some(ref value) = self.maybe_color_list {
-            if let Ok(json_str) = serde_json::to_string(value) {
-                form = form.text("maybeColorList", json_str);
-            }
-        }
-
-        form
+    if let Ok(json_str) = serde_json::to_string(&self.color) {
+        form = form.text("color", json_str);
     }
+
+    if let Some(ref value) = self.maybe_color {
+        if let Ok(json_str) = serde_json::to_string(value) {
+            form = form.text("maybeColor", json_str);
+        }
+    }
+
+    if let Ok(json_str) = serde_json::to_string(&self.color_list) {
+        form = form.text("colorList", json_str);
+    }
+
+    if let Some(ref value) = self.maybe_color_list {
+        if let Ok(json_str) = serde_json::to_string(value) {
+            form = form.text("maybeColorList", json_str);
+        }
+    }
+
+    form
+}
 }

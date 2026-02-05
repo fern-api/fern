@@ -129,6 +129,9 @@ function maybeIntegerValidation(v2: PrimitiveTypeV2 | undefined): IntegerValidat
 }
 
 function getStringExampleOfLength(length: number): string {
+    if (length <= 0) {
+        return "";
+    }
     if (length <= Examples.SAMPLE_STRINGS.length) {
         const sampleString = Examples.SAMPLE_STRINGS[length - 1];
         if (sampleString) {

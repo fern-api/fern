@@ -42,3 +42,15 @@ export interface DoubleOptional {
 }
 
 export type OptionalAlias = string | undefined;
+
+/**
+ * This type tests that string fields containing datetime-like values
+ * are NOT reformatted by the wire test generator. The string field
+ * should preserve its exact value even if it looks like a datetime.
+ */
+export interface ObjectWithDatetimeLikeString {
+    /** A string field that happens to contain a datetime-like value */
+    datetimeLikeString: string;
+    /** An actual datetime field for comparison */
+    actualDatetime: string;
+}

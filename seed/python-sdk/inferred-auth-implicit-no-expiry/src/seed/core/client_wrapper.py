@@ -10,10 +10,12 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
     ):
+        self._auth_headers = auth_headers
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
@@ -30,6 +32,8 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
+        if self._auth_headers is not None:
+            headers.update(self._auth_headers())
         return headers
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
@@ -46,12 +50,13 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(headers=headers, base_url=base_url, timeout=timeout)
+        super().__init__(auth_headers=auth_headers, headers=headers, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -64,14 +69,17 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
+        async_auth_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(headers=headers, base_url=base_url, timeout=timeout)
+        super().__init__(auth_headers=auth_headers, headers=headers, base_url=base_url, timeout=timeout)
         self._async_token = async_token
+        self._async_auth_headers = async_auth_headers
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -85,4 +93,6 @@ class AsyncClientWrapper(BaseClientWrapper):
         if self._async_token is not None:
             token = await self._async_token()
             headers["Authorization"] = f"Bearer {token}"
+        if self._async_auth_headers is not None:
+            headers.update(await self._async_auth_headers())
         return headers

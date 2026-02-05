@@ -19,6 +19,12 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -29,6 +35,7 @@ public partial class ServiceClient : IServiceClient
                         "/file/notification/{0}",
                         ValueConvert.ToPathParameterString(notificationId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

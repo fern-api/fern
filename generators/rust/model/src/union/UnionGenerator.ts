@@ -341,9 +341,9 @@ export class UnionGenerator {
 
         // Add serde rename if:
         // 1. The variant name was escaped (e.g., String -> r#String), OR
-        // 2. The variant name differs from discriminant value (case-insensitive)
+        // 2. The variant name differs from discriminant value (case-sensitive, since serde is case-sensitive)
         const wasEscaped = escapedVariantName !== rawVariantName;
-        const namesDiffer = rawVariantName.toLowerCase() !== discriminantValue.toLowerCase();
+        const namesDiffer = rawVariantName !== discriminantValue;
 
         if (wasEscaped || namesDiffer) {
             attributes.push(Attribute.serde.rename(discriminantValue));

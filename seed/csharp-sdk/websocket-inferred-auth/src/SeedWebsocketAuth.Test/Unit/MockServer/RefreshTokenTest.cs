@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedWebsocketAuth;
-using SeedWebsocketAuth.Core;
+using SeedWebsocketAuth.Test.Utils;
 
 namespace SeedWebsocketAuth.Test.Unit.MockServer;
 
@@ -56,9 +56,6 @@ public class RefreshTokenTest : BaseMockServerTest
                 Scope = "scope",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

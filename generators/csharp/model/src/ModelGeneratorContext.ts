@@ -95,14 +95,12 @@ export class ModelGeneratorContext extends GeneratorContext {
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [
+            AsIsFiles.Test.Json.AdditionalPropertiesTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests
         ];
-        if (this.settings.generateNewAdditionalProperties) {
-            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
-        }
         if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
@@ -113,11 +111,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        const files = [AsIsFiles.FileParameter];
-        if (this.settings.generateNewAdditionalProperties) {
-            files.push(AsIsFiles.Json.AdditionalProperties);
-        }
-        return files;
+        return [AsIsFiles.FileParameter, AsIsFiles.Json.AdditionalProperties];
     }
 
     public override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {

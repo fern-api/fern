@@ -1,0 +1,77 @@
+# Reference
+## Service
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">post</a>(path_param, service_param, endpoint_param, resource_param) -> </code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.service.post(
+  service_param: 'serviceParam',
+  endpoint_param: 1,
+  resource_param: 'resourceParam'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**path_param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**service_param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**endpoint_param:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
