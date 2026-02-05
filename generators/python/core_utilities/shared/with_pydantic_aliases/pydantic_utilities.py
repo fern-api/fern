@@ -53,7 +53,8 @@ if IS_PYDANTIC_V2:
             value = value[:-1] + "+00:00"
         return dt.datetime.fromisoformat(value)
 
-    from pydantic.fields import FieldInfo as ModelField  # type: ignore[misc,assignment]
+    from pydantic.fields import FieldInfo
+    ModelField = FieldInfo  # type: ignore[misc,assignment]
 
     import decimal
     from collections import deque
