@@ -59,6 +59,27 @@ func (j *JustFileWithOptionalQueryParamsRequest) SetMaybeInteger(maybeInteger *i
 	j.require(justFileWithOptionalQueryParamsRequestFieldMaybeInteger)
 }
 
+func (j *JustFileWithOptionalQueryParamsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler JustFileWithOptionalQueryParamsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*j = JustFileWithOptionalQueryParamsRequest(body)
+	return nil
+}
+
+func (j *JustFileWithOptionalQueryParamsRequest) MarshalJSON() ([]byte, error) {
+	type embed JustFileWithOptionalQueryParamsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*j),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, j.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	justFileWithQueryParamsRequestFieldMaybeString           = big.NewInt(1 << 0)
 	justFileWithQueryParamsRequestFieldInteger               = big.NewInt(1 << 1)
@@ -119,6 +140,27 @@ func (j *JustFileWithQueryParamsRequest) SetListOfStrings(listOfStrings []string
 func (j *JustFileWithQueryParamsRequest) SetOptionalListOfStrings(optionalListOfStrings []*string) {
 	j.OptionalListOfStrings = optionalListOfStrings
 	j.require(justFileWithQueryParamsRequestFieldOptionalListOfStrings)
+}
+
+func (j *JustFileWithQueryParamsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler JustFileWithQueryParamsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*j = JustFileWithQueryParamsRequest(body)
+	return nil
+}
+
+func (j *JustFileWithQueryParamsRequest) MarshalJSON() ([]byte, error) {
+	type embed JustFileWithQueryParamsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*j),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, j.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 type OptionalArgsRequest struct {

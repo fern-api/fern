@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.54.4
+  changelogEntry:
+    - summary: |
+        The `use_provided_defaults` config option no longer applies defaults to
+        inlined request body properties.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 62
+
 - version: 4.54.3
   changelogEntry:
     - summary: |

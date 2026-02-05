@@ -5,6 +5,6 @@ export interface Identity {
     user_id: string;
     provider: string;
     is_social: boolean;
-    access_token?: string;
-    expires_in?: number;
+    access_token?: string | undefined;
+    expires_in?: number | undefined;
 }

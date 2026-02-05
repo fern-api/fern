@@ -4,7 +4,7 @@ import type * as SeedTrace from "../../../index.js";
 
 export interface ExecutionSessionResponse {
     sessionId: string;
-    executionSessionUrl?: string;
+    executionSessionUrl?: string | undefined;
     language: SeedTrace.Language;
     status: SeedTrace.ExecutionSessionStatus;
 }

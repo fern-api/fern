@@ -52,6 +52,27 @@ func (f *FindRequest) SetPrivateProperty(privateProperty *int) {
 	f.require(findRequestFieldPrivateProperty)
 }
 
+func (f *FindRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler FindRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*f = FindRequest(body)
+	return nil
+}
+
+func (f *FindRequest) MarshalJSON() ([]byte, error) {
+	type embed FindRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	filteredTypeFieldPublicProperty  = big.NewInt(1 << 0)
 	filteredTypeFieldPrivateProperty = big.NewInt(1 << 1)
