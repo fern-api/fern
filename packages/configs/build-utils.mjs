@@ -96,6 +96,11 @@ export async function buildDynamicSnippets(dirname, packageJson, versionOverride
         outputOptions: {
             codeSplitting: false
         },
+        // Mark fs and crypto as external - they can't be polyfilled for browser
+        // The polyfill plugin provides empty shims that don't export the needed functions
+        // By marking as external, Node.js environments can use real fs/crypto
+        // Browser environments will fail at require() time with a clear error
+        external: ["fs", "crypto"],
         plugins: [nodePolyfills()],
         tsconfig: tsconfigPath,
         format: ["cjs", "esm"],

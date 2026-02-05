@@ -2,6 +2,7 @@
   "name": "@fern-api/mock-utils",
   "version": "0.0.1",
   "description": "Fern utils for generated WireMock testing stubs",
+  "sideEffects": false,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {

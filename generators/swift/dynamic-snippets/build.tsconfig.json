@@ -17,7 +17,7 @@
       "path": "../../browser-compatible-base"
     },
     {
-      "path": "../ast"
+      "path": "../codegen"
     }
   ]
 }

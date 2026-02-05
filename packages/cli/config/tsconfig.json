@@ -7,9 +7,5 @@
     "moduleResolution": "bundler"
   },
   "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../commons/core-utils"
-    }
-  ]
+  "references": []
 }
