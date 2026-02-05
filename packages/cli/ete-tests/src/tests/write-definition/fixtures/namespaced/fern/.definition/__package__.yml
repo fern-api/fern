@@ -1,4 +1,7 @@
+imports:
+  streamRoot: stream/__package__.yml
 types:
+  MarketData: streamRoot.Market
   OauthScope:
     enum:
       - docs: Read access

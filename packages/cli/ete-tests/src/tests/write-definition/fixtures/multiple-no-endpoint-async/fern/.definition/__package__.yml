@@ -1,3 +1,6 @@
+types:
+  TestChannel2SendMessage: string
+  TestChannelSendMessage: string
 service:
   auth: false
   base-path: ''

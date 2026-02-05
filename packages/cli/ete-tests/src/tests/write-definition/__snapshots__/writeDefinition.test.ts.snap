@@ -263,7 +263,10 @@ name: api
 exports[`validate multi no endpoint asyncapi > multiple-no-endpoint-async 1`] = `
 [
   {
-    "contents": "service:
+    "contents": "types:
+  TestChannel2SendMessage: string
+  TestChannelSendMessage: string
+service:
   auth: false
   base-path: ''
   endpoints:
@@ -396,7 +399,10 @@ name: api
 exports[`validate multi with endpoint async > multiple-with-endpoint-async 1`] = `
 [
   {
-    "contents": "service:
+    "contents": "types:
+  TestChannel2SendMessage: string
+  TestChannelSendMessage: string
+service:
   auth: false
   base-path: ''
   endpoints:
@@ -483,7 +489,10 @@ name: api
 exports[`validate namespaced API > namespaced 1`] = `
 [
   {
-    "contents": "types:
+    "contents": "imports:
+  streamRoot: stream/__package__.yml
+types:
+  MarketData: streamRoot.Market
   OauthScope:
     enum:
       - docs: Read access
@@ -839,7 +848,11 @@ types:
 channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body:
+            socket_sequence: 1
+            type: heartbeat
+          type: marketData
   messages:
     marketData:
       body: streamRoot.Market
@@ -2720,7 +2733,7 @@ exports[`validate namespaced API with multiple namespaces > namespaced-asyncapi 
       tag: optional<string>
     source:
       openapi: alpha_one.yml
-  Pets: list<unknown>
+  Pets: list<Pet>
 ",
         "name": "__package__.yml",
         "type": "file",
@@ -2815,6 +2828,14 @@ name: api
   {
     "contents": [
       {
+        "contents": "types:
+  TestChannel2SendMessage: string
+  TestChannelSendMessage: string
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+      {
         "contents": "channel:
   auth: false
   examples:
@@ -2898,7 +2919,10 @@ name: api
 exports[`validate single no endpoint async > single-no-endpoint-async 1`] = `
 [
   {
-    "contents": "service:
+    "contents": "types:
+  TestChannel2SendMessage: string
+  TestChannelSendMessage: string
+service:
   auth: false
   base-path: ''
   endpoints:
@@ -3022,7 +3046,10 @@ name: api
 exports[`validate single with endpoint async > single-with-endpoint-async 1`] = `
 [
   {
-    "contents": "service:
+    "contents": "types:
+  TestChannel2SendMessage: string
+  TestChannelSendMessage: string
+service:
   auth: false
   base-path: ''
   endpoints:
