@@ -30,9 +30,14 @@ describe("migrateFromV64ToV63", () => {
         } as unknown as IrVersions.V64.IntermediateRepresentation;
     };
 
-    it("converts cursor pagination with property locator", () => {
+    const mockResponseProperty: IrVersions.V64.ResponseProperty = {
+        property: {} as IrVersions.V64.ObjectProperty,
+        propertyPath: []
+    };
+
+    it("passes through cursor pagination", () => {
         const cursorPagination = IrVersions.V64.Pagination.cursor({
-            page: IrVersions.V64.RequestLocator.property({
+            page: {
                 property: IrVersions.V64.RequestPropertyValue.query({
                     name: { name: { originalName: "cursor" } as IrVersions.V64.Name, wireValue: "cursor" },
                     valueType: IrVersions.V64.TypeReference.primitive({ v1: "STRING", v2: undefined }),
@@ -43,9 +48,9 @@ describe("migrateFromV64ToV63", () => {
                     docs: undefined
                 }),
                 propertyPath: []
-            }),
-            next: { property: {} as IrVersions.V64.ObjectProperty, propertyPath: [] },
-            results: { property: {} as IrVersions.V64.ObjectProperty, propertyPath: [] }
+            },
+            next: mockResponseProperty,
+            results: mockResponseProperty
         });
 
         const v64IR = createIRWithEndpoint(createEndpointWithPagination(cursorPagination));
@@ -58,32 +63,30 @@ describe("migrateFromV64ToV63", () => {
         }
     });
 
-    it("throws error for cursor pagination with uri locator", () => {
-        const cursorPagination = IrVersions.V64.Pagination.cursor({
-            page: IrVersions.V64.RequestLocator.uri("https://example.com/next"),
-            next: { property: {} as IrVersions.V64.ObjectProperty, propertyPath: [] },
-            results: { property: {} as IrVersions.V64.ObjectProperty, propertyPath: [] }
+    it("throws error for nextUri pagination", () => {
+        const nextUriPagination = IrVersions.V64.Pagination.nextUri({
+            nextUri: mockResponseProperty,
+            results: mockResponseProperty
         });
 
-        const v64IR = createIRWithEndpoint(createEndpointWithPagination(cursorPagination));
+        const v64IR = createIRWithEndpoint(createEndpointWithPagination(nextUriPagination));
 
         expect(() => {
             V64_TO_V63_MIGRATION.migrateBackwards(v64IR, mockContext);
-        }).toThrow("CursorPagination with 'uri' locator cannot be migrated to IR v63");
+        }).toThrow("CursorPagination with 'nextUri' locator cannot be migrated to IR v63");
     });
 
-    it("throws error for cursor pagination with path locator", () => {
-        const cursorPagination = IrVersions.V64.Pagination.cursor({
-            page: IrVersions.V64.RequestLocator.path("/next/{cursor}"),
-            next: { property: {} as IrVersions.V64.ObjectProperty, propertyPath: [] },
-            results: { property: {} as IrVersions.V64.ObjectProperty, propertyPath: [] }
+    it("throws error for nextPath pagination", () => {
+        const nextPathPagination = IrVersions.V64.Pagination.nextPath({
+            nextPath: mockResponseProperty,
+            results: mockResponseProperty
         });
 
-        const v64IR = createIRWithEndpoint(createEndpointWithPagination(cursorPagination));
+        const v64IR = createIRWithEndpoint(createEndpointWithPagination(nextPathPagination));
 
         expect(() => {
             V64_TO_V63_MIGRATION.migrateBackwards(v64IR, mockContext);
-        }).toThrow("CursorPagination with 'path' locator cannot be migrated to IR v63");
+        }).toThrow("CursorPagination with 'nextPath' locator cannot be migrated to IR v63");
     });
 
     it("passes through offset pagination unchanged", () => {
@@ -100,7 +103,7 @@ describe("migrateFromV64ToV63", () => {
                 }),
                 propertyPath: []
             },
-            results: { property: {} as IrVersions.V64.ObjectProperty, propertyPath: [] },
+            results: mockResponseProperty,
             step: undefined,
             hasNextPage: undefined
         });

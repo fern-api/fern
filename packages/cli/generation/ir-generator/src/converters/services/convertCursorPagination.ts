@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Pagination, RequestLocator } from "@fern-api/ir-sdk";
+import { Pagination } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
@@ -19,13 +19,11 @@ export function convertCursorPagination({
     paginationPropertyComponents: CursorPaginationPropertyComponents;
 }): Pagination | undefined {
     return Pagination.cursor({
-        page: RequestLocator.property(
-            propertyResolver.resolveRequestPropertyOrThrow({
-                file,
-                endpoint: endpointName,
-                propertyComponents: paginationPropertyComponents.cursor
-            })
-        ),
+        page: propertyResolver.resolveRequestPropertyOrThrow({
+            file,
+            endpoint: endpointName,
+            propertyComponents: paginationPropertyComponents.cursor
+        }),
         next: propertyResolver.resolveResponsePropertyOrThrow({
             file,
             endpoint: endpointName,

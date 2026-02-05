@@ -5,7 +5,12 @@ import * as FernIr from "../../../index.js";
 /**
  * If set, the endpoint will be generated with auto-pagination features.
  */
-export type Pagination = FernIr.Pagination.Cursor | FernIr.Pagination.Offset | FernIr.Pagination.Custom;
+export type Pagination =
+    | FernIr.Pagination.Cursor
+    | FernIr.Pagination.Offset
+    | FernIr.Pagination.Custom
+    | FernIr.Pagination.NextUri
+    | FernIr.Pagination.NextPath;
 
 export namespace Pagination {
     export interface Cursor extends FernIr.CursorPagination, _Utils {
@@ -20,6 +25,14 @@ export namespace Pagination {
         type: "custom";
     }
 
+    export interface NextUri extends FernIr.NextUriPagination, _Utils {
+        type: "nextUri";
+    }
+
+    export interface NextPath extends FernIr.NextPathPagination, _Utils {
+        type: "nextPath";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Pagination._Visitor<_Result>) => _Result;
     }
@@ -28,6 +41,8 @@ export namespace Pagination {
         cursor: (value: FernIr.CursorPagination) => _Result;
         offset: (value: FernIr.OffsetPagination) => _Result;
         custom: (value: FernIr.CustomPagination) => _Result;
+        nextUri: (value: FernIr.NextUriPagination) => _Result;
+        nextPath: (value: FernIr.NextPathPagination) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -63,6 +78,26 @@ export const Pagination = {
         };
     },
 
+    nextUri: (value: FernIr.NextUriPagination): FernIr.Pagination.NextUri => {
+        return {
+            ...value,
+            type: "nextUri",
+            _visit: function <_Result>(this: FernIr.Pagination.NextUri, visitor: FernIr.Pagination._Visitor<_Result>) {
+                return FernIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
+    nextPath: (value: FernIr.NextPathPagination): FernIr.Pagination.NextPath => {
+        return {
+            ...value,
+            type: "nextPath",
+            _visit: function <_Result>(this: FernIr.Pagination.NextPath, visitor: FernIr.Pagination._Visitor<_Result>) {
+                return FernIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.Pagination, visitor: FernIr.Pagination._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "cursor":
@@ -71,6 +106,10 @@ export const Pagination = {
                 return visitor.offset(value);
             case "custom":
                 return visitor.custom(value);
+            case "nextUri":
+                return visitor.nextUri(value);
+            case "nextPath":
+                return visitor.nextPath(value);
             default:
                 return visitor._other(value);
         }

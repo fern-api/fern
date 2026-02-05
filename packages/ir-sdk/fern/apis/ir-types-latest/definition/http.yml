@@ -408,6 +408,8 @@ types:
       cursor: CursorPagination
       offset: OffsetPagination
       custom: CustomPagination
+      nextUri: NextUriPagination
+      nextPath: NextPathPagination
 
   CursorPagination:
     docs: |
@@ -417,23 +419,9 @@ types:
       the next page and results are resolved from properties defined on the
       response.
     properties:
-      page: RequestLocator
+      page: RequestProperty
       next: ResponseProperty
       results: ResponseProperty
-
-  RequestLocator:
-    docs: |
-      Where to inject data into the request, like for cursor pagination.
-    union:
-      uri:
-        docs: The full URI of the request.
-        type: string
-      path:
-        docs: The full path of the request, i.e. everything after the base hostname and port.
-        type: string
-      property:
-        docs: A property on the request.
-        type: RequestProperty
 
   OffsetPagination:
     docs: |
@@ -462,6 +450,26 @@ types:
           The response property is used to determine the results response type
           generated in the endpoint.
         type: ResponseProperty
+
+  NextUriPagination:
+    docs: |
+      If set, the endpoint will be generated with auto-pagination features.
+
+      The next is a property on the response that contains the next URI, and
+      the results are resolved from properties defined on the response.
+    properties:
+      nextUri: ResponseProperty
+      results: ResponseProperty
+
+  NextPathPagination:
+    docs: |
+      If set, the endpoint will be generated with auto-pagination features.
+
+      The next is a property on the response that contains the next path (everything after the base hostname and port), and
+      the results are resolved from properties defined on the response.
+    properties:
+      nextPath: ResponseProperty
+      results: ResponseProperty
 
   # shared properties
   RequestPropertyValue:

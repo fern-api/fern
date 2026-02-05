@@ -3,22 +3,19 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { RequestProperty } from "./RequestProperty.js";
 import { ResponseProperty } from "./ResponseProperty.js";
 
-export const CursorPagination: core.serialization.ObjectSchema<
-    serializers.CursorPagination.Raw,
-    FernIr.CursorPagination
+export const NextPathPagination: core.serialization.ObjectSchema<
+    serializers.NextPathPagination.Raw,
+    FernIr.NextPathPagination
 > = core.serialization.objectWithoutOptionalProperties({
-    page: RequestProperty,
-    next: ResponseProperty,
+    nextPath: ResponseProperty,
     results: ResponseProperty,
 });
 
-export declare namespace CursorPagination {
+export declare namespace NextPathPagination {
     export interface Raw {
-        page: RequestProperty.Raw;
-        next: ResponseProperty.Raw;
+        nextPath: ResponseProperty.Raw;
         results: ResponseProperty.Raw;
     }
 }

@@ -79,27 +79,15 @@ function convertHttpEndpoint(endpoint: IrVersions.V64.HttpEndpoint): IrVersions.
 function convertPagination(pagination: IrVersions.V64.Pagination): IrVersions.V63.http.Pagination {
     switch (pagination.type) {
         case "cursor":
-            return IrVersions.V63.http.Pagination.cursor({
-                ...pagination,
-                page: convertRequestLocatorToRequestProperty(pagination.page)
-            });
+            return IrVersions.V63.http.Pagination.cursor(pagination);
         case "offset":
             return IrVersions.V63.http.Pagination.offset(pagination);
         case "custom":
             return IrVersions.V63.http.Pagination.custom(pagination);
-    }
-}
-
-function convertRequestLocatorToRequestProperty(
-    locator: IrVersions.V64.RequestLocator
-): IrVersions.V63.http.RequestProperty {
-    switch (locator.type) {
-        case "property":
-            return locator;
-        case "uri":
-        case "path":
+        case "nextUri":
+        case "nextPath":
             throw new Error(
-                `CursorPagination with '${locator.type}' locator cannot be migrated to IR v63. ` +
+                `CursorPagination with '${pagination.type}' locator cannot be migrated to IR v63. ` +
                     `Only 'property' locators are supported in v63.`
             );
     }

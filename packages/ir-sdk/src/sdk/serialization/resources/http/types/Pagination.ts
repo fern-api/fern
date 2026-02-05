@@ -5,6 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { CursorPagination } from "./CursorPagination.js";
 import { CustomPagination } from "./CustomPagination.js";
+import { NextPathPagination } from "./NextPathPagination.js";
+import { NextUriPagination } from "./NextUriPagination.js";
 import { OffsetPagination } from "./OffsetPagination.js";
 
 export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, FernIr.Pagination> = core.serialization
@@ -12,6 +14,8 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
         cursor: CursorPagination,
         offset: OffsetPagination,
         custom: CustomPagination,
+        nextUri: NextUriPagination,
+        nextPath: NextPathPagination,
     })
     .transform<FernIr.Pagination>({
         transform: (value) => {
@@ -22,6 +26,10 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
                     return FernIr.Pagination.offset(value);
                 case "custom":
                     return FernIr.Pagination.custom(value);
+                case "nextUri":
+                    return FernIr.Pagination.nextUri(value);
+                case "nextPath":
+                    return FernIr.Pagination.nextPath(value);
                 default:
                     return value as FernIr.Pagination;
             }
@@ -30,7 +38,12 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
     });
 
 export declare namespace Pagination {
-    export type Raw = Pagination.Cursor | Pagination.Offset | Pagination.Custom;
+    export type Raw =
+        | Pagination.Cursor
+        | Pagination.Offset
+        | Pagination.Custom
+        | Pagination.NextUri
+        | Pagination.NextPath;
 
     export interface Cursor extends CursorPagination.Raw {
         type: "cursor";
@@ -42,5 +55,13 @@ export declare namespace Pagination {
 
     export interface Custom extends CustomPagination.Raw {
         type: "custom";
+    }
+
+    export interface NextUri extends NextUriPagination.Raw {
+        type: "nextUri";
+    }
+
+    export interface NextPath extends NextPathPagination.Raw {
+        type: "nextPath";
     }
 }
