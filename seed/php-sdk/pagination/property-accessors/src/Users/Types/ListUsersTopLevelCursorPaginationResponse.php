@@ -47,6 +47,7 @@ class ListUsersTopLevelCursorPaginationResponse extends JsonSerializableType
     public function setNextCursor(?string $value = null): self
     {
         $this->nextCursor = $value;
+        $this->_setField('nextCursor');
         return $this;
     }
 
@@ -64,6 +65,7 @@ class ListUsersTopLevelCursorPaginationResponse extends JsonSerializableType
     public function setData(array $value): self
     {
         $this->data = $value;
+        $this->_setField('data');
         return $this;
     }
 

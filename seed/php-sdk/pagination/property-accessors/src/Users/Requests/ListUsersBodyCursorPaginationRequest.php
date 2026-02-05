@@ -42,6 +42,7 @@ class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
     public function setPagination(?WithCursor $value = null): self
     {
         $this->pagination = $value;
+        $this->_setField('pagination');
         return $this;
     }
 }
