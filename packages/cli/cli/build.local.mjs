@@ -26,7 +26,7 @@ buildCli({
         name: "fern-api",
         bin: { fern: "cli.cjs" }
     },
-    tsupOverrides: {
+    tsdownOverrides: {
         external: MINIMAL_EXTERNALS
     }
 });

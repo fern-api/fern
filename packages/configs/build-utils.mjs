@@ -1,7 +1,7 @@
 import { exec } from "child_process";
 import { cp, mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
-import tsup from "tsup";
+import { build } from "tsdown";
 import { fileURLToPath } from "url";
 import { promisify } from "util";
 
@@ -11,8 +11,8 @@ const execAsync = promisify(exec);
  * Standard build function for Fern generators
  * @param {string} dirname - The __dirname of the calling build.mjs file
  * @param {Object} options - Build options
- * @param {string} [options.entry='src/cli.ts'] - Entry point for tsup
- * @param {Object} [options.tsupOptions={}] - Additional tsup configuration options to merge
+ * @param {string} [options.entry='src/cli.ts'] - Entry point for tsdown
+ * @param {Object} [options.tsdownOptions={}] - Additional tsdown configuration options to merge
  * @param {string|string[]|Object|Object[]|null} [options.copy=null] - Files/folders to copy after build
  *   Can be:
  *   - string: '../base/src/asIs' - copies to dist/
@@ -21,10 +21,10 @@ const execAsync = promisify(exec);
  *   - array of objects: [{ from: '...', to: '...' }, ...]
  */
 export async function buildGenerator(dirname, options = {}) {
-    const { entry = "src/cli.ts", tsupOptions = {}, copy = null } = options;
+    const { entry = "src/cli.ts", tsdownOptions = {}, copy = null } = options;
 
-    // Build with tsup (merge default options with custom ones)
-    const defaultTsupOptions = {
+    // Build with tsdown (merge default options with custom ones)
+    const defaultTsdownOptions = {
         entry: [entry],
         format: ["cjs"],
         sourcemap: true,
@@ -32,9 +32,9 @@ export async function buildGenerator(dirname, options = {}) {
         outDir: "dist"
     };
 
-    await tsup.build({
-        ...defaultTsupOptions,
-        ...tsupOptions
+    await build({
+        ...defaultTsdownOptions,
+        ...tsdownOptions
     });
 
     // Copy additional files if needed
@@ -80,27 +80,16 @@ export async function buildDynamicSnippets(dirname, packageJson, versionOverride
     await rm(distDir, { recursive: true, force: true });
     await mkdir(distDir, { recursive: true });
 
-    // Import polyfillNode dynamically
-    const { polyfillNode } = await import("esbuild-plugin-polyfill-node");
-
-    await tsup.build({
+    await build({
         entry: [path.join(srcDir, "index.ts")],
         target: "es2020",
         minify: true,
         dts: true,
         sourcemap: true,
-        esbuildPlugins: [
-            polyfillNode({
-                globals: {
-                    buffer: true,
-                    process: true
-                },
-                polyfills: {
-                    fs: false,
-                    crypto: false
-                }
-            })
-        ],
+        platform: "browser",
+        define: {
+            "process.env.NODE_ENV": JSON.stringify("production")
+        },
         tsconfig: tsconfigPath,
         format: ["cjs", "esm"],
         outDir: path.join(distDir, "dist"), // yes, this is intentional to have dist/dist

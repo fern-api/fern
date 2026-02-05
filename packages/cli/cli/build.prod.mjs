@@ -1,4 +1,4 @@
-import { buildCli, PRODUCTION_TSUP_OVERRIDES } from "./build-utils.mjs";
+import { buildCli, PRODUCTION_TSDOWN_OVERRIDES } from "./build-utils.mjs";
 
 buildCli({
     outDir: "dist/prod",
@@ -25,5 +25,5 @@ buildCli({
         name: "fern-api",
         bin: { fern: "cli.cjs" }
     },
-    tsupOverrides: PRODUCTION_TSUP_OVERRIDES
+    tsdownOverrides: PRODUCTION_TSDOWN_OVERRIDES
 });

@@ -1,7 +1,7 @@
 import { exec } from "child_process";
 import { writeFile } from "fs/promises";
 import path from "path";
-import tsup from "tsup";
+import { build } from "tsdown";
 import { fileURLToPath } from "url";
 import { promisify } from "util";
 import packageJson from "./package.json" with { type: "json" };
@@ -27,7 +27,7 @@ export const FULL_EXTERNALS = [
     /^prettier2(?:\/.*)?$/,
     /^vitest(?:\/.*)?$/,
     /^depcheck(?:\/.*)?$/,
-    /^tsup(?:\/.*)?$/,
+    /^tsdown(?:\/.*)?$/,
     /^typescript(?:\/.*)?$/,
     /^@types\/.*$/
 ];
@@ -38,13 +38,12 @@ export const FULL_EXTERNALS = [
 export const MINIMAL_EXTERNALS = ["@boundaryml/baml"];
 
 /**
- * Common tsup overrides for production-like builds with optimization
+ * Common tsdown overrides for production-like builds with optimization
  */
-export const PRODUCTION_TSUP_OVERRIDES = {
+export const PRODUCTION_TSDOWN_OVERRIDES = {
     platform: "node",
     target: "node18",
-    external: FULL_EXTERNALS,
-    metafile: true
+    external: FULL_EXTERNALS
 };
 
 /**
@@ -55,7 +54,7 @@ export const PRODUCTION_TSUP_OVERRIDES = {
  * @param {Object} [config.env] - Environment variables to inject
  * @param {string[]} [config.runtimeDependencies] - List of runtime dependencies to include in package.json
  * @param {Object} [config.packageJsonOverrides] - Overrides for the generated package.json
- * @param {Object} [config.tsupOverrides] - Additional tsup configuration options
+ * @param {Object} [config.tsdownOverrides] - Additional tsdown configuration options
  */
 export async function buildCli(config) {
     const {
@@ -64,11 +63,11 @@ export async function buildCli(config) {
         env = {},
         runtimeDependencies = [],
         packageJsonOverrides = {},
-        tsupOverrides = {}
+        tsdownOverrides = {}
     } = config;
 
-    // Build with tsup
-    await tsup.build({
+    // Build with tsdown
+    await build({
         entry: { cli: "src/main.ts" },
         format: ["cjs"],
         minify,
@@ -79,7 +78,7 @@ export async function buildCli(config) {
             ...env,
             CLI_VERSION: process.argv[2] || packageJson.version
         },
-        ...tsupOverrides
+        ...tsdownOverrides
     });
 
     // Change to output directory

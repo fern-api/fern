@@ -1,9 +1,9 @@
-import tsup from "tsup";
+import { build } from "tsdown";
 
 main();
 
 async function main() {
-    await tsup.build({
+    await build({
         entry: ["src/cli.ts", "src/api.ts"],
         format: ["cjs"],
         dts: true,

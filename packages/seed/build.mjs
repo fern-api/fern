@@ -1,7 +1,7 @@
 import { exec } from "child_process";
 import { writeFile } from "fs/promises";
 import path from "path";
-import tsup from "tsup";
+import { build } from "tsdown";
 import { fileURLToPath } from "url";
 import { promisify } from "util";
 import packageJson from "./package.json" with { type: "json" };
@@ -13,15 +13,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 main();
 
 async function main() {
-    await tsup.build({
+    await build({
         entry: ["src/cli.ts"],
         format: ["cjs"],
         minify: false,
         outDir: "dist",
         sourcemap: true,
         clean: true,
-        esbuildOptions(options) {
-            options.conditions = ["development", "source", "import", "default"];
+        inputOptions: {
+            resolve: {
+                conditionNames: ["development", "source", "import", "default"]
+            }
         },
         env: {
             CLI_NAME: "seed",
