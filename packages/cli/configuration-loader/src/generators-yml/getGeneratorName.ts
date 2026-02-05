@@ -49,7 +49,8 @@ export function getGeneratorNameOrThrow(generatorName: string, context: TaskCont
 }
 
 const GENERATOR_NAME_ALIASES: Record<string, string> = {
-    "fernapi/java-model": GeneratorName.JAVA_MODEL
+    "fernapi/java-model": GeneratorName.JAVA_MODEL,
+    "fernapi/fern-typescript-node-sdk": GeneratorName.TYPESCRIPT_SDK
 };
 
 export function normalizeGeneratorName(generatorName: string): GeneratorName | undefined {
