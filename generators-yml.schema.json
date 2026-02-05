@@ -1947,6 +1947,16 @@
             }
           ]
         },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -2279,6 +2289,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -2747,6 +2767,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
