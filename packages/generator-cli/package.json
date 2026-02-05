@@ -7,9 +7,9 @@
     "directory": "packages/generator-cli"
   },
   "type": "commonjs",
-  "main": "dist/api.js",
+  "main": "dist/api.cjs",
   "source": "src/index.ts",
-  "types": "dist/api.d.ts",
+  "types": "dist/api.d.cts",
   "bin": {
     "generator-cli": "bin/cli"
   },
