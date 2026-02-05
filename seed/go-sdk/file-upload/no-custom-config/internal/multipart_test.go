@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
 	"mime/multipart"
@@ -170,6 +171,81 @@ func TestMultipartWriter(t *testing.T) {
 				if expectedContentType != "" {
 					assert.Equal(t, expectedContentType, file.Header.Get("Content-Type"))
 				}
+			})
+		}
+	})
+
+	t.Run("write file without name", func(t *testing.T) {
+		tests := []struct {
+			desc         string
+			giveField    string
+			giveReader   func(content string) io.Reader
+			giveContent  string
+			wantFilename string
+		}{
+			{
+				desc:      "strings.Reader without name uses field name as filename",
+				giveField: "file",
+				giveReader: func(content string) io.Reader {
+					return strings.NewReader(content)
+				},
+				giveContent:  "test content",
+				wantFilename: "file",
+			},
+			{
+				desc:      "bytes.Reader without name uses field name as filename",
+				giveField: "document",
+				giveReader: func(content string) io.Reader {
+					return bytes.NewReader([]byte(content))
+				},
+				giveContent:  "some data",
+				wantFilename: "document",
+			},
+			{
+				desc:      "bytes.Buffer without name uses field name as filename",
+				giveField: "upload",
+				giveReader: func(content string) io.Reader {
+					return bytes.NewBufferString(content)
+				},
+				giveContent:  "buffer content",
+				wantFilename: "upload",
+			},
+		}
+
+		for _, tt := range tests {
+			t.Run(tt.desc, func(t *testing.T) {
+				w := NewMultipartWriter()
+
+				reader := tt.giveReader(tt.giveContent)
+				require.NoError(t, w.WriteFile(tt.giveField, reader))
+				require.NoError(t, w.Close())
+
+				multipartReader := multipart.NewReader(w.Buffer(), w.writer.Boundary())
+				form, err := multipartReader.ReadForm(maxFormMemory)
+				require.NoError(t, err)
+				defer func() {
+					require.NoError(t, form.RemoveAll())
+				}()
+
+				files := form.File[tt.giveField]
+				require.Len(t, files, 1)
+
+				file := files[0]
+				assert.Equal(t, tt.wantFilename, file.Filename)
+
+				// Verify the Content-Disposition header includes the filename attribute
+				contentDisposition := file.Header.Get("Content-Disposition")
+				assert.Contains(t, contentDisposition, `filename="`+tt.wantFilename+`"`)
+
+				f, err := file.Open()
+				require.NoError(t, err)
+				defer func() {
+					require.NoError(t, f.Close())
+				}()
+
+				content, err := io.ReadAll(f)
+				require.NoError(t, err)
+				assert.Equal(t, tt.giveContent, string(content))
 			})
 		}
 	})
