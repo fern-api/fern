@@ -54,7 +54,7 @@ def parse_datetime(value: Any) -> dt.datetime:
     return dt.datetime.fromisoformat(value)
 
 
-ModelField = pydantic.fields.FieldInfo  # type: ignore[misc,assignment]
+from pydantic.fields import FieldInfo as ModelField  # type: ignore[misc,assignment]
 
 import decimal
 from collections import deque
