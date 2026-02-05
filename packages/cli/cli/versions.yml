@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.64.4
+- version: 3.64.5
   changelogEntry:
     - summary: |
         Fix PostHog network errors being logged to CLI output. When PostHog analytics fails to flush due to network issues (e.g., DNS resolution failures in air-gapped environments), the errors are now suppressed from user-facing output and logged at debug level instead. Run with `--log-level debug` to see these errors for troubleshooting.
@@ -7,6 +7,14 @@
   createdAt: "2026-02-05"
   irVersion: 63
 
+- version: 3.64.4
+  changelogEntry:
+    - summary: |
+        Fix additionalProperties in examples being lost when a schema defines `additionalProperties: true`. Previously, additional properties in examples were set to undefined during conversion, causing them to be stripped from the output. Now the actual values from the example are preserved.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+ 
 - version: 3.64.3
   changelogEntry:
     - summary: |
