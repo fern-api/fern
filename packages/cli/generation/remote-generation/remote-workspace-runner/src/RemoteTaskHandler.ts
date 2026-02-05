@@ -13,7 +13,7 @@ import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
-import yauzl from "yauzl";
+import { open } from "yauzl-promise";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -394,50 +394,21 @@ async function downloadAndExtractZipToDirectory({
 }
 
 export async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
-    return new Promise((resolve, reject) => {
-        yauzl.open(zipPath, { lazyEntries: true }, (err, zipfile) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            if (!zipfile) {
-                reject(new Error("Failed to open zip file"));
-                return;
-            }
+    const zip = await open(zipPath);
 
-            zipfile.readEntry();
-            zipfile.on("entry", (entry) => {
-                const outputPath = path.join(outputDir, entry.fileName);
-                if (entry.fileName.endsWith("/")) {
-                    // Directory entry
-                    mkdir(outputPath, { recursive: true })
-                        .then(() => zipfile.readEntry())
-                        .catch(reject);
-                } else {
-                    // File entry - ensure parent directory exists
-                    mkdir(path.dirname(outputPath), { recursive: true })
-                        .then(() => {
-                            zipfile.openReadStream(entry, (streamErr, readStream) => {
-                                if (streamErr) {
-                                    reject(streamErr);
-                                    return;
-                                }
-                                if (!readStream) {
-                                    reject(new Error("Failed to open read stream"));
-                                    return;
-                                }
-                                const writeStream = createWriteStream(outputPath);
-                                readStream.pipe(writeStream);
-                                writeStream.on("close", () => zipfile.readEntry());
-                                writeStream.on("error", reject);
-                                readStream.on("error", reject);
-                            });
-                        })
-                        .catch(reject);
-                }
-            });
-            zipfile.on("end", () => resolve());
-            zipfile.on("error", reject);
+    for await (const entry of zip) {
+        const outputPath = path.join(outputDir, entry.filename);
+
+        if (entry.filename.endsWith("/")) {
+            await mkdir(outputPath, { recursive: true });
+            continue;
+        }
+
+        await mkdir(path.dirname(outputPath), { recursive: true });
+
+        const readStream = await entry.openReadStream();
+        await new Promise<void>((resolve, reject) => {
+            readStream.pipe(createWriteStream(outputPath)).on("finish", resolve).on("error", reject);
         });
-    });
+    }
 }
