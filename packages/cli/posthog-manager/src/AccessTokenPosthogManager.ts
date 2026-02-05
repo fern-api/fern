@@ -32,9 +32,11 @@ export class AccessTokenPosthogManager implements PosthogManager {
     public async flush(): Promise<void> {
         try {
             await this.posthog.flush();
-        } catch {
-            // Silently ignore flush errors - these are typically network errors
-            // that shouldn't affect CLI operation or be shown to users
+        } catch (error) {
+            // Log at debug level for internal visibility, but don't show to users by default
+            // These are typically network errors in air-gapped environments
+            // biome-ignore lint/suspicious/noConsole: intentional debug logging for internal troubleshooting
+            console.debug("[PostHog] Failed to flush analytics:", error);
         }
     }
 }

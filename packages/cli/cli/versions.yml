@@ -2,7 +2,7 @@
 - version: 3.64.4
   changelogEntry:
     - summary: |
-        Fix PostHog network errors being logged to CLI output. When PostHog analytics fails to flush due to network issues (e.g., DNS resolution failures in air-gapped environments), the errors are now silently suppressed instead of being printed to the console.
+        Fix PostHog network errors being logged to CLI output. When PostHog analytics fails to flush due to network issues (e.g., DNS resolution failures in air-gapped environments), the errors are now suppressed from user-facing output and logged at debug level instead. Run with `--log-level debug` to see these errors for troubleshooting.
       type: fix
   createdAt: "2026-02-05"
   irVersion: 63
