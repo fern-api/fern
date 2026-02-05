@@ -211,6 +211,9 @@ types:
       list:
         type: TypeReference
         key: list
+        validation:
+          minItems: optional<integer>
+          maxItems: optional<integer>
       map: MapType
       nullable:
         type: TypeReference
@@ -221,6 +224,9 @@ types:
       set:
         type: TypeReference
         key: set
+        validation:
+          minProperties: optional<integer>
+          maxProperties: optional<integer>
       literal:
         type: Literal
         key: literal
