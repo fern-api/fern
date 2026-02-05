@@ -3,12 +3,14 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 
 
 class ConvertToken(UniversalBaseModel):
     method: str
-    token_id: str = pydantic.Field(alias="tokenId")
+    token_id: typing_extensions.Annotated[str, FieldMetadata(alias="tokenId"), pydantic.Field(alias="tokenId")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

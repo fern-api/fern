@@ -1,19 +1,48 @@
-import { Server } from "@fern-api/openapi-ir";
+import { Server, ServerVariable } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 
+const X_FERN_DEFAULT_URL = "x-fern-default-url";
+
 export function convertServer(
     server: OpenAPIV3.ServerObject,
     options?: { groupMultiApiEnvironments?: boolean }
 ): Server {
+    const hasVariables = server.variables != null && Object.keys(server.variables).length > 0;
+    const defaultUrl = extractFernDefaultUrl(server);
+
     return {
         url: getServerUrl({ url: server.url, variables: server.variables ?? {} }),
         description: server.description,
         name: getServerName(server, options),
-        audiences: getExtension<string[]>(server, FernOpenAPIExtension.AUDIENCES)
+        audiences: getExtension<string[]>(server, FernOpenAPIExtension.AUDIENCES),
+        // Preserve server variables for runtime URL configuration
+        urlTemplate: hasVariables ? server.url : undefined,
+        variables: hasVariables && server.variables != null ? convertServerVariables(server.variables) : undefined,
+        defaultUrl: hasVariables ? defaultUrl : undefined
     };
+}
+
+/**
+ * Extracts the x-fern-default-url extension from a server object.
+ * This URL is used as a fallback when no variables are provided.
+ */
+function extractFernDefaultUrl(server: OpenAPIV3.ServerObject): string | undefined {
+    const defaultUrl = (server as unknown as Record<string, unknown>)[X_FERN_DEFAULT_URL];
+    if (typeof defaultUrl === "string") {
+        return defaultUrl.endsWith("/") && defaultUrl !== "/" ? defaultUrl.slice(0, -1) : defaultUrl;
+    }
+    return undefined;
+}
+
+function convertServerVariables(variables: Record<string, OpenAPIV3.ServerVariableObject>): ServerVariable[] {
+    return Object.entries(variables).map(([variableId, variable]) => ({
+        id: variableId,
+        default: variable.default,
+        values: variable.enum
+    }));
 }
 
 function getServerUrl({

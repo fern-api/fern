@@ -6,4 +6,19 @@ export interface MultipleBaseUrlsEnvironment extends FernIr.WithDocs {
     id: FernIr.EnvironmentId;
     name: FernIr.Name;
     urls: Record<FernIr.EnvironmentBaseUrlId, FernIr.EnvironmentUrl>;
+    /**
+     * A map of default URLs to use when no variables are provided for each base URL.
+     * If present and no variables are passed, use these URLs instead of the templates.
+     */
+    defaultUrls: Record<FernIr.EnvironmentBaseUrlId, string> | undefined;
+    /**
+     * A map of URL templates with variable placeholders for each base URL.
+     * If present, the SDK should use these templates with urlVariables to construct the final URLs.
+     */
+    urlTemplates: Record<FernIr.EnvironmentBaseUrlId, string> | undefined;
+    /**
+     * A map of variables that can be substituted into the urlTemplates at runtime for each base URL.
+     * Each variable has a name, default value, and optional enum of allowed values.
+     */
+    urlVariables: Record<FernIr.EnvironmentBaseUrlId, FernIr.ServerVariable[]> | undefined;
 }

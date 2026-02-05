@@ -14,18 +14,18 @@ from .submission_id import SubmissionId
 
 
 class TraceResponse(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
-        alias="submissionId"
-    )
-    line_number: typing_extensions.Annotated[int, FieldMetadata(alias="lineNumber")] = pydantic.Field(
-        alias="lineNumber"
-    )
+    submission_id: typing_extensions.Annotated[
+        SubmissionId, FieldMetadata(alias="submissionId"), pydantic.Field(alias="submissionId")
+    ]
+    line_number: typing_extensions.Annotated[int, FieldMetadata(alias="lineNumber"), pydantic.Field(alias="lineNumber")]
     return_value: typing_extensions.Annotated[
-        typing.Optional["DebugVariableValue"], FieldMetadata(alias="returnValue")
-    ] = pydantic.Field(alias="returnValue", default=None)
+        typing.Optional["DebugVariableValue"], FieldMetadata(alias="returnValue"), pydantic.Field(alias="returnValue")
+    ] = None
     expression_location: typing_extensions.Annotated[
-        typing.Optional[ExpressionLocation], FieldMetadata(alias="expressionLocation")
-    ] = pydantic.Field(alias="expressionLocation", default=None)
+        typing.Optional[ExpressionLocation],
+        FieldMetadata(alias="expressionLocation"),
+        pydantic.Field(alias="expressionLocation"),
+    ] = None
     stack: StackInformation
     stdout: typing.Optional[str] = None
 

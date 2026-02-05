@@ -1443,6 +1443,41 @@
     "fernDefinition.service.HttpHeaderSchema": {
       "$ref": "#/definitions/fernDefinition.service.TypeReferenceDeclarationWithEnvOverride"
     },
+    "fernDefinition.environments.ServerVariableSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.environments.SingleBaseUrlEnvironmentSchema": {
       "type": "object",
       "properties": {
@@ -1471,6 +1506,39 @@
         },
         "url": {
           "type": "string"
+        },
+        "default-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url-template": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fernDefinition.environments.ServerVariableSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

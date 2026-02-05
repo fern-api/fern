@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .core.pydantic_utilities import IS_PYDANTIC_V2
+from .core.serialization import FieldMetadata
 from .user import User
 
 
@@ -12,10 +14,11 @@ class Admin(User):
     Admin user object
     """
 
-    admin_level: str = pydantic.Field(alias="adminLevel")
-    """
-    The level of admin privileges.
-    """
+    admin_level: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="adminLevel"),
+        pydantic.Field(alias="adminLevel", description="The level of admin privileges."),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

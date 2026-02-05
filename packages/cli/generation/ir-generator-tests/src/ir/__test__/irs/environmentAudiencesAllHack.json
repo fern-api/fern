@@ -3876,6 +3876,9 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -3900,6 +3903,9 @@
                         }
                     },
                     "url": "https://www.staging.yoursite.com",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

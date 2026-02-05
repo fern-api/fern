@@ -15,6 +15,7 @@ export * from "./SdkGroupName.js";
 export * from "./SecurityScheme.js";
 export * from "./SecuritySchemeId.js";
 export * from "./Server.js";
+export * from "./ServerVariable.js";
 export * from "./Source.js";
 export * from "./StatusCode.js";
 export * from "./Tag.js";

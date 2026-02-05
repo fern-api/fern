@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .core.serialization import FieldMetadata
 
 
 class NormalObject(UniversalBaseModel):
@@ -11,7 +13,9 @@ class NormalObject(UniversalBaseModel):
     A standard object with no nullable issues.
     """
 
-    normal_field: typing.Optional[str] = pydantic.Field(alias="normalField", default=None)
+    normal_field: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="normalField"), pydantic.Field(alias="normalField")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

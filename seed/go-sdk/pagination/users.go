@@ -91,6 +91,27 @@ func (l *ListUsersBodyCursorPaginationRequest) SetPagination(pagination *WithCur
 	l.require(listUsersBodyCursorPaginationRequestFieldPagination)
 }
 
+func (l *ListUsersBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	listUsersBodyOffsetPaginationRequestFieldPagination = big.NewInt(1 << 0)
 )
@@ -116,6 +137,27 @@ func (l *ListUsersBodyOffsetPaginationRequest) require(field *big.Int) {
 func (l *ListUsersBodyOffsetPaginationRequest) SetPagination(pagination *WithPage) {
 	l.Pagination = pagination
 	l.require(listUsersBodyOffsetPaginationRequestFieldPagination)
+}
+
+func (l *ListUsersBodyOffsetPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersBodyOffsetPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersBodyOffsetPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersBodyOffsetPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersBodyOffsetPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -541,6 +583,27 @@ func (l *ListUsersTopLevelBodyCursorPaginationRequest) SetCursor(cursor *string)
 func (l *ListUsersTopLevelBodyCursorPaginationRequest) SetFilter(filter *string) {
 	l.Filter = filter
 	l.require(listUsersTopLevelBodyCursorPaginationRequestFieldFilter)
+}
+
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersTopLevelBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersTopLevelBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersTopLevelBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (

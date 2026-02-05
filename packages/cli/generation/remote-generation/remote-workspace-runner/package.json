@@ -54,7 +54,6 @@
     "@fern-fern/fiddle-sdk": "0.0.775",
     "axios": "^1.12.0",
     "chalk": "^5.3.0",
-    "decompress": "^4.2.1",
     "form-data": "4.0.4",
     "image-size": "^1.2.1",
     "js-yaml": "^4.1.1",
@@ -62,19 +61,22 @@
     "mime-types": "^2.1.35",
     "terminal-link": "^3.0.0",
     "tmp-promise": "^3.0.3",
-    "url-join": "^5.0.0"
+    "url-join": "^5.0.0",
+    "yauzl": "^3.2.0"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/decompress": "^4.2.7",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/mime-types": "^2.1.4",
     "@types/node": "18.15.3",
     "@types/terminal-link": "^1.2.0",
     "@types/url-join": "^4.0.3",
+    "@types/yauzl": "^2.10.3",
+    "@types/yazl": "^3.3.0",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "yazl": "^3.3.1"
   }
 }

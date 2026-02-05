@@ -3226,9 +3226,10 @@ func (f *fileWriter) WriteRequestType(
 		}
 	}
 
-	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 && !requestBody.extraProperties {
-		// If the request doesn't specify any literals or a reference type,
-		// we don't need to customize the [de]serialization logic at all.
+	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 && !requestBody.extraProperties && len(propertyNames) == 0 {
+		// If the request doesn't specify any literals, a reference type, or properties
+		// that could use explicit field handling, we don't need to customize the
+		// [de]serialization logic at all.
 		return nil
 	}
 

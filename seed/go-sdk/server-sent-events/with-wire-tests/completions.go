@@ -34,6 +34,27 @@ func (s *StreamCompletionRequest) SetQuery(query string) {
 	s.require(streamCompletionRequestFieldQuery)
 }
 
+func (s *StreamCompletionRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamCompletionRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamCompletionRequest(body)
+	return nil
+}
+
+func (s *StreamCompletionRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamCompletionRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	streamedCompletionFieldDelta  = big.NewInt(1 << 0)
 	streamedCompletionFieldTokens = big.NewInt(1 << 1)

@@ -1,6 +1,6 @@
 import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
@@ -8,6 +8,11 @@ import { init } from "../init/init";
 const FERNIGNORE_FILECONTENTS = `
 fern.js
 **/*.txt
+`;
+
+const FERNIGNORE_PREVENT_INITIAL_GENERATION_FILECONTENTS = `
+src/Client.ts
+src/core/
 `;
 
 const FERN_JS_FILENAME = "fern.js";
@@ -53,6 +58,44 @@ describe("fern generate --local", () => {
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory
         });
+    }, 360_000);
+
+    // eslint-disable-next-line jest/expect-expect
+    it("Prevent initial generation of files listed in .fernignore", async () => {
+        const pathOfDirectory = await init();
+
+        // Create output directory with .fernignore BEFORE first generation
+        const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("sdks/typescript"));
+        await mkdir(absolutePathToLocalOutput, { recursive: true });
+
+        // Write .fernignore that excludes src/Client.ts and src/core/ directory
+        const absolutePathToFernignore = join(absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME));
+        await writeFile(absolutePathToFernignore, FERNIGNORE_PREVENT_INITIAL_GENERATION_FILECONTENTS);
+
+        // Run first generation - excluded files should NOT be created
+        await runFernCli(["generate", "--local", "--keepDocker"], {
+            cwd: pathOfDirectory
+        });
+
+        // Verify .fernignore still exists
+        await expectPathExists(absolutePathToFernignore);
+
+        // Verify src/Client.ts was NOT generated (exact file match test)
+        const absolutePathToClientTs = join(absolutePathToLocalOutput, RelativeFilePath.of("src/Client.ts"));
+        await expectPathDoesNotExist(absolutePathToClientTs);
+
+        // Verify src/core/ directory was NOT generated (directory pattern test)
+        const absolutePathToCore = join(absolutePathToLocalOutput, RelativeFilePath.of("src/core"));
+        await expectPathDoesNotExist(absolutePathToCore);
+
+        // Run generation again to ensure it's stable
+        await runFernCli(["generate", "--local", "--keepDocker"], {
+            cwd: pathOfDirectory
+        });
+
+        // Files should still not exist
+        await expectPathDoesNotExist(absolutePathToClientTs);
+        await expectPathDoesNotExist(absolutePathToCore);
     }, 360_000);
 });
 
