@@ -30,6 +30,11 @@ export class AccessTokenPosthogManager implements PosthogManager {
     }
 
     public async flush(): Promise<void> {
-        await this.posthog.flush();
+        try {
+            await this.posthog.flush();
+        } catch {
+            // Silently ignore flush errors - these are typically network errors
+            // that shouldn't affect CLI operation or be shown to users
+        }
     }
 }
