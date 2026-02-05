@@ -337,6 +337,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  server-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   unions:
     - customConfig: null
       outputFolder: no-custom-config

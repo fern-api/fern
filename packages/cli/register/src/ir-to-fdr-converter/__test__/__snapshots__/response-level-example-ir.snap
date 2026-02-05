@@ -60,6 +60,7 @@
       "_visit": [Function],
       "environments": [
         {
+          "defaultUrl": undefined,
           "docs": "Demo server",
           "id": "Demo server",
           "name": {
@@ -82,6 +83,8 @@
             },
           },
           "url": "https://api.plantstore.dev/v3",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",

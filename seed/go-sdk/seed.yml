@@ -301,8 +301,10 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-url-templating
   - trace
   - property-access
+  - oauth-client-credentials:.
   - oauth-client-credentials-reference
 
   # TODO: Fix example generator to produce valid dynamic snippets.

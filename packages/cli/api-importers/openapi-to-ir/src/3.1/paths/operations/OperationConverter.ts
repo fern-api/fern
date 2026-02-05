@@ -25,6 +25,7 @@ export declare namespace OperationConverter {
         idempotent: boolean | undefined;
         idToAuthScheme?: Record<string, FernIr.AuthScheme>;
         topLevelServers?: OpenAPIV3_1.ServerObject[];
+        pathLevelServers?: OpenAPIV3_1.ServerObject[];
         streamingExtension: FernStreamingExtension.Output | undefined;
     }
 
@@ -55,6 +56,7 @@ export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
     private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
+    private readonly pathLevelServers?: OpenAPIV3_1.ServerObject[];
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
     private static readonly AUTHORIZATION_HEADER = "Authorization";
@@ -68,12 +70,14 @@ export class OperationConverter extends AbstractOperationConverter {
         idempotent,
         idToAuthScheme,
         topLevelServers,
+        pathLevelServers,
         streamingExtension
     }: OperationConverter.Args) {
         super({ context, breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
+        this.pathLevelServers = pathLevelServers;
         this.streamingExtension = streamingExtension;
     }
 
@@ -273,7 +277,7 @@ export class OperationConverter extends AbstractOperationConverter {
                       }
                     : undefined,
             inlinedTypes: this.inlinedTypes,
-            servers: this.filterOutTopLevelServers(this.operation.servers ?? [])
+            servers: this.filterOutTopLevelServers(this.operation.servers ?? this.pathLevelServers ?? [])
         };
     }
 
@@ -783,7 +787,7 @@ export class OperationConverter extends AbstractOperationConverter {
             return serverFromOperationName;
         }
 
-        const operationServer = this.operation.servers?.[0];
+        const operationServer = this.operation.servers?.[0] ?? this.pathLevelServers?.[0];
         if (operationServer == null) {
             return undefined;
         }
@@ -797,7 +801,7 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getEndpointBaseUrls(): string[] | undefined {
-        const operationServers = this.operation.servers;
+        const operationServers = this.operation.servers ?? this.pathLevelServers;
         if (operationServers == null) {
             return undefined;
         }

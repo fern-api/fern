@@ -3,12 +3,18 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.serialization import FieldMetadata
 
 
 class CreateUserRequest(UniversalBaseModel):
-    type: typing.Literal["CreateUserRequest"] = pydantic.Field(alias="_type", default="CreateUserRequest")
-    version: typing.Literal["v1"] = pydantic.Field(alias="_version", default="v1")
+    type: typing_extensions.Annotated[
+        typing.Literal["CreateUserRequest"], FieldMetadata(alias="_type"), pydantic.Field(alias="_type")
+    ] = "CreateUserRequest"
+    version: typing_extensions.Annotated[
+        typing.Literal["v1"], FieldMetadata(alias="_version"), pydantic.Field(alias="_version")
+    ] = "v1"
     name: str
 
     if IS_PYDANTIC_V2:

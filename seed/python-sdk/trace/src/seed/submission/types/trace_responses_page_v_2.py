@@ -19,8 +19,8 @@ class TraceResponsesPageV2(UniversalBaseModel):
     """
 
     trace_responses: typing_extensions.Annotated[
-        typing.List[TraceResponseV2], FieldMetadata(alias="traceResponses")
-    ] = pydantic.Field(alias="traceResponses")
+        typing.List[TraceResponseV2], FieldMetadata(alias="traceResponses"), pydantic.Field(alias="traceResponses")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
